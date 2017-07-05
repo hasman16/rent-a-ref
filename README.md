@@ -1,4 +1,7 @@
-# Angular Full Stack [![Dependencies](https://david-dm.org/DavideViolante/Angular2-Full-Stack.svg)](https://david-dm.org/DavideViolante/Angular2-Full-Stack) [![Donate](https://img.shields.io/badge/paypal-donate-179BD7.svg)](https://www.paypal.me/dviolante) [![MIT license](http://img.shields.io/badge/license-MIT-lightgrey.svg)](http://opensource.org/licenses/MIT)
+Rent A Ref is a Sports Website designed to allow Events organizers, Referees associations, Freelance sports referee and assignors to manage their respective event(s) or sports in a centralized and easy to use environment.
+### Author
+* [Ahmadou Ndoung](https://github.com/hasman16)
+<!--# Angular Full Stack [![Dependencies](https://david-dm.org/DavideViolante/Angular2-Full-Stack.svg)](https://david-dm.org/DavideViolante/Angular2-Full-Stack) [![Donate](https://img.shields.io/badge/paypal-donate-179BD7.svg)](https://www.paypal.me/dviolante) [![MIT license](http://img.shields.io/badge/license-MIT-lightgrey.svg)](http://opensource.org/licenses/MIT)
 
 
 The frontend is generated with [Angular CLI](https://github.com/angular/angular-cli). The backend is made from scratch. Whole stack in [TypeScript](https://www.typescriptlang.org).
@@ -78,3 +81,4 @@ To get more help about this project, [visit the wiki](https://github.com/DavideV
 
 ### Author
 * [Davide Violante](https://github.com/DavideViolante)
+-->
