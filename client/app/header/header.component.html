@@ -38,6 +38,18 @@
     <a routerLink="/register" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
         <i class="fa fa-user-plus"></i> Register
       </a>
+      <a routerLink="/about" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
+        <i class="fa fa-book"></i> About Us
+      </a>
+      <a routerLink="/cats" class="nav-item nav-link" routerLinkActive="active">
+        <i class="fa fa-list"></i> Cats
+      </a>
+      <a routerLink="/login" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
+        <i class="fa fa-sign-in"></i> Login
+      </a>
+      <a routerLink="/register" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
+        <i class="fa fa-user-plus"></i> Register
+      </a>
     <a routerLink="/account" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
         <i class="fa fa-user"></i> Account ({{auth.currentUser.username}})
       </a>
@@ -47,15 +59,31 @@
     <a routerLink="/logout" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
         <i class="fa fa-sign-out"></i> Logout
       </a>
-      <ul class="nav navbar-nav navbar-right">
-        <!--Add the dropdown directive appDropDown from the shared/dropdown.directive.ts to enable the dropdown to work-->
-        <li class="dropdown" appDropdown>
-          <a href="#" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Save Data</a></li>
-            <li><a href="#">Fetch Data</a></li>
-          </ul>
-        </li>
-      </ul>
-  </div>
+      
+  </div>  
 </nav>
+
+<!--
+  <ul class="nav navbar-nav navbar-right">
+    !--Add the dropdown directive appDropDown from the shared/dropdown.directive.ts to enable the dropdown to work--
+<li class="dropdown" appDropdown>
+  <a href="#" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <li><a href="#">Save Data</a></li>
+    <li><a href="#">Fetch Data</a></li>
+  </ul>
+</li>
+</ul>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+      <li><a href="#">Page 3</a></li>
+    </ul>
+  </div>
+</nav>-->

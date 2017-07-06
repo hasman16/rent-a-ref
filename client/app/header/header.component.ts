@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, Directive } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-header',
@@ -7,10 +8,10 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  //We need to emit the value received from the header.component.html onSelect() function call
-  //For that, we use the @Output to broacast our emitter to the global application so it is reachable everywhere
+  // We need to emit the value received from the header.component.html onSelect() function call
+  // For that, we use the @Output to broacast our emitter to the global application so it is reachable everywhere
   @Output() featureSelected = new EventEmitter<string>();
-  //This featureSelected would be use in the app.component.html
+  // This featureSelected would be use in the app.component.html
   constructor(public auth: AuthService) { }
   ngOnInit() {
   }
