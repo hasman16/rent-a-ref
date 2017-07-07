@@ -49,6 +49,7 @@ import { FooterComponent } from './footer/footer.component';
     UserService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  // Add bootstrap
   bootstrap: [AppComponent]
 })
 
