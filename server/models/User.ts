@@ -1,14 +1,7 @@
-import * as bcrypt from 'bcryptjs';
-import * as mongoose from 'mongoose';
-
-const userSchema = new mongoose.Schema({
-  username: String,
-  email: { type: String, unique: true, lowercase: true, trim: true },
-  password: String,
-  role: String
-});
+//import * as bcrypt from 'bcryptjs';
 
 // Before saving the user, hash the password
+/*
 userSchema.pre('save', function(next) {
   const user = this;
   if (!user.isModified('password')) { return next(); }
@@ -36,7 +29,22 @@ userSchema.set('toJSON', {
     return ret;
   }
 });
-
-const User = mongoose.model('User', userSchema);
+*/
+const User = function(sequelize, DataTypes) {
+    return sequelize.define('user', {
+        username: DataTypes.STRING(64),
+        email: {
+            type: DataTypes.STRING(64),
+            validate: {
+                isEmail: true
+            }
+        },
+        password: DataTypes.STRING,
+        authorization: DataTypes.INTEGER
+    }, {
+        paranoid: true, //mark as deleted but do not delete
+        underscored: true //use underscore instead of camelCase.
+    });
+};
 
 export default User;

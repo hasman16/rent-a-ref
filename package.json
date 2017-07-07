@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "license": "MIT",
   "author": "Ahmadou Ndoung",
-  "description": "Sports Website project built using Angular 4, Express, Mongoose and Node.",
+  "description": "Sports Website project built using Angular 4, Express and Node.",
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
     "build": "ng build",
     "start": "node dist/server/app.js",
     "predev": "tsc -p server",
-    "dev": "concurrently \"mongod\" \"ng serve -pc proxy.conf.json --open\" \"tsc -w -p server\" \"nodemon dist/server/app.js\"",
-    "prod": "concurrently \"mongod\" \"ng build -aot -prod && tsc -p server && node dist/server/app.js\"",
+    "dev": "concurrently  \"ng serve -pc proxy.conf.json --open\" \"tsc -w -p server\" \"nodemon dist/server/app.js\"",
+    "prod": "concurrently \"ng build -aot -prod && tsc -p server && node dist/server/app.js\"",
     "test": "ng test",
     "lint": "ng lint",
     "lintbe": "tslint server/**/**.ts{,x}",
@@ -41,7 +41,11 @@
     "morgan": "^1.8.2",
     "rxjs": "^5.1.0",
     "tether": "1.4.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "multer": "^1.1.0",
+    "pg": "^4.4.4",
+    "randomstring": "^1.1.4",
+    "sequelize": "^3.19.1"
   },
   "devDependencies": {
     "@angular/cli": "1.1.0",
