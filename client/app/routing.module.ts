@@ -12,9 +12,14 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
-
-const routes: Routes = [
-  { path: '', component: HomeComponent },
+import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
+import { PricingComponent } from './home/pricing/pricing.component';
+  const routes: Routes = [
+  {
+    path: '', component: HomeComponent,
+  },
+  { path: 'how-it-works', component: HowItWorksComponent },
+  { path: 'pricing', component: PricingComponent },
   { path: 'about', component: AboutComponent },
   { path: 'cats', component: CatsComponent },
   { path: 'register', component: RegisterComponent },
@@ -27,8 +32,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes, { enableTracing: true } // For debugging purposes only
+  )],
+  exports: [RouterModule]
 })
 
 export class RoutingModule {}
