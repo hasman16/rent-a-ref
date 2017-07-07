@@ -1,12 +1,15 @@
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
 
-import User from '../models/user';
+import User from '../models';
 import BaseCtrl from './base';
 
 export default class UserCtrl extends BaseCtrl {
   model = User;
+  login = () =>{
 
+  }
+/*
   login = (req, res) => {
     this.model.findOne({ email: req.body.email }, (err, user) => {
       if (!user) { return res.sendStatus(403); }
@@ -17,5 +20,5 @@ export default class UserCtrl extends BaseCtrl {
       });
     });
   };
-
+*/
 }
