@@ -11,7 +11,7 @@ const configuration = config[serverName];
 const database = configuration.database;
 
 //connect to database using sequelize
-const sequelize = new Sequelize(
+export const sequelize = new Sequelize(
     database.name, database.user,
     database.password,
     database.settings
@@ -23,8 +23,8 @@ models.forEach(function(model) {
 });
 
 (function(m) {
-    module.exports.cat = sequelize.models.cat;
-    module.exports.user = sequelize.models.user;
+    module.exports.Cat = sequelize.models.cat;
+    module.exports.User = sequelize.models.user;
 })(module.exports);
 
 console.log('=========== Database is:', serverName);
@@ -32,4 +32,4 @@ console.log('=========== Database is:', serverName);
 //sequelize.sync();
 
 //Export sequelize
-export default sequelize;
+//export sequelize;

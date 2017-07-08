@@ -30,7 +30,7 @@ userSchema.set('toJSON', {
   }
 });
 */
-const User = function(sequelize, DataTypes) {
+export default function(sequelize, DataTypes) {
     return sequelize.define('user', {
         username: DataTypes.STRING(64),
         email: {
@@ -46,5 +46,3 @@ const User = function(sequelize, DataTypes) {
         underscored: true //use underscore instead of camelCase.
     });
 };
-
-export default User;
