@@ -14,7 +14,7 @@ var users = [{
   }];
 
 function insertUser(User) {
-  console.log('Attempting to create users'); 
+  console.log('Attempting to create users');
 
   users.forEach(function(user) {
     User.findOne({

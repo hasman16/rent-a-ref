@@ -2,8 +2,10 @@ import config from '../config/index';
 import Sequelize from 'sequelize';
 
 var models = [
-    'Person',
-    'User',
+  'Game',
+  'Person',
+  'Sport',
+  'User',
 ];
 
 const serverName = process.env.serverName || 'test';
@@ -12,19 +14,21 @@ const database = configuration.database;
 
 //connect to database using sequelize
 export const sequelize = new Sequelize(
-    database.name, database.user,
-    database.password,
-    database.settings
+  database.name, database.user,
+  database.password,
+  database.settings
 );
 
 //Export models
 models.forEach(function(model) {
-    module.exports[model] = sequelize.import(__dirname + '/' + model);
+  module.exports[model] = sequelize.import(__dirname + '/' + model);
 });
 
 (function(m) {
-    module.exports.Person = sequelize.models.person;
-    module.exports.User = sequelize.models.user;
+  module.exports.Game = sequelize.models.game;
+  module.exports.Person = sequelize.models.person;
+  module.exports.Sport = sequelize.models.sport;
+  module.exports.User = sequelize.models.user;
 })(module.exports);
 
 console.log('=========== Database is:', serverName);

@@ -32,7 +32,6 @@ userSchema.set('toJSON', {
 */
 export default function(sequelize, DataTypes) {
     return sequelize.define('user', {
-        username: DataTypes.STRING(64),
         email: {
             type: DataTypes.STRING(64),
             validate: {
