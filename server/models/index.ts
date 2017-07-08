@@ -2,7 +2,7 @@ import config from '../config/index';
 import Sequelize from 'sequelize';
 
 var models = [
-    'Cat',
+    'Person',
     'User',
 ];
 
@@ -23,7 +23,7 @@ models.forEach(function(model) {
 });
 
 (function(m) {
-    module.exports.Cat = sequelize.models.cat;
+    module.exports.Person = sequelize.models.person;
     module.exports.User = sequelize.models.user;
 })(module.exports);
 

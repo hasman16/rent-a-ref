@@ -28,16 +28,16 @@ export default class UserCtrl extends BaseCtrl{
       }).then(function(newUser) {
           var token = null;
           if (newUser) {
-            console.log('try token:', process.env.JWT_SECRET);
-              token = jwt.sign(user, process.env.JWT_SECRET, {
+            console.log('try token:', process.env.SECRET_TOKEN);
+            /*  token = jwt.sign(user, process.env.SECRET_TOKEN, {
                   expiredsIn: 1440 * 60
               });
-              console.log('got token');
+*/
               res.status(200).json({
                   success: true,
                   message: 'Authorization success',
                   token: token,
-                  accessLevel: 1
+                  accessLevel: newUser.authorization
               });
 
           } else {
