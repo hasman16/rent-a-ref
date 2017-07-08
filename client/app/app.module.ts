@@ -20,6 +20,8 @@ import { HeaderComponent } from './header/header.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
+import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
+import { PricingComponent } from './home/pricing/pricing.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     DropdownDirective,
     HomeComponent,
-    FooterComponent
+    FooterComponent,
+    HowItWorksComponent,
+    PricingComponent
   ],
   imports: [
     RoutingModule,
@@ -49,6 +53,7 @@ import { FooterComponent } from './footer/footer.component';
     UserService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  // Add bootstrap
   bootstrap: [AppComponent]
 })
 
