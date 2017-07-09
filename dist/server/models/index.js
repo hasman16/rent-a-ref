@@ -8,8 +8,7 @@ var models = [
     'Sport',
     'User',
 ];
-var serverName = 'heroku';
-process.env.serverName || 'test';
+var serverName = process.env.serverName || 'test';
 var configuration = index_1.default[serverName];
 var database = configuration.database;
 //connect to database using sequelize
