@@ -12,12 +12,7 @@ var sequelizeSettings = {
 var heroku = {
   host: 'ec2-54-221-254-72.compute-1.amazonaws.com',
   dialect: 'postgres',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-  logging: false
+  port: 5432,
 };
 
 export default {

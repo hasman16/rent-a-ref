@@ -8,11 +8,13 @@ var models = [
     'Sport',
     'User',
 ];
-var serverName = process.env.serverName || 'test';
+var serverName = 'heroku';
+process.env.serverName || 'test';
 var configuration = index_1.default[serverName];
 var database = configuration.database;
 //connect to database using sequelize
 exports.sequelize = new sequelize_1.default(database.name, database.user, database.password, database.settings);
+console.log('setting:', database.settings);
 //Export models
 models.forEach(function (model) {
     module.exports[model] = exports.sequelize.import(__dirname + '/' + model);

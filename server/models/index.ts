@@ -18,7 +18,7 @@ export const sequelize = new Sequelize(
   database.password,
   database.settings
 );
-
+console.log('setting:', database.settings);
 //Export models
 models.forEach(function(model) {
   module.exports[model] = sequelize.import(__dirname + '/' + model);
