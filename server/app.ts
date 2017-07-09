@@ -23,12 +23,12 @@ app.use((req, res, next) => {
 
 app.use(morgan('dev'));
 sequelize.sync();
-//console.log('sequelize:', sequelize);
+// console.log('sequelize:', sequelize);
 setRoutes(app);
 
 process.on('uncaughtException', function(err) {
     console.log(err);
-    //res.render('404');
+    // res.render('404');
 });
 
 app.listen(app.get('port'), function() {
