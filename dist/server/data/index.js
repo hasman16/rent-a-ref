@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var bcryptService = require("../util/bcryptService");
 var sequelize = null;
 var User = null;
 var users = [{
@@ -14,17 +15,20 @@ var users = [{
 function insertUser(User) {
     console.log('Attempting to create users');
     users.forEach(function (user) {
-        User.findOne({
-            where: { email: user.email, password: user.password }
-        }).then(function (newUser) {
+        bcryptService.hash(user.password)
+            .then(function (password) {
+            user.password = password;
+            console.log('password:', user.email, password);
+            return User.findOne({
+                where: { email: user.email, password: user.password }
+            });
+        })
+            .then(function (newUser) {
             if (!newUser) {
-                User.create(user)
-                    .catch(function (error) {
-                    throw (error);
-                });
-                ;
+                return User.create(user);
             }
-        }).catch(function (error) {
+        })
+            .catch(function (error) {
             throw (error);
         });
     });

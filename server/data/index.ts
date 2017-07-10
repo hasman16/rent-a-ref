@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcryptjs';
+import * as bcryptService from '../util/bcryptService';
 
 var sequelize = null;
 var User = null;
@@ -17,18 +17,23 @@ function insertUser(User) {
   console.log('Attempting to create users');
 
   users.forEach(function(user) {
-    User.findOne({
-      where: { email: user.email, password: user.password }
-    }).then((newUser) => {
+    bcryptService.hash(user.password)
+    .then(password=> {
+      user.password = password;
+      console.log('password:', user.email, password);
+      return User.findOne({
+        where: { email: user.email, password: user.password }
+      });
+    })
+    .then((newUser) => {
       if (!newUser) {
-        User.create(user)
-          .catch((error) => {
-            throw (error);
-          });;
+        return User.create(user);
       }
-    }).catch((error) => {
-      throw (error);
+    })
+    .catch((error) => {
+      throw(error);
     });
+
   });
 }
 
