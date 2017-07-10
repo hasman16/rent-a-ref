@@ -12,6 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var jwt = require("jsonwebtoken");
 var base_1 = require("./base");
+var bcryptService = require("../util/bcryptService");
 var UserCtrl = (function (_super) {
     __extends(UserCtrl, _super);
     function UserCtrl(User) {
@@ -29,27 +30,39 @@ var UserCtrl = (function (_super) {
                 });
             }
             _this.model.findOne({
-                where: { email: user.email, password: user.password }
+                where: { email: user.email }
             }).then(function (newUser) {
                 var token = null;
                 if (newUser) {
-                    token = jwt.sign(user, process.env.SECRET_TOKEN, {
-                        expiresIn: 1440 * 60
-                    });
-                    res.status(200).json({
-                        success: true,
-                        message: 'Authorization success',
-                        token: token,
-                        accessLevel: newUser.authorization
+                    console.log('hash:', user.password, newUser.password);
+                    return bcryptService.compare(user.password, newUser.password)
+                        .then(function (result) {
+                        console.log('result is:', result);
+                        if (result) {
+                            token = jwt.sign(user, process.env.SECRET_TOKEN, {
+                                expiresIn: 1440 * 60
+                            });
+                            res.status(200).json({
+                                success: true,
+                                message: 'Authorization success',
+                                token: token,
+                                accessLevel: newUser.authorization
+                            });
+                        }
+                        else {
+                            authorizationFailed();
+                        }
                     });
                 }
                 else {
                     authorizationFailed();
                 }
-            }).catch(function (err) {
+            })
+                .catch(function (error) {
+                console.log('error:', error);
                 res.status(500).json({
                     success: false,
-                    message: 'Error occurred:' + err
+                    message: 'Error occurred'
                 });
             });
         };
