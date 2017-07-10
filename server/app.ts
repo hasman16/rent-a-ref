@@ -2,12 +2,15 @@ import * as bodyParser from 'body-parser';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as morgan from 'morgan';
-import sequelize from './models';
 import * as path from 'path';
 
+import * as models from './models';
+import importData from './data';
 import setRoutes from './routes';
 
 const app = express();
+const sequelize = models.sequelize;
+
 dotenv.load({ path: '.env' });
 app.set('port', (process.env.PORT || 3000));
 
@@ -22,9 +25,15 @@ app.use((req, res, next) => {
 });
 
 app.use(morgan('dev'));
+<<<<<<< ours
 sequelize.sync();
 // console.log('sequelize:', sequelize);
 setRoutes(app);
+=======
+//sequelize.sync();
+importData(models, true); //set to false to bypass importing data
+setRoutes(app, models);
+>>>>>>> theirs
 
 process.on('uncaughtException', function(err) {
     console.log(err);

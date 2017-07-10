@@ -11,14 +11,14 @@ export class AuthService {
 
   jwtHelper: JwtHelper = new JwtHelper();
 
-  currentUser = { _id: '', username: '', role: '' };
+  currentUser = { username: '', role: '' };
 
   constructor(private userService: UserService,
-              private router: Router) {
-    const token = localStorage.getItem('token');
+    private router: Router) {
+    const token = null; //localStorage.getItem('token');
     if (token) {
       const decodedUser = this.decodeUserFromToken(token);
-      this.setCurrentUser(decodedUser);
+      //this.setCurrentUser(decodedUser);
     }
   }
 
@@ -27,7 +27,7 @@ export class AuthService {
       res => {
         localStorage.setItem('token', res.token);
         const decodedUser = this.decodeUserFromToken(res.token);
-        this.setCurrentUser(decodedUser);
+        this.setCurrentUser();
         return this.loggedIn;
       }
     );
@@ -37,7 +37,7 @@ export class AuthService {
     localStorage.removeItem('token');
     this.loggedIn = false;
     this.isAdmin = false;
-    this.currentUser = { _id: '', username: '', role: '' };
+    this.currentUser = { username: '', role: '' };
     this.router.navigate(['/']);
   }
 
@@ -45,13 +45,12 @@ export class AuthService {
     return this.jwtHelper.decodeToken(token).user;
   }
 
-  setCurrentUser(decodedUser) {
+  setCurrentUser() {
     this.loggedIn = true;
-    this.currentUser._id = decodedUser._id;
-    this.currentUser.username = decodedUser.username;
-    this.currentUser.role = decodedUser.role;
-    decodedUser.role === 'admin' ? this.isAdmin = true : this.isAdmin = false;
-    delete decodedUser.role;
+    this.currentUser.username = 'Admin';
+    this.currentUser.role = 'no role';
+    //decodedUser.role === 'admin' ? this.isAdmin = true : this.isAdmin = false;
+    //delete decodedUser.role;
   }
 
 }

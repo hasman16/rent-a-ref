@@ -1,5 +1,6 @@
+"use strict";
 //import * as bcrypt from 'bcryptjs';
-
+Object.defineProperty(exports, "__esModule", { value: true });
 // Before saving the user, hash the password
 /*
 userSchema.pre('save', function(next) {
@@ -30,7 +31,7 @@ userSchema.set('toJSON', {
   }
 });
 */
-export default function(sequelize, DataTypes) {
+function default_1(sequelize, DataTypes) {
     return sequelize.define('user', {
         email: {
             type: DataTypes.STRING(64),
@@ -41,7 +42,10 @@ export default function(sequelize, DataTypes) {
         password: DataTypes.STRING,
         authorization: DataTypes.INTEGER
     }, {
-        paranoid: true, //mark as deleted but do not delete
+        paranoid: true,
         underscored: true //use underscore instead of camelCase.
     });
-};
+}
+exports.default = default_1;
+;
+//# sourceMappingURL=User.js.map
