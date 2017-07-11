@@ -1,7 +1,12 @@
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
 import BaseCtrl from './base';
-import * as bcryptService from '../util/bcryptService';
+import * as bcrypt from 'bcryptjs';
+
+
+function hash (value: string) {
+  return bcrypt.hash(value, 10);
+};
 
 export default class UserCtrl extends BaseCtrl {
   model = null;
@@ -30,7 +35,7 @@ export default class UserCtrl extends BaseCtrl {
       var token = null;
       if (newUser) {
         console.log('hash:', user.password, newUser.password);
-        return bcryptService.compare(user.password, newUser.password)
+        return bcrypt.compare(user.password, newUser.password)
           .then(result => {
             console.log('result is:', result);
             if (result) {

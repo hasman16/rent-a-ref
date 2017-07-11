@@ -25,10 +25,23 @@ models.forEach(function(model) {
 });
 
 (function(m) {
-  module.exports.Game = sequelize.models.game;
-  module.exports.Person = sequelize.models.person;
-  module.exports.Sport = sequelize.models.sport;
-  module.exports.User = sequelize.models.user;
+  m.Person.belongsTo(m.User);
+
+  m.Person.belongsToMany(m.Sport, {
+      through: 'referee'
+  });
+
+  m.Person.belongsToMany(m.Game, {
+      through: 'match'
+  });
+
+  m.Sport.belongsToMany(m.Game, {
+      through: 'match'
+  });
+
+  module.exports.Referee = sequelize.models.referee;
+  module.exports.Match = sequelize.models.match;
+
 })(module.exports);
 
 console.log('=========== Database is:', serverName);
