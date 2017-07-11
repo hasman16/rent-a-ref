@@ -22,7 +22,10 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
 import { PricingComponent } from './home/pricing/pricing.component';
-
+import { ProfileComponent } from './account/profile/profile.component';
+import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
+// import { CSSCarouselComponent } from './shared/carousel.component';
+// import { CarouselComponent } from './carousel/carousel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +42,11 @@ import { PricingComponent } from './home/pricing/pricing.component';
     HomeComponent,
     FooterComponent,
     HowItWorksComponent,
-    PricingComponent
+    PricingComponent,
+    ProfileComponent,
+    EditProfileComponent
+    // CSSCarouselComponent,
+    // CarouselComponent
   ],
   imports: [
     RoutingModule,

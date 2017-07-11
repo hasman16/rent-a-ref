@@ -14,6 +14,10 @@ import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
 import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
 import { PricingComponent } from './home/pricing/pricing.component';
+import { ProfileComponent } from './account/profile/profile.component';
+import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
+
+
   const routes: Routes = [
   {
     path: '', component: HomeComponent,
@@ -26,6 +30,8 @@ import { PricingComponent } from './home/pricing/pricing.component';
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'account', component: AccountComponent, canActivate: [AuthGuardLogin] },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'edit-profile', component: EditProfileComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin] },
   { path: 'notfound', component: NotFoundComponent },
   { path: '**', redirectTo: '/notfound' },

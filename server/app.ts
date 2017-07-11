@@ -25,13 +25,14 @@ app.use((req, res, next) => {
 });
 
 app.use(morgan('dev'));
-//sequelize.sync();
+
 importData(models, true); //set to false to bypass importing data
 setRoutes(app, models);
 
+
 process.on('uncaughtException', function(err) {
     console.log(err);
-    //res.render('404');
+    // res.render('404');
 });
 
 app.listen(app.get('port'), function() {
