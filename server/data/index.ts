@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcryptjs';
 
 var sequelize = null;
-var User = null;
+
 //1 - admin1
 //2 - admin2
 //3 - organizer
@@ -18,38 +18,80 @@ var users = [{
     authorization: 2
   },
   {
-    email: 'org1@rentaref.com',
+    email: 'admin3@rentaref.com',
+    password: 'admin3',
+    authorization: 2
+  },
+  {
+    email: 'org11@rentaref.com',
     password: 'organ11',
     authorization: 3
   }, {
-      email: 'org22@rentaref.com',
-      password: 'organ22',
-      authorization: 4
-    },
+    email: 'org22@rentaref.com',
+    password: 'organ22',
+    authorization: 4
+  },
   {
-      email: 'ref1@rentaref.com',
-      password: 'referee1',
-      authorization: 5
-    }
+    email: 'org33@rentaref.com',
+    password: 'organ33',
+    authorization: 4
+  },
+  {
+    email: 'ref1@rentaref.com',
+    password: 'referee1',
+    authorization: 5
+  }
 ];
 var people = [
   {
-    firstname: "Michael",
-    lastname: "Test"
+    firstname: "Rod",
+    lastname: "Test",
+    email: "admin1@rentaref.com"
+  },
+  {
+    firstname: "Jane",
+    lastname: "Test",
+    email: "admin2@rentaref.com"
+  },
+  {
+    firstname: "Bob",
+    lastname: "Test",
+    email: "admin3@rentaref.com"
+  },
+  {
+    firstname: "Freda",
+    lastname: "Test",
+    email: 'org11@rentaref.com'
+  },
+  {
+    firstname: "Tom",
+    lastname: "Test",
+    email: 'org22@rentaref.com',
+  },
+  {
+    firstname: "Dick",
+    lastname: "Test",
+    email: 'org33@rentaref.com'
+  },
+  {
+    firstname: "Harry",
+    lastname: "Test",
+    email: 'ref1@rentaref.com',
   }
 ];
+
 var sports = [{
   name: "Soccer",
   duration: 90,
   periods: 2,
   referees: 3
 },
-{
-  name: "Rugby",
-  duration: 80,
-  periods: 2,
-  referees: 3
-}];
+  {
+    name: "Rugby",
+    duration: 80,
+    periods: 2,
+    referees: 3
+  }];
 
 function insertSports(Sport) {
   sports.forEach(function(sport) {
@@ -57,31 +99,43 @@ function insertSports(Sport) {
   });
 }
 
-function insertPeople(Person) {
-  people.forEach(function(person) {
-    Person.create(person);
+function insertPeople(User, Person) {
+  var person = people.find(function(person) {
+    return person.email == User.email;
   });
+
+  if (person) {
+    person["user_id"] = User.id;
+    return Person.create(person);
+  }
 }
 
-function insertUser(User) {
+function insertUser(models) {
+  var User = models.User;
+  var Person = models.Person;
   console.log('Attempting to create users');
 
   users.forEach(function(user) {
     bcrypt.hash(user.password, 10)
-    .then(password=> {
-      user.password = password;
-      return User.findOne({
-        where: { email: user.email, password: user.password }
+      .then(password => {
+        user.password = password;
+        return User.findOne({
+          where: { email: user.email, password: user.password }
+        });
+      })
+      .then((newUser) => {
+        if (!newUser) {
+          return User.create(user);
+        }
+      })
+      .then(user => {
+        if (user) {
+          return insertPeople(user, Person);
+        }
+      })
+      .catch((error) => {
+        throw (error);
       });
-    })
-    .then((newUser) => {
-      if (!newUser) {
-        return User.create(user);
-      }
-    })
-    .catch((error) => {
-      throw(error);
-    });
 
   });
 }
@@ -93,9 +147,8 @@ function insertData(models, doInsert: Boolean = false) {
     sequelize.sync({
       force: true
     })
-      .then(() => insertUser(models.User))
+      .then(() => insertUser(models))
       .then(() => insertSports(models.Sport))
-      .then(() => insertSports(models.Person))
       .catch((error) => {
         throw Error(error);
       });
