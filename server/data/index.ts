@@ -113,7 +113,7 @@ function insertPeople(User, Person) {
 function insertUser(models) {
   var User = models.User;
   var Person = models.Person;
-  console.log('Attempting to create users');
+  console.log('Attempting to create users asdfasd');
 
   users.forEach(function(user) {
     bcrypt.hash(user.password, 10)
