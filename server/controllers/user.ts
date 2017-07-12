@@ -7,7 +7,7 @@ import * as bcrypt from 'bcryptjs';
 function hash (value: string) {
   return bcrypt.hash(value, 10);
 };
- bb
+
 export default class UserCtrl extends BaseCtrl {
   model = null;
 
@@ -21,7 +21,9 @@ export default class UserCtrl extends BaseCtrl {
       email: req.body.email,
       password: req.body.password
     };
-
+    function testing() {
+      console.log('testing');
+    }
     function authorizationFailed() {
       res.status(403).json({
         success: false,
