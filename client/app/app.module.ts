@@ -24,8 +24,14 @@ import { HowItWorksComponent } from './home/how-it-works/how-it-works.component'
 import { PricingComponent } from './home/pricing/pricing.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
-// import { CSSCarouselComponent } from './shared/carousel.component';
-// import { CarouselComponent } from './carousel/carousel.component';
+import { FooterTabletComponent } from './footer/footer-tablet/footer-tablet.component';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,13 +50,17 @@ import { EditProfileComponent } from './account/profile/edit-profile/edit-profil
     HowItWorksComponent,
     PricingComponent,
     ProfileComponent,
-    EditProfileComponent
-    // CSSCarouselComponent,
-    // CarouselComponent
+    EditProfileComponent,
+    FooterTabletComponent,
+    CarouselItemComponent,
+    CarouselComponent
   ],
   imports: [
     RoutingModule,
-    SharedModule
+    SharedModule,
+    BrowserModule,
+    FormsModule,
+    HttpModule
   ],
   providers: [
     AuthService,

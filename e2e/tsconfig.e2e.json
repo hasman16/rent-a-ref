@@ -1,12 +1,20 @@
 {
   "extends": "../tsconfig.json",
+  "compileOnSave": false,
   "compilerOptions": {
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "outDir": "../out-tsc/e2e",
     "module": "commonjs",
+    "moduleResolution": "node",
     "target": "es5",
     "types": [
       "jasmine",
       "node"
+    ],
+    "typeRoots": [
+      "../node_modules/@types"
     ]
   }
 }

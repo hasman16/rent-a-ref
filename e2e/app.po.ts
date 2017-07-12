@@ -1,4 +1,4 @@
-import { $$, browser } from 'protractor';
+import { $$, browser, element, by } from 'protractor';
 
 export class Angular2FullStackPage {
   navigateTo() {
@@ -7,6 +7,10 @@ export class Angular2FullStackPage {
 
   getNavbarElement(n) {
     return $$('app-root a').get(n).getText();
+  }
+
+  getParagraphText() {
+    return element(by.css('app-root h1')).getText();
   }
 
 }

@@ -1,3 +1,4 @@
+<!--
 <style media="screen">
   body {
     /*margin: 0;
@@ -62,16 +63,25 @@
 </style>
 
 <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-
-
+-->
 
 <!--  Video is muted & autoplays, placed after major DOM elements for performance & has an image fallback  -->
 <!--<video autoplay loop id="video-background" muted plays-inline>
   <source src="assets/images/background.mp4" type="video/mp4">
 </video>-->
-
+<app-carousel [delay]="2000">
+  <app-carousel-item>
+    <img src="https://unsplash.it/200" alt="">
+  </app-carousel-item>
+  <app-carousel-item>
+    <img src="https://unsplash.it/201" alt="">
+  </app-carousel-item>
+  <app-carousel-item>
+    <img src="https://unsplash.it/202" alt="">
+  </app-carousel-item>
+</app-carousel>
 <p>
-  home works!
+  home works! now Ahmadou
   
 </p>
 <div>
@@ -79,4 +89,3 @@
 <span style="text-align: right"><img src="assets/images/red_ref.jpg" class="img-fluid img-responsive" alt="Responsive image" width=15% max-width=100% align="right"> </span>
 
 </div>
-<app-footer></app-footer>

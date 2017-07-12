@@ -1,19 +1,3 @@
-<script>
-  $scope.includeDesktopTemplate = false;
-  $scope.includeMobileTemplate = false;
-  var screenWidth = $window.innerWidth;
-
-  if (screenWidth < 700) {
-    $scope.includeMobileTemplate = true;
-  } else {
-    $scope.includeDesktopTemplate = true;
-  }
-</script>
-
-<body ng-app="App">
-  <p ng-if="includeMobileTemplate">Mobile</p>
-  <p ng-if="includeDesktopTemplate">Desktop</p>
-</body>
 <!--footer start from here-->
 <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 <footer>
@@ -22,19 +6,26 @@
       <div class="col-md-4 col-sm-6 footerleft ">
         <div class="logofooter"> <img src="assets/images/reficon1.png" class="img-fluid img-responsive" width=auto alt="Rent A Ref"><img src="assets/images/reftext.png" class="img-fluid img-responsive" alt="Responsive image" width=50% max-width=100% height=auto display="block"></div>
         <p>Your most trusted gateway to modern sports management. <b>1 STOP</b> to events organization and Referee or Umpires assignment </p>
-        <p><i class="fa fa-map-pin"></i> 21622 Margurite Parkway, Mission Viejo, CA 92692</p>
-        <p><i class="fa fa-phone"></i> Phone (USA) : +1 949 201 3340</p>
-        <p><i class="fa fa-envelope"></i> E-mail : hasman16@gmail.com</p>
+        <p><i class="fa fa-map-pin"></i> P.O Box: , Corona, CA</p>
+        <p><i class="fa fa-phone"></i> Phone (USA) : +1 (949)351-5674</p>
+        <p><i class="fa fa-envelope"></i> E-mail : info@rentaref.com</p>
 
       </div>
-      <div class="col-md-2 col-sm-6 paddingtop-bottom">
+      <div class="col-md-3 col-sm-6 paddingtop-bottom">
         <h6 class="heading7">GENERAL LINKS</h6>
-        <ul class="footer-ul">
-          <li><a href="#"> Career</a></li>
-          <li><a href="#"> Privacy Policy</a></li>
-          <li><a href="#"> Terms & Conditions</a></li>        
-          <li><a href="#"> Case Studies</a></li>
-          <li><a href="#"> Frequently Ask Questions</a></li>
+        <ul class="footer-ul">          
+            <li><a routerLink="/career" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
+        <i class="fa fa-briefcase"></i><span style="color: #ffffff"> Career</span>
+        </a></li>
+            <li><a routerLink="/privacy-policy" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
+        <i class="fa fa-file-text-o"></i><span style="color: #ffffff"> Privacy Policy</span>
+        </a></li>
+            <li><a routerLink="/term-conditions" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
+        <i class="fa fa-eye"></i><span style="color: #ffffff"> Terms & Conditions</span>
+        </a></li>
+            <li><a routerLink="/faq" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
+        <i class="fa fa-question-circle-o"></i><span style="color: #ffffff"> Frequently Ask Questions</span>
+        </a></li>      
         </ul>
       </div>
       <div class="col-md-3 col-sm-6 paddingtop-bottom">
@@ -55,10 +46,11 @@
       </div>
       <div class="social-icons">
         <ul class="nomargin">
-          <a href="https://www.facebook.com/ndoung"><i class="fa fa-facebook-square fa-3x social-fb" id="social"></i></a>
-          <a href="https://twitter.com/hasman16"><i class="fa fa-twitter-square fa-3x social-tw" id="social"></i></a>
-          <a href="https://plus.google.com/u/0/+AhmadouNdoung"><i class="fa fa-google-plus-square fa-3x social-gp" id="social"></i></a>
-          <a href="mailto:hasman16@gmail.com"><i class="fa fa-envelope-square fa-3x social-em" id="social"></i></a>
+          <a href="https://www.facebook.com/rentaref"><i class="fa fa-facebook-square fa-3x social-fb" id="social"></i></a>
+          <a href="https://twitter.com/rentaref"><i class="fa fa-twitter-square fa-3x social-tw" id="social"></i></a>
+          <a href="https://www.instagram.com/rentaref/"><i class="fa fa-instagram fa-3x social-gp" id="social"></i></a>
+          <a href="https://www.linkedin.com/company-beta/6407927/"><i class="fa fa-linkedin-square fa-3x social-gp" id="social"></i></a>
+          <a href="mailto:info@rentaref.com"><i class="fa fa-envelope-square fa-3x social-em" id="social"></i></a>
 
         </ul>
       </div>
@@ -83,10 +75,7 @@
         <li><a routerLink="/blog" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
         <i class="fa fa-rss-square"></i><span style="color: #ffffff"> Blog</span>
         </a></li>
-        <li><a routerLink="/faq" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-        <i class="fa fa-question-circle-o"></i><span style="color: #ffffff"> Faq's</span>
-        </a></li>
-        <li><a routerLink="/contact" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
+               <li><a routerLink="/contact" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
         <i class="fa fa-envelope-o"></i><span style="color: #ffffff"> Contact Us</span>
         </a></li>
         <li><a routerLink="/sitemap" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
