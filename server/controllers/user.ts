@@ -7,7 +7,7 @@ import * as bcrypt from 'bcryptjs';
 function hash (value: string) {
   return bcrypt.hash(value, 10);
 };
-
+ bb
 export default class UserCtrl extends BaseCtrl {
   model = null;
 
