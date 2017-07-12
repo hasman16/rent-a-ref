@@ -8,7 +8,7 @@ var models = [
   'User',
 ];
 
-const serverName = "heroku";//process.env.serverName || 'test';
+const serverName = "heroku";process.env.serverName || 'test';
 const configuration = config[serverName];
 const database = configuration.database;
 
