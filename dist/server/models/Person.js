@@ -12,7 +12,8 @@ var Person = function (sequelize, DataTypes) {
             }
         },
         dob: DataTypes.DATE,
-        authorization: DataTypes.INTEGER
+        authorization: DataTypes.INTEGER,
+        authorized_by: DataTypes.INTEGER
     }, {
         paranoid: true,
         underscored: true //use underscore instead of camelCase.

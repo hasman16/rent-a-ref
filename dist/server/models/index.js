@@ -4,12 +4,12 @@ var index_1 = require("../config/index");
 var sequelize_1 = require("sequelize");
 var models = [
     'Game',
+    'Organization',
     'Person',
     'Sport',
     'User',
 ];
-var serverName = "heroku";
-process.env.serverName || 'test';
+var serverName = process.env.serverName || 'test';
 var configuration = index_1.default[serverName];
 var database = configuration.database;
 //connect to database using sequelize
@@ -22,6 +22,10 @@ models.forEach(function (model) {
     m.Person.belongsTo(m.User);
     m.Person.belongsToMany(m.Sport, {
         through: 'referee'
+    });
+    m.Organization.belongsTo(m.Person);
+    m.Person.belongsToMany(m.Organization, {
+        through: 'team'
     });
     m.Person.belongsToMany(m.Game, {
         through: 'match'

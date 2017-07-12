@@ -3,6 +3,7 @@ import Sequelize from 'sequelize';
 
 var models = [
   'Game',
+  'Organization',
   'Person',
   'Sport',
   'User',
@@ -29,6 +30,11 @@ models.forEach(function(model) {
 
   m.Person.belongsToMany(m.Sport, {
       through: 'referee'
+  });
+
+  m.Organization.belongsTo(m.Person);
+  m.Person.belongsToMany(m.Organization, {
+      through: 'team'
   });
 
   m.Person.belongsToMany(m.Game, {

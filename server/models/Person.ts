@@ -11,7 +11,8 @@ const Person = function(sequelize, DataTypes) {
           }
       },
       dob: DataTypes.DATE,
-      authorization: DataTypes.INTEGER
+      authorization: DataTypes.INTEGER,
+      authorized_by: DataTypes.INTEGER
   }, {
       paranoid: true, //mark as deleted but do not delete
       underscored: true //use underscore instead of camelCase.

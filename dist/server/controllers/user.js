@@ -13,29 +13,66 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jwt = require("jsonwebtoken");
 var base_1 = require("./base");
 var bcrypt = require("bcryptjs");
-function hash(value) {
-    return bcrypt.hash(value, 10);
-}
-;
+var responseService_1 = require("./../util/responseService");
 var UserCtrl = (function (_super) {
     __extends(UserCtrl, _super);
     function UserCtrl(User) {
         var _this = _super.call(this) || this;
         _this.model = null;
+        // Get all
+        _this.getAll = function (req, res) {
+            console.log('get all users');
+            _this.model.findAll({
+                attributes: ['id', 'email', 'authorization']
+            })
+                .then(function (results) { return responseService_1.default.success(res, results); })
+                .catch(function (error) { return responseService_1.default.exception(res, error); });
+        };
+        _this.get = function (req, res) {
+            console.log('get user');
+            _this.model.findAll({
+                where: {
+                    id: req.params.id
+                },
+                attributes: ['id', 'email', 'authorization']
+            })
+                .then(function (results) { return responseService_1.default.success(res, results); })
+                .catch(function (error) { return responseService_1.default.exception(res, error); });
+        };
+        _this.create = function (req, res) {
+            var user = new Object(req.body);
+            _this.model.create(user)
+                .then(function (newUser) {
+                var user = {
+                    id: newUser.id,
+                    email: newUser.email,
+                    authorization: newUser.authorization
+                };
+                responseService_1.default.success(res, user);
+            })
+                .catch(function (error) { return responseService_1.default.exception(res, error); });
+        };
+        _this.update = function (req, res) {
+            var user = new Object(req.body);
+            _this.model.update(user, {
+                where: {
+                    id: req.params.id
+                }
+            })
+                .then(function (result) { return responseService_1.default.success(res, "User updated"); })
+                .catch(function (error) { return responseService_1.default.exception(res, error); });
+        };
+        _this.delete = function (req, res) {
+            var user = new Object(req.body);
+            _this.model.destroy(user)
+                .then(function (result) { return responseService_1.default.success(res, "User deleted"); })
+                .catch(function (error) { return responseService_1.default.exception(res, error); });
+        };
         _this.login = function (req, res) {
             var user = {
                 email: req.body.email,
                 password: req.body.password
             };
-            function testing() {
-                console.log('testing');
-            }
-            function authorizationFailed() {
-                res.status(403).json({
-                    success: false,
-                    message: 'Authorization failed'
-                });
-            }
             _this.model.findOne({
                 where: { email: user.email }
             }).then(function (newUser) {
@@ -43,12 +80,11 @@ var UserCtrl = (function (_super) {
                 if (newUser) {
                     return bcrypt.compare(user.password, newUser.password)
                         .then(function (result) {
-                        console.log('result is:', result);
                         if (result) {
                             token = jwt.sign(user, process.env.SECRET_TOKEN, {
                                 expiresIn: 1440 * 60
                             });
-                            res.status(200).json({
+                            responseService_1.default.success(res, {
                                 success: true,
                                 message: 'Authorization success',
                                 token: token,
@@ -56,21 +92,15 @@ var UserCtrl = (function (_super) {
                             });
                         }
                         else {
-                            authorizationFailed();
+                            responseService_1.default.failure(res, 'Authorization failed');
                         }
                     });
                 }
                 else {
-                    authorizationFailed();
+                    responseService_1.default.failure(res, 'Authorization failed');
                 }
             })
-                .catch(function (error) {
-                console.log('error:', error);
-                res.status(500).json({
-                    success: false,
-                    message: 'Error occurred'
-                });
-            });
+                .catch(function (error) { return responseService_1.default.exception(res, error); });
         };
         _this.logout = function (req, res) {
             var user = new Object(req.body);
