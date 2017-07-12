@@ -36,7 +36,6 @@ export default class UserCtrl extends BaseCtrl {
     }).then(function(newUser) {
       var token = null;
       if (newUser) {
-
         return bcrypt.compare(user.password, newUser.password)
           .then(result => {
             console.log('result is:', result);
