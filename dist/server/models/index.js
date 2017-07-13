@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var dotenv = require("dotenv");
 var index_1 = require("../config/index");
 var sequelize_1 = require("sequelize");
+dotenv.load({ path: '.env' });
 var models = [
     'Game',
     'Organization',
@@ -9,11 +11,27 @@ var models = [
     'Sport',
     'User',
 ];
-var serverName = process.env.serverName || 'test';
-var configuration = index_1.default[serverName];
-var database = configuration.database;
-//connect to database using sequelize
-exports.sequelize = new sequelize_1.default(database.name, database.user, database.password, database.settings);
+console.log('secret:', process.env.SECRET_TOKEN, process.env.DATABASE_URL);
+function herokuSetup() {
+    console.log('=========== Database is: heroku');
+    return new sequelize_1.default(process.env.DATABASE_URL);
+}
+function localhostSetup() {
+    var serverName = process.env.serverName || 'test';
+    var configuration = index_1.default[serverName];
+    var database = configuration.database;
+    console.log('=========== Database is:', serverName);
+    //connect to database using sequelize
+    return new sequelize_1.default(database.name, database.user, database.password, database.settings);
+}
+var sqlize;
+if (process.env.DATABASE_URI) {
+    sqlize = herokuSetup();
+}
+else {
+    sqlize = localhostSetup();
+}
+exports.sequelize = sqlize;
 //Export models
 models.forEach(function (model) {
     module.exports[model] = exports.sequelize.import(__dirname + '/' + model);
@@ -36,7 +54,6 @@ models.forEach(function (model) {
     module.exports.Referee = exports.sequelize.models.referee;
     module.exports.Match = exports.sequelize.models.match;
 })(module.exports);
-console.log('=========== Database is:', serverName);
 //sequelize.sync();
 //Export sequelize
 //export sequelize;

@@ -64,7 +64,7 @@ export default function UserController(models) {
       email: req.body.email,
       password: req.body.password
     };
-
+    console.log('secret:', process.env.SECRET_TOKEN);
     User.findOne({
       where: { email: user.email }
     }).then(function(newUser) {
