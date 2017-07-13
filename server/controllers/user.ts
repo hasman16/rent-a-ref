@@ -1,30 +1,23 @@
-import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
-import BaseCtrl from './base';
 import * as bcrypt from 'bcryptjs';
 import ResponseService from './../util/responseService';
 
-export default class UserCtrl extends BaseCtrl {
-  model = null;
-
-  constructor(User: any) {
-    super();
-    this.model = User;
-  }
+export default function UserController(models) {
+  var User = models.User;
 
   // Get all
-  getAll = (req, res) => {
+  var getAll = (req, res) => {
     console.log('get all users');
-    this.model.findAll({
+    User.findAll({
       attributes: ['id', 'email', 'authorization']
     })
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
-  get = (req, res) => {
+  var getOne = (req, res) => {
     console.log('get user');
-    this.model.findAll({
+    User.findAll({
       where: {
         id: req.params.id
       },
@@ -34,9 +27,9 @@ export default class UserCtrl extends BaseCtrl {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  create = (req, res) => {
+  var create = (req, res) => {
     var user = new Object(req.body);
-    this.model.create(user)
+    User.create(user)
       .then(newUser => {
         var user = {
           id: newUser.id,
@@ -48,9 +41,9 @@ export default class UserCtrl extends BaseCtrl {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  update = (req, res) => {
+  var update = (req, res) => {
     var user = new Object(req.body);
-    this.model.update(user, {
+    User.update(user, {
       where: {
         id: req.params.id
       }
@@ -59,20 +52,20 @@ export default class UserCtrl extends BaseCtrl {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  delete = (req, res) => {
+  var deleteOne = (req, res) => {
     var user = new Object(req.body);
-    this.model.destroy(user)
+    User.destroy(user)
       .then(result => ResponseService.success(res, "User deleted"))
       .catch(error => ResponseService.exception(res, error));
   }
 
-  login = (req, res) => {
+  var login = (req, res) => {
     var user = {
       email: req.body.email,
       password: req.body.password
     };
 
-    this.model.findOne({
+    User.findOne({
       where: { email: user.email }
     }).then(function(newUser) {
       var token = null;
@@ -103,7 +96,17 @@ export default class UserCtrl extends BaseCtrl {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  logout = (req, res) => {
+  var logout = (req, res) => {
     var user = new Object(req.body);
+  }
+
+  return {
+    login: login,
+    logout: logout,
+    getAll: getAll,
+    getOne: getOne,
+    create: create,
+    update: update,
+    deleteOne: deleteOne
   }
 }

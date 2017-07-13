@@ -1,30 +1,31 @@
 import * as express from 'express';
-
-import PersonCtrl from './controllers/person';
-import UserCtrl from './controllers/user';
+import authentication from './util/authentication';
+import PersonController from './controllers/person';
+import userController from './controllers/user';
 
 export default function setRoutes(app, models) {
 
   const router = express.Router();
 
-  const personCtrl = new PersonCtrl(models.Person);
-  const userCtrl = new UserCtrl(models.User);
+  const personCtrl = PersonController(models);
+  const userCtrl = userController(models);
 
   // Cats
-  router.route('/person').get(personCtrl.getAll);
-  router.route('/person/count').get(personCtrl.count);
-  router.route('/person').post(personCtrl.insert);
-  router.route('/person/:id').get(personCtrl.get);
-  router.route('/person/:id').put(personCtrl.update);
-  router.route('/person/:id').delete(personCtrl.delete);
+  router.route('/person').get(authentication, personCtrl.getAll);
+  router.route('/person').post(authentication, personCtrl.create);
+  router.route('/person/:id').get(authentication, personCtrl.getOne);
+  router.route('/person/:id').put(authentication, personCtrl.update);
+  router.route('/person/:id').delete(authentication, personCtrl.deleteOne);
 
   // Users
   router.route('/login').post(userCtrl.login);
-  router.route('/user').get(userCtrl.getAll);
-  router.route('/user').post(userCtrl.create);
-  router.route('/user/:id').get(userCtrl.get);
-  router.route('/user/:id').put(userCtrl.update);
-  router.route('/user/:id').delete(userCtrl.delete);
+  router.route('/logout').post(userCtrl.logout);
+  
+  router.route('/user').get(authentication, userCtrl.getAll);
+  router.route('/user').post(authentication, userCtrl.create);
+  router.route('/user/:id').get(authentication, userCtrl.getOne);
+  router.route('/user/:id').put(authentication, userCtrl.update);
+  router.route('/user/:id').delete(authentication, userCtrl.deleteOne);
 
   // Apply the routes to our application with the prefix /api
   app.use('/api', router);
