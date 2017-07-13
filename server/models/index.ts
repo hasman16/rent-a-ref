@@ -12,7 +12,6 @@ var models = [
   'User',
 ];
 
-console.log('secret:', process.env.SECRET_TOKEN, process.env.DATABASE_URL);
 function herokuSetup() {
   console.log('=========== Database is: heroku');
   return new Sequelize(process.env.DATABASE_URL);
@@ -69,9 +68,3 @@ models.forEach(function(model) {
   module.exports.Match = sequelize.models.match;
 
 })(module.exports);
-
-
-//sequelize.sync();
-
-//Export sequelize
-//export sequelize;

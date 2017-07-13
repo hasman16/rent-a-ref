@@ -11,7 +11,6 @@ var models = [
     'Sport',
     'User',
 ];
-console.log('secret:', process.env.SECRET_TOKEN, process.env.DATABASE_URL);
 function herokuSetup() {
     console.log('=========== Database is: heroku');
     return new sequelize_1.default(process.env.DATABASE_URL);
@@ -54,7 +53,4 @@ models.forEach(function (model) {
     module.exports.Referee = exports.sequelize.models.referee;
     module.exports.Match = exports.sequelize.models.match;
 })(module.exports);
-//sequelize.sync();
-//Export sequelize
-//export sequelize;
 //# sourceMappingURL=index.js.map
