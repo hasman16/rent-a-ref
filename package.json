@@ -17,6 +17,10 @@
     "lintbe": "tslint server/**/**.ts{,x}",
     "e2e": "ng e2e"
   },
+  "engines": {
+    "node": ">=7.10.1",
+    "npm": ">=5.0.0"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "^4.0.0",
