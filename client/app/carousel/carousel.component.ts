@@ -12,7 +12,7 @@ import { CarouselItemComponent } from './carousel-item/carousel-item.component';
   templateUrl: './carousel.component.html'
 })
 export class CarouselComponent implements AfterContentInit {
-  @Input() delay = 500;
+  @Input() delay = 0;
   @ContentChildren(CarouselItemComponent) items: QueryList<CarouselItemComponent>;
   activeItem: number;
 

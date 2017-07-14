@@ -23,12 +23,12 @@ app.use(function (req, res, next) {
     next();
 });
 app.use(morgan('dev'));
-//sequelize.sync();
-data_1.default(models, true); //set to false to bypass importing data
+// sequelize.sync();
+data_1.default(models, true); // set to false to bypass importing data
 routes_1.default(app, models);
 process.on('uncaughtException', function (err) {
     console.log(err);
-    //res.render('404');
+    // res.render('404');
 });
 app.listen(app.get('port'), function () {
     console.log('Server listening on port ' + app.get('port'));

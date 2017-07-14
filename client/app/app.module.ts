@@ -25,12 +25,15 @@ import { PricingComponent } from './home/pricing/pricing.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import { FooterTabletComponent } from './footer/footer-tablet/footer-tablet.component';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RefereeComponent } from './referee/referee.component';
+// import { StatisticsComponent } from './shared/statistics/statistics.component';
+// import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
+// import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,10 @@ import { HttpModule } from '@angular/http';
     EditProfileComponent,
     FooterTabletComponent,
     CarouselItemComponent,
-    CarouselComponent
+    CarouselComponent,
+    RefereeComponent
+    // StatisticsComponent
+    // GoogleChart
   ],
   imports: [
     RoutingModule,
@@ -61,6 +67,7 @@ import { HttpModule } from '@angular/http';
     BrowserModule,
     FormsModule,
     HttpModule
+    // Ng2GoogleChartsModule
   ],
   providers: [
     AuthService,

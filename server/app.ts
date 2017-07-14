@@ -25,15 +25,10 @@ app.use((req, res, next) => {
 });
 
 app.use(morgan('dev'));
-<<<<<<< ours
-sequelize.sync();
-// console.log('sequelize:', sequelize);
-setRoutes(app);
-=======
-//sequelize.sync();
-importData(models, true); //set to false to bypass importing data
+// sequelize.sync();
+importData(models, true); // set to false to bypass importing data
 setRoutes(app, models);
->>>>>>> theirs
+
 
 process.on('uncaughtException', function(err) {
     console.log(err);

@@ -16,13 +16,14 @@ import { HowItWorksComponent } from './home/how-it-works/how-it-works.component'
 import { PricingComponent } from './home/pricing/pricing.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
-
+import { RefereeComponent } from './referee/referee.component';
 
   const routes: Routes = [
   {
     path: '', component: HomeComponent,
   },
   { path: 'how-it-works', component: HowItWorksComponent },
+  { path: 'referee', component: RefereeComponent },
   { path: 'pricing', component: PricingComponent },
   { path: 'about', component: AboutComponent },
   { path: 'cats', component: CatsComponent },

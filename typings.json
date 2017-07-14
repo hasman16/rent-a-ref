@@ -1,5 +1,8 @@
 {
   "globalDependencies": {
     "jquery": "registry:dt/jquery#1.10.0+20170310222111"
+  },
+  "dependencies": {
+    "chart.js": "registry:dt/chart.js#2.4.0+20170322003647"
   }
 }
