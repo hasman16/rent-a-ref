@@ -6,7 +6,6 @@ export default function UserController(models, ResponseService) {
 
   // Get all
   function getAll(req, res) {
-    console.log('get all users');
     User.findAll({
       attributes: ['id', 'email', 'authorization']
     })
@@ -15,28 +14,53 @@ export default function UserController(models, ResponseService) {
   }
 
   function getOne(req, res) {
-    console.log('get user');
-    User.findAll({
+    User.findOne({
       where: {
         id: req.params.id
       },
       attributes: ['id', 'email', 'authorization']
     })
-      .then(results => ResponseService.success(res, results))
+      .then(result => ResponseService.success(res, result))
       .catch(error => ResponseService.exception(res, error));
   }
 
+  function returnUser(res, newUser) {
+    const user = {
+      id: newUser.id,
+      email: newUser.email,
+      authorization: newUser.authorization
+    };
+
+    ResponseService.success(res, user);
+  }
+
   function create(req, res) {
-    const aUser = new Object(req.body);
-    User.create(aUser)
+    const aUser = {
+      email: req.body.email,
+      password: req.body.password,
+      authorization: req.body.authorization || 5
+    };
+
+    User.findOne({
+      where: { email: aUser.email },
+      attributes: ['id', 'email', 'authorization']
+    })
       .then(newUser => {
-        const user = {
-          id: newUser.id,
-          email: newUser.email,
-          authorization: newUser.authorization
+        if (newUser) {
+          ResponseService.success(res, newUser);
+        } else {
+          return bcrypt.hash(aUser.password, 10)
         }
-        ResponseService.success(res, user);
       })
+      .then(password => {
+        const user = {
+          email: aUser.email,
+          password: password,
+          authorization: aUser.authorization
+        };
+        return User.create(user);
+      })
+      .then(newUser => returnUser(res, newUser))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -63,17 +87,20 @@ export default function UserController(models, ResponseService) {
       email: req.body.email,
       password: req.body.password
     };
-    console.log('secret:', process.env.SECRET_TOKEN);
+
     User.findOne({
       where: { email: user.email }
     }).then(function(newUser) {
-      let token = null;
       if (newUser) {
         return bcrypt.compare(user.password, newUser.password)
           .then(result => {
-
             if (result) {
-              token = jwt.sign(user, process.env.SECRET_TOKEN, {
+              const user = {
+                id: newUser.id,
+                email: newUser.email,
+                authorization: newUser.authorization
+              };
+              const token = jwt.sign(user, process.env.SECRET_TOKEN, {
                 expiresIn: 1440 * 60
               });
 

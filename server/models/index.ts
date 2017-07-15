@@ -30,7 +30,7 @@ function localhostSetup() {
   );
 }
 
-console.log('Database:', process.env.DATABASE_URL);
+
 let sqlize;
 if (process.env.DATABASE_URL) {
   sqlize = herokuSetup();

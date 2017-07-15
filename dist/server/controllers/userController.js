@@ -6,7 +6,6 @@ function UserController(models, ResponseService) {
     var User = models.User;
     // Get all
     function getAll(req, res) {
-        console.log('get all users');
         User.findAll({
             attributes: ['id', 'email', 'authorization']
         })
@@ -14,27 +13,50 @@ function UserController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getOne(req, res) {
-        console.log('get user');
-        User.findAll({
+        User.findOne({
             where: {
                 id: req.params.id
             },
             attributes: ['id', 'email', 'authorization']
         })
-            .then(function (results) { return ResponseService.success(res, results); })
+            .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
+    function returnUser(res, newUser) {
+        var user = {
+            id: newUser.id,
+            email: newUser.email,
+            authorization: newUser.authorization
+        };
+        ResponseService.success(res, user);
+    }
     function create(req, res) {
-        var aUser = new Object(req.body);
-        User.create(aUser)
-            .then(function (newUser) {
-            var user = {
-                id: newUser.id,
-                email: newUser.email,
-                authorization: newUser.authorization
-            };
-            ResponseService.success(res, user);
+        var aUser = {
+            email: req.body.email,
+            password: req.body.password,
+            authorization: req.body.authorization || 5
+        };
+        User.findOne({
+            where: { email: aUser.email },
+            attributes: ['id', 'email', 'authorization']
         })
+            .then(function (newUser) {
+            if (newUser) {
+                ResponseService.success(res, newUser);
+            }
+            else {
+                return bcrypt.hash(aUser.password, 10);
+            }
+        })
+            .then(function (password) {
+            var user = {
+                email: aUser.email,
+                password: password,
+                authorization: aUser.authorization
+            };
+            return User.create(user);
+        })
+            .then(function (newUser) { return returnUser(res, newUser); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function update(req, res) {
@@ -58,16 +80,19 @@ function UserController(models, ResponseService) {
             email: req.body.email,
             password: req.body.password
         };
-        console.log('secret:', process.env.SECRET_TOKEN);
         User.findOne({
             where: { email: user.email }
         }).then(function (newUser) {
-            var token = null;
             if (newUser) {
                 return bcrypt.compare(user.password, newUser.password)
                     .then(function (result) {
                     if (result) {
-                        token = jwt.sign(user, process.env.SECRET_TOKEN, {
+                        var user_1 = {
+                            id: newUser.id,
+                            email: newUser.email,
+                            authorization: newUser.authorization
+                        };
+                        var token = jwt.sign(user_1, process.env.SECRET_TOKEN, {
                             expiresIn: 1440 * 60
                         });
                         ResponseService.success(res, {
