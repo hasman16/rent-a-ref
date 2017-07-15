@@ -31,7 +31,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RefereeComponent } from './referee/referee.component';
-// import { StatisticsComponent } from './shared/statistics/statistics.component';
+import { StatisticsComponent } from './shared/statistics/statistics.component';
 // import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
 // import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
@@ -57,8 +57,8 @@ import { RefereeComponent } from './referee/referee.component';
     FooterTabletComponent,
     CarouselItemComponent,
     CarouselComponent,
-    RefereeComponent
-    // StatisticsComponent
+    RefereeComponent,
+     StatisticsComponent
     // GoogleChart
   ],
   imports: [
