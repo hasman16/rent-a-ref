@@ -45,18 +45,18 @@ function UserController(models, ResponseService) {
                 ResponseService.success(res, newUser);
             }
             else {
-                return bcrypt.hash(aUser.password, 10);
+                return bcrypt.hash(aUser.password, 10)
+                    .then(function (password) {
+                    var user = {
+                        email: aUser.email,
+                        password: password,
+                        authorization: aUser.authorization
+                    };
+                    return User.create(user);
+                })
+                    .then(function (newUser) { return returnUser(res, newUser); });
             }
         })
-            .then(function (password) {
-            var user = {
-                email: aUser.email,
-                password: password,
-                authorization: aUser.authorization
-            };
-            return User.create(user);
-        })
-            .then(function (newUser) { return returnUser(res, newUser); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function update(req, res) {

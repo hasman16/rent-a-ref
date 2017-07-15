@@ -50,17 +50,17 @@ export default function UserController(models, ResponseService) {
           ResponseService.success(res, newUser);
         } else {
           return bcrypt.hash(aUser.password, 10)
+            .then(password => {
+              const user = {
+                email: aUser.email,
+                password: password,
+                authorization: aUser.authorization
+              };
+              return User.create(user);
+            })
+            .then(newUser => returnUser(res, newUser))
         }
       })
-      .then(password => {
-        const user = {
-          email: aUser.email,
-          password: password,
-          authorization: aUser.authorization
-        };
-        return User.create(user);
-      })
-      .then(newUser => returnUser(res, newUser))
       .catch(error => ResponseService.exception(res, error));
   }
 
