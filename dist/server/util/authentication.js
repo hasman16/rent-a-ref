@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var jsonwebtoken_1 = require("jsonwebtoken");
+var jwt = require("jsonwebtoken");
 function ensureAuthentication(req, res, next) {
     var bearerToken;
     var bearerHeader = req.headers['authorization'];
@@ -8,7 +8,7 @@ function ensureAuthentication(req, res, next) {
         var bearer = bearerHeader.split(' ');
         bearerToken = bearer[1];
         req.token = bearerToken;
-        jsonwebtoken_1.default.verify(bearerToken, process.env.SECRET_TOKEN, function (err, decoded) {
+        jwt.verify(bearerToken, process.env.SECRET_TOKEN, function (err, decoded) {
             if (err) {
                 res.status(403).json({
                     success: false,

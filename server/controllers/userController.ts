@@ -100,6 +100,7 @@ export default function UserController(models, ResponseService) {
                 email: newUser.email,
                 authorization: newUser.authorization
               };
+
               const token = jwt.sign(user, process.env.SECRET_TOKEN, {
                 expiresIn: 1440 * 60
               });

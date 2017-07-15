@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 function ensureAuthentication(req, res, next) {
     let bearerToken;
