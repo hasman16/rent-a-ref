@@ -1,6 +1,4 @@
-import ResponseService from './../util/responseService';
-
-export default function PersonController(models) {
+export default function PersonController(models, ResponseService) {
   const Person = models.Person;
 
   // Get all

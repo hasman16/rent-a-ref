@@ -1,6 +1,4 @@
-import ResponseService from './../util/responseService';
-
-export default function OrganizationController(models) {
+export default function OrganizationController(models, ResponseService) {
   const Organization = models.Organization;
 
   // Get all

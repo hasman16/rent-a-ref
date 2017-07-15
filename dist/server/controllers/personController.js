@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var responseService_1 = require("./../util/responseService");
-function PersonController(models) {
+function PersonController(models, ResponseService) {
     var Person = models.Person;
     // Get all
     function getAll(req, res) {
@@ -9,8 +8,8 @@ function PersonController(models) {
         Person.findAll({
             attributes: ['id', 'firstname', 'lastname']
         })
-            .then(function (results) { return responseService_1.default.success(res, results); })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .then(function (results) { return ResponseService.success(res, results); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getOne(req, res) {
         console.log('get person');
@@ -20,8 +19,8 @@ function PersonController(models) {
             },
             attributes: ['id', 'firstname', 'middlenames', 'lastname']
         })
-            .then(function (results) { return responseService_1.default.success(res, results); })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .then(function (results) { return ResponseService.success(res, results); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function create(req, res) {
         var aPerson = new Object(req.body);
@@ -33,9 +32,9 @@ function PersonController(models) {
                 middlenames: newPerson.middlenames,
                 lastname: newPerson.lastname
             };
-            responseService_1.default.success(res, person);
+            ResponseService.success(res, person);
         })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function update(req, res) {
         var aPerson = new Object(req.body);
@@ -44,14 +43,14 @@ function PersonController(models) {
                 id: req.params.id
             }
         })
-            .then(function (result) { return responseService_1.default.success(res, 'Person updated'); })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .then(function (result) { return ResponseService.success(res, 'Person updated'); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function deleteOne(req, res) {
         var person = new Object(req.body);
         Person.destroy(person)
-            .then(function (result) { return responseService_1.default.success(res, 'Person deleted'); })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .then(function (result) { return ResponseService.success(res, 'Person deleted'); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     return {
         getAll: getAll,

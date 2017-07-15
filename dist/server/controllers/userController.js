@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
-var responseService_1 = require("./../util/responseService");
-function UserController(models) {
+function UserController(models, ResponseService) {
     var User = models.User;
     // Get all
     function getAll(req, res) {
@@ -11,8 +10,8 @@ function UserController(models) {
         User.findAll({
             attributes: ['id', 'email', 'authorization']
         })
-            .then(function (results) { return responseService_1.default.success(res, results); })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .then(function (results) { return ResponseService.success(res, results); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getOne(req, res) {
         console.log('get user');
@@ -22,8 +21,8 @@ function UserController(models) {
             },
             attributes: ['id', 'email', 'authorization']
         })
-            .then(function (results) { return responseService_1.default.success(res, results); })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .then(function (results) { return ResponseService.success(res, results); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function create(req, res) {
         var aUser = new Object(req.body);
@@ -34,9 +33,9 @@ function UserController(models) {
                 email: newUser.email,
                 authorization: newUser.authorization
             };
-            responseService_1.default.success(res, user);
+            ResponseService.success(res, user);
         })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function update(req, res) {
         var user = new Object(req.body);
@@ -45,14 +44,14 @@ function UserController(models) {
                 id: req.params.id
             }
         })
-            .then(function (result) { return responseService_1.default.success(res, 'User updated'); })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .then(function (result) { return ResponseService.success(res, 'User updated'); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function deleteOne(req, res) {
         var user = new Object(req.body);
         User.destroy(user)
-            .then(function (result) { return responseService_1.default.success(res, 'User deleted'); })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .then(function (result) { return ResponseService.success(res, 'User deleted'); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function login(req, res) {
         var user = {
@@ -71,7 +70,7 @@ function UserController(models) {
                         token = jwt.sign(user, process.env.SECRET_TOKEN, {
                             expiresIn: 1440 * 60
                         });
-                        responseService_1.default.success(res, {
+                        ResponseService.success(res, {
                             success: true,
                             message: 'Authorization success',
                             token: token,
@@ -79,15 +78,15 @@ function UserController(models) {
                         });
                     }
                     else {
-                        responseService_1.default.failure(res, 'Authorization failed');
+                        ResponseService.failure(res, 'Authorization failed');
                     }
                 });
             }
             else {
-                responseService_1.default.failure(res, 'Authorization failed');
+                ResponseService.failure(res, 'Authorization failed');
             }
         })
-            .catch(function (error) { return responseService_1.default.exception(res, error); });
+            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function logout(req, res) {
         var user = new Object(req.body);

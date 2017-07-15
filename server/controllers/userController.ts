@@ -1,8 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
-import ResponseService from './../util/responseService';
 
-export default function UserController(models) {
+export default function UserController(models, ResponseService) {
   const User = models.User;
 
   // Get all
