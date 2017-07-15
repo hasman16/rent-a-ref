@@ -1,4 +1,4 @@
-var sequelizeSettings = {
+const sequelizeSettings = {
   host: 'localhost',
   dialect: 'postgres',
   pool: {

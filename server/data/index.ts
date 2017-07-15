@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 
-var sequelize = null;
+let sequelize = null;
 
 // 1 - admin1
 // 2 - admin2
@@ -101,8 +101,8 @@ function insertSports(Sport) {
 }
 
 function insertPeople(User, Person) {
-  let person = people.find(function(person) {
-    return person.email === User.email;
+  let person = people.find(function(aPerson) {
+    return aPerson.email === User.email;
   });
 
   if (person) {
@@ -129,9 +129,9 @@ function insertUser(models) {
           return User.create(user);
         }
       })
-      .then(user => {
-        if (user) {
-          return insertPeople(user, Person);
+      .then(aUser => {
+        if (aUser) {
+          return insertPeople(aUser, Person);
         }
       })
       .catch((error) => {

@@ -4,7 +4,7 @@ import Sequelize from 'sequelize';
 
 dotenv.load({ path: '.env' });
 
-let models = [
+const models = [
   'Game',
   'Organization',
   'Person',
@@ -30,8 +30,9 @@ function localhostSetup() {
   );
 }
 
+console.log('Database:', process.env.DATABASE_URL);
 let sqlize;
-if (process.env.DATABASE_URI) {
+if (process.env.DATABASE_URL) {
   sqlize = herokuSetup();
 } else {
   sqlize = localhostSetup();

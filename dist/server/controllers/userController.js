@@ -26,8 +26,8 @@ function UserController(models) {
             .catch(function (error) { return responseService_1.default.exception(res, error); });
     }
     function create(req, res) {
-        var user = new Object(req.body);
-        User.create(user)
+        var aUser = new Object(req.body);
+        User.create(aUser)
             .then(function (newUser) {
             var user = {
                 id: newUser.id,

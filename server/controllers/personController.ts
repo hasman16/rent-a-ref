@@ -1,7 +1,7 @@
 import ResponseService from './../util/responseService';
 
 export default function PersonController(models) {
-  var Person = models.Person;
+  const Person = models.Person;
 
   // Get all
   function getAll(req, res) {
@@ -26,8 +26,8 @@ export default function PersonController(models) {
   }
 
   function create(req, res) {
-    const person = new Object(req.body);
-    Person.create(person)
+    const aPerson = new Object(req.body);
+    Person.create(aPerson)
       .then(newPerson => {
         const person = {
           id: newPerson.id,
@@ -41,8 +41,8 @@ export default function PersonController(models) {
   }
 
   function update(req, res) {
-    const person = new Object(req.body);
-    Person.update(person, {
+    const aPerson = new Object(req.body);
+    Person.update(aPerson, {
       where: {
         id: req.params.id
       }

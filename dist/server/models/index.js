@@ -23,8 +23,9 @@ function localhostSetup() {
     // connect to database using sequelize
     return new sequelize_1.default(database.name, database.user, database.password, database.settings);
 }
+console.log('Database:', process.env.DATABASE_URL);
 var sqlize;
-if (process.env.DATABASE_URI) {
+if (process.env.DATABASE_URL) {
     sqlize = herokuSetup();
 }
 else {

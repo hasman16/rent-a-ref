@@ -28,8 +28,8 @@ export default function UserController(models) {
   }
 
   function create(req, res) {
-    const user = new Object(req.body);
-    User.create(user)
+    const aUser = new Object(req.body);
+    User.create(aUser)
       .then(newUser => {
         const user = {
           id: newUser.id,

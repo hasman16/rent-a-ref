@@ -96,8 +96,8 @@ function insertSports(Sport) {
     });
 }
 function insertPeople(User, Person) {
-    var person = people.find(function (person) {
-        return person.email === User.email;
+    var person = people.find(function (aPerson) {
+        return aPerson.email === User.email;
     });
     if (person) {
         person['user_id'] = User.id;
@@ -121,9 +121,9 @@ function insertUser(models) {
                 return User.create(user);
             }
         })
-            .then(function (user) {
-            if (user) {
-                return insertPeople(user, Person);
+            .then(function (aUser) {
+            if (aUser) {
+                return insertPeople(aUser, Person);
             }
         })
             .catch(function (error) {

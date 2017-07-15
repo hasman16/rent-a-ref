@@ -24,8 +24,8 @@ function PersonController(models) {
             .catch(function (error) { return responseService_1.default.exception(res, error); });
     }
     function create(req, res) {
-        var person = new Object(req.body);
-        Person.create(person)
+        var aPerson = new Object(req.body);
+        Person.create(aPerson)
             .then(function (newPerson) {
             var person = {
                 id: newPerson.id,
@@ -38,8 +38,8 @@ function PersonController(models) {
             .catch(function (error) { return responseService_1.default.exception(res, error); });
     }
     function update(req, res) {
-        var person = new Object(req.body);
-        Person.update(person, {
+        var aPerson = new Object(req.body);
+        Person.update(aPerson, {
             where: {
                 id: req.params.id
             }
