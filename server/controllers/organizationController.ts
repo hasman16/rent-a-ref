@@ -1,10 +1,10 @@
 import ResponseService from './../util/responseService';
 
 export default function OrganizationController(models) {
-  var Organization = models.Organization;
+  const Organization = models.Organization;
 
   // Get all
-  var getAll = (req, res) => {
+  function getAll(req, res) {
     Organization.findAll({
       attributes: ['id', 'name', 'owner']
     })
@@ -12,7 +12,7 @@ export default function OrganizationController(models) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  var getOne = (req, res) => {
+  function getOne(req, res) {
     Organization.findAll({
       where: {
         id: req.params.id
@@ -23,8 +23,8 @@ export default function OrganizationController(models) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  var create = (req, res) => {
-    var organization = new Object(req.body);
+  function create(req, res) {
+    const organization = new Object(req.body);
     Organization.create(organization)
       .then(newOrganization => {
         ResponseService.success(res, newOrganization);
@@ -32,21 +32,21 @@ export default function OrganizationController(models) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  var update = (req, res) => {
-    var organization = new Object(req.body);
+  function update(req, res) {
+    const organization = new Object(req.body);
     Organization.update(organization, {
       where: {
         id: req.params.id
       }
     })
-      .then(result => ResponseService.success(res, "Organization updated"))
+      .then(result => ResponseService.success(res, 'Organization updated'))
       .catch(error => ResponseService.exception(res, error));
   }
 
-  var deleteOne = (req, res) => {
-    var organization = new Object(req.body);
+  function deleteOne(req, res) {
+    const organization = new Object(req.body);
     Organization.destroy(organization)
-      .then(result => ResponseService.success(res, "Organization deleted"))
+      .then(result => ResponseService.success(res, 'Organization deleted'))
       .catch(error => ResponseService.exception(res, error));
   }
 

@@ -6,8 +6,8 @@ const Sport = function(sequelize, DataTypes) {
       periods: DataTypes.INTEGER,
       referees: DataTypes.INTEGER
   }, {
-      paranoid: true, //mark as deleted but do not delete
-      underscored: true //use underscore instead of camelCase.
+      paranoid: true, // mark as deleted but do not delete
+      underscored: true // use underscore instead of camelCase.
   });
 };
 

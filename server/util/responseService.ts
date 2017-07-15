@@ -1,10 +1,10 @@
 export default new class ResponseService {
 
-  success (res, message){
+  success(res, message) {
     res.status(200).json(message);
   }
 
-  failure (res, message) {
+  failure(res, message) {
     res.status(403).json({
       success: false,
       message: message

@@ -4,7 +4,7 @@ import Sequelize from 'sequelize';
 
 dotenv.load({ path: '.env' });
 
-var models = [
+let models = [
   'Game',
   'Organization',
   'Person',
@@ -22,7 +22,7 @@ function localhostSetup() {
   const configuration = config[serverName];
   const database = configuration.database;
   console.log('=========== Database is:', serverName);
-  //connect to database using sequelize
+  // connect to database using sequelize
   return new Sequelize(
     database.name, database.user,
     database.password,
@@ -30,7 +30,7 @@ function localhostSetup() {
   );
 }
 
-var sqlize;
+let sqlize;
 if (process.env.DATABASE_URI) {
   sqlize = herokuSetup();
 } else {
@@ -39,7 +39,7 @@ if (process.env.DATABASE_URI) {
 
 export const sequelize = sqlize;
 
-//Export models
+// Export models
 models.forEach(function(model) {
   module.exports[model] = sequelize.import(__dirname + '/' + model);
 });

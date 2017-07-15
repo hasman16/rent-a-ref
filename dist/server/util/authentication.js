@@ -1,30 +1,32 @@
-import jwt from 'jsonwebtoken';
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var jsonwebtoken_1 = require("jsonwebtoken");
 function ensureAuthentication(req, res, next) {
-    let bearerToken;
-    const bearerHeader = req.headers['authorization'];
-
+    var bearerToken;
+    var bearerHeader = req.headers['authorization'];
     if (bearerHeader) {
-        const bearer = bearerHeader.split(' ');
+        var bearer = bearerHeader.split(' ');
         bearerToken = bearer[1];
         req.token = bearerToken;
-        jwt.verify(bearerToken, process.env.SECRET_TOKEN, function(err, decoded) {
+        jsonwebtoken_1.default.verify(bearerToken, process.env.SECRET_TOKEN, function (err, decoded) {
             if (err) {
                 res.status(403).json({
                     success: false,
                     message: 'Bad token.'
                 });
-            } else {
+            }
+            else {
                 req.decoded = decoded;
                 next();
             }
         });
-    } else {
+    }
+    else {
         res.status(403).json({
             success: false,
             message: 'No token.'
         });
     }
 }
-
-export default ensureAuthentication;
+exports.default = ensureAuthentication;
+//# sourceMappingURL=authentication.js.map

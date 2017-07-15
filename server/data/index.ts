@@ -2,13 +2,13 @@ import * as bcrypt from 'bcryptjs';
 
 var sequelize = null;
 
-//1 - admin1
-//2 - admin2
-//3 - organizer
-//4 - sub organizer
-//5 - referee
+// 1 - admin1
+// 2 - admin2
+// 3 - organizer
+// 4 - sub organizer
+// 5 - referee
 
-var users = [{
+const users = [{
   email: 'admin1@rentaref.com',
   password: 'admin1',
   authorization: 1
@@ -42,52 +42,53 @@ var users = [{
     authorization: 5
   }
 ];
-var people = [
+
+const people = [
   {
-    firstname: "Rod",
-    lastname: "Test",
-    email: "admin1@rentaref.com"
+    firstname: 'Rod',
+    lastname: 'Test',
+    email: 'admin1@rentaref.com'
   },
   {
-    firstname: "Jane",
-    lastname: "Test",
-    email: "admin2@rentaref.com"
+    firstname: 'Jane',
+    lastname: 'Test',
+    email: 'admin2@rentaref.com'
   },
   {
-    firstname: "Bob",
-    lastname: "Test",
-    email: "admin3@rentaref.com"
+    firstname: 'Bob',
+    lastname: 'Test',
+    email: 'admin3@rentaref.com'
   },
   {
-    firstname: "Freda",
-    lastname: "Test",
+    firstname: 'Freda',
+    lastname: 'Test',
     email: 'org11@rentaref.com'
   },
   {
-    firstname: "Tom",
-    lastname: "Test",
+    firstname: 'Tom',
+    lastname: 'Test',
     email: 'org22@rentaref.com',
   },
   {
-    firstname: "Dick",
-    lastname: "Test",
+    firstname: 'Dick',
+    lastname: 'Test',
     email: 'org33@rentaref.com'
   },
   {
-    firstname: "Harry",
-    lastname: "Test",
+    firstname: 'Harry',
+    lastname: 'Test',
     email: 'ref1@rentaref.com',
   }
 ];
 
-var sports = [{
-  name: "Soccer",
+const sports = [{
+  name: 'Soccer',
   duration: 90,
   periods: 2,
   referees: 3
 },
   {
-    name: "Rugby",
+    name: 'Rugby',
     duration: 80,
     periods: 2,
     referees: 3
@@ -100,19 +101,19 @@ function insertSports(Sport) {
 }
 
 function insertPeople(User, Person) {
-  var person = people.find(function(person) {
-    return person.email == User.email;
+  let person = people.find(function(person) {
+    return person.email === User.email;
   });
 
   if (person) {
-    person["user_id"] = User.id;
+    person['user_id'] = User.id;
     return Person.create(person);
   }
 }
 
 function insertUser(models) {
-  var User = models.User;
-  var Person = models.Person;
+  const User = models.User;
+  const Person = models.Person;
   console.log('Attempting   to create users.');
 
   users.forEach(function(user) {

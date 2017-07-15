@@ -1,11 +1,11 @@
 import * as express from 'express';
 import authentication from './../util/authentication';
-//controllers
+// controllers
 import personController from './../controllers/personController';
 import organizationController from './../controllers/organizationController';
 import userController from './../controllers/userController';
 
-//routes
+// routes
 import personRoutes from './personRoutes';
 import organizationRoutes from './organizationRoutes';
 import userRoutes from './userRoutes';
@@ -18,7 +18,7 @@ export default function setRoutes(app, models) {
   const userCtrl = userController(models);
   const organizationCtrl = organizationController(models);
 
-  personRoutes(router, authentication,personCtrl);
+  personRoutes(router, authentication, personCtrl);
   organizationRoutes(router, authentication, organizationCtrl);
   userRoutes(router, authentication, userCtrl);
 

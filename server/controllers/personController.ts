@@ -4,7 +4,7 @@ export default function PersonController(models) {
   var Person = models.Person;
 
   // Get all
-  var getAll = (req, res) => {
+  function getAll(req, res) {
     console.log('get all persons');
     Person.findAll({
       attributes: ['id', 'firstname', 'lastname']
@@ -13,7 +13,7 @@ export default function PersonController(models) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  var getOne = (req, res) => {
+  function getOne(req, res) {
     console.log('get person');
     Person.findAll({
       where: {
@@ -25,11 +25,11 @@ export default function PersonController(models) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  var create = (req, res) => {
-    var person = new Object(req.body);
+  function create(req, res) {
+    const person = new Object(req.body);
     Person.create(person)
       .then(newPerson => {
-        var person = {
+        const person = {
           id: newPerson.id,
           firstname: newPerson.firstname,
           middlenames: newPerson.middlenames,
@@ -40,21 +40,21 @@ export default function PersonController(models) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  var update = (req, res) => {
-    var person = new Object(req.body);
+  function update(req, res) {
+    const person = new Object(req.body);
     Person.update(person, {
       where: {
         id: req.params.id
       }
     })
-      .then(result => ResponseService.success(res, "Person updated"))
+      .then(result => ResponseService.success(res, 'Person updated'))
       .catch(error => ResponseService.exception(res, error));
   }
 
-  var deleteOne = (req, res) => {
-    var person = new Object(req.body);
+  function deleteOne(req, res) {
+    const person = new Object(req.body);
     Person.destroy(person)
-      .then(result => ResponseService.success(res, "Person deleted"))
+      .then(result => ResponseService.success(res, 'Person deleted'))
       .catch(error => ResponseService.exception(res, error));
   }
 
