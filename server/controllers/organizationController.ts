@@ -11,7 +11,7 @@ export default function OrganizationController(models, ResponseService) {
   }
 
   function getOne(req, res) {
-    Organization.findAll({
+    Organization.findOne({
       where: {
         id: req.params.id
       },

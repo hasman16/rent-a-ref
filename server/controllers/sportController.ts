@@ -12,7 +12,7 @@ export default function SportController(models, ResponseService) {
   }
 
   function getOne(req, res) {
-    Sport.findAll({
+    Sport.findOne({
       where: {
         id: req.params.id
       },

@@ -12,7 +12,7 @@ export default function GameController(models, ResponseService) {
   }
 
   function getOne(req, res) {
-    Game.findAll({
+    Game.findOne({
       where: {
         id: req.params.id
       },
