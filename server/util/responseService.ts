@@ -12,7 +12,6 @@ export default new class ResponseService {
   }
 
   exception(res, error) {
-    console.log('error:', error);
     res.status(500).json({
       success: false,
       message: 'An Internal Error Occurred'

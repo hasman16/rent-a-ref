@@ -13,7 +13,6 @@ exports.default = new (function () {
         });
     };
     ResponseService.prototype.exception = function (res, error) {
-        console.log('error:', error);
         res.status(500).json({
             success: false,
             message: 'An Internal Error Occurred'
