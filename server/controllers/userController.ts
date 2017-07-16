@@ -16,7 +16,7 @@ export default function UserController(models, ResponseService) {
     //const currentAttributes = getAttributes(req.decoded.authorization);
 
     User.findAll({
-      attributes: attributes
+      attributes: attributes,
     })
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
@@ -116,19 +116,32 @@ export default function UserController(models, ResponseService) {
   }
 
   function login(req, res) {
+    const Person = models.Person;
     const user = {
       email: req.body.email,
       password: req.body.password
     };
 
     User.findOne({
-      where: { email: user.email }
+      where: { email: user.email },
+      include: [{
+          model: Person
+      }]
     }).then(function(newUser) {
+      //console.log('user:', newUser);
       if (newUser) {
         return bcrypt.compare(user.password, newUser.password)
           .then(result => {
             if (result) {
-              const user = makeUser(newUser);
+              const person = newUser.person;
+              const user = {
+                id: newUser.id,
+                email: newUser.email,
+                accessLevel: newUser.authorization,
+                firstname: person.firstname,
+                lastname: person.lastname,
+                person_id: person.id
+              };;
 
               const token = jwt.sign(user, process.env.SECRET_TOKEN, {
                 expiresIn: 1440 * 60
@@ -138,7 +151,7 @@ export default function UserController(models, ResponseService) {
                 success: true,
                 message: 'Authorization success',
                 token: token,
-                accessLevel: newUser.authorization
+                user: user
               });
 
             } else {

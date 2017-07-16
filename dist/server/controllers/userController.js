@@ -15,7 +15,7 @@ function UserController(models, ResponseService) {
     function getAll(req, res) {
         //const currentAttributes = getAttributes(req.decoded.authorization);
         User.findAll({
-            attributes: attributes
+            attributes: attributes,
         })
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
@@ -105,18 +105,32 @@ function UserController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function login(req, res) {
+        var Person = models.Person;
         var user = {
             email: req.body.email,
             password: req.body.password
         };
         User.findOne({
-            where: { email: user.email }
+            where: { email: user.email },
+            include: [{
+                    model: Person
+                }]
         }).then(function (newUser) {
+            //console.log('user:', newUser);
             if (newUser) {
                 return bcrypt.compare(user.password, newUser.password)
                     .then(function (result) {
                     if (result) {
-                        var user_1 = makeUser(newUser);
+                        var person = newUser.person;
+                        var user_1 = {
+                            id: newUser.id,
+                            email: newUser.email,
+                            accessLevel: newUser.authorization,
+                            firstname: person.firstname,
+                            lastname: person.lastname,
+                            person_id: person.id
+                        };
+                        ;
                         var token = jwt.sign(user_1, process.env.SECRET_TOKEN, {
                             expiresIn: 1440 * 60
                         });
@@ -124,7 +138,7 @@ function UserController(models, ResponseService) {
                             success: true,
                             message: 'Authorization success',
                             token: token,
-                            accessLevel: newUser.authorization
+                            user: user_1
                         });
                     }
                     else {

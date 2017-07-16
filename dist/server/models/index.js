@@ -36,7 +36,7 @@ models.forEach(function (model) {
     module.exports[model] = exports.sequelize.import(__dirname + '/' + model);
 });
 (function (m) {
-    m.Person.belongsTo(m.User);
+    m.User.hasOne(m.Person);
     m.Person.belongsToMany(m.Sport, {
         through: 'referee'
     });

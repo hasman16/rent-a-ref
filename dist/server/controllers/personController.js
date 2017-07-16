@@ -2,24 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 function PersonController(models, ResponseService) {
     var Person = models.Person;
+    var attributes = ['id', 'firstname', 'middlenames', 'lastname', 'sex'];
     // Get all
     function getAll(req, res) {
-        console.log('get all persons');
         Person.findAll({
-            attributes: ['id', 'firstname', 'lastname']
+            attributes: attributes
         })
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getOne(req, res) {
-        console.log('get person');
-        Person.findAll({
+        Person.findOne({
             where: {
                 id: req.params.id
             },
-            attributes: ['id', 'firstname', 'middlenames', 'lastname']
+            attributes: attributes
         })
-            .then(function (results) { return ResponseService.success(res, results); })
+            .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function create(req, res) {

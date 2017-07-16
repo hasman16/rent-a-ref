@@ -11,11 +11,11 @@ function OrganizationController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getOne(req, res) {
-        Organization.findAll({
+        Organization.findOne({
             where: {
                 id: req.params.id
             },
-            attributes: ['id', 'name']
+            attributes: ['id', 'name', 'owner']
         })
             .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });

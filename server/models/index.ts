@@ -46,7 +46,7 @@ models.forEach(function(model) {
 });
 
 (function(m) {
-  m.Person.belongsTo(m.User);
+  m.User.hasOne(m.Person);
 
   m.Person.belongsToMany(m.Sport, {
     through: 'referee'

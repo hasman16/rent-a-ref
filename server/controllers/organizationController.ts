@@ -15,7 +15,7 @@ export default function OrganizationController(models, ResponseService) {
       where: {
         id: req.params.id
       },
-      attributes: ['id', 'name']
+      attributes: ['id', 'name', 'owner']
     })
       .then(result => ResponseService.success(res, result))
       .catch(error => ResponseService.exception(res, error));
