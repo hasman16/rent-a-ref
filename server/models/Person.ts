@@ -1,18 +1,23 @@
 
 const Person = function(sequelize, DataTypes) {
   return sequelize.define('person', {
-      firstname: DataTypes.STRING(64),
+      firstname: {
+        type: DataTypes.STRING(64),
+        allowNull: false
+      },
       middlenames: DataTypes.STRING(64),
       lastname: DataTypes.STRING(64),
       sex: {
           type: DataTypes.STRING(1),
+          allowNull: false,
           validate: {
               is: /^(m|f)$/i
           }
       },
-      dob: DataTypes.DATE,
-      authorization: DataTypes.INTEGER,
-      authorized_by: DataTypes.INTEGER
+      dob: {
+        type: DataTypes.DATE,
+        allowNull: false
+      }
   }, {
       paranoid: true, // mark as deleted but do not delete
       underscored: true // use underscore instead of camelCase.

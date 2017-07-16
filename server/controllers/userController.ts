@@ -3,11 +3,20 @@ import * as bcrypt from 'bcryptjs';
 
 export default function UserController(models, ResponseService) {
   const User = models.User;
+  const attributes = ['id', 'email', 'authorization'];
+  /*
+    function getAttributes(authorization) {
+      if (authorization === 1 || authorization ===2 ) {
+
+      }
+    }*/
 
   // Get all
   function getAll(req, res) {
+    //const currentAttributes = getAttributes(req.decoded.authorization);
+
     User.findAll({
-      attributes: ['id', 'email', 'authorization']
+      attributes: attributes
     })
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
@@ -18,65 +27,89 @@ export default function UserController(models, ResponseService) {
       where: {
         id: req.params.id
       },
-      attributes: ['id', 'email', 'authorization']
+      attributes: attributes
     })
       .then(result => ResponseService.success(res, result))
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function returnUser(res, newUser) {
-    const user = {
+  function makeUser(newUser) {
+    return {
       id: newUser.id,
       email: newUser.email,
       authorization: newUser.authorization
     };
+  }
 
-    ResponseService.success(res, user);
+  function returnUser(res, newUser) {
+    ResponseService.success(res, makeUser(newUser));
   }
 
   function create(req, res) {
+    const sequelize = models.sequelize;
+    const Person = models.Person;
     const aUser = {
       email: req.body.email,
       password: req.body.password,
-      authorization: req.body.authorization || 5
+      authorization: req.body.authorization || 5,
+      enabled: false,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      dob: req.body.dob,
+      sex: req.body.sex
     };
 
     User.findOne({
-      where: { email: aUser.email },
-      attributes: ['id', 'email', 'authorization']
+      where: { email: aUser.email }
     })
-      .then(newUser => {
-        if (newUser) {
-          ResponseService.success(res, newUser);
+      .then(userInDb => {
+        if (userInDb) {
+          ResponseService.failure(res, 'A user with that email address already exists.');
         } else {
           return bcrypt.hash(aUser.password, 10)
             .then(password => {
               const user = {
                 email: aUser.email,
                 password: password,
-                authorization: aUser.authorization
+                authorization: aUser.authorization,
+                enabled: false
               };
-              return User.create(user);
-            })
-            .then(newUser => returnUser(res, newUser))
+
+              return sequelize.transaction(function(t) {
+                return User.create(user, { transaction: t })
+                  .then(newUser => {
+                    const person = {
+                      firstname: aUser.firstname,
+                      lastname: aUser.lastname,
+                      user_id: newUser.id,
+                      dob: Number(aUser.dob),
+                      sex: aUser.sex
+                    };
+                    return Person.create(person, { transaction: t })
+                      .then(newPerson => returnUser(res, newUser));
+                  });
+              });
+            });
         }
       })
       .catch(error => ResponseService.exception(res, error));
   }
 
   function update(req, res) {
-    const user = new Object(req.body);
+    const user = makeUser(req.body);
+
     User.update(user, {
       where: {
         id: req.params.id
       }
     })
-      .then(result => ResponseService.success(res, 'User updated'))
+      .then(updatedUser => returnUser(res, updatedUser))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function deleteOne(req, res) {
-    const user = new Object(req.body);
+    const user = makeUser(req.body);
+
     User.destroy(user)
       .then(result => ResponseService.success(res, 'User deleted'))
       .catch(error => ResponseService.exception(res, error));
@@ -95,11 +128,7 @@ export default function UserController(models, ResponseService) {
         return bcrypt.compare(user.password, newUser.password)
           .then(result => {
             if (result) {
-              const user = {
-                id: newUser.id,
-                email: newUser.email,
-                authorization: newUser.authorization
-              };
+              const user = makeUser(newUser);
 
               const token = jwt.sign(user, process.env.SECRET_TOKEN, {
                 expiresIn: 1440 * 60

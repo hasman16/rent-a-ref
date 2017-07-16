@@ -11,35 +11,42 @@ let sequelize = null;
 const users = [{
   email: 'admin1@rentaref.com',
   password: 'admin1',
-  authorization: 1
+  authorization: 1,
+  enabled: true
 }, {
     email: 'admin2@rentaref.com',
     password: 'admin2',
-    authorization: 2
+    authorization: 2,
+    enabled: true
   },
   {
     email: 'admin3@rentaref.com',
     password: 'admin3',
-    authorization: 2
+    authorization: 2,
+    enabled: true
   },
   {
     email: 'org11@rentaref.com',
     password: 'organ11',
-    authorization: 3
+    authorization: 3,
+    enabled: true
   }, {
     email: 'org22@rentaref.com',
     password: 'organ22',
-    authorization: 4
+    authorization: 4,
+    enabled: true
   },
   {
     email: 'org33@rentaref.com',
     password: 'organ33',
-    authorization: 4
+    authorization: 4,
+    enabled: true
   },
   {
     email: 'ref1@rentaref.com',
     password: 'referee1',
-    authorization: 5
+    authorization: 5,
+    enabled: true
   }
 ];
 
@@ -47,37 +54,44 @@ const people = [
   {
     firstname: 'Rod',
     lastname: 'Test',
-    email: 'admin1@rentaref.com'
+    email: 'admin1@rentaref.com',
+    sex: 'm'
   },
   {
     firstname: 'Jane',
     lastname: 'Test',
-    email: 'admin2@rentaref.com'
+    email: 'admin2@rentaref.com',
+    sex: 'f'
   },
   {
     firstname: 'Bob',
     lastname: 'Test',
-    email: 'admin3@rentaref.com'
+    email: 'admin3@rentaref.com',
+    sex: 'm'
   },
   {
     firstname: 'Freda',
     lastname: 'Test',
-    email: 'org11@rentaref.com'
+    email: 'org11@rentaref.com',
+    sex: 'f'
   },
   {
     firstname: 'Tom',
     lastname: 'Test',
     email: 'org22@rentaref.com',
+    sex: 'm'
   },
   {
     firstname: 'Dick',
     lastname: 'Test',
-    email: 'org33@rentaref.com'
+    email: 'org33@rentaref.com',
+    sex: 'm'
   },
   {
     firstname: 'Harry',
     lastname: 'Test',
     email: 'ref1@rentaref.com',
+    sex: 'm'
   }
 ];
 
@@ -107,6 +121,7 @@ function insertPeople(User, Person) {
 
   if (person) {
     person['user_id'] = User.id;
+    person['dob'] = (new Date()).getTime();
     return Person.create(person);
   }
 }

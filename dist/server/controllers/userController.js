@@ -4,10 +4,18 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 function UserController(models, ResponseService) {
     var User = models.User;
+    var attributes = ['id', 'email', 'authorization'];
+    /*
+      function getAttributes(authorization) {
+        if (authorization === 1 || authorization ===2 ) {
+  
+        }
+      }*/
     // Get all
     function getAll(req, res) {
+        //const currentAttributes = getAttributes(req.decoded.authorization);
         User.findAll({
-            attributes: ['id', 'email', 'authorization']
+            attributes: attributes
         })
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
@@ -17,32 +25,40 @@ function UserController(models, ResponseService) {
             where: {
                 id: req.params.id
             },
-            attributes: ['id', 'email', 'authorization']
+            attributes: attributes
         })
             .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
-    function returnUser(res, newUser) {
-        var user = {
+    function makeUser(newUser) {
+        return {
             id: newUser.id,
             email: newUser.email,
             authorization: newUser.authorization
         };
-        ResponseService.success(res, user);
+    }
+    function returnUser(res, newUser) {
+        ResponseService.success(res, makeUser(newUser));
     }
     function create(req, res) {
+        var sequelize = models.sequelize;
+        var Person = models.Person;
         var aUser = {
             email: req.body.email,
             password: req.body.password,
-            authorization: req.body.authorization || 5
+            authorization: req.body.authorization || 5,
+            enabled: false,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            dob: req.body.dob,
+            sex: req.body.sex
         };
         User.findOne({
-            where: { email: aUser.email },
-            attributes: ['id', 'email', 'authorization']
+            where: { email: aUser.email }
         })
-            .then(function (newUser) {
-            if (newUser) {
-                ResponseService.success(res, newUser);
+            .then(function (userInDb) {
+            if (userInDb) {
+                ResponseService.failure(res, 'A user with that email address already exists.');
             }
             else {
                 return bcrypt.hash(aUser.password, 10)
@@ -50,27 +66,40 @@ function UserController(models, ResponseService) {
                     var user = {
                         email: aUser.email,
                         password: password,
-                        authorization: aUser.authorization
+                        authorization: aUser.authorization,
+                        enabled: false
                     };
-                    return User.create(user);
-                })
-                    .then(function (newUser) { return returnUser(res, newUser); });
+                    return sequelize.transaction(function (t) {
+                        return User.create(user, { transaction: t })
+                            .then(function (newUser) {
+                            var person = {
+                                firstname: aUser.firstname,
+                                lastname: aUser.lastname,
+                                user_id: newUser.id,
+                                dob: Number(aUser.dob),
+                                sex: aUser.sex
+                            };
+                            return Person.create(person, { transaction: t })
+                                .then(function (newPerson) { return returnUser(res, newUser); });
+                        });
+                    });
+                });
             }
         })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function update(req, res) {
-        var user = new Object(req.body);
+        var user = makeUser(req.body);
         User.update(user, {
             where: {
                 id: req.params.id
             }
         })
-            .then(function (result) { return ResponseService.success(res, 'User updated'); })
+            .then(function (updatedUser) { return returnUser(res, updatedUser); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function deleteOne(req, res) {
-        var user = new Object(req.body);
+        var user = makeUser(req.body);
         User.destroy(user)
             .then(function (result) { return ResponseService.success(res, 'User deleted'); })
             .catch(function (error) { return ResponseService.exception(res, error); });
@@ -87,11 +116,7 @@ function UserController(models, ResponseService) {
                 return bcrypt.compare(user.password, newUser.password)
                     .then(function (result) {
                     if (result) {
-                        var user_1 = {
-                            id: newUser.id,
-                            email: newUser.email,
-                            authorization: newUser.authorization
-                        };
+                        var user_1 = makeUser(newUser);
                         var token = jwt.sign(user_1, process.env.SECRET_TOKEN, {
                             expiresIn: 1440 * 60
                         });

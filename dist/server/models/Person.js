@@ -2,18 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Person = function (sequelize, DataTypes) {
     return sequelize.define('person', {
-        firstname: DataTypes.STRING(64),
+        firstname: {
+            type: DataTypes.STRING(64),
+            allowNull: false
+        },
         middlenames: DataTypes.STRING(64),
         lastname: DataTypes.STRING(64),
         sex: {
             type: DataTypes.STRING(1),
+            allowNull: false,
             validate: {
                 is: /^(m|f)$/i
             }
         },
-        dob: DataTypes.DATE,
-        authorization: DataTypes.INTEGER,
-        authorized_by: DataTypes.INTEGER
+        dob: {
+            type: DataTypes.DATE,
+            allowNull: false
+        }
     }, {
         paranoid: true,
         underscored: true // use underscore instead of camelCase.
