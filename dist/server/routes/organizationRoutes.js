@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function organizationRoutes(router, authentication, organizationCtrl) {
+function organizationRoutes(setter, organizationCtrl) {
+    var router = setter.router;
+    var authentication = setter.authentication;
+    var authorization = setter.authorization;
+    var uploads = setter.uploads;
     router.route('/organization').get(authentication, organizationCtrl.getAll);
     router.route('/organization').post(authentication, organizationCtrl.create);
     router.route('/organization/:id').get(authentication, organizationCtrl.getOne);

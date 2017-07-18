@@ -1,20 +1,9 @@
-import * as jwt from 'jsonwebtoken';
-import * as bcrypt from 'bcryptjs';
 
-export default function UserController(models, ResponseService) {
+export default function UserController(bcrypt, jwt, models, ResponseService) {
   const User = models.User;
   const attributes = ['id', 'email', 'authorization'];
-  /*
-    function getAttributes(authorization) {
-      if (authorization === 1 || authorization ===2 ) {
 
-      }
-    }*/
-
-  // Get all
   function getAll(req, res) {
-    //const currentAttributes = getAttributes(req.decoded.authorization);
-
     User.findAll({
       attributes: attributes,
     })
@@ -97,7 +86,6 @@ export default function UserController(models, ResponseService) {
 
   function update(req, res) {
     const user = makeUser(req.body);
-
     User.update(user, {
       where: {
         id: req.params.id
@@ -125,10 +113,9 @@ export default function UserController(models, ResponseService) {
     User.findOne({
       where: { email: user.email },
       include: [{
-          model: Person
+        model: Person
       }]
     }).then(function(newUser) {
-      //console.log('user:', newUser);
       if (newUser) {
         return bcrypt.compare(user.password, newUser.password)
           .then(result => {

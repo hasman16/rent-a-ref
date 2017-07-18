@@ -1,5 +1,8 @@
 import * as express from 'express';
+import * as jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcryptjs';
 import authentication from './../util/authentication';
+import authorization from './../util/authorization';
 import ResponseService from './../util/responseService';
 
 // controllers
@@ -19,18 +22,22 @@ import userRoutes from './userRoutes';
 export default function setRoutes(app, models) {
 
   const router = express.Router();
-
+  const external = {
+      authorization: authorization(),
+      authentication: authentication,
+      router: router
+  };
   const gameCtrl = gameController(models, ResponseService);
   const personCtrl = personController(models, ResponseService);
-  const userCtrl = userController(models, ResponseService);
+  const userCtrl = userController(bcrypt, jwt, models, ResponseService);
   const sportCtrl = sportController(models, ResponseService);
   const organizationCtrl = organizationController(models, ResponseService);
 
-  gameRoutes(router, authentication, gameCtrl);
-  personRoutes(router, authentication, personCtrl);
-  organizationRoutes(router, authentication, organizationCtrl);
-  sportRoutes(router, authentication, sportCtrl);
-  userRoutes(router, authentication, userCtrl);
+  gameRoutes(external, gameCtrl);
+  personRoutes(external, personCtrl);
+  organizationRoutes(external, organizationCtrl);
+  sportRoutes(external, sportCtrl);
+  userRoutes(external, userCtrl);
 
   // Apply the routes to our application with the prefix /api
   app.use('/api', router);

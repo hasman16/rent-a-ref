@@ -40,10 +40,12 @@ models.forEach(function (model) {
     m.Person.belongsToMany(m.Sport, {
         through: 'referee'
     });
-    m.Organization.belongsTo(m.Person);
+    m.Person.hasMany(m.Organization);
     m.Person.belongsToMany(m.Organization, {
-        through: 'team'
+        through: 'organizer'
     });
+    //sequelize.models.organizer.hasMany(m.Game);
+    m.Game.belongsTo(exports.sequelize.models.organizer);
     m.Person.belongsToMany(m.Game, {
         through: 'match'
     });
@@ -52,5 +54,6 @@ models.forEach(function (model) {
     });
     module.exports.Referee = exports.sequelize.models.referee;
     module.exports.Match = exports.sequelize.models.match;
+    module.exports.Organizer = exports.sequelize.models.organizer;
 })(module.exports);
 //# sourceMappingURL=index.js.map

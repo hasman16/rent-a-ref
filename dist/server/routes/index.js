@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcryptjs");
 var authentication_1 = require("./../util/authentication");
+var authorization_1 = require("./../util/authorization");
 var responseService_1 = require("./../util/responseService");
 // controllers
 var gameController_1 = require("./../controllers/gameController");
@@ -17,16 +20,21 @@ var sportRoutes_1 = require("./sportRoutes");
 var userRoutes_1 = require("./userRoutes");
 function setRoutes(app, models) {
     var router = express.Router();
+    var external = {
+        authorization: authorization_1.default(),
+        authentication: authentication_1.default,
+        router: router
+    };
     var gameCtrl = gameController_1.default(models, responseService_1.default);
     var personCtrl = personController_1.default(models, responseService_1.default);
-    var userCtrl = userController_1.default(models, responseService_1.default);
+    var userCtrl = userController_1.default(bcrypt, jwt, models, responseService_1.default);
     var sportCtrl = sportController_1.default(models, responseService_1.default);
     var organizationCtrl = organizationController_1.default(models, responseService_1.default);
-    gameRoutes_1.default(router, authentication_1.default, gameCtrl);
-    personRoutes_1.default(router, authentication_1.default, personCtrl);
-    organizationRoutes_1.default(router, authentication_1.default, organizationCtrl);
-    sportRoutes_1.default(router, authentication_1.default, sportCtrl);
-    userRoutes_1.default(router, authentication_1.default, userCtrl);
+    gameRoutes_1.default(external, gameCtrl);
+    personRoutes_1.default(external, personCtrl);
+    organizationRoutes_1.default(external, organizationCtrl);
+    sportRoutes_1.default(external, sportCtrl);
+    userRoutes_1.default(external, userCtrl);
     // Apply the routes to our application with the prefix /api
     app.use('/api', router);
 }

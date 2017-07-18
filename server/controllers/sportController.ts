@@ -23,15 +23,12 @@ export default function SportController(models, ResponseService) {
   }
 
   function create(req, res) {
-    function callback() {
-      const sport = makeSport(req.body, false);
-      Sport.create(sport)
-        .then(newSport => {
-          returnSport(res, newSport);
-        })
-        .catch(error => ResponseService.exception(res, error));
-    }
-    executeAsAdmin(req, res, callback);
+    const sport = makeSport(req.body, false);
+    Sport.create(sport)
+      .then(newSport => {
+        returnSport(res, newSport);
+      })
+      .catch(error => ResponseService.exception(res, error));
   }
 
   function makeSport(sport, idOk) {
@@ -48,31 +45,19 @@ export default function SportController(models, ResponseService) {
   }
 
   function returnSport(res, sport) {
-    ResponseService.success(res, makeSport(sport,true));
-  }
-
-  function executeAsAdmin(req, res, callback) {
-    const authorization = req.decoded.accessLevel;
-    if (authorization === 1 || authorization === 2) {
-      callback();
-    } else {
-      ResponseService.failure(res, "Permissions violation.");
-    }
+    ResponseService.success(res, makeSport(sport, true));
   }
 
   function updateOne(req, res) {
-    function callback() {
-      const sport = makeSport(req.body, false);
+    const sport = makeSport(req.body, false);
 
-      Sport.update(sport, {
-        where: {
-          id: req.params.id
-        }
-      })
-        .then(newSport => getOne(req, res))
-        .catch(error => ResponseService.exception(res, error));
-    }
-    executeAsAdmin(req, res, callback);
+    Sport.update(sport, {
+      where: {
+        id: req.params.id
+      }
+    })
+      .then(newSport => getOne(req, res))
+      .catch(error => ResponseService.exception(res, error));
   }
 
   function deleteOne(req, res) {
@@ -80,25 +65,22 @@ export default function SportController(models, ResponseService) {
       return Number(lines1[0]) + Number(lines2[2]);
     }
 
-    function callback() {
-      const sequelize = models.sequelize;
-      const Referee = models.Referee;
-      const clause = {
-        where: {
-          id: req.params.id
-        }
-      };
+    const sequelize = models.sequelize;
+    const Referee = models.Referee;
+    const clause = {
+      where: {
+        id: req.params.id
+      }
+    };
 
-      sequelize.transaction(function(t) {
-        return Sport.destroy(clause, { transaction: t })
-          .then(lines1 => {
-            return Referee.destroy(clause, { transaction: t })
-              .then(lines2 => ResponseService.success(res, "Sport and Referees deleted:", totalLines(lines1, lines2)));
-          });
-      })
-        .catch(error => ResponseService.exception(res, error));
-    }
-    executeAsAdmin(req, res, callback);
+    sequelize.transaction(function(t) {
+      return Sport.destroy(clause, { transaction: t })
+        .then(lines1 => {
+          return Referee.destroy(clause, { transaction: t })
+            .then(lines2 => ResponseService.success(res, "Sport and Referees deleted:", totalLines(lines1, lines2)));
+        });
+    })
+      .catch(error => ResponseService.exception(res, error));
   }
 
   return {

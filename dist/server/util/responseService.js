@@ -18,6 +18,27 @@ exports.default = new (function () {
             message: 'An Internal Error Occurred'
         });
     };
+    ResponseService.prototype.isAdmin = function (req) {
+        var authorization = req.decoded.accessLevel;
+        return (authorization === 1 || authorization === 2);
+    };
+    ResponseService.prototype.isUser = function (req) {
+        return req.decoded.id === req.params.id;
+    };
+    ResponseService.prototype.isUserOrAdmin = function (req) {
+        return this.isUser(req) || this.isAdmin(req);
+    };
+    ResponseService.prototype.permissionViolation = function (res) {
+        this.failure(res, "Permissions violation.");
+    };
+    ResponseService.prototype.executeAsAdmin = function (req, res, callback) {
+        if (this.isAdmin(req)) {
+            callback();
+        }
+        else {
+            this.permissionViolation(res);
+        }
+    };
     return ResponseService;
 }());
 //# sourceMappingURL=responseService.js.map

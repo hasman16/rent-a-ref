@@ -1,19 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
-function UserController(models, ResponseService) {
+function UserController(bcrypt, jwt, models, ResponseService) {
     var User = models.User;
     var attributes = ['id', 'email', 'authorization'];
-    /*
-      function getAttributes(authorization) {
-        if (authorization === 1 || authorization ===2 ) {
-  
-        }
-      }*/
-    // Get all
     function getAll(req, res) {
-        //const currentAttributes = getAttributes(req.decoded.authorization);
         User.findAll({
             attributes: attributes,
         })
@@ -116,7 +106,6 @@ function UserController(models, ResponseService) {
                     model: Person
                 }]
         }).then(function (newUser) {
-            //console.log('user:', newUser);
             if (newUser) {
                 return bcrypt.compare(user.password, newUser.password)
                     .then(function (result) {

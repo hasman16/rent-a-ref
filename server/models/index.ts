@@ -52,10 +52,14 @@ models.forEach(function(model) {
     through: 'referee'
   });
 
-  m.Organization.belongsTo(m.Person);
+  m.Person.hasMany(m.Organization);
+
   m.Person.belongsToMany(m.Organization, {
-    through: 'team'
+    through: 'organizer'
   });
+
+  //sequelize.models.organizer.hasMany(m.Game);
+  m.Game.belongsTo(sequelize.models.organizer);
 
   m.Person.belongsToMany(m.Game, {
     through: 'match'
@@ -67,5 +71,6 @@ models.forEach(function(model) {
 
   module.exports.Referee = sequelize.models.referee;
   module.exports.Match = sequelize.models.match;
+  module.exports.Organizer = sequelize.models.organizer;
 
 })(module.exports);
