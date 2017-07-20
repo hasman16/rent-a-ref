@@ -5,6 +5,7 @@ function organizationRoutes(setter, organizationCtrl) {
     var authentication = setter.authentication;
     var authorization = setter.authorization;
     var uploads = setter.uploads;
+    router.route('/organizer/:id').get(authentication, organizationCtrl.getOrganizers);
     router.route('/organization').get(authentication, organizationCtrl.getAll);
     router.route('/organization').post(authentication, organizationCtrl.create);
     router.route('/organization/:id').get(authentication, organizationCtrl.getOne);

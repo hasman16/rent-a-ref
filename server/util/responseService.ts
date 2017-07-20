@@ -4,6 +4,15 @@ export default new class ResponseService {
     res.status(status).json(message);
   }
 
+  successCollection(res, collection, status = 200) {
+    const message = {
+        success: true,
+        data: collection
+    };
+
+    this.success(res, message, status);
+  }
+
   failure(res, message, status = 403) {
     res.status(status).json({
       success: false,

@@ -3,6 +3,7 @@ export default function organizationRoutes(setter, organizationCtrl) {
   const authentication = setter.authentication;
   const authorization = setter.authorization;
   const uploads = setter.uploads;
+  router.route('/organizer/:id').get(authentication, organizationCtrl.getOrganizers);
 
   router.route('/organization').get(authentication, organizationCtrl.getAll);
   router.route('/organization').post(authentication, organizationCtrl.create);

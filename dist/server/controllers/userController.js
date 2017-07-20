@@ -129,7 +129,7 @@ function UserController(bcrypt, jwt, models, ResponseService) {
                             message: 'Authorization success',
                             token: token,
                             user: user_1
-                        });
+                        }, 201);
                     }
                     else {
                         ResponseService.failure(res, 'Authorization failed');

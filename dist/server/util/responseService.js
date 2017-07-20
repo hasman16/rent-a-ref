@@ -7,6 +7,14 @@ exports.default = new (function () {
         if (status === void 0) { status = 200; }
         res.status(status).json(message);
     };
+    ResponseService.prototype.successCollection = function (res, collection, status) {
+        if (status === void 0) { status = 200; }
+        var message = {
+            success: true,
+            data: collection
+        };
+        this.success(res, message, status);
+    };
     ResponseService.prototype.failure = function (res, message, status) {
         if (status === void 0) { status = 403; }
         res.status(status).json({
