@@ -2,7 +2,6 @@ export default function GameController(models, ResponseService) {
   const Game = models.Game;
   const attributes = ['id', 'name', 'duration', 'referees']
 
-  // Get all
   function getAll(req, res) {
     Game.findAll({
       attributes: attributes

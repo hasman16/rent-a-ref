@@ -27,8 +27,9 @@ function UserController(bcrypt, jwt, models, ResponseService) {
             authorization: newUser.authorization
         };
     }
-    function returnUser(res, newUser) {
-        ResponseService.success(res, makeUser(newUser));
+    function returnUser(res, newUser, status) {
+        if (status === void 0) { status = 200; }
+        ResponseService.success(res, makeUser(newUser), status);
     }
     function create(req, res) {
         var sequelize = models.sequelize;
@@ -70,7 +71,7 @@ function UserController(bcrypt, jwt, models, ResponseService) {
                                 sex: aUser.sex
                             };
                             return Person.create(person, { transaction: t })
-                                .then(function (newPerson) { return returnUser(res, newUser); });
+                                .then(function (newPerson) { return returnUser(res, newUser); }, 201);
                         });
                     });
                 });
@@ -85,7 +86,7 @@ function UserController(bcrypt, jwt, models, ResponseService) {
                 id: req.params.id
             }
         })
-            .then(function (updatedUser) { return returnUser(res, updatedUser); })
+            .then(function (updatedUser) { return returnUser(res, updatedUser); }, 201)
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function deleteOne(req, res) {

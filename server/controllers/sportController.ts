@@ -1,6 +1,6 @@
 export default function SportController(models, ResponseService) {
   const Sport = models.Sport;
-  const attributes = ['id', 'name', 'duration', 'referees']
+  const attributes = ['id', 'name', 'periods', 'duration', 'referees'];
 
   // Get all
   function getAll(req, res) {

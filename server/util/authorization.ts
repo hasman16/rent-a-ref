@@ -13,7 +13,7 @@ export default function authorization() {
     if (checkIsAdmin(req)) {
       next();
     } else {
-      permissionViolation(next);
+      permissionViolation(res, next);
     }
   }
 
@@ -21,14 +21,20 @@ export default function authorization() {
     if (checkIsUser(req) || checkIsAdmin(req)) {
       next();
     } else {
-      permissionViolation(next);
+      permissionViolation(res, next);
     }
   }
 
-  function permissionViolation(next) {
+  function permissionViolation(res, next) {
     const checkError = new Error('User does not have permission to perform this action.');
+    res.json(403, {
+        success: false,
+        message: 'Permission Violation'
+    });
+
     next(checkError);
   }
+
   return {
     isAdmin: isAdmin,
     isUserOrAdmin: isUserOrAdmin

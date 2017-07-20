@@ -3,20 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = new (function () {
     function ResponseService() {
     }
-    ResponseService.prototype.success = function (res, message) {
-        res.status(200).json(message);
+    ResponseService.prototype.success = function (res, message, status) {
+        if (status === void 0) { status = 200; }
+        res.status(status).json(message);
     };
-    ResponseService.prototype.failure = function (res, message) {
-        res.status(403).json({
+    ResponseService.prototype.failure = function (res, message, status) {
+        if (status === void 0) { status = 403; }
+        res.status(status).json({
             success: false,
             message: message
         });
     };
     ResponseService.prototype.exception = function (res, error) {
-        res.status(500).json({
-            success: false,
-            message: 'An Internal Error Occurred'
-        });
+        this.failure(res, 'An Internal Error Occurred', 500);
     };
     ResponseService.prototype.isAdmin = function (req) {
         var authorization = req.decoded.accessLevel;

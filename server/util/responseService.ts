@@ -1,21 +1,18 @@
 export default new class ResponseService {
 
-  success(res, message) {
-    res.status(200).json(message);
+  success(res, message, status = 200) {
+    res.status(status).json(message);
   }
 
-  failure(res, message) {
-    res.status(403).json({
+  failure(res, message, status = 403) {
+    res.status(status).json({
       success: false,
       message: message
     });
   }
 
   exception(res, error) {
-    res.status(500).json({
-      success: false,
-      message: 'An Internal Error Occurred'
-    });
+    this.failure(res, 'An Internal Error Occurred', 500);
   }
 
   isAdmin(req) {

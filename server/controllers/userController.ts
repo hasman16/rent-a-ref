@@ -30,8 +30,8 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
     };
   }
 
-  function returnUser(res, newUser) {
-    ResponseService.success(res, makeUser(newUser));
+  function returnUser(res, newUser, status = 200) {
+    ResponseService.success(res, makeUser(newUser), status);
   }
 
   function create(req, res) {
@@ -75,7 +75,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                       sex: aUser.sex
                     };
                     return Person.create(person, { transaction: t })
-                      .then(newPerson => returnUser(res, newUser));
+                      .then(newPerson => returnUser(res, newUser), 201);
                   });
               });
             });
@@ -91,7 +91,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
         id: req.params.id
       }
     })
-      .then(updatedUser => returnUser(res, updatedUser))
+      .then(updatedUser => returnUser(res, updatedUser), 201)
       .catch(error => ResponseService.exception(res, error));
   }
 
