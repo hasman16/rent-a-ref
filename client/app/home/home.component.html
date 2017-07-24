@@ -1,180 +1,228 @@
-<!--
-<style media="screen">
-  body {
-    /*margin: 0;
-  padding: 0;*/
-    /*  Background fallback in case of IE8 & down, or in case video doens't load, such as with slower connections  */
-    /*background: #333;
-  background-attachment: fixed;
-  background-size: cover;*/
-  }
-  /* The only rule that matters */
+<link rel="stylesheet" type="text/css" href="/assets/css/kaushan.css">
 
-  #video-background {
-    /*  making the video fullscreen  
-  position: fixed;
-  right: 0; 
-  bottom: 0;
-  min-width: 50%; 
-  min-height: 50%;
-  width: auto; 
-  height: auto;
-  z-index: -100;*/
-    position: fixed;
-    width: 85%;
-    height: auto;
-    z-index: -100;
-  }
-  /* These just style the content */
-
-  article {
-    /*  just a fancy border  
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 10px solid rgba(255, 255, 255, 0.5);
-  margin: 10px;*/
-  }
-
-  h1 {
-    position: absolute;
-    top: 60%;
-    width: 100%;
-    font-size: 36px;
-    letter-spacing: 3px;
-    color: #fff;
-    font-family: Oswald, sans-serif;
-    text-align: center;
-  }
-
-  h1 span {
-    font-family: sans-serif;
-    letter-spacing: 0;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  h1 span a {
-    color: #fff;
-  }
-</style>
-
-<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
--->
-
-<!--  Video is muted & autoplays, placed after major DOM elements for performance & has an image fallback  -->
-<!--<video autoplay loop id="video-background" muted plays-inline>
-  <source src="assets/images/background.mp4" type="video/mp4">
-</video>-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 <div class="bd-example" id="d1" style="height:200px;">
-  <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-<app-carousel [delay]="15000">
-  <app-carousel-item >
-    <div class="carousel-inner" role="listbox" style="background-color: #42f4f1; text-align: center;opacity: .9;
-filter: alpha(opacity=90);height:240px;" id="d1" >
-      <div class="carousel-item active">
-       <span style="text-align: center"> <img class="img-fluid img-responsive" src="./assets/carousel/carousel.png" alt=""></span>
-    <h1 class="title-widget">LARGEST NETWORK OF QUALIFIED REFEREES AND UMPIRES</h1>
-    <div class="row">
-      <div class="col-sm-12 form-group">
-        <label for="name" class="text-white font-weight-bold bg-primary text-white">The future of modern sports management is now. Rent-A-Ref offers a unique platform to organizers and officials.</label>
-      </div>
-      </div>
-      </div>
-      </div>
-  </app-carousel-item>
-  <app-carousel-item>
-    <div class="carousel-inner" role="listbox" style="background-color: #42f4f1; text-align: center;opacity: .9;
+        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+                <app-carousel [delay]="3000">
+                        <app-carousel-item>
+                                <div class="carousel-inner" role="listbox" style="background-color: #42f4f1; text-align: center;opacity: .9;
 filter: alpha(opacity=90);height:240px;" id="d1">
-      <div class="carousel-item active">
-        <span style="text-align: center"><img class="img-fluid img-responsive" src="./assets/carousel/carousel.gif" alt="" width=60%></span>
-    
-      <h1 class="title-widget"><span style="color: darkmagenta">Resources and commitment</span></h1>
-    
-    <div class="row">
-      <div class="col-sm-12 form-group">
-        <label for="name" class="text-white font-weight-bold bg-primary text-white">We are committed to helping you find the right tool to organize your events and the right officials suited for the purpose</label>
-      </div>
-    </div>
-    </div>
-    </div>
-  </app-carousel-item>
-  <app-carousel-item>
-    <div class="carousel-inner" role="listbox" style="background-color: #42f4f1; text-align: center;opacity: .9;
+                                        <div class="carousel-item active">
+                                                <span style="text-align: center"> <img class="img-fluid img-responsive" src="./assets/carousel/carousel.png" alt=""></span>
+                                                <h1 class="title-widget">LARGEST NETWORK OF QUALIFIED REFEREES AND UMPIRES</h1>
+                                                <div class="row">
+                                                        <div class="col-sm-12 form-group">
+                                                                <label for="name" class="text-white font-weight-bold bg-primary text-white">The future of modern sports management is now. Rent-A-Ref offers a unique platform to organizers and officials.</label>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </app-carousel-item>
+                        <app-carousel-item>
+                                <div class="carousel-inner" role="listbox" style="background-color: #42f4f1; text-align: center;opacity: .9;
 filter: alpha(opacity=90);height:240px;" id="d1">
-  <div class="carousel-item active">
-    <span style="text-align: center"><img class="img-fluid img-responsive" src="./assets/carousel/carousel1.png" alt=""></span>
+                                        <div class="carousel-item active">
+                                                <span style="text-align: center"><img class="img-fluid img-responsive" src="./assets/carousel/carousel.gif" alt="" width=60%></span>
 
-    <h1 class="title-widget"><span style="color: darkblue">Find a Referee or an Umpire with Just a Few Clicks</span></h1>
+                                                <h1 class="title-widget"><span style="color: darkmagenta">Resources and commitment</span></h1>
 
-    <div class="row">
-      <div class="col-sm-12 form-group">
-        <label for="name" class="text-white font-weight-bold bg-primary text-white">Each Referee is vetted to make sure they match the skill level of Your Game.</label>
-      </div>
-    </div>
-  </div>
-  </div>
-  </app-carousel-item>
-</app-carousel>
+                                                <div class="row">
+                                                        <div class="col-sm-12 form-group">
+                                                                <label for="name" class="text-white font-weight-bold bg-primary text-white">We are committed to helping you find the right tool to organize your events and the right officials suited for the purpose</label>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </app-carousel-item>
+                        <app-carousel-item>
+                                <div class="carousel-inner" role="listbox" style="background-color: #42f4f1; text-align: center;opacity: .9;
+filter: alpha(opacity=90);height:240px;" id="d1">
+                                        <div class="carousel-item active">
+                                                <span style="text-align: center"><img class="img-fluid img-responsive" src="./assets/carousel/carousel1.png" alt=""></span>
+
+                                                <h1 class="title-widget"><span style="color: darkblue">Find a Referee or an Umpire with Just a Few Clicks</span></h1>
+
+                                                <div class="row">
+                                                        <div class="col-sm-12 form-group">
+                                                                <label for="name" class="text-white font-weight-bold bg-primary text-white">Each Referee is vetted to make sure they match the skill level of Your Game.</label>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </app-carousel-item>
+                </app-carousel>
+        </div>
 </div>
-</div>
-<div class="container bg-faded" style="opacity: .9;filter: alpha(opacity=90);">
+<div class="bg-faded" style="opacity: .9;filter: alpha(opacity=90);">
+        <div class="row">
+                <div class="col-xs-12">
+                        <div class="row">
+                                <div class="col-sm-2 bg-faded">
+                                        <span style="text-align: left"><img src="assets/images/umpire.jpg" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100%></span>
+                                        <p> <a routerLink="/referee" class="nav-item nav-link" routerLinkActive="active"><button class="btn btn-primary btn-responsive" type="button">Find a Referee</button></a></p>
+                                </div>
+
+                                <div class="col-sm-8 text-justify">
+                                        <br>
+                                        <h1 class="title-widget">Are you looking for some officials (Soccer referees, umpires etc...) for your event?</h1>
+                                        <hr>
+                                        <label for="refereeNeeded">Rent-A-Ref offers centralized platform where you can find officials who are:</label>
+                                        <!--Start-->
+                                        <hr>
+
+                                        <div class="card-deck">
+                                                <div class="card">
+                                                        <div class="card-block">
+                                                                <h4 class="title-widget" style="text-align: center; font-weight: bolder; size: 18px">Certified</h4>
+                                                                <p class="card-text"><span style="text-align: center;display: block; margin: auto;"><img src="assets/images/certified.png" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100%></span></p>
+                                                        </div>
+                                                </div>
+                                                <div class="card">
+                                                        <div class="card-block">
+                                                                <h4 class="title-widget" style="text-align: center; font-weight: bolder; size: 18px">Reliable</h4>
+                                                                <p class="card-text"><span style="text-align: center;display: block; margin: auto;"><img src="assets/images/reliable.png" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100%></span></p>
+                                                        </div>
+                                                </div>
+                                                <div class="card">
+                                                        <div class="card-block">
+                                                                <h4 class="title-widget" style="text-align: center; font-weight: bolder; size: 18px">Affordable</h4>
+                                                                <p class="card-text"><span style="text-align: center;display: block; margin: auto;"><img src="assets/images/savemoney.png" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100%></span></p>
+                                                        </div>
+                                                </div>
+                                        </div>
+
+                                        <!--End-->
+                                </div>
+
+                                <div class="col-sm-2 bg-faded">
+                                        <span style="text-align: right"><img src="assets/images/red_ref.jpg" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100% align="right"> </span>
+                                        <p> <a routerLink="/referee" class="nav-item nav-link" routerLinkActive="active"><button class="btn btn-primary btn-responsive" type="button">Find a Referee</button></a></p>
+                                </div>
+                        </div>
+                        <!--Start-->
+                        <hr>
 <div class="row">
-  <div class="col-xs-12" >   
-      <div class="row">
-        <div class="col-sm-2 bg-faded">
-          <span style="text-align: left"><img src="assets/images/umpire.jpg" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100%></span>
-          <p> <a routerLink="/referee" class="nav-item nav-link" routerLinkActive="active"><button class="btn btn-primary" type="button">Find a Referee</button></a></p>
-        </div>
+        <div class="col-lg-12 text-xs-center">
+            <h1 class="content-header elegantshd bigFont">Multi-Sport platform</h1>
+        
+                <div class="form-group">
+                        <div class="col-md-3"><label class="btn btn-primary"><img src="assets/images/Running.png" alt="..." class="img-thumbnail img-check"><input type="checkbox" name="chk1" id="item4" value="val1" class="hidden" autocomplete="off"></label></div>
+                        <div class="col-md-3"><label class="btn btn-primary"><img src="assets/images/Basketball.png" alt="..." class="img-thumbnail img-check"><input type="checkbox" name="chk2" id="item4" value="val2" class="hidden" autocomplete="off"></label></div>
+                        <div class="col-md-3"><label class="btn btn-primary"><img src="assets/images/Football.png" alt="..." class="img-thumbnail img-check"><input type="checkbox" name="chk3" id="item4" value="val3" class="hidden" autocomplete="off"></label></div>
+                        <div class="col-md-3"><label class="btn btn-primary"><img src="assets/images/Soccer.png" alt="..." class="img-thumbnail img-check"><input type="checkbox" name="chk4" id="item4" value="val4" class="hidden" autocomplete="off"></label></div>
+                </div>
+                
 
-        <div class="col-sm-8 text-justify">
-          <br>
-          <h1 class="title-widget">Are you looking for some officials (Soccer referees, umpires etc...) for your event?</h1>
-          <hr>
-          <label for="refereeNeeded">Rent-A-Ref offers centralized platform where you can find officials who are:</label>
-        <!--Start-->
-        <hr>
-
-        <div class="card-deck">
-          <div class="card">
-            <div class="card-block">
-              <h4 class="title-widget" style="text-align: center; font-weight: bolder; size: 18px">Certified</h4>
-              <p class="card-text"><span style="text-align: lcentereft">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/images/certified.png" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100%></span></p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-block">
-              <h4 class="title-widget" style="text-align: center; font-weight: bolder; size: 18px">Reliable</h4>
-              <p class="card-text"><span style="text-align: center">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/images/reliable.png" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100%></span></p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-block">
-              <h4 class="title-widget" style="text-align: center; font-weight: bolder; size: 18px">Affordable</h4>
-              <p class="card-text"><span style="text-align: center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/images/savemoney.png" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100%></span></p>
-            </div>
-          </div>
         </div>
-
-        <!--End-->
-        </div>
-
-        <div class="col-sm-2 bg-faded">
-          <span style="text-align: right"><img src="assets/images/red_ref.jpg" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100% align="right"> </span>
-          <p> <a routerLink="/referee" class="nav-item nav-link" routerLinkActive="active"><button class="btn btn-primary" type="button">Find a Referee</button></a></p>
-        </div>
-      </div>
-  </div>
 </div>
-<div>
-<div>
-<!--Start-->
+
+                        <!--End-->
+                        <!--Startt-->
 <hr>
-
-<!--<app-statistics></app-statistics>-->
-<!--End-->
-
+<h4 class="elegantshd bigFont">What's Being Said</h4>
+  <div class='row'>
+    <div class='col-md-offset-2 col-md-12'>
+      <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+        <!-- Bottom Carousel Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
+          <li data-target="#quote-carousel" data-slide-to="1"></li>
+          <li data-target="#quote-carousel" data-slide-to="2"></li>
+          <li data-target="#quote-carousel" data-slide-to="3"></li>          
+        </ol>
+        
+        <!-- Carousel Slides / Quotes -->
+        <div class="carousel-inner">
+        
+          <!-- Quote 1 -->
+          <div class="carousel-item active">
+            <blockquote>
+              <div class="row">
+                <div class="col-sm-3 text-center">
+                  <img class="img-circle quotePic" src="/assets/images/quote2.jpg" style="width: 100px;height:100px;">
+                  <!--<img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;">-->
+                </div>
+                <div class="col-sm-9 ">
+                <p class="quoteFont" >We are proud to have Rent-A-Ref as the exclusive officiating provider for all of the Wooter leagues. Great Service, Great Price, Great Refs. Thank you!</p>
+                  <div class="quoteAuthor text-center"> <span style="color: #FFF;font-size:24px;font-weight:bolder"><cite>- David -</cite></span>
+                  <br>
+                  <span style="color: blue;font-size:16px;font-weight:bolder"><a src="https://wooter.co/">COO, Wooter</a></span>
+                  </div>
+                </div>
+              </div>
+            </blockquote>
+          </div>
+          <!-- Quote 2 -->
+          <div class="carousel-item">
+            <blockquote>
+              <div class="row">
+                <div class="col-sm-3 text-center">
+                  <img class="img-circle quotePic" src="/assets/images/quote1.jpg" style="width: 100px;height:100px;">
+                  <!--<img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;">-->
+                </div>
+                <div class="col-sm-9 ">
+                <p class="quoteFont" >Rent-A-Ref allows me to do what I love when I want to. Not only am I notified when there are games near by, but they also take care of the payment and deposit it into my bank account, so I don't have to ask each team to pay.</p>
+                  <div class="quoteAuthor text-center"> <span style="color: #FFF;font-size:24px;font-weight:bolder">- Carlon -</span>
+                  <br>
+                  <span style="color: blue;font-size:16px;font-weight:bolder">Sports Official</span>
+                  </div>
+                </div>
+              </div>
+            </blockquote>
+          </div>
+          <!-- Quote 3 -->
+          <div class="carousel-item">
+            <blockquote>
+              <div class="row">
+                <div class="col-sm-3 text-center">
+                  <img class="img-circle quotePic" src="/assets/images/quote.jpg" style="width: 100px;height:100px;">
+                  <!--<img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;">-->
+                </div>
+                <div class="col-sm-9 ">
+                  <p class="quoteFont" >LASportsNet partnered with Rent-A-Ref to begin scheduling our expanding soccer and basketball programs. With a vast network of experienced and trained referees, we've been able to keep up with the growth of our leagues thanks to Rent-A-Ref.</p>
+                  <div class="quoteAuthor text-center"> <span style="color: #FFF;font-size:24px;font-weight:bolder">- Anthony -</span>
+                  <br>
+                  <span style="color: blue;font-size:16px;font-weight:bolder"><a src="https://lasportsnet.com/" >CMO, LASportsNet</a></span>
+                  </div>
+                </div>
+              </div>
+            </blockquote>
+          </div>
+<!-- Quote 4 -->
+          <div class="carousel-item">
+            <blockquote>
+              <div class="row">
+                <div class="col-sm-3 text-center">
+                  <img class="img-circle quotePic" src="/assets/images/ndoung.jpeg" style="width: 100px;height:100px;">
+                  <!--<img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;">-->
+                </div>
+                <div class="col-sm-9 ">
+                  <h6>As a soccer referee, we need a platform that is easily manageable and user-friendly. Rent-A-Ref offers us the right tools so we can focus on officiating and stay on top of ever changing schedule. </h6>
+                  <div class="quoteAuthor text-center"> <span style="color: #FFF;font-size:24px;font-weight:bolder">- Ndoung -</span>
+                  <br>
+                  <span style="color: blue;font-size:16px;font-weight:bolder"><a src="http://www.hasmandesign.com">Fullstack Engineer, Solera</a></span>
+                  </div>
+                </div>
+              </div>
+            </blockquote>
+          </div>
+         
+          <!--end-->
+        </div>
+        
+        <!-- Carousel Buttons Next/Prev -->
+        
+        <a data-slide="prev" href="#quote-carousel" class="carousel-control-prev"><i class="fa fa-chevron-left"></i></a>
+        <a data-slide="next" href="#quote-carousel" class="carousel-control-next"><i class="fa fa-chevron-right"></i></a>
+        
+        
+        
+        
+      </div>                          
+    </div>
+  </div>
+                        <!--End-->
+                </div>
+        </div>
 </div>
+

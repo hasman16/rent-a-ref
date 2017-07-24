@@ -36,14 +36,15 @@ export class AppComponent {
 
 
     // alert('testing');
-    const destination_anim_bgs = new Array('assets/images/refereebg.jpg', 'assets/images/refereebg1.jpg', 'assets/images/refereebg2.jpg');
-    const destination_anim_bgs2 = new Array('assets/images/refereebg3.jpg', 'assets/images/refereebg4.jpg', 'assets/images/refereebg5.jpg');
-    const destination_anim_bgs3 = new Array('assets/images/refereebg6.jpg', 'assets/images/refereebg7.jpg', 'assets/images/refereebg8.jpg');
+    const destination_anim_bgs = new Array('assets/images/refereebg.jpg', 'assets/images/refereebg1.jpg', 'assets/images/refereebg12.jpg');
+
 
     // destination_anim_bgs = [];
 
-    destination_anim_bgs.push('assets/images/refereebg3.jpg', 'assets/images/refereebg4.jpg', 'assets/images/refereebg5.jpg');
-    destination_anim_bgs.push('assets/images/refereebg6.jpg', 'assets/images/refereebg7.jpg', 'assets/images/refereebg8.jpg');
+    destination_anim_bgs.push('assets/images/refereebg2.jpg', 'assets/images/refereebg3.jpg', 'assets/images/refereebg4.jpg');
+    destination_anim_bgs.push('assets/images/refereebg5.jpg', 'assets/images/refereebg6.jpg', 'assets/images/refereebg7.jpg');
+    destination_anim_bgs.push('assets/images/refereebg8.jpg', 'assets/images/refereebg9.jpg', 'assets/images/refereebg10.jpg');
+    destination_anim_bgs.push('assets/images/refereebg11.jpg');
     // destination_anim_bgs.push(destination_anim_bgs2);
     // destination_anim_bgs.push(destination_anim_bgs3);
     $(document).ready(function () {
@@ -55,7 +56,9 @@ export class AppComponent {
       // let imgArr = [];
 
       imgArr.push('assets/images/refereebg3.jpg', 'assets/images/refereebg4.jpg', 'assets/images/refereebg5.jpg');
-      imgArr.push('assets / images / refereebg6.jpg', 'assets/ images / refereebg7.jpg', 'assets/ images / refereebg8.jpg');
+      imgArr.push('assets/images/refereebg6.jpg', 'assets/images/refereebg7.jpg', 'assets/images/refereebg8.jpg');
+      imgArr.push('assets/images/refereebg9.jpg', 'assets/images/refereebg10.jpg', 'assets/images/refereebg11.jpg');
+      imgArr.push('assets/images/refereebg12.jpg');
      // imgArr.push(imgArr3);
 
       if (destination_anim_bgs[0]) {

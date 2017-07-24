@@ -17,12 +17,14 @@
             <li><a routerLink="/career" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
         <i class="fa fa-briefcase"></i><span style="color: #ffffff"> Career</span>
         </a></li>
-            <li><a routerLink="/privacy-policy" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-        <i class="fa fa-file-text-o"></i><span style="color: #ffffff"> Privacy Policy</span>
-        </a></li>
-            <li><a routerLink="/term-conditions" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-        <i class="fa fa-eye"></i><span style="color: #ffffff"> Terms & Conditions</span>
-        </a></li>
+            <li data-toggle="modal" data-target="#ordine">
+              <!--<a routerLink="/privacy-policy" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">-->
+        <i class="fa fa-file-text-o"></i><span style="color: #ffffff;cursor: pointer;"> Privacy Policy</span>
+        </li>
+            <li >
+              <!--<a routerLink="/terms-and-conditions" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">-->
+        <i class="fa fa-eye"></i><span style="color: #ffffff;cursor: pointer;" data-toggle="modal" data-target="#ordine"> Terms & Conditions</span>
+        </li>
             <li><a routerLink="/faq" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
         <i class="fa fa-question-circle-o"></i><span style="color: #ffffff"> Frequently Ask Questions</span>
         </a></li>      
@@ -44,7 +46,7 @@
           </div>
         </div>-->
       </div>
-      <div class="social-icons">
+      <div class="social-icons img-responsive">
         <ul class="nomargin">
           <a href="https://www.facebook.com/rentaref"><i class="fa fa-facebook-square fa-3x social-fb" id="social"></i></a>
           <a href="https://twitter.com/rentaref"><i class="fa fa-twitter-square fa-3x social-tw" id="social"></i></a>
@@ -85,3 +87,29 @@
     </div>
   </div>
 </div>
+
+<!-- Modal start Terms & Conditions-->
+<div id="ordine" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordineLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">Rend-A-Ref Terms and Conditions</h4>
+      </div>
+      <div class="modal-body">
+        <div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="/assets/src/terms-conditions.txt" allowfullscreen></iframe>
+</div>
+        <p><span style="color:blue, font-weight:bolder;size:14px">Thank you</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+  <!--Modal end-->
+
+  

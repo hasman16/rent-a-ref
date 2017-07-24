@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-how-it-works',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HowItWorksComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+     $(document).ready(function () {
+      //alert('testing');
+ 
+      });
+  }
 
   ngOnInit() {
   }
