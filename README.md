@@ -1,9 +1,4 @@
-Rent A Ref is a Sports Website designed to allow Events organizers, Referees associations, Freelance sports referee and assignors to manage their respective event(s) or sports in a centralized and easy to use environment.
-### Author
-* [Ahmadou Ndoung](https://github.com/hasman16)
-
-https://blog.heroku.com/node-habits-2017
-<!--# Angular Full Stack [![Dependencies](https://david-dm.org/DavideViolante/Angular2-Full-Stack.svg)](https://david-dm.org/DavideViolante/Angular2-Full-Stack) [![Donate](https://img.shields.io/badge/paypal-donate-179BD7.svg)](https://www.paypal.me/dviolante) [![MIT license](http://img.shields.io/badge/license-MIT-lightgrey.svg)](http://opensource.org/licenses/MIT)
+# Angular Full Stack [![Dependencies](https://david-dm.org/DavideViolante/Angular2-Full-Stack.svg)](https://david-dm.org/DavideViolante/Angular2-Full-Stack) [![Donate](https://img.shields.io/badge/paypal-donate-179BD7.svg)](https://www.paypal.me/dviolante) [![MIT license](http://img.shields.io/badge/license-MIT-lightgrey.svg)](http://opensource.org/licenses/MIT)
 
 
 The frontend is generated with [Angular CLI](https://github.com/angular/angular-cli). The backend is made from scratch. Whole stack in [TypeScript](https://www.typescriptlang.org).
@@ -34,7 +29,7 @@ Other tools and technologies used:
 A window will automatically open at [localhost:4200](http://localhost:4200). Angular and Express files are being watched. Any change automatically creates a new bundle, restart Express server and reload your browser.
 
 ### Production mode
-`npm run prod`: run the project with a production bundle and AOT compilation listening at [localhost:3000](http://localhost:3000)
+`npm run prod`: run the project with a production bundle and AOT compilation listening at [localhost:3000](http://localhost:3000) 
 
 ## Deploy (Heroku)
 1. Go to Heroku and create a new app
@@ -70,7 +65,7 @@ A window will automatically open at [localhost:4200](http://localhost:4200). Ang
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/). 
 Before running the tests make sure you are serving the app via `npm start`.
 
 ## Running TSLint
@@ -83,4 +78,3 @@ To get more help about this project, [visit the wiki](https://github.com/DavideV
 
 ### Author
 * [Davide Violante](https://github.com/DavideViolante)
--->

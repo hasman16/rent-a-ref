@@ -17,7 +17,8 @@ import { PricingComponent } from './home/pricing/pricing.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import { RefereeComponent } from './referee/referee.component';
-
+import {PartnersComponent} from './group/partners/partners.component';
+import {TermsAndConditionsComponent} from './group/terms-and-conditions/terms-and-conditions.component';
   const routes: Routes = [
   {
     path: '', component: HomeComponent,
@@ -25,6 +26,8 @@ import { RefereeComponent } from './referee/referee.component';
   { path: 'how-it-works', component: HowItWorksComponent },
   { path: 'referee', component: RefereeComponent },
   { path: 'pricing', component: PricingComponent },
+  { path: 'partners', component: PartnersComponent },
+  { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
   { path: 'about', component: AboutComponent },
   { path: 'cats', component: CatsComponent },
   { path: 'register', component: RegisterComponent },

@@ -31,7 +31,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RefereeComponent } from './referee/referee.component';
-import { StatisticsComponent } from './shared/statistics/statistics.component';
+import { PartnersComponent } from './group/partners/partners.component';
+import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
+import { CareersComponent } from './group/careers/careers.component';
+// import { StatisticsComponent } from './shared/statistics/statistics.component';
+
 // import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
 // import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
@@ -58,7 +62,10 @@ import { StatisticsComponent } from './shared/statistics/statistics.component';
     CarouselItemComponent,
     CarouselComponent,
     RefereeComponent,
-     StatisticsComponent
+    PartnersComponent,
+    TermsAndConditionsComponent,
+    CareersComponent
+    // StatisticsComponent
     // GoogleChart
   ],
   imports: [
