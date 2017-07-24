@@ -1,0 +1,125 @@
+POST /login
+Payload:
+{
+  "email":"admin1@rentaref.com",
+  "password": "admin1"
+}
+Returns:
+{
+    "success": true,
+    "message": "Authorization success",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJhZG1pbjFAcmVudGFyZWYuY29tIiwiYWNjZXNzTGV2ZWwiOjEsImZpcnN0bmFtZSI6IlJvZCIsImxhc3RuYW1lIjoiVGVzdCIsInBlcnNvbl9pZCI6NiwiaWF0IjoxNTAwMzU1NzY0LCJleHAiOjE1MDA0NDIxNjR9.sgu5UrsdqPfz7VTyUOIQ-I7g9y7e4sQkdlDUgYGnbV8",
+    "user": {
+        "id": 6,
+        "email": "admin1@rentaref.com",
+        "accessLevel": 1,
+        "firstname": "Rod",
+        "lastname": "Test",
+        "person_id": 6
+    }
+}
+
+POST /logout --- not implemented
+
+GET /user - Get all users
+Payload:
+Returns:
+[
+    {
+        "id": 1,
+        "email": "admin2@rentaref.com",
+        "authorization": 2
+    },
+    {
+        "id": 2,
+        "email": "admin3@rentaref.com",
+        "authorization": 2
+    },
+    {
+        "id": 3,
+        "email": "org11@rentaref.com",
+        "authorization": 3
+    },
+    {
+        "id": 4,
+        "email": "org22@rentaref.com",
+        "authorization": 4
+    },
+    {
+        "id": 5,
+        "email": "ref1@rentaref.com",
+        "authorization": 5
+    },
+    {
+        "id": 6,
+        "email": "admin1@rentaref.com",
+        "authorization": 1
+    },
+    {
+        "id": 7,
+        "email": "org33@rentaref.com",
+        "authorization": 4
+    }
+]
+Notes:
+Only admins have permissions for this endpoint.
+
+
+POST  /user - Create User
+Payload:
+{
+  "email":"test4@rentaref.com",
+  "password": "test4",
+  "firstname": "lazerus",
+  "sex": "m",
+  "dob": 1758888
+}
+Returns:
+{
+    "id": 8,
+    "email": "test4@rentaref.com",
+    "authorization": 5
+}
+Notes:
+Does not require login. Access level is optional, default is 5.
+
+
+GET  /user/1 - Retrieve User
+Payload:
+Result:
+{
+    "id": 1,
+    "email": "admin2@rentaref.com",
+    "authorization": 2
+}
+Notes:
+Must be the user 1 or an admin.
+
+
+PUT  /user/:id - Update User
+
+DELETE  /user/:id - Delete User -- not tested
+
+GET /game - Get all Games
+POST  /game - Create Game
+GET  /game/:id - Retrieve Game
+PUT  /game/:id - Update Game
+DELETE  /game/:id - Delete Game
+
+GET /organization - Get all Organizations
+POST  /organization - Create Organization
+GET  /organization/:id - Retrieve Organization
+PUT  /organization/:id - Update Organization
+DELETE  /organization/:id - Delete Organization
+
+GET /person - Get all Persons
+POST  /person - Create Person
+GET  /person/:id - Retrieve Person
+PUT  /person/:id - Update Person
+DELETE  /person/:id - Delete Person
+
+GET /sport - Get all Sports
+POST  /sport - Create Sport
+GET  /sport/:id - Retrieve Sport
+PUT  /sport/:id - Update Sport
+DELETE  /sport/:id - Delete Sport

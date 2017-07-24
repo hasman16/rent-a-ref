@@ -17,6 +17,9 @@
     "lintbe": "tslint server/**/**.ts{,x}",
     "e2e": "ng e2e"
   },
+  "engines": {
+    "node": ">=7.10.1"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "^4.0.0",
@@ -44,7 +47,7 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "1.1.0",
+    "@angular/cli": "^1.1.0",
     "@angular/compiler-cli": "^4.0.0",
     "@angular/language-service": "^4.0.0",
     "@types/jasmine": "2.5.45",
