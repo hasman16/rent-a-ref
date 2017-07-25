@@ -18,13 +18,21 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import { RefereeComponent } from './referee/referee.component';
 import {PartnersComponent} from './group/partners/partners.component';
-import {TermsAndConditionsComponent} from './group/terms-and-conditions/terms-and-conditions.component';
+import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
+import { CareersComponent } from './group/careers/careers.component';
+import { FaqComponent } from './group/faq/faq.component';
+import { ContactusComponent } from './group/contactus/contactus.component';
+import { BlogComponent} from './group/blog/blog.component';
   const routes: Routes = [
   {
     path: '', component: HomeComponent,
   },
   { path: 'how-it-works', component: HowItWorksComponent },
   { path: 'referee', component: RefereeComponent },
+  { path: 'career', component: CareersComponent },
+  { path: 'faq', component: FaqComponent },
+  { path: 'blog', component: BlogComponent },
+  { path: 'contact', component: ContactusComponent },
   { path: 'pricing', component: PricingComponent },
   { path: 'partners', component: PartnersComponent },
   { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
