@@ -1,14 +1,17 @@
 export default function(sequelize, DataTypes) {
     return sequelize.define('phone', {
         "number": {
-          type:DataTypes.STRING,
+          type:DataTypes.STRING(64),
           allowNull: false,
           validate: {
-            is: /^\d{5}(-\d{4})?$/
+            is: /^\d+$/
           }
         },
-        phone: {
-          type: DataTypes.STRING
+        description: {
+          type: DataTypes.STRING(64),
+          validate: {
+            is: /^(mobile|home|cell|other)$/i
+          }
         }
     }, {
         paranoid: true, // mark as deleted but do not delete

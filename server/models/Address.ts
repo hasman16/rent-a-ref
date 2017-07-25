@@ -8,21 +8,21 @@ export default function(sequelize, DataTypes) {
           type: DataTypes.STRING,
         },
         city: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(128),
           allowNull: false,
           validate: {
             isAlpha: true
           }
         },
         state: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(128),
           allowNull: false,
           validate: {
             isAlpha: true
           }
         },
         zip: {
-          type:DataTypes.STRING,
+          type:DataTypes.STRING(16),
           allowNull: false,
           validate: {
             is: /^\d{5}(-\d{4})?$/

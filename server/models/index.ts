@@ -55,13 +55,19 @@ models.forEach(function(model) {
   });
 
   m.Person.hasMany(m.Organization);
-  m.Person.hasMany(m.Address);
 
   m.Person.belongsToMany(m.Organization, {
     through: 'organizer'
   });
 
-  //sequelize.models.organizer.hasMany(m.Game);
+  m.Person.belongsToMany(m.Address, {
+    through: 'person_addresses'
+  });
+  
+  m.Person.belongsToMany(m.Phone, {
+    through: 'person_phone'
+  });
+
   m.Game.belongsTo(sequelize.models.organizer);
 
   m.Person.belongsToMany(m.Game, {
@@ -70,6 +76,14 @@ models.forEach(function(model) {
 
   m.Sport.belongsToMany(m.Game, {
     through: 'match'
+  });
+
+  m.Organization.belongsToMany(m.Address, {
+    through: 'organization_addresses'
+  });
+
+  m.Organization.belongsToMany(m.Phone, {
+    through: 'organization_phone'
   });
 
   module.exports.Referee = sequelize.models.referee;

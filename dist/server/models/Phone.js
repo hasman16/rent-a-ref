@@ -3,14 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function default_1(sequelize, DataTypes) {
     return sequelize.define('phone', {
         "number": {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
-                is: /^\d{5}(-\d{4})?$/
+                is: /^\d+$/
             }
         },
-        phone: {
-            type: DataTypes.STRING
+        description: {
+            type: DataTypes.STRING(64),
+            validate: {
+                is: /^(mobile|home|cell|other)$/i
+            }
         }
     }, {
         paranoid: true,
