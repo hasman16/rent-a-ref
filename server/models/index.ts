@@ -5,9 +5,11 @@ import Sequelize from 'sequelize';
 dotenv.load({ path: '.env' });
 
 const models = [
+  'Address',
   'Game',
   'Organization',
   'Person',
+  'Phone',
   'Sport',
   'User',
 ];
@@ -53,6 +55,7 @@ models.forEach(function(model) {
   });
 
   m.Person.hasMany(m.Organization);
+  m.Person.hasMany(m.Address);
 
   m.Person.belongsToMany(m.Organization, {
     through: 'organizer'
