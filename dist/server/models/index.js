@@ -68,5 +68,9 @@ models.forEach(function (model) {
     module.exports.Referee = exports.sequelize.models.referee;
     module.exports.Match = exports.sequelize.models.match;
     module.exports.Organizer = exports.sequelize.models.organizer;
+    module.exports.OrganizationAddress = exports.sequelize.models.organization_address;
+    module.exports.OrganizationPhone = exports.sequelize.models.organization_phone;
+    module.exports.PersonAddress = exports.sequelize.models.person_address;
+    module.exports.PersonPhone = exports.sequelize.models.person_phone;
 })(module.exports);
 //# sourceMappingURL=index.js.map

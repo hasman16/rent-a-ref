@@ -3,6 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function GameController(models, ResponseService) {
     var Game = models.Game;
     var attributes = ['id', 'name', 'duration', 'referees'];
+    function makeGame(newGame, withId) {
+        if (withId === void 0) { withId = false; }
+        var game = {
+            "name": newGame["name"],
+            "duration": newGame['duration'],
+            "referees": newGame['referees']
+        };
+        if (withId) {
+            game['id'] = newGame.id;
+        }
+        return game;
+    }
     function getAll(req, res) {
         Game.findAll({
             attributes: attributes
@@ -21,15 +33,15 @@ function GameController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function create(req, res) {
-        var game = new Object(req.body);
+        var game = makeGame(req.body, false);
         Game.create(game)
             .then(function (newGame) {
-            ResponseService.success(res, newGame);
+            ResponseService.success(res, makeGame(newGame, true));
         })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function update(req, res) {
-        var game = new Object(req.body);
+        var game = makeGame(req.body, false);
         Game.update(game, {
             where: {
                 id: req.params.id
@@ -39,7 +51,7 @@ function GameController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function deleteOne(req, res) {
-        var game = new Object(req.body);
+        var game = makeGame(req.body, false);
         Game.destroy(game)
             .then(function (result) { return ResponseService.success(res, 'Game deleted'); })
             .catch(function (error) { return ResponseService.exception(res, error); });

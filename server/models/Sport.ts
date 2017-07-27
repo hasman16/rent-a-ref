@@ -1,4 +1,3 @@
-
 const Sport = function(sequelize, DataTypes) {
   return sequelize.define('sport', {
       name: {

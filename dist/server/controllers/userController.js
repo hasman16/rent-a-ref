@@ -34,6 +34,7 @@ function UserController(bcrypt, jwt, models, ResponseService) {
     function create(req, res) {
         var sequelize = models.sequelize;
         var Person = models.Person;
+        var Phone = models.Phone;
         var aUser = {
             email: req.body.email,
             password: req.body.password,
@@ -71,7 +72,14 @@ function UserController(bcrypt, jwt, models, ResponseService) {
                                 sex: aUser.sex
                             };
                             return Person.create(person, { transaction: t })
-                                .then(function (newPerson) { return returnUser(res, newUser); }, 201);
+                                .then(function (newPerson) {
+                                var phone = {
+                                    "number": req.body.phone_number,
+                                    "description": req.body.phone_description
+                                };
+                                Phone.create(phone, { transaction: t })
+                                    .then(function (newPhone) { return returnUser(res, newUser); });
+                            });
                         });
                     });
                 });

@@ -1,0 +1,1635 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Rent-A-Ref",
+		"_postman_id": "639d8bdd-e340-35db-5c61-695af663e59d",
+		"description": "API tests for rent-a-ref website on Heroku. Will need to tests on Heroku too.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"description": "",
+			"item": [
+				{
+					"name": "login as admin1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9]+\\.[a-z0-9]+\\.[a-z0-9\\-]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"tests['Expect user id to be a number'] = /\\d+/.test(data.user.id);",
+									"tests['Expect accessLevel is administrator'] = data.user.accessLevel === 1;",
+									"tests['Expect person_id to be a number'] = /\\d+/.test(data.user.person_id);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin1@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin1",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "login as admin2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9]+\\.[a-z0-9]+\\.[a-z0-9\\-]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"tests['Expect user id to be a number'] = /\\d+/.test(data.user.id);",
+									"tests['Expect accessLevel is administrator'] = data.user.accessLevel === 2;",
+									"tests['Expect person_id to be a number'] = /\\d+/.test(data.user.person_id);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "login as ref",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9]+\\.[a-z0-9]+\\.[a-z0-9\\-]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"tests['Expect user id to be a number'] = /\\d+/.test(data.user.id);",
+									"tests['Expect accessLevel is administrator'] = data.user.accessLevel === 5;",
+									"tests['Expect person_id to be a number'] = /\\d+/.test(data.user.person_id);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "ref1@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "referee1",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "login correct username wrong password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 403'] = responseCode.code === 403;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === false;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message is \"Authorization failed\"'] = data.message === \"Authorization failed\";",
+									"tests['Doesnot return token'] = !responseBody.has('token');",
+									"tests['Expect token to be undefined'] = data.token === undefined;",
+									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
+									"tests['Expect accessLevel is undefined'] = data.accessLevel === undefined;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin1@rentaref.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "xx",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "login wrong username correct password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 403'] = responseCode.code === 403;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === false;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message is \"Authorization failed\"'] = data.message === \"Authorization failed\";",
+									"tests['Doesnot return token'] = !responseBody.has('token');",
+									"tests['Expect token to be undefined'] = data.token === undefined;",
+									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
+									"tests['Expect accessLevel is undefined'] = data.accessLevel === undefined;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "fred@mailinator.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin1",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "login as unknow user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 403'] = responseCode.code === 403;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === false;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message is \"Authorization failed\"'] = data.message === \"Authorization failed\";",
+									"tests['Doesnot return token'] = !responseBody.has('token');",
+									"tests['Expect token to be undefined'] = data.token === undefined;",
+									"tests['Does not return user'] = !responseBody.has('user');",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "fredflintstone@bedrock.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "fjljj",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Organization as Admin1",
+			"description": "",
+			"item": [
+				{
+					"name": "login as admin1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9]+\\.[a-z0-9]+\\.[a-z0-9\\-]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"tests['Expect user id to be a number'] = /\\d+/.test(data.user.id);",
+									"tests['Expect accessLevel is administrator'] = data.user.accessLevel === 1;",
+									"tests['Expect person_id to be a number'] = /\\d+/.test(data.user.person_id);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin1@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin1",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/organization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Expect data to be array'] = /\\d/.test(data.length);",
+									"tests['Expect rows to be returned'] = data.length > 0;",
+									"var item = data[0];",
+									"tests['Expect sport to have an id'] = /\\d+/.test(item.id);",
+									"tests['Expect sport to have name'] = item.name.length > 0;",
+									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
+									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
+									"",
+									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
+									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
+									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
+									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/organization",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/organization/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"tests['Returns a name'] = responseBody.has('name');",
+									"tests['Returns number of periods'] = responseBody.has('periods');",
+									"tests['Returns duration of game'] = responseBody.has('duration');",
+									"tests['Returns number ofreferees'] = responseBody.has('referees');",
+									"",
+									"",
+									"tests['Expect sport id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect sport to have name'] = item.name.length > 0;",
+									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
+									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
+									"",
+									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
+									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
+									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
+									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/organization/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/organization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"tests['Returns a name'] = responseBody.has('name');",
+									"tests['Returns number of periods'] = responseBody.has('periods');",
+									"tests['Returns duration of game'] = responseBody.has('duration');",
+									"tests['Returns number ofreferees'] = responseBody.has('referees');",
+									"",
+									"",
+									"tests['Expect sport id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect sport to have name'] = item.name.length > 0;",
+									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
+									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
+									"",
+									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
+									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
+									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
+									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/organization",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Test Organization",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/organization/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"tests['Returns a name'] = responseBody.has('name');",
+									"tests['Returns number of periods'] = responseBody.has('periods');",
+									"tests['Returns duration of game'] = responseBody.has('duration');",
+									"tests['Returns number ofreferees'] = responseBody.has('referees');",
+									"",
+									"",
+									"tests['Expect sport id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect sport to have name'] = item.name.length > 0;",
+									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
+									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
+									"",
+									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
+									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
+									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
+									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/organization/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Underwater basket weaving",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "periods",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "referees",
+									"value": "13",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "90",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/organizer/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"tests['Returns a name'] = responseBody.has('name');",
+									"tests['Returns number of periods'] = responseBody.has('periods');",
+									"tests['Returns duration of game'] = responseBody.has('duration');",
+									"tests['Returns number ofreferees'] = responseBody.has('referees');",
+									"",
+									"",
+									"tests['Expect sport id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect sport to have name'] = item.name.length > 0;",
+									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
+									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
+									"",
+									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
+									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
+									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
+									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/organizer/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/organization/1/phone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"tests['Returns a name'] = responseBody.has('name');",
+									"tests['Returns number of periods'] = responseBody.has('periods');",
+									"tests['Returns duration of game'] = responseBody.has('duration');",
+									"tests['Returns number ofreferees'] = responseBody.has('referees');",
+									"",
+									"",
+									"tests['Expect sport id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect sport to have name'] = item.name.length > 0;",
+									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
+									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
+									"",
+									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
+									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
+									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
+									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/organization/1/phone",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "number",
+									"value": "9495555455",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "mobile",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sports as Admin1",
+			"description": "",
+			"item": [
+				{
+					"name": "login as admin1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9]+\\.[a-z0-9]+\\.[a-z0-9\\-]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"tests['Expect user id to be a number'] = /\\d+/.test(data.user.id);",
+									"tests['Expect accessLevel is administrator'] = data.user.accessLevel === 1;",
+									"tests['Expect person_id to be a number'] = /\\d+/.test(data.user.person_id);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin1@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin1",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/sport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Expect data to be array'] = /\\d/.test(data.length);",
+									"tests['Expect rows to be returned'] = data.length > 0;",
+									"var item = data[0];",
+									"tests['Expect sport to have an id'] = /\\d+/.test(item.id);",
+									"tests['Expect sport to have name'] = item.name.length > 0;",
+									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
+									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
+									"",
+									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
+									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
+									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
+									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/sport",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/sport/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"tests['Returns a name'] = responseBody.has('name');",
+									"tests['Returns number of periods'] = responseBody.has('periods');",
+									"tests['Returns duration of game'] = responseBody.has('duration');",
+									"tests['Returns number ofreferees'] = responseBody.has('referees');",
+									"",
+									"",
+									"tests['Expect sport id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect sport to have name'] = item.name.length > 0;",
+									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
+									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
+									"",
+									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
+									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
+									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
+									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/sport/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/sport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"tests['Returns a name'] = responseBody.has('name');",
+									"tests['Returns number of periods'] = responseBody.has('periods');",
+									"tests['Returns duration of game'] = responseBody.has('duration');",
+									"tests['Returns number ofreferees'] = responseBody.has('referees');",
+									"",
+									"",
+									"tests['Expect sport id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect sport to have name'] = item.name.length > 0;",
+									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
+									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
+									"",
+									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
+									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
+									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
+									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/sport",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Underwater basket weaving",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "periods",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "referees",
+									"value": "13",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "90",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/sport/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"tests['Returns a name'] = responseBody.has('name');",
+									"tests['Returns number of periods'] = responseBody.has('periods');",
+									"tests['Returns duration of game'] = responseBody.has('duration');",
+									"tests['Returns number ofreferees'] = responseBody.has('referees');",
+									"",
+									"",
+									"tests['Expect sport id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect sport to have name'] = item.name.length > 0;",
+									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
+									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
+									"",
+									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
+									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
+									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
+									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/sport/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Underwater basket weaving",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "periods",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "referees",
+									"value": "13",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "90",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User as Admin1",
+			"description": "",
+			"item": [
+				{
+					"name": "login as admin1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9]+\\.[a-z0-9]+\\.[a-z0-9\\-]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"tests['Expect user id to be a number'] = /\\d+/.test(data.user.id);",
+									"tests['Expect accessLevel is administrator'] = data.user.accessLevel === 1;",
+									"tests['Expect person_id to be a number'] = /\\d+/.test(data.user.person_id);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin1@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin1",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user",
+					"request": {
+						"url": "localhost:3000/api/user",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/1",
+					"request": {
+						"url": "localhost:3000/api/user/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user",
+					"request": {
+						"url": "localhost:3000/api/user",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test4@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "Lazerus",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "sex",
+									"value": "m",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "1758888",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/1",
+					"request": {
+						"url": "localhost:3000/api/user/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test4@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test12",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "Lazerus",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "sex",
+									"value": "m",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "1758888",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/1",
+					"request": {
+						"url": "localhost:3000/api/user/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test4@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "Lazerus",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "sex",
+									"value": "m",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "1758888",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User as Ref",
+			"description": "",
+			"item": [
+				{
+					"name": "login as ref ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9]+\\.[a-z0-9]+\\.[a-z0-9\\-]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"tests['Expect user id to be a number'] = /\\d+/.test(data.user.id);",
+									"tests['Expect accessLevel is administrator'] = data.user.accessLevel === 5;",
+									"tests['Expect person_id to be a number'] = /\\d+/.test(data.user.person_id);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"postman.setGlobalVariable(\"userId\", data.user.id);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "ref1@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "referee1",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 403;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === false;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Permission Violation\";",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/user",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id",
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id",
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test4@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test12",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "Lazerus",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "sex",
+									"value": "m",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "1758888",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id",
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test4@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "Lazerus",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "sex",
+									"value": "m",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "1758888",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

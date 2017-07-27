@@ -22,31 +22,33 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function makeAddress(newAddress) {
+  function makeAddress(newAddress, withId) {
+    withId = withId || false;
     let address = {
-          street1: newAddress.street1,
-          street2: newAddress.street2,
-          city: newAddress.city,
-          state: newAddress.state,
-          zip: newAddress.zip
+      street1: newAddress.street1,
+      street2: newAddress.street2,
+      city: newAddress.city,
+      state: newAddress.state,
+      zip: newAddress.zip
     };
     if (withId) {
       address['id'] = newAddress.id;
     }
+
     return address;
   }
+
   function create(req, res) {
     const anAddress = makeAddress(req.body, false);
 
     Address.create(anAddress)
-      .then(newAddress => {
-        ResponseService.success(res, newAddress);
-      })
+      .then(newAddress => ResponseService.success(res, makeAddress(newAddress, true)))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function update(req, res) {
-    const anAddress = new Object(req.body);
+    const anAddress = makeAddress(req.body, false);
+
     Address.update(anAddress, {
       where: {
         id: req.params.id
@@ -58,6 +60,7 @@ export default function AddressController(models, ResponseService) {
 
   function deleteOne(req, res) {
     const anAddress = makeAddress(req.body, true);
+
     Address.destroy(anAddress)
       .then(result => ResponseService.success(res, 'Address deleted'))
       .catch(error => ResponseService.exception(res, error));

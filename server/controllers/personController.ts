@@ -22,23 +22,26 @@ export default function PersonController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
+  function makePerson(newPerson) {
+    return {
+      firstname: newPerson.firstname,
+      middlenames: newPerson.middlenames,
+      lastname: newPerson.lastname,
+      dob: newPerson.dob
+    };
+  }
+
   function create(req, res) {
-    const aPerson = new Object(req.body);
+    const aPerson = makePerson(req.body);
     Person.create(aPerson)
       .then(newPerson => {
-        const person = {
-          id: newPerson.id,
-          firstname: newPerson.firstname,
-          middlenames: newPerson.middlenames,
-          lastname: newPerson.lastname
-        }
-        ResponseService.success(res, person);
+        ResponseService.success(res, newPerson);
       })
       .catch(error => ResponseService.exception(res, error));
   }
 
   function update(req, res) {
-    const aPerson = new Object(req.body);
+    const aPerson = makePerson(req.body);
     Person.update(aPerson, {
       where: {
         id: req.params.id
@@ -49,7 +52,7 @@ export default function PersonController(models, ResponseService) {
   }
 
   function deleteOne(req, res) {
-    const person = new Object(req.body);
+    const person = makePerson(req.body);
     Person.destroy(person)
       .then(result => ResponseService.success(res, 'Person deleted'))
       .catch(error => ResponseService.exception(res, error));

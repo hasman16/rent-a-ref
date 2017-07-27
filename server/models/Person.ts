@@ -1,4 +1,3 @@
-
 const Person = function(sequelize, DataTypes) {
   return sequelize.define('person', {
       firstname: {

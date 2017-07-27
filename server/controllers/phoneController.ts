@@ -22,10 +22,11 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function makePhone(newPhone) {
+  function makePhone(newPhone, withId) {
+    withId = withId || false;
     let phone = {
-          "number": newPhone["number"],
-          "description": newPhone['description']
+      "number": newPhone.number,
+      "description": newPhone.description
     };
     if (withId) {
       phone['id'] = newPhone.id;
@@ -33,19 +34,32 @@ export default function AddressController(models, ResponseService) {
     return phone;
   }
 
-  function create(req, res) {
+  function create(req, res, joinTable, joinModel) {
+    const sequelize = models.sequelize;
     const aPhone = makePhone(req.body, false);
 
-    Phone.create(aPhone)
-      .then(newPhone => {
-        ResponseService.success(res, newPhone);
-      })
+    sequelize.transaction(function(t) {
+      return Phone.create(aPhone, { transaction: t })
+        .then(newPhone => {
+          const model = Object.assign({}, joinModel, { phone_id: newPhone.id });
+          return joinTable.create(model, { transaction: t })
+            .then(newModel => {
+              ResponseService.success(res, newModel);
+            });
+        });
+    })
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function update(req, res) {
+  function createByOrganization(req, res) {
+    const table = models.OrganizationPhone;
+    const model = { organization_id: req.params.organization_id };
+    create(req, res, table, model);
+  }
+
+  function updateByOrganization(req, res) {
     const aPhone = makePhone(req.body, false);
-    aPhone.update(aPhone, {
+    Phone.update(aPhone, {
       where: {
         id: req.params.id
       }
@@ -54,7 +68,31 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function deleteOne(req, res) {
+  function deleteByOrganization(req, res) {
+    const aPhone = makePhone(req.body, true);
+    Phone.destroy(aPhone)
+      .then(result => ResponseService.success(res, 'Phone deleted'))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function createByPerson(req, res) {
+    const table = models.PersonPhone;
+    const model = { person_id: req.params.person_id };
+    this.create(req, res, table, model);
+  }
+
+  function updateByPerson(req, res) {
+    const aPhone = makePhone(req.body, false);
+    Phone.update(aPhone, {
+      where: {
+        id: req.params.id
+      }
+    })
+      .then(result => ResponseService.success(res, 'Phone updated'))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function deleteByPerson(req, res) {
     const aPhone = makePhone(req.body, true);
     Phone.destroy(aPhone)
       .then(result => ResponseService.success(res, 'Phone deleted'))
@@ -62,10 +100,14 @@ export default function AddressController(models, ResponseService) {
   }
 
   return {
-    getAll: getAll,
-    getOne: getOne,
-    create: create,
-    update: update,
-    deleteOne: deleteOne
+    getAll,
+    getOne,
+    createByPerson,
+    updateByPerson,
+    deleteByPerson,
+
+    createByOrganization,
+    updateByOrganization,
+    deleteByOrganization
   }
 }

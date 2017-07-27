@@ -1,4 +1,3 @@
-
 const Game = function(sequelize, DataTypes) {
   return sequelize.define('game', {
       name: DataTypes.STRING(64),

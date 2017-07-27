@@ -21,22 +21,24 @@ function PersonController(models, ResponseService) {
             .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
+    function makePerson(newPerson) {
+        return {
+            firstname: newPerson.firstname,
+            middlenames: newPerson.middlenames,
+            lastname: newPerson.lastname,
+            dob: newPerson.dob
+        };
+    }
     function create(req, res) {
-        var aPerson = new Object(req.body);
+        var aPerson = makePerson(req.body);
         Person.create(aPerson)
             .then(function (newPerson) {
-            var person = {
-                id: newPerson.id,
-                firstname: newPerson.firstname,
-                middlenames: newPerson.middlenames,
-                lastname: newPerson.lastname
-            };
-            ResponseService.success(res, person);
+            ResponseService.success(res, newPerson);
         })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function update(req, res) {
-        var aPerson = new Object(req.body);
+        var aPerson = makePerson(req.body);
         Person.update(aPerson, {
             where: {
                 id: req.params.id
@@ -46,7 +48,7 @@ function PersonController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function deleteOne(req, res) {
-        var person = new Object(req.body);
+        var person = makePerson(req.body);
         Person.destroy(person)
             .then(function (result) { return ResponseService.success(res, 'Person deleted'); })
             .catch(function (error) { return ResponseService.exception(res, error); });

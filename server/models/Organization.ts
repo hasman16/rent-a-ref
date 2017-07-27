@@ -1,4 +1,3 @@
-
 const Organization = function(sequelize, DataTypes) {
   return sequelize.define('organization', {
       name: {

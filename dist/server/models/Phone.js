@@ -6,11 +6,12 @@ function default_1(sequelize, DataTypes) {
             type: DataTypes.STRING(64),
             allowNull: false,
             validate: {
-                is: /^\d+$/
+                is: /^\d{9,}$/
             }
         },
         description: {
             type: DataTypes.STRING(64),
+            allowNull: false,
             validate: {
                 is: /^(mobile|home|cell|other)$/i
             }
