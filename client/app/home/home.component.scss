@@ -1028,7 +1028,7 @@ p.moredetails {
     padding-right: 8px;
 }
 
-.infiniteCarousel .container ul li .details{display:block;height:130px;position:relative;}
+.infiniteCarousel .container1 ul li .details{display:block;height:130px;position:relative;}
 
 /* LISTS */
 ul.arrows {
@@ -1157,7 +1157,7 @@ div.form-container {
 	top: 0;
 }
 
-.infiniteCarousel .container ul {
+.infiniteCarousel .container1 ul {
 	width: 9999px;
 	height: 285px;
 	list-style-image: none;
@@ -1169,7 +1169,7 @@ div.form-container {
 	top: 0;
 }
 
-.infiniteCarousel .container ul li {
+.infiniteCarousel .container1 ul li {
 	display: block;
 	float: left;
 	height: 285px;
@@ -2663,7 +2663,7 @@ background: #59728B;
 
 /* Master */
 #master-wrapper {
-    background: url("http://localhost:4200/assets/images/refereebg1.jpg") repeat fixed center center #000000;
+    background: url("/assets/images/refereebg1.jpg") repeat fixed center center #000000;
     height: 100%;
     position: fixed;
     width: 100%;
@@ -2725,7 +2725,7 @@ background: #59728B;
 /*Main Menu Container*/
 .nfMain {
 background-color:#55556a;
-background-image:url('http://localhost:4200/assets/images/refereebg.jpg');
+background-image:url('/assets/images/refereebg.jpg');
 padding:0px 0px 0px 20px;}
 /*Item Links*/
 .nfMain .nfLink {border-style:solid;

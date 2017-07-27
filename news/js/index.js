@@ -2,8 +2,8 @@ var link = $('.com__nav-link');
 var linkParent = link.parent('li');
 var section = $('.com__section');
 var sectionContent = section.find('*');
-alert('Test');
-var switchTab = function() {alert('Test 1');
+
+var switchTab = function() {
 	var p = $(this).parent('li');
 	var i  = p.index();
 	var s = section.eq(i);
