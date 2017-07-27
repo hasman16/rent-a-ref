@@ -37,6 +37,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
   function create(req, res) {
     const sequelize = models.sequelize;
     const Person = models.Person;
+    const Phone = models.Phone;
     const aUser = {
       email: req.body.email,
       password: req.body.password,
@@ -75,7 +76,14 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                       sex: aUser.sex
                     };
                     return Person.create(person, { transaction: t })
-                      .then(newPerson => returnUser(res, newUser), 201);
+                      .then(newPerson => {
+                        const phone = {
+                          "number": req.body.phone_number,
+                          "description": req.body.phone_description
+                        };
+                        Phone.create(phone, { transaction: t })
+                          .then(newPhone => returnUser(res, newUser));
+                      });
                   });
               });
             });
@@ -139,7 +147,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                 message: 'Authorization success',
                 token: token,
                 user: user
-              },201);
+              }, 201);
 
             } else {
               ResponseService.failure(res, 'Authorization failed');

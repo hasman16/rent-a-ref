@@ -5,9 +5,11 @@ import Sequelize from 'sequelize';
 dotenv.load({ path: '.env' });
 
 const models = [
+  'Address',
   'Game',
   'Organization',
   'Person',
+  'Phone',
   'Sport',
   'User',
 ];
@@ -58,7 +60,14 @@ models.forEach(function(model) {
     through: 'organizer'
   });
 
-  //sequelize.models.organizer.hasMany(m.Game);
+  m.Person.belongsToMany(m.Address, {
+    through: 'person_addresses'
+  });
+
+  m.Person.belongsToMany(m.Phone, {
+    through: 'person_phone'
+  });
+
   m.Game.belongsTo(sequelize.models.organizer);
 
   m.Person.belongsToMany(m.Game, {
@@ -69,8 +78,19 @@ models.forEach(function(model) {
     through: 'match'
   });
 
+  m.Organization.belongsToMany(m.Address, {
+    through: 'organization_addresses'
+  });
+
+  m.Organization.belongsToMany(m.Phone, {
+    through: 'organization_phone'
+  });
+
   module.exports.Referee = sequelize.models.referee;
   module.exports.Match = sequelize.models.match;
   module.exports.Organizer = sequelize.models.organizer;
-
+  module.exports.OrganizationAddress = sequelize.models.organization_address;
+  module.exports.OrganizationPhone = sequelize.models.organization_phone;
+  module.exports.PersonAddress = sequelize.models.person_address;
+  module.exports.PersonPhone = sequelize.models.person_phone;
 })(module.exports);

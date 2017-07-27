@@ -2,6 +2,18 @@ export default function GameController(models, ResponseService) {
   const Game = models.Game;
   const attributes = ['id', 'name', 'duration', 'referees']
 
+  function makeGame(newGame, withId = false) {
+    let game = {
+      "name": newGame["name"],
+      "duration": newGame['duration'],
+      "referees": newGame['referees']
+    };
+    if (withId) {
+      game['id'] = newGame.id;
+    }
+    return game;
+  }
+
   function getAll(req, res) {
     Game.findAll({
       attributes: attributes
@@ -22,16 +34,16 @@ export default function GameController(models, ResponseService) {
   }
 
   function create(req, res) {
-    const game = new Object(req.body);
+    const game = makeGame(req.body, false);
     Game.create(game)
       .then(newGame => {
-        ResponseService.success(res, newGame);
+        ResponseService.success(res, makeGame(newGame, true));
       })
       .catch(error => ResponseService.exception(res, error));
   }
 
   function update(req, res) {
-    const game = new Object(req.body);
+    const game = makeGame(req.body, false);
     Game.update(game, {
       where: {
         id: req.params.id
@@ -42,7 +54,7 @@ export default function GameController(models, ResponseService) {
   }
 
   function deleteOne(req, res) {
-    const game = new Object(req.body);
+    const game = makeGame(req.body, false);
     Game.destroy(game)
       .then(result => ResponseService.success(res, 'Game deleted'))
       .catch(error => ResponseService.exception(res, error));

@@ -9,6 +9,8 @@ import ResponseService from './../util/responseService';
 import gameController from './../controllers/gameController';
 import personController from './../controllers/personController';
 import organizationController from './../controllers/organizationController';
+
+import phoneController from './../controllers/phoneController';
 import sportController from './../controllers/sportController';
 import userController from './../controllers/userController';
 
@@ -16,6 +18,7 @@ import userController from './../controllers/userController';
 import gameRoutes from './gameRoutes';
 import personRoutes from './personRoutes';
 import organizationRoutes from './organizationRoutes';
+import phoneRoutes from './phoneRoutes';
 import sportRoutes from './sportRoutes';
 import userRoutes from './userRoutes';
 
@@ -23,19 +26,21 @@ export default function setRoutes(app, models) {
 
   const router = express.Router();
   const external = {
-      authorization: authorization(),
-      authentication: authentication,
-      router: router
+    authorization: authorization(),
+    authentication: authentication,
+    router: router
   };
   const gameCtrl = gameController(models, ResponseService);
   const personCtrl = personController(models, ResponseService);
   const userCtrl = userController(bcrypt, jwt, models, ResponseService);
   const sportCtrl = sportController(models, ResponseService);
   const organizationCtrl = organizationController(models, ResponseService);
+  const phoneCtrl = phoneController(models, ResponseService);
 
   gameRoutes(external, gameCtrl);
   personRoutes(external, personCtrl);
   organizationRoutes(external, organizationCtrl);
+  phoneRoutes(external, phoneCtrl);
   sportRoutes(external, sportCtrl);
   userRoutes(external, userCtrl);
 
