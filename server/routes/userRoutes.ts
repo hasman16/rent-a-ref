@@ -8,6 +8,7 @@ export default function userRoutes(setter, userCtrl) {
   router.route('/logout').post(userCtrl.logout);
 
   router.route('/user').get(authentication, authorization.isAdmin, userCtrl.getAll);
+
   router.route('/user').post(userCtrl.create);
   router.route('/register').post(userCtrl.create);
 
