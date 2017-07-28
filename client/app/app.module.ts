@@ -34,6 +34,9 @@ import { RefereeComponent } from './referee/referee.component';
 import { PartnersComponent } from './group/partners/partners.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { CareersComponent } from './group/careers/careers.component';
+import { FaqComponent } from './group/faq/faq.component';
+import { BlogComponent } from './group/blog/blog.component';
+import { ContactusComponent } from './group/contactus/contactus.component';
 // import { StatisticsComponent } from './shared/statistics/statistics.component';
 
 // import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
@@ -64,7 +67,10 @@ import { CareersComponent } from './group/careers/careers.component';
     RefereeComponent,
     PartnersComponent,
     TermsAndConditionsComponent,
-    CareersComponent
+    CareersComponent,
+    FaqComponent,
+    BlogComponent,
+    ContactusComponent
     // StatisticsComponent
     // GoogleChart
   ],

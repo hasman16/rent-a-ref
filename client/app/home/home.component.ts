@@ -10,13 +10,17 @@ import * as $ from 'jquery';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { 
+  constructor() {
    // When the DOM is ready, run this function
 $(document).ready(function() {
-  //Set the carousel options
+  // Set the carousel options
+  $('#news-carousel').carousel({
+    pause: true,
+    interval: 20000,
+  });
   $('#quote-carousel').carousel({
     pause: true,
-    interval: 5000,
+    interval: 15000,
   });
 });
   }

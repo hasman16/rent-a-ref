@@ -43,7 +43,7 @@ export class AppComponent {
 
     destination_anim_bgs.push('assets/images/refereebg2.jpg', 'assets/images/refereebg3.jpg', 'assets/images/refereebg4.jpg');
     destination_anim_bgs.push('assets/images/refereebg5.jpg', 'assets/images/refereebg6.jpg', 'assets/images/refereebg7.jpg');
-    destination_anim_bgs.push('assets/images/refereebg8.jpg', 'assets/images/refereebg9.jpg', 'assets/images/refereebg10.jpg');
+    destination_anim_bgs.push('assets/images/refereebg8.jpg', 'assets/images/refereebg9.png', 'assets/images/refereebg10.jpg');
     destination_anim_bgs.push('assets/images/refereebg11.jpg');
     // destination_anim_bgs.push(destination_anim_bgs2);
     // destination_anim_bgs.push(destination_anim_bgs3);
@@ -57,7 +57,7 @@ export class AppComponent {
 
       imgArr.push('assets/images/refereebg3.jpg', 'assets/images/refereebg4.jpg', 'assets/images/refereebg5.jpg');
       imgArr.push('assets/images/refereebg6.jpg', 'assets/images/refereebg7.jpg', 'assets/images/refereebg8.jpg');
-      imgArr.push('assets/images/refereebg9.jpg', 'assets/images/refereebg10.jpg', 'assets/images/refereebg11.jpg');
+      imgArr.push('assets/images/refereebg9.png', 'assets/images/refereebg10.jpg', 'assets/images/refereebg11.jpg');
       imgArr.push('assets/images/refereebg12.jpg');
      // imgArr.push(imgArr3);
 
