@@ -1,9 +1,10 @@
 <nav class="navbar navbar-dark bg-primary">
   <div class="nav navbar-nav">
-    <a routerLink="/" class="nav-item nav-link navbar-brand" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> <img src="assets/images/reficon1.png" class="img-fluid img-responsive" width=auto alt="Rent A Ref"><img src="assets/images/reftext.gif"
-        class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=100%></a>
+    
 
         <ul class="nav navbar-nav">
+          <a routerLink="/" class="nav-item nav-link navbar-brand" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> <span style="white-space: nowrap;"><img src="assets/images/reficon1.png" class="img-fluid img-responsive" width=auto alt="Rent A Ref"><img src="assets/images/reftext.gif"
+        class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=90%></span></a>
     <a routerLink="/" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
         <i class="fa fa-home"></i> Home
       </a>
@@ -13,9 +14,9 @@
       <a routerLink="/pricing" class="nav-item nav-link" routerLinkActive="active">
         <i class="fa  fa-money" aria-hidden="true"></i> Pricing
       </a>
-    <a routerLink="/cats" class="nav-item nav-link" routerLinkActive="active">
-        <i class="fa fa-list"></i> Cats     </a>
-
+    <!--<a routerLink="/cats" class="nav-item nav-link" routerLinkActive="active">
+        <i class="fa fa-list"></i> Cats     </a>-->
+<span style="float: right">
     <a routerLink="/login" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
         <i class="fa fa-sign-in"></i> Login
       </a>
@@ -32,15 +33,15 @@
     <a routerLink="/logout" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
         <i class="fa fa-sign-out"></i> Logout
       </a>
-
+</span>
         </ul>
   </div>  
   <br>
-  <span class="nav navbar-nav">
-<a routerLink="/profile" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
+  <span class="nav navbar-nav" style="float:right">
+<a routerLink="/profile" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
         <i class="fa fa-user"></i> Profile
       </a>
-      <a routerLink="/edit-profile" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
+      <a routerLink="/edit-profile" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
         <i class="fa fa-pencil-square-o"></i> Edit Profile
       </a>
     </span>
