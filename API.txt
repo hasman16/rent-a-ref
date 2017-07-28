@@ -66,6 +66,7 @@ Only admins have permissions for this endpoint.
 
 
 POST  /user - Create User
+POST  /register - Alternative.
 Payload:
 {
   "email":"test4@rentaref.com",
@@ -76,9 +77,8 @@ Payload:
 }
 Returns:
 {
-    "id": 8,
-    "email": "test4@rentaref.com",
-    "authorization": 5
+    "success": true,
+    "message": "User created successfully"
 }
 Notes:
 Does not require login. Access level is optional, default is 5.

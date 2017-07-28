@@ -1242,7 +1242,58 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "test4@rentaref.com",
+									"value": "test77@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "Lazerus",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "sex",
+									"value": "m",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "1758888",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/register",
+					"request": {
+						"url": "localhost:3000/api/register",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "register@rentaref.com",
 									"description": "",
 									"type": "text"
 								},

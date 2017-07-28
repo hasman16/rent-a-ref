@@ -64,7 +64,6 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                 authorization: aUser.authorization,
                 enabled: false
               };
-
               return sequelize.transaction(function(t) {
                 return User.create(user, { transaction: t })
                   .then(newUser => {
@@ -77,12 +76,17 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                     };
                     return Person.create(person, { transaction: t })
                       .then(newPerson => {
+                        /*
                         const phone = {
                           "number": req.body.phone_number,
                           "description": req.body.phone_description
                         };
                         Phone.create(phone, { transaction: t })
-                          .then(newPhone => returnUser(res, newUser));
+                          .then(newPhone => returnUser(res, newUser)); */
+                        ResponseService.success(res, {
+                          success: true,
+                          message: 'User created successfully'
+                        }, 201);
                       });
                   });
               });
