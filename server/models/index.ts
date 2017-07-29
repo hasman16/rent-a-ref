@@ -6,6 +6,7 @@ dotenv.load({ path: '.env' });
 
 const models = [
   'Address',
+  'Email',
   'Game',
   'Organization',
   'Person',
