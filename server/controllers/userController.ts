@@ -1,7 +1,7 @@
 
 export default function UserController(bcrypt, jwt, models, ResponseService) {
   const User = models.User;
-  const attributes = ['id', 'email', 'authorization'];
+  const attributes = ['id', 'email', 'authorization', 'can_organize', 'can_referee', 'status'];
 
   function getAll(req, res) {
     User.findAll({
@@ -60,8 +60,8 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
     const sequelize = models.sequelize;
     const Person = models.Person;
     const Phone = models.Phone;
-    const aUser = createNewUser(req);
-
+    const aUser = createNewUser(req.body);
+    console.log('newUser:', aUser);
     User.findOne({
       where: { email: aUser.email }
     })

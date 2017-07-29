@@ -29,38 +29,59 @@ Returns:
 [
     {
         "id": 1,
-        "email": "admin2@rentaref.com",
-        "authorization": 2
+        "email": "org33@rentaref.com",
+        "authorization": 3,
+        "can_organize": "pending",
+        "can_referee": "pending",
+        "status": "active"
     },
     {
         "id": 2,
-        "email": "admin3@rentaref.com",
-        "authorization": 2
+        "email": "admin1@rentaref.com",
+        "authorization": 1,
+        "can_organize": "active",
+        "can_referee": "active",
+        "status": "active"
     },
     {
         "id": 3,
         "email": "org11@rentaref.com",
-        "authorization": 3
+        "authorization": 3,
+        "can_organize": "active",
+        "can_referee": "active",
+        "status": "active"
     },
     {
         "id": 4,
         "email": "org22@rentaref.com",
-        "authorization": 4
+        "authorization": 3,
+        "can_organize": "active",
+        "can_referee": "no",
+        "status": "active"
     },
     {
         "id": 5,
-        "email": "ref1@rentaref.com",
-        "authorization": 5
+        "email": "ref2@rentaref.com",
+        "authorization": 3,
+        "can_organize": "no",
+        "can_referee": "active",
+        "status": "active"
     },
     {
         "id": 6,
-        "email": "admin1@rentaref.com",
-        "authorization": 1
+        "email": "admin2@rentaref.com",
+        "authorization": 2,
+        "can_organize": "active",
+        "can_referee": "active",
+        "status": "active"
     },
     {
         "id": 7,
-        "email": "org33@rentaref.com",
-        "authorization": 4
+        "email": "ref1@rentaref.com",
+        "authorization": 3,
+        "can_organize": "no",
+        "can_referee": "active",
+        "status": "active"
     }
 ]
 Notes:
@@ -75,7 +96,9 @@ Payload:
   "password": "test4",
   "firstname": "lazerus",
   "sex": "m",
-  "dob": 1758888
+  "dob": 1758888,
+  "can_referee": true|false, //optional defaults to "no"
+  "can_organize": true|false //optional defaults to "no"
 }
 Returns:
 {
