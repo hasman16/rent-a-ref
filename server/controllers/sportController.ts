@@ -14,7 +14,7 @@ export default function SportController(models, ResponseService) {
   function getOne(req, res) {
     Sport.findOne({
       where: {
-        id: req.params.id
+        id: req.params.sport_id
       },
       attributes: attributes
     })
@@ -23,7 +23,7 @@ export default function SportController(models, ResponseService) {
   }
 
   function create(req, res) {
-    const sport = makeSport(req.body, false);
+    const sport = makeSport(req.body);
     Sport.create(sport)
       .then(newSport => {
         returnSport(res, newSport);
@@ -31,29 +31,29 @@ export default function SportController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function makeSport(sport, idOk) {
+  function makeSport(sport) {
     let newSport = {
       name: String(sport.name).trim(),
       duration: Number(sport.duration),
       referees: Number(sport.referees),
       periods: Number(sport.periods)
     };
-    if (idOk) {
-      newSport['id'] = sport.id;
-    }
+
     return newSport;
   }
 
   function returnSport(res, sport) {
-    ResponseService.success(res, makeSport(sport, true));
+    let newSport = makeSport(sport);
+    newSport["id"] = sport.id;
+    ResponseService.success(res, newSport);
   }
 
   function updateOne(req, res) {
-    const sport = makeSport(req.body, false);
+    const sport = makeSport(req.body);
 
     Sport.update(sport, {
       where: {
-        id: req.params.id
+        id: req.params.sport_id
       }
     })
       .then(newSport => getOne(req, res))
@@ -69,7 +69,7 @@ export default function SportController(models, ResponseService) {
     const Referee = models.Referee;
     const clause = {
       where: {
-        id: req.params.id
+        id: req.params.sport_id
       }
     };
 

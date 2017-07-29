@@ -15,7 +15,7 @@ export default function OrganizationController(models, ResponseService) {
 
     Organizer.findAll({
       where: {
-        organization_id: req.params.id
+        organization_id: req.params.organization_id
       },
       include: [{
         model: models.Person
@@ -28,7 +28,7 @@ export default function OrganizationController(models, ResponseService) {
   function getOne(req, res) {
     Organization.findOne({
       where: {
-        id: req.params.id
+        id: req.params.organization_id
       },
       attributes: attributes
     })
@@ -72,7 +72,7 @@ export default function OrganizationController(models, ResponseService) {
     };
     Organization.update(organization, {
       where: {
-        id: req.params.id
+        id: req.params.organization_id
       }
     })
       .then(result => getOne(req, res))

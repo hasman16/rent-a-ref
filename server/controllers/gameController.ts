@@ -2,16 +2,20 @@ export default function GameController(models, ResponseService) {
   const Game = models.Game;
   const attributes = ['id', 'name', 'duration', 'referees']
 
-  function makeGame(newGame, withId = false) {
+  function makeGame(newGame) {
     let game = {
       "name": newGame["name"],
       "duration": newGame['duration'],
       "referees": newGame['referees']
     };
-    if (withId) {
-      game['id'] = newGame.id;
-    }
+
     return game;
+  }
+
+  function returnGame(res, game, status = 200) {
+    let newGame = makeGame(game);
+    newGame["id"] = game.id;
+    ResponseService.success(res, newGame, status);
   }
 
   function getAll(req, res) {
@@ -25,7 +29,7 @@ export default function GameController(models, ResponseService) {
   function getOne(req, res) {
     Game.findOne({
       where: {
-        id: req.params.id
+        id: req.params.game_id
       },
       attributes: attributes
     })
@@ -34,19 +38,20 @@ export default function GameController(models, ResponseService) {
   }
 
   function create(req, res) {
-    const game = makeGame(req.body, false);
+    const game = makeGame(req.body);
+
     Game.create(game)
       .then(newGame => {
-        ResponseService.success(res, makeGame(newGame, true));
+        returnGame(res, newGame, 201);
       })
       .catch(error => ResponseService.exception(res, error));
   }
 
   function update(req, res) {
-    const game = makeGame(req.body, false);
+    const game = makeGame(req.body);
     Game.update(game, {
       where: {
-        id: req.params.id
+        id: req.params.game_id
       }
     })
       .then(result => ResponseService.success(res, 'Game updated'))
@@ -54,7 +59,7 @@ export default function GameController(models, ResponseService) {
   }
 
   function deleteOne(req, res) {
-    const game = makeGame(req.body, false);
+    const game = makeGame(req.body);
     Game.destroy(game)
       .then(result => ResponseService.success(res, 'Game deleted'))
       .catch(error => ResponseService.exception(res, error));

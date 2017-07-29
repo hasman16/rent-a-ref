@@ -5,7 +5,7 @@ export default function phoneRoutes(setter, phoneCtrl) {
   const uploads = setter.uploads;
   const isUserOrAdmin = authorization.isUserOrAdmin;
   const isAdmin = authorization.isAdmin;
-  const personPhone = 'person/person_id/phone/phone_id';
+  //const userPhone = 'user/:user_id/phone/:phone_id';
 
   router.route('/phone').get(authentication, isAdmin, phoneCtrl.getAll);
 

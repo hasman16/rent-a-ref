@@ -7,14 +7,14 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
     User.findAll({
       attributes: attributes,
     })
-      .then(results => ResponseService.success(res, results))
+      .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function getOne(req, res) {
     User.findOne({
       where: {
-        id: req.params.id
+        id: req.params.user_id
       },
       attributes: attributes
     })
@@ -24,7 +24,6 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
 
   function makeUser(newUser) {
     return {
-      id: newUser.id,
       email: newUser.email,
       authorization: newUser.authorization,
       can_organize: newUser.can_organize,
@@ -33,8 +32,10 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
     };
   }
 
-  function returnUser(res, newUser, status = 200) {
-    ResponseService.success(res, makeUser(newUser), status);
+  function returnUser(res, user, status = 200) {
+    let newUser = makeUser(user);
+    newUser["id"] = user.id;
+    ResponseService.success(res, newUser, status);
   }
 
   function createNewUser(user) {
@@ -61,7 +62,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
     const Person = models.Person;
     const Phone = models.Phone;
     const aUser = createNewUser(req.body);
-    console.log('newUser:', aUser);
+
     User.findOne({
       where: { email: aUser.email }
     })
@@ -108,10 +109,10 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
     const user = makeUser(req.body);
     User.update(user, {
       where: {
-        id: req.params.id
+        id: req.params.user_id
       }
     })
-      .then(updatedUser => returnUser(res, updatedUser), 201)
+      .then(updatedUser => returnUser(res, updatedUser, 201))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -175,7 +176,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
   }
 
   function logout(req, res) {
-    const user = new Object(req.body);
+    const user = makeUser(req.body);
   }
 
   return {
