@@ -1,6 +1,6 @@
 export default function OrganizationController(models, ResponseService) {
   const Organization = models.Organization;
-  const attributes = ['id', 'name', 'person_id'];
+  const attributes = ['id', 'name', 'user_id'];
 
   function getAll(req, res) {
     Organization.findAll({
@@ -38,11 +38,11 @@ export default function OrganizationController(models, ResponseService) {
 
   function create(req, res) {
     const sequelize = models.sequelize;
-    const person_id = req.decoded.person_id;
+    const user_id = req.decoded.id;
     const Organizer = models.Organizer;
     const organization = {
       name: req.body.name,
-      person_id: person_id
+      user_id: user_id
     };
 
     sequelize.transaction(function(t) {
@@ -50,14 +50,14 @@ export default function OrganizationController(models, ResponseService) {
         .then(newOrganization => {
           const organizer = {
             organization_id: newOrganization.id,
-            person_id: person_id
+            user_id: user_id
           };
           return Organizer.create(organizer, { transaction: t })
             .then(newOrganizer => {
               const org = {
                 id: newOrganization.id,
                 name: newOrganization.name,
-                person_id: newOrganization.person_id
+                user_id: newOrganization.user_id
               };
               ResponseService.success(res, org);
             });
@@ -88,7 +88,7 @@ export default function OrganizationController(models, ResponseService) {
 
   return {
     getAll: getAll,
-    getOrganizers:getOrganizers,
+    getOrganizers: getOrganizers,
     getOne: getOne,
     create: create,
     update: update,

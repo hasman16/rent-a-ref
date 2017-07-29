@@ -11,12 +11,12 @@ export default function phoneRoutes(setter, phoneCtrl) {
 
   router.route('/organization/:organization_id/phone').post(authentication, phoneCtrl.createByOrganization);
   router.route('/organization/:organization_id/phone').get(authentication, phoneCtrl.getByOrganization);
-  router.route('/organization/:organization_id/phone/phone_id').put(authentication, phoneCtrl.updateByOrganization);
-  router.route('/organization/:organization_id/phone/phone_id').delete(authentication, phoneCtrl.deleteByOrganization);
+  router.route('/organization/:organization_id/phone/:phone_id').put(authentication, phoneCtrl.updateByOrganization);
+  router.route('/organization/:organization_id/phone/:phone_id').delete(authentication, phoneCtrl.deleteByOrganization);
 
-  router.route('/person/:person_id/phone').post(authentication, isUserOrAdmin, phoneCtrl.createByPerson);
-  router.route('/person/person_id/phone').get(authentication, isUserOrAdmin, phoneCtrl.getByPerson);
-  router.route('/person/person_id/phone/phone_id').put(authentication, isUserOrAdmin, phoneCtrl.updateByPerson);
-  router.route('/person/person_id/phone/phone_id').delete(authentication, isUserOrAdmin, phoneCtrl.deleteByPerson);
+  router.route('/user/:user_id/phone').post(authentication, isUserOrAdmin, phoneCtrl.createByUser);
+  router.route('/user/:user_id/phone').get(authentication, isUserOrAdmin, phoneCtrl.getByUser);
+  router.route('/user/:user_id/phone/:phone_id').put(authentication, isUserOrAdmin, phoneCtrl.updateByUser);
+  router.route('/user/:user_id/phone/:phone_id').delete(authentication, isUserOrAdmin, phoneCtrl.deleteByUser);
 
 }

@@ -8,14 +8,16 @@ Returns:
 {
     "success": true,
     "message": "Authorization success",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJhZG1pbjFAcmVudGFyZWYuY29tIiwiYWNjZXNzTGV2ZWwiOjEsImZpcnN0bmFtZSI6IlJvZCIsImxhc3RuYW1lIjoiVGVzdCIsInBlcnNvbl9pZCI6NiwiaWF0IjoxNTAwMzU1NzY0LCJleHAiOjE1MDA0NDIxNjR9.sgu5UrsdqPfz7VTyUOIQ-I7g9y7e4sQkdlDUgYGnbV8",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJhZG1pbjFAcmVudGFyZWYuY29tIiwiYWNjZXNzTGV2ZWwiOjEsImZpcnN0bmFtZSI6IlJvZCIsImxhc3RuYW1lIjoiVGVzdCIsImNhbl9yZWZlcmVlIjoiYWN0aXZlIiwiY2FuX29yZ2FuaXplIjoiYWN0aXZlIiwic3RhdHVzIjoiYWN0aXZlIiwiaWF0IjoxNTAxMzQ1MTU5LCJleHAiOjE1MDE0MzE1NTl9.4V888S9cnSFneNtSJ1TMhob6copDbdJvwKMZDhHQ0RI",
     "user": {
-        "id": 6,
+        "id": 7,
         "email": "admin1@rentaref.com",
         "accessLevel": 1,
         "firstname": "Rod",
         "lastname": "Test",
-        "person_id": 6
+        "can_referee": "active",
+        "can_organize": "active",
+        "status": "active"
     }
 }
 

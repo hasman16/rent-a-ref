@@ -92,18 +92,18 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function createByPerson(req, res) {
-    const table = models.PersonPhone;
-    const model = { person_id: req.params.person_id };
+  function createByUser(req, res) {
+    const table = models.UserPhone;
+    const model = { user_id: req.params.user_id };
     this.create(req, res, table, model);
   }
 
-  function getByPerson(req, res) {
-    const PersonPhone = models.PersonPhone;
+  function getByUser(req, res) {
+    const UserPhone = models.UserPhone;
 
-    PersonPhone.findAll({
+    UserPhone.findAll({
       where: {
-        person_id: req.body.person_id
+        person_id: req.body.user_id
       },
       include: [
         {
@@ -115,7 +115,7 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function updateByPerson(req, res) {
+  function updateByUser(req, res) {
     const aPhone = makePhone(req.body, false);
     Phone.update(aPhone, {
       where: {
@@ -126,7 +126,7 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function deleteByPerson(req, res) {
+  function deleteByUser(req, res) {
     const aPhone = makePhone(req.body, true);
     Phone.destroy(aPhone)
       .then(result => ResponseService.success(res, 'Phone deleted'))
@@ -136,10 +136,10 @@ export default function AddressController(models, ResponseService) {
   return {
     getAll,
     getOne,
-    createByPerson,
-    getByPerson,
-    updateByPerson,
-    deleteByPerson,
+    createByUser,
+    getByUser,
+    updateByUser,
+    deleteByUser,
 
     createByOrganization,
     getByOrganization,
