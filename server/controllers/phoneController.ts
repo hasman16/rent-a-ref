@@ -57,12 +57,29 @@ export default function AddressController(models, ResponseService) {
     create(req, res, table, model);
   }
 
+  function getByOrganization(req, res) {
+    const OrganizationPhone = models.OrganizationPhone;
+
+    OrganizationPhone.findAll({
+      where: {
+        organization_id: req.body.organization_id
+      }
+    })
+      .then(results => ResponseService.success(res, results))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
   function updateByOrganization(req, res) {
     const aPhone = makePhone(req.body, false);
     Phone.update(aPhone, {
       where: {
         id: req.params.id
-      }
+      },
+      include: [
+        {
+          mode: Phone
+        }
+      ]
     })
       .then(result => ResponseService.success(res, 'Phone updated'))
       .catch(error => ResponseService.exception(res, error));
@@ -79,6 +96,23 @@ export default function AddressController(models, ResponseService) {
     const table = models.PersonPhone;
     const model = { person_id: req.params.person_id };
     this.create(req, res, table, model);
+  }
+
+  function getByPerson(req, res) {
+    const PersonPhone = models.PersonPhone;
+
+    PersonPhone.findAll({
+      where: {
+        person_id: req.body.person_id
+      },
+      include: [
+        {
+          mode: Phone
+        }
+      ]
+    })
+      .then(results => ResponseService.success(res, results))
+      .catch(error => ResponseService.exception(res, error));
   }
 
   function updateByPerson(req, res) {
@@ -103,10 +137,12 @@ export default function AddressController(models, ResponseService) {
     getAll,
     getOne,
     createByPerson,
+    getByPerson,
     updateByPerson,
     deleteByPerson,
 
     createByOrganization,
+    getByOrganization,
     updateByOrganization,
     deleteByOrganization
   }

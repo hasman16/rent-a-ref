@@ -26,7 +26,10 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
     return {
       id: newUser.id,
       email: newUser.email,
-      authorization: newUser.authorization
+      authorization: newUser.authorization,
+      can_organize: newUser.can_organize,
+      can_referee: newUser.can_referee,
+      status: newUser.status
     };
   }
 
@@ -34,20 +37,30 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
     ResponseService.success(res, makeUser(newUser), status);
   }
 
+  function createNewUser(user) {
+    let aUser = {
+      email: user.email,
+      password: user.password,
+      authorization: 3,
+      status: 'active',
+      can_organize: 'no',
+      can_referee: 'no',
+      firstname: user.firstname,
+      lastname: user.lastname,
+      dob: user.dob,
+      sex: user.sex
+    };
+    aUser.can_referee = user.can_referee ? 'pending' : aUser.can_referee;
+    aUser.can_organize = user.can_organize ? 'active' : 'no';
+
+    return aUser;
+  }
+
   function create(req, res) {
     const sequelize = models.sequelize;
     const Person = models.Person;
     const Phone = models.Phone;
-    const aUser = {
-      email: req.body.email,
-      password: req.body.password,
-      authorization: req.body.authorization || 5,
-      enabled: false,
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      dob: req.body.dob,
-      sex: req.body.sex
-    };
+    const aUser = createNewUser(req);
 
     User.findOne({
       where: { email: aUser.email }
@@ -62,7 +75,9 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                 email: aUser.email,
                 password: password,
                 authorization: aUser.authorization,
-                enabled: false
+                can_referee: aUser.can_referee,
+                can_organize: aUser.can_organize,
+                status: aUser.status
               };
               return sequelize.transaction(function(t) {
                 return User.create(user, { transaction: t })
@@ -139,7 +154,9 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                 accessLevel: newUser.authorization,
                 firstname: person.firstname,
                 lastname: person.lastname,
-                person_id: person.id
+                can_referee: newUser.can_referee,
+                can_organize: newUser.can_organize,
+                status: newUser.status
               };;
 
               const token = jwt.sign(user, process.env.SECRET_TOKEN, {

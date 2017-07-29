@@ -12,41 +12,63 @@ const users = [{
   email: 'admin1@rentaref.com',
   password: 'admin1',
   authorization: 1,
-  enabled: true
+  status: 'active',
+  can_referee: 'active',
+  can_organize: 'active'
 }, {
     email: 'admin2@rentaref.com',
     password: 'admin2',
     authorization: 2,
-    enabled: true
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'active'
   },
   {
     email: 'admin3@rentaref.com',
     password: 'admin3',
     authorization: 2,
-    enabled: true
+    status: 'active',
+    can_referee: 'active',
+    can_organize: true
   },
   {
     email: 'org11@rentaref.com',
     password: 'organ11',
     authorization: 3,
-    enabled: true
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'active'
   }, {
     email: 'org22@rentaref.com',
     password: 'organ22',
-    authorization: 4,
-    enabled: true
+    authorization: 3,
+    status: 'active',
+    can_referee: 'no',
+    can_organize: 'active'
   },
   {
     email: 'org33@rentaref.com',
     password: 'organ33',
-    authorization: 4,
-    enabled: true
+    authorization: 3,
+    status: 'active',
+    can_referee: 'pending',
+    can_organize: 'pending'
   },
   {
     email: 'ref1@rentaref.com',
     password: 'referee1',
-    authorization: 5,
-    enabled: true
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
+  },
+  {
+    email: 'ref2@rentaref.com',
+    password: 'referee1',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
   }
 ];
 
