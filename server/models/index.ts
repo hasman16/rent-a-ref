@@ -68,6 +68,9 @@ models.forEach(function(model) {
   m.User.belongsToMany(m.Phone, {
     through: 'user_phone'
   });
+  m.Phone.belongsToMany(m.User, {
+    through: 'user_phone'
+  });
 
   m.Game.belongsTo(sequelize.models.organizer);
 
@@ -86,12 +89,15 @@ models.forEach(function(model) {
   m.Organization.belongsToMany(m.Phone, {
     through: 'organization_phone'
   });
+  m.Phone.belongsToMany(m.Organization, {
+    through: 'organization_phone'
+  });
 
   module.exports.Referee = sequelize.models.referee;
   module.exports.Match = sequelize.models.match;
   module.exports.Organizer = sequelize.models.organizer;
   module.exports.OrganizationAddress = sequelize.models.organization_address;
   module.exports.OrganizationPhone = sequelize.models.organization_phone;
-  module.exports.PersonAddress = sequelize.models.user_address;
-  module.exports.PersonPhone = sequelize.models.user_phone;
+  module.exports.UserAddress = sequelize.models.user_address;
+  module.exports.UserPhone = sequelize.models.user_phone;
 })(module.exports);

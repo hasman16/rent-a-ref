@@ -79,7 +79,7 @@ export default function AddressController(models, ResponseService) {
       },
       include: [
         {
-          mode: Phone
+          model: Phone
         }
       ]
     })
@@ -97,23 +97,27 @@ export default function AddressController(models, ResponseService) {
   function createByUser(req, res) {
     const table = models.UserPhone;
     const model = { user_id: req.params.user_id };
-    this.create(req, res, table, model);
+    create(req, res, table, model);
   }
 
   function getByUser(req, res) {
-    const UserPhone = models.UserPhone;
+    const User = models.User;
 
-    UserPhone.findAll({
+    User.findOne({
       where: {
-        person_id: req.body.user_id
+        id: req.params.user_id
       },
-      include: [
-        {
-          mode: Phone
+      include: [{
+        model: Phone,
+        attributes: ['id', 'number', 'description'],
+        through: {
+          attributes: []
         }
-      ]
+      }]
     })
-      .then(results => ResponseService.success(res, results))
+      .then(results => {
+        ResponseService.successCollection(res, results.phones);
+      })
       .catch(error => ResponseService.exception(res, error));
   }
 

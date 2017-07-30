@@ -4,9 +4,7 @@ let sequelize = null;
 
 // 1 - admin1
 // 2 - admin2
-// 3 - organizer
-// 4 - sub organizer
-// 5 - referee
+// 3 - user
 
 const users = [{
   email: 'admin1@rentaref.com',
@@ -29,7 +27,7 @@ const users = [{
     authorization: 2,
     status: 'active',
     can_referee: 'active',
-    can_organize: true
+    can_organize: 'active'
   },
   {
     email: 'org11@rentaref.com',
@@ -172,6 +170,7 @@ function insertUser(models) {
         }
       })
       .catch((error) => {
+        console.log('error;', error);
         throw (error);
       });
 
