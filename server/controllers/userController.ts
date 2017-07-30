@@ -130,7 +130,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
       email: req.body.email,
       password: req.body.password
     };
-
+    console.log('login:', user);
     User.findOne({
       where: { email: user.email },
       include: [{

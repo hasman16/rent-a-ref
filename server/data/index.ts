@@ -62,7 +62,7 @@ const users = [{
   },
   {
     email: 'ref2@rentaref.com',
-    password: 'referee1',
+    password: 'referee2',
     authorization: 3,
     status: 'active',
     can_referee: 'active',
@@ -72,46 +72,52 @@ const users = [{
 
 const people = [
   {
-    firstname: 'Rod',
-    lastname: 'Test',
+    firstname: 'Eugene',
+    lastname: 'Krabs',
     email: 'admin1@rentaref.com',
     sex: 'm'
   },
   {
-    firstname: 'Jane',
-    lastname: 'Test',
+    firstname: 'Squidward',
+    lastname: 'Tenticles',
     email: 'admin2@rentaref.com',
-    sex: 'f'
-  },
-  {
-    firstname: 'Bob',
-    lastname: 'Test',
-    email: 'admin3@rentaref.com',
     sex: 'm'
   },
   {
-    firstname: 'Freda',
-    lastname: 'Test',
+    firstname: 'Pearl',
+    lastname: 'Krabs',
+    email: 'admin3@rentaref.com',
+    sex: 'f'
+  },
+  {
+    firstname: 'Sandy',
+    lastname: 'cheeks',
     email: 'org11@rentaref.com',
     sex: 'f'
   },
   {
-    firstname: 'Tom',
-    lastname: 'Test',
+    firstname: 'Spongebob',
+    lastname: 'Squarepants',
     email: 'org22@rentaref.com',
     sex: 'm'
   },
   {
-    firstname: 'Dick',
-    lastname: 'Test',
+    firstname: 'Patrick',
+    lastname: 'Star',
     email: 'org33@rentaref.com',
     sex: 'm'
   },
   {
-    firstname: 'Harry',
-    lastname: 'Test',
+    firstname: 'Sheldon',
+    lastname: 'Plankton',
     email: 'ref1@rentaref.com',
     sex: 'm'
+  },
+    {
+    firstname: 'Mrs',
+    lastname: 'Puff',
+    email: 'ref2@rentaref.com',
+    sex: 'f'
   }
 ];
 

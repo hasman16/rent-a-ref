@@ -7,7 +7,7 @@ export default function SportController(models, ResponseService) {
     Sport.findAll({
       attributes: attributes
     })
-      .then(results => ResponseService.success(res, results))
+      .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
