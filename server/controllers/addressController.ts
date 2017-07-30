@@ -14,7 +14,7 @@ export default function AddressController(models, ResponseService) {
   function getOne(req, res) {
     Address.findOne({
       where: {
-        id: req.params.id
+        id: req.params.address_id
       },
       attributes: attributes
     })
@@ -22,36 +22,38 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function makeAddress(newAddress, withId) {
-    withId = withId || false;
-    let address = {
+  function makeAddress(newAddress) {
+    const address = {
       street1: newAddress.street1,
       street2: newAddress.street2,
       city: newAddress.city,
       state: newAddress.state,
       zip: newAddress.zip
     };
-    if (withId) {
-      address['id'] = newAddress.id;
-    }
 
     return address;
   }
 
+  function returnAddress(res, address, status = 200) {
+    let newAddress = makeAddress(address);
+    newAddress["id"] = address.id;
+    ResponseService.success(res, newAddress, status);
+  }
+
   function create(req, res) {
-    const anAddress = makeAddress(req.body, false);
+    const anAddress = makeAddress(req.body);
 
     Address.create(anAddress)
-      .then(newAddress => ResponseService.success(res, makeAddress(newAddress, true)))
+      .then(newAddress => returnAddress(res, newAddress, 201))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function update(req, res) {
-    const anAddress = makeAddress(req.body, false);
+    const anAddress = makeAddress(req.body);
 
     Address.update(anAddress, {
       where: {
-        id: req.params.id
+        id: req.params.address_id
       }
     })
       .then(result => ResponseService.success(res, 'Address updated'))
@@ -59,7 +61,7 @@ export default function AddressController(models, ResponseService) {
   }
 
   function deleteOne(req, res) {
-    const anAddress = makeAddress(req.body, true);
+    const anAddress = makeAddress(req.body);
 
     Address.destroy(anAddress)
       .then(result => ResponseService.success(res, 'Address deleted'))

@@ -14,7 +14,7 @@ export default function AddressController(models, ResponseService) {
   function getOne(req, res) {
     Phone.findOne({
       where: {
-        id: req.params.id
+        id: req.params.phone_id
       },
       attributes: attributes
     })
@@ -22,21 +22,23 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function makePhone(newPhone, withId) {
-    withId = withId || false;
+  function makePhone(newPhone) {
     let phone = {
       "number": newPhone.number,
       "description": newPhone.description
     };
-    if (withId) {
-      phone['id'] = newPhone.id;
-    }
     return phone;
+  }
+
+  function returnPhone(res, phone, status = 200) {
+    let newPhone = makePhone(phone);
+    newPhone["id"] = phone.id;
+    ResponseService.success(res, newPhone, status);
   }
 
   function create(req, res, joinTable, joinModel) {
     const sequelize = models.sequelize;
-    const aPhone = makePhone(req.body, false);
+    const aPhone = makePhone(req.body);
 
     sequelize.transaction(function(t) {
       return Phone.create(aPhone, { transaction: t })
@@ -57,43 +59,77 @@ export default function AddressController(models, ResponseService) {
     create(req, res, table, model);
   }
 
+  function getByOrganization(req, res) {
+    const OrganizationPhone = models.OrganizationPhone;
+
+    OrganizationPhone.findAll({
+      where: {
+        organization_id: req.body.organization_id
+      }
+    })
+      .then(results => ResponseService.success(res, results))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
   function updateByOrganization(req, res) {
-    const aPhone = makePhone(req.body, false);
+    const aPhone = makePhone(req.body);
     Phone.update(aPhone, {
       where: {
-        id: req.params.id
-      }
+        id: req.params.phone_id
+      },
+      include: [
+        {
+          mode: Phone
+        }
+      ]
     })
       .then(result => ResponseService.success(res, 'Phone updated'))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function deleteByOrganization(req, res) {
-    const aPhone = makePhone(req.body, true);
+    const aPhone = makePhone(req.body);
     Phone.destroy(aPhone)
       .then(result => ResponseService.success(res, 'Phone deleted'))
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function createByPerson(req, res) {
-    const table = models.PersonPhone;
-    const model = { person_id: req.params.person_id };
+  function createByUser(req, res) {
+    const table = models.UserPhone;
+    const model = { user_id: req.params.user_id };
     this.create(req, res, table, model);
   }
 
-  function updateByPerson(req, res) {
-    const aPhone = makePhone(req.body, false);
+  function getByUser(req, res) {
+    const UserPhone = models.UserPhone;
+
+    UserPhone.findAll({
+      where: {
+        person_id: req.body.user_id
+      },
+      include: [
+        {
+          mode: Phone
+        }
+      ]
+    })
+      .then(results => ResponseService.success(res, results))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function updateByUser(req, res) {
+    const aPhone = makePhone(req.body);
     Phone.update(aPhone, {
       where: {
-        id: req.params.id
+        id: req.params.phone_id
       }
     })
       .then(result => ResponseService.success(res, 'Phone updated'))
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function deleteByPerson(req, res) {
-    const aPhone = makePhone(req.body, true);
+  function deleteByUser(req, res) {
+    const aPhone = makePhone(req.body);
     Phone.destroy(aPhone)
       .then(result => ResponseService.success(res, 'Phone deleted'))
       .catch(error => ResponseService.exception(res, error));
@@ -102,11 +138,13 @@ export default function AddressController(models, ResponseService) {
   return {
     getAll,
     getOne,
-    createByPerson,
-    updateByPerson,
-    deleteByPerson,
+    createByUser,
+    getByUser,
+    updateByUser,
+    deleteByUser,
 
     createByOrganization,
+    getByOrganization,
     updateByOrganization,
     deleteByOrganization
   }

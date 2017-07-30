@@ -51,31 +51,31 @@ models.forEach(function(model) {
 (function(m) {
   m.User.hasOne(m.Person);
 
-  m.Person.belongsToMany(m.Sport, {
+  m.User.belongsToMany(m.Sport, {
     through: 'referee'
   });
 
-  m.Person.hasMany(m.Organization);
+  m.User.hasMany(m.Organization);
 
-  m.Person.belongsToMany(m.Organization, {
+  m.User.belongsToMany(m.Organization, {
     through: 'organizer'
   });
 
-  m.Person.belongsToMany(m.Address, {
-    through: 'person_addresses'
+  m.User.belongsToMany(m.Address, {
+    through: 'user_addresses'
   });
 
-  m.Person.belongsToMany(m.Phone, {
-    through: 'person_phone'
+  m.User.belongsToMany(m.Phone, {
+    through: 'user_phone'
   });
 
   m.Game.belongsTo(sequelize.models.organizer);
 
-  m.Person.belongsToMany(m.Game, {
+  m.User.belongsToMany(m.Game, {
     through: 'match'
   });
 
-  m.Sport.belongsToMany(m.Game, {
+  m.User.belongsToMany(m.Game, {
     through: 'match'
   });
 
@@ -92,6 +92,6 @@ models.forEach(function(model) {
   module.exports.Organizer = sequelize.models.organizer;
   module.exports.OrganizationAddress = sequelize.models.organization_address;
   module.exports.OrganizationPhone = sequelize.models.organization_phone;
-  module.exports.PersonAddress = sequelize.models.person_address;
-  module.exports.PersonPhone = sequelize.models.person_phone;
+  module.exports.PersonAddress = sequelize.models.user_address;
+  module.exports.PersonPhone = sequelize.models.user_phone;
 })(module.exports);
