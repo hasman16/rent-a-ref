@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { ToastComponent } from '../shared/toast/toast.component';
+import * as $ from 'jquery';
+import 'jquery-ui';
 
 @Component({
   selector: 'app-register',
@@ -12,40 +14,62 @@ import { ToastComponent } from '../shared/toast/toast.component';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
-  username = new FormControl('', [Validators.required,
+  fullname = new FormControl('', [Validators.required,
                                   Validators.minLength(2),
-                                  Validators.maxLength(30),
+                                  Validators.maxLength(50),
                                   Validators.pattern('[a-zA-Z0-9_-\\s]*')]);
   email = new FormControl('', [Validators.required,
                                Validators.minLength(3),
                                Validators.maxLength(100)]);
   password = new FormControl('', [Validators.required,
-                                  Validators.minLength(6)]);
+    Validators.minLength(6)]);
+
+  phone = new FormControl('', [Validators.required,
+  Validators.minLength(6),
+  Validators.maxLength(20)]);
+
+  passwordrepeat = new FormControl('', [Validators.required,
+  Validators.minLength(6)]);
 
   role = new FormControl('', [Validators.required]);
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               public toast: ToastComponent,
-              private userService: UserService) { }
+              private userService: UserService) {
+    $(function () {
+      $('.required-icon').tooltip({
+        placement: 'left',
+        title: 'Required field'
+      });
+    });
+               }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      username: this.username,
+      fullname: this.fullname,
       email: this.email,
       password: this.password,
+      passwordrepeat: this.passwordrepeat,
+      phone: this.phone,
       role: this.role
     });
   }
 
-  setClassUsername() {
-    return { 'has-danger': !this.username.pristine && !this.username.valid };
+  setClassfullname() {
+    return { 'has-danger': !this.fullname.pristine && !this.fullname.valid };
   }
   setClassEmail() {
     return { 'has-danger': !this.email.pristine && !this.email.valid };
   }
   setClassPassword() {
     return { 'has-danger': !this.password.pristine && !this.password.valid };
+  }
+  setClassPasswordrepeat() {
+    return { 'has-danger': !this.passwordrepeat.pristine && !this.passwordrepeat.valid };
+  }
+  setClassphone() {
+    return { 'has-danger': !this.phone.pristine && !this.phone.valid };
   }
 
   register() {
@@ -60,4 +84,6 @@ export class RegisterComponent implements OnInit {
     );
     // console.log('Erro: ' + this.error);
   }
+
+
 }
