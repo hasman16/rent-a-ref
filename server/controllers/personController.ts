@@ -14,7 +14,7 @@ export default function PersonController(models, ResponseService) {
   function getOne(req, res) {
     Person.findOne({
       where: {
-        id: req.params.id
+        id: req.params.person_id
       },
       attributes: attributes
     })
@@ -44,7 +44,7 @@ export default function PersonController(models, ResponseService) {
     const aPerson = makePerson(req.body);
     Person.update(aPerson, {
       where: {
-        id: req.params.id
+        id: req.params.person_id
       }
     })
       .then(result => ResponseService.success(res, 'Person updated'))

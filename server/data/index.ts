@@ -4,94 +4,120 @@ let sequelize = null;
 
 // 1 - admin1
 // 2 - admin2
-// 3 - organizer
-// 4 - sub organizer
-// 5 - referee
+// 3 - user
 
 const users = [{
   email: 'admin1@rentaref.com',
   password: 'admin1',
   authorization: 1,
-  enabled: true
+  status: 'active',
+  can_referee: 'active',
+  can_organize: 'active'
 }, {
     email: 'admin2@rentaref.com',
     password: 'admin2',
     authorization: 2,
-    enabled: true
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'active'
   },
   {
     email: 'admin3@rentaref.com',
     password: 'admin3',
     authorization: 2,
-    enabled: true
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'active'
   },
   {
     email: 'org11@rentaref.com',
     password: 'organ11',
     authorization: 3,
-    enabled: true
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'active'
   }, {
     email: 'org22@rentaref.com',
     password: 'organ22',
-    authorization: 4,
-    enabled: true
+    authorization: 3,
+    status: 'active',
+    can_referee: 'no',
+    can_organize: 'active'
   },
   {
     email: 'org33@rentaref.com',
     password: 'organ33',
-    authorization: 4,
-    enabled: true
+    authorization: 3,
+    status: 'active',
+    can_referee: 'pending',
+    can_organize: 'pending'
   },
   {
     email: 'ref1@rentaref.com',
     password: 'referee1',
-    authorization: 5,
-    enabled: true
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
+  },
+  {
+    email: 'ref2@rentaref.com',
+    password: 'referee2',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
   }
 ];
 
 const people = [
   {
-    firstname: 'Rod',
-    lastname: 'Test',
+    firstname: 'Eugene',
+    lastname: 'Krabs',
     email: 'admin1@rentaref.com',
     sex: 'm'
   },
   {
-    firstname: 'Jane',
-    lastname: 'Test',
+    firstname: 'Squidward',
+    lastname: 'Tenticles',
     email: 'admin2@rentaref.com',
-    sex: 'f'
-  },
-  {
-    firstname: 'Bob',
-    lastname: 'Test',
-    email: 'admin3@rentaref.com',
     sex: 'm'
   },
   {
-    firstname: 'Freda',
-    lastname: 'Test',
+    firstname: 'Pearl',
+    lastname: 'Krabs',
+    email: 'admin3@rentaref.com',
+    sex: 'f'
+  },
+  {
+    firstname: 'Sandy',
+    lastname: 'cheeks',
     email: 'org11@rentaref.com',
     sex: 'f'
   },
   {
-    firstname: 'Tom',
-    lastname: 'Test',
+    firstname: 'Spongebob',
+    lastname: 'Squarepants',
     email: 'org22@rentaref.com',
     sex: 'm'
   },
   {
-    firstname: 'Dick',
-    lastname: 'Test',
+    firstname: 'Patrick',
+    lastname: 'Star',
     email: 'org33@rentaref.com',
     sex: 'm'
   },
   {
-    firstname: 'Harry',
-    lastname: 'Test',
+    firstname: 'Sheldon',
+    lastname: 'Plankton',
     email: 'ref1@rentaref.com',
     sex: 'm'
+  },
+    {
+    firstname: 'Mrs',
+    lastname: 'Puff',
+    email: 'ref2@rentaref.com',
+    sex: 'f'
   }
 ];
 
@@ -150,6 +176,7 @@ function insertUser(models) {
         }
       })
       .catch((error) => {
+        console.log('error;', error);
         throw (error);
       });
 

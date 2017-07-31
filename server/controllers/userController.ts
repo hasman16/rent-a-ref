@@ -1,20 +1,20 @@
 
 export default function UserController(bcrypt, jwt, models, ResponseService) {
   const User = models.User;
-  const attributes = ['id', 'email', 'authorization'];
+  const attributes = ['id', 'email', 'authorization', 'can_organize', 'can_referee', 'status'];
 
   function getAll(req, res) {
     User.findAll({
       attributes: attributes,
     })
-      .then(results => ResponseService.success(res, results))
+      .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function getOne(req, res) {
     User.findOne({
       where: {
-        id: req.params.id
+        id: req.params.user_id
       },
       attributes: attributes
     })
@@ -24,30 +24,44 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
 
   function makeUser(newUser) {
     return {
-      id: newUser.id,
       email: newUser.email,
-      authorization: newUser.authorization
+      authorization: newUser.authorization,
+      can_organize: newUser.can_organize,
+      can_referee: newUser.can_referee,
+      status: newUser.status
     };
   }
 
-  function returnUser(res, newUser, status = 200) {
-    ResponseService.success(res, makeUser(newUser), status);
+  function returnUser(res, user, status = 200) {
+    let newUser = makeUser(user);
+    newUser["id"] = user.id;
+    ResponseService.success(res, newUser, status);
+  }
+
+  function createNewUser(user) {
+    let aUser = {
+      email: user.email,
+      password: user.password,
+      authorization: 3,
+      status: 'active',
+      can_organize: 'no',
+      can_referee: 'no',
+      firstname: user.firstname,
+      lastname: user.lastname,
+      dob: user.dob,
+      sex: user.sex
+    };
+    aUser.can_referee = user.can_referee ? 'pending' : aUser.can_referee;
+    aUser.can_organize = user.can_organize ? 'active' : 'no';
+
+    return aUser;
   }
 
   function create(req, res) {
     const sequelize = models.sequelize;
     const Person = models.Person;
     const Phone = models.Phone;
-    const aUser = {
-      email: req.body.email,
-      password: req.body.password,
-      authorization: req.body.authorization || 5,
-      enabled: false,
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      dob: req.body.dob,
-      sex: req.body.sex
-    };
+    const aUser = createNewUser(req.body);
 
     User.findOne({
       where: { email: aUser.email }
@@ -62,7 +76,9 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                 email: aUser.email,
                 password: password,
                 authorization: aUser.authorization,
-                enabled: false
+                can_referee: aUser.can_referee,
+                can_organize: aUser.can_organize,
+                status: aUser.status
               };
               return sequelize.transaction(function(t) {
                 return User.create(user, { transaction: t })
@@ -76,13 +92,6 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                     };
                     return Person.create(person, { transaction: t })
                       .then(newPerson => {
-                        /*
-                        const phone = {
-                          "number": req.body.phone_number,
-                          "description": req.body.phone_description
-                        };
-                        Phone.create(phone, { transaction: t })
-                          .then(newPhone => returnUser(res, newUser)); */
                         ResponseService.success(res, {
                           success: true,
                           message: 'User created successfully'
@@ -100,10 +109,10 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
     const user = makeUser(req.body);
     User.update(user, {
       where: {
-        id: req.params.id
+        id: req.params.user_id
       }
     })
-      .then(updatedUser => returnUser(res, updatedUser), 201)
+      .then(updatedUser => returnUser(res, updatedUser, 201))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -121,7 +130,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
       email: req.body.email,
       password: req.body.password
     };
-
+    console.log('login:', user);
     User.findOne({
       where: { email: user.email },
       include: [{
@@ -139,7 +148,9 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                 accessLevel: newUser.authorization,
                 firstname: person.firstname,
                 lastname: person.lastname,
-                person_id: person.id
+                can_referee: newUser.can_referee,
+                can_organize: newUser.can_organize,
+                status: newUser.status
               };;
 
               const token = jwt.sign(user, process.env.SECRET_TOKEN, {
@@ -165,7 +176,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
   }
 
   function logout(req, res) {
-    const user = new Object(req.body);
+    const user = makeUser(req.body);
   }
 
   return {

@@ -6,7 +6,7 @@ export default function authorization() {
   }
 
   function checkIsUser(req) {
-    return Number(req.decoded.id) === Number(req.params.id);
+    return Number(req.decoded.id) === Number(req.params.user_id);
   }
 
   function isAdmin(req, res, next) {

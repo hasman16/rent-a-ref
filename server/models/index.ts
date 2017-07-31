@@ -6,6 +6,7 @@ dotenv.load({ path: '.env' });
 
 const models = [
   'Address',
+  'Email',
   'Game',
   'Organization',
   'Person',
@@ -50,31 +51,34 @@ models.forEach(function(model) {
 (function(m) {
   m.User.hasOne(m.Person);
 
-  m.Person.belongsToMany(m.Sport, {
+  m.User.belongsToMany(m.Sport, {
     through: 'referee'
   });
 
-  m.Person.hasMany(m.Organization);
+  m.User.hasMany(m.Organization);
 
-  m.Person.belongsToMany(m.Organization, {
+  m.User.belongsToMany(m.Organization, {
     through: 'organizer'
   });
 
-  m.Person.belongsToMany(m.Address, {
-    through: 'person_addresses'
+  m.User.belongsToMany(m.Address, {
+    through: 'user_addresses'
   });
 
-  m.Person.belongsToMany(m.Phone, {
-    through: 'person_phone'
+  m.User.belongsToMany(m.Phone, {
+    through: 'user_phone'
+  });
+  m.Phone.belongsToMany(m.User, {
+    through: 'user_phone'
   });
 
   m.Game.belongsTo(sequelize.models.organizer);
 
-  m.Person.belongsToMany(m.Game, {
+  m.User.belongsToMany(m.Game, {
     through: 'match'
   });
 
-  m.Sport.belongsToMany(m.Game, {
+  m.User.belongsToMany(m.Game, {
     through: 'match'
   });
 
@@ -85,12 +89,15 @@ models.forEach(function(model) {
   m.Organization.belongsToMany(m.Phone, {
     through: 'organization_phone'
   });
+  m.Phone.belongsToMany(m.Organization, {
+    through: 'organization_phone'
+  });
 
   module.exports.Referee = sequelize.models.referee;
   module.exports.Match = sequelize.models.match;
   module.exports.Organizer = sequelize.models.organizer;
   module.exports.OrganizationAddress = sequelize.models.organization_address;
   module.exports.OrganizationPhone = sequelize.models.organization_phone;
-  module.exports.PersonAddress = sequelize.models.person_address;
-  module.exports.PersonPhone = sequelize.models.person_phone;
+  module.exports.UserAddress = sequelize.models.user_address;
+  module.exports.UserPhone = sequelize.models.user_phone;
 })(module.exports);
