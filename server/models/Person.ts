@@ -5,12 +5,15 @@ const Person = function(sequelize, DataTypes) {
         allowNull: false
       },
       middlenames: DataTypes.STRING(64),
-      lastname: DataTypes.STRING(64),
-      sex: {
-          type: DataTypes.STRING(1),
+      lastname: {
+        type: DataTypes.STRING(64),
+        allowNull: false
+      },
+      gender: {
+          type: DataTypes.STRING(24),
           allowNull: false,
           validate: {
-              is: /^(m|f)$/i
+              is: /^(m|f|pending)$/i
           }
       },
       dob: {

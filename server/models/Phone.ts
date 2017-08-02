@@ -3,9 +3,6 @@ export default function(sequelize, DataTypes) {
         "number": {
           type:DataTypes.STRING(64),
           allowNull: false,
-          validate: {
-            is: /^\d{9,}$/
-          }
         },
         description: {
           type: DataTypes.STRING(64),
