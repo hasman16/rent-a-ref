@@ -90,7 +90,8 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                       firstname: req.body.firstname,
                       lastname: req.body.lastname,
                       gender: 'pending',
-                      dob: new Date('1901')
+                      dob: new Date('1901'),
+                      user_id: newUser.id
                     }
 
                     return Person.create(person, { transaction: t })
@@ -152,7 +153,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
       email: req.body.email,
       password: req.body.password
     };
-    console.log('login:', user);
+
     User.findOne({
       where: { email: user.email },
       include: [{
