@@ -45,21 +45,22 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
       authorization: 3,
       status: 'active',
       can_organize: 'no',
-      can_referee: 'no',
-      firstname: user.firstname,
-      lastname: user.lastname,
-      dob: user.dob,
-      sex: user.sex
+      can_referee: 'no'
     };
-    aUser.can_referee = user.can_referee ? 'pending' : aUser.can_referee;
-    aUser.can_organize = user.can_organize ? 'active' : 'no';
+
+    if (user.role === 'organizer') {
+      aUser.can_referee = 'no';
+      aUser.can_organize = 'pending';
+    } else {
+      aUser.can_referee = 'pending';
+      aUser.can_organize = 'no';
+    }
 
     return aUser;
   }
 
   function create(req, res) {
     const sequelize = models.sequelize;
-    const Person = models.Person;
     const Phone = models.Phone;
     const aUser = createNewUser(req.body);
 
@@ -83,20 +84,26 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
               return sequelize.transaction(function(t) {
                 return User.create(user, { transaction: t })
                   .then(newUser => {
-                    const person = {
-                      firstname: aUser.firstname,
-                      lastname: aUser.lastname,
-                      user_id: newUser.id,
-                      dob: Number(aUser.dob),
-                      sex: aUser.sex
-                    };
-                    return Person.create(person, { transaction: t })
-                      .then(newPerson => {
-                        ResponseService.success(res, {
-                          success: true,
-                          message: 'User created successfully'
-                        }, 201);
-                      });
+                    const hasPhone = /\d+/.test(req.body["number"]);
+    
+                    if (hasPhone) {
+                      const phone = {
+                        "number": hasPhone,
+                        "type": "other"
+                      };
+                      return Phone.create(phone, { transaction: t })
+                        .then(newPerson => {
+                          ResponseService.success(res, {
+                            success: true,
+                            message: 'User created successfully'
+                          }, 201);
+                        });
+                    } else {
+                      ResponseService.success(res, {
+                        success: true,
+                        message: 'User created successfully'
+                      }, 201);
+                    }
                   });
               });
             });

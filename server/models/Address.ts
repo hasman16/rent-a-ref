@@ -1,10 +1,10 @@
 export default function(sequelize, DataTypes) {
     return sequelize.define('address', {
-        street1: {
+        line1: {
           type: DataTypes.STRING,
           allowNull: false
         },
-        street2: {
+        line2: {
           type: DataTypes.STRING,
         },
         city: {

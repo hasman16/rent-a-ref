@@ -1,4 +1,4 @@
-export default function AddressController(models, ResponseService) {
+export default function PhoneController(models, ResponseService) {
   const Phone = models.Phone;
   const attributes = ['id', 'number', 'description'];
 
@@ -53,38 +53,77 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
+  function guardOrganization(req, res, callback) {
+    const user_id = req.decoded.id;
+    const Organization = models.Organization;
+
+    if (ResponseService.isAdmin(req)) {
+      callback();
+    } else {
+      Organization.findOne({
+        where: {
+          id: req.params.organization_id,
+          user_id: user_id
+        }
+      })
+        .then(organization => {
+          if (organization) {
+            callback();
+          } else {
+            ResponseService.failure(res, "Permissions violation.");
+          }
+        })
+        .catch(error => ResponseService.exception(res, error));
+    }
+  }
+
   function createByOrganization(req, res) {
-    const table = models.OrganizationPhone;
-    const model = { organization_id: req.params.organization_id };
-    create(req, res, table, model);
+    function performCreation() {
+      const table = models.OrganizationPhone;
+      const model = { organization_id: req.params.organization_id };
+      create(req, res, table, model);
+    }
+    guardOrganization(req, res, performCreation);
   }
 
   function getByOrganization(req, res) {
-    const OrganizationPhone = models.OrganizationPhone;
+    const Organization = models.Organization;
 
-    OrganizationPhone.findAll({
+    Organization.findAll({
       where: {
-        organization_id: req.body.organization_id
-      }
+        id: req.params.organization_id
+      },
+      attributes: ['id','name', 'user_id'],
+      include: [{
+        model: Phone,
+        attributes: ['id', 'number', 'description'],
+        through: {
+          attributes: []
+        }
+      }]
     })
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function updateByOrganization(req, res) {
-    const aPhone = makePhone(req.body);
-    Phone.update(aPhone, {
-      where: {
-        id: req.params.phone_id
-      },
-      include: [
-        {
-          model: Phone
-        }
-      ]
-    })
-      .then(result => ResponseService.success(res, 'Phone updated'))
-      .catch(error => ResponseService.exception(res, error));
+    function performCreation() {
+      const aPhone = makePhone(req.body);
+      Phone.update(aPhone, {
+        where: {
+          id: req.params.phone_id
+        },
+        include: [
+          {
+            model: Phone
+          }
+        ]
+      })
+        .then(result => ResponseService.success(res, 'Phone updated'))
+        .catch(error => ResponseService.exception(res, error));
+    }
+
+    guardOrganization(req, res, performCreation);
   }
 
   function deleteByOrganization(req, res) {

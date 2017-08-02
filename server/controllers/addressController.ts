@@ -1,6 +1,6 @@
 export default function AddressController(models, ResponseService) {
   const Address = models.Address;
-  const attributes = ['id', 'street1', 'street2', 'city', 'state', 'zip'];
+  const attributes = ['id', 'line1', 'line2', 'city', 'state', 'zip'];
 
   // Get all
   function getAll(req, res) {
@@ -24,8 +24,8 @@ export default function AddressController(models, ResponseService) {
 
   function makeAddress(newAddress) {
     const address = {
-      street1: newAddress.street1,
-      street2: newAddress.street2,
+      line1: newAddress.line1,
+      line2: newAddress.line2,
       city: newAddress.city,
       state: newAddress.state,
       zip: newAddress.zip
