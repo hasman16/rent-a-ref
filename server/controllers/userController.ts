@@ -47,8 +47,9 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
       can_organize: 'no',
       can_referee: 'no'
     };
+    const isOrganizer = String(user.role).trim();
 
-    if (user.role === 'organizer') {
+    if (/^organizer$/ig.test(isOrganizer)) {
       aUser.can_referee = 'no';
       aUser.can_organize = 'pending';
     } else {
@@ -84,27 +85,41 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
               return sequelize.transaction(function(t) {
                 return User.create(user, { transaction: t })
                   .then(newUser => {
-                    const hasPhone = /\d+/.test(req.body["number"]);
-    
-                    if (hasPhone) {
-                      const phone = {
-                        "number": hasPhone,
-                        "type": "other"
-                      };
-                      return Phone.create(phone, { transaction: t })
-                        .then(newPerson => {
+                    const Person = models.Person;
+                    const person = {
+                      firstname: req.body.firstname,
+                      lastname: req.body.lastname,
+                      gender: 'pending',
+                      dob: new Date('1901')
+                    }
+
+                    return Person.create(person, { transaction: t })
+                      .then(function(newPerson) {
+                        const hasPhone = /\d+/.test(req.body["phone"]);
+
+                        if (hasPhone) {
+                          const phone = {
+                            "number": String(req.body["phone"]),
+                            "description": "other"
+                          };
+                          console.log('phone:', phone);
+                          return Phone.create(phone, { transaction: t })
+                            .then(newPhone => {
+                              ResponseService.success(res, {
+                                success: true,
+                                message: 'User created successfully'
+                              }, 201);
+                            });
+                        } else {
+                          console.log('has no phone');
                           ResponseService.success(res, {
                             success: true,
                             message: 'User created successfully'
                           }, 201);
-                        });
-                    } else {
-                      ResponseService.success(res, {
-                        success: true,
-                        message: 'User created successfully'
-                      }, 201);
-                    }
+                        }
+                      });
                   });
+
               });
             });
         }

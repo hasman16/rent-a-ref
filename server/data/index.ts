@@ -75,49 +75,49 @@ const people = [
     firstname: 'Eugene',
     lastname: 'Krabs',
     email: 'admin1@rentaref.com',
-    sex: 'm'
+    gender: 'm'
   },
   {
     firstname: 'Squidward',
     lastname: 'Tenticles',
     email: 'admin2@rentaref.com',
-    sex: 'm'
+    gender: 'm'
   },
   {
     firstname: 'Pearl',
     lastname: 'Krabs',
     email: 'admin3@rentaref.com',
-    sex: 'f'
+    gender: 'f'
   },
   {
     firstname: 'Sandy',
     lastname: 'cheeks',
     email: 'org11@rentaref.com',
-    sex: 'f'
+    gender: 'f'
   },
   {
     firstname: 'Spongebob',
     lastname: 'Squarepants',
     email: 'org22@rentaref.com',
-    sex: 'm'
+    gender: 'm'
   },
   {
     firstname: 'Patrick',
     lastname: 'Star',
     email: 'org33@rentaref.com',
-    sex: 'm'
+    gender: 'm'
   },
   {
     firstname: 'Sheldon',
     lastname: 'Plankton',
     email: 'ref1@rentaref.com',
-    sex: 'm'
+    gender: 'm'
   },
     {
     firstname: 'Mrs',
     lastname: 'Puff',
     email: 'ref2@rentaref.com',
-    sex: 'f'
+    gender: 'f'
   }
 ];
 
