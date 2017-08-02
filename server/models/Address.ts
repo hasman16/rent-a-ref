@@ -22,7 +22,7 @@ export default function(sequelize, DataTypes) {
           }
         },
         zip: {
-          type:DataTypes.STRING(16),
+          type: DataTypes.STRING(16),
           allowNull: false,
           validate: {
             is: /^\d{5}(-\d{4})?$/
