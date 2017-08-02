@@ -19,21 +19,32 @@ export class RegisterComponent implements OnInit {
                                   Validators.minLength(2),
                                   Validators.maxLength(50),
                                   Validators.pattern('[a-zA-Z0-9_-\\s]*')]);
+  lastname = new FormControl('', [Validators.required,
+  Validators.minLength(2),
+  Validators.maxLength(50),
+  Validators.pattern('[a-zA-Z0-9_-\\s]*')]);
+
+  // middlename = new FormControl('', [Validators.maxLength(50),  Validators.pattern('[a-zA-Z0-9_-\\s]*')]);
+  
   email = new FormControl('', [Validators.required,
                                Validators.minLength(3),
                                Validators.maxLength(100)]);
+  repeatemail = new FormControl('', [Validators.required,
+  Validators.minLength(3),
+  Validators.maxLength(100)]);
+
   password = new FormControl('', [Validators.required,
     Validators.minLength(6)]);
+
+  passwordrepeat = new FormControl('', [Validators.required,
+  Validators.minLength(6)]);
 
   phone = new FormControl('', [Validators.required,
   Validators.minLength(6),
   Validators.maxLength(20)]);
 
-  passwordrepeat = new FormControl('', [Validators.required,
-  Validators.minLength(6)]);
-
   role = new FormControl('', [Validators.required]);
-  sex = new FormControl('', [Validators.required]);
+
   // firstname = this.fullname;
 
 
@@ -53,11 +64,11 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       firstname: this.firstname,
+      // middlename: this.middlename,
+      lastname: this.lastname,
       email: this.email,
       password: this.password,
-      passwordrepeat: this.passwordrepeat,
       phone: this.phone,
-      sex: this.sex,
       role: this.role
     });
   }
@@ -65,8 +76,17 @@ export class RegisterComponent implements OnInit {
   setClassfullname() {
     return { 'has-danger': !this.firstname.pristine && !this.firstname.valid };
   }
+  /*setClassmiddlename() {
+    return { 'has-danger': !this.middlename.pristine && !this.middlename.valid };
+  }*/
+  setClasslastname() {
+    return { 'has-danger': !this.lastname.pristine && !this.lastname.valid };
+  }
   setClassEmail() {
     return { 'has-danger': !this.email.pristine && !this.email.valid };
+  }
+  setClassrepeatEmail() {
+    return { 'has-danger': !this.repeatemail.pristine && !this.repeatemail.valid };
   }
   setClassPassword() {
     return { 'has-danger': !this.password.pristine && !this.password.valid };

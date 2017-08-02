@@ -6,12 +6,28 @@
     <form [formGroup]="registerForm" (ngSubmit)="register()">
       <div class="input-group required-field-block" [ngClass]="setClassfullname()" >
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input class="form-control" type="text" name="firstname" formControlName="firstname" placeholder="Fullname" autofocus aria-describedby="basic-addon-firstname">
+        <input class="form-control" type="text" name="firstname" formControlName="firstname" placeholder="Firstname" autofocus aria-describedby="basic-addon-firstname">
         <span class="input-group-addon" id="basic-addon-firstname" style="color: orange; font-size: 10px;font-style: italic">Max: 50  .</span>
         <div class="required-icon">
           <div class="text">*</div>
         </div>
       </div>
+<!--
+      <div class="input-group" [ngClass]="setClassmiddlename()">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input class="form-control" type="text" name="middlename" formControlName="middlename" placeholder="Middlename">
+        <span class="input-group-addon" id="basic-addon-firstname" style="color: orange; font-size: 10px;font-style: italic">Max: 50  .</span>        
+      </div>
+-->
+      <div class="input-group required-field-block" [ngClass]="setClasslastname()">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input class="form-control" type="text" name="lastname" formControlName="lastname" placeholder="Lastname" aria-describedby="basic-addon-lastname">
+        <span class="input-group-addon" id="basic-addon-lastname" style="color: orange; font-size: 10px;font-style: italic">Max: 50  .</span>
+        <div class="required-icon">
+          <div class="text">*</div>
+        </div>
+      </div>
+
       <div class="input-group required-field-block" [ngClass]="setClassEmail()">
         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
         <input class="form-control" type="email" name="email" formControlName="email" placeholder="Email" aria-describedby="basic-addon-email" email>
@@ -21,6 +37,18 @@
           <div class="text">*</div>
         </div>
       </div>
+
+      <div class="input-group required-field-block" [ngClass]="setClassrepeatEmail()">
+        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+        <input class="form-control" type="email" name="repeatemail" formControlName="repeatemail" placeholder="Repeat Email" aria-describedby="basic-addon-repeatemail"
+          email>
+
+        <span class="input-group-addon" id="basic-addon-repeatemail" style="color: orange; font-size: 10px;font-style: italic">Email Match</span>
+        <div class="required-icon">
+          <div class="text">*</div>
+        </div>
+      </div>
+
       <div class="input-group required-field-block" [ngClass]="setClassPassword()">
         <span class="input-group-addon"><i class="fa fa-key"></i></span>
         <input class="form-control" type="password" name="password" formControlName="password" placeholder="Password" aria-describedby="basic-addon-password">
@@ -47,7 +75,7 @@
           <div class="text">*</div>
         </div>
       </div>
-
+<!--
 <div class="input-group">
   <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
   <select class="form-control" name="sex" formControlName="sex">
@@ -56,11 +84,11 @@
           <option value="F">Female</option>
         </select>
 </div>
-
+-->
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-black-tie"></i></span>
         <select class="form-control" name="role" formControlName="role">
-          <option value="" selected disabled>Role</option>
+          <option value="" selected disabled>Choose Role</option>
           <option value="Organizer">Organizer</option>
           <option value="Referee">Referee</option>
         </select>
