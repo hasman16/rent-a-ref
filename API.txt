@@ -20,6 +20,11 @@ Returns:
         "status": "active"
     }
 }
+Note:
+can_referee is always: "no","pending","active" or "suspended"
+can_organize is always: "no","pending","active","suspended"
+status is always: "no","pending","active","suspended"
+
 
 POST /logout --- not implemented
 
@@ -95,18 +100,26 @@ Payload:
   "email":"test4@rentaref.com",
   "password": "test4",
   "firstname": "lazerus",
-  "sex": "m",
-  "dob": 1758888,
-  "can_referee": true|false, //optional defaults to "no"
-  "can_organize": true|false //optional defaults to "no"
+  "role": organizer | referee,
+  "phone": 949586124 - optional
 }
 Returns:
+CODE: 201
 {
     "success": true,
     "message": "User created successfully"
 }
+ERROR: 403
+{
+    "success": false,
+    "message": "A user with that email address already exists."
+}
 Notes:
-Does not require login. Access level is optional, default is 5.
+Does not require login. Access level is always set to 3 eg user. The admin (1)
+has to go in to upgrade the new user to an assistant admin (2).
+
+The client such as the browser has to execute the login call. The API does not
+auto login the new user.
 
 
 GET  /user/1 - Retrieve User
