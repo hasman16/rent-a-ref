@@ -6,8 +6,8 @@
     <form [formGroup]="registerForm" (ngSubmit)="register()">
       <div class="input-group required-field-block" [ngClass]="setClassfullname()" >
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input class="form-control" type="text" name="fullname" formControlName="fullname" placeholder="Fullname" autofocus aria-describedby="basic-addon-fullname">
-        <span class="input-group-addon" id="basic-addon-fullname" style="color: orange; font-size: 10px;font-style: italic">Max: 50  .</span>
+        <input class="form-control" type="text" name="firstname" formControlName="firstname" placeholder="Fullname" autofocus aria-describedby="basic-addon-firstname">
+        <span class="input-group-addon" id="basic-addon-firstname" style="color: orange; font-size: 10px;font-style: italic">Max: 50  .</span>
         <div class="required-icon">
           <div class="text">*</div>
         </div>
@@ -52,8 +52,8 @@
   <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
   <select class="form-control" name="sex" formControlName="sex">
           <option value="" selected disabled>Gender</option>
-          <option value="user">Male</option>
-          <option value="admin">Femal</option>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
         </select>
 </div>
 
@@ -61,8 +61,8 @@
         <span class="input-group-addon"><i class="fa fa-black-tie"></i></span>
         <select class="form-control" name="role" formControlName="role">
           <option value="" selected disabled>Role</option>
-          <option value="user">Organizer</option>
-          <option value="admin">Referee</option>
+          <option value="Organizer">Organizer</option>
+          <option value="Referee">Referee</option>
         </select>
       </div>
       <br>

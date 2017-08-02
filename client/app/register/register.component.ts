@@ -14,7 +14,8 @@ import 'jquery-ui';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
-  fullname = new FormControl('', [Validators.required,
+
+  firstname = new FormControl('', [Validators.required,
                                   Validators.minLength(2),
                                   Validators.maxLength(50),
                                   Validators.pattern('[a-zA-Z0-9_-\\s]*')]);
@@ -32,6 +33,10 @@ export class RegisterComponent implements OnInit {
   Validators.minLength(6)]);
 
   role = new FormControl('', [Validators.required]);
+  sex = new FormControl('', [Validators.required]);
+  // firstname = this.fullname;
+
+
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -47,17 +52,18 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      fullname: this.fullname,
+      firstname: this.firstname,
       email: this.email,
       password: this.password,
       passwordrepeat: this.passwordrepeat,
       phone: this.phone,
+      sex: this.sex,
       role: this.role
     });
   }
 
   setClassfullname() {
-    return { 'has-danger': !this.fullname.pristine && !this.fullname.valid };
+    return { 'has-danger': !this.firstname.pristine && !this.firstname.valid };
   }
   setClassEmail() {
     return { 'has-danger': !this.email.pristine && !this.email.valid };
