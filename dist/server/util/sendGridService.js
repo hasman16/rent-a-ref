@@ -12,21 +12,24 @@ exports.default = new (function () {
     SendGridService.prototype.sendEmail = function (setter) {
         var value;
         if (this.enabled) {
-            var helper = sendgrid.mail;
-            var from_email = new helper.Email(setter.from);
-            var to_email = new helper.Email(setter.to);
-            var subject = setter.subject;
-            var content = new helper.Content('text/plain', setter.content);
-            var mail = new helper.Mail(from_email, subject, to_email, content);
-            var request = this.sg.emptyRequest({
-                method: 'POST',
-                path: '/v3/mail/send',
-                body: mail.toJSON()
+            var sg_1 = this.sg;
+            var helper_1 = sendgrid.mail;
+            var from_email_1 = new helper_1.Email(setter.from);
+            var subject_1 = setter.subject;
+            var content_1 = new helper_1.Content('text/plain', setter.content);
+            var emails = setter.to.map(function (emailAddress) {
+                var to_email = new helper_1.Email(emailAddress);
+                var mail = new helper_1.Mail(from_email_1, subject_1, to_email, content_1);
+                var request = sg_1.emptyRequest({
+                    method: 'POST',
+                    path: '/v3/mail/send',
+                    body: mail.toJSON()
+                });
+                return sg_1.API(request);
             });
-            value = this.sg.API(request)
+            value = Promise.all(emails)
                 .then(function (result) { return console.log('email sent:', result); })
                 .catch(function (error) { return console.log('error:', error); });
-            ;
         }
         return value;
     };
