@@ -16,28 +16,22 @@ export default new class SendGridService {
     let value;
 
     if (this.enabled) {
-      const sg = this.sg;
       const helper = sendgrid.mail;
       const from_email = new helper.Email(setter.from);
+      const to_email = new helper.Email('hasman16@gmail.com');
       const subject = setter.subject;
       const content = new helper.Content('text/plain', setter.content);
+      const mail = new helper.Mail(from_email, subject, to_email, content);
 
-      const emails = setter.to.map(emailAddress => {
-        let to_email = new helper.Email(emailAddress);
-        let mail = new helper.Mail(from_email, subject, to_email, content);
-
-        let request = sg.emptyRequest({
-          method: 'POST',
-          path: '/v3/mail/send',
-          body: mail.toJSON()
-        });
-
-        return sg.API(request);
+      const request = this.sg.emptyRequest({
+        method: 'POST',
+        path: '/v3/mail/send',
+        body: mail.toJSON()
       });
 
-      value = Promise.all(emails)
+      value = this.sg.API(request)
         .then(result => console.log('email sent:', result))
-        .catch(error => console.log('error:', error));
+        .catch(error => console.log('error:', error));;
     }
     return value;
   }
