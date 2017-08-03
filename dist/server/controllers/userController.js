@@ -61,7 +61,7 @@ function UserController(bcrypt, jwt, models, ResponseService, SendGridService) {
             message: 'User created successfully'
         }, 201);
         SendGridService.sendEmail({
-            to: ['hasman16@gmail', 'smylydon@gmail.com'],
+            to: ['hasman16@gmail.com', 'smylydon@gmail.com'],
             from: 'smylydon@gmail.com',
             subject: 'User registered',
             content: 'Hello from sendgrid'
