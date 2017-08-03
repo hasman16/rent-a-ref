@@ -60,15 +60,15 @@ export default function UserController(bcrypt, jwt, models, ResponseService, Sen
     return aUser;
   }
 
-  function respondAndSendEmail(res) {
+  function respondAndSendEmail(res, email) {
     ResponseService.success(res, {
       success: true,
       message: 'User created successfully'
     }, 201);
 
     SendGridService.sendEmail({
-      to: ['hasman16@gmail.com', 'smylydon@gmail.com'],
-      from: 'smylydon@gmail.com',
+      to: email,
+      from: 'admin@rentaref.com',
       subject: 'User registered',
       content: 'Hello from sendgrid'
     });
@@ -119,9 +119,9 @@ export default function UserController(bcrypt, jwt, models, ResponseService, Sen
                           };
 
                           return Phone.create(phone, { transaction: t })
-                            .then(newPhone => respondAndSendEmail(res));
+                            .then(newPhone => respondAndSendEmail(res, aUser.email));
                         } else {
-                          respondAndSendEmail(res);
+                          respondAndSendEmail(res, aUser.email);
                         }
                       });
                   });

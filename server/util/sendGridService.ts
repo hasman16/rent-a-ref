@@ -1,7 +1,6 @@
 import * as sendgrid from 'sendgrid';
 
 export default new class SendGridService {
-  helper;
   sg;
   enabled;
   constructor() {
@@ -15,17 +14,36 @@ export default new class SendGridService {
     let value;
 
     if (this.enabled) {
-      const helper = sendgrid.mail;
-      const from_email = new helper.Email(setter.from);
-      const to_email = new helper.Email(setter.to);
-      const subject = setter.subject;
-      const content = new helper.Content('text/plain', setter.content);
-      const mail = new helper.Mail(from_email, subject, to_email, content);
+      let to = setter.to;
+      if (!Array.isArray(setter.to)) {
+        to = [setter.to];
+      };
+      const emailAddresses = to.map((emailAddress) => {
+        return {
+          email: emailAddress
+        };
+      });
 
       const request = this.sg.emptyRequest({
         method: 'POST',
         path: '/v3/mail/send',
-        body: mail.toJSON()
+        body: {
+          personalizations: [
+            {
+              to: emailAddresses,
+              subject: setter.subject
+            }
+          ],
+          from: {
+            email: setter.from
+          },
+          content: [
+            {
+              type: 'text/plain',
+              value: setter.content
+            }
+          ],
+        },
       });
 
       value = this.sg.API(request)

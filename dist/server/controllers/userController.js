@@ -55,14 +55,14 @@ function UserController(bcrypt, jwt, models, ResponseService, SendGridService) {
         }
         return aUser;
     }
-    function respondAndSendEmail(res) {
+    function respondAndSendEmail(res, email) {
         ResponseService.success(res, {
             success: true,
             message: 'User created successfully'
         }, 201);
         SendGridService.sendEmail({
-            to: ['hasman16@gmail.com', 'smylydon@gmail.com'],
-            from: 'smylydon@gmail.com',
+            to: email,
+            from: 'admin@rentaref.com',
             subject: 'User registered',
             content: 'Hello from sendgrid'
         });
@@ -109,10 +109,10 @@ function UserController(bcrypt, jwt, models, ResponseService, SendGridService) {
                                         "description": "other"
                                     };
                                     return Phone.create(phone, { transaction: t })
-                                        .then(function (newPhone) { return respondAndSendEmail(res); });
+                                        .then(function (newPhone) { return respondAndSendEmail(res, aUser.email); });
                                 }
                                 else {
-                                    respondAndSendEmail(res);
+                                    respondAndSendEmail(res, aUser.email);
                                 }
                             });
                         });
