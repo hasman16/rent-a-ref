@@ -4,6 +4,7 @@ import * as bcrypt from 'bcryptjs';
 import authentication from './../util/authentication';
 import authorization from './../util/authorization';
 import ResponseService from './../util/responseService';
+import SendGridService from './../util/sendGridService';
 
 // controllers
 import gameController from './../controllers/gameController';
@@ -32,7 +33,7 @@ export default function setRoutes(app, models) {
   };
   const gameCtrl = gameController(models, ResponseService);
   const personCtrl = personController(models, ResponseService);
-  const userCtrl = userController(bcrypt, jwt, models, ResponseService);
+  const userCtrl = userController(bcrypt, jwt, models, ResponseService, SendGridService);
   const sportCtrl = sportController(models, ResponseService);
   const organizationCtrl = organizationController(models, ResponseService);
   const phoneCtrl = phoneController(models, ResponseService);

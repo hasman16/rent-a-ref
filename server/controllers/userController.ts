@@ -1,5 +1,5 @@
 
-export default function UserController(bcrypt, jwt, models, ResponseService) {
+export default function UserController(bcrypt, jwt, models, ResponseService, SendGridService) {
   const User = models.User;
   const attributes = ['id', 'email', 'authorization', 'can_organize', 'can_referee', 'status'];
 
@@ -60,6 +60,19 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
     return aUser;
   }
 
+  function respondAndSendEmail(res) {
+    ResponseService.success(res, {
+      success: true,
+      message: 'User created successfully'
+    }, 201);
+
+    SendGridService.sendEmail({
+      to: ['hasman16@gmail', 'smylydon@gmail.com'],
+      from: 'smylydon@gmail.com',
+      subject: 'User registered'
+    });
+  }
+
   function create(req, res) {
     const sequelize = models.sequelize;
     const Phone = models.Phone;
@@ -103,20 +116,11 @@ export default function UserController(bcrypt, jwt, models, ResponseService) {
                             "number": String(req.body["phone"]),
                             "description": "other"
                           };
-                          console.log('phone:', phone);
+
                           return Phone.create(phone, { transaction: t })
-                            .then(newPhone => {
-                              ResponseService.success(res, {
-                                success: true,
-                                message: 'User created successfully'
-                              }, 201);
-                            });
+                            .then(newPhone => respondAndSendEmail(res));
                         } else {
-                          console.log('has no phone');
-                          ResponseService.success(res, {
-                            success: true,
-                            message: 'User created successfully'
-                          }, 201);
+                          respondAndSendEmail(res);
                         }
                       });
                   });
