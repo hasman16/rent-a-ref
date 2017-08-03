@@ -10,7 +10,9 @@ exports.default = new (function () {
     }
     SendGridService.prototype.sendEmail = function (setter) {
         var value;
+        console.log('setter:', setter);
         if (this.enabled) {
+            console.log("ok enabled ===================");
             var helper = sendgrid.mail;
             var from_email = new helper.Email(setter.from);
             var to_email = new helper.Email(setter.to);
@@ -20,7 +22,7 @@ exports.default = new (function () {
             var request = this.sg.emptyRequest({
                 method: 'POST',
                 path: '/v3/mail/send',
-                body: mail.toJSON(),
+                body: mail.toJSON()
             });
             value = this.sg.API(request);
         }

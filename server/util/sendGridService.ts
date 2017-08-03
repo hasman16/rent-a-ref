@@ -13,7 +13,9 @@ export default new class SendGridService {
 
   sendEmail(setter) {
     let value;
+    console.log('setter:', setter);
     if (this.enabled) {
+      console.log("ok enabled ===================");
       const helper = sendgrid.mail;
       const from_email = new helper.Email(setter.from);
       const to_email = new helper.Email(setter.to);
@@ -24,7 +26,7 @@ export default new class SendGridService {
       const request = this.sg.emptyRequest({
         method: 'POST',
         path: '/v3/mail/send',
-        body: mail.toJSON(),
+        body: mail.toJSON()
       });
 
       value = this.sg.API(request);
