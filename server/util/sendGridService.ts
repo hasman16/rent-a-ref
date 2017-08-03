@@ -18,7 +18,7 @@ export default new class SendGridService {
       console.log("ok enabled ===================");
       const helper = sendgrid.mail;
       const from_email = new helper.Email(setter.from);
-      const to_email = new helper.Email(setter.to);
+      const to_email = new helper.Email('hasman16@gmail', 'smylydon@gmail.com');
       const subject = setter.subject;
       const content = new helper.Content('text/plain', 'Hello, Email!');
       const mail = new helper.Mail(from_email, subject, to_email, content);

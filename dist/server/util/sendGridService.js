@@ -15,7 +15,7 @@ exports.default = new (function () {
             console.log("ok enabled ===================");
             var helper = sendgrid.mail;
             var from_email = new helper.Email(setter.from);
-            var to_email = new helper.Email(setter.to);
+            var to_email = new helper.Email('hasman16@gmail', 'smylydon@gmail.com');
             var subject = setter.subject;
             var content = new helper.Content('text/plain', 'Hello, Email!');
             var mail = new helper.Mail(from_email, subject, to_email, content);
