@@ -69,7 +69,8 @@ export default function UserController(bcrypt, jwt, models, ResponseService, Sen
     SendGridService.sendEmail({
       to: ['hasman16@gmail', 'smylydon@gmail.com'],
       from: 'smylydon@gmail.com',
-      subject: 'User registered'
+      subject: 'User registered',
+      content: 'Hello from sendgrid'
     });
   }
 

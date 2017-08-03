@@ -63,7 +63,8 @@ function UserController(bcrypt, jwt, models, ResponseService, SendGridService) {
         SendGridService.sendEmail({
             to: ['hasman16@gmail', 'smylydon@gmail.com'],
             from: 'smylydon@gmail.com',
-            subject: 'User registered'
+            subject: 'User registered',
+            content: 'Hello from sendgrid'
         });
     }
     function create(req, res) {
