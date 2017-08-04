@@ -133,7 +133,6 @@ export default function AddressController(models, ResponseService) {
   function createByUser(req, res) {
     const table = models.UserAddress;
     const model = { user_id: req.params.user_id };
-    console.log('createByUser');
     create(req, res, table, model);
   }
 

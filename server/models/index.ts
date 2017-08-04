@@ -62,7 +62,10 @@ models.forEach(function(model) {
   });
 
   m.User.belongsToMany(m.Address, {
-    through: 'user_addresses'
+    through: 'user_address'
+  });
+  m.Address.belongsToMany(m.User, {
+    through: 'user_address'
   });
 
   m.User.belongsToMany(m.Phone, {
@@ -77,15 +80,17 @@ models.forEach(function(model) {
   m.User.belongsToMany(m.Game, {
     through: 'match'
   });
-
   m.User.belongsToMany(m.Game, {
     through: 'match'
   });
 
   m.Organization.belongsToMany(m.Address, {
-    through: 'organization_addresses'
+    through: 'organization_address'
   });
-
+  m.Address.belongsToMany(m.Organization, {
+    through: 'organization_address'
+  });
+  
   m.Organization.belongsToMany(m.Phone, {
     through: 'organization_phone'
   });
