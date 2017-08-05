@@ -9,17 +9,11 @@ export default function(sequelize, DataTypes) {
         },
         city: {
           type: DataTypes.STRING(128),
-          allowNull: false,
-          validate: {
-            isAlpha: true
-          }
+          allowNull: false
         },
         state: {
           type: DataTypes.STRING(128),
-          allowNull: false,
-          validate: {
-            isAlpha: true
-          }
+          allowNull: false
         },
         zip: {
           type: DataTypes.STRING(16),
@@ -27,6 +21,9 @@ export default function(sequelize, DataTypes) {
           validate: {
             is: /^\d{5}(-\d{4})?$/
           }
+        },
+        notes: {
+          type: DataTypes.STRING(128)
         }
     }, {
         paranoid: true, // mark as deleted but do not delete

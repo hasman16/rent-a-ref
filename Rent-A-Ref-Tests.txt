@@ -1,0 +1,419 @@
+Title: Rent-A-Ref
+Description: API tests for rent-a-ref website on Heroku. Will need to tests on Heroku too.
+
+Test:Login
+POST: /api/login
+Payload:
+{
+	"email": "admin1@rentaref.com",
+	"password": "admin1"
+}
+
+POST: /api/login
+Payload:
+{
+	"email": "admin2@rentaref.com",
+	"password": "admin2"
+}
+
+POST: /api/login
+Payload:
+{
+	"email": "ref1@rentaref.com",
+	"password": "referee1"
+}
+
+POST: /api/login
+Payload:
+{
+	"email": "ref2@rentaref.com",
+	"password": "referee2"
+}
+
+POST: /api/login
+Payload:
+{
+	"email": "admin1@rentaref.com",
+	"password": "xx"
+}
+
+POST: /api/login
+Payload:
+{
+	"email": "fred@mailinator.com",
+	"password": "admin1"
+}
+
+POST: /api/login
+Payload:
+{
+	"email": "fredflintstone@bedrock.com",
+	"password": "fjljj"
+}
+
+
+Test:Address as ref1
+POST: /api/login
+Payload:
+{
+	"email": "ref1@rentaref.com",
+	"password": "referee1"
+}
+
+GET: /api/address
+
+GET: /api/user/:userId/address
+
+POST: /api/user/:userId/address
+Payload:
+{
+	"line1": "255 Main St",
+	"line2": "",
+	"city": "Metroville",
+	"state": "CA",
+	"zip": "92866"
+}
+
+GET: /api/user/:userId/address
+
+PUT: /api/user/:userId/address/:addressId
+Payload:
+{
+	"line1": "255 Main St",
+	"line2": "",
+	"city": "Metroville South",
+	"state": "CA",
+	"zip": "92866"
+}
+
+
+Test:Address as admin1
+POST: /api/login
+Payload:
+{
+	"email": "admin1@rentaref.com",
+	"password": "admin1"
+}
+
+GET: /api/address
+
+GET: /api/user/:userId/address
+
+POST: /api/user/:userId/address
+Payload:
+{
+	"line1": "255 Main St",
+	"line2": "",
+	"city": "Metroville",
+	"state": "CA",
+	"zip": "92866"
+}
+
+GET: /api/user/:userId/address
+
+PUT: /api/user/:userId/address/:addressId
+Payload:
+{
+	"line1": "255 Main St",
+	"line2": "",
+	"city": "Metroville South",
+	"state": "CA",
+	"zip": "92866"
+}
+
+
+Test:Organization as Admin1
+POST: /api/login
+Payload:
+{
+	"email": "admin1@rentaref.com",
+	"password": "admin1"
+}
+
+GET: /api/organization
+
+GET: /api/organization/1
+
+POST: /api/organization
+Payload:
+{
+	"name": "Test Organization"
+}
+
+PUT: /api/organization/:organizationId
+Payload:
+{
+	"name": "Underwater basket weaving"
+}
+
+GET: /api/organizer/:organizationId
+
+POST: /api/organization/:organizationId/phone
+Payload:
+{
+	"number": "9495555455",
+	"description": "mobile"
+}
+
+GET: /api/organization/:organizationId/phone
+
+
+Test:Organization as ref1
+POST: /api/login
+Payload:
+{
+	"email": "ref1@rentaref.com",
+	"password": "referee1"
+}
+
+GET: /api/organization
+
+GET: /api/organization/1
+
+POST: /api/organization
+Payload:
+{
+	"name": "Test Organization"
+}
+
+PUT: /api/organization/:organizationId
+Payload:
+{
+	"name": "Underwater basket weaving"
+}
+
+GET: /api/organization/:organizationId
+
+POST: /api/organization/:organizationId/phone
+Payload:
+{
+	"number": "9495555455",
+	"description": "mobile"
+}
+
+GET: /api/organization/:organizationId/phone
+
+
+Test:Phone as ref1
+POST: /api/login
+Payload:
+{
+	"email": "ref1@rentaref.com",
+	"password": "referee1"
+}
+
+GET: /api/phone
+
+GET: /api/user/:userId/phone
+
+POST: /api/user/:userId/phone
+Payload:
+{
+	"number": "9495555455",
+	"description": "mobile"
+}
+
+POST: /api/user/:userId/phone
+Payload:
+{
+	"number": "9495555455",
+	"description": "home"
+}
+
+POST: /api/user/:userId/phone
+Payload:
+{
+	"number": "9495555455",
+	"description": "other"
+}
+
+POST: /api/user/:userId/phone
+Payload:
+{
+	"number": "9495555455",
+	"description": "dd"
+}
+
+
+Test:Sports as Admin1
+POST: /api/login
+Payload:
+{
+	"email": "admin1@rentaref.com",
+	"password": "admin1"
+}
+
+GET: /api/sport
+
+GET: /api/sport/1
+
+POST: /api/sport
+Payload:
+{
+	"name": "Underwater basket weaving",
+	"periods": "5",
+	"referees": "13",
+	"duration": "90"
+}
+
+PUT: /api/sport/1
+Payload:
+{
+	"name": "Underwater basket weaving",
+	"periods": "5",
+	"referees": "13",
+	"duration": "90"
+}
+
+
+Test:Sports as ref1
+POST: /api/login
+Payload:
+{
+	"email": "ref1@rentaref.com",
+	"password": "referee1"
+}
+
+GET: /api/sport
+
+GET: /api/sport/1
+
+POST: /api/sport
+Payload:
+{
+	"name": "Underwater basket weaving",
+	"periods": "5",
+	"referees": "13",
+	"duration": "90"
+}
+
+PUT: /api/sport/1
+Payload:
+{
+	"name": "Underwater basket weaving",
+	"periods": "5",
+	"referees": "13",
+	"duration": "90"
+}
+
+
+Test:User as Admin1
+POST: /api/login
+Payload:
+{
+	"email": "admin1@rentaref.com",
+	"password": "admin1"
+}
+
+GET: /api/user
+
+GET: /api/user/1
+
+POST: /api/user
+Payload:
+{
+	"email": "test77@rentaref.com",
+	"password": "test1",
+	"firstname": "Lazerus",
+	"sex": "m",
+	"dob": "1758888",
+	"lastname": "Jones"
+}
+
+POST: /api/user
+Payload:
+{
+	"email": "test78@rentaref.com",
+	"password": "test1",
+	"firstname": "Lazerus",
+	"sex": "m",
+	"dob": "1758888",
+	"lastname": "Jones",
+	"can_referee": "true",
+	"can_organize": "true"
+}
+
+POST: /api/register
+Payload:
+{
+	"email": "register@rentaref.com",
+	"password": "test1",
+	"firstname": "Lazerus",
+	"sex": "m",
+	"dob": "1758888"
+}
+
+PUT: /api/user/1
+Payload:
+{
+	"email": "test4@rentaref.com",
+	"password": "test12",
+	"firstname": "Lazerus",
+	"sex": "m",
+	"dob": "1758888"
+}
+
+DELETE: /api/user/1
+Payload:
+{
+	"email": "test4@rentaref.com",
+	"password": "test1",
+	"firstname": "Lazerus",
+	"sex": "m",
+	"dob": "1758888"
+}
+
+
+Test:User as Ref
+POST: /api/login
+Payload:
+{
+	"email": "ref1@rentaref.com",
+	"password": "referee1"
+}
+
+GET: /api/user
+
+GET: /api/user/:userId
+
+PUT: /api/user/:userId
+Payload:
+{
+	"email": "test4@rentaref.com",
+	"password": "test12",
+	"firstname": "Lazerus",
+	"sex": "m",
+	"dob": "1758888"
+}
+
+POST: /api/register
+Payload:
+{
+	"email": "test4@rentaref.com",
+	"password": "test12",
+	"firstname": "Lazerus",
+	"lastname": "Man",
+	"phone": "9491234567",
+	"role": "ORGANIZER"
+}
+
+POST: /api/user
+Payload:
+{
+	"email": "test5@rentaref.com",
+	"password": "test12",
+	"firstname": "Lazerus",
+	"lastname": "Manuel",
+	"phone": "9895666",
+	"role": "referee"
+}
+
+DELETE: /api/user/:userId
+Payload:
+{
+	"email": "test4@rentaref.com",
+	"password": "test1",
+	"firstname": "Lazerus",
+	"sex": "m",
+	"dob": "1758888"
+}

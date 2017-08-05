@@ -1,6 +1,12 @@
 export default new class ResponseService {
 
   success(res, message, status = 200) {
+    if (typeof message === 'string') {
+      message = {
+          success: true,
+          message: message
+      };
+    }
     res.status(status).json(message);
   }
 

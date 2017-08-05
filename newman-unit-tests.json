@@ -411,6 +411,756 @@
 			]
 		},
 		{
+			"name": "Address as ref1",
+			"description": "Unit tests for address CRUD endpoints for a user. The getAll call should fail, this should only work for admins.",
+			"item": [
+				{
+					"name": "login as ref1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9\\-_]+\\.[a-z0-9\\-_]+\\.[a-z0-9\\-_]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"var user = data.user;",
+									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
+									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(user.can_organize);",
+									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"postman.setGlobalVariable(\"userId\", data.user.id);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "ref1@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "referee1",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 403'] = responseCode.code === 403;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === false;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Permission Violation\";",
+									"tests['Doesnot return token'] = !responseBody.has('token');",
+									"tests['Expect token to be undefined'] = data.token === undefined;",
+									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
+									"tests['Expect accessLevel is undefined'] = data.accessLevel === undefined;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/address",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id/address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === true;",
+									"tests['Returns a element data'] = responseBody.has('data');",
+									"tests['Returns data'] = data.data instanceof Array === true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}/address",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id/address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns a user_id'] = responseBody.has('user_id');",
+									"tests['Returns a address id'] = responseBody.has('address_id');",
+									"",
+									"",
+									"tests['Expect user id to be a number'] = /\\d+/.test(item.user_id);",
+									"tests['Expect user id not to be zero'] = item.user_id > 0;",
+									"tests['Expect user ids match'] = item.user_id == postman.getGlobalVariable(\"userId\");",
+									"",
+									"tests['Expect address id to be a number'] = /\\d+/.test(item.address_id);",
+									"tests['Expect address id not to zero'] = item.address_id > 0;",
+									"postman.setGlobalVariable(\"addressId\", item.address_id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}/address",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "line1",
+									"value": "255 Main St",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "line2",
+									"value": "",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Metroville",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "CA",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "zip",
+									"value": "92866",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id/address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === true;",
+									"tests['Returns a element data'] = responseBody.has('data');",
+									"tests['Returns data'] = data.data instanceof Array === true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}/address",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id/address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns message'] = responseBody.has('message');",
+									"",
+									"tests['Expect success to be true'] = item.success === true;",
+									"tests['Expect message to be \"Address updated\"'] = item.message === \"Address updated\";",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}/address/{{addressId}}",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "line1",
+									"value": "255 Main St",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "line2",
+									"value": "",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Metroville South",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "CA",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "zip",
+									"value": "92866",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address as admin1",
+			"description": "Unit tests for address CRUD endpoints for a user. The getAll call should fail, this should only work for admins.",
+			"item": [
+				{
+					"name": "login as admin1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9\\-_]+\\.[a-z0-9\\-_]+\\.[a-z0-9\\-_]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"var user = data.user;",
+									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
+									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(user.can_organize);",
+									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"postman.setGlobalVariable(\"userId\", data.user.id);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin1@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin1",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 403'] = responseCode.code === 403;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === false;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Permission Violation\";",
+									"tests['Doesnot return token'] = !responseBody.has('token');",
+									"tests['Expect token to be undefined'] = data.token === undefined;",
+									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
+									"tests['Expect accessLevel is undefined'] = data.accessLevel === undefined;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/address",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id/address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === true;",
+									"tests['Returns a element data'] = responseBody.has('data');",
+									"tests['Returns data'] = data.data instanceof Array === true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}/address",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id/address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns a user_id'] = responseBody.has('user_id');",
+									"tests['Returns a address id'] = responseBody.has('address_id');",
+									"",
+									"",
+									"tests['Expect user id to be a number'] = /\\d+/.test(item.user_id);",
+									"tests['Expect user id not to be zero'] = item.user_id > 0;",
+									"tests['Expect user ids match'] = item.user_id == postman.getGlobalVariable(\"userId\");",
+									"",
+									"tests['Expect address id to be a number'] = /\\d+/.test(item.address_id);",
+									"tests['Expect address id not to zero'] = item.address_id > 0;",
+									"postman.setGlobalVariable(\"addressId\", item.address_id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}/address",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "line1",
+									"value": "255 Main St",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "line2",
+									"value": "",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Metroville",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "CA",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "zip",
+									"value": "92866",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id/address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === true;",
+									"tests['Returns a element data'] = responseBody.has('data');",
+									"tests['Returns data'] = data.data instanceof Array === true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}/address",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/user/:id/address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns message'] = responseBody.has('message');",
+									"",
+									"tests['Expect success to be true'] = item.success === true;",
+									"tests['Expect message to be \"Address updated\"'] = item.message === \"Address updated\";",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/user/{{userId}}/address/{{addressId}}",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "line1",
+									"value": "255 Main St",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "line2",
+									"value": "",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Metroville South",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "CA",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "zip",
+									"value": "92866",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Organization as Admin1",
 			"description": "",
 			"item": [
