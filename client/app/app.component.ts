@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import * as $ from 'jquery';
 
 @Component({
+  moduleId: module.id,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

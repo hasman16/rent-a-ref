@@ -13,9 +13,7 @@ import { ToastComponent } from '../shared/toast/toast.component';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  email = new FormControl('', [Validators.required,
-                                       Validators.minLength(3),
-                                       Validators.maxLength(100)]);
+  email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required,
                                           Validators.minLength(6)]);
 
@@ -43,9 +41,15 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.auth.login(this.loginForm.value).subscribe(
-      res => this.router.navigate(['/']),
+      res => {
+        // this.router.navigate(['/']);
+        // console.log('status: ' + res['success'] + ' Message: ' + res['message']);
+        console.log('Response: ', res);
+        console.log('Response: ', res.user);
+      },
       error => this.toast.setMessage('invalid email or password!', 'danger')
     );
+
   }
 
 }

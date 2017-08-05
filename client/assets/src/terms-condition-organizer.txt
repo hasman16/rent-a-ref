@@ -1,7 +1,9 @@
-﻿               Terms of Service
+               Terms of Service
 
-Referee/Umpire
+              Requester/Organizer
 
+ORGANIZER
+REFEREE
 Welcome to Rent-A-Ref! These Terms of Use (“Terms”) apply to your access to and use of the website, mobile application and other online products and services (collectively, our “Services”) provided by Rent-A-Ref (“Rent-A-Ref,” “we,” “us” or “our”). By accessing or using our Services, you agree to these Terms. If you do not agree to these Terms, do not access or use our Services.
 ​
 These Terms do not alter in any way the terms or conditions of any other agreement you may have with Rent-A-Ref for products or services. If you are accessing or using our Services on behalf of another person or entity, you represent and warrant that you are authorized to accept these Terms on such person or entity's behalf, and that such person or entity will be responsible to Rent-A-Ref if you violate these Terms. If you have any question regarding the use of our Services, please contact us.
@@ -10,26 +12,22 @@ These Terms do not alter in any way the terms or conditions of any other agreeme
 By submitting your information to Rent-A-Ref, you consent to receive electronic communications from Rent-A-Ref (e.g., via email or by posting notices on our Services). These communications may include notices about your account (e.g., payment authorizations and other transactional information), and emails connecting you with Referees. These communications are part of your relationship with us. You agree that any notices, agreements, disclosures or other communications that we send to you electronically will satisfy any legal communication requirements, including, but not limited to, that such communications be in writing. You should maintain copies of electronic communications from us by printing a paper copy or saving an electronic copy. We may also send you promotional communications via email, including, but not limited to, newsletters, special offers, surveys and other news and information we think will be of interest to you. You may opt out (unsubscribe) of receiving these promotional emails at any time by following the unsubscribe instructions provided in these communications.
 ​
 2. User Transactions; Release
-Our Services may be used to help You ('Referee' or 'Umpire') schedule and officiate assignments ('League Games', 'Tournaments', 'One-Time Events') submitted by a Requester/Organizer, and to facilitate payment for such services. However, users transact solely between themselves and Rent-A-Ref is not a party to any transactions between users. Rent-A-Ref hereby expressly disclaims, and you hereby expressly release Rent-A-Ref from, any and all liability whatsoever for any controversies, claims, suits, injuries, loss, harm or damages arising from or related to disputes, dealings, or interactions between you and any other users or third parties. If You Accept to officiate games with Rent-A-Ref Requester/Organizer outside of our Service, it may result in suspension of your account and you may be liable for all fees paid to Rent-A-Ref.
+Our Services may be used to help obtain or offer Referee and Umpiring Services provided by users and to facilitate payment for such services. However, users transact solely between themselves and Rent-A-Ref is not a party to any transactions between users. Rent-A-Ref hereby expressly disclaims, and you hereby expressly release Rent-A-Ref from, any and all liability whatsoever for any controversies, claims, suits, injuries, loss, harm or damages arising from or related to disputes, dealings, or interactions between you and any other users or third parties. If you request Referee or Umpiring services with Rent-A-Ref users outside of our Service, it may result in suspension of your account and you may be liable for all fees paid to Rent-A-Ref.
 ​
-3. Scheduling and Accepting Assignments; Cancellations
-You may use our Services to Find, Accept and Officiate assignments submitted by a Requester/Organizer, and to facilitate payment for such services.
+3. Referee and Umpire Bookings; Cancellations
+You may use our services to schedule a Referee or an Umpire for a minimum of a one hour session. Any bookings purchased through our services that were rescheduled must be complete within 1 month. Any bookings purchased but not not completed within 1 month of the purchase are forfeit and you will not be issued a refund.
 ​
-Accepting Assignments - By Accepting to attend an Assignment verbally via phone or email, you are liable for attending the event and holding a proper conduct during the duration of the event. Any cancellations ('choosing to no longer attend event') must be expressed via a phone call or an email to info@rentaref.co four (4) days prior to the event in order to not be penalized. If you choose to not communicate or choose cancel less than four (4) days prior to the event, the following penalties can be applied to your account:
+        i. Submitting Requests - By submitting a Referee/Umpire Request via our website, you express                        interest in obtaining a Referee(s) or an Umpire(s) via our Services.
+       ii. Cancellation - Cancellation of your scheduled game(s) or event less than 1 week ( 7 days ) prior to                the start date of your game(s) or event due to not having enough players, changing your mind or                stopping communication, will result in a Cancellation Fee of  $25.
+                          a. Exceptions to Cancellations of your Game(s) or Event are: Weather / Act of God.
 ​
-        i. Cancellation Fee -  If you choose to Accept an Assignment, you are responsible for attending the                                                  Assignment on time and hold a professional conduct. If you choose to Accept
-                                            an assignment and do not attend and/or do not notify the Organizer or
-                                            Rent-A-Ref, you will be responsible for up to 50% of the fees you were
-                                            estimated to make during this Assignment.
-       ii. Suspension of account - If you do not attend and/or do not notify the Organizer or Rent-A-Ref, your                                             account can be suspended and you may be banned from utilizing Rent-A-Ref                                                  Services to find future Assignments (Depending on the Circumstances).
+3. Payment and Billing Information
+By providing a credit card or other payment method that we accept, you represent and warrant that you are authorized to use the designated payment method and that you authorize us (or our third-party payment processor) to charge your payment method for the total amount of your purchase (including any applicable taxes and other charges) (collectively, as applicable, an “Order”). If the payment method cannot be verified, is invalid or is otherwise not acceptable, your Order may be suspended or cancelled. You must resolve any problem we encounter in order to proceed with your Order. In the event you want to change or update payment information associated with your Rent-A-Ref account, you can do so by contacting us.
 ​
-4. Payment and Billing Information
-By providing us a method to compensate you for Completed Assignments, you represent and warrant that you are authorized to use the designated payment method and that you authorize us (or our third-party payment processor) to send you a payment for Completed Assignments. If the payment method cannot be verified, is invalid, or is otherwise not acceptable, your payment for Completed Assignments may be put in pending status until the payment method is verified. In the event you want to change or update payment information associated with your Rent-A-Ref account, you can do so by contacting us.
+4. Pricing and Availability
+All prices are shown in U.S. dollars and applicable taxes and other charges, if any, are additional. Prices may be adjusted at any time in which instance you will be notified. Referee and Umpire Services are subject to availability, and we reserve the right to cancel all or part of a scheduled Services and to discontinue making certain services available through our Services without prior notice.
 ​
-5. Pricing and Availability
-All prices per Assignment are shown in U.S. dollars and applicable taxes and other charges. Prices may be adjusted at any time in which instance you will be notified. Assignments are subject to availability, and we reserve the right to cancel all or part of a scheduled Services and to discontinue making certain services available through our Services without prior notice.
-​
-6. Acceptable Use of Our Services
+5. Acceptable Use of Our Services
 Your use of our Services will not violate any law, contract, intellectual property or other third-party right or constitute a tort, and you are solely responsible for your conduct while on our Services. You will not:
 Use our Services in any manner that could interfere with, disrupt, negatively affect or inhibit other users from fully enjoying our Services, or that could damage, disable, overburden or impair the functioning of our Services in any manner;
 Engage in any discriminatory, defamatory, hateful, harassing, abusive, obscene, threatening, physically dangerous, or otherwise objectionable conduct;
@@ -39,34 +37,34 @@ Attempt to reverse engineer any aspect of our Services or do anything that might
 Develop any third-party application that interacts with User Content or our Services without Rent-A-Ref’s prior written consent;
 Use our Services for any illegal or unauthorized purpose, or engage in, encourage or promote any activity that violates these Terms.
 ​
-7. Indemnification
+6. Indemnification
 You will defend, indemnify and hold harmless Rent-A-Ref, its independent contractors, service providers and consultants, and their respective directors, officers, employees and agents (collectively, “Rent-A-Ref”), from and against any claims, damages, costs, liabilities and expenses (including, but not limited to, reasonable attorneys' fees) arising out of or related to:
        (a) Your access to or use of our Services;
        (b) Any User Content or Feedback you provide; (c) your violation of these Terms;
        (d) Your violation, misappropriation or infringement of any rights of another (including intellectual                     property rights or privacy rights); or (e) your conduct in connection with our Services.
 ​
-8. Disclaimers
+7. Disclaimers
 Your use of our Services is at your sole risk. Our Services are provided “as is” and “as available” without warranties of any kind, either express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, title, and non-infringement. In addition, Rent-A-Ref does not represent or warrant that our Services are accurate, complete, reliable, current or error-free. While Rent-A-Ref attempts to make your access to and use of our Services safe, we cannot and do not represent or warrant that our Services or servers are free of harmful components. You assume the entire risk as to the quality and performance of the Services.
 ​
-9. Limitation of Liability
+8. Limitation of Liability
 Rent-A-Ref and the other Rent-A-Ref Parties will not be liable to you under any theory of liability—whether based in contract, tort, negligence, strict liability, warranty, or otherwise—for any indirect, consequential, exemplary, incidental, special or punitive damages or lost profits, to the fullest extent permitted by the applicable law, even if Rent-A-Ref or the other Rent-A-Ref Parties have been advised of the possibility of such damages. The limitations of liability set for in this section will apply even if the remedies otherwise provided under these Terms, at law or in equity, fail of their essential purpose. The total liability of Rent-A-Ref and the other Rent-A-Ref Parties, for any claim arising out of or relating to these Terms or our Services, regardless of the form of the action, is limited to the greater of the amount paid, if any, by you to access or use our Services. The limitations set forth in this section will not limit or exclude liability for the gross negligence, fraud or intentional misconduct of Rent-A-Ref or the other Rent-A-Ref Parties.
 ​
-10. Assumption of Risk
+9. Assumption of Risk
 You assume all risks when using our Services, including all of the risks associated with interactions with other users. You agree to take all necessary precautions when interacting with other users.
 ​
-11. Modifications to Our Services
+10. Modifications to Our Services
 Rent-A-Ref reserves the right to modify or discontinue, temporarily or permanently, our Services, or any features or portions thereof, without prior notice. You agree that Rent-A-Ref will not be liable for any modification, suspension or discontinuance of our Services, or any part thereof.
 ​
-12. Applicable Law and Venue
+11. Applicable Law and Venue
 These Terms and your use of our Services will be governed by and construed in accordance with the laws of California, without resort to its conflict of law provisions. You agree that any action at law or in equity arising out of or relating to these Terms will be filed only in the state and federal courts located in Riverside, California and you hereby irrevocably and unconditionally consent and submit to the exclusive jurisdiction of such courts over any suit, action or proceeding arising out of these Terms.
 ​
-13. Termination
+12. Termination
 Rent-A-Ref reserves the right, without notice and in its sole discretion, to terminate your license to access and use our Services and to block or prevent your future access to and use of our Services.
 ​
-14. Changes to These Terms
+13. Changes to These Terms
 We may make changes to these Terms from time to time. If we make changes, we will post the amended Terms to our Services and update the “Last Updated” date above. We may also attempt to notify you by sending an email notification to the address associated with your account or providing notice through our Services. Unless we say otherwise in our notice, the amended Terms will be effective immediately and your continued access to and use of our Services after we provide notice will confirm your acceptance of the changes. If you do not agree to the amended Terms, you must stop accessing and using our Services.
 ​
-15. Miscellaneous
+14. Miscellaneous
 These Terms constitute the entire agreement between you and Rent-A-Ref relating to your access to and use of our Services and your order, receipt and use of products or services made available through our Services. These Terms, and any rights and licenses granted hereunder, may not be transferred or assigned by you without the prior written consent of Rent-A-Ref. No waiver of any provision of these Terms will constitute a waiver of such provision in any prior, concurrent or subsequent circumstance, and Rent-A-Ref failure to assert any right or provision under these Terms will not constitute a waiver of such right or provision. Except as otherwise provided herein, these Terms are intended solely for the benefit of the parties and are not intended to confer third party beneficiary rights upon any other person or entity.
 ​
 Last Update

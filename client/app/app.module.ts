@@ -37,6 +37,8 @@ import { CareersComponent } from './group/careers/careers.component';
 import { FaqComponent } from './group/faq/faq.component';
 import { BlogComponent } from './group/blog/blog.component';
 import { ContactusComponent } from './group/contactus/contactus.component';
+import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
+import { Ng2GoogleRecaptchaModule } from 'ng2-google-recaptcha';
 // import { StatisticsComponent } from './shared/statistics/statistics.component';
 
 // import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
@@ -70,7 +72,8 @@ import { ContactusComponent } from './group/contactus/contactus.component';
     CareersComponent,
     FaqComponent,
     BlogComponent,
-    ContactusComponent
+    ContactusComponent,
+    GoogleRecaptchaDirective
     // StatisticsComponent
     // GoogleChart
   ],
@@ -79,7 +82,9 @@ import { ContactusComponent } from './group/contactus/contactus.component';
     SharedModule,
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    Ng2GoogleRecaptchaModule
+
     // Ng2GoogleChartsModule
   ],
   providers: [

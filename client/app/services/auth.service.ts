@@ -15,10 +15,10 @@ export class AuthService {
 
   constructor(private userService: UserService,
     private router: Router) {
-    const token = null; //localStorage.getItem('token');
+    const token = null; // localStorage.getItem('token');
     if (token) {
       const decodedUser = this.decodeUserFromToken(token);
-      //this.setCurrentUser(decodedUser);
+      // this.setCurrentUser(decodedUser);
     }
   }
 
@@ -28,7 +28,7 @@ export class AuthService {
         localStorage.setItem('token', res.token);
         const decodedUser = this.decodeUserFromToken(res.token);
         this.setCurrentUser();
-        return this.loggedIn;
+        return res;
       }
     );
   }
