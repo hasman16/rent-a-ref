@@ -50,37 +50,10 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function guardOrganization(req, res, callback) {
-    const user_id = req.decoded.id;
-    const Organization = models.Organization;
-
-    if (ResponseService.isAdmin(req)) {
-      callback();
-    } else {
-      Organization.findOne({
-        where: {
-          id: req.params.organization_id,
-          user_id: user_id
-        }
-      })
-        .then(organization => {
-          if (organization) {
-            callback();
-          } else {
-            ResponseService.failure(res, "Permissions violation.");
-          }
-        })
-        .catch(error => ResponseService.exception(res, error));
-    }
-  }
-
   function createByOrganization(req, res) {
-    function performCreation() {
-      const table = models.OrganizationAddress;
-      const model = { organization_id: req.params.organization_id };
-      create(req, res, table, model);
-    }
-    guardOrganization(req, res, performCreation);
+    const table = models.OrganizationAddress;
+    const model = { organization_id: req.params.organization_id };
+    create(req, res, table, model);
   }
 
   function getByOrganization(req, res) {
@@ -90,7 +63,7 @@ export default function AddressController(models, ResponseService) {
       where: {
         id: req.params.organization_id
       },
-      attributes: ['id','name', 'user_id'],
+      attributes: ['id', 'name', 'user_id'],
       include: [{
         model: Address,
         attributes: ['id', 'number', 'description'],
@@ -104,23 +77,21 @@ export default function AddressController(models, ResponseService) {
   }
 
   function updateByOrganization(req, res) {
-    function performCreation() {
-      const anAddress = makeAddress(req.body);
-      Address.update(anAddress, {
-        where: {
-          id: req.params.address_id
-        },
-        include: [
-          {
-            model: Address
-          }
-        ]
-      })
-        .then(result => ResponseService.success(res, 'Address updated'))
-        .catch(error => ResponseService.exception(res, error));
-    }
 
-    guardOrganization(req, res, performCreation);
+    const anAddress = makeAddress(req.body);
+    Address.update(anAddress, {
+      where: {
+        id: req.params.address_id
+      },
+      include: [
+        {
+          model: Address
+        }
+      ]
+    })
+      .then(result => ResponseService.success(res, 'Address updated'))
+      .catch(error => ResponseService.exception(res, error));
+
   }
 
   function deleteByOrganization(req, res) {

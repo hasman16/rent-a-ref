@@ -1,4 +1,5 @@
-export default function authorization() {
+export default function authorization(dbModels) {
+  const models = dbModels
 
   function checkIsAdmin(req) {
     const authorization = Number(req.decoded.accessLevel);
@@ -25,18 +26,80 @@ export default function authorization() {
     }
   }
 
+  function orgIsOwner(req, res, next) {
+    const Organization = models.Organization;
+    const user_id = req.decoded.id;
+    const organization_id = req.params.organization_id;
+
+    if (checkIsAdmin(req)) {
+      next();
+    } else {
+      Organization.findOne({
+        where: {
+          id: organization_id,
+          user_id: user_id
+        }
+      })
+        .then(organization => {
+          if (organization) {
+            next();
+          } else {
+            permissionViolation(res, next);
+          }
+        })
+        .catch(error => {
+          res.json(500, {
+            success: false,
+            message: 'Internal Error'
+          });
+        });
+    }
+  }
+
+  function orgIsMember(req, res, next) {
+    const Organizer = models.Organizer;
+    const user_id = req.decoded.id;
+    const organization_id = req.params.organization_id;
+
+    if (checkIsAdmin(req)) {
+      next();
+    } else {
+      Organizer.findOne({
+        where: {
+          id: organization_id,
+          user_id: user_id
+        }
+      })
+        .then(organization => {
+          if (organization) {
+            next();
+          } else {
+            permissionViolation(res, next);
+          }
+        })
+        .catch(error => {
+          res.json(500, {
+            success: false,
+            message: 'Internal Error'
+          });
+        });
+    }
+  }
+
   function permissionViolation(res, next) {
     const checkError = new Error('User does not have permission to perform this action.');
     res.json(403, {
-        success: false,
-        message: 'Permission Violation'
+      success: false,
+      message: 'Permission Violation'
     });
 
     next(checkError);
   }
 
   return {
-    isAdmin: isAdmin,
-    isUserOrAdmin: isUserOrAdmin
+    isAdmin,
+    isUserOrAdmin,
+    orgIsOwner,
+    orgIsMember
   }
 }
