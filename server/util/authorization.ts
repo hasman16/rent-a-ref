@@ -47,12 +47,7 @@ export default function authorization(dbModels) {
             permissionViolation(res, next);
           }
         })
-        .catch(error => {
-          res.json(500, {
-            success: false,
-            message: 'Internal Error'
-          });
-        });
+        .catch(error => serverError(res,next, error));
     }
   }
 
@@ -77,20 +72,25 @@ export default function authorization(dbModels) {
             permissionViolation(res, next);
           }
         })
-        .catch(error => {
-          res.json(500, {
-            success: false,
-            message: 'Internal Error'
-          });
-        });
+        .catch(error => serverError(res,next, error));
     }
+  }
+
+  function serverError(res, next, error) {
+    const checkError = new Error('There was a server error.');
+    res.json(500, {
+      success: false,
+      message: 'Internal Server Error.'
+    });
+
+    next(checkError);
   }
 
   function permissionViolation(res, next) {
     const checkError = new Error('User does not have permission to perform this action.');
     res.json(403, {
       success: false,
-      message: 'Permission Violation'
+      message: 'Forbidden: Permission Violation.'
     });
 
     next(checkError);

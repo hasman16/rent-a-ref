@@ -43,7 +43,7 @@ export default function AddressController(models, ResponseService) {
           const model = Object.assign({}, joinModel, { address_id: newAddress.id });
           return joinTable.create(model, { transaction: t })
             .then(newModel => {
-              ResponseService.success(res, newModel);
+              ResponseService.success(res, newModel, 201);
             });
         });
     })
@@ -53,6 +53,7 @@ export default function AddressController(models, ResponseService) {
   function createByOrganization(req, res) {
     const table = models.OrganizationAddress;
     const model = { organization_id: req.params.organization_id };
+        console.log('getByOrganization:', req.params.organization_id);
     create(req, res, table, model);
   }
 
@@ -66,13 +67,13 @@ export default function AddressController(models, ResponseService) {
       attributes: ['id', 'name', 'user_id'],
       include: [{
         model: Address,
-        attributes: ['id', 'number', 'description'],
+        attributes: attributes,
         through: {
           attributes: []
         }
       }]
     })
-      .then(results => ResponseService.success(res, results))
+      .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -97,7 +98,7 @@ export default function AddressController(models, ResponseService) {
   function deleteByOrganization(req, res) {
     const anAddress = makeAddress(req.body);
     Address.destroy(anAddress)
-      .then(result => ResponseService.success(res, 'Address deleted'))
+      .then(result => ResponseService.success(res, 'Address deleted', 204))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -142,7 +143,7 @@ export default function AddressController(models, ResponseService) {
   function deleteByUser(req, res) {
     const anAddress = makeAddress(req.body);
     Address.destroy(anAddress)
-      .then(result => ResponseService.success(res, 'Address deleted'))
+      .then(result => ResponseService.success(res, 'Address deleted', 204))
       .catch(error => ResponseService.exception(res, error));
   }
 

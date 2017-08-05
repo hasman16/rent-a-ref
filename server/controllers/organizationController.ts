@@ -59,7 +59,7 @@ export default function OrganizationController(models, ResponseService) {
                 name: newOrganization.name,
                 user_id: newOrganization.user_id
               };
-              ResponseService.success(res, org);
+              ResponseService.success(res, org, 201);
             });
         });
     })
@@ -82,7 +82,7 @@ export default function OrganizationController(models, ResponseService) {
   function deleteOne(req, res) {
     const organization = new Object(req.body);
     Organization.destroy(organization)
-      .then(result => ResponseService.success(res, 'Organization deleted'))
+      .then(result => ResponseService.success(res, 'Organization deleted', 204))
       .catch(error => ResponseService.exception(res, error));
   }
 

@@ -75,7 +75,7 @@ export default function PhoneController(models, ResponseService) {
         }
       }]
     })
-      .then(results => ResponseService.success(res, results))
+      .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 

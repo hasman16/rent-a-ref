@@ -140,7 +140,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService, Sen
         id: req.params.user_id
       }
     })
-      .then(updatedUser => returnUser(res, updatedUser, 201))
+      .then(updatedUser => returnUser(res, updatedUser, 200))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -148,7 +148,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService, Sen
     const user = makeUser(req.body);
 
     User.destroy(user)
-      .then(result => ResponseService.success(res, 'User deleted'))
+      .then(result => ResponseService.success(res, 'User deleted', 204))
       .catch(error => ResponseService.exception(res, error));
   }
 

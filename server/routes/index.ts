@@ -28,7 +28,7 @@ export default function setRoutes(app, models) {
 
   const router = express.Router();
   const external = {
-    authorization: authorization(),
+    authorization: authorization(models),
     authentication: authentication,
     router: router
   };
