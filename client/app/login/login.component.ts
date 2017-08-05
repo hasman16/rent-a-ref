@@ -42,10 +42,10 @@ export class LoginComponent implements OnInit {
   login() {
     this.auth.login(this.loginForm.value).subscribe(
       res => {
-        // this.router.navigate(['/']);
         // console.log('status: ' + res['success'] + ' Message: ' + res['message']);
         console.log('Response: ', res);
         console.log('Response: ', res.user);
+        this.router.navigate(['/']);
       },
       error => this.toast.setMessage('invalid email or password!', 'danger')
     );

@@ -174,20 +174,22 @@ export class RegisterComponent implements OnInit {
        console.log('status: ' + res.success + ' Message: ' + res.message);
         // console.log('Response from the server: ' + res.headers.get('X-Custom-Header'));
         // console.log('Response from the server for user: ' + res.body.message);
-        // this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('status: ' + err.status + ' Message: ' + err.message);
           console.log('An error occurred:', err.error.message);
-          this.toast.setMessage('An error occurred:' + err.error.message, 'danger');
+          this.toast.setMessage('An error occurred:' + err.message, 'danger');
           // this.toast.setMessage('Error Message: ' + err.error.message, 'danger');
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           console.log(`Backend returned code ${err.status}, Error Message: ${err.statusText}, body was: ${err.error}`);
-          this.toast.setMessage('Backend returned code: ' + err.status + ' Error Status: ' + err.statusText, 'danger');
+          console.log('status: ' + err.status + ' Message: ' + err);
+          this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
+         // this.toast.setMessage('Backend returned code: ' + err.status + ' Error Status: ' + err.statusText, 'danger');
 
 
           // this.toast.setMessage('Error Message: ' + err.error.message, 'danger');
