@@ -46,6 +46,7 @@ import { StandbyComponent } from './account/profile/standby/standby.component';
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'account', component: AccountComponent, canActivate: [AuthGuardLogin] },
+  { path: 'user/:id/account', component: AccountComponent, canActivate: [AuthGuardLogin] },
   { path: 'profile', component: ProfileComponent },
   { path: 'edit-profile', component: EditProfileComponent },
   { path: 'user/:id/edit-profile', component: EditProfileComponent },
