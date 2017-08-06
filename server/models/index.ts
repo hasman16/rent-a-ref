@@ -6,10 +6,13 @@ dotenv.load({ path: '.env' });
 
 const models = [
   'Address',
+  'Comment',
   'Email',
   'Game',
+  'Image',
   'Organization',
   'Person',
+  'Post',
   'Phone',
   'Sport',
   'User',
@@ -84,13 +87,19 @@ models.forEach(function(model) {
     through: 'match'
   });
 
+  m.User.hasMany(m.Post);
+  m.Post.hasMany(m.Comment);
+
+  m.Comment.belongsTo(m.Post);
+  m.Post.belongsTo(m.User);
+
   m.Organization.belongsToMany(m.Address, {
     through: 'organization_address'
   });
   m.Address.belongsToMany(m.Organization, {
     through: 'organization_address'
   });
-  
+
   m.Organization.belongsToMany(m.Phone, {
     through: 'organization_phone'
   });
