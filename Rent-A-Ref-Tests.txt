@@ -193,6 +193,18 @@ Payload:
 
 GET: /api/organization/:organizationId/phone
 
+GET: /api/organization/:organizationId/address
+
+POST: /api/organization/:organizationId/address
+Payload:
+{
+	"line1": "255 Main St",
+	"line2": "",
+	"city": "Metroville",
+	"state": "CA",
+	"zip": "92866"
+}
+
 
 Test:Phone as ref1
 POST: /api/login

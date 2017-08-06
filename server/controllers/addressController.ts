@@ -53,7 +53,7 @@ export default function AddressController(models, ResponseService) {
   function createByOrganization(req, res) {
     const table = models.OrganizationAddress;
     const model = { organization_id: req.params.organization_id };
-        console.log('getByOrganization:', req.params.organization_id);
+    console.log('getByOrganization:', req.params.organization_id);
     create(req, res, table, model);
   }
 

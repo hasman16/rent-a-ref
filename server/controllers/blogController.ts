@@ -1,4 +1,4 @@
-export default function AddressController(models, ResponseService) {
+export default function BlogController(models, ResponseService) {
   const Post = models.Post;
   const Comment = models.Comment;
   const User = models.User;
@@ -86,7 +86,7 @@ export default function AddressController(models, ResponseService) {
   function updateComment(req, res) {
     const comment = Object.assign({}, req.body);
     delete comment.post_id;
-    
+
     Comment.update(comment, {
       where: {
         id: req.params.comment_id
@@ -114,6 +114,7 @@ export default function AddressController(models, ResponseService) {
     updatePost,
     deletePost,
     createComment,
+    updateComment,
     deleteComment
   }
 }

@@ -1,6 +1,6 @@
 export default function(sequelize, DataTypes) {
   return sequelize.define('comment', {
-    comment: {
+    content: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
