@@ -181,7 +181,8 @@ export class RegisterComponent implements OnInit {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('status: ' + err.status + ' Message: ' + err.message);
           console.log('An error occurred:', err.error.message);
-          this.toast.setMessage('An error occurred:' + err.message, 'danger');
+          this.toast.setMessage('This email address already exists', 'danger');
+          // this.toast.setMessage('An error occurred:' + err.message, 'danger');
           // this.toast.setMessage('Error Message: ' + err.error.message, 'danger');
         } else {
           // The backend returned an unsuccessful response code.
