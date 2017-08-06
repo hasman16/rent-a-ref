@@ -44,8 +44,8 @@ export class LoginComponent implements OnInit {
       res => {
         // console.log('status: ' + res['success'] + ' Message: ' + res['message']);
         console.log('Response: ', res);
-        console.log('Response: ', res.user);
-        this.router.navigate(['/']);
+        console.log('Response user: ', res.user);
+        // this.router.navigate(['/']);
       },
       error => this.toast.setMessage('invalid email or password!', 'danger')
     );

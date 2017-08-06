@@ -169,7 +169,7 @@ export class RegisterComponent implements OnInit {
     if (this.valid) {
     this.userService.register(this.registerForm.value).subscribe(
       res => {
-        this.toast.setMessage('You successfully registered!', 'success');
+        this.toast.setMessage(res.message, 'success');
         console.log('Response: ' + res);
        console.log('status: ' + res.success + ' Message: ' + res.message);
         // console.log('Response from the server: ' + res.headers.get('X-Custom-Header'));
