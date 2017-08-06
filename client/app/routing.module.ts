@@ -22,7 +22,11 @@ import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-
 import { CareersComponent } from './group/careers/careers.component';
 import { FaqComponent } from './group/faq/faq.component';
 import { ContactusComponent } from './group/contactus/contactus.component';
-import { BlogComponent} from './group/blog/blog.component';
+import { BlogComponent } from './group/blog/blog.component';
+import { SuspendedComponent } from './account/profile/suspended/suspended.component';
+import { DeactivatedComponent } from './account/profile/deactivated/deactivated.component';
+import { StandbyComponent } from './account/profile/standby/standby.component';
+
   const routes: Routes = [
   {
     path: '', component: HomeComponent,
@@ -44,6 +48,10 @@ import { BlogComponent} from './group/blog/blog.component';
   { path: 'account', component: AccountComponent, canActivate: [AuthGuardLogin] },
   { path: 'profile', component: ProfileComponent },
   { path: 'edit-profile', component: EditProfileComponent },
+  { path: 'user/:id/edit-profile', component: EditProfileComponent },
+  { path: 'user/:id/standby', component: StandbyComponent },
+  { path: 'user/:id/suspended', component: SuspendedComponent },
+  { path: 'user/:id/deactivated', component: DeactivatedComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin] },
   { path: 'notfound', component: NotFoundComponent },
   { path: '**', redirectTo: '/notfound' },

@@ -169,7 +169,7 @@ export class RegisterComponent implements OnInit {
     if (this.valid) {
     this.userService.register(this.registerForm.value).subscribe(
       res => {
-        this.toast.setMessage('You successfully registered!', 'success');
+        this.toast.setMessage(res.message, 'success');
         console.log('Response: ' + res);
        console.log('status: ' + res.success + ' Message: ' + res.message);
         // console.log('Response from the server: ' + res.headers.get('X-Custom-Header'));
@@ -181,7 +181,8 @@ export class RegisterComponent implements OnInit {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('status: ' + err.status + ' Message: ' + err.message);
           console.log('An error occurred:', err.error.message);
-          this.toast.setMessage('An error occurred:' + err.message, 'danger');
+          this.toast.setMessage('This email address already exists', 'danger');
+          // this.toast.setMessage('An error occurred:' + err.message, 'danger');
           // this.toast.setMessage('Error Message: ' + err.error.message, 'danger');
         } else {
           // The backend returned an unsuccessful response code.
