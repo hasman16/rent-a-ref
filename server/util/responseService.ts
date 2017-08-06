@@ -45,7 +45,7 @@ export default new class ResponseService {
   }
 
   permissionViolation(res) {
-    this.failure(res, "Permissions violation.");
+    this.failure(res, "Forbidden: Permissions violation.");
   }
 
   executeAsAdmin(req, res, callback) {

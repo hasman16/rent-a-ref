@@ -10,9 +10,9 @@ function ensureAuthentication(req, res, next) {
         req.token = bearerToken;
         jwt.verify(bearerToken, process.env.SECRET_TOKEN, function(err, decoded) {
             if (err) {
-                res.status(403).json({
+                res.status(401).json({
                     success: false,
-                    message: 'Bad token.'
+                    message: 'Validation Error: New login required.'
                 });
             } else {
                 req.decoded = decoded;
@@ -20,9 +20,9 @@ function ensureAuthentication(req, res, next) {
             }
         });
     } else {
-        res.status(403).json({
+        res.status(401).json({
             success: false,
-            message: 'No token.'
+            message: 'Validation Error: Login required.'
         });
     }
 }

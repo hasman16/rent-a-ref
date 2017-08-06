@@ -35,7 +35,7 @@ export default function PersonController(models, ResponseService) {
     const aPerson = makePerson(req.body);
     Person.create(aPerson)
       .then(newPerson => {
-        ResponseService.success(res, newPerson);
+        ResponseService.success(res, newPerson, 201);
       })
       .catch(error => ResponseService.exception(res, error));
   }
@@ -54,7 +54,7 @@ export default function PersonController(models, ResponseService) {
   function deleteOne(req, res) {
     const person = makePerson(req.body);
     Person.destroy(person)
-      .then(result => ResponseService.success(res, 'Person deleted'))
+      .then(result => ResponseService.success(res, 'Person deleted', 204))
       .catch(error => ResponseService.exception(res, error));
   }
 

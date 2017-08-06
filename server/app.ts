@@ -29,7 +29,6 @@ app.use(morgan('dev'));
 importData(models, true); // set to false to bypass importing data
 setRoutes(app, models);
 
-
 process.on('uncaughtException', function(err) {
     console.log(err);
     // res.render('404');

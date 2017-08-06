@@ -26,7 +26,7 @@ export default function SportController(models, ResponseService) {
     const sport = makeSport(req.body);
     Sport.create(sport)
       .then(newSport => {
-        returnSport(res, newSport);
+        returnSport(res, newSport, 201);
       })
       .catch(error => ResponseService.exception(res, error));
   }
@@ -42,10 +42,10 @@ export default function SportController(models, ResponseService) {
     return newSport;
   }
 
-  function returnSport(res, sport) {
+  function returnSport(res, sport, status = 200) {
     let newSport = makeSport(sport);
     newSport["id"] = sport.id;
-    ResponseService.success(res, newSport);
+    ResponseService.success(res, newSport, status);
   }
 
   function updateOne(req, res) {
@@ -77,7 +77,7 @@ export default function SportController(models, ResponseService) {
       return Sport.destroy(clause, { transaction: t })
         .then(lines1 => {
           return Referee.destroy(clause, { transaction: t })
-            .then(lines2 => ResponseService.success(res, "Sport and Referees deleted:", totalLines(lines1, lines2)));
+            .then(lines2 => ResponseService.success(res, "Sport and Referees deleted:", totalLines(lines1, lines2), 204));
         });
     })
       .catch(error => ResponseService.exception(res, error));
