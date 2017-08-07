@@ -9,13 +9,13 @@ export default function userRoutes(setter, userCtrl) {
   router.route('/login').post(userCtrl.login);
   router.route('/logout').post(userCtrl.logout);
 
-  router.route('/user').get(authentication, isAdmin, userCtrl.getAll);
+  router.route('/users').get(authentication, isAdmin, userCtrl.getAll);
 
-  router.route('/user').post(userCtrl.create);
+  router.route('/users').post(userCtrl.create);
   router.route('/register').post(userCtrl.create);
 
-  router.route('/user/:user_id').get(authentication, isUserOrAdmin, userCtrl.getOne);
-  router.route('/user/:user_id').put(authentication, isUserOrAdmin, userCtrl.update);
-  router.route('/user/:user_id').patch(authentication, isUserOrAdmin, userCtrl.update);
-  router.route('/user/:user_id').delete(authentication, isUserOrAdmin, userCtrl.deleteOne);
+  router.route('/users/:user_id').get(authentication, isUserOrAdmin, userCtrl.getOne);
+  router.route('/users/:user_id').put(authentication, isUserOrAdmin, userCtrl.update);
+  router.route('/users/:user_id').patch(authentication, isUserOrAdmin, userCtrl.update);
+  router.route('/users/:user_id').delete(authentication, isUserOrAdmin, userCtrl.deleteOne);
 }

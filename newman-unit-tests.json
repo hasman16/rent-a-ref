@@ -20,7 +20,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -30,7 +30,8 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is administrator'] = user.accessLevel === 1;",
+									"tests['Expect accessLevel is admin1'] = user.accessLevel === 1;",
+									"tests['Doe not return password'] = user.password === undefined;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -38,8 +39,7 @@
 									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
 									"",
 									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
-									"postman.setGlobalVariable(\"userId\", data.user.id);",
-									""
+									"postman.setGlobalVariable(\"userId\", data.user.id);"
 								]
 							}
 						}
@@ -84,7 +84,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -94,13 +94,13 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is administrator 2'] = user.accessLevel === 2;",
+									"tests['Expect accessLevel is admin2'] = user.accessLevel === 2;",
+									"tests['Doe not return password'] = user.password === undefined;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
 									"tests['Expect can_organize to be a string'] = /\\w+/.test(user.can_organize);",
 									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
-									"",
 									"",
 									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
 									"postman.setGlobalVariable(\"userId\", data.user.id);"
@@ -148,7 +148,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -159,6 +159,7 @@
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
 									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Doe not return password'] = user.password === undefined;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -211,7 +212,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -222,6 +223,7 @@
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
 									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Doe not return password'] = user.password === undefined;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -411,7 +413,7 @@
 			]
 		},
 		{
-			"name": "Address as ref1",
+			"name": "Addresses as ref1",
 			"description": "Unit tests for address CRUD endpoints for a user. The getAll call should fail, this should only work for admins.",
 			"item": [
 				{
@@ -423,7 +425,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -434,6 +436,7 @@
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
 									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Doe not return password'] = user.password === undefined;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -441,8 +444,7 @@
 									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
 									"",
 									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
-									"postman.setGlobalVariable(\"userId\", data.user.id);",
-									""
+									"postman.setGlobalVariable(\"userId\", data.user.id);"
 								]
 							}
 						}
@@ -479,7 +481,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/address",
+					"name": "localhost:3000/api/addresses",
 					"event": [
 						{
 							"listen": "test",
@@ -501,7 +503,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/address",
+						"url": "localhost:3000/api/addresses",
 						"method": "GET",
 						"header": [
 							{
@@ -532,7 +534,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/address",
+					"name": "localhost:3000/api/user/:id/addresses",
 					"event": [
 						{
 							"listen": "test",
@@ -541,16 +543,16 @@
 								"exec": [
 									"var data = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 200;",
-									"tests['Returns success'] = responseBody.has('success');",
-									"tests['Returns success is false'] = data.success === true;",
-									"tests['Returns a element data'] = responseBody.has('data');",
-									"tests['Returns data'] = data.data instanceof Array === true;"
+									"tests['Returns a user id'] = responseBody.has('id');",
+									"tests['Returns an email'] = responseBody.has('email');",
+									"tests['Doe not return password'] = responseBody.has('password') === false;",
+									"tests['Returns address as an array'] = data.addresses instanceof Array === true;"
 								]
 							}
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/address",
+						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "GET",
 						"header": [
 							{
@@ -581,7 +583,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/address",
+					"name": "localhost:3000/api/users/:id/addresses",
 					"event": [
 						{
 							"listen": "test",
@@ -589,7 +591,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns a user_id'] = responseBody.has('user_id');",
 									"tests['Returns a address id'] = responseBody.has('address_id');",
 									"",
@@ -606,7 +608,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/address",
+						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "POST",
 						"header": [
 							{
@@ -660,7 +662,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/address",
+					"name": "localhost:3000/api/users/:id/address",
 					"event": [
 						{
 							"listen": "test",
@@ -669,16 +671,16 @@
 								"exec": [
 									"var data = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 200;",
-									"tests['Returns success'] = responseBody.has('success');",
-									"tests['Returns success is false'] = data.success === true;",
-									"tests['Returns a element data'] = responseBody.has('data');",
-									"tests['Returns data'] = data.data instanceof Array === true;"
+									"tests['Returns a user id'] = responseBody.has('id');",
+									"tests['Returns an email'] = responseBody.has('email');",
+									"tests['Doe not return password'] = responseBody.has('password') === false;",
+									"tests['Returns address as an array'] = data.addresses instanceof Array === true;"
 								]
 							}
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/address",
+						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "GET",
 						"header": [
 							{
@@ -709,28 +711,29 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/address",
+					"name": "localhost:3000/api/users/:id/addresses",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"var item = JSON.parse(responseBody);",
+									"var data = JSON.parse(responseBody);",
+									"/*",
 									"tests['Status code is 200'] = responseCode.code === 200;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns message'] = responseBody.has('message');",
 									"",
 									"tests['Expect success to be true'] = item.success === true;",
 									"tests['Expect message to be \"Address updated\"'] = item.message === \"Address updated\";",
-									"",
+									"*/",
 									""
 								]
 							}
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/address/{{addressId}}",
+						"url": "localhost:3000/api/users/{{userId}}/addresses/{{addressId}}",
 						"method": "PUT",
 						"header": [
 							{
@@ -776,6 +779,24 @@
 									"value": "92866",
 									"description": "",
 									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "2017-08-07T06:04:09.699Z",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "deleted_at",
+									"value": "2017-08-07T06:04:09.699Z",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "updated_at",
+									"value": "2017-08-07T06:04:09.699Z",
+									"description": "",
+									"type": "text"
 								}
 							]
 						},
@@ -786,7 +807,7 @@
 			]
 		},
 		{
-			"name": "Address as admin1",
+			"name": "Addresses as admin1",
 			"description": "Unit tests for address CRUD endpoints for a user. The getAll call should fail, this should only work for admins.",
 			"item": [
 				{
@@ -798,7 +819,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -808,7 +829,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect accessLevel is user'] = user.accessLevel === 1;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -854,7 +875,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/address",
+					"name": "localhost:3000/api/addresses",
 					"event": [
 						{
 							"listen": "test",
@@ -871,7 +892,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/address",
+						"url": "localhost:3000/api/addresses",
 						"method": "GET",
 						"header": [
 							{
@@ -902,7 +923,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/address",
+					"name": "localhost:3000/api/users/:id/addresses",
 					"event": [
 						{
 							"listen": "test",
@@ -920,7 +941,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/address",
+						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "GET",
 						"header": [
 							{
@@ -951,7 +972,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/address",
+					"name": "localhost:3000/api/users/:id/addresses",
 					"event": [
 						{
 							"listen": "test",
@@ -976,7 +997,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/address",
+						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "POST",
 						"header": [
 							{
@@ -1030,7 +1051,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/address",
+					"name": "localhost:3000/api/users/:id/addresses",
 					"event": [
 						{
 							"listen": "test",
@@ -1048,7 +1069,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/address",
+						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "GET",
 						"header": [
 							{
@@ -1079,7 +1100,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/address",
+					"name": "localhost:3000/api/users/:id/addresses",
 					"event": [
 						{
 							"listen": "test",
@@ -1100,7 +1121,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/address/{{addressId}}",
+						"url": "localhost:3000/api/users/{{userId}}/addresses/{{addressId}}",
 						"method": "PUT",
 						"header": [
 							{
@@ -1156,7 +1177,7 @@
 			]
 		},
 		{
-			"name": "Organization as Admin1",
+			"name": "Organizations as Admin1",
 			"description": "",
 			"item": [
 				{
@@ -1168,7 +1189,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -1224,7 +1245,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization",
+					"name": "localhost:3000/api/organizations",
 					"event": [
 						{
 							"listen": "test",
@@ -1239,7 +1260,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization",
+						"url": "localhost:3000/api/organizations",
 						"method": "GET",
 						"header": [
 							{
@@ -1270,7 +1291,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/1",
+					"name": "localhost:3000/api/organizations/1",
 					"event": [
 						{
 							"listen": "test",
@@ -1300,7 +1321,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/1",
+						"url": "localhost:3000/api/organizations/1",
 						"method": "GET",
 						"header": [
 							{
@@ -1331,7 +1352,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization",
+					"name": "localhost:3000/api/organizations",
 					"event": [
 						{
 							"listen": "test",
@@ -1353,7 +1374,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization",
+						"url": "localhost:3000/api/organizations",
 						"method": "POST",
 						"header": [
 							{
@@ -1378,7 +1399,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id",
+					"name": "localhost:3000/api/organizations/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -1401,7 +1422,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}",
+						"url": "localhost:3000/api/organizations/{{organizationId}}",
 						"method": "PUT",
 						"header": [
 							{
@@ -1426,7 +1447,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organizer/:id",
+					"name": "localhost:3000/api/organizers/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -1456,7 +1477,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizer/{{organizationId}}",
+						"url": "localhost:3000/api/organizers/{{organizationId}}",
 						"method": "GET",
 						"header": [
 							{
@@ -1487,7 +1508,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id/phone",
+					"name": "localhost:3000/api/organizations/:id/phones",
 					"event": [
 						{
 							"listen": "test",
@@ -1502,7 +1523,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}/phone",
+						"url": "localhost:3000/api/organizations/{{organizationId}}/phones",
 						"method": "POST",
 						"header": [
 							{
@@ -1538,7 +1559,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id/phone",
+					"name": "localhost:3000/api/organizations/:id/phones",
 					"event": [
 						{
 							"listen": "test",
@@ -1568,7 +1589,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}/phone",
+						"url": "localhost:3000/api/organizations/{{organizationId}}/phones",
 						"method": "GET",
 						"header": [
 							{
@@ -1606,7 +1627,7 @@
 			]
 		},
 		{
-			"name": "Organization as ref1",
+			"name": "Organizations as ref1",
 			"description": "",
 			"item": [
 				{
@@ -1618,7 +1639,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -1674,7 +1695,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization",
+					"name": "localhost:3000/api/organizations",
 					"event": [
 						{
 							"listen": "test",
@@ -1700,7 +1721,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization",
+						"url": "localhost:3000/api/organizations",
 						"method": "GET",
 						"header": [
 							{
@@ -1731,7 +1752,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/1",
+					"name": "localhost:3000/api/organizations/1",
 					"event": [
 						{
 							"listen": "test",
@@ -1755,7 +1776,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/1",
+						"url": "localhost:3000/api/organizations/1",
 						"method": "GET",
 						"header": [
 							{
@@ -1786,7 +1807,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization",
+					"name": "localhost:3000/api/organizations",
 					"event": [
 						{
 							"listen": "test",
@@ -1808,7 +1829,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization",
+						"url": "localhost:3000/api/organizations",
 						"method": "POST",
 						"header": [
 							{
@@ -1833,7 +1854,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id",
+					"name": "localhost:3000/api/organizations/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -1856,7 +1877,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}",
+						"url": "localhost:3000/api/organizations/{{organizationId}}",
 						"method": "PUT",
 						"header": [
 							{
@@ -1881,7 +1902,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id",
+					"name": "localhost:3000/api/organizations/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -1906,7 +1927,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}",
+						"url": "localhost:3000/api/organizations/{{organizationId}}",
 						"method": "GET",
 						"header": [
 							{
@@ -1937,7 +1958,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id/phone",
+					"name": "localhost:3000/api/organizations/:id/phones",
 					"event": [
 						{
 							"listen": "test",
@@ -1958,7 +1979,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}/phone",
+						"url": "localhost:3000/api/organizations/{{organizationId}}/phones",
 						"method": "POST",
 						"header": [
 							{
@@ -1994,7 +2015,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id/phone",
+					"name": "localhost:3000/api/organizations/:id/phones",
 					"event": [
 						{
 							"listen": "test",
@@ -2015,7 +2036,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}/phone",
+						"url": "localhost:3000/api/organizations/{{organizationId}}/phones",
 						"method": "GET",
 						"header": [
 							{
@@ -2051,7 +2072,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id/address",
+					"name": "localhost:3000/api/organizations/:id/addresses",
 					"event": [
 						{
 							"listen": "test",
@@ -2072,7 +2093,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}/address",
+						"url": "localhost:3000/api/organizations/{{organizationId}}/addresses",
 						"method": "GET",
 						"header": [
 							{
@@ -2108,7 +2129,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id/address",
+					"name": "localhost:3000/api/organizations/:id/addresses",
 					"event": [
 						{
 							"listen": "test",
@@ -2133,7 +2154,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}/address",
+						"url": "localhost:3000/api/organizations/{{organizationId}}/addresses",
 						"method": "POST",
 						"header": [
 							{
@@ -2189,7 +2210,7 @@
 			]
 		},
 		{
-			"name": "Phone as ref1",
+			"name": "Phones as ref1",
 			"description": "Unit tests for phone CRUD endpoints for a user. The getAll call should fail, this should only work for admins.",
 			"item": [
 				{
@@ -2201,7 +2222,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -2257,7 +2278,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/phone",
+					"name": "localhost:3000/api/phones",
 					"event": [
 						{
 							"listen": "test",
@@ -2279,7 +2300,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/phone",
+						"url": "localhost:3000/api/phones",
 						"method": "GET",
 						"header": [
 							{
@@ -2310,7 +2331,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/phone",
+					"name": "localhost:3000/api/users/:id/phones",
 					"event": [
 						{
 							"listen": "test",
@@ -2328,7 +2349,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/phone",
+						"url": "localhost:3000/api/users/{{userId}}/phones",
 						"method": "GET",
 						"header": [
 							{
@@ -2384,7 +2405,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/phone",
+						"url": "localhost:3000/api/users/{{userId}}/phones",
 						"method": "POST",
 						"header": [
 							{
@@ -2420,7 +2441,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/phone -home",
+					"name": "localhost:3000/api/users/:id/phones -home",
 					"event": [
 						{
 							"listen": "test",
@@ -2445,7 +2466,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/phone",
+						"url": "localhost:3000/api/users/{{userId}}/phones",
 						"method": "POST",
 						"header": [
 							{
@@ -2481,7 +2502,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/phone -other",
+					"name": "localhost:3000/api/users/:id/phones -other",
 					"event": [
 						{
 							"listen": "test",
@@ -2506,7 +2527,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/phone",
+						"url": "localhost:3000/api/users/{{userId}}/phones",
 						"method": "POST",
 						"header": [
 							{
@@ -2542,7 +2563,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id/phone -bad type",
+					"name": "localhost:3000/api/users/:id/phones -bad type",
 					"event": [
 						{
 							"listen": "test",
@@ -2564,7 +2585,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}/phone",
+						"url": "localhost:3000/api/users/{{userId}}/phones",
 						"method": "POST",
 						"header": [
 							{
@@ -2614,7 +2635,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -2670,7 +2691,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/sport",
+					"name": "localhost:3000/api/sports",
 					"event": [
 						{
 							"listen": "test",
@@ -2688,7 +2709,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sport",
+						"url": "localhost:3000/api/sports",
 						"method": "GET",
 						"header": [
 							{
@@ -2719,7 +2740,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/sport/1",
+					"name": "localhost:3000/api/sports/1",
 					"event": [
 						{
 							"listen": "test",
@@ -2749,7 +2770,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sport/1",
+						"url": "localhost:3000/api/sports/1",
 						"method": "GET",
 						"header": [
 							{
@@ -2780,7 +2801,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/sport",
+					"name": "localhost:3000/api/sports",
 					"event": [
 						{
 							"listen": "test",
@@ -2810,7 +2831,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sport",
+						"url": "localhost:3000/api/sports",
 						"method": "POST",
 						"header": [
 							{
@@ -2853,7 +2874,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/sport/1",
+					"name": "localhost:3000/api/sports/1",
 					"event": [
 						{
 							"listen": "test",
@@ -2883,7 +2904,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sport/1",
+						"url": "localhost:3000/api/sports/1",
 						"method": "PUT",
 						"header": [
 							{
@@ -2940,7 +2961,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -2995,7 +3016,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/sport",
+					"name": "localhost:3000/api/sports",
 					"event": [
 						{
 							"listen": "test",
@@ -3013,7 +3034,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sport",
+						"url": "localhost:3000/api/sports",
 						"method": "GET",
 						"header": [
 							{
@@ -3044,7 +3065,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/sport/1",
+					"name": "localhost:3000/api/sports/1",
 					"event": [
 						{
 							"listen": "test",
@@ -3074,7 +3095,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sport/1",
+						"url": "localhost:3000/api/sports/1",
 						"method": "GET",
 						"header": [
 							{
@@ -3105,7 +3126,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/sport",
+					"name": "localhost:3000/api/sports",
 					"event": [
 						{
 							"listen": "test",
@@ -3127,7 +3148,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sport",
+						"url": "localhost:3000/api/sports",
 						"method": "POST",
 						"header": [
 							{
@@ -3170,7 +3191,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/sport/1",
+					"name": "localhost:3000/api/sports/1",
 					"event": [
 						{
 							"listen": "test",
@@ -3192,7 +3213,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sport/1",
+						"url": "localhost:3000/api/sports/1",
 						"method": "PUT",
 						"header": [
 							{
@@ -3237,7 +3258,7 @@
 			]
 		},
 		{
-			"name": "User as Admin1",
+			"name": "Users as Admin1",
 			"description": "",
 			"item": [
 				{
@@ -3249,7 +3270,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -3305,9 +3326,9 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user",
+					"name": "localhost:3000/api/users",
 					"request": {
-						"url": "localhost:3000/api/user",
+						"url": "localhost:3000/api/users",
 						"method": "GET",
 						"header": [
 							{
@@ -3338,9 +3359,9 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/1",
+					"name": "localhost:3000/api/users/1",
 					"request": {
-						"url": "localhost:3000/api/user/1",
+						"url": "localhost:3000/api/users/1",
 						"method": "GET",
 						"header": [
 							{
@@ -3371,9 +3392,9 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user",
+					"name": "localhost:3000/api/users",
 					"request": {
-						"url": "localhost:3000/api/user",
+						"url": "localhost:3000/api/users",
 						"method": "POST",
 						"header": [
 							{
@@ -3428,9 +3449,9 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user",
+					"name": "localhost:3000/api/users",
 					"request": {
-						"url": "localhost:3000/api/user",
+						"url": "localhost:3000/api/users",
 						"method": "POST",
 						"header": [
 							{
@@ -3548,9 +3569,9 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/1",
+					"name": "localhost:3000/api/users/1",
 					"request": {
-						"url": "localhost:3000/api/user/1",
+						"url": "localhost:3000/api/users/1",
 						"method": "PUT",
 						"header": [
 							{
@@ -3599,9 +3620,9 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/1",
+					"name": "localhost:3000/api/users/1",
 					"request": {
-						"url": "localhost:3000/api/user/1",
+						"url": "localhost:3000/api/users/1",
 						"method": "DELETE",
 						"header": [
 							{
@@ -3652,7 +3673,7 @@
 			]
 		},
 		{
-			"name": "User as Ref",
+			"name": "Users as Ref",
 			"description": "",
 			"item": [
 				{
@@ -3664,7 +3685,7 @@
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Status code is 201'] = responseCode.code === 201;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success as true'] = data.success === true;",
 									"tests['Returns message'] = responseBody.has('message');",
@@ -3719,7 +3740,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user",
+					"name": "localhost:3000/api/users",
 					"event": [
 						{
 							"listen": "test",
@@ -3739,7 +3760,7 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/user",
+						"url": "localhost:3000/api/users",
 						"method": "GET",
 						"header": [
 							{
@@ -3770,9 +3791,9 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id",
+					"name": "localhost:3000/api/users/:id",
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}",
+						"url": "localhost:3000/api/users/{{userId}}",
 						"method": "GET",
 						"header": [
 							{
@@ -3803,9 +3824,9 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id",
+					"name": "localhost:3000/api/users/:id",
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}",
+						"url": "localhost:3000/api/users/{{userId}}",
 						"method": "PUT",
 						"header": [
 							{
@@ -3911,9 +3932,9 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user",
+					"name": "localhost:3000/api/users",
 					"request": {
-						"url": "localhost:3000/api/user",
+						"url": "localhost:3000/api/users",
 						"method": "POST",
 						"header": [
 							{
@@ -3968,9 +3989,9 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/user/:id",
+					"name": "localhost:3000/api/users/:id",
 					"request": {
-						"url": "localhost:3000/api/user/{{userId}}",
+						"url": "localhost:3000/api/users/{{userId}}",
 						"method": "DELETE",
 						"header": [
 							{
