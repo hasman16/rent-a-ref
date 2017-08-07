@@ -33,15 +33,16 @@ export default function setRoutes(app, models) {
     authentication: authentication,
     router: router
   };
+  const responseService = new ResponseService(models);
 
-  const addressCtrl = addressController(models, ResponseService);
-  const blogCtrl = blogController(models, ResponseService);
-  const gameCtrl = gameController(models, ResponseService);
-  const organizationCtrl = organizationController(models, ResponseService);
-  const personCtrl = personController(models, ResponseService);
-  const phoneCtrl = phoneController(models, ResponseService);
-  const sportCtrl = sportController(models, ResponseService);
-  const userCtrl = userController(bcrypt, jwt, models, ResponseService, SendGridService);
+  const addressCtrl = addressController(models, responseService);
+  const blogCtrl = blogController(models, responseService);
+  const gameCtrl = gameController(models, responseService);
+  const organizationCtrl = organizationController(models, responseService);
+  const personCtrl = personController(models, responseService);
+  const phoneCtrl = phoneController(models, responseService);
+  const sportCtrl = sportController(models, responseService);
+  const userCtrl = userController(bcrypt, jwt, models, responseService, SendGridService);
 
   addressRoutes(external, addressCtrl);
   blogRoutes(external, blogCtrl);

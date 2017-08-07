@@ -3,18 +3,23 @@ export default function BlogController(models, ResponseService) {
   const Comment = models.Comment;
   const User = models.User;
 
+
+
   function getAllPosts(req, res) {
-    Post.findAll({
+    let clauses = {
       include: [{
         model: Comment
       }]
-    })
+    };
+    clauses = ResponseService.limitOffset(clauses, req);
+
+    Post.findAll(clauses)
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function getPostsByUser(req, res) {
-    User.findOne({
+    let clauses = {
       where: {
         id: req.params.user_id
       },
@@ -25,7 +30,10 @@ export default function BlogController(models, ResponseService) {
           model: Comment
         }]
       }]
-    })
+    };
+    clauses = ResponseService.limitOffset(clauses, req);
+
+    User.findOne(clauses)
       .then(result => ResponseService.success(res, result))
       .catch(error => ResponseService.exception(res, error));
   }
@@ -39,7 +47,7 @@ export default function BlogController(models, ResponseService) {
         model: Comment
       }]
     })
-      .then(results => ResponseService.successCollection(res, results))
+      .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -51,26 +59,30 @@ export default function BlogController(models, ResponseService) {
   }
 
   function updatePost(req, res) {
-    let post = Object.assign({}, req.body);
-    delete post.user_id;
+    const post_id = req.params.post_id;
+    function update(oldPost) {
+      let newPost = Object.assign({}, req.body);
+      delete newPost.user_id;
+      return Post.update(newPost, {
+        where: {
+          id: oldPost.id
+        }
+      });
+    }
 
-    Post.update(post, {
-      where: {
-        id: req.params.post_id
-      }
-    })
-      .then(result => ResponseService.success(res, result, 200))
-      .catch(error => ResponseService.exception(res, error));
+    ResponseService.findObject(post_id, 'Post', res, update);
   }
 
   function deletePost(req, res) {
-    Post.update({
-      where: {
-        id: req.params.post_id
-      }
-    })
-      .then(result => ResponseService.success(res, result, 204))
-      .catch(error => ResponseService.exception(res, error));
+    const post_id = req.params.post_id;
+    function doDelete(post) {
+      return Post.destroy({
+        where: {
+          id: post.id
+        }
+      })
+    }
+    ResponseService.findObject(post_id, 'Post', res, doDelete, 204);
   }
 
   function createComment(req, res) {
@@ -84,26 +96,30 @@ export default function BlogController(models, ResponseService) {
   }
 
   function updateComment(req, res) {
-    const comment = Object.assign({}, req.body);
-    delete comment.post_id;
+    const comment_id = req.params.comment_id;
+    function update(oldComment) {
+      let newComment = Object.assign({}, req.body);
+      delete newComment.post_id;
+      return Comment.update(newComment, {
+        where: {
+          id: oldComment.id
+        }
+      });
+    }
 
-    Comment.update(comment, {
-      where: {
-        id: req.params.comment_id
-      }
-    })
-      .then(result => ResponseService.success(res, result, 200))
-      .catch(error => ResponseService.exception(res, error));
+    ResponseService.findObject(comment_id, 'Comment', res, update);
   }
 
   function deleteComment(req, res) {
-    Comment.delete({
-      where: {
-        id: req.comment_id
-      }
-    })
-      .then(result => ResponseService.success(res, result, 204))
-      .catch(error => ResponseService.exception(res, error));
+    const comment_id = req.params.comment_id;
+    function doDelete(comment) {
+      return Comment.destroy({
+        where: {
+          id: comment.id
+        }
+      })
+    }
+    ResponseService.findObject(comment_id, 'Comment', res, doDelete, 204);
   }
 
   return {

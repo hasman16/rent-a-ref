@@ -7,5 +7,6 @@ export default function gameRoutes(setter, gameCtrl) {
   router.route('/game').post(authentication, gameCtrl.create);
   router.route('/game/:game_id').get(authentication, gameCtrl.getOne);
   router.route('/game/:game_id').put(authentication, gameCtrl.update);
+    router.route('/game/:game_id').patch(authentication, gameCtrl.update);
   router.route('/game/:game_id').delete(authentication, gameCtrl.deleteOne);
 }

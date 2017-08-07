@@ -26,47 +26,42 @@ export default function authorization(dbModels) {
     }
   }
 
-  function orgIsOwner(req, res, next) {
+  function isOrgOwner(req, res, next) {
     const Organization = models.Organization;
-    const user_id = req.decoded.id;
-    const organization_id = req.params.organization_id;
-
-    if (checkIsAdmin(req)) {
-      next();
-    } else {
-      Organization.findOne({
-        where: {
-          id: organization_id,
-          user_id: user_id
-        }
-      })
-        .then(organization => {
-          if (organization) {
-            next();
-          } else {
-            permissionViolation(res, next);
-          }
-        })
-        .catch(error => serverError(res,next, error));
+    const whereClause = {
+      user_id: req.decoded.id,
+      id: req.params.organization_id
     }
+
+    checkAssociation(whereClause, Organization, req, res, next);
   }
 
-  function orgIsMember(req, res, next) {
+  function isOrgMember(req, res, next) {
     const Organizer = models.Organizer;
-    const user_id = req.decoded.id;
-    const organization_id = req.params.organization_id;
+    const whereClause = {
+      user_id: req.decoded.id,
+      organization_id: req.params.organization_id
+    }
+    checkAssociation(whereClause, Organizer, req, res, next);
+  }
 
+  function isUserAddress(req, res, next) {
+    const whereClause = {
+      user_id: req.decoded.id,
+      address_id: req.params.address_id
+    }
+    const Model = models.UserAddress;
+
+    checkAssociation(whereClause, Model, req, res, next);
+  }
+
+  function checkAssociation(whereClause, Model, req, res, next) {
     if (checkIsAdmin(req)) {
       next();
     } else {
-      Organizer.findOne({
-        where: {
-          id: organization_id,
-          user_id: user_id
-        }
-      })
-        .then(organization => {
-          if (organization) {
+      Model.findOne(whereClause)
+        .then(item => {
+          if (item) {
             next();
           } else {
             permissionViolation(res, next);
@@ -99,7 +94,8 @@ export default function authorization(dbModels) {
   return {
     isAdmin,
     isUserOrAdmin,
-    orgIsOwner,
-    orgIsMember
+    isUserAddress,
+    isOrgOwner,
+    isOrgMember
   }
 }

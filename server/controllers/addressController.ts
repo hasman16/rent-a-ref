@@ -22,20 +22,9 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function makeAddress(newAddress) {
-    let address = new Object(newAddress);
-    return address;
-  }
-
-  function returnAddress(res, address, status = 200) {
-    let newAddress = makeAddress(address);
-    newAddress["id"] = address.id;
-    ResponseService.success(res, newAddress, status);
-  }
-
   function create(req, res, joinTable, joinModel) {
     const sequelize = models.sequelize;
-    const anAddress = makeAddress(req.body);
+    const anAddress = ResponseService.makeObject(req);
 
     sequelize.transaction(function(t) {
       return Address.create(anAddress, { transaction: t })
@@ -53,7 +42,6 @@ export default function AddressController(models, ResponseService) {
   function createByOrganization(req, res) {
     const table = models.OrganizationAddress;
     const model = { organization_id: req.params.organization_id };
-    console.log('getByOrganization:', req.params.organization_id);
     create(req, res, table, model);
   }
 
@@ -73,33 +61,16 @@ export default function AddressController(models, ResponseService) {
         }
       }]
     })
-      .then(results => ResponseService.successCollection(res, results))
+      .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function updateByOrganization(req, res) {
-
-    const anAddress = makeAddress(req.body);
-    Address.update(anAddress, {
-      where: {
-        id: req.params.address_id
-      },
-      include: [
-        {
-          model: Address
-        }
-      ]
-    })
-      .then(result => ResponseService.success(res, 'Address updated'))
-      .catch(error => ResponseService.exception(res, error));
-
+    updateAddress(req, res);
   }
 
   function deleteByOrganization(req, res) {
-    const anAddress = makeAddress(req.body);
-    Address.destroy(anAddress)
-      .then(result => ResponseService.success(res, 'Address deleted', 204))
-      .catch(error => ResponseService.exception(res, error));
+    deleteAddress(req, res);
   }
 
   function createByUser(req, res) {
@@ -115,36 +86,59 @@ export default function AddressController(models, ResponseService) {
       where: {
         id: req.params.user_id
       },
+      attributes: ['id', 'email', 'can_referee', 'can_organize', 'status'],
       include: [{
         model: Address,
-        attributes: ['id', 'line1', 'line2', 'city', 'state', 'zip'],
         through: {
           attributes: []
         }
       }]
     })
       .then(results => {
-        ResponseService.successCollection(res, results.addresses);
+        ResponseService.success(res, results);
       })
       .catch(error => ResponseService.exception(res, error));
   }
 
   function updateByUser(req, res) {
-    const anAddress = makeAddress(req.body);
-    Address.update(anAddress, {
-      where: {
-        id: req.params.address_id
-      }
-    })
-      .then(result => ResponseService.success(res, 'Address updated'))
-      .catch(error => ResponseService.exception(res, error));
+    updateAddress(req, res);
   }
 
   function deleteByUser(req, res) {
-    const anAddress = makeAddress(req.body);
-    Address.destroy(anAddress)
-      .then(result => ResponseService.success(res, 'Address deleted', 204))
-      .catch(error => ResponseService.exception(res, error));
+    deleteAddress(req, res);
+  }
+
+  function updateAddress(req, res) {
+    const address_id = req.params.address_id;
+
+    function update(oldAddress) {
+      const newAddress = ResponseService.makeObject(req);
+
+      return Address.update(newAddress, {
+        where: {
+          id: oldAddress.id
+        }
+      })
+        .then(() => {
+          return Address.findById(oldAddress.id);
+        });
+    }
+
+    ResponseService.findObject(address_id, 'Address', res, update);
+  }
+
+  function deleteAddress(req, res) {
+    const address_id = req.params.address_id;
+
+    function doDelete(address) {
+      return Address.destroy({
+        where: {
+          id: address.id
+        }
+      });
+    }
+
+    ResponseService.findObject(address_id, 'Address', res, doDelete, 204);
   }
 
   return {
