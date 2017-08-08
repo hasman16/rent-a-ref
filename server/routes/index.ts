@@ -25,6 +25,26 @@ import personRoutes from './personRoutes';
 import phoneRoutes from './phoneRoutes';
 import sportRoutes from './sportRoutes';
 import userRoutes from './userRoutes';
+import * as redis from 'redis';
+import * as ExpressBrute from 'express-brute';
+import * as RedisStore from 'express-brute-redis';
+
+let client;
+if (process.env.REDIS_URL) {
+  client = redis.createClient(process.env.REDIS_URL, {
+    no_ready_check: true
+  });
+} else {
+  client = redis.createClient(6379, '127.0.0.1', {
+    no_ready_check: true
+  });
+}
+
+const store = new RedisStore({
+    client: client
+});
+
+const bruteforce = new ExpressBrute(store);
 
 export default function setRoutes(app, models) {
   const router = express.Router();
@@ -54,5 +74,5 @@ export default function setRoutes(app, models) {
   userRoutes(external, userCtrl);
 
   // Apply the routes to our application with the prefix /api
-  app.use('/api', router);
+  app.use('/api', bruteforce.prevent, router);
 }
