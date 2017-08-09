@@ -31,7 +31,7 @@ export class AuthService {
         console.log('From the  Auth: ', res);
         // Organizer
         switch (res.user.can_organize + ' ' + res.user.status) {
-          case ('pending standby'):
+          case ('pending in_progress'):
             // The organizer has not yet completed the profile
             // this.router.navigate(['user/' + res.user.id + '/edit-profile']);
             break;
@@ -63,6 +63,10 @@ export class AuthService {
             break;
           case ('pending in_progress'):
             // The referee account has not yet been activated by the admin. Still in Standby
+            // Kill his session
+            this.loggedIn = false;
+            this.isAdmin = false;
+            this.currentUser = { username: '', role: '' };
             // this.router.navigate(['user/' + res.user.id + '/standby']);
             break;
           case ('yes active'):
