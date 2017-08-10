@@ -1,5 +1,5 @@
 <app-toast [message]="toast.message"></app-toast>
-
+<div class="card col-sm-12">
 <div class="card">
   <h4 class="card-header elegantshd bigFont">Login</h4>
   <div class="card-block">
@@ -12,7 +12,20 @@
         <span class="input-group-addon"><i class="fa fa-key"></i></span>
         <input class="form-control" type="password" name="password" formControlName="password" placeholder="Password">
       </div>
-      <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid"><i class="fa fa-sign-in"></i> Login</button>
+      <br>
+      
+      <button class="btn btn-primary btn-sm" type="submit" [disabled]="!loginForm.valid"><i class="fa fa-sign-in"></i> Login</button>
+
+      <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input">
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Remember me    </span>
+  </label>
+
+     <button class="btn btn-link" type="button" (click)="onForgot()"><i class="fa fa-sign-in"></i>Forgot Password</button>
+      
     </form>
+    
   </div>
+</div>
 </div>

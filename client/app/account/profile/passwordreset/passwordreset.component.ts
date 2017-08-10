@@ -26,6 +26,11 @@ export class PasswordresetComponent implements OnInit {
       email: this.email
     });
   }
+
+  onCancel() {
+    this.router.navigate(['/login']);
+  }
+
   onSubmit() {
     // this.router.navigate(['passwordreset']);
     this.userService.getUser(this.emailForm.value).subscribe(

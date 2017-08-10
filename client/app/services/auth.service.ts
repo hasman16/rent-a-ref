@@ -31,7 +31,7 @@ export class AuthService {
         console.log('From the  Auth: ', res);
         // Organizer
         switch (res.user.can_organize + ' ' + res.user.status) {
-          case ('pending in_progress'):
+          case ('pending standby'):
             // The organizer has not yet completed the profile
             // this.router.navigate(['user/' + res.user.id + '/edit-profile']);
             break;

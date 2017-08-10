@@ -24,7 +24,7 @@ export default function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'no',
       validate: {
-        isIn: [['no', 'yes']]
+        isIn: [["no","pending","active","suspended"]]
       }
     },
     can_organize: {
@@ -32,7 +32,7 @@ export default function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'no',
       validate: {
-        isIn: [['no', 'yes']]
+        isIn: [["no","pending","active","suspended"]]
       }
     },
     status: {
@@ -40,7 +40,7 @@ export default function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'no',
       validate: {
-        isIn: [['no', 'pending', 'active', 'suspended', 'in_progress', 'banned']]
+        isIn: [["no","pending","active","suspended"]]
       }
     }
   }, {

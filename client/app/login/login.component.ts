@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit {
     return { 'has-danger': !this.password.pristine && !this.password.valid };
   }
 
+  onForgot() {
+    this.router.navigate(['passwordreset']);
+  }
+
   login() {
     this.auth.login(this.loginForm.value).subscribe(
       res => {
