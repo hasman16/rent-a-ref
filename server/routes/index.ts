@@ -16,6 +16,8 @@ import phoneController from './../controllers/phoneController';
 import sportController from './../controllers/sportController';
 import userController from './../controllers/userController';
 
+import loginController from './../controllers/loginController';
+import registerController from './../controllers/registerController';
 // routes
 import addressRoutes from './addressRoutes';
 import blogRoutes from './blogRoutes';
@@ -41,7 +43,7 @@ if (process.env.REDIS_URL) {
 }
 
 const store = new RedisStore({
-    client: client
+  client: client
 });
 
 const bruteforce = new ExpressBrute(store);
@@ -63,6 +65,14 @@ export default function setRoutes(app, models) {
   const phoneCtrl = phoneController(models, responseService);
   const sportCtrl = sportController(models, responseService);
   const userCtrl = userController(bcrypt, jwt, models, responseService, SendGridService);
+  const loginCtrl = loginController(bcrypt, jwt, models, responseService, SendGridService);
+  const registerCtrl = registerController(bcrypt, jwt, models, responseService, SendGridService);
+
+  const ctrl = {
+    loginCtrl,
+    userCtrl,
+    registerCtrl
+  };
 
   addressRoutes(external, addressCtrl);
   blogRoutes(external, blogCtrl);
@@ -71,8 +81,9 @@ export default function setRoutes(app, models) {
   organizationRoutes(external, organizationCtrl);
   phoneRoutes(external, phoneCtrl);
   sportRoutes(external, sportCtrl);
-  userRoutes(external, userCtrl);
+  userRoutes(external, ctrl);
 
   // Apply the routes to our application with the prefix /api
-  app.use('/api', bruteforce.prevent, router);
+  //  app.use('/api', bruteforce.prevent, router);
+  app.use('/api', router);
 }
