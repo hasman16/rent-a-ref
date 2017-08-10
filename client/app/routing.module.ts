@@ -26,6 +26,7 @@ import { BlogComponent } from './group/blog/blog.component';
 import { SuspendedComponent } from './account/profile/suspended/suspended.component';
 import { DeactivatedComponent } from './account/profile/deactivated/deactivated.component';
 import { StandbyComponent } from './account/profile/standby/standby.component';
+import { PasswordresetComponent } from './account/profile/passwordreset/passwordreset.component';
 
   const routes: Routes = [
   {
@@ -45,6 +46,7 @@ import { StandbyComponent } from './account/profile/standby/standby.component';
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
+  { path: 'passwordreset', component: PasswordresetComponent },
   { path: 'account', component: AccountComponent, canActivate: [AuthGuardLogin] },
   { path: 'user/:id/account', component: AccountComponent, canActivate: [AuthGuardLogin] },
   { path: 'profile', component: ProfileComponent },

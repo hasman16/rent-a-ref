@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit {
     return { 'has-danger': !this.password.pristine && !this.password.valid };
   }
 
+  onForgot() {
+    this.router.navigate(['passwordreset']);
+  }
+
   login() {
     this.auth.login(this.loginForm.value).subscribe(
       res => {
@@ -63,6 +67,8 @@ export class LoginComponent implements OnInit {
             break;
           case ('yes suspended'):
             // The Organizer account is suspended due to failed login attempts
+            // Kill his session
+            // his.loggedIn = false;
             this.router.navigate(['user/' + res.user.id + '/suspended']);
             break;
           case ('no banned'):
