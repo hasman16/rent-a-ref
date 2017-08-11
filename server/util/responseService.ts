@@ -4,7 +4,7 @@ export default class ResponseService {
   constructor(models) {
     this.models = models;
   }
-  
+
   makeObject(req) {
     let obj = Object.assign({}, req.body);
     delete obj.created_at;

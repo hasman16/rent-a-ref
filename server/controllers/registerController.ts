@@ -30,14 +30,15 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
       can_organize: aUser.can_organize,
       status: aUser.status
     };
-    console.log('create user:', user);
+
     return sequelize.transaction(function(t) {
       return User.create(user, { transaction: t })
         .then(newUser => {
           const lock = {
             attempts: 0,
             passcode: '',
-            password: password
+            password: password,
+            user_id: newUser.id
           };
           return Lock.create(lock, { transaction: t })
             .then(() => {
