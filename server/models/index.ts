@@ -54,7 +54,7 @@ models.forEach(function(model) {
 
 (function(m) {
   m.User.hasOne(m.Person);
-  
+
   m.User.hasOne(m.Lock);
   m.Lock.belongsTo(m.User);
 
