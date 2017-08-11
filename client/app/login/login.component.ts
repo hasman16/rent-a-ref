@@ -4,6 +4,9 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 
 import { AuthService } from '../services/auth.service';
 import { ToastComponent } from '../shared/toast/toast.component';
+import { CookieService } from 'ngx-cookie-service';
+import * as $ from 'jquery';
+import 'jquery-ui';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +14,8 @@ import { ToastComponent } from '../shared/toast/toast.component';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  cookieValue = 'UNKNOWN';
+  checkboxFlag = false;
   loginForm: FormGroup;
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required,
@@ -20,7 +24,10 @@ export class LoginComponent implements OnInit {
   constructor(private auth: AuthService,
               private formBuilder: FormBuilder,
               private router: Router,
-              public toast: ToastComponent) { }
+              public toast: ToastComponent,
+              private cookieService: CookieService) {
+
+               }
 
   ngOnInit() {
     if (this.auth.loggedIn) {
@@ -30,6 +37,9 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password
     });
+
+    this.cookieValue = this.cookieService.get('Rent-A-Ref-Username');
+    // this.email = JSON.stringify(this.cookieService.get('Rent-A-Ref-Username'));
   }
 
   setClassEmail() {
@@ -51,6 +61,9 @@ export class LoginComponent implements OnInit {
         console.log('Response user: ', res.user);
         console.log('Response can ref: ', res.user.can_referee);
         console.log('Response can org: ', res.user.can_organize);
+        console.log('checkboxFlag: ', this.checkboxFlag);
+        this.cookieService.set('Rent-A-Ref-Username', res.user.email);
+        // this.cookieService.set('Rent-A-Ref-Password', res.user.password);
         // this.router.navigate(['/']);
         // Check if the user is a referee/organizer and if his/she has not yet completed the profile form, then redirect him/her to the form
 
@@ -105,5 +118,34 @@ export class LoginComponent implements OnInit {
     );
 
   }
+  // Cookies
+  /*
+  putCookie() {
+    const expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() + (365 * 5));
 
+    $cookies.put('acdelco-test-launcher', JSON.stringify($scope.launch), {
+      expires: expireDate,
+      path: '/'
+    });
+  };
+
+function getCookie() {
+  var c = $cookies.get('acdelco-test-launcher')
+  if (c != null) {
+    var x = JSON.parse(c);
+    if (x != null) {
+      $scope.launch = x;
+    } else {
+      // set defaults
+      $scope.launch = {
+        "url": "http://dev.dstgateway.com/ACDelco/#/",
+        "sessionKey": "",
+        "parms": ""
+      };
+    }
+  }*/
 }
+
+
+

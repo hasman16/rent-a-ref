@@ -38,6 +38,7 @@ import { FaqComponent } from './group/faq/faq.component';
 import { BlogComponent } from './group/blog/blog.component';
 import { ContactusComponent } from './group/contactus/contactus.component';
 import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
+import { CookieService } from 'ngx-cookie-service';
 // import { Ng2GoogleRecaptchaModule } from 'ng2-google-recaptcha';
 
 // import { StatisticsComponent } from './shared/statistics/statistics.component';
@@ -94,7 +95,8 @@ import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
     AuthGuardLogin,
     AuthGuardAdmin,
     CatService,
-    UserService
+    UserService,
+    CookieService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   // Add bootstrap

@@ -51,6 +51,7 @@
     "ng2-charts": "^1.6.0",
     "ng2-google-charts": "^3.0.0",
     "ngx-bootstrap": "^1.7.1",
+    "ngx-cookie-service": "^1.0.7",
     "pg": "^4.4.4",
     "randomstring": "^1.1.4",
     "redis": "^2.7.1",
