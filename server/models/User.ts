@@ -8,10 +8,6 @@ export default function(sequelize, DataTypes) {
         isEmail: true
       }
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     authorization: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -40,7 +36,7 @@ export default function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'no',
       validate: {
-        isIn: [["no","pending","active","suspended"]]
+        isIn: [["no","pending","active","suspended","locked"]]
       }
     }
   }, {

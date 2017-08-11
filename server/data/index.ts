@@ -113,7 +113,7 @@ const people = [
     email: 'ref1@rentaref.com',
     gender: 'm'
   },
-    {
+  {
     firstname: 'Mrs',
     lastname: 'Puff',
     email: 'ref2@rentaref.com',
@@ -151,7 +151,16 @@ function insertPeople(User, Person) {
     return Person.create(person);
   }
 }
+function insertLock(user, password, models) {
+  const Lock = models.Lock;
 
+  Lock.create({
+    attempts: 0,
+    password: password,
+    passcode: null,
+    user_id: user.id
+  })
+}
 function insertUser(models) {
   const User = models.User;
   const Person = models.Person;
@@ -162,17 +171,22 @@ function insertUser(models) {
       .then(password => {
         user.password = password;
         return User.findOne({
-          where: { email: user.email, password: user.password }
-        });
+          where: { email: user.email }
+        })
       })
-      .then((newUser) => {
+      .then(function(newUser) {
         if (!newUser) {
-          return User.create(user);
+          const password = user.password;
+          return User.create(user)
+            .then((aUser) => {
+              insertLock(aUser, password, models);
+              return aUser;
+            });
         }
       })
       .then(aUser => {
         if (aUser) {
-          return insertPeople(aUser, Person);
+          insertPeople(aUser, Person);
         }
       })
       .catch((error) => {
