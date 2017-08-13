@@ -15,11 +15,14 @@ import 'jquery-ui';
 })
 export class LoginComponent implements OnInit {
   cookieValue = 'UNKNOWN';
+  cookieCheck = false;
   checkboxFlag = false;
+  stringBoxCheck = 'false'
+  stringEmail = '';
   loginForm: FormGroup;
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required,
-                                          Validators.minLength(6)]);
+  email = new FormControl('', [<any>Validators.required, <any>Validators.email]);
+  password = new FormControl('', [<any>Validators.required,
+    <any>Validators.minLength(6)]);
 
   constructor(private auth: AuthService,
               private formBuilder: FormBuilder,
@@ -37,8 +40,19 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password
     });
-
-    this.cookieValue = this.cookieService.get('Rent-A-Ref-Username');
+    this.stringBoxCheck = this.cookieService.get('checkboxFlag');
+    if (this.stringBoxCheck === 'false') {
+      this.checkboxFlag = false;
+    } else {
+      this.checkboxFlag = true;
+    }
+    if (this.checkboxFlag) {
+      this.cookieValue = this.cookieService.get('email');
+    }
+    if (this.cookieValue !== 'UNKNOWN') {
+      // this.email = JSON.stringify(this.cookieValue);
+    }
+    // this.email = JSON.stringify(this.email);
     // this.email = JSON.stringify(this.cookieService.get('Rent-A-Ref-Username'));
   }
 
@@ -62,8 +76,22 @@ export class LoginComponent implements OnInit {
         console.log('Response can ref: ', res.user.can_referee);
         console.log('Response can org: ', res.user.can_organize);
         console.log('checkboxFlag: ', this.checkboxFlag);
-        this.cookieService.set('Rent-A-Ref-Username', res.user.email);
-        // this.cookieService.set('Rent-A-Ref-Password', res.user.password);
+        if (this.checkboxFlag) {
+          const expireDate = new Date();
+          expireDate.setDate(expireDate.getDate() + (365 * 5));
+          this.cookieService.set('email', res.user.email);
+          // this.cookieService.set('email', res.user.email, expireDate, '/login', 'rent-a-ref.com', true);
+          this.cookieService.set('checkboxFlag', 'true');
+          // this.cookieService.set('Rent-A-Ref-Password', res.user.password);
+        } else {
+          // Delete cookie entry
+          this.cookieService.set('checkboxFlag', 'false');
+// Check if cookie entry exists
+          this.cookieCheck = this.cookieService.check('email');
+          // if (this.cookieCheck) {
+            this.cookieService.delete('email');
+          // }
+        }
         // this.router.navigate(['/']);
         // Check if the user is a referee/organizer and if his/she has not yet completed the profile form, then redirect him/her to the form
 
