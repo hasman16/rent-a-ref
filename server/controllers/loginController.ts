@@ -39,8 +39,6 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
         });
     }
 
-    const Lock = models.Lock;
-
     return Lock.findOne({
       where: {
         user_id: user_id
@@ -83,7 +81,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
         SendGridService.sendEmail({
           to: user.email,
           from: 'admin@rentaref.com',
-          subject: 'User registered',
+          subject: 'Account Locked.',
           content: content
         });
       }
