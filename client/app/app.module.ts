@@ -37,7 +37,7 @@ import { CareersComponent } from './group/careers/careers.component';
 import { FaqComponent } from './group/faq/faq.component';
 import { BlogComponent } from './group/blog/blog.component';
 import { ContactusComponent } from './group/contactus/contactus.component';
-import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
+// import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
 import { CookieService } from 'ngx-cookie-service';
 // import { Ng2GoogleRecaptchaModule } from 'ng2-google-recaptcha';
 

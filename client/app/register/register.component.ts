@@ -5,8 +5,8 @@ import { UserService } from '../services/user.service';
 import { ToastComponent } from '../shared/toast/toast.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as $ from 'jquery';
-import 'jquery-ui';
-import { GoogleRecaptchaDirective } from '../shared/googlerecaptcha.directive';
+// import 'jquery-ui';
+// import { GoogleRecaptchaDirective } from '../shared/googlerecaptcha.directive';
 // import { CreateRecaptchaComponent } from 'ng2-google-recaptcha/create-recaptcha/create-recaptcha.component';
 @Component({
   moduleId: module.id,
