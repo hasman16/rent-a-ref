@@ -22,7 +22,8 @@ export class AccountComponent implements OnInit {
   }
 
   getUser() {
-    this.userService.getUser(this.auth.currentUser).subscribe(
+    // this.userService.getUser(this.auth.currentUser).subscribe(
+    this.userService.getUser(this.auth.currentUser.id).subscribe(
       data => this.user = data,
       error => console.log(error),
       () => this.isLoading = false

@@ -33,16 +33,17 @@ export class UserService {
     return this.http.post('/api/user', JSON.stringify(user), this.options);
   }
 
-  getUser(user): Observable<any> {
-    return this.http.get(`/api/user/${user._id}`).map(res => res.json());
+  getUser(user_id: number): Observable<any> {
+    return this.http.get(`/api/user/${user_id}`).map(res => res.json());
+    // return this.http.get(`/api/user/${user._id}`).map(res => res.json());
   }
 
   editUser(user): Observable<any> {
-    return this.http.put(`/api/user/${user._id}`, JSON.stringify(user), this.options);
+    return this.http.put(`/api/user/${user.id}`, JSON.stringify(user), this.options);
   }
 
-  deleteUser(user): Observable<any> {
-    return this.http.delete(`/api/user/${user._id}`, this.options);
+  deleteUser(user_id: number): Observable<any> {
+    return this.http.delete(`/api/user/${user_id}`, this.options);
   }
 
 }

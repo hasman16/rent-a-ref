@@ -11,7 +11,8 @@ export class AuthService {
 
   jwtHelper: JwtHelper = new JwtHelper();
 
-  currentUser = { username: '', role: '' };
+  // currentUser = { username: '', role: '' };
+  currentUser;
 
   constructor(private userService: UserService,
     private router: Router) {
