@@ -36,7 +36,7 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
                 }
             });
         }
-        var Lock = models.Lock;
+        // const Lock = models.Lock;
         return Lock.findOne({
             where: {
                 user_id: user_id
@@ -68,13 +68,13 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
             if (attempts >= 5) {
                 attempts = 5;
                 passcode = randomstring.generate();
-                var content = "There was more than 5 unsuccessful login attempts on your";
-                content += " account. Use the passcode to reset your password: ";
-                content += "\n\n " + passcode;
+                var content = 'There was more than 5 unsuccessful login attempts on your';
+                content += ' account. Use the temp passcode below to reset your password: ';
+                content += '\n\n ' + passcode;
                 SendGridService.sendEmail({
                     to: user.email,
                     from: 'admin@rentaref.com',
-                    subject: 'User registered',
+                    subject: 'Locked User Account',
                     content: content
                 });
             }

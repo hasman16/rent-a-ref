@@ -32,7 +32,7 @@ function UserController(bcrypt, jwt, models, ResponseService, SendGridService) {
     function returnUser(res, user, status) {
         if (status === void 0) { status = 200; }
         var newUser = makeUser(user);
-        newUser["id"] = user.id;
+        newUser['id'] = user.id;
         ResponseService.success(res, newUser, status);
     }
     function update(req, res) {

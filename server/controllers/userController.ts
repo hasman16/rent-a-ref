@@ -34,13 +34,13 @@ export default function UserController(bcrypt, jwt, models, ResponseService, Sen
   }
 
   function returnUser(res, user, status = 200) {
-    let newUser = makeUser(user);
-    newUser["id"] = user.id;
+    const newUser = makeUser(user);
+    newUser['id'] = user.id;
     ResponseService.success(res, newUser, status);
   }
 
   function update(req, res) {
-    let user = ResponseService.makeObject(req.body);
+    const user = ResponseService.makeObject(req.body);
     if (!ResponseService.isAdmin(req)) {
       delete user.authorization;
     }

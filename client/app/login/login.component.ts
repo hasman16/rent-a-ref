@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   checkboxFlag = false;
   stringBoxCheck = 'false'
   stringEmail = '';
+  submitted = false;
   loginForm: FormGroup;
   email = new FormControl('', [<any>Validators.required, <any>Validators.email]);
   password = new FormControl('', [<any>Validators.required,
@@ -70,6 +71,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.auth.login(this.loginForm.value).subscribe(
       res => {
+        this.submitted = true;
         // console.log('status: ' + res['success'] + ' Message: ' + res['message']);
         console.log('Response: ', res);
         console.log('Response user: ', res.user);
@@ -106,7 +108,7 @@ export class LoginComponent implements OnInit {
             // The organizer is active and ready to go
             this.router.navigate(['user/' + res.user.id + '/account']);
             break;
-          case ('yes suspended'):
+          case ('yes locked'):
             // The Organizer account is suspended due to failed login attempts
             // Kill his session
             // his.loggedIn = false;
@@ -115,6 +117,9 @@ export class LoginComponent implements OnInit {
           case ('no banned'):
             // The Organizer account is disabled by the admin
             this.router.navigate(['user/' + res.user.id + '/deactivated']);
+            break;
+          default:
+            this.router.navigate(['user/' + res.user.id + '/account']);
             break;
         }
 
@@ -132,7 +137,7 @@ export class LoginComponent implements OnInit {
             // The referee is active and ready to go
             this.router.navigate(['user/' + res.user.id + '/account']);
             break;
-          case ('yes suspended'):
+          case ('yes locked'):
             // The referee account is suspended due to failed login attempts
             this.router.navigate(['user/' + res.user.id + '/suspended']);
             break;
@@ -140,9 +145,12 @@ export class LoginComponent implements OnInit {
             // The referee account is disabled by the admin
             this.router.navigate(['user/' + res.user.id + '/deactivated']);
             break;
+          default:
+            this.router.navigate(['user/' + res.user.id + '/account']);
+            break;
         }
       },
-      error => this.toast.setMessage('invalid email or password!', 'danger')
+      error => this.toast.setMessage('invalid email or password! ', 'danger')
     );
 
   }

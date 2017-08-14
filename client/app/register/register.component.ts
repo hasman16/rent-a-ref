@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit {
   //
   // Called when the Captcha has finished
   //
-  private onCaptchaComplete(response: any) {
+  /* private onCaptchaComplete(response: any) {
 
     console.log('reCAPTCHA response recieved:');
     console.log('response: ' + response);
@@ -89,7 +89,7 @@ export class RegisterComponent implements OnInit {
         response.recaptcha.resetRecaptcha();
       }, 2000);
     }
-  }
+}*/
     /* tslint:enable:no-unused-variable */
   constructor(private formBuilder: FormBuilder,
               private router: Router,
