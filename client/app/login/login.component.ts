@@ -36,19 +36,24 @@ export class LoginComponent implements OnInit {
     if (this.auth.loggedIn) {
       this.router.navigate(['/']);
     }
+
     this.loginForm = this.formBuilder.group({
       email: this.email,
       password: this.password
     });
+
     this.stringBoxCheck = this.cookieService.get('checkboxFlag');
+
     if (this.stringBoxCheck === 'false') {
       this.checkboxFlag = false;
     } else {
       this.checkboxFlag = true;
     }
+
     if (this.checkboxFlag) {
       this.cookieValue = this.cookieService.get('email');
     }
+
     if (this.cookieValue !== 'UNKNOWN') {
       // this.email = JSON.stringify(this.cookieValue);
     }
@@ -70,16 +75,17 @@ export class LoginComponent implements OnInit {
   login() {
     this.auth.login(this.loginForm.value).subscribe(
       res => {
+        const user = res.user;
         // console.log('status: ' + res['success'] + ' Message: ' + res['message']);
         console.log('Response: ', res);
-        console.log('Response user: ', res.user);
-        console.log('Response can ref: ', res.user.can_referee);
-        console.log('Response can org: ', res.user.can_organize);
+        console.log('Response user: ', user);
+        console.log('Response can ref: ', user.can_referee);
+        console.log('Response can org: ', user.can_organize);
         console.log('checkboxFlag: ', this.checkboxFlag);
         if (this.checkboxFlag) {
           const expireDate = new Date();
           expireDate.setDate(expireDate.getDate() + (365 * 5));
-          this.cookieService.set('email', res.user.email);
+          this.cookieService.set('email', user.email);
           // this.cookieService.set('email', res.user.email, expireDate, '/login', 'rent-a-ref.com', true);
           this.cookieService.set('checkboxFlag', 'true');
           // this.cookieService.set('Rent-A-Ref-Password', res.user.password);
@@ -95,50 +101,50 @@ export class LoginComponent implements OnInit {
         // this.router.navigate(['/']);
         // Check if the user is a referee/organizer and if his/she has not yet completed the profile form, then redirect him/her to the form
 
-
+        console.log('organizer:', user.can_organize + ' ' + user.status);
         // Organizer
         switch (res.user.can_organize + ' ' + res.user.status) {
           case ('pending standby'):
             // The organizer has not yet completed the profile
-            this.router.navigate(['user/' + res.user.id + '/edit-profile']);
+            this.router.navigate(['user/' + user.id + '/edit-profile']);
             break;
           case ('yes active'):
             // The organizer is active and ready to go
-            this.router.navigate(['user/' + res.user.id + '/account']);
+            this.router.navigate(['user/' + user.id + '/account']);
             break;
           case ('yes suspended'):
             // The Organizer account is suspended due to failed login attempts
             // Kill his session
             // his.loggedIn = false;
-            this.router.navigate(['user/' + res.user.id + '/suspended']);
+            this.router.navigate(['user/' + user.id + '/suspended']);
             break;
           case ('no banned'):
             // The Organizer account is disabled by the admin
-            this.router.navigate(['user/' + res.user.id + '/deactivated']);
+            this.router.navigate(['user/' + user.id + '/deactivated']);
             break;
         }
 
         // Referee
-        switch (res.user.can_referee + ' ' + res.user.status) {
+        switch (user.can_referee + ' ' + user.status) {
           case ('pending active'):
             // The referee account has been activated by the admin. Now he needs to complete his profile
-            this.router.navigate(['user/' + res.user.id + '/edit-profile']);
+            this.router.navigate(['user/' + user.id + '/edit-profile']);
             break;
           case ('pending in_progress'):
             // The referee account has not yet been activated by the admin. Still in Standby
-            this.router.navigate(['user/' + res.user.id + '/standby']);
+            this.router.navigate(['user/' + user.id + '/standby']);
             break;
           case ('yes active'):
             // The referee is active and ready to go
-            this.router.navigate(['user/' + res.user.id + '/account']);
+            this.router.navigate(['user/' + user.id + '/account']);
             break;
           case ('yes suspended'):
             // The referee account is suspended due to failed login attempts
-            this.router.navigate(['user/' + res.user.id + '/suspended']);
+            this.router.navigate(['user/' + user.id + '/suspended']);
             break;
           case ('no banned'):
             // The referee account is disabled by the admin
-            this.router.navigate(['user/' + res.user.id + '/deactivated']);
+            this.router.navigate(['user/' + user.id + '/deactivated']);
             break;
         }
       },
