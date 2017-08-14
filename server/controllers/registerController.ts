@@ -71,27 +71,27 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
     });
   }
 
-    function createNewUser(user) {
-      let aUser = {
-        email: user.email,
-        password: user.password,
-        authorization: 3,
-        status: 'active',
-        can_organize: 'no',
-        can_referee: 'no'
-      };
-      const isOrganizer = String(user.role).trim();
+  function createNewUser(user) {
+    let aUser = {
+      email: user.email,
+      password: user.password,
+      authorization: 3,
+      status: 'active',
+      can_organize: 'no',
+      can_referee: 'no'
+    };
+    const isOrganizer = String(user.role).trim();
 
-      if (/^organizer$/ig.test(isOrganizer)) {
-        aUser.can_referee = 'no';
-        aUser.can_organize = 'pending';
-      } else {
-        aUser.can_referee = 'pending';
-        aUser.can_organize = 'no';
-      }
-
-      return aUser;
+    if (/^organizer$/ig.test(isOrganizer)) {
+      aUser.can_referee = 'no';
+      aUser.can_organize = 'pending';
+    } else {
+      aUser.can_referee = 'pending';
+      aUser.can_organize = 'no';
     }
+
+    return aUser;
+  }
 
   function registerUser(req, res) {
     const aUser = createNewUser(req.body);
