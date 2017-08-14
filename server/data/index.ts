@@ -67,7 +67,15 @@ const users = [{
     status: 'active',
     can_referee: 'active',
     can_organize: 'no'
-  }
+  },
+  {
+    email: 'pete@mailinator.com',
+    password: 'petepete',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
+  },
 ];
 
 const people = [
@@ -118,6 +126,12 @@ const people = [
     lastname: 'Puff',
     email: 'ref2@rentaref.com',
     gender: 'f'
+  },
+  {
+    firstname: 'Peter',
+    lastname: 'Perfect',
+    email: 'pete@mailinator.com',
+    gender: 'm'
   }
 ];
 

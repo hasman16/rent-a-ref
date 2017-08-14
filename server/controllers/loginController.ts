@@ -83,7 +83,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
         SendGridService.sendEmail({
           to: user.email,
           from: 'admin@rentaref.com',
-          subject: 'Locked User Account',
+          subject: 'Account Locked.',
           content: content
         });
       }
