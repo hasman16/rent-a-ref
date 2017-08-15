@@ -48,7 +48,7 @@ export default new class SendGridService {
 
       value = this.sg.API(request)
         .then(result => console.log('email sent:', result))
-        .catch(error => console.log('error:', error));;
+        .catch(error => console.log('error:', error));
     }
     return value;
   }

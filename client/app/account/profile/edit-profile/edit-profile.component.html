@@ -6,22 +6,43 @@
   <app-toast [message]="toast.message"></app-toast>      
       <div class="card-block">
         <form #accountForm="ngForm" (ngSubmit)="save(user)">
+          <div><h1>User ID: {{user.id}}</h1></div>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input class="form-control" type="text" name="username" [(ngModel)]="user.username" placeholder="Username" required>
+            <input class="form-control" type="text" name="firstname" [(ngModel)]="user.firstname" placeholder="Firstname" required>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input class="form-control" type="text" name="lastname" [(ngModel)]="user.lastname" placeholder="Lastname">
           </div>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
             <input class="form-control" type="email" name="email" [(ngModel)]="user.email" placeholder="Email" required>
           </div>
+          <div class="input-group required-field-block">
+            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+            <input class="form-control" type="password" name="password" formControlName="password" placeholder="Password" disabled=true>            
+          </div>
           <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
+            <select class="form-control" name="sex" [(ngModel)]="user.sex" formControlName="sex">
+          <option value="" selected disabled>Gender</option>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+          </div>
+          <div class="input-group required-field-block">
+            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+            <input class="form-control" type="text" name="phone" [(ngModel)]="user.phone" formControlName="phone" placeholder="Phone Number" phone="CN">
+          </div>
+          <!--<div class="input-group">
             <span class="input-group-addon"><i class="fa fa-black-tie"></i></span>
             <select class="form-control" name="role" [(ngModel)]="user.role">
           <option value="" disabled>Role</option>
           <option value="user">User</option>
           <option value="admin">Admin</option>
         </select>
-          </div>
+          </div>-->
           <button class="btn btn-primary" type="submit" [disabled]="!accountForm.form.valid">
         <i class="fa fa-save"></i> Save
       </button>

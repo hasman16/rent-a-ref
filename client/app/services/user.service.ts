@@ -65,7 +65,7 @@ export class UserService {
     return this.http.post('/api/users', JSON.stringify(user), this.getOptions());
   }
 
-  getUser(user_id: number): Observable<any> {
+  getUser(user_id: any): Observable<any> {
     return this.http.get(`/api/users/${user_id}`, this.getOptions()).map(res => res.json());
   }
 

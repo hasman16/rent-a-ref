@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
 import * as $ from 'jquery';
-import 'jquery-ui';
+// import 'jquery-ui';
 
 @Component({
   selector: 'app-edit-profile',
@@ -28,7 +28,7 @@ export class EditProfileComponent implements OnInit {
   getUser() {
     this.userService.getUser(this.auth.currentUser.id).subscribe(
       data => this.user = data,
-      error => console.log(error),
+      error => console.log('Get user error: ', error),
       () => this.isLoading = false
     );
   }
