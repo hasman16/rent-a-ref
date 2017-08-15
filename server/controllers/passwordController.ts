@@ -21,10 +21,11 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
             }]
           }
         }, { transation: t })
-        .then((user) => {
+        .then(function (user) {
           return Lock.update({
             attempts: 0,
             passcode: null,
+            passcode_age: null,
             password: password
           }, {
               where: {
@@ -46,12 +47,49 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
     return bcrypt.hash(user.password1, 10)
       .then(password => {
         if (user.password1 === user.password2) {
-          unlockUser(newUser.id, password)
+          return unlockUser(newUser.id, password)
             .then(() => resetSuccess(res));
         } else {
           ResponseService.failure(res, 'Password1 and Password2 do not match.', 403);
         }
       });
+  }
+
+  function changepassword(req, res) {
+    const user = {
+      id: req.params.user_id,
+      password1: req.body.password1,
+      password2: req.body.password2,
+    };
+
+    User.findOne({
+      where: { id: user.id },
+      include: [{
+        model: Lock
+      }]
+    }).then(function(newUser) {
+      if (newUser) {
+        const status = newUser.status;
+        if (status === 'active') {
+          return generatePassword(res, user, newUser);
+        } else if (status === 'locked') {
+          ResponseService.failure(res, {
+            success: false,
+            message: 'Account is locked check your mail.',
+          }, 403);
+        } else if (status === 'suspended') {
+          ResponseService.failure(res, {
+            success: false,
+            message: 'Account has been suspended by Admin.',
+          }, 403);
+        } else {
+          ResponseService.failure(res, 'Could not change password.');
+        }
+      } else {
+        ResponseService.failure(res, 'Unknown user.');
+      }
+    })
+      .catch(error => ResponseService.exception(res, error));
   }
 
   function comparePasscode(res, user, newUser) {
@@ -84,10 +122,8 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
     }).then(function(newUser) {
       if (newUser) {
         const status = newUser.status;
-        if (status === 'locked') {
+        if (status === 'locked' || status === 'active') {
           return comparePasscode(res, user, newUser);
-        } else if (status === 'active') {
-          return generatePassword(res, user, newUser);
         } else if (status === 'suspended') {
           ResponseService.failure(res, {
             success: false,
@@ -111,20 +147,27 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
     bcrypt.hash(passcode, 10)
       .then(newPasscode => {
         return Lock.update({
-          passcode: newPasscode
+          passcode: newPasscode,
+          passcode_age: (new Date())
         }, {
             where: {
               user_id: user.id
             }
           });
       })
+      /*      .then(() => {
+              return SendGridService.sendEmail({
+                to: user.email,
+                from: 'admin@rentaref.com',
+                subject: 'Reset Password.',
+                content: content
+              });
+            })*/
       .then(() => {
-        SendGridService.sendEmail({
-          to: user.email,
-          from: 'admin@rentaref.com',
-          subject: 'Reset Password.',
-          content: content
-        });
+        ResponseService.success(res, {
+          success: true,
+          message: 'A new passcode sent to ' + user.email + '.',
+        }, 201);
       });
   }
 
@@ -160,7 +203,8 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
   }
 
   return {
-    resetpassword,
-    forgotpassword
+    changepassword,
+    forgotpassword,
+    resetpassword
   }
 }
