@@ -17,7 +17,12 @@ export class UserService {
   }
 
   setOptions(token) {
-    this.headers = new Headers({ 'Authorization': 'Bearer ' + token });
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+    this.headers.append('charset', 'UTF-8');
+    if (token) {
+      this.headers.append('Authorization', 'Bearer ' + token);
+    }
     this.options = new RequestOptions({ headers: this.headers });
   }
 

@@ -29,9 +29,7 @@ import { StandbyComponent } from './account/profile/standby/standby.component';
 import { PasswordresetComponent } from './account/profile/passwordreset/passwordreset.component';
 
   const routes: Routes = [
-  {
-    path: '', component: HomeComponent,
-  },
+  { path: '', component: HomeComponent },
   { path: 'how-it-works', component: HowItWorksComponent },
   { path: 'referee', component: RefereeComponent },
   { path: 'career', component: CareersComponent },
