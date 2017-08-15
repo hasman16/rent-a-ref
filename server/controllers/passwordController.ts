@@ -8,7 +8,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
     const sequelize = models.sequelize;
 
     return sequelize.transaction(function(t) {
-      User.update({
+      return User.update({
         status: 'active'
       }, {
           where: {
@@ -21,7 +21,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
             }]
           }
         }, { transation: t })
-        .then(function (user) {
+        .then(function(user) {
           return Lock.update({
             attempts: 0,
             passcode: null,
@@ -155,14 +155,14 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
             }
           });
       })
-      /*      .then(() => {
-              return SendGridService.sendEmail({
-                to: user.email,
-                from: 'admin@rentaref.com',
-                subject: 'Reset Password.',
-                content: content
-              });
-            })*/
+      .then(() => {
+        return SendGridService.sendEmail({
+          to: user.email,
+          from: 'admin@rentaref.com',
+          subject: 'Reset Password.',
+          content: content
+        });
+      })
       .then(() => {
         ResponseService.success(res, {
           success: true,

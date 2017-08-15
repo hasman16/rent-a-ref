@@ -4040,6 +4040,306 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Password",
+			"description": "",
+			"item": [
+				{
+					"name": "login as pete@mailinator.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 201;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9\\-_]+\\.[a-z0-9\\-_]+\\.[a-z0-9\\-_]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"var user = data.user;",
+									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
+									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(user.can_organize);",
+									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"postman.setGlobalVariable(\"userId\", data.user.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "pete@mailinator.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "petepete",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/changepassword/:user_id",
+					"request": {
+						"url": "localhost:3000/api/changepassword/{{userId}}",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password1",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "login as pete@mailinator.com new password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 201;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9\\-_]+\\.[a-z0-9\\-_]+\\.[a-z0-9\\-_]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"var user = data.user;",
+									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
+									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(user.can_organize);",
+									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"postman.setGlobalVariable(\"userId\", data.user.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "pete@mailinator.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/forgotpassword",
+					"request": {
+						"url": "localhost:3000/api/forgotpassword",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "pete@mailinator.com",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/resetpassword",
+					"request": {
+						"url": "localhost:3000/api/resetpassword",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "pete@mailinator.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password1",
+									"value": "hello1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "hello1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "passcode",
+									"value": "yQC5X8jG1jprja9NLiTPVu8dJz1mOwdI",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "login as pete@mailinator.com new new password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 201;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9\\-_]+\\.[a-z0-9\\-_]+\\.[a-z0-9\\-_]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"var user = data.user;",
+									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
+									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(user.can_organize);",
+									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"postman.setGlobalVariable(\"userId\", data.user.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "pete@mailinator.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
