@@ -11,6 +11,7 @@ import addressController from './../controllers/addressController';
 import blogController from './../controllers/blogController';
 import gameController from './../controllers/gameController';
 import organizationController from './../controllers/organizationController';
+import passwordController from './../controllers/passwordController';
 import personController from './../controllers/personController';
 import phoneController from './../controllers/phoneController';
 import sportController from './../controllers/sportController';
@@ -64,12 +65,15 @@ export default function setRoutes(app, models) {
   const personCtrl = personController(models, responseService);
   const phoneCtrl = phoneController(models, responseService);
   const sportCtrl = sportController(models, responseService);
+
   const userCtrl = userController(bcrypt, jwt, models, responseService, SendGridService);
   const loginCtrl = loginController(bcrypt, jwt, models, responseService, SendGridService);
+  const passwordCtrl = passwordController(bcrypt, jwt, models, responseService, SendGridService);
   const registerCtrl = registerController(bcrypt, jwt, models, responseService, SendGridService);
 
   const ctrl = {
     loginCtrl,
+    passwordCtrl,
     userCtrl,
     registerCtrl
   };

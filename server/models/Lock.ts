@@ -10,6 +10,9 @@ export default function(sequelize, DataTypes) {
     },
     passcode: {
       type: DataTypes.STRING
+    },
+    passcode_age: {
+      type: DataTypes.DATE
     }
   }, {
       paranoid: true, // mark as deleted but do not delete

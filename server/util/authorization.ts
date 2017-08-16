@@ -18,6 +18,14 @@ export default function authorization(dbModels) {
     }
   }
 
+  function isUser(req, res, next) {
+    if (checkIsUser(req)) {
+      next();
+    } else {
+      permissionViolation(res, next);
+    }
+  }
+
   function isUserOrAdmin(req, res, next) {
     if (checkIsUser(req) || checkIsAdmin(req)) {
       next();
@@ -93,6 +101,7 @@ export default function authorization(dbModels) {
 
   return {
     isAdmin,
+    isUser,
     isUserOrAdmin,
     isUserAddress,
     isOrgOwner,

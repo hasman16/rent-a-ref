@@ -432,3 +432,48 @@ Payload:
 	"sex": "m",
 	"dob": "1758888"
 }
+
+
+Test:Password
+POST: /api/login
+Payload:
+{
+	"email": "pete@mailinator.com",
+	"password": "petepete"
+}
+
+POST: /api/changepassword/:userId
+Payload:
+{
+	"password1": "reefer",
+	"password2": "reefer"
+}
+
+POST: /api/login
+Payload:
+{
+	"email": "pete@mailinator.com",
+	"password": "reefer"
+}
+
+POST: /api/forgotpassword
+Payload:
+{
+	"email": "pete@mailinator.com"
+}
+
+POST: /api/resetpassword
+Payload:
+{
+	"email": "pete@mailinator.com",
+	"password1": "hello1",
+	"password2": "hello1",
+	"passcode": "yQC5X8jG1jprja9NLiTPVu8dJz1mOwdI"
+}
+
+POST: /api/login
+Payload:
+{
+	"email": "pete@mailinator.com",
+	"password": "reefer"
+}
