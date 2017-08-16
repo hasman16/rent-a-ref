@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
 import * as $ from 'jquery';
 // import 'jquery-ui';
-import { DatepickerPopupComponent } from '../../../shared/datepicker-popup/datepicker-popup.component';
+// import { DatepickerPopupComponent } from '../../../shared/datepicker-popup/datepicker-popup.component';
 
 @Component({
   selector: 'app-edit-profile',
