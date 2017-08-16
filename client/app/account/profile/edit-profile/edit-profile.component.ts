@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
 import * as $ from 'jquery';
 // import 'jquery-ui';
+import { DatepickerPopupComponent } from '../../../shared/datepicker-popup/datepicker-popup.component';
 
 @Component({
   selector: 'app-edit-profile',
@@ -16,7 +17,7 @@ import * as $ from 'jquery';
 export class EditProfileComponent implements OnInit {
   user = {};
   isLoading = true;
-
+  model;
   constructor(private auth: AuthService,
     public toast: ToastComponent,
     private userService: UserService) { }
