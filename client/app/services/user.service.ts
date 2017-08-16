@@ -38,14 +38,14 @@ export class UserService {
     return this.http.get('/api/users').map(res => res.json());
   }
 
-  countUsers(): Observable<any> {
-    return this.http.get('/api/users/count').map(res => res.json());
+  resetpassword(credentials): Observable<any> {
+    return this.http.post('/api/resetpassword', JSON.stringify(credentials), this.getOptions());
   }
-
-  addUser(user): Observable<any> {
-    return this.http.post('/api/users', JSON.stringify(user), this.getOptions());
-  }
-
+  /*
+    addUser(user): Observable<any> {
+      return this.http.post('/api/users', JSON.stringify(user), this.getOptions());
+    }
+  */
   getUser(user_id: number): Observable<any> {
     return this.http.get(`/api/users/${user_id}`, this.getOptions()).map(res => res.json());
   }

@@ -1,34 +1,38 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { CatsComponent } from './cats/cats.component';
-import { AboutComponent } from './about/about.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
-import { LogoutComponent } from './logout/logout.component';
-import { AccountComponent } from './account/account.component';
-import { AdminComponent } from './admin/admin.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { HomeComponent } from './home/home.component';
+
 import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
+
+import { AppComponent } from './app.component';
+import { CatsComponent } from './cats/cats.component';
+
+import { AboutComponent } from './about/about.component';
+import { AccountComponent } from './account/account.component';
+import { AdminComponent } from './admin/admin.component';
+import { BlogComponent } from './group/blog/blog.component';
+import { CareersComponent } from './group/careers/careers.component';
+import { ContactusComponent } from './group/contactus/contactus.component';
+import { DeactivatedComponent } from './account/profile/deactivated/deactivated.component';
+import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
+import { FaqComponent } from './group/faq/faq.component';
+import { HomeComponent } from './home/home.component';
 import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { PartnersComponent } from './group/partners/partners.component';
+import { PasswordresetComponent } from './account/profile/passwordreset/passwordreset.component';
 import { PricingComponent } from './home/pricing/pricing.component';
 import { ProfileComponent } from './account/profile/profile.component';
-import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import { RefereeComponent } from './referee/referee.component';
-import { PartnersComponent} from './group/partners/partners.component';
-import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
-import { CareersComponent } from './group/careers/careers.component';
-import { FaqComponent } from './group/faq/faq.component';
-import { ContactusComponent } from './group/contactus/contactus.component';
-import { BlogComponent } from './group/blog/blog.component';
-import { SuspendedComponent } from './account/profile/suspended/suspended.component';
-import { DeactivatedComponent } from './account/profile/deactivated/deactivated.component';
+import { RegisterComponent } from './register/register.component';
+import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
 import { StandbyComponent } from './account/profile/standby/standby.component';
-import { PasswordresetComponent } from './account/profile/passwordreset/passwordreset.component';
+import { SuspendedComponent } from './account/profile/suspended/suspended.component';
+import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 
-  const routes: Routes = [
+const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'how-it-works', component: HowItWorksComponent },
   { path: 'referee', component: RefereeComponent },
@@ -42,6 +46,8 @@ import { PasswordresetComponent } from './account/profile/passwordreset/password
   { path: 'about', component: AboutComponent },
   { path: 'cats', component: CatsComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'resetpassword', component: ResetPasswordComponent },
+  { path: 'resetpassword/:passcode', component: ResetPasswordComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'passwordreset', component: PasswordresetComponent },
@@ -64,4 +70,4 @@ import { PasswordresetComponent } from './account/profile/passwordreset/password
   exports: [RouterModule]
 })
 
-export class RoutingModule {}
+export class RoutingModule { }
