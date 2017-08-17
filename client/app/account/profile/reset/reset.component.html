@@ -14,7 +14,7 @@
                 </div>
                 <div class="input-group" [ngClass]="setClassPasscode()">
                   <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                  <input class="form-control" type="password" name="passcode" formControlName="passcode" placeholder="Passcode">
+                  <input class="form-control" type="password" name="passcode" [(ngModel)]="passcode" formControlName="passcode" placeholder="Passcode">
                 </div>
                 <div class="input-group" [ngClass]="setClassPassword1()">
                   <span class="input-group-addon"><i class="fa fa-key"></i></span>

@@ -15,6 +15,9 @@ import * as $ from 'jquery';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
+  paypalFlag = false;
+  checkFlag = false;
+  ccFlag = false;
   user = {};
   isLoading = true;
   model;
