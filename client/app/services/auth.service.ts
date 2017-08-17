@@ -134,6 +134,13 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
+  resetpassword(payload) {
+    return this.userService.resetpassword(payload).map(res => res.json()).map(
+      res => {
+        return res;
+      }
+    );
+  }
 
 /*
   setCurrentUser(res) {

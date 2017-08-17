@@ -46,13 +46,14 @@ export class UserService {
     return this.http.get(`/api/users`).map(res => res.json());
   }
 
+/*
   countUsers(): Observable<any> {
     return this.http.get(`/api/users/count`).map(res => res.json());
   }
 
   addUser(user): Observable<any> {
 
-    /*return this.http.post(`/api/users`, JSON.stringify(user), this.options);
+    return this.http.post(`/api/users`, JSON.stringify(user), this.options);
   }
 
   getUser(user_id: any): Observable<any> {
@@ -65,12 +66,31 @@ export class UserService {
   }
 
   deleteUser(user_id: any): Observable<any> {
-    return this.http.delete(`/api/users/${user_id}`, this.options);*/
+    return this.http.delete(`/api/users/${user_id}`, this.options);
 
     return this.http.post('/api/users', JSON.stringify(user), this.getOptions());
   }
 
   getUser(user_id: any): Observable<any> {
+*/
+  resetpassword(credentials): Observable<any> {
+    return this.http.post('/api/resetpassword', JSON.stringify(credentials), this.getOptions());
+  }
+
+  forgotpassword(email): Observable<any> {
+    return this.http.post('/api/forgotpassword', JSON.stringify(email), this.getOptions());
+  }
+
+  changepassword(passwords, user): Observable<any> {
+    return this.http.put(`/api/changepassword/${user.id}`, JSON.stringify(passwords), this.getOptions());
+  }
+  /*
+    addUser(user): Observable<any> {
+      return this.http.post('/api/users', JSON.stringify(user), this.getOptions());
+    }
+  */
+  getUser(user_id: any): Observable<any> {
+
     return this.http.get(`/api/users/${user_id}`, this.getOptions()).map(res => res.json());
   }
 

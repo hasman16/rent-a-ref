@@ -141,9 +141,14 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
 
   function sendPasscode(res, user) {
     const passcode = randomstring.generate();
-    let content = "Use the passcode to reset your password."
-    content += "\n\n " + passcode;
-
+    let content = 'Use the passcode to reset your password.'
+    content += '\n\n ' + passcode
+    content += '\n\n '
+    content += '\n\n '
+    content += '\n\n Or you can copy the link below to launch the reset password page'
+    content += '\n\n '
+    content += '\n\n '
+    content += '\n\n http://localhost:4200/reset?passcode=' + passcode;
     bcrypt.hash(passcode, 10)
       .then(newPasscode => {
         return Lock.update({

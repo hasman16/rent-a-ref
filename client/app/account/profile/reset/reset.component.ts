@@ -9,25 +9,35 @@ import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-passwordreset',
-  templateUrl: './passwordreset.component.html',
-  styleUrls: ['./passwordreset.component.scss']
+  selector: 'app-reset',
+  templateUrl: './reset.component.html',
+  styleUrls: ['./reset.component.scss']
 })
-export class PasswordresetComponent implements OnInit {
-  public divMessage = '';
-  public hideShowDiv = false;
-  emailForm: FormGroup;
-  email = new FormControl('', [Validators.required, Validators.email]);
+export class ResetComponent implements OnInit {
+  public showDivreset = true;
+  passwordForm: FormGroup;
 
+  email = new FormControl('', [Validators.required, Validators.email]);
+  passcode = new FormControl('', [<any>Validators.required,
+  <any>Validators.minLength(6)]);
+
+  password1 = new FormControl('', [<any>Validators.required,
+  <any>Validators.minLength(6)]);
+
+  password2 = new FormControl('', [<any>Validators.required,
+  <any>Validators.minLength(6)]);
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     public toast: ToastComponent, private userService: UserService) { }
 
   ngOnInit() {
-    this.emailForm = this.formBuilder.group({
-      email: this.email
-    }); 
+      this.passwordForm = this.formBuilder.group({
+      email: this.email,
+      passcode: this.passcode,
+      password1: this.password1,
+      password2: this.password2
+    });
 
   }
 
@@ -42,18 +52,20 @@ export class PasswordresetComponent implements OnInit {
   onReset() {
     this.router.navigate(['/reset']);
   }
-  onSubmit() {
+
+
+  onResetSubmit() {
     // this.router.navigate(['passwordreset']);
-    this.userService.forgotpassword(this.emailForm.value).subscribe(
+    this.userService.resetpassword(this.passwordForm.value).subscribe(
       res => {
         this.toast.setMessage(res.message, 'success');
-        this.divMessage = res.message;
         console.log('Response: ' + res);
         console.log('status: ' + res.success + ' Message: ' + res.message);
         // console.log('Response from the server: ' + res.headers.get('X-Custom-Header'));
         // console.log('Response from the server for user: ' + res.body.message);
-        this.hideShowDiv = true;
-       // this.router.navigate(['/login']);
+        // this.hideShowDiv = true;
+        this.showDivreset = false;
+        // this.router.navigate(['/login']);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -63,7 +75,7 @@ export class PasswordresetComponent implements OnInit {
           this.toast.setMessage('This email address does not exists', 'danger');
           // this.toast.setMessage('An error occurred:' + err.message, 'danger');
           // this.toast.setMessage('Error Message: ' + err.error.message, 'danger');
-          this.hideShowDiv = false;
+          this.showDivreset = true;
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
@@ -71,7 +83,7 @@ export class PasswordresetComponent implements OnInit {
           console.log('status: ' + err.status + ' Message: ' + err);
           this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
           // this.toast.setMessage('Backend returned code: ' + err.status + ' Error Status: ' + err.statusText, 'danger');
-          this.hideShowDiv = false;
+          this.showDivreset = true;
 
           // this.toast.setMessage('Error Message: ' + err.error.message, 'danger');
         }
@@ -82,7 +94,16 @@ export class PasswordresetComponent implements OnInit {
     );
   }
 
-  setClassEmail() {
+   setClassEmail1() {
     return { 'has-danger': !this.email.pristine && !this.email.valid };
+  }
+  setClassPasscode() {
+    return { 'has-danger': !this.passcode.pristine && !this.passcode.valid };
+  }
+  setClassPassword1() {
+    return { 'has-danger': !this.password1.pristine && !this.password1.valid };
+  }
+  setClassPassword2() {
+    return { 'has-danger': !this.password2.pristine && !this.password2.valid };
   }
 }

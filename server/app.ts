@@ -37,17 +37,18 @@ app.use(morgan('dev'));
 importData(models, true); // set to false to bypass importing data
 setRoutes(app, models);
 
-app.get('/resetpassword', function(req, res) {
-    var model = ['Mary', 'had', 'a', 'little', 'lamb'];
-    res.render('resetpassword', {
-      model: model});
+app.post('/resetpassword', function(req, res) {
+    res.render('resetpassword');
 });
 
+app.post('/resetpassword', function (req, res) {
+  res.redirect('404');
+})
+
 app.get('/resetpassword/:passcode', function(req, res) {
-    var model = ['Mary', 'had', 'a', 'little', 'lamb'];
     res.render('resetpassword', {
-      model: model,
-      passcode: req.params.passcode});
+      passcode: req.params.passcode
+    });
 });
 
 process.on('uncaughtException', function(err) {
