@@ -11,8 +11,8 @@ import { SharedModule } from './shared/shared.module';
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
 import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthService } from './services/auth.service';
-import { CatService } from './services/cat.service';
 import { CookieService } from 'ngx-cookie-service';
+import { TokenService } from './services/token.service';
 import { UserService } from './services/user.service';
 
 /* Components */
@@ -24,7 +24,6 @@ import { BlogComponent } from './group/blog/blog.component';
 import { CareersComponent } from './group/careers/careers.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.component';
-import { CatsComponent } from './cats/cats.component'; // This not needed
 import { ContactusComponent } from './group/contactus/contactus.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import { FaqComponent } from './group/faq/faq.component';
@@ -63,7 +62,6 @@ import { ResetComponent } from './account/profile/reset/reset.component';
     AboutComponent,
     AccountComponent,
     AdminComponent,
-    CatsComponent,
     RegisterComponent,
     ResetPasswordComponent,
     LoginComponent,
@@ -107,7 +105,7 @@ import { ResetComponent } from './account/profile/reset/reset.component';
     AuthService,
     AuthGuardLogin,
     AuthGuardAdmin,
-    CatService,
+    TokenService,
     UserService,
     CookieService
   ],

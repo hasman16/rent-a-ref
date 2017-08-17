@@ -86,7 +86,6 @@ export default function AddressController(models, ResponseService) {
       where: {
         id: req.params.user_id
       },
-      attributes: ['id', 'email', 'can_referee', 'can_organize', 'status'],
       include: [{
         model: Address,
         through: {

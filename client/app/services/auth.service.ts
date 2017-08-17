@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { JwtHelper } from 'angular2-jwt';
 
+import { TokenService } from '../services/token.service';
 import { UserService } from '../services/user.service';
 
 @Injectable()
 export class AuthService {
   loggedIn = false;
   isAdmin = false;
-  jwtHelper: JwtHelper = new JwtHelper();
 
   currentUser = { email: '', role: '', id: '', firstname: '', lastname: '', can_organize: '', can_referee: '' };
 
@@ -16,7 +15,9 @@ export class AuthService {
 
 
   constructor(private userService: UserService,
+    private tokenService: TokenService,
     private router: Router) {
+
     const user = localStorage.getItem('user');
     if (user) {
       this.setCurrentUser(JSON.parse(user));
@@ -165,7 +166,7 @@ export class AuthService {
     this.loggedIn = false;
     this.currentUser = null;
     this.isAdmin = false;
-    this.userService.setOptions(null);
+    this.tokenService.setOptions(null);
     localStorage.removeItem('user');
 
     if (setter) {
@@ -187,7 +188,7 @@ export class AuthService {
       }
       // ============================
       this.isAdmin = (accessLevel === 1 || accessLevel === 2);
-      this.userService.setOptions(setter.token);
+      this.tokenService.setOptions(setter.token);
       localStorage.setItem('user', JSON.stringify(setter));
     }
 
