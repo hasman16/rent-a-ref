@@ -1,3 +1,23 @@
+
+.input-group {
+  margin-bottom: 8px;
+
+  .input-group-addon {
+    min-width: 42px;
+  }
+
+  input + .input-group-addon {
+    min-width: 86px;
+  }
+}
+
+.register-rentaref {
+  color: orange;
+  font-size: 10px;
+  font-style: italic;
+  border-right: 1px solid rgba(0,0,0,.15);
+}
+
 .recaptcha-container {
 
     position: relative;
@@ -11,7 +31,7 @@
 /* Required field START */
 
 .required-field-block {
-    position: relative;   
+    position: relative;
 }
 
 .required-field-block .required-icon {
@@ -34,7 +54,7 @@
     transition: background 0.1s linear;
     font-size: 75%;
 }
-	
+
 .required-field-block .required-icon {
     background-color: transparent;
     position: absolute;
