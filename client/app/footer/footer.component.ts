@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
+  public dt: Date = new Date();
   selectLoad = true;
   privacy = false;
   constructor() { }
@@ -13,5 +14,10 @@ export class FooterComponent implements OnInit {
   ngOnInit() {
   }
 
-
+  public getDate(): number {
+    return this.dt && this.dt.getTime() || new Date().getTime();
+  }
+  public today(): void {
+    this.dt = new Date();
+  }
 }
