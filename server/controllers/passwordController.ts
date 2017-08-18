@@ -68,26 +68,22 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
         model: Lock
       }]
     }).then(function(newUser) {
+      let message = 'Unknown user.';
       if (newUser) {
-        const status = newUser.status;
-        if (status === 'active') {
+        switch(newUser.status){
+        case 'active':
           return generatePassword(res, user, newUser);
-        } else if (status === 'locked') {
-          ResponseService.failure(res, {
-            success: false,
-            message: 'Account is locked check your mail.',
-          }, 403);
-        } else if (status === 'suspended') {
-          ResponseService.failure(res, {
-            success: false,
-            message: 'Account has been suspended by Admin.',
-          }, 403);
-        } else {
-          ResponseService.failure(res, 'Could not change password.');
+        case 'locked':
+          message = 'Account is locked check your mail.';
+        case 'suspended':
+          message = 'Account has been suspended by Admin.';
+          break;
+        default:
+          message = 'Could not change password.';
         }
-      } else {
-        ResponseService.failure(res, 'Unknown user.');
-      }
+      } 
+      ResponseService.failure(res, message);
+      
     })
       .catch(error => ResponseService.exception(res, error));
   }
@@ -120,21 +116,18 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
         model: Lock
       }]
     }).then(function(newUser) {
+      let message = 'Unknown username.';
       if (newUser) {
         const status = newUser.status;
         if (status === 'locked' || status === 'active') {
           return comparePasscode(res, user, newUser);
         } else if (status === 'suspended') {
-          ResponseService.failure(res, {
-            success: false,
-            message: 'Account has been suspended by Admin.',
-          }, 403);
+          message = 'Account has been suspended by Admin.';
         } else {
-          ResponseService.failure(res, 'Could not reset password.');
+          message = 'Could not reset password.';
         }
-      } else {
-        ResponseService.failure(res, 'Unknown username.');
-      }
+      } 
+        ResponseService.failure(res, message);
     })
       .catch(error => ResponseService.exception(res, error));
   }
@@ -149,6 +142,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
     content += '\n\n '
     content += '\n\n '
     content += '\n\n http://localhost:4200/reset?passcode=' + passcode;
+
     bcrypt.hash(passcode, 10)
       .then(newPasscode => {
         return Lock.update({
@@ -187,22 +181,19 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
         model: Lock
       }]
     }).then(function(newUser) {
+      let message = 'Unknown username.';
       if (newUser) {
         const status = newUser.status;
 
         if (status === 'active' || status === 'locked') {
           return sendPasscode(res, newUser);
         } else if (newUser.status === 'suspended') {
-          ResponseService.failure(res, {
-            success: false,
-            message: 'Account has been suspended by Admin.',
-          }, 403);
+          message = 'Account has been suspended by Admin.';
         } else {
-          ResponseService.failure(res, 'Could not generate passcode.');
+          message = 'Could not generate passcode.';
         }
-      } else {
-        ResponseService.failure(res, 'Unknown username.');
-      }
+      } 
+        ResponseService.failure(res, message);
     })
       .catch(error => ResponseService.exception(res, error));
   }

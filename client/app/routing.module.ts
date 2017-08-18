@@ -5,7 +5,6 @@ import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
 
 import { AppComponent } from './app.component';
-import { CatsComponent } from './cats/cats.component';
 
 import { AboutComponent } from './about/about.component';
 import { AccountComponent } from './account/account.component';
@@ -45,7 +44,6 @@ const routes: Routes = [
   { path: 'partners', component: PartnersComponent },
   { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'cats', component: CatsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'resetpassword', component: ResetPasswordComponent },
   { path: 'resetpassword/:passcode', component: ResetPasswordComponent },
