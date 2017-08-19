@@ -165,7 +165,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
       .then(() => {
         ResponseService.success(res, {
           success: true,
-          message: 'A new passcode sent to ' + user.email + '.',
+          message: 'A new passcode sent to ' + user.email + '.'
         }, 201);
       });
   }

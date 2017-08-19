@@ -57,7 +57,7 @@ export default function UserController(bcrypt, jwt, models, ResponseService, Sen
     const user = makeUser(req.body);
 
     User.destroy(user)
-      .then(result => ResponseService.success(res, 'User deleted', 204))
+      .then(() => ResponseService.success(res, 'User deleted', 204))
       .catch(error => ResponseService.exception(res, error));
   }
 
