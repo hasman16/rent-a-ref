@@ -2591,6 +2591,277 @@
 			]
 		},
 		{
+			"name": "People as ref1",
+			"description": "Unit tests for people endpoint.",
+			"item": [
+				{
+					"name": "login as ref1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 201;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9\\-_]+\\.[a-z0-9\\-_]+\\.[a-z0-9\\-_]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"var user = data.user;",
+									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
+									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(user.can_organize);",
+									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
+									"",
+									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"postman.setGlobalVariable(\"userId\", data.user.id);",
+									"postman.setGlobalVariable(\"personId\", data.user.person_id);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "ref1@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "referee1",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/people",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 403'] = responseCode.code === 403;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === false;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Permission Violation\";",
+									"tests['Doesnot return token'] = !responseBody.has('token');",
+									"tests['Expect token to be undefined'] = data.token === undefined;",
+									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
+									"tests['Expect accessLevel is undefined'] = data.accessLevel === undefined;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/people",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/people/person_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === true;",
+									"tests['Returns a element data'] = responseBody.has('data');",
+									"tests['Returns data'] = data.data instanceof Array === true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/people/{{personId}}",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/people/person_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === true;",
+									"tests['Returns a element data'] = responseBody.has('data');",
+									"tests['Returns data'] = data.data instanceof Array === true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/people/{{personId}}",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstname",
+									"value": "Harold",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "LLoyd",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/people/person_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success is false'] = data.success === true;",
+									"tests['Returns a element data'] = responseBody.has('data');",
+									"tests['Returns data'] = data.data instanceof Array === true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/people/{{personId}}",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Phones as ref1",
 			"description": "Unit tests for phone CRUD endpoints for a user. The getAll call should fail, this should only work for admins.",
 			"item": [
