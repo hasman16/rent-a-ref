@@ -1,6 +1,6 @@
 export default function PersonController(models, ResponseService) {
   const Person = models.Person;
-  const attributes = ['id', 'firstname', 'middlenames', 'lastname', 'sex'];
+  const attributes = ['id', 'firstname', 'middlenames', 'lastname'];
 
   // Get all
   function getAll(req, res) {
@@ -32,7 +32,7 @@ export default function PersonController(models, ResponseService) {
   }
 
   function create(req, res) {
-    const aPerson = makePerson(req.body);
+    const aPerson =  ResponseService.makeObject(req);
     Person.create(aPerson)
       .then(newPerson => {
         ResponseService.success(res, newPerson, 201);
@@ -41,7 +41,7 @@ export default function PersonController(models, ResponseService) {
   }
 
   function update(req, res) {
-    const aPerson = makePerson(req.body);
+    const aPerson =  ResponseService.makeObject(req);
     Person.update(aPerson, {
       where: {
         id: req.params.person_id
@@ -53,7 +53,11 @@ export default function PersonController(models, ResponseService) {
 
   function deleteOne(req, res) {
     const person = makePerson(req.body);
-    Person.destroy(person)
+    Person.destroy({
+      where:{
+        id: req.params.person_id
+      }
+    })
       .then(result => ResponseService.success(res, 'Person deleted', 204))
       .catch(error => ResponseService.exception(res, error));
   }

@@ -9,7 +9,7 @@ export default function personRoutes(setter, personCtrl) {
   router.route('/people').get(authentication, isAdmin, personCtrl.getAll);
 
   router.route('/people/:person_id').get(authentication, personCtrl.getOne);
-  router.route('/people/:person_id').put(authentication, isUserOrAdmin, personCtrl.update);
-  router.route('/people/:person_id').patch(authentication, isUserOrAdmin, personCtrl.update);
+  router.route('/people/:person_id').put(authentication, personCtrl.update);
+  router.route('/people/:person_id').patch(authentication, personCtrl.update);
   router.route('/people/:person_id').delete(authentication, isAdmin, personCtrl.deleteOne);
 }
