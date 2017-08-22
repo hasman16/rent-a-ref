@@ -125,6 +125,35 @@ Payload:
 }
 
 
+Test:Blog as ref
+POST: /api/login
+Payload:
+{
+	"email": "admin1@rentaref.com",
+	"password": "admin1"
+}
+
+GET: /api/posts
+
+GET: /api/users/:userId/posts
+
+POST: /api/posts
+Payload:
+{
+	"content": "Crazy ramblings of a lunatic."
+}
+
+GET: /api/users/:userId/posts
+
+PUT: /api/users/:userId/posts/:postId
+Payload:
+{
+	"content": "Mary had a little lamb."
+}
+
+GET: /api/posts
+
+
 Test:Organizations as Admin1
 POST: /api/login
 Payload:
@@ -207,6 +236,28 @@ Payload:
 	"state": "CA",
 	"zip": "92866"
 }
+
+
+Test:People as ref1
+POST: /api/login
+Payload:
+{
+	"email": "ref1@rentaref.com",
+	"password": "referee1"
+}
+
+GET: /api/people
+
+GET: /api/people/:personId
+
+PUT: /api/people/:personId
+Payload:
+{
+	"firstname": "Harold",
+	"lastname": "LLoyd"
+}
+
+GET: /api/people/:personId
 
 
 Test:Phones as ref1

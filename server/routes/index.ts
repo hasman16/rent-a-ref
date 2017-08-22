@@ -66,7 +66,7 @@ export default function setRoutes(app, models) {
   const phoneCtrl = phoneController(models, responseService);
   const sportCtrl = sportController(models, responseService);
 
-  const userCtrl = userController(bcrypt, jwt, models, responseService, SendGridService);
+  const userCtrl = userController(models, responseService, SendGridService);
   const loginCtrl = loginController(bcrypt, jwt, models, responseService, SendGridService);
   const passwordCtrl = passwordController(bcrypt, jwt, models, responseService, SendGridService);
   const registerCtrl = registerController(bcrypt, jwt, models, responseService, SendGridService);

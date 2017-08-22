@@ -23,8 +23,9 @@ export default function userRoutes(setter, ctrls) {
   router.route('/forgotpassword').post(passwordCtrl.forgotpassword);
   router.route('/resetpassword').post(passwordCtrl.resetpassword);
 
-  router.route('/users/:user_id').get(authentication, isUserOrAdmin, userCtrl.getOne);
-  router.route('/users/:user_id').put(authentication, isUserOrAdmin, userCtrl.update);
-  router.route('/users/:user_id').patch(authentication, isUserOrAdmin, userCtrl.update);
-  router.route('/users/:user_id').delete(authentication, isUserOrAdmin, userCtrl.deleteOne);
+  router.use('/users/:user_id', authentication, isUserOrAdmin);
+  router.route('/users/:user_id').get(userCtrl.getOne);
+  router.route('/users/:user_id').put(userCtrl.update);
+  router.route('/users/:user_id').patch(userCtrl.update);
+  router.route('/users/:user_id').delete(userCtrl.deleteOne);
 }

@@ -44,7 +44,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
   }
 
   function generatePassword(res, user, newUser) {
-    return bcrypt.hash(user.password1, 10)
+    return bcrypt.hash(user.password1, 12)
       .then(password => {
         if (user.password1 === user.password2) {
           return unlockUser(newUser.id, password)
@@ -148,7 +148,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
     content += '\n\n Or you can copy the link below to launch the reset password page'
     content += '\n\n http://localhost:4200/reset?passcode=' + passcode;
 
-    bcrypt.hash(passcode, 10)
+    bcrypt.hash(passcode, 12)
       .then(newPasscode => {
         return Lock.update({
           passcode: newPasscode,
@@ -170,7 +170,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
       .then(() => {
         ResponseService.success(res, {
           success: true,
-          message: 'A new passcode sent to ' + user.email + '.',
+          message: 'A new passcode sent to ' + user.email + '.'
         }, 201);
       });
   }

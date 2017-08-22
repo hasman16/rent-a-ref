@@ -3,15 +3,8 @@ export default function BlogController(models, ResponseService) {
   const Comment = models.Comment;
   const User = models.User;
 
-
-
   function getAllPosts(req, res) {
-    let clauses = {
-      include: [{
-        model: Comment
-      }]
-    };
-    clauses = ResponseService.limitOffset(clauses, req);
+    const clauses = ResponseService.limitOffset({}, req);
 
     Post.findAll(clauses)
       .then(results => ResponseService.successCollection(res, results))
@@ -19,21 +12,22 @@ export default function BlogController(models, ResponseService) {
   }
 
   function getPostsByUser(req, res) {
-    let clauses = {
+    let clauses = ResponseService.limitOffset({}, req);
+    let mainClauses = {
       where: {
         id: req.params.user_id
       },
-      attributes: ['email', 'status'],
+      attributes: ['id', 'email', 'status'],
       include: [{
         model: Post,
-        include: [{
-          model: Comment
-        }]
+        limit: clauses.limit,
+        offset: clauses.offset,
+        order: clauses.order
       }]
     };
-    clauses = ResponseService.limitOffset(clauses, req);
+    console.log('getPostsByUser');
 
-    User.findOne(clauses)
+    User.findOne(mainClauses)
       .then(result => ResponseService.success(res, result))
       .catch(error => ResponseService.exception(res, error));
   }
@@ -44,7 +38,10 @@ export default function BlogController(models, ResponseService) {
         id: req.params.post_id
       },
       include: [{
-        model: Comment
+        model: Comment,
+        limit: 10,
+        offset: 0,
+        order: 'ASC'
       }]
     })
       .then(results => ResponseService.success(res, results))

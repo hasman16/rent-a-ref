@@ -16,9 +16,12 @@ export default function addressRoutes(setter, addressCtrl) {
   router.route('/organizations/:organization_id/addresses/:address_id').patch(authentication, isOrgOwner, addressCtrl.updateByOrganization);
   router.route('/organizations/:organization_id/addresses/:address_id').delete(authentication, isOrgOwner, addressCtrl.deleteByOrganization);
 
-  router.route('/users/:user_id/addresses').post(authentication, isUserOrAdmin, addressCtrl.createByUser);
-  router.route('/users/:user_id/addresses').get(authentication, isUserOrAdmin, addressCtrl.getByUser);
-  router.route('/users/:user_id/addresses/:address_id').put(authentication, isUserOrAdmin, addressCtrl.updateByUser);
-  router.route('/users/:user_id/addresses/:address_id').patch(authentication, isUserOrAdmin, addressCtrl.updateByUser);
-  router.route('/users/:user_id/addresses/:address_id').delete(authentication, isAdmin, addressCtrl.deleteByUser);
+  router.use('/users/:user_id/addresses', authentication, isUserOrAdmin);
+  router.route('/users/:user_id/addresses').post(addressCtrl.createByUser);
+  router.route('/users/:user_id/addresses').get(addressCtrl.getByUser);
+
+  router.use('/users/:user_id/addresses/:address_id', authentication, isUserOrAdmin);
+  router.route('/users/:user_id/addresses/:address_id').put(addressCtrl.updateByUser);
+  router.route('/users/:user_id/addresses/:address_id').patch(addressCtrl.updateByUser);
+  router.route('/users/:user_id/addresses/:address_id').delete(isAdmin, addressCtrl.deleteByUser);
 }
