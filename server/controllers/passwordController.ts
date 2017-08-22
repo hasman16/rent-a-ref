@@ -44,7 +44,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
   }
 
   function generatePassword(res, user, newUser) {
-    return bcrypt.hash(user.password1, 10)
+    return bcrypt.hash(user.password1, 12)
       .then(password => {
         if (user.password1 === user.password2) {
           return unlockUser(newUser.id, password)
@@ -81,9 +81,9 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
         default:
           message = 'Could not change password.';
         }
-      } 
+      }
       ResponseService.failure(res, message);
-      
+
     })
       .catch(error => ResponseService.exception(res, error));
   }
@@ -126,7 +126,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
         } else {
           message = 'Could not reset password.';
         }
-      } 
+      }
         ResponseService.failure(res, message);
     })
       .catch(error => ResponseService.exception(res, error));
@@ -143,7 +143,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
     content += '\n\n '
     content += '\n\n http://localhost:4200/reset?passcode=' + passcode;
 
-    bcrypt.hash(passcode, 10)
+    bcrypt.hash(passcode, 12)
       .then(newPasscode => {
         return Lock.update({
           passcode: newPasscode,
@@ -192,7 +192,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
         } else {
           message = 'Could not generate passcode.';
         }
-      } 
+      }
         ResponseService.failure(res, message);
     })
       .catch(error => ResponseService.exception(res, error));

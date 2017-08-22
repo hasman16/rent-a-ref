@@ -1,6 +1,5 @@
-import * as randomstring from 'randomstring';
 
-export default function UserController(bcrypt, jwt, models, ResponseService, SendGridService) {
+export default function UserController(models, ResponseService, SendGridService) {
   const User = models.User;
   const attributes = ['id', 'email', 'authorization', 'can_organize', 'can_referee', 'status'];
 

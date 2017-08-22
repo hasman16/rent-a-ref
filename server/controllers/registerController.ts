@@ -103,7 +103,7 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
         if (userInDb) {
           ResponseService.failure(res, 'A user with that email address already exists.');
         } else {
-          return bcrypt.hash(aUser.password, 10)
+          return bcrypt.hash(aUser.password, 12)
             .then(password => {
               return createUserPerson(req, res, aUser, password);
             });

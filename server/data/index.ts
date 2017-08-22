@@ -165,6 +165,7 @@ function insertPeople(User, Person) {
     return Person.create(person);
   }
 }
+
 function insertLock(user, password, models) {
   const Lock = models.Lock;
 
@@ -175,6 +176,7 @@ function insertLock(user, password, models) {
     user_id: user.id
   })
 }
+
 function insertUser(models) {
   const User = models.User;
   const Person = models.Person;

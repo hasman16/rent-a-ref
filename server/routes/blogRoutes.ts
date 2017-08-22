@@ -14,7 +14,7 @@ export default function blogRoutes(setter, blogCtrl) {
   router.route('/posts/:post_id').patch(authentication, isUserOrAdmin, blogCtrl.updatePost);
   router.route('/posts/:post_id').delete(authentication, isAdmin, blogCtrl.deletePost);
 
-  router.route('/posts/:post_id/comment').post(authentication, isUserOrAdmin, blogCtrl.createComment);
+  router.route('/posts/:post_id/comment').post(authentication, blogCtrl.createComment);
   router.route('/comments/:comment_id').put(authentication, isAdmin, blogCtrl.updateComment);
   router.route('/comments/:comment_id').patch(authentication, isAdmin, blogCtrl.updateComment);
   router.route('/comments/:comment_id').delete(authentication, isAdmin, blogCtrl.deleteComment);

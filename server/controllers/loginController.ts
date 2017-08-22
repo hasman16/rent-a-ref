@@ -49,7 +49,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
         let updatePromise;
 
         if (lock.attempts >= 5) {
-          updatePromise = bcrypt.hash(lock.passcode, 10)
+          updatePromise = bcrypt.hash(lock.passcode, 12)
             .then(passcode => {
               lock.passcode = passcode;
               return doUpdate(lock);
@@ -116,8 +116,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
     const lock = newUser.lock;
 
     return bcrypt.compare(user.password, lock.password)
-      .then(result => {
-        console.log('comparePassword:', result)
+    .then((result) =>{
         if (result) {
           const person = newUser.person;
           const user = {
@@ -130,11 +129,11 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
             can_organize: newUser.can_organize,
             status: newUser.status
           };
-          console.log('ok got token');
+
           const token = jwt.sign(user, process.env.SECRET_TOKEN, {
             expiresIn: 1440 * 60
           });
-          console.log('unlockUser:')
+
           return updateLock(user.id, function() {
             return {
               attempts: 0,
@@ -172,7 +171,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
       email: req.body.email,
       password: req.body.password
     };
-    console.log('do login:', user);
+
     User.findOne({
       where: { email: user.email },
       include: [{
@@ -181,11 +180,8 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
           model: Lock
         }]
     }).then(function(newUser) {
-      console.log('newUser')
       if (newUser) {
-        console.log('got newUser')
         if (newUser.status === 'active') {
-          console.log('user is active')
           return comparePassword(res, user, newUser);
         } else {
           return userStatus(res, newUser);
