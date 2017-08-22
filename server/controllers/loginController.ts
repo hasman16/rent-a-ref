@@ -123,6 +123,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
             id: newUser.id,
             email: newUser.email,
             accessLevel: newUser.authorization,
+            person_id: person.id,
             firstname: person.firstname,
             lastname: person.lastname,
             can_referee: newUser.can_referee,
