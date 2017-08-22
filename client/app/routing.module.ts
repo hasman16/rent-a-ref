@@ -31,6 +31,7 @@ import { StandbyComponent } from './account/profile/standby/standby.component';
 import { SuspendedComponent } from './account/profile/suspended/suspended.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
+import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -51,15 +52,15 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'passwordreset', component: PasswordresetComponent },
   { path: 'reset', component: ResetComponent },
-  { path: 'account', component: AccountComponent, canActivate: [AuthGuardLogin] },
-  { path: 'user/:id/account', component: AccountComponent, canActivate: [AuthGuardLogin] },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'edit-profile', component: EditProfileComponent },
-  { path: 'user/:id/edit-profile', component: EditProfileComponent },
-  { path: 'user/:id/standby', component: StandbyComponent },
-  { path: 'user/:id/suspended', component: SuspendedComponent },
-  { path: 'user/:id/deactivated', component: DeactivatedComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin] },
+  // { path: 'account', component: AccountComponent, canActivate: [AuthGuardLogin] },
+  { path: 'account/:id', component: AccountComponent, canActivate: [AuthGuardLogin] },
+  { path: 'account/profile/:id', component: ProfileComponent, canDeactivate: [CanDeactivateGuardService] },
+  // { path: 'edit-profile', component: EditProfileComponent, canActivate: [AuthGuardAdmin] },
+  { path: 'account/profile/edit-profile/:id', component: EditProfileComponent },
+  { path: 'account/standby/:id', component: StandbyComponent },
+  { path: 'account/suspended/:id', component: SuspendedComponent },
+  { path: 'account/deactivated/:id', component: DeactivatedComponent },
+  { path: 'account/admin/:id', component: AdminComponent, canActivate: [AuthGuardAdmin], canDeactivate: [CanDeactivateGuardService]},
   { path: 'notfound', component: NotFoundComponent },
   { path: '**', redirectTo: '/notfound' },
 ];

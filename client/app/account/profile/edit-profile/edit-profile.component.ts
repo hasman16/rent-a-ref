@@ -18,28 +18,29 @@ import * as moment from 'moment';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
-/*
-  public dt: Date = new Date();
-  public minDate: Date = void 0;
-  public events: any[];
-  public tomorrow: Date;
-  public afterTomorrow: Date;
-  public dateDisabled: { date: Date, mode: string }[];
-  public formats: string[] = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY',
-    'shortDate'];
-  public format: string = this.formats[0];
-  public dateOptions: any = {
-    formatYear: 'YY',
-    startingDay: 1
-  };
-  private opened = false;
-*/
+  /*
+    public dt: Date = new Date();
+    public minDate: Date = void 0;
+    public events: any[];
+    public tomorrow: Date;
+    public afterTomorrow: Date;
+    public dateDisabled: { date: Date, mode: string }[];
+    public formats: string[] = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY',
+      'shortDate'];
+    public format: string = this.formats[0];
+    public dateOptions: any = {
+      formatYear: 'YY',
+      startingDay: 1
+    };
+    private opened = false;
+  */
   paypalFlag = false;
   checkFlag = false;
   ccFlag = false;
   paypal = '';
-
+  data = {};
   user = {};
+  address = {id: '', line1: '', line2: '', city: '', state: '', zip: ''};
   isLoading = true;
   model;
   constructor(private auth: AuthService,
@@ -54,56 +55,56 @@ export class EditProfileComponent implements OnInit {
       { date: this.tomorrow, status: 'full' },
       { date: this.afterTomorrow, status: 'partially' }
     ];*/
-/*
-    $(function () {
-      const bindDatePicker = function () {
-        $("#datetimepicker1").datetimepicker({
-          format: 'YYYY-MM-DD',
-          icons: {
-            time: 'fa fa-clock-o',
-            date: 'fa fa-calendar',
-            up: 'fa fa-arrow-up',
-            down: 'fa fa-arrow-down'
+    /*
+        $(function () {
+          const bindDatePicker = function () {
+            $("#datetimepicker1").datetimepicker({
+              format: 'YYYY-MM-DD',
+              icons: {
+                time: 'fa fa-clock-o',
+                date: 'fa fa-calendar',
+                up: 'fa fa-arrow-up',
+                down: 'fa fa-arrow-down'
+              }
+            }).find('input:first').on('blur', function () {
+              console.log('Calendar test');
+              // check if the date is correct. We can accept dd-mm-yyyy and yyyy-mm-dd.
+              // update the format if it's yyyy-mm-dd
+              let date: any = parseDate($(this).val());
+
+              if (!isValidDate(date, '')) {
+                // create date based on momentjs (we have that)
+                date = moment().format('YYYY-MM-DD');
+              }
+
+              $(this).val(date);
+              });
+
           }
-        }).find('input:first').on('blur', function () {
-          console.log('Calendar test');
-          // check if the date is correct. We can accept dd-mm-yyyy and yyyy-mm-dd.
-          // update the format if it's yyyy-mm-dd
-          let date: any = parseDate($(this).val());
 
-          if (!isValidDate(date, '')) {
-            // create date based on momentjs (we have that)
-            date = moment().format('YYYY-MM-DD');
+          const isValidDate = function (value, format) {
+            format = format || false;
+            // lets parse the date to the best of our knowledge
+            if (format) {
+              value = parseDate(value);
+            }
+
+            const timestamp = Date.parse(value);
+
+            return isNaN(timestamp) === false;
           }
 
-          $(this).val(date);
-          });
+          const parseDate = function (value) {
+            const m = value.match(/^(\d{1,2})(\/|-)?(\d{1,2})(\/|-)?(\d{4})$/);
+            if (m) {
+              value = m[5] + '-' + ('00' + m[3]).slice(-2) + '-' + ('00' + m[1]).slice(-2);
+            }
+            return value;
+          }
 
-      }
-
-      const isValidDate = function (value, format) {
-        format = format || false;
-        // lets parse the date to the best of our knowledge
-        if (format) {
-          value = parseDate(value);
-        }
-
-        const timestamp = Date.parse(value);
-
-        return isNaN(timestamp) === false;
-      }
-
-      const parseDate = function (value) {
-        const m = value.match(/^(\d{1,2})(\/|-)?(\d{1,2})(\/|-)?(\d{4})$/);
-        if (m) {
-          value = m[5] + '-' + ('00' + m[3]).slice(-2) + '-' + ('00' + m[1]).slice(-2);
-        }
-        return value;
-      }
-
-      bindDatePicker();
-    });*/
-    }
+          bindDatePicker();
+        });*/
+  }
   /*calendarLoad() {
     $('#datepicker').datepicker({
       uiLibrary: 'bootstrap4',
@@ -112,17 +113,85 @@ export class EditProfileComponent implements OnInit {
     console.log('Calender test');
   }*/
   ngOnInit() {
+    console.log('Id: ' + this.auth.currentUser.id);
     this.getUser();
+    this.getPerson();
+    this.getPersonPhone();
+    this.getUserAddress();
+
   }
 
   getUser() {
     this.userService.getUser(this.auth.currentUser.id).subscribe(
-      data => this.user = data,
+      // data => this.user = data,
+      res => {
+        this.data = res;
+        // this.toast.setMessage(res.message, 'success');
+        console.log('Response data: ' + JSON.stringify(res));
+        console.log('status: ' + res.id + ' Message: ' + res.firstname);
+      },
       error => console.log('Get user error: ', error),
       () => this.isLoading = false
     );
+    console.log('data: ' + JSON.stringify(this.data));
   }
 
+  getPerson() {
+    this.userService.getPerson(this.auth.currentUser.id).subscribe(
+      // data => this.user = data,
+      res => {
+        // this.toast.setMessage(res.message, 'success');
+        console.log('Response Person: ' + JSON.stringify(res));
+        console.log('status person: ' + res.id + ' Message: ' + res.firstname);
+      },
+      error => console.log('Get Person error: ', error),
+      () => this.isLoading = false
+    );
+    // console.log('data: ' + JSON.stringify(this.data));
+  }
+
+
+  getPersonPhone() {
+    this.userService.getUserPhone(this.auth.currentUser.id).subscribe(
+      // data => this.user = data,
+      res => {
+        // this.toast.setMessage(res.message, 'success');
+        console.log('Response getUserPhone: ' + JSON.stringify(res));
+        console.log('status getUserPhone: ' + res.id + ' Message: ' + res.phone);
+      },
+      error => console.log('Get getUserPhone error: ', error),
+      () => this.isLoading = false
+    );
+    // console.log('data: ' + JSON.stringify(this.data));
+  }
+
+  getUserAddress() {
+    this.userService.getUserAddress(this.auth.currentUser.id).subscribe(
+      // data => this.user = data,
+      res => {
+        this.address = res.addresses;
+        // this.toast.setMessage(res.message, 'success');
+        console.log('Response getUserAddress: ' + JSON.stringify(res));
+        console.log('status getUserAddress: ' + res.id + ' Message: ' + res.addresses.line1);
+      },
+      error => console.log('Get getUserAddress error: ', error),
+      () => this.isLoading = false
+    );
+    // console.log('data: ' + JSON.stringify(this.data));
+  }
+
+  getUserAddress_perID() {
+    this.userService.getUserAddress_id(this.auth.currentUser.id, this.address.id).subscribe(
+      // data => this.user = data,
+      res => {
+        // this.toast.setMessage(res.message, 'success');
+        console.log('Response getUserAddress_ID: ' + JSON.stringify(res));
+        console.log('status getUserAddress_ID: ' + res.id + ' Message: ' + res.addresses.line1);
+      },
+      error => console.log('Get getUserAddress_ID error: ', error),
+      () => this.isLoading = false
+    );
+}
   save(user) {
     this.userService.editUser(user).subscribe(
       res => this.toast.setMessage('account settings saved!', 'success'),

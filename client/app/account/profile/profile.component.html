@@ -1,9 +1,14 @@
 <div class="card col-sm-12">
   <div class="card">
-  <h4 class="elegantshd bigFont">Profile</h4>
+  <div class="card" *ngIf="!isLoading">
+    <h4 class="card-header elegantshd bigFont">User's Profile</h4>
+    <app-loading [condition]="isLoading"></app-loading>
   <div class="card-block">
     <blockquote>
-      <p>User's profile</p>
+      <div class="list-group">
+        <span class="list-group-item active"><h1>User ID: {{data.id}}</h1></span>
+        
+      </div>
     </blockquote>
   </div>
   </div>

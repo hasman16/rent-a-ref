@@ -76,6 +76,14 @@ const users = [{
     can_referee: 'active',
     can_organize: 'no'
   },
+  {
+    email: 'ahmadou.mbouo@dstinc.com',
+    password: 'passcode',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'pending',
+    can_organize: 'no'
+  }
 ];
 
 const people = [
@@ -131,6 +139,12 @@ const people = [
     firstname: 'Peter',
     lastname: 'Perfect',
     email: 'pete@mailinator.com',
+    gender: 'm'
+  },
+  {
+    firstname: 'Ahmadou',
+    lastname: 'Ndoung',
+    email: 'ahmadou.mbouo@dstinc.com',
     gender: 'm'
   }
 ];

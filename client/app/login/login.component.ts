@@ -111,51 +111,63 @@ export class LoginComponent implements OnInit {
         switch (res.user.can_organize + ' ' + res.user.status) {
           case ('pending standby'):
             // The organizer has not yet completed the profile
-            this.router.navigate(['user/' + user.id + '/edit-profile']);
+            // console.log('organizer 1:', user.can_organize + ' ' + user.status);
+            this.router.navigate(['account/profile/edit-profile/' + user.id]);
             break;
           case ('yes active'):
             // The organizer is active and ready to go
-            this.router.navigate(['user/' + user.id + '/account']);
+            // console.log('organizer 2:', user.can_organize + ' ' + user.status);
+            this.router.navigate(['account/' + user.id]);
             break;
           case ('yes locked'):
             // The Organizer account is suspended due to failed login attempts
             // Kill his session
             // his.loggedIn = false;
-            this.router.navigate(['user/' + user.id + '/suspended']);
+            // console.log('organizer 3:', user.can_organize + ' ' + user.status);
+            this.router.navigate(['account/suspended/' + user.id]);
             break;
           case ('no banned'):
             // The Organizer account is disabled by the admin
-            this.router.navigate(['user/' + user.id + '/deactivated']);
+            // console.log('organizer 4:', user.can_organize + ' ' + user.status);
+            this.router.navigate(['account/deactivated/' + user.id]);
             break;
           default:
-            this.router.navigate(['user/' + res.user.id + '/account']);
+            // console.log('organizer 5:', user.can_organize + ' ' + user.status);
+            // this.router.navigate(['user/' + res.user.id + '/account']);
             break;
         }
 
         // Referee
+        console.log('Referee :', user.can_referee + ' ' + user.status);
         switch (user.can_referee + ' ' + user.status) {
           case ('pending active'):
             // The referee account has been activated by the admin. Now he needs to complete his profile
-            this.router.navigate(['user/' + user.id + '/edit-profile']);
+            // console.log('Referee 1:', user.can_referee + ' ' + user.status + ' user.id: ' + user.id);
+            this.router.navigate(['account/profile/edit-profile/' + user.id]);
             break;
           case ('pending in_progress'):
             // The referee account has not yet been activated by the admin. Still in Standby
-            this.router.navigate(['user/' + user.id + '/standby']);
+            // console.log('Referee 2:', user.can_referee + ' ' + user.status);
+            this.router.navigate(['account/standby/' + user.id]);
             break;
           case ('yes active'):
             // The referee is active and ready to go
-            this.router.navigate(['user/' + user.id + '/account']);
+            // console.log('Referee 3:', user.can_referee + ' ' + user.status);
+            this.router.navigate(['account/' + user.id ]);
             break;
           case ('yes locked'):
             // The referee account is suspended due to failed login attempts
-            this.router.navigate(['user/' + user.id + '/suspended']);
+            // console.log('Referee 4:', user.can_referee + ' ' + user.status);
+            this.router.navigate(['account/suspended/' + user.id ]);
             break;
           case ('no banned'):
             // The referee account is disabled by the admin
-            this.router.navigate(['user/' + user.id + '/deactivated']);
+            // console.log('Referee 5:', user.can_referee + ' ' + user.status);
+            this.router.navigate(['account/deactivated/' + user.id]);
             break;
           default:
-            this.router.navigate(['user/' + res.user.id + '/account']);
+            // console.log('Referee 6:', user.can_referee + ' ' + user.status);
+            this.router.navigate(['account/' + res.user.id ]);
             break;
         }
       },

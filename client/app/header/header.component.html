@@ -24,10 +24,10 @@
         <i class="fa fa-user-plus"></i> Register
       </a>
 
-    <a routerLink="/account" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
+    <a [routerLink]="['/account', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
         <i class="fa fa-user"></i> Account ({{auth.currentUser.email}})
       </a>
-    <a routerLink="/admin" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin">
+    <a [routerLink]="['/account/admin', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin">
         <i class="fa fa-lock"></i> Admin
       </a>
     <a routerLink="/logout" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
@@ -38,10 +38,10 @@
   </div>  
   <br>
   <span class="nav navbar-nav" style="float:right">
-<a routerLink="/profile" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
+<a [routerLink]="['/account/profile', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
         <i class="fa fa-user"></i> Profile
       </a>
-      <a routerLink="/edit-profile" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
+      <a [routerLink]="['/account/profile/edit-profile', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
         <i class="fa fa-pencil-square-o"></i> Edit Profile
       </a>
     </span>

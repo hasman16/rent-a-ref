@@ -57,4 +57,28 @@ export class UserService {
 
   }
 
+  getPerson(user_id: any): Observable<any> {
+
+    return this.http.get(`/api/people/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
+  }
+
+  getUserAddress(user_id: any): Observable<any> {
+
+    return this.http.get(`/api/users/${user_id}/addresses`, this.tokenService.getOptions()).map(res => res.json());
+  }
+
+  getUserAddress_id(user_id: any, addressId: any): Observable<any> {
+
+    return this.http.get(`/api/users/${user_id}/addresses/${addressId}`, this.tokenService.getOptions()).map(res => res.json());
+  }
+
+  getUserPhone(user_id: any): Observable<any> {
+
+    return this.http.get(`/api/users/${user_id}/phones`, this.tokenService.getOptions()).map(res => res.json());
+  }
+
+  getUserPhone_id(user_id: any, phoneId: any): Observable<any> {
+
+    return this.http.get(`/api/users/${user_id}/phones/${phoneId}`, this.tokenService.getOptions()).map(res => res.json());
+  }
 }

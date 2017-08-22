@@ -46,7 +46,7 @@ import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-
 /* Misc. */
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ResetComponent } from './account/profile/reset/reset.component';
-
+import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 // import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
 
 // import { Ng2GoogleRecaptchaModule } from 'ng2-google-recaptcha';
@@ -107,7 +107,8 @@ import { ResetComponent } from './account/profile/reset/reset.component';
     AuthGuardAdmin,
     TokenService,
     UserService,
-    CookieService
+    CookieService,
+    CanDeactivateGuardService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   // Add bootstrap

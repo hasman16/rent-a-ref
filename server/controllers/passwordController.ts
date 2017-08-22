@@ -70,20 +70,22 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
     }).then(function(newUser) {
       let message = 'Unknown user.';
       if (newUser) {
-        switch(newUser.status){
-        case 'active':
-          return generatePassword(res, user, newUser);
+        switch (newUser.status) {
+          case 'active':
+            return generatePassword(res, user, newUser);
         case 'locked':
           message = 'Account is locked check your mail.';
+          break;
         case 'suspended':
           message = 'Account has been suspended by Admin.';
           break;
         default:
           message = 'Could not change password.';
+          break;
         }
-      } 
+      }
       ResponseService.failure(res, message);
-      
+
     })
       .catch(error => ResponseService.exception(res, error));
   }
@@ -126,7 +128,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
         } else {
           message = 'Could not reset password.';
         }
-      } 
+      }
         ResponseService.failure(res, message);
     })
       .catch(error => ResponseService.exception(res, error));
@@ -134,13 +136,16 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
 
   function sendPasscode(res, user) {
     const passcode = randomstring.generate();
-    let content = 'Use the passcode to reset your password.'
+    let content = 'You are receiving this email because someone (presumably you), reported a lost password at http://www.ref-a-ref.com.'
+    content += '\n\n If it wasn\'t you, please ignore this email.'
+    content += '\n\n If it was you, however, click the link below to reset your '
+    content += '\n\n password.You can also copy and paste the link into your browser address bar.'
+    content += '\n\n '
+
+    content += 'Use the passcode to reset your password.'
     content += '\n\n ' + passcode
     content += '\n\n '
-    content += '\n\n '
     content += '\n\n Or you can copy the link below to launch the reset password page'
-    content += '\n\n '
-    content += '\n\n '
     content += '\n\n http://localhost:4200/reset?passcode=' + passcode;
 
     bcrypt.hash(passcode, 10)
@@ -157,7 +162,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
       .then(() => {
         return SendGridService.sendEmail({
           to: user.email,
-          from: 'admin@rentaref.com',
+          from: 'do-not-reply@rentaref.com',
           subject: 'Reset Password.',
           content: content
         });
@@ -192,7 +197,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
         } else {
           message = 'Could not generate passcode.';
         }
-      } 
+      }
         ResponseService.failure(res, message);
     })
       .catch(error => ResponseService.exception(res, error));

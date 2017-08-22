@@ -8,10 +8,10 @@
   <app-toast [message]="toast.message"></app-toast>      
       <div class="card-block">
         <form #accountForm="ngForm" (ngSubmit)="save(user)">
-          <div><h1>User ID: {{user.id}}</h1></div>
+          <div><h1>User ID: {{data.id}}</h1></div>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input class="form-control" type="text" name="firstname" [(ngModel)]="user.firstname" placeholder="Firstname" required>
+            <input class="form-control" type="text" name="firstname" [(ngModel)]="user.firstname" placeholder="Firstname" required>{{user.firstname}}
           </div>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -21,7 +21,7 @@
           <label for="state" class="col-sm-2 control-label">Your credentials</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-            <input class="form-control" type="email" name="email" [(ngModel)]="user.email" placeholder="Email" required>
+            <input class="form-control" type="email" name="email" [(ngModel)]="data.email" placeholder="Email" required>
           </div>
           <div class="input-group required-field-block">
             <span class="input-group-addon"><i class="fa fa-key"></i></span>
