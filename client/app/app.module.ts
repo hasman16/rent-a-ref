@@ -47,6 +47,7 @@ import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
+import { Routes, RouterModule } from '@angular/router';
 // import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
 
 // import { Ng2GoogleRecaptchaModule } from 'ng2-google-recaptcha';
@@ -56,6 +57,15 @@ import { CanDeactivateGuardService } from './services/can-deactivate-guard.servi
 // import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
 // import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'how-it-works', component: HowItWorksComponent },
+  { path: 'referee', component: RefereeComponent },
+  { path: 'career', component: CareersComponent },
+  { path: 'faq', component: FaqComponent },
+  { path: 'blog', component: BlogComponent },
+  { path: 'contact', component: ContactusComponent },
+];
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,6 +107,7 @@ import { CanDeactivateGuardService } from './services/can-deactivate-guard.servi
     BrowserModule,
     FormsModule,
     HttpModule,
+    RouterModule.forRoot(routes)
     // Ng2GoogleRecaptchaModule
 
     // Ng2GoogleChartsModule
