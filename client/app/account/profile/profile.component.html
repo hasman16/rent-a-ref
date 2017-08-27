@@ -1,15 +1,97 @@
+<div class="row">
+  
 <div class="card col-sm-12">
   <div class="card">
   <div class="card" *ngIf="!isLoading">
     <h4 class="card-header elegantshd bigFont">User's Profile</h4>
     <app-loading [condition]="isLoading"></app-loading>
   <div class="card-block">
-    <blockquote>
+    
+    <blockquote>     
+     
       <div class="list-group">
-        <span class="list-group-item active"><h1>User ID: {{data.id}}</h1></span>
+        <!-->can_organize":"active","can_referee":"active","status":"active"-->
+        <span class="list-group-item active">
+          <button type="button" class="btn btn-primary" disabled>User ID: {{data.id}}</button><button type="button" class="btn btn-success" disabled>Can Organize: {{data.can_organize}}</button>          
+        <button type="button" class="btn btn-warning" disabled>Can Referee: {{data.can_referee}}</button> <button type="button"
+          class="btn btn-danger" disabled>Status: {{data.status}}</button></span> 
+      </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="list-group">
+        <p class="list-group-item"><label>Firstname: </label><strong>{{person.firstname}}</strong></p> 
+        <p class="list-group-item"><label>Lastname: </label><strong>{{person.lastname}}</strong>
+        <span style="text-align: right" class="text-right">
+          <!--<a [routerLink]="['account/profile/edit-profile/', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
+        <i class="fa fa-pencil"></i>Edit</a>-->
+      <button class="btn btn-primary" type="submit" (click)="onEdit()">
+        <i class="fa fa-pencil"></i> Edit
+      </button>
+      </span>
+        </p>
+      </div>
+      <div class="list-group">
+        <span class="list-group-item danger"><h3>Credentials</h3></span>
+        <p class="list-group-item"><label>Email: </label><strong>{{data.email}}</strong></p>
+        <p class="list-group-item"><label>Password: </label><strong>***********</strong></p>
+      </div>
+      <div class="list-group">
         
+        <p class="list-group-item"><label>Gender: </label><strong> {{person.sex}}</strong></p>
+        <p class="list-group-item"><label>D.O.B: </label><strong> {{person.sex}}</strong></p>
+        <p class="list-group-item"><label>{{phone.description}} Phone: </label><strong>{{phone.number}}</strong></p>
+      </div>
+      <div class="list-group">
+
+        <p class="list-group-item"><label>Address: </label><strong> {{address.line1}}</strong></p>
+        <p class="list-group-item"><label>Address 1: </label><strong> {{address.line2}}</strong></p>
+        <p class="list-group-item"><label>City: </label><strong>{{address.city}}</strong></p>
+        <p class="list-group-item"><label>State: </label><strong>{{address.state}}</strong></p>
+        <p class="list-group-item"><label>ZIP code: </label><strong>{{address.zip}}</strong></p>
+      </div>
+      <span class="list-group-item active">Where available to referee?</span>
+      <div class="list-group">        
+        <p class="list-group-item"><label>City: </label><strong>{{available.city}}</strong></p>
+        <p class="list-group-item"><label>State: </label><strong>{{available.state}}</strong></p>
+        <p class="list-group-item"><label>ZIP code: </label><strong>{{available.zip}}</strong></p>
+      </div>
+      <span class="list-group-item active">Payment</span>
+      <div class="list-group">
+        <p><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input" [value]="paypalFlag" [(ngModel)]="paypalFlag" >
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Paypal </span> 
+  </label></p>
+
+        <p><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input" [value]="checkFlag" [(ngModel)]="checkFlag" >
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Check </span>
+  </label></p>
+
+        <p><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input" [value]="ccFlag" [(ngModel)]="ccFlag" >
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Credit Card </span>
+  </label></p>
+      </div>
+
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <!--Example 1-->
+        <!--<button class="btn btn-primary" (click)="onReload()">Reload Page</button>
+        <app-edit-server></app-edit-server>
+        <hr>
+        <app-server></app-server>-->
+
+        <!--Example 2-->
+        <router-outlet></router-outlet>
+
       </div>
     </blockquote>
   </div>
   </div>
 </div>
+
+
+
+  </div>

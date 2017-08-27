@@ -130,7 +130,7 @@ export class EditProfileComponent implements OnInit {
         console.log('Response data: ' + JSON.stringify(res));
         console.log('status: ' + res.id + ' Message: ' + res.firstname);
       },
-      error => console.log('Get user error: ', error),
+      error => this.auth.logout(),
       () => this.isLoading = false
     );
     console.log('data: ' + JSON.stringify(this.data));
