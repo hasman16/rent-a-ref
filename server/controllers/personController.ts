@@ -52,7 +52,6 @@ export default function PersonController(models, ResponseService) {
   }
 
   function deleteOne(req, res) {
-    const person = makePerson(req.body);
     Person.destroy({
       where:{
         id: req.params.person_id

@@ -59,10 +59,17 @@ export default function GameController(models, ResponseService) {
   }
 
   function deleteOne(req, res) {
-    const game = makeGame(req.body);
-    Game.destroy(game)
-      .then(result => ResponseService.success(res, 'Game deleted', 204))
-      .catch(error => ResponseService.exception(res, error));
+      const game_id = req.params.game_id;
+
+      function doDelete(game) {
+        return Game.destroy({
+          where: {
+            id: game.id
+          }
+        });
+      }
+
+      ResponseService.findObject(game_id, 'Game', res, doDelete, 204);
   }
 
   return {

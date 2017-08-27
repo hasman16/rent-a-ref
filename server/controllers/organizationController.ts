@@ -80,10 +80,17 @@ export default function OrganizationController(models, ResponseService) {
   }
 
   function deleteOne(req, res) {
-    const organization = new Object(req.body);
-    Organization.destroy(organization)
-      .then(result => ResponseService.success(res, 'Organization deleted', 204))
-      .catch(error => ResponseService.exception(res, error));
+      const organization_id = req.params.game_id;
+
+      function doDelete(organization) {
+        return Organization.destroy({
+          where: {
+            id: organization.id
+          }
+        });
+      }
+
+      ResponseService.findObject(organization_id, 'Organization', res, doDelete, 204);
   }
 
   return {
