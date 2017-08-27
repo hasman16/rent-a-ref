@@ -5,6 +5,7 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
   const Lock = models.Lock;
   const Person = models.Person;
   const Phone = models.Phone;
+  const Address = models.Address;
 
   function respondAndSendEmail(res, email) {
     ResponseService.success(res, {
@@ -112,7 +113,31 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
       .catch(error => ResponseService.exception(res, error));
   }
 
+  function getProfile(req, res) {
+    User.findOne({
+      where: {
+        id: req.params.user_id
+      },
+      include: [{
+        model: Person
+      }, {
+        model: Address,
+        through: {
+          attributes: []
+        }
+      },
+      {
+        model: Phone,
+        through: {
+          attributes: []
+        }
+      }]
+    }).then((result) => ResponseService.success(res, result, 200))
+      .catch(error => ResponseService.exception(res, error))
+  }
+
   return {
+    getProfile,
     registerUser
   }
 }

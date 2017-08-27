@@ -19,6 +19,10 @@ export default function userRoutes(setter, ctrls) {
   router.route('/users').post(registerCtrl.registerUser);
   router.route('/register').post(registerCtrl.registerUser);
 
+  router.use('/profile/:user_id', authentication, isUser);
+  router.route('/profile/:user_id').get(registerCtrl.getProfile);
+  //router.route('/profile/:user_id').get(authentication, isUser,registerCtrl.getProfile);
+
   router.route('/changepassword/:user_id').post(authentication, isUser, passwordCtrl.changepassword);
   router.route('/forgotpassword').post(passwordCtrl.forgotpassword);
   router.route('/resetpassword').post(passwordCtrl.resetpassword);
