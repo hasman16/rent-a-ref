@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserService {
 
-  constructor(private http: Http, private tokenService:TokenService) { }
+  constructor(private http: Http, private tokenService: TokenService) { }
 
 
   register(user): Observable<any> {

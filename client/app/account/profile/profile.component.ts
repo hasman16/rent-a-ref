@@ -5,7 +5,43 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+// import { ROUTER_PROVIDERS, RouteConfig} from 'angular2/router';
+import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
+import * as $ from 'jquery';
+import * as moment from 'moment';
+import { ToastComponent } from '../../shared/toast/toast.component';
+// import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
+// Start
+/*@Component({
+  selector: 'app-edit-profile',
+  templateUrl: '../../edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.scss']
+})
+export class EditProfileComponent {
+
+  paypalFlag = false;
+  checkFlag = false;
+  ccFlag = false;
+  paypal = '';
+  data = {};
+  user = {};
+  address = { id: '', line1: '', line2: '', city: '', state: '', zip: '' };
+  isLoading = true;
+  model;
+  abort = false;
+
+
+  constructor(private auth: AuthService,
+    public toast: ToastComponent,
+    private userService: UserService) {
+
+  }
+
+}
+*/
+
+// End
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -24,7 +60,10 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   available = { city: '', state: '', zip: '' };
   isLoading = true;
   allowEdit = false;
-  edit = 'account/profile/edit-profile/';
+  edit = 'account/profile';
+  id = this.auth.currentUser.id;
+  abort = false;
+  divPassword = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router, private auth: AuthService,
@@ -32,10 +71,12 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
 
   ngOnInit() {
     this.getUser();
-    this.getPerson();
-    this.getPersonPhone();
-    // this.getUserAddress();
-    this.getUserAddress_perID()
+    if (!this.abort) {
+      this.getPerson();
+      this.getPersonPhone();
+      // this.getUserAddress();
+      this.getUserAddress_perID();
+    }
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
@@ -59,8 +100,32 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
         console.log('Response data: ' + JSON.stringify(res));
         console.log('status: ' + res.id + ' Message: ' + res.firstname);
       },
-      error => this.auth.logout(),
-      () => this.isLoading = false
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
+          this.isLoading = false;
+          if (this.auth.loggedIn) {
+            console.log('Still loggedIn');
+          } else {
+            console.log('Session expired');
+            this.abort = true;
+            this.auth.logout();
+          }
+        } else {
+          console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
+          this.isLoading = false;
+          if (this.auth.loggedIn) {
+            console.log('Still loggedIn: ');
+          } else {
+            console.log('Session expired');
+            this.abort = true;
+            this.auth.logout();
+          }
+        }
+      }
+      // error => this.auth.logout(),
+      // () => this.isLoading = false
     );
     console.log('data: ' + JSON.stringify(this.data));
   }
@@ -125,6 +190,14 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   onEdit() {
-    this.router.navigate([this.edit, this.auth.currentUser.id], { relativeTo: this.route, queryParamsHandling: 'preserve' });
+    console.log('this.divPassword: ', this.divPassword);
+    this.route.queryParams
+      .subscribe(
+      (queryParams: Params) => {
+        this.divPassword = queryParams['divPassword'] === 'password' ? true : false;
+      }
+    );
+    console.log('this.divPassword 1: ', this.divPassword);
+    this.router.navigate(['edit-profile'], { relativeTo: this.route, queryParamsHandling: 'preserve' });
   }
 }

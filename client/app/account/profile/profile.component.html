@@ -5,16 +5,16 @@
   <div class="card" *ngIf="!isLoading">
     <h4 class="card-header elegantshd bigFont">User's Profile</h4>
     <app-loading [condition]="isLoading"></app-loading>
-  <div class="card-block">
+  <div class="card-block card-outline-primary">
     
     <blockquote>     
      
       <div class="list-group">
         <!-->can_organize":"active","can_referee":"active","status":"active"-->
         <span class="list-group-item active">
-          <button type="button" class="btn btn-primary" disabled>User ID: {{data.id}}</button><button type="button" class="btn btn-success" disabled>Can Organize: {{data.can_organize}}</button>          
-        <button type="button" class="btn btn-warning" disabled>Can Referee: {{data.can_referee}}</button> <button type="button"
-          class="btn btn-danger" disabled>Status: {{data.status}}</button></span> 
+          <button type="button" class="btn btn-primary" disabled>User ID: {{user.id}}</button><button type="button" class="btn btn-success" disabled>Can Organize: {{user.can_organize}}</button>          
+        <button type="button" class="btn btn-warning" disabled>Can Referee: {{user.can_referee}}</button> <button type="button"
+          class="btn btn-danger" disabled>Status: {{user.status}}</button></span> 
       </div>
           <div class="col-xs-12 col-sm-6">
             <div class="list-group">
@@ -23,15 +23,19 @@
         <span style="text-align: right" class="text-right">
           <!--<a [routerLink]="['account/profile/edit-profile/', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
         <i class="fa fa-pencil"></i>Edit</a>-->
-      <button class="btn btn-primary" type="submit" (click)="onEdit()">
+
+        <a [routerLink]="['edit-profile']" [queryParams]="{divPassword: auth.loggedIn===true ? 'password' : ''}" fragment="loading"
+          href="#" class="list-group-item">Edit</a>
+      <!--<button class="btn btn-primary" type="submit" (click)="onEdit()" [queryParams]="{divPassword='password'}" fragment="loading">
         <i class="fa fa-pencil"></i> Edit
-      </button>
+      </button>-->
       </span>
         </p>
       </div>
-      <div class="list-group">
-        <span class="list-group-item danger"><h3>Credentials</h3></span>
-        <p class="list-group-item"><label>Email: </label><strong>{{data.email}}</strong></p>
+      <div class="card card-outline-success">
+        <span class="card danger"><strong>Credentials           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divPassword: auth.loggedIn===true ? 'password' : ''}" fragment="loading"
+          href="#" >    Edit</a></span>
+        <p class="list-group-item"><label>Email: </label><strong>{{user.email}}</strong></p>
         <p class="list-group-item"><label>Password: </label><strong>***********</strong></p>
       </div>
       <div class="list-group">

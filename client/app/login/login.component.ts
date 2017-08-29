@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { AuthService } from '../services/auth.service';
 import { ToastComponent } from '../shared/toast/toast.component';
 import { CookieService } from 'ngx-cookie-service';
+import { HttpErrorResponse } from '@angular/common/http';
 import * as $ from 'jquery';
 import 'jquery-ui';
 
@@ -171,7 +172,28 @@ export class LoginComponent implements OnInit {
             break;
         }
       },
-      error => this.toast.setMessage('invalid email or password! ', 'danger')
+      // error => this.toast.setMessage('invalid email or password! ', 'danger')
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          // console.log('status Login: ' + err.status + ' Message: ' + err.message);
+          console.log('A client-side or network error occurred');
+          this.toast.setMessage('invalid email or password! ', 'danger');
+          // this.toast.setMessage('An error occurred:' + err.message, 'danger');
+          // this.toast.setMessage('Error Message: ' + err.error.message, 'danger');
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          // console.log(`Login Backend returned code ${err.status}, Error Message: ${err.statusText}, body was: ${err.message}`);
+          // console.log(`status:  ${err.success }, Message: ${err}`);
+          // this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
+          // this.toast.setMessage('Backend returned code: ' + err.status + ' Error Status: ' + err.statusText, 'danger');
+          console.log('The backend returned an unsuccessful response code');
+          this.toast.setMessage('invalid email or password! ', 'danger');
+
+          // this.toast.setMessage('Error Message: ' + err.error.message, 'danger');
+        }
+      }
     );
 
   }
