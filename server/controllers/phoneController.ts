@@ -143,9 +143,12 @@ export default function PhoneController(models, ResponseService) {
   }
 
   function deleteByUser(req, res) {
-    const aPhone = makePhone(req.body);
-    Phone.destroy(aPhone)
-      .then(result => ResponseService.success(res, 'Phone deleted'))
+    Phone.destroy({
+      where: {
+        id: req.params.phone_id
+      }
+    })
+      .then(result => ResponseService.success(res, 'Phone deleted',204))
       .catch(error => ResponseService.exception(res, error));
   }
 

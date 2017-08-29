@@ -12,6 +12,7 @@ import { AuthGuardAdmin } from './services/auth-guard-admin.service';
 import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthService } from './services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { StatesService} from './services/states.service';
 import { TokenService } from './services/token.service';
 import { UserService } from './services/user.service';
 
@@ -117,6 +118,7 @@ const routes: Routes = [
     AuthGuardLogin,
     AuthGuardAdmin,
     TokenService,
+    StatesService,
     UserService,
     CookieService,
     CanDeactivateGuardService

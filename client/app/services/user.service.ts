@@ -57,6 +57,10 @@ export class UserService {
 
   }
 
+  getProfile(user_id: any): Observable<any> {
+    return this.http.get(`/api/profile/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
+  }
+
   getPerson(user_id: any): Observable<any> {
 
     return this.http.get(`/api/people/${user_id}`, this.tokenService.getOptions()).map(res => res.json());

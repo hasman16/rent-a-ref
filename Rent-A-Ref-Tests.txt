@@ -528,3 +528,14 @@ Payload:
 	"email": "pete@mailinator.com",
 	"password": "reefer"
 }
+
+
+Test:Profile
+POST: /api/login
+Payload:
+{
+	"email": "ref1@rentaref.com",
+	"password": "referee1"
+}
+
+GET: /api/profile/:userId

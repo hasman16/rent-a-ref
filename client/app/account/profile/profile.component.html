@@ -1,10 +1,11 @@
 <div class="row">
-  
+
 <div class="card col-sm-12">
   <div class="card">
   <div class="card" *ngIf="!isLoading">
     <h4 class="card-header elegantshd bigFont">User's Profile</h4>
     <app-loading [condition]="isLoading"></app-loading>
+<<<<<<< HEAD
   <div class="card-block card-outline-primary">
     
     <blockquote>     
@@ -15,10 +16,22 @@
           <button type="button" class="btn btn-primary" disabled>User ID: {{user.id}}</button><button type="button" class="btn btn-success" disabled>Can Organize: {{user.can_organize}}</button>          
         <button type="button" class="btn btn-warning" disabled>Can Referee: {{user.can_referee}}</button> <button type="button"
           class="btn btn-danger" disabled>Status: {{user.status}}</button></span> 
+=======
+  <div class="card-block">
+
+    <blockquote>
+
+      <div class="list-group">
+        <!-->can_organize":"active","can_referee":"active","status":"active"-->
+        <span class="list-group-item active">
+          <button type="button" class="btn btn-primary" disabled>User ID: {{data.id}}</button><button type="button" class="btn btn-success" disabled>Can Organize: {{data.can_organize}}</button>
+        <button type="button" class="btn btn-warning" disabled>Can Referee: {{data.can_referee}}</button> <button type="button"
+          class="btn btn-danger" disabled>Status: {{data.status}}</button></span>
+>>>>>>> 02f681d2a843d0072ef831524a0665617f62025d
       </div>
           <div class="col-xs-12 col-sm-6">
             <div class="list-group">
-        <p class="list-group-item"><label>Firstname: </label><strong>{{person.firstname}}</strong></p> 
+        <p class="list-group-item"><label>Firstname: </label><strong>{{person.firstname}}</strong></p>
         <p class="list-group-item"><label>Lastname: </label><strong>{{person.lastname}}</strong>
         <span style="text-align: right" class="text-right">
           <!--<a [routerLink]="['account/profile/edit-profile/', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
@@ -39,21 +52,44 @@
         <p class="list-group-item"><label>Password: </label><strong>***********</strong></p>
       </div>
       <div class="list-group">
-        
-        <p class="list-group-item"><label>Gender: </label><strong> {{person.sex}}</strong></p>
-        <p class="list-group-item"><label>D.O.B: </label><strong> {{person.sex}}</strong></p>
-        <p class="list-group-item"><label>{{phone.description}} Phone: </label><strong>{{phone.number}}</strong></p>
-      </div>
-      <div class="list-group">
 
+        <p class="list-group-item"><label>Gender: </label><strong> {{person.gender}}</strong></p>
+        <p class="list-group-item"><label>D.O.B: </label><strong> {{person.dob}}</strong></p>
+
+      </div>
+
+    <ng-container *ngIf="phones.length === 0">
+      <div class="list-group" *ngIf="addresses.length === 0">
+        <p class="list-group-item"><strong>There are no phones set up for you.</strong></p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="phones.length > 0">
+      <div class="list-group" >
+        <p class="list-group-item" *ngFor="let phone of phones">
+          <label>{{phone.description}} Phone: </label><strong>{{phone.number}}</strong>
+        </p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="addresses.length === 0">
+      <div class="list-group" *ngIf="addresses.length === 0">
+        <p class="list-group-item"><strong> There are no address set up for you.</strong></p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="addresses.length > 0">
+      <div class="list-group" *ngFor="let address of addresses">
         <p class="list-group-item"><label>Address: </label><strong> {{address.line1}}</strong></p>
         <p class="list-group-item"><label>Address 1: </label><strong> {{address.line2}}</strong></p>
         <p class="list-group-item"><label>City: </label><strong>{{address.city}}</strong></p>
         <p class="list-group-item"><label>State: </label><strong>{{address.state}}</strong></p>
         <p class="list-group-item"><label>ZIP code: </label><strong>{{address.zip}}</strong></p>
       </div>
+    </ng-container>
+
       <span class="list-group-item active">Where available to referee?</span>
-      <div class="list-group">        
+      <div class="list-group">
         <p class="list-group-item"><label>City: </label><strong>{{available.city}}</strong></p>
         <p class="list-group-item"><label>State: </label><strong>{{available.state}}</strong></p>
         <p class="list-group-item"><label>ZIP code: </label><strong>{{available.zip}}</strong></p>
@@ -63,7 +99,7 @@
         <p><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
     <input type="checkbox" class="custom-control-input" [value]="paypalFlag" [(ngModel)]="paypalFlag" >
     <span class="custom-control-indicator"></span>
-    <span class="custom-control-description">Paypal </span> 
+    <span class="custom-control-description">Paypal </span>
   </label></p>
 
         <p><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">

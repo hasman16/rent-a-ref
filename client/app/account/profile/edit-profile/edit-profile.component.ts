@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastComponent } from '../../../shared/toast/toast.component';
 import { AuthService } from '../../../services/auth.service';
+import { StatesService } from '../../../services/states.service';
 import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -11,13 +12,13 @@ import * as $ from 'jquery';
 import { NgbDatepickerModule } from '../../../shared/ngBootstrap/datepicker/datepicker.module';
 import * as moment from 'moment';
 
-
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
+
   divPasswordFlag = false;
   divPassword = '';
   /*
@@ -36,15 +37,21 @@ export class EditProfileComponent implements OnInit {
     };
     private opened = false;
   */
+
   paypalFlag = false;
   checkFlag = false;
   ccFlag = false;
   paypal = '';
   data = {};
   user = {};
-  address = {id: '', line1: '', line2: '', city: '', state: '', zip: ''};
+  person = {};
+  phone = {};
+  address = { id: '', line1: '', line2: '', city: '', state: '', zip: '' };
+  addresses = [];
+  phones = [];
   isLoading = true;
   model;
+
   abort = false;
 
   public showDivreset = true;
@@ -172,13 +179,14 @@ export class EditProfileComponent implements OnInit {
       this.getPersonPhone();
       this.getUserAddress();
     }
+
   }
 
-  getUser() {
-    this.userService.getUser(this.auth.currentUser.id).subscribe(
-      // data => this.user = data,
+  getProfile() {
+    this.userService.getProfile(this.auth.currentUser.id).subscribe(
       res => {
         this.data = res;
+
         this.user = res;
         this.email = res.email;
         if (this.divPasswordFlag) {
@@ -243,39 +251,14 @@ export class EditProfileComponent implements OnInit {
     // console.log('data: ' + JSON.stringify(this.data));
   }
 
-  getUserAddress() {
-    this.userService.getUserAddress(this.auth.currentUser.id).subscribe(
-      // data => this.user = data,
-      res => {
-        this.address = res.addresses;
-        // this.toast.setMessage(res.message, 'success');
-        console.log('Response getUserAddress: ' + JSON.stringify(res));
-        console.log('status getUserAddress: ' + res.id + ' Message: ' + res.addresses.line1);
-      },
-      error => console.log('Get getUserAddress error: ', error),
-      () => this.isLoading = false
-    );
-    // console.log('data: ' + JSON.stringify(this.data));
-  }
 
-  getUserAddress_perID() {
-    this.userService.getUserAddress_id(this.auth.currentUser.id, this.address.id).subscribe(
-      // data => this.user = data,
-      res => {
-        // this.toast.setMessage(res.message, 'success');
-        console.log('Response getUserAddress_ID: ' + JSON.stringify(res));
-        console.log('status getUserAddress_ID: ' + res.id + ' Message: ' + res.addresses.line1);
-      },
-      error => console.log('Get getUserAddress_ID error: ', error),
-      () => this.isLoading = false
-    );
-}
   save(user) {
     this.userService.editUser(user).subscribe(
       res => this.toast.setMessage('account settings saved!', 'success'),
       error => console.log(error)
     );
   }
+
 
   onCancel() {
     // this.router.navigate(['/login']);
@@ -389,5 +372,5 @@ export class EditProfileComponent implements OnInit {
   setClassPassword2() {
     return { 'has-danger': !this.password2.pristine && !this.password2.valid };
   }
-}
 
+}
