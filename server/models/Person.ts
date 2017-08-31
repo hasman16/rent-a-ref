@@ -13,7 +13,7 @@ const Person = function(sequelize, DataTypes) {
           type: DataTypes.STRING(24),
           allowNull: false,
           validate: {
-              is: /^(m|f|pending)$/i
+              is: /^(M|F|pending)$/i
           }
       },
       dob: {

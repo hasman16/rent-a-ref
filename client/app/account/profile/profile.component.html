@@ -40,7 +40,9 @@
         <p class="list-group-item"><label>Password: </label><strong>***********</strong></p>
       </div>
       
-
+<div class="card card-outline-warning">
+  <span class="card danger"><strong>Phones           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divPhones: auth.loggedIn===true ? 'phones' : ''}" fragment="loading"
+          href="#" >    Edit</a></span>
     <ng-container *ngIf="phones.length === 0">
       <div class="list-group" *ngIf="addresses.length === 0">
         <p class="list-group-item"><strong>There are no phones set up for you.</strong></p>
@@ -54,7 +56,10 @@
         </p>
       </div>
     </ng-container>
-
+</div>
+    <div class="card card-outline-secondary">
+      <span class="card danger"><strong>Address           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divAddress: auth.loggedIn===true ? 'address' : ''}" fragment="loading"
+          href="#" >    Edit</a></span>
     <ng-container *ngIf="addresses.length === 0">
       <div class="list-group" *ngIf="addresses.length === 0">
         <p class="list-group-item"><strong> There are no address set up for you.</strong></p>
@@ -70,14 +75,18 @@
         <p class="list-group-item"><label>ZIP code: </label><strong>{{address.zip}}</strong></p>
       </div>
     </ng-container>
-
-      <span class="list-group-item active">Where available to referee?</span>
+    </div>
+    
+      
+      <span class="list-group-item active">Where available to referee? <a [routerLink]="['edit-profile']" [queryParams]="{divVenue: auth.loggedIn===true ? 'venue' : ''}" fragment="loading"
+        href="#">    Edit</a></span>
       <div class="list-group">
         <p class="list-group-item"><label>City: </label><strong>{{available.city}}</strong></p>
         <p class="list-group-item"><label>State: </label><strong>{{available.state}}</strong></p>
         <p class="list-group-item"><label>ZIP code: </label><strong>{{available.zip}}</strong></p>
       </div>
-      <span class="list-group-item active">Payment</span>
+      <span class="list-group-item active">Payment  <span style="text-color:#fff"> <a [routerLink]="['edit-profile']" [queryParams]="{divPayment: auth.loggedIn===true ? 'payment' : ''}" fragment="loading"
+        href="#">    Edit</a></span></span>
       <div class="list-group">
         <p><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
     <input type="checkbox" class="custom-control-input" [value]="paypalFlag" [(ngModel)]="paypalFlag" >

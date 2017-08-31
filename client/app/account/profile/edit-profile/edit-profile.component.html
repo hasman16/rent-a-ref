@@ -69,22 +69,22 @@ testing
           <p>Please fill up the fields below to update your information. </p>
           <div class="input-group" [ngClass]="setClassFirstname()">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input class="form-control" type="text" name="firstname" formControlName="person.firstname" placeholder="Firstname" value="{{person.firstname}}" required>
+            <input class="form-control" type="text" name="firstname" formControlName="firstname" placeholder="Firstname" value="{{person.firstname}}" required>
           </div>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
-            <input class="form-control" type="text" name="middlenames" formControlName="person.middlenames" placeholder="Middlename" value="{{person.middlenames}}">
+            <input class="form-control" type="text" name="middlenames" formControlName="middlenames" placeholder="Middlename" value="{{person.middlenames}}">
           </div>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user-circle-o"></i></span>
-            <input class="form-control" type="text" name="lastname" formControlName="person.lastname" placeholder="Lastname" value="{{person.lastname}}">
+            <input class="form-control" type="text" name="lastname" formControlName="lastname" placeholder="Lastname" value="{{person.lastname}}">
           </div>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
             <select class="form-control" name="gender" formControlName="gender" [(ngModel)]='selectedValue'>
           <option value="" selected disabled>Gender</option>
-          <option value="m">Male</option>
-          <option value="f">Female</option>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
         </select>
           </div>
 <div class="input-group">
@@ -92,11 +92,11 @@ testing
           <my-date-picker name="dob" [options]="myDatePickerOptions" [(ngModel)]="model" (dateChanged)="onDateChanged($event)" formControlName="dob" placeholder="Date of birth"></my-date-picker>
           </div>
           <br>
-          <p><button type="submit" class="btn btn-primary btn-sm" [disabled]="!bioForm.valid"> <i class="fa fa-save"></i> Save</button>
+          <p><button type="submit" class="btn btn-primary btn-sm" > <i class="fa fa-save"></i> Save</button>
             <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
           </p>       
         </form>
-
+<!--[disabled]="!bioForm.valid"-->
         <ng-template #showDivbiomsg>
           <blockquote cite="">
             <p>Your information was successfully updated.</p>

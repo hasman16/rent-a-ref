@@ -65,6 +65,9 @@ export class UserService {
 
     return this.http.get(`/api/people/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
   }
+  updatePerson(information, user): Observable<any> {
+    return this.http.put(`/api/people/${user.id}`, JSON.stringify(information), this.tokenService.getOptions());
+  }
 
   getUserAddress(user_id: any): Observable<any> {
 

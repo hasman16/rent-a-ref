@@ -133,11 +133,11 @@ export class EditProfileComponent implements OnInit {
         this.showDivbio = true;
 
         this.bioForm = this.formBuilder.group({
-          firstname: this.firstname,
+          firstname: this.firstname.value,
           middlenames: this.middlenames,
           lastname: this.lastname,
           gender: this.gender,
-          dob: this.dob
+          dob: this.model
         });
         //
     }
@@ -379,7 +379,7 @@ export class EditProfileComponent implements OnInit {
 
   onBioSubmit() {
     // this.router.navigate(['passwordreset']);
-    this.userService.changepassword(this.bioForm.value, this.user).subscribe(
+    this.userService.updatePerson(this.bioForm.value, this.user).subscribe(
       res => {
         this.toast.setMessage(res.message, 'success');
         console.log('Response: ' + res);
