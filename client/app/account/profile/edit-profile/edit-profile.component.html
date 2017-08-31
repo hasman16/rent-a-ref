@@ -2,20 +2,21 @@
 <link href="http://code.gijgo.com/1.5.0/css/gijgo.css" rel="stylesheet" type="text/css" />-->
 <div class="col-xs-12 col-sm-12">
 <!--<div class="card col-sm-12">-->
-  <div class="card" *ngIf="!isLoading">
+  <!--<div class="card" *ngIf="!isLoading">-->
+    <div class="card">
 
   <!--<div>
     <h1>{{divPasswordFlag}}</h1>
   </div>-->
     <h4 *ngIf="divPasswordFlag" class="card-header elegantshd bigFont">Change Your Password</h4>
+    <h4 *ngIf="divBioFlag" class="card-header elegantshd bigFont">Update Your Information</h4>
   
-  <app-loading [condition]="isLoading"></app-loading>
+  <!--<app-loading [condition]="isLoading"></app-loading>-->
 
-<<<<<<< HEAD
   <app-toast [message]="toast.message"></app-toast>      
       <div class="card-block" *ngIf="divPasswordFlag">        
         <div class="card-block">
-          <div class="card">
+          <div class="card card-outline-success">
             <div class="card-block numberbg">
 
 
@@ -23,7 +24,7 @@
                 <p>Please fill up the fields below to change your password. </p>
                 <div class="input-group" >
                   <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                  <input class="form-control" type="email" name="email"  formControlName="email" placeholder="{{email}}" disabled>
+                  <input class="form-control" type="email" name="email"  formControlName="email" placeholder="{{user.email}}" disabled>
                 </div>
                 <div class="input-group" [ngClass]="setClassPassword()">
                   <span class="input-group-addon"><i class="fa fa-key"></i></span>
@@ -49,24 +50,69 @@
 
               <ng-template #showDivresetmsg>
                 <blockquote cite="">
-                  <p>Your password was successfully reset.</p>
-                  <p>Please click this button to login
-                    <button class="btn btn-primary btn-sm" type="button" (click)="onLogin()"><i class="fa fa-sign-in"></i>Login</button></p>
+                  <p>Your password was successfully changed.</p>  
                 </blockquote>
               </ng-template>
             </div>
           </div>
         </div>
+      </div>
 
+        <!--Bio info-->
+<div class="card-block" *ngIf="divBioFlag">
+  <div class="card-block">
+    <div class="card card-outline-info">
+      <div class="card-block numberbg">
+testing
+
+        <form [formGroup]="bioForm" (ngSubmit)="onBioSubmit()" *ngIf="showDivbio else showDivbiomsg" novalidate>
+          <p>Please fill up the fields below to update your information. </p>
+          <div class="input-group" [ngClass]="setClassFirstname()">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input class="form-control" type="text" name="firstname" formControlName="person.firstname" placeholder="Firstname" value="{{person.firstname}}" required>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+            <input class="form-control" type="text" name="middlenames" formControlName="person.middlenames" placeholder="Middlename" value="{{person.middlenames}}">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user-circle-o"></i></span>
+            <input class="form-control" type="text" name="lastname" formControlName="person.lastname" placeholder="Lastname" value="{{person.lastname}}">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
+            <select class="form-control" name="gender" formControlName="gender" [(ngModel)]='selectedValue'>
+          <option value="" selected disabled>Gender</option>
+          <option value="m">Male</option>
+          <option value="f">Female</option>
+        </select>
+          </div>
+<div class="input-group">
+  <span class="input-group-addon"><i class="fa  fa-birthday-cake"></i></span>
+          <my-date-picker name="dob" [options]="myDatePickerOptions" [(ngModel)]="model" (dateChanged)="onDateChanged($event)" formControlName="dob" placeholder="Date of birth"></my-date-picker>
+          </div>
+          <br>
+          <p><button type="submit" class="btn btn-primary btn-sm" [disabled]="!bioForm.valid"> <i class="fa fa-save"></i> Save</button>
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+          </p>       
+        </form>
+
+        <ng-template #showDivbiomsg>
+          <blockquote cite="">
+            <p>Your information was successfully updated.</p>
+          </blockquote>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  </div>
+  </div>
 
         <!--<form #accountForm="ngForm" (ngSubmit)="save(user)">
         <div><h1>User ID: {{data.id}}</h1></div>
-=======
-  <app-toast [message]="toast.message"></app-toast>
-      <div class="card-block">
-        <form #accountForm="ngForm" (ngSubmit)="save(user)">
-          <div><h1>User ID: {{data.id}}</h1></div>
->>>>>>> 02f681d2a843d0072ef831524a0665617f62025d
+
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
             <input class="form-control" type="text" name="firstname" [(ngModel)]="person.firstname" placeholder="Firstname" required>{{person.firstname}}
@@ -195,50 +241,4 @@
         <i class="fa fa-save"></i> Save
       </button>
         </form>-->
-      </div>
-<<<<<<< HEAD
       
-      
-=======
-    </div>
-  </div>
-</div>
--->
-<!--
-      <style>
-        .full button span {
-          background-color: limegreen;
-          border-radius: 32px;
-          color: black;
-        }
-
-        .partially button span {
-          background-color: orange;
-          border-radius: 32px;
-          color: black;
-        }
-      </style>
-
-      <div>
-        <div class="card">
-          <pre class="card-block card-header">Selected date is: <em *ngIf="dt">{{ getDate() | date:'fullDate'}}</em></pre>
-        </div>
-        <h4>Inline</h4>
-        <div style="display:inline-block; min-height:290px;">
-
-        </div>
-
-        <hr />
-        <button type="button" class="btn btn-sm btn-info" (click)="today()">Today</button>
-        <button type="button" class="btn btn-sm btn-default btn-secondary" (click)="d20090824();">2009-08-24</button>
-        <button type="button" class="btn btn-sm btn-danger" (click)="clear()">Clear</button>
-        <button type="button" class="btn btn-sm btn-default btn-secondary" (click)="toggleMin()" tooltip="After today restriction">Min date</button>
-        <button type="button" class="btn btn-sm btn-default btn-secondary" (click)="disableTomorrow()">Disable Tomorrow</button>
-      </div>-->
-<!--
-      <input id="datepicker" width="276" /><span class="input-group-addon"><span class="fa fa-calendar" (click)="calendarLoad()"></span>
-      </span>-->
-
->>>>>>> 02f681d2a843d0072ef831524a0665617f62025d
-    </div>
-  </div>

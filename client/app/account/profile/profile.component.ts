@@ -55,11 +55,12 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   data = {};
   user = {};
   person = {};
-
+  addresses = {};
+  phones = {};
   available = { city: '', state: '', zip: '' };
   isLoading = true;
   allowEdit = false;
-
+  middlenameFlag = false;
   edit = 'account/profile';
   id = this.auth.currentUser.id;
   abort = false;
@@ -71,14 +72,15 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     private userService: UserService) { }
 
   ngOnInit() {
-
+    this.getProfile();
+    /*
     this.getUser();
     if (!this.abort) {
       this.getPerson();
       this.getPersonPhone();
       // this.getUserAddress();
       this.getUserAddress_perID();
-    }
+    }*/
 
   }
 
@@ -92,9 +94,18 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     this.userService.getProfile(this.auth.currentUser.id).subscribe(
       res => {
         this.data = res;
+        this.user = res;
         this.person = res.person;
         this.addresses = res.addresses;
         this.phones = res.phones;
+        if (JSON.stringify(res.person.middlenames) !== 'null') {
+          this.middlenameFlag = true;
+        }
+        console.log('Response data: ' + JSON.stringify(res));
+        console.log('Response person: ' + JSON.stringify(res.person));
+        console.log('Response firstname: ' + JSON.stringify(res.person.firstname));
+        console.log('Response middlenames: ' + JSON.stringify(res.person.middlenames));
+        console.log('Response addresses: ' + JSON.stringify(res.addresses));
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {

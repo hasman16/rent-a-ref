@@ -49,6 +49,7 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 import { Routes, RouterModule } from '@angular/router';
+import { MyDatePickerModule } from 'mydatepicker';
 // import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
 
 // import { Ng2GoogleRecaptchaModule } from 'ng2-google-recaptcha';
@@ -108,6 +109,7 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
+    MyDatePickerModule,
     RouterModule.forRoot(routes)
     // Ng2GoogleRecaptchaModule
 

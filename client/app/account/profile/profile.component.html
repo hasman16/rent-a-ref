@@ -2,10 +2,10 @@
 
 <div class="card col-sm-12">
   <div class="card">
-  <div class="card" *ngIf="!isLoading">
+  <div class="card" >
     <h4 class="card-header elegantshd bigFont">User's Profile</h4>
-    <app-loading [condition]="isLoading"></app-loading>
-<<<<<<< HEAD
+    <!--<app-loading [condition]="isLoading"></app-loading>-->
+
   <div class="card-block card-outline-primary">
     
     <blockquote>     
@@ -16,34 +16,22 @@
           <button type="button" class="btn btn-primary" disabled>User ID: {{user.id}}</button><button type="button" class="btn btn-success" disabled>Can Organize: {{user.can_organize}}</button>          
         <button type="button" class="btn btn-warning" disabled>Can Referee: {{user.can_referee}}</button> <button type="button"
           class="btn btn-danger" disabled>Status: {{user.status}}</button></span> 
-=======
-  <div class="card-block">
 
-    <blockquote>
-
-      <div class="list-group">
-        <!-->can_organize":"active","can_referee":"active","status":"active"-->
-        <span class="list-group-item active">
-          <button type="button" class="btn btn-primary" disabled>User ID: {{data.id}}</button><button type="button" class="btn btn-success" disabled>Can Organize: {{data.can_organize}}</button>
-        <button type="button" class="btn btn-warning" disabled>Can Referee: {{data.can_referee}}</button> <button type="button"
-          class="btn btn-danger" disabled>Status: {{data.status}}</button></span>
->>>>>>> 02f681d2a843d0072ef831524a0665617f62025d
       </div>
           <div class="col-xs-12 col-sm-6">
-            <div class="list-group">
-        <p class="list-group-item"><label>Firstname: </label><strong>{{person.firstname}}</strong></p>
-        <p class="list-group-item"><label>Lastname: </label><strong>{{person.lastname}}</strong>
-        <span style="text-align: right" class="text-right">
-          <!--<a [routerLink]="['account/profile/edit-profile/', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
-        <i class="fa fa-pencil"></i>Edit</a>-->
+          <div class="card card-outline-info">
+            <span class="card danger"><strong>           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divBio: auth.loggedIn===true ? 'bio' : ''}" fragment="loading"
+          href="#" >    Edit</a></span>
+        <p class="list-group-item"><label>Firstname: </label><strong> {{person.firstname}}</strong></p>
+        <ng-container *ngIf="middlenameFlag">
+          <p class="list-group-item"><label>Middlename: </label><strong> {{person.middlenames}}</strong></p>
+        </ng-container>
 
-        <a [routerLink]="['edit-profile']" [queryParams]="{divPassword: auth.loggedIn===true ? 'password' : ''}" fragment="loading"
-          href="#" class="list-group-item">Edit</a>
-      <!--<button class="btn btn-primary" type="submit" (click)="onEdit()" [queryParams]="{divPassword='password'}" fragment="loading">
-        <i class="fa fa-pencil"></i> Edit
-      </button>-->
-      </span>
+       
+        <p class="list-group-item"><label>Lastname: </label> <strong> {{person.lastname}}</strong>       
         </p>
+        <p class="list-group-item"><label>Gender: </label><strong> {{person.gender}}</strong></p>
+        <p class="list-group-item"><label>D.O.B: </label><strong> {{person.dob}}</strong></p>
       </div>
       <div class="card card-outline-success">
         <span class="card danger"><strong>Credentials           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divPassword: auth.loggedIn===true ? 'password' : ''}" fragment="loading"
@@ -51,12 +39,7 @@
         <p class="list-group-item"><label>Email: </label><strong>{{user.email}}</strong></p>
         <p class="list-group-item"><label>Password: </label><strong>***********</strong></p>
       </div>
-      <div class="list-group">
-
-        <p class="list-group-item"><label>Gender: </label><strong> {{person.gender}}</strong></p>
-        <p class="list-group-item"><label>D.O.B: </label><strong> {{person.dob}}</strong></p>
-
-      </div>
+      
 
     <ng-container *ngIf="phones.length === 0">
       <div class="list-group" *ngIf="addresses.length === 0">

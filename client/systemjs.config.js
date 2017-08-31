@@ -5,13 +5,25 @@
 (function (global) {
         // map tells the System loader where to look for things
         var map = {
-                'app': 'example', // 'dist',
+                'app': 'rent-a-ref', // 'dist',
                 'directive': 'directives',
                 '@angular': 'node_modules/@angular',
                 'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
                 'rxjs': 'node_modules/rxjs',
                 'ng2-google-recaptcha': 'node_modules/ng2-google-recaptcha'
         };
+        System.config({
+                paths: {
+                        'npm:': 'node_modules/'
+                },
+                map: {
+                        // Other components are here...
+
+                        'mydatepicker': 'npm:mydatepicker/bundles/mydatepicker.umd.min.js'
+                },
+                packages: {
+                }
+        });
         // packages tells the System loader how to load when no filename and/or no extension
         var packages = {
                 'app': { main: 'main.js', defaultExtension: 'js' },
