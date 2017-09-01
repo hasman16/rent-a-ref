@@ -539,3 +539,23 @@ Payload:
 }
 
 GET: /api/profile/:userId
+
+POST: /api/users/:userId/location_preference
+Payload:
+{
+	"radius": "5",
+	"city": "Metroville",
+	"state": "CA",
+	"zip": "92866"
+}
+
+GET: /api/profile/:userId
+
+PUT: /api/location_preference/:areaId
+Payload:
+{
+	"radius": "5",
+	"city": "Metroville North",
+	"state": "CA",
+	"zip": "92866"
+}

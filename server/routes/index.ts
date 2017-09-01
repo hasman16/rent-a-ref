@@ -1,6 +1,11 @@
 import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
+import * as redis from 'redis';
+import * as ExpressBrute from 'express-brute';
+import * as RedisStore from 'express-brute-redis';
+
+// Middleware
 import authentication from './../util/authentication';
 import authorization from './../util/authorization';
 import ResponseService from './../util/responseService';
@@ -8,6 +13,7 @@ import SendGridService from './../util/sendGridService';
 
 // controllers
 import addressController from './../controllers/addressController';
+import areaController from './../controllers/areaController';
 import blogController from './../controllers/blogController';
 import gameController from './../controllers/gameController';
 import organizationController from './../controllers/organizationController';
@@ -19,8 +25,10 @@ import userController from './../controllers/userController';
 
 import loginController from './../controllers/loginController';
 import registerController from './../controllers/registerController';
+
 // routes
 import addressRoutes from './addressRoutes';
+import areaRoutes from './areaRoutes';
 import blogRoutes from './blogRoutes';
 import gameRoutes from './gameRoutes';
 import organizationRoutes from './organizationRoutes';
@@ -28,9 +36,7 @@ import personRoutes from './personRoutes';
 import phoneRoutes from './phoneRoutes';
 import sportRoutes from './sportRoutes';
 import userRoutes from './userRoutes';
-import * as redis from 'redis';
-import * as ExpressBrute from 'express-brute';
-import * as RedisStore from 'express-brute-redis';
+
 
 let client;
 if (process.env.REDIS_URL) {
@@ -61,6 +67,7 @@ export default function setRoutes(app, models) {
   const addressCtrl = addressController(models, responseService);
   const blogCtrl = blogController(models, responseService);
   const gameCtrl = gameController(models, responseService);
+  const areaCtrl = areaController(models, responseService);
   const organizationCtrl = organizationController(models, responseService);
   const personCtrl = personController(models, responseService);
   const phoneCtrl = phoneController(models, responseService);
@@ -81,6 +88,7 @@ export default function setRoutes(app, models) {
   addressRoutes(external, addressCtrl);
   blogRoutes(external, blogCtrl);
   gameRoutes(external, gameCtrl);
+  areaRoutes(external, areaCtrl);
   personRoutes(external, personCtrl);
   organizationRoutes(external, organizationCtrl);
   phoneRoutes(external, phoneCtrl);

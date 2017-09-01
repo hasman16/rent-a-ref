@@ -6,6 +6,7 @@ dotenv.load({ path: '.env' });
 
 const models = [
   'Address',
+  'Area',
   'Comment',
   'Email',
   'Game',
@@ -54,6 +55,7 @@ models.forEach(function(model) {
 
 (function(m) {
   m.User.hasOne(m.Person);
+  m.User.hasMany(m.Area);
 
   m.User.hasOne(m.Lock);
   m.Lock.belongsTo(m.User);

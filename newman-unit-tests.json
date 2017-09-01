@@ -5118,6 +5118,211 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "localhost:3000/api/users/:id/location_preference",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 201;",
+									"tests['Returns a user_id'] = responseBody.has('user_id');",
+									"tests['Returns a address id'] = responseBody.has('id');",
+									"",
+									"",
+									"tests['Expect user id to be a number'] = /\\d+/.test(item.user_id);",
+									"tests['Expect user id not to be zero'] = item.user_id > 0;",
+									"tests['Expect user ids match'] = item.user_id == postman.getGlobalVariable(\"userId\");",
+									"",
+									"tests['Expect address id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect address id not to zero'] = item.id > 0;",
+									"postman.setGlobalVariable(\"areaId\", item.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/users/{{userId}}/location_preference",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "radius",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Metroville",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "CA",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "zip",
+									"value": "92866",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/profile/:user_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 200;",
+									"tests['Returns id'] = responseBody.has('id');",
+									"tests['Returns id'] = responseBody.has('email');",
+									"tests['Returns person'] = responseBody.has('person');",
+									"tests['Returns addresses'] = responseBody.has('addresses');",
+									"tests['Returns phones'] = responseBody.has('phones');",
+									"",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(data.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(data.can_organize);",
+									"",
+									"",
+									"var person = data.person;",
+									"",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(person.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(person.lastname);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/profile/{{userId}}",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password1",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/location_preference/:area_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 201;",
+									"tests['Returns a user_id'] = responseBody.has('user_id');",
+									"tests['Returns a address id'] = responseBody.has('address_id');",
+									"",
+									"",
+									"tests['Expect user id to be a number'] = /\\d+/.test(item.user_id);",
+									"tests['Expect user id not to be zero'] = item.user_id > 0;",
+									"tests['Expect user ids match'] = item.user_id == postman.getGlobalVariable(\"userId\");",
+									"",
+									"tests['Expect address id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect address id not to zero'] = item.id > 0;",
+									"//postman.setGlobalVariable(\"locationId\", item.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:3000/api/location_preference/{{areaId}}",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{administratorToken}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "radius",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Metroville North",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "CA",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "zip",
+									"value": "92866",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		}

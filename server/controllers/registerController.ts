@@ -1,11 +1,12 @@
 import * as randomstring from 'randomstring';
 
 export default function RegisterController(bcrypt, jwt, models, ResponseService, SendGridService) {
-  const User = models.User;
+  const Address = models.Address;
+  const Area = models.Area;
   const Lock = models.Lock;
   const Person = models.Person;
   const Phone = models.Phone;
-  const Address = models.Address;
+  const User = models.User;
 
   function respondAndSendEmail(res, email) {
     ResponseService.success(res, {
@@ -125,6 +126,9 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
         through: {
           attributes: []
         }
+      },
+      {
+        model: Area
       },
       {
         model: Phone,
