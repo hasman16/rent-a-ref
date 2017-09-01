@@ -69,6 +69,21 @@ export class UserService {
     return this.http.put(`/api/people/${user.id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
+  updatePhone(information, user): Observable<any> {
+    return this.http.put(`/api/users/${user.id}/phones`, JSON.stringify(information), this.tokenService.getOptions());
+  }
+
+  updateAddress(information, user): Observable<any> {
+    return this.http.put(`/api/users/${user.id}/addresses`, JSON.stringify(information), this.tokenService.getOptions());
+  }
+
+  updateZone(information, user): Observable<any> {
+    return this.http.put(`/api/zone/${user.id}`, JSON.stringify(information), this.tokenService.getOptions());
+  }
+
+  updatePayment(information, user): Observable<any> {
+    return this.http.put(`/api/payment/${user.id}`, JSON.stringify(information), this.tokenService.getOptions());
+  }
   getUserAddress(user_id: any): Observable<any> {
 
     return this.http.get(`/api/users/${user_id}/addresses`, this.tokenService.getOptions()).map(res => res.json());

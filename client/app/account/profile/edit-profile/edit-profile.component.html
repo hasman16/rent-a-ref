@@ -10,6 +10,10 @@
   </div>-->
     <h4 *ngIf="divPasswordFlag" class="card-header elegantshd bigFont">Change Your Password</h4>
     <h4 *ngIf="divBioFlag" class="card-header elegantshd bigFont">Update Your Information</h4>
+    <h4 *ngIf="divPhoneFlag" class="card-header elegantshd bigFont">Update Your Phones</h4>
+    <h4 *ngIf="divAddressFlag" class="card-header elegantshd bigFont">Update Your Address</h4>
+    <h4 *ngIf="divZoneFlag" class="card-header elegantshd bigFont">Update Your Available Zone</h4>
+    <h4 *ngIf="divPaymentFlag" class="card-header elegantshd bigFont">Update Your Payment </h4>
   
   <!--<app-loading [condition]="isLoading"></app-loading>-->
 
@@ -83,8 +87,8 @@ testing
             <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
             <select class="form-control" name="gender" formControlName="gender" [(ngModel)]='selectedValue'>
           <option value="" selected disabled>Gender</option>
-          <option value="M">Male</option>
-          <option value="F">Female</option>
+          <option value="m">Male</option>
+          <option value="f">Female</option>
         </select>
           </div>
 <div class="input-group">
@@ -106,7 +110,199 @@ testing
     </div>
   </div>
   </div>
+<!--Phones-->
+<div class="card-block" *ngIf="divPhoneFlag">
+  <div class="card-block">
+    <div class="card card-outline-warning">
+      <div class="card-block numberbg">
 
+
+        <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()" *ngIf="showDivPhone else showDivPhonemsg">
+          <p>Update your phone. </p>
+          <div class="input-group">
+            <label class="center-block">Phone:
+              <select class="form-control" formControlName="description" [(ngModel)]='selectedValue'>
+          <option value="" selected disabled>Type</option>
+          <option value="Cell">Cell</option>
+          <option value="Home">Home</option>
+          <option value="Work">Work</option>
+          <option value="Mobile">Mobile</option>
+        </select>
+            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+            <input class="form-control" formControlName="uphone">
+            </label>
+          </div>
+         
+          <br>
+          <p><button type="submit" class="btn btn-primary btn-sm" > <i class="fa fa-save"></i>Save</button>
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+          </p>         
+
+        </form>
+
+
+        <ng-template #showDivPhonemsg>
+          <blockquote cite="">
+            <p>Your phone number was successfully updated.</p>
+          </blockquote>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Address-->
+<div class="card-block" *ngIf="divAddressFlag">
+  <div class="card-block">
+    <div class="card card-outline-secondary">
+      <div class="card-block numberbg">
+
+
+        <form [formGroup]="addressForm" (ngSubmit)="onAddressSubmit()" *ngIf="showDivAddress else showDivAddressmsg">
+          <p>Update address. </p>
+          <div style="margin-left: 1em;">
+            <div class="form-group">
+              <label class="center-block">Address:
+            <input class="form-control" formControlName="line1">
+          </label>
+            </div>
+            <div class="form-group">
+              <label class="center-block">Address 1:
+            <input class="form-control" formControlName="line2">
+          </label>
+            </div>
+            <div class="form-group">
+              <label class="center-block">City:
+            <input class="form-control" formControlName="city">
+          </label>
+            </div>
+            <div class="form-group">
+              <label class="center-block">State:
+            <select class="form-control" formControlName="state">
+              <option *ngFor="let state of states" [value]="state">{{state}}</option>
+            </select>
+          </label>
+            </div>
+            <div class="form-group">
+              <label class="center-block">Zip Code:
+            <input class="form-control" formControlName="zip">
+          </label>
+            </div>
+          </div>
+          <br>
+          <p><button type="submit" class="btn btn-primary btn-sm" > <i class="fa fa-save"></i>Save</button>
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+          </p>         
+
+        </form>
+
+
+        <ng-template #showDivAddressmsg>
+          <blockquote cite="">
+            <p>Your address was successfully updated.</p>
+          </blockquote>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Available venue-->
+<div class="card-block" *ngIf="divVenueFlag">
+  <div class="card-block">
+    <div class="card card-outline-success">
+      <div class="card-block numberbg">
+
+
+        <form [formGroup]="zoneForm" (ngSubmit)="onZoneSubmit()" *ngIf="showDivZone else showDivZonemsg">
+          <p>Please update your availability zone. </p>
+          <div style="margin-left: 1em;">
+            
+            <div class="form-group">
+              <label class="center-block">City:
+            <input class="form-control" formControlName="acity">
+          </label>
+            </div>
+            <div class="form-group">
+              <label class="center-block">State:
+            <select class="form-control" formControlName="astate">
+              <option *ngFor="let state of states" [value]="state">{{state}}</option>
+            </select>
+          </label>
+            </div>
+            <div class="form-group">
+              <label class="center-block">Zip Code:
+            <input class="form-control" formControlName="azip">
+          </label>
+            </div>
+          </div>
+          <br>
+          <p><button type="submit" class="btn btn-primary btn-sm" > <i class="fa fa-save"></i>Save</button>
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+          </p>          
+        </form>
+
+
+        <ng-template #showDivZonemsg>
+          <blockquote cite="">
+            <p>Availability zone was successfully updated.</p>
+          </blockquote>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Payment-->
+<div class="card-block" *ngIf="divPaymentFlag">
+  <div class="card-block">
+    <div class="card card-outline-success">
+      <div class="card-block numberbg">
+
+
+        <form [formGroup]="passwordForm" (ngSubmit)="onPaymentSubmit()" *ngIf="showDivPayment else showDivPaymentmsg">
+          <p>Please update your payment preference. </p>
+          <div style="margin-left: 1em;">
+            <div class="form-group"><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input" [value]="paypalFlag" [(ngModel)]="paypalFlag" >
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Paypal </span>
+    <input class="form-control" formControlName="paypalinfo">
+  </label></div>
+
+            <div class="form-group"><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input" [value]="checkFlag" [(ngModel)]="checkFlag" >
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Check </span>    
+  </label></div>
+
+            <div class="form-group"><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input" [value]="ccFlag" [(ngModel)]="ccFlag" >
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Credit Card </span>
+    <input class="form-control" formControlName="ccinfo">
+  </label></div>
+
+           
+          </div>
+          <br>
+          <p><button type="submit" class="btn btn-primary btn-sm" [disabled]="!passwordForm.valid"> <i class="fa fa-save"></i>Save</button>
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+          </p>
+        </form>
+
+
+        <ng-template #showDivPaymentmsg>
+          <blockquote cite="">
+            <p>Your payment preference was successfully updated.</p>
+          </blockquote>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--End-->
   </div>
   </div>
 
