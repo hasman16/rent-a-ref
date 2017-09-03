@@ -473,18 +473,7 @@ export class EditProfileComponent implements OnInit {
         // console.log('Response from the server: ' + res.headers.get('X-Custom-Header'));
         // console.log('Response from the server for user: ' + res.body.message);
         // this.hideShowDiv = true;
-        this.divBioFlag = false;
-        this.showDivbio = false;
-        this.divPasswordFlag = false;
-        this.showDivreset = false;
-        this.divPhoneFlag = false;
-        this.showDivPhone = false;
-        this.divAddressFlag = false;
-        this.showDivAddress = false;
-        this.divZoneFlag = false;
-        this.showDivZone = false;
-        this.divPaymentFlag = false;
-        this.showDivPayment = false;
+        this.onCancel();
         // this.router.navigate(['/login']);
       },
       (err: HttpErrorResponse) => {
@@ -546,18 +535,7 @@ export class EditProfileComponent implements OnInit {
         // console.log('Response from the server: ' + res.headers.get('X-Custom-Header'));
         // console.log('Response from the server for user: ' + res.body.message);
         // this.hideShowDiv = true;
-        this.divBioFlag = false;
-        this.showDivbio = false;
-        this.divPasswordFlag = false;
-        this.showDivreset = false;
-        this.divPhoneFlag = false;
-        this.showDivPhone = false;
-        this.divAddressFlag = false;
-        this.showDivAddress = false;
-        this.divZoneFlag = false;
-        this.showDivZone = false;
-        this.divPaymentFlag = false;
-        this.showDivPayment = false;
+        this.onCancel();
         // this.router.navigate(['/login']);
       },
       (err: HttpErrorResponse) => {
@@ -619,18 +597,7 @@ export class EditProfileComponent implements OnInit {
         // console.log('Response from the server: ' + res.headers.get('X-Custom-Header'));
         // console.log('Response from the server for user: ' + res.body.message);
         // this.hideShowDiv = true;
-        this.divBioFlag = false;
-        this.showDivbio = false;
-        this.divPasswordFlag = false;
-        this.showDivreset = false;
-        this.divPhoneFlag = false;
-        this.showDivPhone = false;
-        this.divAddressFlag = false;
-        this.showDivAddress = false;
-        this.divZoneFlag = false;
-        this.showDivZone = false;
-        this.divPaymentFlag = false;
-        this.showDivPayment = false;
+        this.onCancel();
         // this.router.navigate(['/login']);
       },
       (err: HttpErrorResponse) => {
@@ -692,18 +659,7 @@ export class EditProfileComponent implements OnInit {
         // console.log('Response from the server: ' + res.headers.get('X-Custom-Header'));
         // console.log('Response from the server for user: ' + res.body.message);
         // this.hideShowDiv = true;
-        this.divBioFlag = false;
-        this.showDivbio = false;
-        this.divPasswordFlag = false;
-        this.showDivreset = false;
-        this.divPhoneFlag = false;
-        this.showDivPhone = false;
-        this.divAddressFlag = false;
-        this.showDivAddress = false;
-        this.divZoneFlag = false;
-        this.showDivZone = false;
-        this.divPaymentFlag = false;
-        this.showDivPayment = false;
+        this.onCancel();
         // this.router.navigate(['/login']);
       },
       (err: HttpErrorResponse) => {
@@ -766,18 +722,7 @@ export class EditProfileComponent implements OnInit {
         // console.log('Response from the server: ' + res.headers.get('X-Custom-Header'));
         // console.log('Response from the server for user: ' + res.body.message);
         // this.hideShowDiv = true;
-        this.divBioFlag = false;
-        this.showDivbio = false;
-        this.divPasswordFlag = false;
-        this.showDivreset = false;
-        this.divPhoneFlag = false;
-        this.showDivPhone = false;
-        this.divAddressFlag = false;
-        this.showDivAddress = false;
-        this.divZoneFlag = false;
-        this.showDivZone = false;
-        this.divPaymentFlag = false;
-        this.showDivPayment = false;
+        this.onCancel();
         // this.router.navigate(['/login']);
       },
       (err: HttpErrorResponse) => {
@@ -839,18 +784,7 @@ export class EditProfileComponent implements OnInit {
         // console.log('Response from the server: ' + res.headers.get('X-Custom-Header'));
         // console.log('Response from the server for user: ' + res.body.message);
         // this.hideShowDiv = true;
-        this.divBioFlag = false;
-        this.showDivbio = false;
-        this.divPasswordFlag = false;
-        this.showDivreset = false;
-        this.divPhoneFlag = false;
-        this.showDivPhone = false;
-        this.divAddressFlag = false;
-        this.showDivAddress = false;
-        this.divZoneFlag = false;
-        this.showDivZone = false;
-        this.divPaymentFlag = false;
-        this.showDivPayment = false;
+        this.onCancel();
         // this.router.navigate(['/login']);
       },
       (err: HttpErrorResponse) => {
