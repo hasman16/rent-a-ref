@@ -28,7 +28,7 @@ export class EditProfileComponent implements OnInit {
   checkFlag = false;
   ccFlag = false;
   paypal = '';
-  data = { id: ''};
+
   user = { id: '', email: ''};
   person = { id: ''};
 
@@ -197,9 +197,8 @@ export class EditProfileComponent implements OnInit {
   getProfile() {
     this.userService.getProfile(this.auth.currentUser.id).subscribe(
       res => {
-        this.data = res;
         this.user = res;
-        console.log("user is:", this.user);
+
         this.person = res.person;
         this.addresses = res.addresses;
         this.phones = res.phones;
@@ -291,8 +290,8 @@ export class EditProfileComponent implements OnInit {
 
   onBioSubmit() {
     let bio = Object.assign({}, this.bioForm.value);
-    bio.dob = bio.epoc;
-    console.log('bio:', bio);
+    bio.dob = Number(bio.dob.epoc) * 1000;
+
     this.userService.updatePerson(bio, this.person.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
