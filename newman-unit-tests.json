@@ -2803,6 +2803,18 @@
 									"value": "LLoyd",
 									"description": "",
 									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "1284102000000",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "f",
+									"description": "",
+									"type": "text"
 								}
 							]
 						},
@@ -4501,24 +4513,6 @@
 									"value": "test12",
 									"description": "",
 									"type": "text"
-								},
-								{
-									"key": "firstname",
-									"value": "Lazerus",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "sex",
-									"value": "m",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "dob",
-									"value": "1758888",
-									"description": "",
-									"type": "text"
 								}
 							]
 						},
@@ -4607,30 +4601,6 @@
 								{
 									"key": "password",
 									"value": "test12",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "firstname",
-									"value": "Lazerus",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "lastname",
-									"value": "Manuel",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "phone",
-									"value": "9895666",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "role",
-									"value": "referee",
 									"description": "",
 									"type": "text"
 								}
@@ -4764,7 +4734,7 @@
 					"name": "localhost:3000/api/changepassword/:user_id",
 					"request": {
 						"url": "localhost:3000/api/changepassword/{{userId}}",
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",

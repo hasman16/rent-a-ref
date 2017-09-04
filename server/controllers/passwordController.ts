@@ -61,7 +61,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
       password1: req.body.password1,
       password2: req.body.password2,
     };
-
+    console.log('changepassword:', user);
     User.findOne({
       where: { id: user.id },
       include: [{

@@ -32,8 +32,8 @@ export class UserService {
     return this.http.post('/api/forgotpassword', JSON.stringify(email), this.tokenService.getOptions());
   }
 
-  changepassword(passwords, user): Observable<any> {
-    return this.http.put(`/api/changepassword/${user.id}`, JSON.stringify(passwords), this.tokenService.getOptions());
+  changepassword(passwords, user_id): Observable<any> {
+    return this.http.put(`/api/changepassword/${user_id}`, JSON.stringify(passwords), this.tokenService.getOptions());
   }
 
   getUser(user_id: any): Observable<any> {
