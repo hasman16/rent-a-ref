@@ -7,7 +7,7 @@
         <div class="input-group required-field-block" [ngClass]="setClassfullname()">
           <span class="input-group-addon"><i class="fa fa-user"></i></span>
           <input class="form-control" type="text" name="fullname" formControlName="fullname" placeholder="Fullname" autofocus aria-describedby="basic-addon-fullname">
-          <span class="input-group-addon" id="basic-addon-fullname" style="color: orange; font-size: 10px;font-style: italic">Max: 50  .</span>
+          <span class="input-group-addon" id="basic-addon-fullname" class="contactus-text">Max: 50  .</span>
           <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
             <div class="text">*</div>
           </div>
@@ -19,7 +19,7 @@
           <input class="form-control" type="email" name="email" formControlName="email" placeholder="Email" aria-describedby="basic-addon-email"
             email>
 
-          <span class="input-group-addon" id="basic-addon-email" style="color: orange; font-size: 10px;font-style: italic">Valid Email  .</span>
+          <span class="input-group-addon" id="basic-addon-email" class="contactus-text">Valid Email  .</span>
           <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
             <div class="text">*</div>
           </div>
@@ -28,7 +28,7 @@
       <div class="input-group required-field-block" [ngClass]="setClassSubject()">
         <span class="input-group-addon"><i class="fa fa-hashtag"></i></span>
         <input class="form-control" type="text" name="subject" formControlName="subject" placeholder="Subject" autofocus aria-describedby="basic-addon-subject">
-        <span class="input-group-addon" id="basic-addon-subject" style="color: orange; font-size: 10px;font-style: italic">Max: 50  .</span>
+        <span class="input-group-addon" id="basic-addon-subject" class="contactus-text">Max: 50  .</span>
         <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
           <div class="text">*</div>
         </div>
@@ -38,7 +38,7 @@
         <span class="input-group-addon"><i class="fa fa-align-justify"></i></span>
         <!--<input class="form-control" type="textarea" name="textMessage" formControlName="textMessage" placeholder="Message" autofocus aria-describedby="basic-addon-textMessage">-->
         <textarea ng-model="textMessage" class="form-control" name="textMessage" formControlName="textMessage" placeholder="Message" autofocus aria-describedby="basic-addon-textMessage"></textarea>
-        <span class="input-group-addon" id="basic-addon-textMessage" style="color: orange; font-size: 10px;font-style: italic">Max: 900  .</span>
+        <span class="input-group-addon" id="basic-addon-textMessage" class="contactus-text">Max: 900  .</span>
         <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
           <div class="text">*</div>
         </div>

@@ -45,7 +45,7 @@ export default function PersonController(models, ResponseService) {
     if (aPerson.dob) {
       aPerson.dob = Number(aPerson.dob);
     }
-    console.log('aPerson:', aPerson);
+
     Person.update(aPerson, {
       where: {
         id: req.params.person_id

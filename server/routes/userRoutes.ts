@@ -23,7 +23,9 @@ export default function userRoutes(setter, ctrls) {
   router.route('/profile/:user_id').get(registerCtrl.getProfile);
   //router.route('/profile/:user_id').get(authentication, isUser,registerCtrl.getProfile);
 
-  router.route('/changepassword/:user_id').post(authentication, isUser, passwordCtrl.changepassword);
+  router.route('/changepassword/:user_id').put(authentication, isUser, passwordCtrl.changepassword);
+  router.route('/changepassword/:user_id').patch(authentication, isUser, passwordCtrl.changepassword);
+  
   router.route('/forgotpassword').post(passwordCtrl.forgotpassword);
   router.route('/resetpassword').post(passwordCtrl.resetpassword);
 

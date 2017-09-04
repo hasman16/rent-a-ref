@@ -278,7 +278,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   onPasswordSubmit() {
-    this.userService.changepassword(this.passwordForm.value, this.user).subscribe(
+    this.userService.changepassword(this.passwordForm.value, this.user.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);

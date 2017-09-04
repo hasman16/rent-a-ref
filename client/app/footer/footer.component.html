@@ -17,21 +17,21 @@
         <h6 class="heading7">GENERAL LINKS</h6>
         <ul class="footer-ul">
             <li><a routerLink="/career" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-        <i class="fa fa-briefcase"></i><span style="color: #ffffff"> Career</span>
+        <i class="fa fa-briefcase"></i><span class="general-links"> Career</span>
         </a></li>
             <li data-toggle="modal" data-target="#ordine" (click)="privacy = true">
               <!--<a routerLink="/privacy-policy" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">-->
-        <i class="fa fa-file-text-o"></i><span style="color: #ffffff;cursor: pointer;"> Privacy Policy</span>
+        <i class="fa fa-file-text-o"></i><span class="general-links"> Privacy Policy</span>
         </li>
             <li data-toggle="modal" data-target="#ordine" (click)="selectLoad = true; privacy = false">
               <!--<a routerLink="/terms-and-conditions" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">-->
-        <i class="fa fa-eye"></i><span style="color: #ffffff;cursor: pointer;" > Terms & Conditions( Referee )</span>
+        <i class="fa fa-eye"></i><span class="general-links"> Terms & Conditions( Referee )</span>
         </li>
       <li data-toggle="modal" data-target="#ordine" (click)="selectLoad = false; privacy = false">
-      <i class="fa fa-eye"></i><span style="color: #ffffff;cursor: pointer;"> Terms & Conditions( Organizer )</span>
+      <i class="fa fa-eye"></i><span class="general-links"> Terms & Conditions( Organizer )</span>
       </li>
             <li><a routerLink="/faq" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-        <i class="fa fa-question-circle-o"></i><span style="color: #ffffff"> Frequently Ask Questions</span>
+        <i class="fa fa-question-circle-o"></i><span class="general-links"> Frequently Ask Questions</span>
         </a></li>
         </ul>
       </div>
@@ -77,16 +77,16 @@
         <i class="fa fa-users"></i><span style="color: #ffffff"> Partners</span>
         </a></li>-->
         <li><a routerLink="/about" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-        <i class="fa fa-book"></i><span style="color: #ffffff"> About Us</span>
+        <i class="fa fa-book"></i><span class="general-links"> About Us</span>
         </a></li>
         <li><a routerLink="/blog" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-        <i class="fa fa-rss-square"></i><span style="color: #ffffff"> Blog</span>
+        <i class="fa fa-rss-square"></i><span class="general-links"> Blog</span>
         </a></li>
                <li><a routerLink="/contact" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-        <i class="fa fa-envelope-o"></i><span style="color: #ffffff"> Contact Us</span>
+        <i class="fa fa-envelope-o"></i><span class="general-links"> Contact Us</span>
         </a></li>
         <li><a routerLink="/sitemap" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-        <i class="fa fa-sitemap"></i><span style="color: #ffffff"> Site Map</span>
+        <i class="fa fa-sitemap"></i><span class="general-links"> Site Map</span>
         </a></li>
       </ul>
     </div>
@@ -115,7 +115,7 @@
 <div class="embed-responsive embed-responsive-16by9" *ngIf="!selectLoad">
   <iframe class="embed-responsive-item" src="/assets/src/terms-condition-organizer.txt" allowfullscreen></iframe>
 </div>
-        <p><span style="color:blue; font-weight:bolder;font-size:14px">Thank you</span></p>
+        <p><span class="blue-footer">Thank you</span></p>
       </div>
       <!--Privacy start-->
 <div class="modal-body" *ngIf="privacy">
@@ -123,7 +123,7 @@
     <iframe class="embed-responsive-item" src="/assets/src/privacy.txt" allowfullscreen></iframe>
   </div>
  
-  <p><span style="color:blue; font-weight:bolder;font-size:14px">Thank you</span></p>
+  <p><span class="blue-footer">Thank you</span></p>
 </div>
       <!--Privacy end-->
       <div class="modal-footer">
@@ -148,7 +148,7 @@
           <div class="embed-responsive embed-responsive-16by9">
             <iframe class="embed-responsive-item" src="/assets/src/terms-conditions.txt" allowfullscreen></iframe>
           </div>
-          <p><span style="color:blue; font-weight:bolder;font-size:14px">Thank you</span></p>
+          <p><span class="blue-footer">Thank you</span></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

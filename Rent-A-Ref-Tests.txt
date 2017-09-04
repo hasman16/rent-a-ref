@@ -254,7 +254,9 @@ PUT: /api/people/:personId
 Payload:
 {
 	"firstname": "Harold",
-	"lastname": "LLoyd"
+	"lastname": "LLoyd",
+	"dob": "1284102000000",
+	"gender": "f"
 }
 
 GET: /api/people/:personId
@@ -446,10 +448,7 @@ PUT: /api/users/:userId
 Payload:
 {
 	"email": "test4@rentaref.com",
-	"password": "test12",
-	"firstname": "Lazerus",
-	"sex": "m",
-	"dob": "1758888"
+	"password": "test12"
 }
 
 POST: /api/register
@@ -467,11 +466,7 @@ POST: /api/users
 Payload:
 {
 	"email": "test5@rentaref.com",
-	"password": "test12",
-	"firstname": "Lazerus",
-	"lastname": "Manuel",
-	"phone": "9895666",
-	"role": "referee"
+	"password": "test12"
 }
 
 DELETE: /api/users/:userId
@@ -493,7 +488,7 @@ Payload:
 	"password": "petepete"
 }
 
-POST: /api/changepassword/:userId
+PUT: /api/changepassword/:userId
 Payload:
 {
 	"password1": "reefer",
