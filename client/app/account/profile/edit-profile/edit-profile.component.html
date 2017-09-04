@@ -21,14 +21,6 @@
 
             <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" *ngIf="showDivreset else showDivresetmsg">
               <p>Please fill up the fields below to change your password.</p>
-              <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                <input class="form-control" type="email" name="email" formControlName="email" placeholder="{{user.email}}" disabled>
-              </div>
-              <div class="input-group" [ngClass]="setClassPassword()">
-                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                <input class="form-control" type="password" name="password" formControlName="password" placeholder="Current password" autofocus>
-              </div>
               <div class="input-group" [ngClass]="setClassPassword1()">
                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
                 <input class="form-control" type="password" name="password1" formControlName="password1" placeholder="New password">
@@ -38,7 +30,8 @@
                 <input class="form-control" type="password" name="password2" formControlName="password2" placeholder="Repeat new password">
               </div>
               <br>
-              <p><button type="submit" class="btn btn-primary btn-sm" [disabled]="!passwordForm.valid"> <i class="fa fa-save"></i>Save</button>
+              <p>
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!passwordForm.valid"> <i class="fa fa-save"></i>Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
               </p>
 
@@ -66,15 +59,15 @@
               <p>Please fill up the fields below to update your information. </p>
               <div class="input-group" [ngClass]="setClassFirstname()">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                <input class="form-control" type="text" name="firstname" formControlName="firstname" placeholder="Firstname" value="{{person.firstname}}" required>
+                <input class="form-control" type="text" name="firstname" formControlName="firstname" placeholder="Firstname" [(ngModel)]="person.firstname" required>
               </div>
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
-                <input class="form-control" type="text" name="middlenames" formControlName="middlenames" placeholder="Middlename" value="{{person.middlenames}}">
+                <input class="form-control" type="text" name="middlenames" formControlName="middlenames" placeholder="Middlename" [(ngModel)]="person.middlenames">
               </div>
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user-circle-o"></i></span>
-                <input class="form-control" type="text" name="lastname" formControlName="lastname" placeholder="Lastname" value="{{person.lastname}}">
+                <input class="form-control" type="text" name="lastname" formControlName="lastname" placeholder="Lastname" [(ngModel)]="person.lastname">
               </div>
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
@@ -86,7 +79,7 @@
               </div>
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa  fa-birthday-cake"></i></span>
-                <my-date-picker name="dob" [options]="myDatePickerOptions" [(ngModel)]="model" (dateChanged)="onDateChanged($event)" formControlName="dob" placeholder="Date of birth"></my-date-picker>
+                <my-date-picker name="dob" [options]="myDatePickerOptions" [(ngModel)]="dateModel" (dateChanged)="onDateChanged($event)" formControlName="dob" placeholder="Date of birth"></my-date-picker>
               </div>
               <br>
               <p>
@@ -174,7 +167,7 @@
                 <div class="form-group">
                   <label class="center-block">State:
                     <select class="form-control" formControlName="state">
-                      <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                      <option *ngFor="let state of states" value="{{state.abbreviation}}">{{state.name}}</option>
                     </select>
                   </label>
                 </div>

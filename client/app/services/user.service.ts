@@ -12,13 +12,6 @@ export class UserService {
 
 
   register(user): Observable<any> {
-    /*return this.http.post(`/api/register`, JSON.stringify(user), this.options).map(res => res.json());
-    // return this.http.post('/api/user', JSON.stringify(user), this.options);
-  }
-
-  login(credentials): Observable<any> {
-    return this.http.post(`/api/login`, JSON.stringify(credentials), this.options);*/
-
     return this.http.post('/api/register', JSON.stringify(user), this.tokenService.getOptions()).map(res => res.json());
   }
 
@@ -61,46 +54,43 @@ export class UserService {
     return this.http.get(`/api/profile/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
   }
 
-  getPerson(user_id: any): Observable<any> {
-
-    return this.http.get(`/api/people/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
-  }
-  updatePerson(information, user): Observable<any> {
-    return this.http.put(`/api/people/${user.id}`, JSON.stringify(information), this.tokenService.getOptions());
+  getPerson(person_id: any): Observable<any> {
+    return this.http.get(`/api/people/${person_id}`, this.tokenService.getOptions()).map(res => res.json());
   }
 
-  updatePhone(information, user): Observable<any> {
-    return this.http.put(`/api/users/${user.id}/phones`, JSON.stringify(information), this.tokenService.getOptions());
+  updatePerson(information, person_id): Observable<any> {
+    return this.http.put(`/api/people/${person_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
-  updateAddress(information, user): Observable<any> {
-    return this.http.put(`/api/users/${user.id}/addresses`, JSON.stringify(information), this.tokenService.getOptions());
+  updatePhone(information, user_id, phone_id): Observable<any> {
+    return this.http.put(`/api/users/${user_id}/phones/${phone_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
-  updateZone(information, user): Observable<any> {
-    return this.http.put(`/api/zone/${user.id}`, JSON.stringify(information), this.tokenService.getOptions());
+  updateAddress(information, user_id, address_id): Observable<any> {
+    return this.http.put(`/api/users/${user_id}/addresses/${address_id}`, JSON.stringify(information), this.tokenService.getOptions());
+  }
+
+  updateZone(information, user_id, zone_id): Observable<any> {
+    return this.http.put(`/api/zone/${user_id}/${zone_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
   updatePayment(information, user): Observable<any> {
     return this.http.put(`/api/payment/${user.id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
-  getUserAddress(user_id: any): Observable<any> {
 
+  getUserAddresses(user_id: any): Observable<any> {
     return this.http.get(`/api/users/${user_id}/addresses`, this.tokenService.getOptions()).map(res => res.json());
   }
 
-  getUserAddress_id(user_id: any, addressId: any): Observable<any> {
-
-    return this.http.get(`/api/users/${user_id}/addresses/${addressId}`, this.tokenService.getOptions()).map(res => res.json());
+  getUserAddress(user_id: any, address_id: any): Observable<any> {
+    return this.http.get(`/api/users/${user_id}/addresses/${address_id}`, this.tokenService.getOptions()).map(res => res.json());
   }
 
-  getUserPhone(user_id: any): Observable<any> {
-
+  getUserPhones(user_id: any): Observable<any> {
     return this.http.get(`/api/users/${user_id}/phones`, this.tokenService.getOptions()).map(res => res.json());
   }
 
-  getUserPhone_id(user_id: any, phoneId: any): Observable<any> {
-
-    return this.http.get(`/api/users/${user_id}/phones/${phoneId}`, this.tokenService.getOptions()).map(res => res.json());
+  getUserPhone(user_id: any, phone_id: any): Observable<any> {
+    return this.http.get(`/api/users/${user_id}/phones/${phone_id}`, this.tokenService.getOptions()).map(res => res.json());
   }
 }

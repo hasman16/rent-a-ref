@@ -28,14 +28,14 @@ export class EditProfileComponent implements OnInit {
   checkFlag = false;
   ccFlag = false;
   paypal = '';
-  data = {};
-  user = {};
-  person = {};
+  data = { id: ''};
+  user = { id: '', email: ''};
+  person = { id: ''};
 
   address = { id: '', line1: '', line2: '', city: '', state: '', zip: '' };
   addresses = [];
   phones = [];
-  phone = {};
+  phone = { id:''};
   isLoading = true;
 
   states;
@@ -57,11 +57,7 @@ export class EditProfileComponent implements OnInit {
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
 
   email = new FormControl('', [Validators.required, Validators.email]);
-  passcode = new FormControl('', [<any>Validators.required,
-  <any>Validators.minLength(6)]);
 
-  password = new FormControl('', [<any>Validators.required,
-  <any>Validators.minLength(6)]);
   password1 = new FormControl('', [<any>Validators.required,
   <any>Validators.minLength(6)]);
   password2 = new FormControl('', [<any>Validators.required,
@@ -111,7 +107,7 @@ export class EditProfileComponent implements OnInit {
 
   // Initialized to specific date (09.10.2018).
   // public model: Object = { date: { year: 2018, month: 10, day: 9 } };
-  public model;
+  public dateModel;
 
   onDateChanged(event: IMyDateModel) {
     console.log('onDateChanged(): ', event.date,
@@ -135,7 +131,7 @@ export class EditProfileComponent implements OnInit {
           this.showDivreset = true;
 
           this.passwordForm = this.formBuilder.group({
-            password: this.password,
+            //password: this.password,
             password1: this.password1,
             password2: this.password2
           });
@@ -144,11 +140,11 @@ export class EditProfileComponent implements OnInit {
           this.showDivbio = true;
 
           this.bioForm = this.formBuilder.group({
-            firstname: this.firstname.value,
+            firstname: this.firstname,
             middlenames: this.middlenames,
             lastname: this.lastname,
             gender: this.gender,
-            dob: this.model
+            dob: this.dateModel
           });
         } else if (data['divPhone'] === 'phones') {
           this.divPhoneFlag = true;
@@ -203,6 +199,7 @@ export class EditProfileComponent implements OnInit {
       res => {
         this.data = res;
         this.user = res;
+        console.log("user is:", this.user);
         this.person = res.person;
         this.addresses = res.addresses;
         this.phones = res.phones;
@@ -214,7 +211,7 @@ export class EditProfileComponent implements OnInit {
           const varYear = res.person.dob.substring(0, 4);
           const varMonth = res.person.dob.substring(5, 7);
           const varDay = res.person.dob.substring(8, 10);
-          this.model = { date: { year: varYear, month: varMonth, day: varDay } };
+          this.dateModel = { date: { year: varYear, month: varMonth, day: varDay } };
         }
       },
 
@@ -263,6 +260,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   callSuccess(res) {
+    console.log('callSuccess');
     this.toast.setMessage(res.message, 'success');
     this.onCancel();
   }
@@ -282,7 +280,7 @@ export class EditProfileComponent implements OnInit {
 
   onPasswordSubmit() {
     this.userService.changepassword(this.passwordForm.value, this.user).subscribe(
-      this.callSuccess,
+      res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
         this.divPasswordFlag = true;
@@ -292,8 +290,11 @@ export class EditProfileComponent implements OnInit {
   }
 
   onBioSubmit() {
-    this.userService.updatePerson(this.bioForm.value, this.user).subscribe(
-      this.callSuccess,
+    let bio = Object.assign({}, this.bioForm.value);
+    bio.dob = bio.epoc;
+    console.log('bio:', bio);
+    this.userService.updatePerson(bio, this.person.id).subscribe(
+      res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
         this.divBioFlag = true;
@@ -304,8 +305,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   onPhoneSubmit() {
-    this.userService.updatePhone(this.phoneForm.value, this.user).subscribe(
-      this.callSuccess,
+    this.userService.updatePhone(this.phoneForm.value, this.user.id, this.phone.id).subscribe(
+      res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
         this.divPhoneFlag = true;
@@ -315,8 +316,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   onAddressSubmit() {
-    this.userService.updateAddress(this.addressForm.value, this.user).subscribe(
-      this.callSuccess,
+    this.userService.updateAddress(this.addressForm.value, this.user.id, this.address.id).subscribe(
+      res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
         this.divAddressFlag = true;
@@ -327,14 +328,15 @@ export class EditProfileComponent implements OnInit {
   }
 
   onZoneSubmit() {
-    this.userService.updateZone(this.zoneForm.value, this.user).subscribe(
+    /*
+    this.userService.updateZone(this.zoneForm.value, this.user.id).subscribe(
       this.callSuccess,
       (err: HttpErrorResponse) => {
         this.callFailure(err);
         this.divZoneFlag = true;
         this.showDivZone = true;
       }
-    );
+    );*/
   }
 
   onPaymentSubmit() {
@@ -350,14 +352,6 @@ export class EditProfileComponent implements OnInit {
 
   setClassEmail1() {
     return { 'has-danger': !this.email.pristine && !this.email.valid };
-  }
-
-  setClassPasscode() {
-    return { 'has-danger': !this.passcode.pristine && !this.passcode.valid };
-  }
-
-  setClassPassword() {
-    return { 'has-danger': !this.password.pristine && !this.password.valid };
   }
 
   setClassPassword1() {
