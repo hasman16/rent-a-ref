@@ -32,6 +32,7 @@ import { SuspendedComponent } from './account/profile/suspended/suspended.compon
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
+import { ScheduleComponent } from './account/schedule/schedule.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -53,7 +54,12 @@ const routes: Routes = [
   { path: 'passwordreset', component: PasswordresetComponent },
   { path: 'reset', component: ResetComponent },
   // { path: 'account', component: AccountComponent, canActivate: [AuthGuardLogin] },
-  { path: 'account/:id', component: AccountComponent, canActivate: [AuthGuardLogin] },
+  {
+    path: 'account/:id', component: AccountComponent, canActivate: [AuthGuardLogin]
+  },
+    {
+      path: 'account/:id/schedule', component: ScheduleComponent, canActivate: [AuthGuardLogin]
+  },
   {
     path: 'account/profile/:id', component: ProfileComponent, canDeactivate: [CanDeactivateGuardService],
     children: [
