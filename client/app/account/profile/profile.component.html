@@ -7,15 +7,15 @@
     <!--<app-loading [condition]="isLoading"></app-loading>-->
 
   <div class="card-block card-outline-primary">
-    
-    <blockquote>     
-     
+
+    <blockquote>
+
       <div class="list-group">
         <!-->can_organize":"active","can_referee":"active","status":"active"-->
         <span class="list-group-item active">
-          <button type="button" class="btn btn-primary" disabled>User ID: {{user.id}}</button><button type="button" class="btn btn-success" disabled>Can Organize: {{user.can_organize}}</button>          
+          <button type="button" class="btn btn-primary" disabled>User ID: {{user.id}}</button><button type="button" class="btn btn-success" disabled>Can Organize: {{user.can_organize}}</button>
         <button type="button" class="btn btn-warning" disabled>Can Referee: {{user.can_referee}}</button> <button type="button"
-          class="btn btn-danger" disabled>Status: {{user.status}}</button></span> 
+          class="btn btn-danger" disabled>Status: {{user.status}}</button></span>
 
       </div>
           <div class="col-xs-12 col-sm-6">
@@ -27,8 +27,8 @@
           <p class="list-group-item"><label>Middlename: </label><strong> {{person.middlenames}}</strong></p>
         </ng-container>
 
-       
-        <p class="list-group-item"><label>Lastname: </label> <strong> {{person.lastname}}</strong>       
+
+        <p class="list-group-item"><label>Lastname: </label> <strong> {{person.lastname}}</strong>
         </p>
         <p class="list-group-item"><label>Gender: </label><strong> {{person.gender}}</strong></p>
         <p class="list-group-item"><label>D.O.B: </label><strong> {{person.dob}}</strong></p>
@@ -39,7 +39,7 @@
         <p class="list-group-item"><label>Email: </label><strong>{{user.email}}</strong></p>
         <p class="list-group-item"><label>Password: </label><strong>***********</strong></p>
       </div>
-      
+
 <div class="card card-outline-warning">
   <span class="card danger"><strong>Phones           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divPhone: auth.loggedIn===true ? 'phones' : ''}" fragment="loading"
           href="#" >    Edit</a></span>
@@ -76,8 +76,8 @@
       </div>
     </ng-container>
     </div>
-    
-      
+
+
       <span class="list-group-item active">Where available to referee? <a [routerLink]="['edit-profile']" [queryParams]="{divZone: auth.loggedIn===true ? 'zone' : ''}" fragment="loading"
         href="#"><span style="color:red;text-indent: 50px;font-weight: bolder;background-color: #fff;">    Edit</span></a></span>
       <div class="list-group">
