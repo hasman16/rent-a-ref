@@ -2,38 +2,62 @@ import * as bodyParser from 'body-parser';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as morgan from 'morgan';
-import * as mongoose from 'mongoose';
 import * as path from 'path';
+import * as handlebars from 'express-handlebars';
 
+import * as models from './models';
+import importData from './data';
 import setRoutes from './routes';
 
 const app = express();
+const sequelize = models.sequelize;
+
 dotenv.load({ path: '.env' });
 app.set('port', (process.env.PORT || 3000));
+
+app.use(express.static('public'));
+app.set('views', path.join(__dirname + '/views'));
+app.engine('hbs', handlebars({
+    extname: 'hbs'
+}));
+app.set('view engine', 'hbs');
 
 app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
+  next();
+});
 
 app.use(morgan('dev'));
-mongoose.connect(process.env.MONGODB_URI);
-const db = mongoose.connection;
-(<any>mongoose).Promise = global.Promise;
+// sequelize.sync();
+importData(models, true); // set to false to bypass importing data
+setRoutes(app, models);
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('Connected to MongoDB');
+app.post('/resetpassword', function(req, res) {
+    res.render('resetpassword');
+});
 
-  setRoutes(app);
+app.post('/resetpassword', function (req, res) {
+  res.redirect('404');
+})
 
-  app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
-  });
+app.get('/resetpassword/:passcode', function(req, res) {
+    res.render('resetpassword', {
+      passcode: req.params.passcode
+    });
+});
 
-  app.listen(app.get('port'), () => {
-    console.log('Angular Full Stack listening on port ' + app.get('port'));
-  });
+process.on('uncaughtException', function(err) {
+    console.log(err);
+    // res.render('404');
+});
 
+app.listen(app.get('port'), function() {
+    console.log('Server listening on port ' + app.get('port'));
 });
 
 export { app };

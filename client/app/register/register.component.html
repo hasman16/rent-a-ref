@@ -1,30 +1,106 @@
 <app-toast [message]="toast.message"></app-toast>
-
+<div class="card col-sm-12">
 <div class="card">
-  <h4 class="card-header">Register</h4>
+  <h4 class="card-header elegantshd bigFont">Register Organizer or Referee</h4>
   <div class="card-block">
     <form [formGroup]="registerForm" (ngSubmit)="register()">
-      <div class="input-group" [ngClass]="setClassUsername()">
+      <div class="input-group required-field-block" [ngClass]="setClassfirstname()">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input class="form-control" type="text" name="username" formControlName="username" placeholder="Username" autofocus>
+        <input class="form-control" type="text" name="firstname" formControlName="firstname" placeholder="Firstname" autofocus aria-describedby="basic-addon-firstname">
+        <span class="input-group-addon register-rentaref" id="basic-addon-firstname">Max: 50  .</span>
+        <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
+          <div class="text">*</div>
+        </div>
       </div>
-      <div class="input-group" [ngClass]="setClassEmail()">
+      <div class="input-group required-field-block" [ngClass]="setClasslastname()">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input class="form-control" type="text" name="lastname" formControlName="lastname" placeholder="Lastname" aria-describedby="basic-addon-lastname">
+        <span class="input-group-addon register-rentaref" id="basic-addon-lastname">Max: 50  .</span>
+        <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
+          <div class="text">*</div>
+        </div>
+      </div>
+
+      <div class="input-group required-field-block" [ngClass]="setClassEmail()">
         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-        <input class="form-control" type="email" name="email" formControlName="email" placeholder="Email">
+        <input class="form-control" type="email" name="email" formControlName="email" placeholder="Email" aria-describedby="basic-addon-email"
+          email>
+
+        <span class="input-group-addon register-rentaref" id="basic-addon-email">Valid Email  .</span>
+        <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
+          <div class="text">*</div>
+        </div>
       </div>
-      <div class="input-group" [ngClass]="setClassPassword()">
+
+      <div class="input-group required-field-block" [ngClass]="setClassrepeatEmail()">
+        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+        <input class="form-control" type="email" name="repeatemail" formControlName="repeatemail" placeholder="Repeat Email" aria-describedby="basic-addon-repeatemail"
+          email>
+
+        <span class="input-group-addon register-rentaref" id="basic-addon-repeatemail">Email Match</span>
+        <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
+          <div class="text">*</div>
+        </div>
+      </div>
+
+      <div class="input-group required-field-block" [ngClass]="setClassPassword()">
         <span class="input-group-addon"><i class="fa fa-key"></i></span>
-        <input class="form-control" type="password" name="password" formControlName="password" placeholder="Password">
+        <input class="form-control" type="password" name="password" formControlName="password" placeholder="Password" aria-describedby="basic-addon-password">
+        <span class="input-group-addon register-rentaref" id="basic-addon-password">Min 6   .</span>
+        <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
+          <div class="text">*</div>
+        </div>
       </div>
+      <!--Repeat password-->
+      <div class="input-group required-field-block" [ngClass]="setClassPasswordrepeat()">
+        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+        <input class="form-control" type="password" name="passwordrepeat" formControlName="passwordrepeat" placeholder="Repeat Password"
+          aria-describedby="basic-addon-passwordrepeat">
+        <span class="input-group-addon register-rentaref" id="basic-addon-passwordrepeat">Min 6   .</span>
+        <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
+          <div class="text">*</div>
+        </div>
+      </div>
+      <!--end-->
+      <div class="input-group required-field-block" [ngClass]="setClassphone()">
+        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+        <input class="form-control" type="text" name="phone" formControlName="phone" placeholder="Phone Number" autofocus aria-describedby="basic-addon-phone"
+          phone="CN">
+        <span class="input-group-addon register-rentaref" id="basic-addon-phone">Valid Phone   .</span>
+        <div class="required-icon" data-toggle="tooltip" data-placement="left" title="Required field!">
+          <div class="text">*</div>
+        </div>
+      </div>
+      <!--
+<div class="input-group">
+  <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
+  <select class="form-control" name="sex" formControlName="sex">
+          <option value="" selected disabled>Gender</option>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+</div>
+-->
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-black-tie"></i></span>
         <select class="form-control" name="role" formControlName="role">
-          <option value="" selected disabled>Role</option>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
+          <option value="" selected disabled>Choose Role</option>
+          <option value="Organizer">Organizer</option>
+          <option value="Referee">Referee</option>
         </select>
       </div>
-      <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid"><i class="fa fa-user-plus"></i> Register</button>
-    </form>
-  </div>
+      <br>
+      <!--<div class="g-recaptcha" data-sitekey="6Le2rSsUAAAAAH5sKN-FpYJGXAC-skdE23lbHN_a"></div>
+      <div (setVerified)='setVerified($event)' googlerecaptcha [siteKey]='6Le2rSsUAAAAAH5sKN-FpYJGXAC-skdE23lbHN_a' [theme]='theme'></div>
+      <br>-->
+     <!-- <div class='recaptcha-container'>
+        <p class='samples-screen-body-text'>Standard reCAPTCHA out of the box</p>
+        <ng2-google-recaptcha  [recaptchaId]='recaptcha1Id' [recaptchaSiteKey]="6Le2rSsUAAAAAH5sKN-FpYJGXAC-skdE23lbHN_a" [recaptchaStyle]='theme' (onCaptchaComplete)='onCaptchaComplete($event)'></ng2-google-recaptcha>
+        <br>
+      </div>
+      <br>-->
+      <button class="btn btn-primary btn-sm" type="submit" [disabled]="!registerForm.valid"><i class="fa fa-user-plus"></i> Register</button>
+      </form>
+      </div>
+      </div>
 </div>

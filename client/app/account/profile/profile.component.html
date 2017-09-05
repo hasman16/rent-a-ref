@@ -1,0 +1,129 @@
+<div class="row">
+
+<div class="card col-sm-12">
+  <div class="card">
+  <div class="card" >
+    <h4 class="card-header elegantshd bigFont">User's Profile</h4>
+    <!--<app-loading [condition]="isLoading"></app-loading>-->
+
+  <div class="card-block card-outline-primary">
+
+    <blockquote>
+
+      <div class="list-group">
+        <!-->can_organize":"active","can_referee":"active","status":"active"-->
+        <span class="list-group-item active">
+          <button type="button" class="btn btn-sm btn-primary" disabled>User ID: {{user.id}}</button><button type="button" class="btn btn-sm btn-success" disabled>Can Organize: {{user.can_organize}}</button>
+        <button type="button" class="btn btn-sm btn-warning" disabled>Can Referee: {{user.can_referee}}</button> <button type="button"
+          class="btn btn-sm btn-danger" disabled>Status: {{user.status}}</button></span>
+
+      </div>
+          <div class="col-xs-12 col-sm-6">
+          <div class="card card-outline-info">
+            <span class="card danger"><strong>           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divBio: auth.loggedIn===true ? 'bio' : ''}" fragment="loading"
+          href="#" >    Edit</a></span>
+        <p class="list-group-item"><label>Firstname: </label><strong> {{person.firstname}}</strong></p>
+        <ng-container *ngIf="middlenameFlag">
+          <p class="list-group-item"><label>Middlename: </label><strong> {{person.middlenames}}</strong></p>
+        </ng-container>
+
+
+        <p class="list-group-item"><label>Lastname: </label> <strong> {{person.lastname}}</strong>
+        </p>
+        <p class="list-group-item"><label>Gender: </label><strong> {{person.gender}}</strong></p>
+        <p class="list-group-item"><label>D.O.B: </label><strong> {{person.dob}}</strong></p>
+      </div>
+      <div class="card card-outline-success">
+        <span class="card danger"><strong>Credentials           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divPassword: auth.loggedIn===true ? 'password' : ''}" fragment="loading"
+          href="#" >    Edit</a></span>
+        <p class="list-group-item"><label>Email: </label><strong>{{user.email}}</strong></p>
+        <p class="list-group-item"><label>Password: </label><strong>***********</strong></p>
+      </div>
+
+<div class="card card-outline-warning">
+  <span class="card danger"><strong>Phones           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divPhone: auth.loggedIn===true ? 'phones' : ''}" fragment="loading"
+          href="#" >    Edit</a></span>
+    <ng-container *ngIf="phones.length === 0">
+      <div class="list-group" *ngIf="addresses.length === 0">
+        <p class="list-group-item"><strong>There are no phones set up for you.</strong></p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="phones.length > 0">
+      <div class="list-group" >
+        <p class="list-group-item" *ngFor="let phone of phones">
+          <label>{{phone.description}} Phone: </label><strong>{{phone.number}}</strong>
+        </p>
+      </div>
+    </ng-container>
+</div>
+    <div class="card card-outline-secondary">
+      <span class="card danger"><strong>Address           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divAddress: auth.loggedIn===true ? 'address' : ''}" fragment="loading"
+          href="#" >     Edit</a></span>
+    <ng-container *ngIf="addresses.length === 0">
+      <div class="list-group" *ngIf="addresses.length === 0">
+        <p class="list-group-item"><strong> There are no address set up for you.</strong></p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="addresses.length > 0">
+      <div class="list-group" *ngFor="let address of addresses">
+        <p class="list-group-item"><label>Address: </label><strong> {{address.line1}}</strong></p>
+        <p class="list-group-item"><label>Address 1: </label><strong> {{address.line2}}</strong></p>
+        <p class="list-group-item"><label>City: </label><strong>{{address.city}}</strong></p>
+        <p class="list-group-item"><label>State: </label><strong>{{address.state}}</strong></p>
+        <p class="list-group-item"><label>ZIP code: </label><strong>{{address.zip}}</strong></p>
+      </div>
+    </ng-container>
+    </div>
+
+
+      <span class="list-group-item active">Where available to referee? <a [routerLink]="['edit-profile']" [queryParams]="{divZone: auth.loggedIn===true ? 'zone' : ''}" fragment="loading"
+        href="#"><span class="profile-text2">    Edit</span></a></span>
+      <div class="list-group">
+        <p class="list-group-item"><label>City: </label><strong>{{available.city}}</strong></p>
+        <p class="list-group-item"><label>State: </label><strong>{{available.state}}</strong></p>
+        <p class="list-group-item"><label>ZIP code: </label><strong>{{available.zip}}</strong></p>
+      </div>
+      <span class="list-group-item active">Payment  <a [routerLink]="['edit-profile']" [queryParams]="{divPayment: auth.loggedIn===true ? 'payment' : ''}" fragment="loading"
+        href="#"><span class="profile-text2">        Edit</span></a></span>
+      <div class="list-group">
+        <p><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input" [value]="paypalFlag" [(ngModel)]="paypalFlag" disabled>
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Paypal </span>
+  </label></p>
+
+        <p><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input" [value]="checkFlag" [(ngModel)]="checkFlag" disabled>
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Check </span>
+  </label></p>
+
+        <p><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input" [value]="ccFlag" [(ngModel)]="ccFlag" disabled>
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Credit Card </span>
+  </label></p>
+      </div>
+
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <!--Example 1-->
+        <!--<button class="btn btn-primary" (click)="onReload()">Reload Page</button>
+        <app-edit-server></app-edit-server>
+        <hr>
+        <app-server></app-server>-->
+
+        <!--Example 2-->
+        <router-outlet></router-outlet>
+
+      </div>
+    </blockquote>
+  </div>
+  </div>
+</div>
+
+
+
+  </div>

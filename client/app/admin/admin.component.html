@@ -1,7 +1,7 @@
 <app-loading [condition]="isLoading"></app-loading>
 
 <app-toast [message]="toast.message"></app-toast>
-
+<div class="card col-sm-12">
 <div class="card" *ngIf="!isLoading">
   <h4 class="card-header">Registered users ({{users.length}})</h4>
   <div class="card-block">
@@ -33,4 +33,5 @@
       </tbody>
     </table>
   </div>
+</div>
 </div>
