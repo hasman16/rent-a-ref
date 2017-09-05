@@ -79,14 +79,14 @@
 
 
       <span class="list-group-item active">Where available to referee? <a [routerLink]="['edit-profile']" [queryParams]="{divZone: auth.loggedIn===true ? 'zone' : ''}" fragment="loading"
-        href="#"><span style="color:red;text-indent: 50px;font-weight: bolder;background-color: #fff;">    Edit</span></a></span>
+        href="#"><span class="profile-text2">    Edit</span></a></span>
       <div class="list-group">
         <p class="list-group-item"><label>City: </label><strong>{{available.city}}</strong></p>
         <p class="list-group-item"><label>State: </label><strong>{{available.state}}</strong></p>
         <p class="list-group-item"><label>ZIP code: </label><strong>{{available.zip}}</strong></p>
       </div>
       <span class="list-group-item active">Payment  <a [routerLink]="['edit-profile']" [queryParams]="{divPayment: auth.loggedIn===true ? 'payment' : ''}" fragment="loading"
-        href="#"><span style="color:red;text-indent: 50px;font-weight: bolder;background-color: #fff;">        Edit</span></a></span>
+        href="#"><span class="profile-text2">        Edit</span></a></span>
       <div class="list-group">
         <p><label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
     <input type="checkbox" class="custom-control-input" [value]="paypalFlag" [(ngModel)]="paypalFlag" disabled>

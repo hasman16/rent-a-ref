@@ -4,7 +4,7 @@
       <a routerLink="/" class="nav-item nav-link navbar-brand" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
         <span style="white-space: nowrap;">
           <img src="assets/images/reficon1.png" class="img-fluid img-responsive" width=auto alt="Rent A Ref">
-          <img src="assets/images/reftext.gif" class="img-fluid img-responsive" alt="Responsive image" width=80% max-width=90%>
+          <img src="assets/images/reftext.gif" class="img-fluid img-responsive" alt="Responsive image" width="80%" max-width="90%">
         </span>
       </a>
     
@@ -14,18 +14,21 @@
       <a routerLink="/how-it-works" class="nav-item nav-link" routerLinkActive="active">
         <i class="fa  fa-info-circle" aria-hidden="true"></i> How It Works
       </a>
-      <!--<a routerLink="/pricing" class="nav-item nav-link" routerLinkActive="active">
-        <i class="fa  fa-money" aria-hidden="true"></i> Pricing
-      </a>-->
-      <!--<a routerLink="/cats" class="nav-item nav-link" routerLinkActive="active">
-        <i class="fa fa-list"></i> Cats     </a>-->
+
       <span style="float: right">
+          <a [routerLink]="['/account/profile', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-user"></i> Profile
+          </a>
+          <a [routerLink]="['/account/profile', auth.currentUser.id, 'edit-profile' ]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-pencil-square-o"></i> Edit Profile
+          </a>
+
           <a routerLink="/login" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
               <i class="fa fa-sign-in"></i> Login
             </a>
           <a routerLink="/register" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
               <i class="fa fa-user-plus"></i> Register
-            </a>
+          </a>
 
           <a [routerLink]="['/account', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn" [routerLinkActiveOptions]="{exact: true}">
               <i class="fa fa-user"></i> Account ({{auth.currentUser.email}})
@@ -39,15 +42,6 @@
       </span>
     </ul>
   </div>  
-  <br>
-  <span class="nav navbar-nav" style="float:right">
-      <a [routerLink]="['/account/profile', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn" [routerLinkActiveOptions]="{exact: true}">
-        <i class="fa fa-user"></i> Profile
-      </a>
-      <a [routerLink]="['/account/profile', auth.currentUser.id, 'edit-profile' ]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn" [routerLinkActiveOptions]="{exact: true}">
-        <i class="fa fa-pencil-square-o"></i> Edit Profile
-      </a>
-  </span>
 </nav>
 
 
