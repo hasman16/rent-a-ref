@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit {
           case ('pending standby'):
             // The organizer has not yet completed the profile
             // console.log('organizer 1:', user.can_organize + ' ' + user.status);
-            this.router.navigate(['account/profile/edit-profile/' + user.id]);
+            this.router.navigate(['account/profile/' + user.id]);
             break;
           case ('yes active'):
             // The organizer is active and ready to go
@@ -144,7 +144,7 @@ export class LoginComponent implements OnInit {
           case ('pending active'):
             // The referee account has been activated by the admin. Now he needs to complete his profile
             // console.log('Referee 1:', user.can_referee + ' ' + user.status + ' user.id: ' + user.id);
-            this.router.navigate(['account/profile/edit-profile/' + user.id]);
+            this.router.navigate(['account/profile/' + user.id]);
             break;
           case ('pending in_progress'):
             // The referee account has not yet been activated by the admin. Still in Standby

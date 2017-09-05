@@ -50,6 +50,8 @@ import { ResetComponent } from './account/profile/reset/reset.component';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
+import { ScheduleComponent } from './account/schedule/schedule.component';
+import { OrganizeComponent } from './organize/organize.component';
 // import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
 
 // import { Ng2GoogleRecaptchaModule } from 'ng2-google-recaptcha';
@@ -97,7 +99,9 @@ const routes: Routes = [
     FaqComponent,
     BlogComponent,
     ContactusComponent,
-    ResetComponent
+    ResetComponent,
+    ScheduleComponent,
+    OrganizeComponent
     // GoogleRecaptchaDirective
 
     // StatisticsComponent

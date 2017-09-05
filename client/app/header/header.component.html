@@ -16,12 +16,23 @@
       </a>
 
       <span style="float: right">
+        <a [routerLink]="['/organizer', auth.currentUser.id ]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
+        [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="auth.currentUser.can_organize == 'active'"><i class="fa fa-life-ring"></i> Organize</span>
+          </a>
+          
+        <a [routerLink]="['/account', auth.currentUser.id, 'schedule' ]" class="nav-item nav-link" routerLinkActive="active"
+          *ngIf="auth.loggedIn" [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="auth.currentUser.can_referee == 'active'"><i class="fa fa-list-ul"></i> Schedule</span>
+          </a>
+
           <a [routerLink]="['/account/profile', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn" [routerLinkActiveOptions]="{exact: true}">
             <i class="fa fa-user"></i> Profile
           </a>
+          <!--
           <a [routerLink]="['/account/profile', auth.currentUser.id, 'edit-profile' ]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn" [routerLinkActiveOptions]="{exact: true}">
             <i class="fa fa-pencil-square-o"></i> Edit Profile
-          </a>
+          </a> -->
 
           <a routerLink="/login" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
               <i class="fa fa-sign-in"></i> Login
@@ -42,6 +53,7 @@
       </span>
     </ul>
   </div>  
+
 </nav>
 
 
