@@ -58,16 +58,18 @@
     </ng-container>
 </div>
     <div class="card card-outline-secondary">
-      <span class="card danger"><strong>Address           </strong><a [routerLink]="['edit-profile']" [queryParams]="{divAddress: auth.loggedIn===true ? 'address' : ''}" fragment="loading"
-          href="#" >     Edit</a></span>
+      <span class="card danger"><strong>Address</strong><a *ngIf="addresses.length < 4" [routerLink]="['edit-profile']" [queryParams]="{divAddress: auth.loggedIn===true ? '0' : ''}" fragment="loading"
+          href="#" >&nbsp;&nbsp;Add</a></span>
     <ng-container *ngIf="addresses.length === 0">
       <div class="list-group" *ngIf="addresses.length === 0">
-        <p class="list-group-item"><strong> There are no address set up for you.</strong></p>
+        <p class="list-group-item"><strong> There are no addresses set up for you.</strong></p>
       </div>
     </ng-container>
 
     <ng-container *ngIf="addresses.length > 0">
-      <div class="list-group" *ngFor="let address of addresses">
+      <div class="list-group" *ngFor="let address of addresses">{{address.id}}
+        <a [routerLink]="['edit-profile']" [queryParams]="{divAddress: auth.loggedIn===true ? address.id : ''}" fragment="loading"
+            href="#" >Edit</a>
         <p class="list-group-item"><label>Address: </label><strong> {{address.line1}}</strong></p>
         <p class="list-group-item"><label>Address 1: </label><strong> {{address.line2}}</strong></p>
         <p class="list-group-item"><label>City: </label><strong>{{address.city}}</strong></p>

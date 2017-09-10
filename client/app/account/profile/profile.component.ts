@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router, Data } from '@angular/router';
-import { CanComponentDeactivate } from '../../services/can-deactivate-guard.service';
-import { AuthService } from '../../services/auth.service';
-import { UserService } from '../../services/user.service';
+import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
+
 import * as moment from 'moment';
+
+import { AuthService } from '../../services/auth.service';
+import { CanComponentDeactivate } from '../../services/can-deactivate-guard.service';
+import { ProfileService } from '../../services/profile.service';
+import { UserService } from '../../services/user.service';
+
 import { ToastComponent } from '../../shared/toast/toast.component';
 
 // End
@@ -23,8 +27,8 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   data = {};
   user = {};
   person = {};
-  addresses = {};
-  phones = {};
+  addresses = [];
+  phones = [];
   available = { };
   isLoading = true;
   allowEdit = false;
@@ -36,6 +40,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
 
   constructor(private route: ActivatedRoute,
     private router: Router, private auth: AuthService,
+    private profileService: ProfileService,
     private userService: UserService) { }
 
   ngOnInit() {
@@ -49,7 +54,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   getProfile() {
-    this.userService.getProfile(this.auth.currentUser.id).subscribe(
+    this.profileService.getProfile(this.auth.currentUser.id).subscribe(
       res => {
         this.data = res;
         this.user = res;
@@ -70,7 +75,6 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
         }
         this.isLoading = false;
         if (!this.auth.loggedIn) {
-          console.log('Session expired');
           this.abort = true;
           this.auth.logout();
         }

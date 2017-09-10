@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastComponent } from '../../../shared/toast/toast.component';
-import { AuthService } from '../../../services/auth.service';
-import { StatesService } from '../../../services/states.service';
-import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
 import * as moment from 'moment';
+
+import { ToastComponent } from '../../../shared/toast/toast.component';
+import { AuthService } from '../../../services/auth.service';
+import { ProfileService } from '../../../services/profile.service';
+import { StatesService } from '../../../services/states.service';
+import { UserService } from '../../../services/user.service';
+
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
 
 @Component({
@@ -55,6 +58,7 @@ export class EditProfileComponent implements OnInit {
   zoneForm: FormGroup;
   paymentForm: FormGroup;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
+  zipRegex: '^\\d{5}(?:[ -]{1}\\d{4})?$';
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
@@ -84,7 +88,7 @@ export class EditProfileComponent implements OnInit {
   state = new FormControl('', [Validators.required, Validators.minLength(2),
   Validators.maxLength(20), Validators.pattern(this.alphaNumericRegex)]);
   zip = new FormControl('', [Validators.required, Validators.minLength(2),
-  Validators.maxLength(12), Validators.pattern(this.alphaNumericRegex)]);
+  Validators.maxLength(12), Validators.pattern(this.zipRegex)]);
 
   acity = new FormControl('', [Validators.required, Validators.minLength(2),
   Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]);
@@ -115,29 +119,32 @@ export class EditProfileComponent implements OnInit {
   }
 
   constructor(private formBuilder: FormBuilder, private auth: AuthService,
-    public toast: ToastComponent,
+    public toast: ToastComponent, private profileService: ProfileService,
     private userService: UserService, private route: ActivatedRoute,
     private router: Router, private statesService: StatesService) {
     this.subscribeToParams(route);
   }
 
   subscribeToParams(route) {
+
     route.queryParams.subscribe(
       data => {
         this.resetDivs();
+        this.user = this.profileService.getData();
 
         if (data['divPassword'] === 'password') {
           this.divPasswordFlag = true;
           this.showDivreset = true;
 
           this.passwordForm = this.formBuilder.group({
-            //password: this.password,
             password1: this.password1,
             password2: this.password2
           });
         } else if (data['divBio'] === 'bio') {
           this.divBioFlag = true;
           this.showDivbio = true;
+          this.person = this.profileService.getPerson();
+          this.selectedValue = this.person['gender'];
 
           this.bioForm = this.formBuilder.group({
             firstname: this.firstname,
@@ -149,22 +156,14 @@ export class EditProfileComponent implements OnInit {
         } else if (data['divPhone'] === 'phones') {
           this.divPhoneFlag = true;
           this.showDivPhone = true;
+          this.phones = this.profileService.getPhones();
 
           this.phoneForm = this.formBuilder.group({
             number: this.uphone,
             description: this.description
           });
-        } else if (data['divAddress'] === 'address') {
-          this.divAddressFlag = true;
-          this.showDivAddress = true;
-
-          this.addressForm = this.formBuilder.group({
-            line1: this.line1,
-            line2: this.line2,
-            city: this.city,
-            state: this.state,
-            zip: this.zip
-          });
+        } else if (data['divAddress'] !== '') {
+          this.createAddressForm(data);
         } else if (data['divZone'] === 'zone') {
           this.divZoneFlag = true;
           this.showDivZone = true;
@@ -189,20 +188,46 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.states = this.statesService.getStates();
-    this.getProfile();
+  createAddressForm(data) {
+    let addressId = Number(data['divAddress']);
+    this.addresses = this.profileService.getAddresses();
+
+    this.divAddressFlag = true;
+    this.showDivAddress = true;
+    this.address = { id: '0' , line1: '', line2: '', city: '', state: '', zip: '' };
+
+    if (addressId > 0) {
+      let address = this.addresses.find(function (address) {
+        return Number(address.id) === addressId;
+      });
+      this.address = address ? address: this.address;
+    }
+
+    this.addressForm = this.formBuilder.group({
+      line1: this.line1,
+      line2: this.line2,
+      city: this.city,
+      state: this.state,
+      zip: this.zip
+    });
   }
 
+  ngOnInit() {
+    this.states = this.statesService.getStates();
+    //this.getProfile();
+  }
+
+/*
   getProfile() {
+    console.log('gotProfile:')
     this.userService.getProfile(this.auth.currentUser.id).subscribe(
       res => {
+        console.log('gotProfile2');
         this.user = res;
 
         this.person = res.person;
         this.addresses = res.addresses;
         this.phones = res.phones;
-        this.address = this.addresses[0];
         this.phone = this.phones[0];
         this.selectedValue = res.person.gender;
 
@@ -230,7 +255,7 @@ export class EditProfileComponent implements OnInit {
       }
     );
   }
-
+*/
 
   save(user) {
     this.userService.editUser(user).subscribe(
@@ -315,6 +340,25 @@ export class EditProfileComponent implements OnInit {
   }
 
   onAddressSubmit() {
+    console.log('this.address2:', this.address);
+    if (Number(this.address.id) === 0) {
+      this.addAddress();
+    }else {
+      this.updateAddress();
+    }
+  }
+
+  addAddress() {
+    this.userService.addAddress(this.addressForm.value, this.user.id).subscribe(
+      res => this.callSuccess(res),
+      (err: HttpErrorResponse) => {
+        this.callFailure(err);
+        this.divAddressFlag = true;
+        this.showDivAddress = true;
+      }
+    );
+  }
+  updateAddress() {
     this.userService.updateAddress(this.addressForm.value, this.user.id, this.address.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
@@ -322,10 +366,8 @@ export class EditProfileComponent implements OnInit {
         this.divAddressFlag = true;
         this.showDivAddress = true;
       }
-
     );
   }
-
   onZoneSubmit() {
     /*
     this.userService.updateZone(this.zoneForm.value, this.user.id).subscribe(

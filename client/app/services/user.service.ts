@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { TokenService } from '../services/token.service';
+import { TokenService } from './token.service';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -10,14 +10,12 @@ export class UserService {
 
   constructor(private http: Http, private tokenService: TokenService) { }
 
-
   register(user): Observable<any> {
     return this.http.post('/api/register', JSON.stringify(user), this.tokenService.getOptions()).map(res => res.json());
   }
 
   login(credentials): Observable<any> {
     return this.http.post('/api/login', JSON.stringify(credentials), this.tokenService.getOptions());
-
   }
 
   getUsers(): Observable<any> {
@@ -47,7 +45,6 @@ export class UserService {
 
   deleteUser(user_id: number): Observable<any> {
     return this.http.delete(`/api/users/${user_id}`, this.tokenService.getOptions());
-
   }
 
   getProfile(user_id: any): Observable<any> {
@@ -64,6 +61,10 @@ export class UserService {
 
   updatePhone(information, user_id, phone_id): Observable<any> {
     return this.http.put(`/api/users/${user_id}/phones/${phone_id}`, JSON.stringify(information), this.tokenService.getOptions());
+  }
+
+  addAddress(information, user_id): Observable<any> {
+    return this.http.post(`/api/users/${user_id}/addresses`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
   updateAddress(information, user_id, address_id): Observable<any> {
