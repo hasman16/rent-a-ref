@@ -69,7 +69,7 @@
             <div class="card card-outline-warning">
               <span class="card danger">
                 <strong>Phones</strong>
-                <a *ngIf="phones.length < 3" [routerLink]="['edit-profile']" [queryParams]="{divPhone: auth.loggedIn===true ? 'phones' : ''}" fragment="loading"
+                <a *ngIf="phones.length < 3" [routerLink]="['edit-profile']" [queryParams]="{divPhone: auth.loggedIn===true ? '0' : ''}" fragment="loading"
                       href="#" >&nbsp;&nbsp;Add</a>
               </span>
               <ng-container *ngIf="phones.length === 0">
@@ -81,7 +81,7 @@
               </ng-container>
 
               <ng-container *ngIf="phones.length > 0">
-                <div class="list-group" >
+                <div class="list-group" *ngFor="let phone of phones">
                   <a [routerLink]="['edit-profile']" [queryParams]="{divPhone: auth.loggedIn===true ? phone.id : ''}" fragment="loading"
                           href="#" >Edit</a>
                   <span class="list-group-item" *ngFor="let phone of phones">
@@ -108,7 +108,7 @@
               </ng-container>
 
               <ng-container *ngIf="addresses.length > 0">
-                <div class="list-group" *ngFor="let address of addresses">{{address.id}}
+                <div class="list-group" *ngFor="let address of addresses">
                   <a [routerLink]="['edit-profile']" [queryParams]="{divAddress: auth.loggedIn===true ? address.id : ''}" fragment="loading"
                       href="#" >Edit</a>
                   <span class="list-group-item">

@@ -74,10 +74,10 @@ export class EditProfileComponent implements OnInit {
   gender = new FormControl('', [<any>Validators.nullValidator]);
   dob = new FormControl('', [<any>Validators.nullValidator]);
 
-  uphone = new FormControl('', [Validators.required,
+  phoneNumber = new FormControl('', [Validators.required,
   Validators.minLength(6),
   Validators.maxLength(20)]);
-  description = new FormControl('', [Validators.required, Validators.minLength(2),
+  phoneDescription = new FormControl('', [Validators.required, Validators.minLength(2),
   Validators.maxLength(10), Validators.pattern(this.alphaNumericRegex)]);
 
   line1 = new FormControl('', [Validators.required, Validators.minLength(2),
@@ -153,15 +153,9 @@ export class EditProfileComponent implements OnInit {
             gender: this.gender,
             dob: this.dateModel
           });
-        } else if (data['divPhone'] === 'phones') {
-          this.divPhoneFlag = true;
-          this.showDivPhone = true;
-          this.phones = this.profileService.getPhones();
+        } else if (data['divPhone'] !== '') {
+          this.createPhoneForm(data);
 
-          this.phoneForm = this.formBuilder.group({
-            number: this.uphone,
-            description: this.description
-          });
         } else if (data['divAddress'] !== '') {
           this.createAddressForm(data);
         } else if (data['divZone'] === 'zone') {
@@ -212,50 +206,31 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  createPhoneForm(data) {
+    let phoneId = Number(data['divPhone']);
+    this.phones = this.profileService.getPhones();
+
+    this.divPhoneFlag = true;
+    this.showDivPhone = true;
+
+    this.phone = { id: '0' };
+
+    if (phoneId > 0) {
+      let phone = this.phones.find(function (phone) {
+        return Number(phone.id) === phoneId;
+      });
+      this.phone = phone ? phone: this.phone;
+    }
+
+    this.phoneForm = this.formBuilder.group({
+      number: this.phoneNumber,
+      description: this.phoneDescription
+    });
+  }
+
   ngOnInit() {
     this.states = this.statesService.getStates();
-    //this.getProfile();
   }
-
-/*
-  getProfile() {
-    console.log('gotProfile:')
-    this.userService.getProfile(this.auth.currentUser.id).subscribe(
-      res => {
-        console.log('gotProfile2');
-        this.user = res;
-
-        this.person = res.person;
-        this.addresses = res.addresses;
-        this.phones = res.phones;
-        this.phone = this.phones[0];
-        this.selectedValue = res.person.gender;
-
-        if (res.person.dob !== '') {
-          const varYear = res.person.dob.substring(0, 4);
-          const varMonth = res.person.dob.substring(5, 7);
-          const varDay = res.person.dob.substring(8, 10);
-          this.dateModel = { date: { year: varYear, month: varMonth, day: varDay } };
-        }
-      },
-
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log('A client-side or network error occurred for the Profile');
-        } else {
-          console.log('The backend returned an unsuccessful response code for the profile');
-
-        }
-        this.isLoading = false;
-        if (!this.auth.loggedIn) {
-          this.abort = true;
-          this.auth.logout();
-        }
-      }
-    );
-  }
-*/
 
   save(user) {
     this.userService.editUser(user).subscribe(
@@ -328,28 +303,16 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  onPhoneSubmit() {
-    this.userService.updatePhone(this.phoneForm.value, this.user.id, this.phone.id).subscribe(
-      res => this.callSuccess(res),
-      (err: HttpErrorResponse) => {
-        this.callFailure(err);
-        this.divPhoneFlag = true;
-        this.showDivPhone = true;
-      }
-    );
-  }
-
   onAddressSubmit() {
-    console.log('this.address2:', this.address);
     if (Number(this.address.id) === 0) {
-      this.addAddress();
+      this.createAddress();
     }else {
       this.updateAddress();
     }
   }
 
-  addAddress() {
-    this.userService.addAddress(this.addressForm.value, this.user.id).subscribe(
+  createAddress() {
+    this.userService.createAddress(this.addressForm.value, this.user.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
@@ -358,6 +321,7 @@ export class EditProfileComponent implements OnInit {
       }
     );
   }
+
   updateAddress() {
     this.userService.updateAddress(this.addressForm.value, this.user.id, this.address.id).subscribe(
       res => this.callSuccess(res),
@@ -368,6 +332,38 @@ export class EditProfileComponent implements OnInit {
       }
     );
   }
+
+  onPhoneSubmit() {
+    console.log('phone is:', this.phoneForm.value);
+    if (Number(this.phone.id) === 0) {
+      this.createPhone();
+    }else {
+      this.updatePhone();
+    }
+  }
+
+  createPhone() {
+    this.userService.createPhone(this.phoneForm.value, this.user.id).subscribe(
+      res => this.callSuccess(res),
+      (err: HttpErrorResponse) => {
+        this.callFailure(err);
+        this.divPhoneFlag = true;
+        this.showDivPhone = true;
+      }
+    );
+  }
+
+  updatePhone() {
+    this.userService.updatePhone(this.phoneForm.value, this.user.id, this.phone.id).subscribe(
+      res => this.callSuccess(res),
+      (err: HttpErrorResponse) => {
+        this.callFailure(err);
+        this.divPhoneFlag = true;
+        this.showDivPhone = true;
+      }
+    );
+  }
+
   onZoneSubmit() {
     /*
     this.userService.updateZone(this.zoneForm.value, this.user.id).subscribe(
@@ -408,7 +404,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   setClassphone() {
-    return { 'has-danger': !this.uphone.pristine && !this.uphone.valid };
+    return { 'has-danger': !this.phoneNumber.pristine && !this.phoneNumber.valid };
   }
 
   setClassLine1() {

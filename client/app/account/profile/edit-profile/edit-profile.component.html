@@ -20,7 +20,7 @@
           <div class="card-block numberbg">
 
             <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" *ngIf="showDivreset else showDivresetmsg">
-              <p>Please fill up the fields below to change your password.</p>
+              <p>Please fill in the fields below to change your password.</p>
               <div class="input-group" [ngClass]="setClassPassword1()">
                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
                 <input class="form-control" type="password" name="password1" formControlName="password1" placeholder="New password">
@@ -35,7 +35,7 @@
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
               </div>
 
-              <p>If you are still having some issues changing your password, please, <span class="profile-text">contact us</span> and someone would get in touch with you.</p>
+              <p>If you are still having some issues changing your password, please,<span class="profile-text">contact us</span> and someone will get in touch with you.</p>
 
             </form>
 
@@ -56,7 +56,7 @@
         <div class="card card-outline-info">
           <div class="card-block numberbg">
             <form [formGroup]="bioForm" (ngSubmit)="onBioSubmit()" *ngIf="showDivbio else showDivbiomsg" novalidate>
-              <p>Please fill up the fields below to update your information. </p>
+              <p>Please fill in the fields below to update your information.</p>
               <div class="input-group" [ngClass]="setClassFirstname()">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                 <input class="form-control" type="text" name="firstname" formControlName="firstname" placeholder="Firstname" [(ngModel)]="person.firstname" required>
@@ -109,15 +109,15 @@
               <p>Update your phone. </p>
               <div class="input-group">
                 <label class="center-block">Phone:
-                  <select class="form-control" formControlName="description" [(ngModel)]='selectedValue'>
+                  <select class="form-control" formControlName="description" [ngModel]='phone.description'>
                     <option value="" selected disabled>Type</option>
-                    <option value="Cell">Cell</option>
+                    <option value="Mobile">Mobile</option>
                     <option value="Home">Home</option>
                     <option value="Work">Work</option>
-                    <option value="Mobile">Mobile</option>
+                    <option value="Other">Other</option>
                   </select>
                   <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                  <input class="form-control" formControlName="uphone">
+                  <input class="form-control" formControlName="number" [ngModel]="phone.number">
                 </label>
               </div>
 
@@ -144,7 +144,6 @@
       <div class="card-block">
         <div class="card card-outline-secondary">
           <div class="card-block numberbg">
-
 
             <form [formGroup]="addressForm" (ngSubmit)="onAddressSubmit()" *ngIf="showDivAddress else showDivAddressmsg">
               <p>Update address. </p>
