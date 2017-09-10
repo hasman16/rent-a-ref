@@ -30,10 +30,10 @@
                 <input class="form-control" type="password" name="password2" formControlName="password2" placeholder="Repeat new password">
               </div>
               <br>
-              <p>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!passwordForm.valid"> <i class="fa fa-save"></i>Save</button>
+              <div>
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!passwordForm.valid"><i class="fa fa-save"></i>Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
-              </p>
+              </div>
 
               <p>If you are still having some issues changing your password, please, <span class="profile-text">contact us</span> and someone would get in touch with you.</p>
 
@@ -82,10 +82,10 @@
                 <my-date-picker name="dob" [options]="myDatePickerOptions" [(ngModel)]="dateModel" (dateChanged)="onDateChanged($event)" formControlName="dob" placeholder="Date of birth"></my-date-picker>
               </div>
               <br>
-              <p>
+              <div>
                 <button type="submit" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
-              </p>
+              </div>
             </form>
 
             <ng-template #showDivbiomsg>
@@ -122,10 +122,10 @@
               </div>
 
               <br>
-              <p>
+              <div>
                 <button type="submit" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i>Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
-              </p>
+              </div>
             </form>
 
             <ng-template #showDivPhonemsg>
@@ -177,11 +177,11 @@
                   </label>
                 </div>
               </div>
-              <br>
-              <p>
+
+              <div>
                 <button type="submit" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i>Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
-              </p>
+              </div>
             </form>
 
             <ng-template #showDivAddressmsg>
@@ -223,11 +223,11 @@
                   </label>
                 </div>
               </div>
-              <br>
-              <p>
+
+              <div>
                 <button type="submit" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i>Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
-              </p>
+              </div>
             </form>
 
             <ng-template #showDivZonemsg>
@@ -277,16 +277,15 @@
                 </div>
 
               </div>
-              <br>
 
-              <p>
+              <div>
                 <button type="submit" class="btn btn-primary btn-sm" [disabled]="!passwordForm.valid">
                   <i class="fa fa-save"></i>Save
                 </button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()">
               <i class="fa fa-ban"></i>Cancel
-            </button>
-              </p>
+              </button>
+              </div>
             </form>
 
 
