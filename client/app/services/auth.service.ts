@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { TokenService } from '../services/token.service';
-import { UserService } from '../services/user.service';
+import { TokenService } from './token.service';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
@@ -10,9 +10,6 @@ export class AuthService {
   isAdmin = false;
 
   currentUser = { email: '', role: '', id: '', firstname: '', lastname: '', can_organize: '', can_referee: '' };
-
- // currentUser;
-
 
   constructor(private userService: UserService,
     private tokenService: TokenService,

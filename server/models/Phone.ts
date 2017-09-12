@@ -8,7 +8,7 @@ export default function(sequelize, DataTypes) {
           type: DataTypes.STRING(64),
           allowNull: false,
           validate: {
-            is: /^(mobile|home|cell|other)$/i
+            is: /^(mobile|home|work|other)$/i
           }
         }
     }, {
