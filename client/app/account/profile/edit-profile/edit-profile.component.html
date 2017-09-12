@@ -100,25 +100,23 @@
     </div>
 
     <!--Phones-->
-    <div class="card-block" *ngIf="divPhoneFlag">
-      <div class="card-block">
-        <div class="card card-outline-warning">
-          <div class="card-block numberbg">
+    <div class="card-block" *ngIf="divPhoneFlag">     
+        <div class="card card-outline-warning">        
 
             <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()" *ngIf="showDivPhone else showDivPhonemsg">
               <p>Update your phone. </p>
               <div class="input-group">
-                <label class="center-block">Phone:
-                  <select class="form-control" formControlName="description" [(ngModel)]='selectedValue'>
+                Phone:
+                  <select class="selectpicker form-control" formControlName="description" [(ngModel)]='selectedValue'>
                     <option value="" selected disabled>Type</option>
                     <option value="Cell">Cell</option>
                     <option value="Home">Home</option>
                     <option value="Work">Work</option>
                     <option value="Mobile">Mobile</option>
                   </select>
-                  <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                  <span class="input-group-addon" style="display:unset "><i class="fa fa-phone"></i></span>
                   <input class="form-control" formControlName="uphone">
-                </label>
+                
               </div>
 
               <br>
@@ -134,8 +132,7 @@
               </blockquote>
             </ng-template>
 
-          </div>
-        </div>
+          
       </div>
     </div>
 
