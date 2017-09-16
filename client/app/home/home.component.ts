@@ -14,6 +14,10 @@ export class HomeComponent implements OnInit {
    // When the DOM is ready, run this function
 $(document).ready(function() {
   // Set the carousel options
+  $('#header-carousel').carousel({
+    pause: true,
+    interval: 100000,
+  });
   $('#news-carousel').carousel({
     pause: true,
     interval: 20000,
