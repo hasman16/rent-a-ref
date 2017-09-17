@@ -100,19 +100,15 @@
     </div>
 
     <!--Phones-->
-    <div class="card-block" *ngIf="divPhoneFlag">     
-        <div class="card card-outline-warning">        
+    <div class="card-block" *ngIf="divPhoneFlag">
+        <div class="card card-outline-warning">
 
             <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()" *ngIf="showDivPhone else showDivPhonemsg">
               <p>Update your phone. </p>
               <div class="input-group">
 
-<!--Phone:
-                  <select class="selectpicker form-control" formControlName="description" [(ngModel)]='selectedValue'>-->
-
                 <label class="center-block">Phone:
-                  <select class="form-control" formControlName="description" [ngModel]='phone.description'>
-
+                  <select class="form-control" formControlName="description">
                     <option value="" selected disabled>Type</option>
                     <option value="Mobile">Mobile</option>
                     <option value="Home">Home</option>
@@ -120,12 +116,8 @@
                     <option value="Other">Other</option>
                   </select>
 
-                 <!-- <span class="input-group-addon" style="display:unset "><i class="fa fa-phone"></i></span>
-                  <input class="form-control" formControlName="uphone">-->
-                
-
                   <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                  <input class="form-control" formControlName="number" [ngModel]="phone.number">
+                  <input class="form-control" formControlName="number">
                 </label>
 
               </div>
@@ -143,7 +135,6 @@
               </blockquote>
             </ng-template>
 
-          
       </div>
     </div>
 
@@ -158,22 +149,22 @@
               <div class="profile-div">
                 <div class="form-group">
                   <label class="center-block">Address:
-                    <input class="form-control" formControlName="line1" [ngModel]="address.line1">
+                    <input class="form-control" formControlName="line1">
                   </label>
                 </div>
                 <div class="form-group">
                   <label class="center-block">Address 1:
-                    <input class="form-control" formControlName="line2" [ngModel]="address.line2">
+                    <input class="form-control" formControlName="line2">
                   </label>
                 </div>
                 <div class="form-group">
                   <label class="center-block">City:
-                    <input class="form-control" formControlName="city" [ngModel]="address.city">
+                    <input class="form-control" formControlName="city">
                   </label>
                 </div>
                 <div class="form-group">
                   <label class="center-block">State:
-                    <select class="form-control" formControlName="state" [ngModel]="address.state">
+                    <select class="form-control" formControlName="state">
                       <option *ngFor="let state of states" value="{{state.abbreviation}}">{{state.name}}</option>
                     </select>
                   </label>

@@ -10,6 +10,9 @@ import { ProfileService } from '../../../services/profile.service';
 import { StatesService } from '../../../services/states.service';
 import { UserService } from '../../../services/user.service';
 
+import { AddressType } from '../../../shared/models/addressType';
+import { PhoneType } from '../../../shared/models/phoneType';
+
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
 
 @Component({
@@ -32,13 +35,13 @@ export class EditProfileComponent implements OnInit {
   ccFlag = false;
   paypal = '';
 
-  user = { id: '', email: ''};
-  person = { id: ''};
+  user = { id: '', email: '' };
+  person = { id: '' };
 
-  address = { id: '', line1: '', line2: '', city: '', state: '', zip: '' };
+  address: AddressType;
   addresses = [];
   phones = [];
-  phone = { id:''};
+  phone: PhoneType;
   isLoading = true;
 
   states;
@@ -127,6 +130,46 @@ export class EditProfileComponent implements OnInit {
 
   subscribeToParams(route) {
 
+    this.addressForm = this.formBuilder.group({
+      line1: this.line1,
+      line2: this.line2,
+      city: this.city,
+      state: this.state,
+      zip: this.zip
+    });
+
+    this.bioForm = this.formBuilder.group({
+      firstname: this.firstname,
+      middlenames: this.middlenames,
+      lastname: this.lastname,
+      gender: this.gender,
+      dob: this.dateModel
+    });
+
+    this.passwordForm = this.formBuilder.group({
+      password1: this.password1,
+      password2: this.password2
+    });
+
+    this.phoneForm = this.formBuilder.group({
+      number: this.phoneNumber,
+      description: this.phoneDescription
+    });
+
+    this.zoneForm = this.formBuilder.group({
+      city: this.acity,
+      state: this.astate,
+      zip: this.azip
+    });
+
+    this.paymentForm = this.formBuilder.group({
+      paypalFlag: this.paypalFlag,
+      paypalinfo: this.paypalinfo,
+      checkFlag: this.checkFlag,
+      ccFlag: this.ccFlag,
+      ccinfo: this.ccinfo
+    });
+
     route.queryParams.subscribe(
       data => {
         this.resetDivs();
@@ -135,97 +178,64 @@ export class EditProfileComponent implements OnInit {
         if (data['divPassword'] === 'password') {
           this.divPasswordFlag = true;
           this.showDivreset = true;
-
-          this.passwordForm = this.formBuilder.group({
-            password1: this.password1,
-            password2: this.password2
-          });
         } else if (data['divBio'] === 'bio') {
           this.divBioFlag = true;
           this.showDivbio = true;
           this.person = this.profileService.getPerson();
           this.selectedValue = this.person['gender'];
-
-          this.bioForm = this.formBuilder.group({
-            firstname: this.firstname,
-            middlenames: this.middlenames,
-            lastname: this.lastname,
-            gender: this.gender,
-            dob: this.dateModel
-          });
-        } else if (data['divPhone'] !== '') {
+        } else if (data['divPhone'] !== undefined) {
           this.createPhoneForm(data);
-
-        } else if (data['divAddress'] !== '') {
+        } else if (data['divAddress'] !== undefined) {
           this.createAddressForm(data);
         } else if (data['divZone'] === 'zone') {
           this.divZoneFlag = true;
           this.showDivZone = true;
-
-          this.zoneForm = this.formBuilder.group({
-            city: this.acity,
-            state: this.astate,
-            zip: this.azip
-          });
         } else if (data['divPayment'] === 'payment') {
           this.divPaymentFlag = true;
           this.showDivPayment = true;
-
-          this.paymentForm = this.formBuilder.group({
-            paypalFlag: this.paypalFlag,
-            paypalinfo: this.paypalinfo,
-            checkFlag: this.checkFlag,
-            ccFlag: this.ccFlag,
-            ccinfo: this.ccinfo
-          });
         }
-    });
+      });
   }
 
   createAddressForm(data) {
-    let addressId = Number(data['divAddress']);
     this.addresses = this.profileService.getAddresses();
+
+    let addressId = Number(data['divAddress']);
+    let address = this.addresses.find(function(address) {
+      return Number(address.id) === addressId;
+    });
+
+    this.address = new AddressType(address);
+
+    this.addressForm.setValue({
+      line1: this.address.line1,
+      line2: this.address.line2,
+      city: this.address.city,
+      state: this.address.state,
+      zip: this.address.zip
+    });
 
     this.divAddressFlag = true;
     this.showDivAddress = true;
-    this.address = { id: '0' , line1: '', line2: '', city: '', state: '', zip: '' };
-
-    if (addressId > 0) {
-      let address = this.addresses.find(function (address) {
-        return Number(address.id) === addressId;
-      });
-      this.address = address ? address: this.address;
-    }
-
-    this.addressForm = this.formBuilder.group({
-      line1: this.line1,
-      line2: this.line2,
-      city: this.city,
-      state: this.state,
-      zip: this.zip
-    });
   }
 
   createPhoneForm(data) {
-    let phoneId = Number(data['divPhone']);
     this.phones = this.profileService.getPhones();
+
+    let phoneId = Number(data['divPhone']);
+    let phone = this.phones.find(function(phone) {
+      return Number(phone.id) === phoneId;
+    });
+
+    this.phone = new PhoneType(phone);
+
+    this.phoneForm.setValue({
+      number: this.phone.number,
+      description: this.phone.description
+    });
 
     this.divPhoneFlag = true;
     this.showDivPhone = true;
-
-    this.phone = { id: '0' };
-
-    if (phoneId > 0) {
-      let phone = this.phones.find(function (phone) {
-        return Number(phone.id) === phoneId;
-      });
-      this.phone = phone ? phone: this.phone;
-    }
-
-    this.phoneForm = this.formBuilder.group({
-      number: this.phoneNumber,
-      description: this.phoneDescription
-    });
   }
 
   ngOnInit() {
@@ -306,7 +316,7 @@ export class EditProfileComponent implements OnInit {
   onAddressSubmit() {
     if (Number(this.address.id) === 0) {
       this.createAddress();
-    }else {
+    } else {
       this.updateAddress();
     }
   }
@@ -334,10 +344,9 @@ export class EditProfileComponent implements OnInit {
   }
 
   onPhoneSubmit() {
-    console.log('phone is:', this.phoneForm.value);
     if (Number(this.phone.id) === 0) {
       this.createPhone();
-    }else {
+    } else {
       this.updatePhone();
     }
   }
