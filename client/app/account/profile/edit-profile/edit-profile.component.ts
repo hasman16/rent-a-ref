@@ -65,43 +65,12 @@ export class EditProfileComponent implements OnInit {
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  password1 = new FormControl('', [<any>Validators.required,
-  <any>Validators.minLength(6)]);
-  password2 = new FormControl('', [<any>Validators.required,
-  <any>Validators.minLength(6)]);
-
   firstname = new FormControl('', [Validators.required, Validators.minLength(2),
   Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]);
   middlenames = new FormControl('', [Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]);
   lastname = new FormControl('', [Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]);
   gender = new FormControl('', [<any>Validators.nullValidator]);
   dob = new FormControl('', [<any>Validators.nullValidator]);
-
-  phoneNumber = new FormControl('', [Validators.required,
-  Validators.minLength(6),
-  Validators.maxLength(20)]);
-  phoneDescription = new FormControl('', [Validators.required, Validators.minLength(2),
-  Validators.maxLength(10), Validators.pattern(this.alphaNumericRegex)]);
-
-  line1 = new FormControl('', [Validators.required, Validators.minLength(2),
-  Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]);
-  line2 = new FormControl('', [Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]);
-  city = new FormControl('', [Validators.required, Validators.minLength(2),
-  Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]);
-  state = new FormControl('', [Validators.required, Validators.minLength(2),
-  Validators.maxLength(20), Validators.pattern(this.alphaNumericRegex)]);
-  zip = new FormControl('', [Validators.required, Validators.minLength(2),
-  Validators.maxLength(12), Validators.pattern(this.zipRegex)]);
-
-  acity = new FormControl('', [Validators.required, Validators.minLength(2),
-  Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]);
-  astate = new FormControl('', [Validators.required, Validators.minLength(2),
-  Validators.maxLength(20), Validators.pattern(this.alphaNumericRegex)]);
-  azip = new FormControl('', [Validators.required, Validators.minLength(2),
-  Validators.maxLength(12), Validators.pattern(this.alphaNumericRegex)]);
-  aradius = new FormControl('', [Validators.required,
-  Validators.minLength(6),
-  Validators.maxLength(20)]);
 
   paypalinfo = new FormControl('', [<any>Validators.nullValidator]);
   check = new FormControl('', [<any>Validators.nullValidator]);
@@ -131,11 +100,19 @@ export class EditProfileComponent implements OnInit {
   subscribeToParams(route) {
 
     this.addressForm = this.formBuilder.group({
-      line1: this.line1,
-      line2: this.line2,
-      city: this.city,
-      state: this.state,
-      zip: this.zip
+      line1: ['', [Validators.required, Validators.minLength(5),
+      Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]],
+
+      line2: ['', [Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]],
+
+      city: ['', [Validators.required, Validators.minLength(2),
+      Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
+
+      state: ['', [Validators.required, Validators.minLength(2),
+      Validators.maxLength(20), Validators.pattern(this.alphaNumericRegex)]],
+
+      zip: ['', [Validators.required, Validators.minLength(2),
+      Validators.maxLength(12), Validators.pattern(this.zipRegex)]]
     });
 
     this.bioForm = this.formBuilder.group({
@@ -147,19 +124,30 @@ export class EditProfileComponent implements OnInit {
     });
 
     this.passwordForm = this.formBuilder.group({
-      password1: this.password1,
-      password2: this.password2
+      password1: ['', [<any>Validators.required,
+      <any>Validators.minLength(6)]],
+      password2: ['', [<any>Validators.required,
+      <any>Validators.minLength(6)]]
     });
 
     this.phoneForm = this.formBuilder.group({
-      number: this.phoneNumber,
-      description: this.phoneDescription
+      number: ['', [Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(20)]],
+      description: ['', [Validators.required, Validators.minLength(2),
+      Validators.maxLength(10), Validators.pattern(this.alphaNumericRegex)]]
     });
 
     this.zoneForm = this.formBuilder.group({
-      city: this.acity,
-      state: this.astate,
-      zip: this.azip
+      city: ['', [Validators.required, Validators.minLength(2),
+      Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
+      state: ['', [Validators.required, Validators.minLength(2),
+      Validators.maxLength(20), Validators.pattern(this.alphaNumericRegex)]],
+      zip: ['', [Validators.required, Validators.minLength(2),
+      Validators.maxLength(12), Validators.pattern(this.zipRegex)]],
+      radius: ['', [Validators.required,
+      Validators.minLength(1),
+      Validators.maxLength(3),  Validators.pattern('\\d{1,3}')]]
     });
 
     this.paymentForm = this.formBuilder.group({
@@ -176,6 +164,10 @@ export class EditProfileComponent implements OnInit {
         this.user = this.profileService.getData();
 
         if (data['divPassword'] === 'password') {
+          this.passwordForm.setValue({
+            password1: '',
+            password2: ''
+          });
           this.divPasswordFlag = true;
           this.showDivreset = true;
         } else if (data['divBio'] === 'bio') {
@@ -309,7 +301,6 @@ export class EditProfileComponent implements OnInit {
         this.divBioFlag = true;
         this.showDivbio = true;
       }
-
     );
   }
 
@@ -400,47 +391,8 @@ export class EditProfileComponent implements OnInit {
     return { 'has-danger': !this.email.pristine && !this.email.valid };
   }
 
-  setClassPassword1() {
-    return { 'has-danger': !this.password1.pristine && !this.password1.valid };
-  }
-
-  setClassPassword2() {
-    return { 'has-danger': !this.password2.pristine && !this.password2.valid };
-  }
-
   setClassFirstname() {
     return { 'has-danger': !this.firstname.pristine && !this.firstname.valid };
   }
 
-  setClassphone() {
-    return { 'has-danger': !this.phoneNumber.pristine && !this.phoneNumber.valid };
-  }
-
-  setClassLine1() {
-    return { 'has-danger': !this.line1.pristine && !this.line1.valid };
-  }
-
-  setClassCity() {
-    return { 'has-danger': !this.city.pristine && !this.city.valid };
-  }
-
-  setClassState() {
-    return { 'has-danger': !this.state.pristine && !this.state.valid };
-  }
-
-  setClassZip() {
-    return { 'has-danger': !this.zip.pristine && !this.zip.valid };
-  }
-
-  setClassaCity() {
-    return { 'has-danger': !this.acity.pristine && !this.acity.valid };
-  }
-
-  setClassaState() {
-    return { 'has-danger': !this.astate.pristine && !this.astate.valid };
-  }
-
-  setClassaZip() {
-    return { 'has-danger': !this.azip.pristine && !this.azip.valid };
-  }
 }
