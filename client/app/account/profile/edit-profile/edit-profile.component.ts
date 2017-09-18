@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
 import * as moment from 'moment';
 
 import { ToastComponent } from '../../../shared/toast/toast.component';
@@ -11,9 +11,11 @@ import { StatesService } from '../../../services/states.service';
 import { UserService } from '../../../services/user.service';
 
 import { AddressType } from '../../../shared/models/addressType';
+import { compareFields } from '../../../shared/compareFields';
 import { PhoneType } from '../../../shared/models/phoneType';
 
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -128,7 +130,7 @@ export class EditProfileComponent implements OnInit {
       <any>Validators.minLength(6)]],
       password2: ['', [<any>Validators.required,
       <any>Validators.minLength(6)]]
-    });
+    }, { validator: compareFields('password1', 'password2') });
 
     this.phoneForm = this.formBuilder.group({
       number: ['', [Validators.required,
@@ -147,7 +149,7 @@ export class EditProfileComponent implements OnInit {
       Validators.maxLength(12), Validators.pattern(this.zipRegex)]],
       radius: ['', [Validators.required,
       Validators.minLength(1),
-      Validators.maxLength(3),  Validators.pattern('\\d{1,3}')]]
+      Validators.maxLength(3), Validators.pattern('\\d{1,3}')]]
     });
 
     this.paymentForm = this.formBuilder.group({

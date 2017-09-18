@@ -21,17 +21,17 @@
 
             <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" *ngIf="showDivreset else showDivresetmsg">
               <p>Please fill in the fields below to change your password.</p>
-              <div class="input-group" [ngClass]="{ 'has-danger': !passwordForm.get('password1').pristine && !passwordForm.get('password1').valid }">
+              <div class="input-group" [ngClass]="{ 'has-danger': passwordForm.get('password1').touched && passwordForm.get('password1').invalid }">
                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
                 <input class="form-control" type="password" name="password1" formControlName="password1" placeholder="New password">
               </div>
-              <div class="input-group" [ngClass]="{ 'has-danger': !passwordForm.get('password2').pristine && (!passwordForm.get('password2').valid || (passwordForm.get(password2).value != passwordForm.get(password1).value)) }">
+              <div class="input-group" [ngClass]="{ 'has-danger': passwordForm.get('password2').touched && passwordForm.get('password2').invalid }">
                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
                 <input class="form-control" type="password" name="password2" formControlName="password2" placeholder="Repeat new password">
               </div>
               <br>
               <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!passwordForm.valid"><i class="fa fa-save"></i>Save</button>
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="passwordForm.invalid"><i class="fa fa-save"></i>Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
               </div>
 
@@ -83,7 +83,7 @@
               </div>
               <br>
               <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!bioForm.valid"> <i class="fa fa-save"></i> Save</button>
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="bioForm.invalid"> <i class="fa fa-save"></i> Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
               </div>
             </form>
@@ -105,7 +105,7 @@
 
             <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()" *ngIf="showDivPhone else showDivPhonemsg">
               <p>Update your phone. </p>
-              <div class="input-group" [ngClass]="{ 'has-danger': !phoneForm.get('number').pristine && !phoneForm.get('number').valid }">
+              <div class="input-group" [ngClass]="{ 'has-danger': phoneForm.get('number').touched && phoneForm.get('number').invalid }">
 
                 <label class="center-block">Phone:
                   <select class="form-control" formControlName="description">
@@ -124,7 +124,7 @@
 
               <br>
               <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!phoneForm.valid"> <i class="fa fa-save"></i>Save</button>
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="phoneForm.invalid"> <i class="fa fa-save"></i>Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
               </div>
             </form>
@@ -147,7 +147,7 @@
             <form [formGroup]="addressForm" (ngSubmit)="onAddressSubmit()" *ngIf="showDivAddress else showDivAddressmsg">
               <p>Update address. </p>
               <div class="profile-div">
-                <div class="form-group" [ngClass]="{ 'has-danger': !addressForm.get('line1').pristine && !addressForm.get('line1').valid }">
+                <div class="form-group" [ngClass]="{ 'has-danger': addressForm.get('line1').touched && addressForm.get('line1').invalid }">
                   <label class="center-block">Address:
                     <input class="form-control" formControlName="line1">
                   </label>
@@ -157,7 +157,7 @@
                     <input class="form-control" formControlName="line2">
                   </label>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-danger': !addressForm.get('city').pristine && !addressForm.get('city').valid }">
+                <div class="form-group" [ngClass]="{ 'has-danger': addressForm.get('city').touched && addressForm.get('city').invalid }">
                   <label class="center-block">City:
                     <input class="form-control" formControlName="city">
                   </label>
@@ -169,7 +169,7 @@
                     </select>
                   </label>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-danger': !addressForm.get('zip').pristine && !addressForm.get('zip').valid }">
+                <div class="form-group" [ngClass]="{ 'has-danger': addressForm.get('zip').touched && addressForm.get('zip').invalid }">
                   <label class="center-block">Zip Code:
                     <input class="form-control" formControlName="zip">
                   </label>
@@ -177,7 +177,7 @@
               </div>
 
               <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!addressForm.valid"> <i class="fa fa-save"></i>Save</button>
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="addressForm.invalid"> <i class="fa fa-save"></i>Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
               </div>
             </form>
@@ -203,7 +203,7 @@
               <p>Please update your availability zone. </p>
               <div class="profile-div">
 
-                <div class="form-group" [ngClass]="{ 'has-danger': !zoneForm.get('city').pristine && !zoneForm.get('city').valid }">
+                <div class="form-group" [ngClass]="{ 'has-danger': zoneForm.get('city').touched && zoneForm.get('city').invalid }">
                   <label class="center-block">City:
                     <input class="form-control" formControlName="city">
                   </label>
@@ -215,13 +215,13 @@
                     </select>
                   </label>
                 </div>
-                <div class="form-group" [ngClass]="{ 'has-danger': !zoneForm.get('zip').pristine && !zoneForm.get('zip').valid }">
+                <div class="form-group" [ngClass]="{ 'has-danger': zoneForm.get('zip').touched && zoneForm.get('zip').invalid }">
                   <label class="center-block">Zip Code:
                     <input class="form-control" formControlName="zip">
                   </label>
                 </div>
 
-                <div class="form-group" [ngClass]="{ 'has-danger': !zoneForm.get('radius').pristine && !zoneForm.get('radius').valid }">
+                <div class="form-group" [ngClass]="{ 'has-danger': zoneForm.get('radius').touched && zoneForm.get('radius').invalid }">
                   <label class="center-block">Travel Radius:
                     <input class="form-control" formControlName="radius">
                   </label>
@@ -229,7 +229,7 @@
               </div>
 
               <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!zoneForm.valid"> <i class="fa fa-save"></i>Save</button>
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="zoneForm.invalid"> <i class="fa fa-save"></i>Save</button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
               </div>
             </form>
@@ -283,7 +283,7 @@
               </div>
 
               <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!passwordForm.valid">
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="passwordForm.invalid">
                   <i class="fa fa-save"></i>Save
                 </button>
                 <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()">
