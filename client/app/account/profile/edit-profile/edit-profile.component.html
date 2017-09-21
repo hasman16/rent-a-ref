@@ -11,37 +11,7 @@
 
     <div class="card-block" *ngIf="divPasswordFlag">
       <div class="card-block">
-        <div class="card card-outline-success">
-          <div class="card-block numberbg">
-
-            <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" *ngIf="showDivreset else showDivresetmsg">
-              <p>Please fill in the fields below to change your password.</p>
-              <div class="input-group" [ngClass]="{ 'has-danger': passwordForm.get('password1').touched && passwordForm.get('password1').invalid }">
-                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                <input class="form-control" type="password" name="password1" formControlName="password1" placeholder="New password">
-              </div>
-              <div class="input-group" [ngClass]="{ 'has-danger': passwordForm.get('password2').touched && passwordForm.get('password2').invalid }">
-                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                <input class="form-control" type="password" name="password2" formControlName="password2" placeholder="Repeat new password">
-              </div>
-              <br>
-              <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="passwordForm.invalid"><i class="fa fa-save"></i>Save</button>
-                <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
-              </div>
-
-              <p>If you are still having some issues changing your password, please,<span class="profile-text">contact us</span> and someone will get in touch with you.</p>
-
-            </form>
-
-            <ng-template #showDivresetmsg>
-              <blockquote>
-                <p>Your password was successfully changed.</p>
-              </blockquote>
-            </ng-template>
-
-          </div>
-        </div>
+        <password-form [password]="password" (savePassword)="onPasswordSubmit($event)"></password-form>
       </div>
     </div>
 
@@ -96,41 +66,7 @@
 
     <!--Phones-->
     <div class="card-block" *ngIf="divPhoneFlag">
-        <div class="card card-outline-warning">
-
-            <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()" *ngIf="showDivPhone else showDivPhonemsg">
-              <p>Update your phone. </p>
-              <div class="input-group" [ngClass]="{ 'has-danger': phoneForm.get('number').touched && phoneForm.get('number').invalid }">
-
-                <label class="center-block">Phone:
-                  <select class="form-control" formControlName="description">
-                    <option value="" selected disabled>Type</option>
-                    <option value="Mobile">Mobile</option>
-                    <option value="Home">Home</option>
-                    <option value="Work">Work</option>
-                    <option value="Other">Other</option>
-                  </select>
-
-                  <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                  <input class="form-control" formControlName="number">
-                </label>
-
-              </div>
-
-              <br>
-              <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="phoneForm.invalid"> <i class="fa fa-save"></i>Save</button>
-                <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
-              </div>
-            </form>
-
-            <ng-template #showDivPhonemsg>
-              <blockquote>
-                <p>Your phone number was successfully updated.</p>
-              </blockquote>
-            </ng-template>
-
-      </div>
+      <phone-form [phone]="phone" (savePhone)="onPhoneSubmit($event)"></phone-form>
     </div>
 
     <!--Address-->

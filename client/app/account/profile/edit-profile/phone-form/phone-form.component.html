@@ -1,0 +1,35 @@
+<div class="card card-outline-warning">
+
+    <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()" *ngIf="showDivPhone else showDivPhonemsg">
+      <p>Update your phone. </p>
+      <div class="input-group" [ngClass]="{ 'has-danger': phoneForm.get('number').touched && phoneForm.get('number').invalid }">
+
+        <label class="center-block">Phone:
+          <select class="form-control" formControlName="description">
+            <option value="" selected disabled>Type</option>
+            <option value="Mobile">Mobile</option>
+            <option value="Home">Home</option>
+            <option value="Work">Work</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+          <input class="form-control" formControlName="number">
+        </label>
+
+      </div>
+
+      <br>
+      <div>
+        <button type="submit" class="btn btn-primary btn-sm" [disabled]="phoneForm.invalid"> <i class="fa fa-save"></i>Save</button>
+        <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+      </div>
+    </form>
+
+    <ng-template #showDivPhonemsg>
+      <blockquote>
+        <p>Your phone number was successfully updated.</p>
+      </blockquote>
+    </ng-template>
+
+</div>

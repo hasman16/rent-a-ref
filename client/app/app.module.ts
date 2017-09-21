@@ -13,13 +13,14 @@ import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthService } from './services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ProfileService } from './services/profile.service';
-import { StatesService} from './services/states.service';
+import { StatesService } from './services/states.service';
 import { TokenService } from './services/token.service';
 import { UserService } from './services/user.service';
 
 /* Components */
 import { AboutComponent } from './about/about.component';
 import { AccountComponent } from './account/account.component';
+import { AddressFormComponent } from './account/profile/edit-profile/address-form/address-form.component';
 import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
 import { BlogComponent } from './group/blog/blog.component';
@@ -28,7 +29,6 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.component';
 import { ContactusComponent } from './group/contactus/contactus.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
-import { AddressFormComponent } from './account/profile/edit-profile/address-form/address-form.component';
 import { FaqComponent } from './group/faq/faq.component';
 import { FooterComponent } from './footer/footer.component';
 import { FooterTabletComponent } from './footer/footer-tablet/footer-tablet.component';
@@ -39,6 +39,8 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { PartnersComponent } from './group/partners/partners.component';
+import { PasswordFormComponent } from './account/profile/edit-profile/password-form/password-form.component';
+import { PhoneFormComponent } from './account/profile/edit-profile/phone-form/phone-form.component';
 import { PricingComponent } from './home/pricing/pricing.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { RefereeComponent } from './referee/referee.component';
@@ -79,32 +81,35 @@ const routes: Routes = [
     AccountComponent,
     AddressFormComponent,
     AdminComponent,
-    RegisterComponent,
-    ResetPasswordComponent,
+    BlogComponent,
+    CareersComponent,
+    CarouselComponent,
+    CarouselItemComponent,
+    ContactusComponent,
+    DropdownDirective,
+    EditProfileComponent,
+    FaqComponent,
+    FooterComponent,
+    FooterTabletComponent,
+    HeaderComponent,
+    HomeComponent,
+    HowItWorksComponent,
     LoginComponent,
     LogoutComponent,
     NotFoundComponent,
-    HeaderComponent,
-    DropdownDirective,
-    HomeComponent,
-    FooterComponent,
-    HowItWorksComponent,
+    OrganizeComponent,
+    PartnersComponent,
+    PasswordFormComponent,
+    PhoneFormComponent,
     PricingComponent,
     ProfileComponent,
-    EditProfileComponent,
-    FooterTabletComponent,
-    CarouselItemComponent,
-    CarouselComponent,
     RefereeComponent,
-    PartnersComponent,
-    TermsAndConditionsComponent,
-    CareersComponent,
-    FaqComponent,
-    BlogComponent,
-    ContactusComponent,
+    RegisterComponent,
     ResetComponent,
+    ResetPasswordComponent,
     ScheduleComponent,
-    OrganizeComponent
+    TermsAndConditionsComponent
+
     // GoogleRecaptchaDirective
 
     // StatisticsComponent

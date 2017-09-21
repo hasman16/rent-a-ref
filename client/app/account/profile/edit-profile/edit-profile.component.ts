@@ -119,21 +119,6 @@ export class EditProfileComponent implements OnInit {
       dob: this.dateModel
     });
 
-    this.passwordForm = this.formBuilder.group({
-      password1: ['', [<any>Validators.required,
-      <any>Validators.minLength(6)]],
-      password2: ['', [<any>Validators.required,
-      <any>Validators.minLength(6)]]
-    }, { validator: compareFields('password1', 'password2') });
-
-    this.phoneForm = this.formBuilder.group({
-      number: ['', [Validators.required,
-      Validators.minLength(6),
-      Validators.maxLength(20)]],
-      description: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(10), Validators.pattern(this.alphaNumericRegex)]]
-    });
-
     this.zoneForm = this.formBuilder.group({
       city: ['', [Validators.required, Validators.minLength(2),
       Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
@@ -160,10 +145,7 @@ export class EditProfileComponent implements OnInit {
         this.user = this.profileService.getData();
         let action = "";
         if (data['divPassword'] === 'password') {
-          this.passwordForm.setValue({
-            password1: '',
-            password2: ''
-          });
+
           action = "password";
           this.divPasswordFlag = true;
           this.showDivreset = true;
@@ -216,11 +198,6 @@ export class EditProfileComponent implements OnInit {
 
     this.phone = new PhoneType(phone);
 
-    this.phoneForm.setValue({
-      number: this.phone.number,
-      description: this.phone.description
-    });
-
     this.divPhoneFlag = true;
     this.showDivPhone = true;
   }
@@ -256,7 +233,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   callSuccess(res) {
-    console.log('callSuccess');
     this.toast.setMessage(res.message, 'success');
     this.onCancel();
   }
