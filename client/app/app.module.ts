@@ -28,6 +28,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.component';
 import { ContactusComponent } from './group/contactus/contactus.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
+import { AddressFormComponent } from './account/profile/edit-profile/address-form/address-form.component';
 import { FaqComponent } from './group/faq/faq.component';
 import { FooterComponent } from './footer/footer.component';
 import { FooterTabletComponent } from './footer/footer-tablet/footer-tablet.component';
@@ -76,6 +77,7 @@ const routes: Routes = [
     AppComponent,
     AboutComponent,
     AccountComponent,
+    AddressFormComponent,
     AdminComponent,
     RegisterComponent,
     ResetPasswordComponent,

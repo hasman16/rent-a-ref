@@ -1,0 +1,49 @@
+<div class="card card-outline-secondary">
+  <div class="card-block numberbg">
+
+    <form [formGroup]="addressForm" (ngSubmit)="onAddressSubmit()" *ngIf="showDivAddress else showDivAddressmsg">
+      <p>Update address. </p>
+      <div class="profile-div">
+        <div class="form-group" [ngClass]="{ 'has-danger': addressForm.get('line1').touched && addressForm.get('line1').invalid }">
+          <label class="center-block">Address:
+            <input class="form-control" formControlName="line1">
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="center-block">Address 1:
+            <input class="form-control" formControlName="line2">
+          </label>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-danger': addressForm.get('city').touched && addressForm.get('city').invalid }">
+          <label class="center-block">City:
+            <input class="form-control" formControlName="city">
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="center-block">State:
+            <select class="form-control" formControlName="state">
+              <option *ngFor="let state of states" value="{{state.abbreviation}}">{{state.name}}</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-danger': addressForm.get('zip').touched && addressForm.get('zip').invalid }">
+          <label class="center-block">Zip Code:
+            <input class="form-control" formControlName="zip">
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-primary btn-sm" [disabled]="addressForm.invalid"> <i class="fa fa-save"></i>Save</button>
+        <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+      </div>
+    </form>
+
+    <ng-template #showDivAddressmsg>
+      <blockquote>
+        <p>Your address was successfully updated.</p>
+      </blockquote>
+    </ng-template>
+
+  </div>
+</div>
