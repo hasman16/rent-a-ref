@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
-
+import { CommonModule } from '@angular/common';
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
 import { AuthGuardLogin } from './services/auth-guard-login.service';
@@ -16,7 +16,7 @@ import { ProfileService } from './services/profile.service';
 import { StatesService} from './services/states.service';
 import { TokenService } from './services/token.service';
 import { UserService } from './services/user.service';
-
+import { OrganizeService } from './services/organize.service';
 /* Components */
 import { AboutComponent } from './about/about.component';
 import { AccountComponent } from './account/account.component';
@@ -53,6 +53,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { OrganizeComponent } from './organize/organize.component';
+import { DataTableModule } from 'angular-2-data-table';
 // import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
 
 // import { Ng2GoogleRecaptchaModule } from 'ng2-google-recaptcha';
@@ -115,6 +116,8 @@ const routes: Routes = [
     FormsModule,
     HttpModule,
     MyDatePickerModule,
+    CommonModule,
+    DataTableModule,
     RouterModule.forRoot(routes)
     // Ng2GoogleRecaptchaModule
 
@@ -128,6 +131,7 @@ const routes: Routes = [
     ProfileService,
     StatesService,
     UserService,
+    OrganizeService,
     CookieService,
     CanDeactivateGuardService
   ],

@@ -100,4 +100,15 @@ export class UserService {
   updatePhone(information, user_id, phone_id): Observable<any> {
     return this.http.put(`/api/users/${user_id}/phones/${phone_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
+
+  // Create an Organization
+  createOrganization(information, user_id): Observable<any> {
+    return this.http.post(`/api/organization/${user_id}`, JSON.stringify(information), this.tokenService.getOptions());
+  }
+  updateOrganization(information, Organization_id): Observable<any> {
+    return this.http.put(`/api/organization/${Organization_id}`, JSON.stringify(information), this.tokenService.getOptions());
+  }
+  getOrganization(user_id: any): Observable<any> {
+    return this.http.get(`/api/organization/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
+  }
 }

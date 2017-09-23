@@ -28,7 +28,7 @@ export class ProfileService {
     return this.phones;
   }
 
-  getProfile(user_id:any) {
+  getProfile(user_id: any) {
     return this.userService.getProfile(user_id)
       .map((res) => {
         this.data = res;
