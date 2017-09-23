@@ -11,11 +11,15 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./address-form.component.scss']
 })
 export class AddressFormComponent implements OnInit {
-  @Input() address: AddressType;
+  @Input() set address(anAddress: AddressType) {
+    this.anAddress = anAddress;
+    this.fillForm();
+  };
   @Input() states: any;
   @Output() saveAddress = new EventEmitter();
 
   addressForm: FormGroup;
+  anAddress: AddressType;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
   showDivAddress = true;
@@ -47,7 +51,7 @@ export class AddressFormComponent implements OnInit {
     this.validator(zip, 'zipInvalid');
   }
 
-  validator(item:AbstractControl , name: string) {
+  validator(item: AbstractControl, name: string) {
     item
       .valueChanges
       .debounceTime(1000)
@@ -60,13 +64,21 @@ export class AddressFormComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
+  fillForm() {
     this.addressForm.setValue({
-      line1: this.address.line1,
-      line2: this.address.line2,
-      city: this.address.city,
-      state: this.address.state,
-      zip: this.address.zip
+      line1: this.anAddress.line1,
+      line2: this.anAddress.line2,
+      city: this.anAddress.city,
+      state: this.anAddress.state,
+      zip: this.anAddress.zip
     });
+  }
+
+  ngOnInit() {
+    this.fillForm();
+  }
+
+  onAddressSubmit() {
+    this.saveAddress.emit(this.addressForm.value);
   }
 }

@@ -23,6 +23,10 @@ export class PasswordFormComponent implements OnInit {
     }, { validator: compareFields('password1', 'password2') });
   }
 
+  onPasswordSubmit() {
+    this.savePassword.emit(this.passwordForm.value);
+  }
+
   ngOnInit() {
     this.passwordForm.setValue({
       password1: '',

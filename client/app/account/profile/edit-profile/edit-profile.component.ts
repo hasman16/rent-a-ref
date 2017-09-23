@@ -276,6 +276,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   onAddressSubmit(newAddress: AddressType) {
+    console.log('onAddressSubmit:', newAddress);
     if (Number(this.address.id) === 0) {
       this.createAddress(newAddress);
     } else {

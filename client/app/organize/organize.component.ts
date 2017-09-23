@@ -9,9 +9,9 @@ import { StatesService } from '../services/states.service';
 import { UserService } from '../services/user.service';
 import { OrganizeService } from '../services/organize.service';
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
-import { DataTable, DataTableTranslations, DataTableResource } from 'angular-2-data-table';
+import { DataTable, DataTableTranslations, DataTableResource } from 'angular-4-data-table';
 import { films } from './organize-data';
-
+/*"angular-2-data-table": "^0.1.2", */
 @Component({
   selector: 'app-organize',
   templateUrl: './organize.component.html',

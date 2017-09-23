@@ -84,7 +84,7 @@
                 <div class="list-group" *ngFor="let phone of phones">
                   <a [routerLink]="['edit-profile']" [queryParams]="{divPhone: auth.loggedIn===true ? phone.id : ''}" fragment="loading"
                           href="#" >Edit</a>
-                  <span class="list-group-item" *ngFor="let phone of phones">
+                  <span class="list-group-item">
                     <label>{{phone.description}} Phone:</label>
                     <strong>{{phone.number}}</strong>
                   </span>

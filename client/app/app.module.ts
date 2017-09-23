@@ -56,7 +56,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { OrganizeComponent } from './organize/organize.component';
-import { DataTableModule } from 'angular-2-data-table';
+import { DataTableModule } from 'angular-4-data-table';
 // import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
 
 // import { Ng2GoogleRecaptchaModule } from 'ng2-google-recaptcha';

@@ -61,7 +61,6 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
         this.person = res.person;
         this.addresses = res.addresses;
         this.phones = res.phones;
-
         if (JSON.stringify(res.person.middlenames) !== 'null') {
           this.middlenameFlag = true;
         }
