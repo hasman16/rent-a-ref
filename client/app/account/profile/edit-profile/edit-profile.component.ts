@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
@@ -16,6 +16,8 @@ import { PhoneType } from '../../../shared/models/phoneType';
 
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
 
+import { AddressFormComponent } from './address-form/address-form.component';
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -23,7 +25,15 @@ import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
-
+  messages: object = {
+    "password": "Change Your Password",
+    "bio": "Update Your Information",
+    "phone": "Update Your Phones",
+    "address": "Update Your Address",
+    "zone": "Update Your Available Zone",
+    "payment": "Update Your Payment"
+  };
+  message: string = "";
   divPasswordFlag = false;
   divBioFlag = false;
   divPhoneFlag = false;
@@ -59,7 +69,7 @@ export class EditProfileComponent implements OnInit {
   passwordForm: FormGroup;
   bioForm: FormGroup;
   phoneForm: FormGroup;
-  addressForm: FormGroup;
+  //addressForm: FormGroup;
   zoneForm: FormGroup;
   paymentForm: FormGroup;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
@@ -100,22 +110,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   subscribeToParams(route) {
-
-    this.addressForm = this.formBuilder.group({
-      line1: ['', [Validators.required, Validators.minLength(5),
-      Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]],
-
-      line2: ['', [Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]],
-
-      city: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
-
-      state: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(20), Validators.pattern(this.alphaNumericRegex)]],
-
-      zip: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(12), Validators.pattern(this.zipRegex)]]
-    });
 
     this.bioForm = this.formBuilder.group({
       firstname: this.firstname,
@@ -164,30 +158,37 @@ export class EditProfileComponent implements OnInit {
       data => {
         this.resetDivs();
         this.user = this.profileService.getData();
-
+        let action = "";
         if (data['divPassword'] === 'password') {
           this.passwordForm.setValue({
             password1: '',
             password2: ''
           });
+          action = "password";
           this.divPasswordFlag = true;
           this.showDivreset = true;
         } else if (data['divBio'] === 'bio') {
-          this.divBioFlag = true;
-          this.showDivbio = true;
+          action = "bio";
           this.person = this.profileService.getPerson();
           this.selectedValue = this.person['gender'];
+          this.divBioFlag = true;
+          this.showDivbio = true;
         } else if (data['divPhone'] !== undefined) {
+          action = "phone";
           this.createPhoneForm(data);
         } else if (data['divAddress'] !== undefined) {
+          action = "address";
           this.createAddressForm(data);
         } else if (data['divZone'] === 'zone') {
+          action = "zone";
           this.divZoneFlag = true;
           this.showDivZone = true;
         } else if (data['divPayment'] === 'payment') {
+          action = "payment";
           this.divPaymentFlag = true;
           this.showDivPayment = true;
         }
+        this.message = this.messages[action];
       });
   }
 
@@ -200,14 +201,6 @@ export class EditProfileComponent implements OnInit {
     });
 
     this.address = new AddressType(address);
-
-    this.addressForm.setValue({
-      line1: this.address.line1,
-      line2: this.address.line2,
-      city: this.address.city,
-      state: this.address.state,
-      zip: this.address.zip
-    });
 
     this.divAddressFlag = true;
     this.showDivAddress = true;
@@ -306,16 +299,16 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  onAddressSubmit() {
+  onAddressSubmit(newAddress: AddressType) {
     if (Number(this.address.id) === 0) {
-      this.createAddress();
+      this.createAddress(newAddress);
     } else {
-      this.updateAddress();
+      this.updateAddress(newAddress);
     }
   }
 
-  createAddress() {
-    this.userService.createAddress(this.addressForm.value, this.user.id).subscribe(
+  createAddress(newAddress: AddressType) {
+    this.userService.createAddress(newAddress, this.user.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
@@ -325,8 +318,8 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  updateAddress() {
-    this.userService.updateAddress(this.addressForm.value, this.user.id, this.address.id).subscribe(
+  updateAddress(newAddress: AddressType) {
+    this.userService.updateAddress(newAddress, this.user.id, this.address.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
