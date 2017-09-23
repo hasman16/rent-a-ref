@@ -31,6 +31,7 @@
     "@angular/platform-browser": "^4.2.4",
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
+    "angular-2-data-table": "^0.1.2",
     "angular2-jwt": "^0.2.3",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.3.1",
@@ -48,7 +49,6 @@
     "jquery-ui": "^1.12.1",
     "jsonwebtoken": "^7.4.1",
     "morgan": "^1.8.2",
-    "rxjs": "^5.4.2",
     "multer": "^1.1.0",
     "mydatepicker": "^2.0.27",
     "ng2-charts": "^1.6.0",
@@ -58,6 +58,7 @@
     "pg": "^4.4.4",
     "randomstring": "^1.1.4",
     "redis": "^2.7.1",
+    "rxjs": "^5.4.2",
     "sendgrid": "^5.2.0",
     "sequelize": "^3.19.1",
     "tether": "1.4.0",
@@ -82,8 +83,8 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "nodemon": "1.11.0",
     "protractor": "~5.1.2",
-    "ts-node": "~3.2.0",
     "sinon": "^1.15.3",
+    "ts-node": "~3.2.0",
     "tslint": "~5.3.2",
     "typescript": "~2.3.3"
   }

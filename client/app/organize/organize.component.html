@@ -2,9 +2,112 @@
   <div class="card">
     <h4 class="elegantshd bigFont">Organize or Request Referee(s)</h4>
     <div class="card-block">
+      <ng-container *ngIf="userDatas.name === ''">
       <blockquote>
-        <p>COming soon.</p>
+        <button type="button" class="btn btn-primary btn-lg btn-block"><li data-toggle="modal" data-target="#orgline" (click)="organizeFlag = true">
+          <!--<a routerLink="/privacy-policy" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">-->
+          <i class="fa fa-institution"></i><span class="general-links"> Click to Create an Organization</span>
+        </li></button>        
       </blockquote>
+</ng-container>
+<ng-container *ngIf="userDatas.name !== ''">
+<ol class="breadcrumb">
+  <li class="breadcrumb-item active">Organization: <b>{{org_name}}</b></li>
+</ol>
+
+</ng-container>
+
+<ng-container>
+  <div style="margin: auto; max-width: 1000px; margin-top:50px">
+    <data-table id="films-grid" headerTitle="Films" [items]="films" [itemCount]="filmCount" (reload)="reloadFilms($event)" [limit]="8"
+      [sortBy]="'rating'" [sortAsc]="false" [selectColumn]="true" [multiSelect]="false" [substituteRows]="false" [expandableRows]="true"
+      [translations]="translations" [indexColumnHeader]="'#'" [selectOnRowClick]="true">
+      <ng-template #dataTableExpand let-item="item">
+        <div [textContent]="item.description" style="padding: 5px; color: gray"></div>
+      </ng-template>
+      <data-table-column [property]="'title'" [header]="'Title'" [sortable]="true">
+      </data-table-column>
+      <data-table-column [property]="'year'" [header]="'Release year'" [sortable]="true">
+      </data-table-column>
+      <data-table-column [property]="'rating'" [header]="'Rating'" [sortable]="true" [cellColors]="cellColor">
+      </data-table-column>
+      <data-table-column [property]="'director'" [header]="'Director'">
+      </data-table-column>
+    </data-table>
+    <div style="margin-top: 10px">
+      <b>Selected:</b>
+      <span *ngIf="filmsTable.selectedRow == null"><i>No item selected</i></span>
+      <span [textContent]="filmsTable.selectedRow && filmsTable.selectedRow.item.title"></span>
+    </div>
+  </div>
+</ng-container>
+
+
+      <!-- Modal start - Create Organization-->
+      <div id="orgline" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordineLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header" *ngIf="organizeFlag">
+              <button type="button" class="close" data-dismiss="modal">×</button>
+              <button></button>
+              <!--<h4 class="modal-title">What is your Organization name?</h4>-->
+            </div>
+            <div class="modal-body" *ngIf="organizeFlag">
+              <div class="embed-responsive embed-responsive-16by9">
+                <!--<iframe class="embed-responsive-item" src="/assets/src/terms-conditions.txt" allowfullscreen></iframe>-->
+                <div class="col-xs-12 col-sm-12">
+                  <!--<div class="card col-sm-12">-->
+                  <!--<div class="card" *ngIf="!isLoading">-->
+                  <div class="card">
+
+                    <h4 class="card-header elegantshd bigFont">New Organization</h4>
+                    <app-toast [message]="toast.message"></app-toast>
+
+                    <div class="card-block">
+                      <div class="card-block">
+                        <div class="card card-outline-success">
+                          <div class="card-block numberbg">
+
+                            <form [formGroup]="organizationForm" (ngSubmit)="createOrganization()" *ngIf="showDivOrg_name else showDivresetmsg">
+                              <p>Please fill in the field below.</p>
+                              <div class="input-group" [ngClass]="setClassName()">
+                                <span class="input-group-addon"><i class="fa  fa-universal-access"></i></span>
+                                <input class="form-control" name="org_name" formControlName="org_name" placeholder="Organization Name" [(ngModel)]="userData.org_name"
+                                  required>
+                              </div>
+                              
+                              <br>
+                              <div>
+                                <button type="submit" class="btn btn-primary btn-sm" [disabled]="organizationForm.invalid"><i class="fa fa-save"></i>Create</button>
+                                <!--<button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>-->
+                              </div>                              
+
+                            </form>
+
+                            <ng-template #showDivresetmsg>
+                              <blockquote>
+                                <p>Your Organization was successfully created.</p>
+                              </blockquote>
+                            </ng-template>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+</div>
+</div>
+              </div>              
+              <!--<p><span class="blue-footer">Thank you</span></p>-->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+        <!--Modal end-->
     </div>
   </div>
 </div>
