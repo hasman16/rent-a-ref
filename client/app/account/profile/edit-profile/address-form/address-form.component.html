@@ -4,7 +4,7 @@
     <form [formGroup]="addressForm" (ngSubmit)="onAddressSubmit()" *ngIf="showDivAddress else showDivAddressmsg">
       <p>Update address. </p>
       <div class="profile-div">
-        <div class="form-group" [ngClass]="{ 'has-danger': addressForm.get('line1').touched && addressForm.get('line1').invalid }">
+        <div class="form-group" [ngClass]="{ 'has-danger': line1Invalid }">
           <label class="center-block">Address:
             <input class="form-control" formControlName="line1">
           </label>
@@ -14,7 +14,7 @@
             <input class="form-control" formControlName="line2">
           </label>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-danger': addressForm.get('city').touched && addressForm.get('city').invalid }">
+        <div class="form-group" [ngClass]="{ 'has-danger': cityInvalid }">
           <label class="center-block">City:
             <input class="form-control" formControlName="city">
           </label>
@@ -26,7 +26,7 @@
             </select>
           </label>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-danger': addressForm.get('zip').touched && addressForm.get('zip').invalid }">
+        <div class="form-group" [ngClass]="{ 'has-danger': zipInvalid }">
           <label class="center-block">Zip Code:
             <input class="form-control" formControlName="zip">
           </label>
