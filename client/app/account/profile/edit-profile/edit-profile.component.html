@@ -79,52 +79,7 @@
     <!--Available venue-->
     <div class="card-block" *ngIf="divZoneFlag">
       <div class="card-block">
-        <div class="card card-outline-success">
-          <div class="card-block numberbg">
-
-            <form [formGroup]="zoneForm" (ngSubmit)="onZoneSubmit()" *ngIf="showDivZone else showDivZonemsg">
-              <p>Please update your availability zone. </p>
-              <div class="profile-div">
-
-                <div class="form-group" [ngClass]="{ 'has-danger': zoneForm.get('city').touched && zoneForm.get('city').invalid }">
-                  <label class="center-block">City:
-                    <input class="form-control" formControlName="city">
-                  </label>
-                </div>
-                <div class="form-group">
-                  <label class="center-block">State:
-                    <select class="form-control" formControlName="state">
-                      <option *ngFor="let state of states" value="{{state.abbreviation}}">{{state.name}}</option>
-                    </select>
-                  </label>
-                </div>
-                <div class="form-group" [ngClass]="{ 'has-danger': zoneForm.get('zip').touched && zoneForm.get('zip').invalid }">
-                  <label class="center-block">Zip Code:
-                    <input class="form-control" formControlName="zip">
-                  </label>
-                </div>
-
-                <div class="form-group" [ngClass]="{ 'has-danger': zoneForm.get('radius').touched && zoneForm.get('radius').invalid }">
-                  <label class="center-block">Travel Radius:
-                    <input class="form-control" formControlName="radius">
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="zoneForm.invalid"> <i class="fa fa-save"></i>Save</button>
-                <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
-              </div>
-            </form>
-
-            <ng-template #showDivZonemsg>
-              <blockquote>
-                <p>Availability zone was successfully updated.</p>
-              </blockquote>
-            </ng-template>
-
-          </div>
-        </div>
+          <zone-form zone="zone"></zone-form>
       </div>
     </div>
 

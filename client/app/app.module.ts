@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
+
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
 import { AuthGuardLogin } from './services/auth-guard-login.service';
@@ -17,6 +18,7 @@ import { StatesService } from './services/states.service';
 import { TokenService } from './services/token.service';
 import { UserService } from './services/user.service';
 import { OrganizeService } from './services/organize.service';
+
 /* Components */
 import { AboutComponent } from './about/about.component';
 import { AccountComponent } from './account/account.component';
@@ -38,6 +40,7 @@ import { HowItWorksComponent } from './home/how-it-works/how-it-works.component'
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { OrganizeComponent } from './organize/organize.component';
 import { PartnersComponent } from './group/partners/partners.component';
 import { PasswordFormComponent } from './account/profile/edit-profile/password-form/password-form.component';
 import { PhoneFormComponent } from './account/profile/edit-profile/phone-form/phone-form.component';
@@ -45,17 +48,18 @@ import { PricingComponent } from './home/pricing/pricing.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { RefereeComponent } from './referee/referee.component';
 import { RegisterComponent } from './register/register.component';
+import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
+import { ScheduleComponent } from './account/schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
+import { ZoneFormComponent } from './account/profile/edit-profile/zone-form/zone-form.component';
+
 
 /* Misc. */
 import { DropdownDirective } from './shared/dropdown.directive';
-import { ResetComponent } from './account/profile/reset/reset.component';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
-import { ScheduleComponent } from './account/schedule/schedule.component';
-import { OrganizeComponent } from './organize/organize.component';
 import { DataTableModule } from 'angular-4-data-table';
 // import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
 
@@ -109,7 +113,8 @@ const routes: Routes = [
     ResetComponent,
     ResetPasswordComponent,
     ScheduleComponent,
-    TermsAndConditionsComponent
+    TermsAndConditionsComponent,
+    ZoneFormComponent
 
     // GoogleRecaptchaDirective
 

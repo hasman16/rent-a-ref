@@ -5,6 +5,7 @@ export class AddressType {
   city: string = '';
   state: string = '';
   zip: string = '';
+  radius: string = '';
   constructor(data = {}) {
     Object.assign(this, data);
     if (!this.id) {

@@ -59,10 +59,16 @@ export class UserService {
     return this.http.put(`/api/people/${person_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
-  updateZone(information, user_id, zone_id): Observable<any> {
-    return this.http.put(`/api/zone/${user_id}/${zone_id}`, JSON.stringify(information), this.tokenService.getOptions());
+  //Zones
+  createZone(information, user_id): Observable<any> {
+    return this.http.post(`/api/user/${user_id}/location_preference`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
+  updateZone(information, zone_id: any): Observable<any> {
+    return this.http.put(`/api/location_preference/${zone_id}`, JSON.stringify(information), this.tokenService.getOptions());
+  }
+
+  //Payments
   updatePayment(information, user): Observable<any> {
     return this.http.put(`/api/payment/${user.id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
@@ -105,9 +111,11 @@ export class UserService {
   createOrganization(information, user_id): Observable<any> {
     return this.http.post(`/api/organization/${user_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
+
   updateOrganization(information, Organization_id): Observable<any> {
     return this.http.put(`/api/organization/${Organization_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
+
   getOrganization(user_id: any): Observable<any> {
     return this.http.get(`/api/organization/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
   }

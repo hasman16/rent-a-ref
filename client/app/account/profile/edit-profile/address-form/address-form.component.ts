@@ -15,11 +15,15 @@ export class AddressFormComponent implements OnInit {
     this.anAddress = anAddress;
     this.fillForm();
   };
+  @Input() set zoneMode(mode: boolean) {
+    this.mode = mode;
+  }
   @Input() states: any;
   @Output() saveAddress = new EventEmitter();
 
   addressForm: FormGroup;
   anAddress: AddressType;
+  mode: boolean = false;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
   showDivAddress = true;

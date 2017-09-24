@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
+import _ from "lodash";
 
 @Injectable()
 export class ProfileService {
-  private data = { id: '', email: '', person: [], addresses: []};
-  private person = { id: ''};
+  private data; //  { id: '', email: '', person: [], addresses: []};
+  private person; // = { id: ''};
   private addresses = [];
+  private areas = [];
   private phones = [];
 
   constructor(private userService: UserService) {
@@ -13,19 +15,23 @@ export class ProfileService {
   }
 
   getData() {
-    return this.data;
+    return _.clone(this.data);
   }
 
   getPerson() {
-    return this.person;
+    return _.cloneDeep(this.person);
   }
 
   getAddresses() {
-    return this.addresses;
+    return _.cloneDeep(this.addresses);
+  }
+
+  getAreas() {
+    return _.cloneDeep(this.areas);
   }
 
   getPhones() {
-    return this.phones;
+    return _.cloneDeep(this.phones);
   }
 
   getProfile(user_id: any) {
@@ -35,6 +41,7 @@ export class ProfileService {
         this.person = res.person;
         this.addresses = res.addresses;
         this.phones = res.phones;
+        this.areas = res.areas;
         return res;
       });
   }

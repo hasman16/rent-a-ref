@@ -16,9 +16,6 @@ import { PhoneType } from '../../../shared/models/phoneType';
 
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
 
-import { AddressFormComponent } from './address-form/address-form.component';
-
-
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -54,6 +51,9 @@ export class EditProfileComponent implements OnInit {
   addresses = [];
   phones = [];
   phone: PhoneType;
+  area: AddressType;
+  areas = [];
+
   isLoading = true;
 
   states;
@@ -66,11 +66,11 @@ export class EditProfileComponent implements OnInit {
   public showDivAddress = false;
   public showDivZone = false;
   public showDivPayment = false;
-  passwordForm: FormGroup;
+  //passwordForm: FormGroup;
   bioForm: FormGroup;
-  phoneForm: FormGroup;
+  //phoneForm: FormGroup;
   //addressForm: FormGroup;
-  zoneForm: FormGroup;
+  //zoneForm: FormGroup;
   paymentForm: FormGroup;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '^\\d{5}(?:[ -]{1}\\d{4})?$';
@@ -119,18 +119,6 @@ export class EditProfileComponent implements OnInit {
       dob: this.dateModel
     });
 
-    this.zoneForm = this.formBuilder.group({
-      city: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
-      state: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(20), Validators.pattern(this.alphaNumericRegex)]],
-      zip: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(12), Validators.pattern(this.zipRegex)]],
-      radius: ['', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(3), Validators.pattern('\\d{1,3}')]]
-    });
-
     this.paymentForm = this.formBuilder.group({
       paypalFlag: this.paypalFlag,
       paypalinfo: this.paypalinfo,
@@ -161,10 +149,9 @@ export class EditProfileComponent implements OnInit {
         } else if (data['divAddress'] !== undefined) {
           action = "address";
           this.createAddressForm(data);
-        } else if (data['divZone'] === 'zone') {
+        } else if (data['divZone'] !== undefined) {
           action = "zone";
-          this.divZoneFlag = true;
-          this.showDivZone = true;
+          this.createZoneForm(data);
         } else if (data['divPayment'] === 'payment') {
           action = "payment";
           this.divPaymentFlag = true;
@@ -200,6 +187,20 @@ export class EditProfileComponent implements OnInit {
 
     this.divPhoneFlag = true;
     this.showDivPhone = true;
+  }
+
+  createZoneForm(data) {
+    this.areas = this.profileService.getAreas();
+
+    let areaId = Number(data['divAddress']);
+    let area = this.areas.find(function(area) {
+      return Number(area.id) === areaId;
+    });
+
+    this.area = new AddressType(area);
+
+    this.divZoneFlag = true;
+    this.showDivZone = true;
   }
 
   ngOnInit() {
@@ -250,8 +251,8 @@ export class EditProfileComponent implements OnInit {
     this.resetDivs();
   }
 
-  onPasswordSubmit() {
-    this.userService.changepassword(this.passwordForm.value, this.user.id).subscribe(
+  onPasswordSubmit(newPassword) {
+    this.userService.changepassword(newPassword, this.user.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
@@ -276,7 +277,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   onAddressSubmit(newAddress: AddressType) {
-    console.log('onAddressSubmit:', newAddress);
     if (Number(this.address.id) === 0) {
       this.createAddress(newAddress);
     } else {
@@ -306,16 +306,16 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  onPhoneSubmit() {
+  onPhoneSubmit(newPhone: PhoneType) {
     if (Number(this.phone.id) === 0) {
-      this.createPhone();
+      this.createPhone(newPhone);
     } else {
-      this.updatePhone();
+      this.updatePhone(newPhone);
     }
   }
 
-  createPhone() {
-    this.userService.createPhone(this.phoneForm.value, this.user.id).subscribe(
+  createPhone(newPhone: PhoneType) {
+    this.userService.createPhone(newPhone, this.user.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
@@ -325,8 +325,8 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  updatePhone() {
-    this.userService.updatePhone(this.phoneForm.value, this.user.id, this.phone.id).subscribe(
+  updatePhone(newPhone: PhoneType) {
+    this.userService.updatePhone(newPhone, this.user.id, this.phone.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
@@ -336,16 +336,15 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  onZoneSubmit() {
-    /*
-    this.userService.updateZone(this.zoneForm.value, this.user.id).subscribe(
+  onZoneSubmit(newZone: AddressType) {
+    this.userService.updateZone(newZone, this.user.id).subscribe(
       this.callSuccess,
       (err: HttpErrorResponse) => {
         this.callFailure(err);
         this.divZoneFlag = true;
         this.showDivZone = true;
       }
-    );*/
+    );
   }
 
   onPaymentSubmit() {
