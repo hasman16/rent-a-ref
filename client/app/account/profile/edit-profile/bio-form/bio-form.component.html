@@ -1,0 +1,43 @@
+<div class="card card-outline-info">
+  <div class="card-block numberbg">
+    <form [formGroup]="bioForm" (ngSubmit)="onBioSubmit()" *ngIf="showDivbio else showDivbiomsg" novalidate>
+      <p>Please fill in the fields below to update your information.</p>
+      <div class="input-group" [ngClass]="{ 'has-danger': firstnameInvalid }">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input class="form-control" name="firstname" formControlName="firstname" placeholder="Firstname">
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+        <input class="form-control" name="middlenames" formControlName="middlenames" placeholder="Middlename">
+      </div>
+      <div class="input-group" [ngClass]="{ 'has-danger': lastnameInvalid }">
+        <span class="input-group-addon"><i class="fa fa-user-circle-o"></i></span>
+        <input class="form-control" name="lastname" formControlName="lastname" placeholder="Lastname">
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
+        <select class="form-control" name="gender" formControlName="gender">
+          <option value="" selected disabled>Gender</option>
+          <option value="m">Male</option>
+          <option value="f">Female</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa  fa-birthday-cake"></i></span>
+        <my-date-picker name="dob" [options]="myDatePickerOptions" (dateChanged)="onDateChanged($event)" formControlName="dob" placeholder="Date of birth"></my-date-picker>
+      </div>
+      <br>
+      <div>
+        <button type="submit" class="btn btn-primary btn-sm" [disabled]="bioForm.invalid"> <i class="fa fa-save"></i> Save</button>
+        <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+      </div>
+    </form>
+
+    <ng-template #showDivbiomsg>
+      <blockquote>
+        <p>Your information was successfully updated.</p>
+      </blockquote>
+    </ng-template>
+
+  </div>
+</div>

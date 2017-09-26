@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import _ from "lodash";
+import { AddressType } from "./../shared/models/addressType";
+import { BioType } from "./../shared/models/bioType";
+import { PhoneType } from "./../shared/models/phoneType";
 
 @Injectable()
 export class ProfileService {
@@ -18,19 +21,19 @@ export class ProfileService {
     return _.clone(this.data);
   }
 
-  getPerson() {
+  getPerson():BioType {
     return _.cloneDeep(this.person);
   }
 
-  getAddresses() {
+  getAddresses():Array<AddressType> {
     return _.cloneDeep(this.addresses);
   }
 
-  getAreas() {
+  getAreas():Array<any> {
     return _.cloneDeep(this.areas);
   }
 
-  getPhones() {
+  getPhones():Array<PhoneType> {
     return _.cloneDeep(this.phones);
   }
 

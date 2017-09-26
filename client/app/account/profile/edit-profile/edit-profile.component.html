@@ -18,49 +18,7 @@
     <!--Bio info-->
     <div class="card-block" *ngIf="divBioFlag">
       <div class="card-block">
-        <div class="card card-outline-info">
-          <div class="card-block numberbg">
-            <form [formGroup]="bioForm" (ngSubmit)="onBioSubmit()" *ngIf="showDivbio else showDivbiomsg" novalidate>
-              <p>Please fill in the fields below to update your information.</p>
-              <div class="input-group" [ngClass]="setClassFirstname()">
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                <input class="form-control" name="firstname" formControlName="firstname" placeholder="Firstname" [(ngModel)]="person.firstname" required>
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
-                <input class="form-control" name="middlenames" formControlName="middlenames" placeholder="Middlename" [(ngModel)]="person.middlenames">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-user-circle-o"></i></span>
-                <input class="form-control" name="lastname" formControlName="lastname" placeholder="Lastname" [(ngModel)]="person.lastname">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
-                <select class="form-control" name="gender" formControlName="gender" [(ngModel)]='selectedValue'>
-                  <option value="" selected disabled>Gender</option>
-                  <option value="m">Male</option>
-                  <option value="f">Female</option>
-                </select>
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon"><i class="fa  fa-birthday-cake"></i></span>
-                <my-date-picker name="dob" [options]="myDatePickerOptions" [(ngModel)]="dateModel" (dateChanged)="onDateChanged($event)" formControlName="dob" placeholder="Date of birth"></my-date-picker>
-              </div>
-              <br>
-              <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="bioForm.invalid"> <i class="fa fa-save"></i> Save</button>
-                <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
-              </div>
-            </form>
-
-            <ng-template #showDivbiomsg>
-              <blockquote>
-                <p>Your information was successfully updated.</p>
-              </blockquote>
-            </ng-template>
-
-          </div>
-        </div>
+        <bio-form [person]="person" (saveBio)="onBioSubmit($event)"></bio-form>
       </div>
     </div>
 

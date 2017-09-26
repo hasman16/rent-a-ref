@@ -13,8 +13,7 @@ import { UserService } from '../../../services/user.service';
 import { AddressType } from '../../../shared/models/addressType';
 import { compareFields } from '../../../shared/compareFields';
 import { PhoneType } from '../../../shared/models/phoneType';
-
-import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
+import { BioType } from '../../../shared/models/bioType';
 
 @Component({
   selector: 'app-edit-profile',
@@ -45,7 +44,7 @@ export class EditProfileComponent implements OnInit {
   paypal = '';
 
   user = { id: '', email: '' };
-  person = { id: '' };
+  person: BioType;
 
   address: AddressType;
   addresses = [];
@@ -57,7 +56,6 @@ export class EditProfileComponent implements OnInit {
   isLoading = true;
 
   states;
-  selectedValue;
   abort = false;
 
   public showDivreset = false;
@@ -66,41 +64,16 @@ export class EditProfileComponent implements OnInit {
   public showDivAddress = false;
   public showDivZone = false;
   public showDivPayment = false;
-  //passwordForm: FormGroup;
-  bioForm: FormGroup;
-  //phoneForm: FormGroup;
-  //addressForm: FormGroup;
-  //zoneForm: FormGroup;
+
   paymentForm: FormGroup;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '^\\d{5}(?:[ -]{1}\\d{4})?$';
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  firstname = new FormControl('', [Validators.required, Validators.minLength(2),
-  Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]);
-  middlenames = new FormControl('', [Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]);
-  lastname = new FormControl('', [Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]);
-  gender = new FormControl('', [<any>Validators.nullValidator]);
-  dob = new FormControl('', [<any>Validators.nullValidator]);
-
   paypalinfo = new FormControl('', [<any>Validators.nullValidator]);
   check = new FormControl('', [<any>Validators.nullValidator]);
   ccinfo = new FormControl('', [<any>Validators.nullValidator]);
-
-  public myDatePickerOptions: IMyDpOptions = {
-    // other options...
-    dateFormat: 'yyyy-mm-dd',
-  };
-
-  // Initialized to specific date (09.10.2018).
-  // public model: Object = { date: { year: 2018, month: 10, day: 9 } };
-  public dateModel;
-
-  onDateChanged(event: IMyDateModel) {
-    console.log('onDateChanged(): ', event.date,
-      ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-  }
 
   constructor(private formBuilder: FormBuilder, private auth: AuthService,
     public toast: ToastComponent, private profileService: ProfileService,
@@ -110,15 +83,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   subscribeToParams(route) {
-
-    this.bioForm = this.formBuilder.group({
-      firstname: this.firstname,
-      middlenames: this.middlenames,
-      lastname: this.lastname,
-      gender: this.gender,
-      dob: this.dateModel
-    });
-
     this.paymentForm = this.formBuilder.group({
       paypalFlag: this.paypalFlag,
       paypalinfo: this.paypalinfo,
@@ -133,14 +97,12 @@ export class EditProfileComponent implements OnInit {
         this.user = this.profileService.getData();
         let action = "";
         if (data['divPassword'] === 'password') {
-
           action = "password";
           this.divPasswordFlag = true;
           this.showDivreset = true;
         } else if (data['divBio'] === 'bio') {
           action = "bio";
           this.person = this.profileService.getPerson();
-          this.selectedValue = this.person['gender'];
           this.divBioFlag = true;
           this.showDivbio = true;
         } else if (data['divPhone'] !== undefined) {
@@ -262,8 +224,7 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  onBioSubmit() {
-    let bio = Object.assign({}, this.bioForm.value);
+  onBioSubmit(bio) {
     bio.dob = Number(bio.dob.epoc) * 1000;
 
     this.userService.updatePerson(bio, this.person.id).subscribe(
@@ -356,14 +317,6 @@ export class EditProfileComponent implements OnInit {
         this.showDivPayment = true;
       }
     );
-  }
-
-  setClassEmail1() {
-    return { 'has-danger': !this.email.pristine && !this.email.valid };
-  }
-
-  setClassFirstname() {
-    return { 'has-danger': !this.firstname.pristine && !this.firstname.valid };
   }
 
 }

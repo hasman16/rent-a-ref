@@ -25,6 +25,7 @@ import { AccountComponent } from './account/account.component';
 import { AddressFormComponent } from './account/profile/edit-profile/address-form/address-form.component';
 import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
+import { BioFormComponent } from './account/profile/edit-profile/bio-form/bio-form.component';
 import { BlogComponent } from './group/blog/blog.component';
 import { CareersComponent } from './group/careers/careers.component';
 import { CarouselComponent } from './carousel/carousel.component';
@@ -86,6 +87,7 @@ const routes: Routes = [
     AccountComponent,
     AddressFormComponent,
     AdminComponent,
+    BioFormComponent,
     BlogComponent,
     CareersComponent,
     CarouselComponent,
