@@ -54,7 +54,7 @@ import { ResetPasswordComponent } from './resetpassword/resetpassword.component'
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './account/profile/edit-profile/zone-form/zone-form.component';
-
+import { GamesComponent } from './games/games.component';
 
 /* Misc. */
 import { DropdownDirective } from './shared/dropdown.directive';
@@ -62,6 +62,15 @@ import { CanDeactivateGuardService } from './services/can-deactivate-guard.servi
 import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
 import { DataTableModule } from 'angular-4-data-table';
+// rich grid
+import { RichGridComponent } from './rich-grid-example/rich-grid.component';
+import { DateComponent } from './date-component/date.component';
+import { HeaderGridComponent } from './header-grid/header-grid.component';
+import { HeaderGroupComponent } from './header-group-component/header-group.component';
+import { LeftmenuComponent } from './leftmenu/leftmenu.component';
+import { BarchartComponent } from './barchart/barchart.component';
+
+
 // import { GoogleRecaptchaDirective } from './shared/googlerecaptcha.directive';
 
 // import { Ng2GoogleRecaptchaModule } from 'ng2-google-recaptcha';
@@ -111,12 +120,19 @@ const routes: Routes = [
     PricingComponent,
     ProfileComponent,
     RefereeComponent,
+    GamesComponent,
     RegisterComponent,
     ResetComponent,
     ResetPasswordComponent,
     ScheduleComponent,
     TermsAndConditionsComponent,
-    ZoneFormComponent
+    ZoneFormComponent,
+    HeaderGridComponent,
+    DateComponent,
+    RichGridComponent,
+    HeaderGroupComponent,
+    LeftmenuComponent,
+    BarchartComponent
 
     // GoogleRecaptchaDirective
 

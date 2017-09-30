@@ -9,7 +9,7 @@ import * as $ from 'jquery';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  public chartData: Array<any>;
   constructor() {
    // When the DOM is ready, run this function
 $(document).ready(function() {
@@ -30,6 +30,24 @@ $(document).ready(function() {
   }
 
   ngOnInit() {
+    // give everything a chance to get loaded before starting the animation to reduce choppiness
+    setTimeout(() => {
+      this.generateData();
+
+      // change the data periodically
+      setInterval(() => this.generateData(), 60000);
+    }, 1000);
   }
 
+  generateData() {
+    this.chartData = [];
+    for (let i = 0; i < 5; i++) {
+      const newNumber = (Math.random() * 500);
+      this.chartData.push([
+        `${i}`,
+        newNumber
+      ]);
+    }
+
+  }
 }

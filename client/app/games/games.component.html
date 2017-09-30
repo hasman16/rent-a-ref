@@ -1,0 +1,22 @@
+<div class="container" style="background-color: #4F4F6B">
+        <div class="row">
+                <div class="col-sm-2">
+                        <!--<p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
+      <button #btn type="button" pButton class="bg-inverse" icon="fa fa-list" label="Show" (click)="menu.toggle($event)"></button>-->
+                        <br>
+                        <br>
+                        <app-leftmenu></app-leftmenu>
+                </div>
+                <div class="col-sm-10">
+                        <div class="main-wrapper">
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+<div class="card col-sm-12">
+        <div class="card" *ngIf="!isLoading">
+                <h4>Game Assignment</h4>
+                <rich-grid></rich-grid>
+                </div>
+                </div>
+                </div>
+                </div>

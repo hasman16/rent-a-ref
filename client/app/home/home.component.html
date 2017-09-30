@@ -231,6 +231,29 @@
                         <!--End-->
                         <!--Start News-->
                         <hr>
+<h4 class="elegantshd bigFont">Statistics</h4>
+<div class='row' style="padding: 10px; margin: 10px">
+        <div class='col-md-offset-2 col-md-12'>
+                <div class="col-sm-12">
+                                <div class="main-wrapper">
+                                        <div class="card card-block bg-inverse frameHeight" >
+                                                <h4>Games in progress / Request</h4>
+                                                <div class="col-sm-8">
+                                                <app-barchart *ngIf="chartData" [data]="chartData"></app-barchart>
+                                                </div>
+                                                <div class="col-sm-4 text-white"><span><ul>
+                                                        <li>0 --> Games request</li>
+                                                        <li>1 --> Games currently assigned</li>
+                                                        <li>2 --> Games in progress</li>
+                                                        <li>3 --> Referees Available</li>
+                                                        <li>4 --> Interest from Organizers and Referees</li>
+                                                </ul></span></div>
+                                        </div>
+                                </div>
+                        </div>
+                        </div>
+                        </div>
+                        <hr>
 
                         <h4 class="elegantshd bigFont">In the News</h4>
                         <div class='row' style="padding: 10px; margin: 10px">
