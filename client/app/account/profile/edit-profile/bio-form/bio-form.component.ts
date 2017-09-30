@@ -20,6 +20,7 @@ export class BioFormComponent implements OnInit {
   };
   @Input() states: any;
   @Output() saveBio = new EventEmitter();
+  @Output() cancelForm = new EventEmitter();
 
   bioForm: FormGroup;
   aPerson: BioType;
@@ -87,7 +88,12 @@ export class BioFormComponent implements OnInit {
     this.fillForm();
   }
 
-  onAddressSubmit() {
+  onSubmit() {
     this.saveBio.emit(this.bioForm.value);
+  }
+
+  onCancel() {
+    console.log('onCancel');
+    this.cancelForm.emit(false);
   }
 }

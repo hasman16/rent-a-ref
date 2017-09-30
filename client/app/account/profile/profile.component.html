@@ -19,35 +19,37 @@
 
           <div class="col-xs-12 col-sm-6">
               <div class="card card-outline-info">
-                <span class="card danger">
-                  <strong>Personal details</strong>
-                  <a [routerLink]="['edit-profile']" [queryParams]="{divBio: auth.loggedIn===true ? 'bio' : ''}" fragment="loading"
-              href="#" >Edit</a>
-                </span>
-
-                <span class="list-group-item">
-                  <label>Firstname: </label>
-                  <strong>{{person.firstname}}</strong>
-                </span>
-                <ng-container *ngIf="middlenameFlag">
-                  <span class="list-group-item">
-                    <label>Middlename: </label>
-                    <strong>{{person.middlenames}}</strong>
+                <div *ngIf="!editBio">
+                  <span class="card danger">
+                    <strong>Personal details</strong>
+                    <a [routerLink]="['edit-profile']" (click)="editBio=true" href="#" >Edit</a>
                   </span>
-                </ng-container>
 
-                <span class="list-group-item">
-                  <label>Lastname:</label>
-                  <strong>{{person.lastname}}</strong>
-                </span>
-                <span class="list-group-item">
-                  <label>Gender:</label>
-                  <strong>{{person.gender}}</strong>
-                </span>
-                <span class="list-group-item">
-                  <label>D.O.B:</label>
-                  <strong>{{person.dob}}</strong>
-                </span>
+                  <span class="list-group-item">
+                    <label>Firstname: </label>
+                    <strong>{{person.firstname}}</strong>
+                  </span>
+                  <ng-container *ngIf="middlenameFlag">
+                    <span class="list-group-item">
+                      <label>Middlename: </label>
+                      <strong>{{person.middlenames}}</strong>
+                    </span>
+                  </ng-container>
+
+                  <span class="list-group-item">
+                    <label>Lastname:</label>
+                    <strong>{{person.lastname}}</strong>
+                  </span>
+                  <span class="list-group-item">
+                    <label>Gender:</label>
+                    <strong>{{person.gender}}</strong>
+                  </span>
+                  <span class="list-group-item">
+                    <label>D.O.B:</label>
+                    <strong>{{person.dob}}</strong>
+                  </span>
+                </div>
+                <bio-form *ngIf="editBio" [person]="person" (saveBio)="onBioSubmit($event)" (cancelForm)="onFormCancel($event)"></bio-form>
             </div>
 
             <div class="card card-outline-success">

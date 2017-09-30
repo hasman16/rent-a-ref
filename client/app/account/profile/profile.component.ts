@@ -37,6 +37,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   //id = this.auth.currentUser.id;
   abort = false;
   divPassword = false;
+  editBio = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router, private auth: AuthService,
@@ -89,5 +90,15 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
       }
     );
     this.router.navigate(['edit-profile'], { relativeTo: this.route, queryParamsHandling: 'preserve' });
+  }
+
+  onBioSubmit(value) {
+    console.log('value:', value);
+    this.onFormCancel(false);
+  }
+
+  onFormCancel(value) {
+    console.log('onFormCancel');
+    this.editBio = false;
   }
 }
