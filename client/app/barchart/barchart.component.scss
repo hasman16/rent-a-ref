@@ -1,0 +1,15 @@
+.d3-barchart {
+  width:45%;
+  height:170px;
+padding-top: -10px;
+margin-top: -10px;
+}
+
+.d3-barchart .axis path,
+.d3-barchart .axis line {
+  stroke: #999;
+}
+
+.d3-barchart .axis text {
+  fill: #999;
+}

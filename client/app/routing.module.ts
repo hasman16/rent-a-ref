@@ -34,6 +34,8 @@ import { ResetComponent } from './account/profile/reset/reset.component';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { OrganizeComponent } from './organize/organize.component';
+import { GamesComponent } from './games/games.component';
+// import { RichGridComponent } from './rich-grid-example/rich-grid.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -74,7 +76,9 @@ const routes: Routes = [
   { path: 'account/standby/:id', component: StandbyComponent },
   { path: 'account/suspended/:id', component: SuspendedComponent },
   { path: 'account/deactivated/:id', component: DeactivatedComponent },
-  { path: 'account/admin/:id', component: AdminComponent, canActivate: [AuthGuardAdmin], canDeactivate: [CanDeactivateGuardService]},
+  { path: 'account/admin/:id', component: AdminComponent, canActivate: [AuthGuardAdmin], canDeactivate: [CanDeactivateGuardService] },
+  { path: 'officials', component: RefereeComponent },
+  { path: 'games', component: GamesComponent },
   { path: 'notfound', component: NotFoundComponent },
   { path: '**', redirectTo: '/notfound' },
 ];

@@ -33,8 +33,8 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   isLoading = true;
   allowEdit = false;
   middlenameFlag = false;
-  //edit = 'account/profile';
-  //id = this.auth.currentUser.id;
+  // edit = 'account/profile';
+  // id = this.auth.currentUser.id;
   abort = false;
   divPassword = false;
   editBio = false;
