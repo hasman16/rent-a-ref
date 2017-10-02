@@ -1,6 +1,6 @@
-<div class="card card-outline-warning">
+<div class="card card-outline-warning fadeInForm">
 
-    <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()" *ngIf="showDivPhone else showDivPhonemsg">
+    <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()">
       <p>Update your phone. </p>
       <div class="input-group" [ngClass]="{ 'has-danger': phoneForm.get('number').touched && phoneForm.get('number').invalid }">
 
@@ -21,15 +21,8 @@
 
       <br>
       <div>
-        <button type="submit" class="btn btn-primary btn-sm" [disabled]="phoneForm.invalid"> <i class="fa fa-save"></i>Save</button>
-        <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm" [disabled]="phoneForm.invalid"><i class="fa fa-save"></i>Save</button>
+        <button class="btn btn-secondary btn-sm" type="button" (click)="onCancel($event)"><i class="fa fa-times"></i>Cancel</button>
       </div>
     </form>
-
-    <ng-template #showDivPhonemsg>
-      <blockquote>
-        <p>Your phone number was successfully updated.</p>
-      </blockquote>
-    </ng-template>
-
 </div>

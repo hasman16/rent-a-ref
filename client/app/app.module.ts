@@ -3,6 +3,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 /* Modules */
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -144,6 +145,7 @@ const routes: Routes = [
     SharedModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     MyDatePickerModule,
     CommonModule,

@@ -13,6 +13,7 @@ export class PhoneFormComponent implements OnInit {
     this.fillForm();
   };
   @Output() savePhone = new EventEmitter();
+  @Output() cancelForm = new EventEmitter();
 
   phoneForm: FormGroup;
   telephone: PhoneType;
@@ -40,6 +41,10 @@ export class PhoneFormComponent implements OnInit {
     this.savePhone.emit(this.phoneForm.value);
   }
 
+  onCancel() {
+    this.cancelForm.emit(false);
+  }
+  
   ngOnInit() {
     this.fillForm();
   }

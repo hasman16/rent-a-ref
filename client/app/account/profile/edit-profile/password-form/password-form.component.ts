@@ -10,6 +10,7 @@ import { compareFields } from '../../../../shared/compareFields';
 export class PasswordFormComponent implements OnInit {
   @Input() password: any;
   @Output() savePassword = new EventEmitter();
+  @Output() cancelForm = new EventEmitter();
 
   passwordForm: FormGroup;
   showDivreset = true;
@@ -25,6 +26,10 @@ export class PasswordFormComponent implements OnInit {
 
   onPasswordSubmit() {
     this.savePassword.emit(this.passwordForm.value);
+  }
+  
+  onCancel() {
+    this.cancelForm.emit(false);
   }
 
   ngOnInit() {

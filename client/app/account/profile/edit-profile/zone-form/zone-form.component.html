@@ -1,7 +1,7 @@
 <div class="card card-outline-success">
   <div class="card-block numberbg">
 
-    <form [formGroup]="zoneForm" (ngSubmit)="onZoneSubmit()" *ngIf="showDivZone else showDivZonemsg">
+    <form [formGroup]="zoneForm" (ngSubmit)="onZoneSubmit()">
       <p>Please update your availability zone. </p>
       <div class="profile-div">
 
@@ -32,15 +32,9 @@
 
       <div>
         <button type="submit" class="btn btn-primary btn-sm" [disabled]="zoneForm.invalid"> <i class="fa fa-save"></i>Save</button>
-        <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+        <button class="btn btn-secondary btn-sm" type="button" (click)="onCancel($event)"><i class="fa fa-times"></i>Cancel</button>
       </div>
     </form>
-
-    <ng-template #showDivZonemsg>
-      <blockquote>
-        <p>Availability zone was successfully updated.</p>
-      </blockquote>
-    </ng-template>
 
   </div>
 </div>

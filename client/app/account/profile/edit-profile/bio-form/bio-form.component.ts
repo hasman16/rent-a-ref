@@ -15,7 +15,6 @@ import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
 export class BioFormComponent implements OnInit {
   @Input() set person(aPerson: BioType) {
     this.aPerson = aPerson;
-    console.log("a person:", aPerson);
     this.fillForm();
   };
   @Input() states: any;
@@ -93,7 +92,6 @@ export class BioFormComponent implements OnInit {
   }
 
   onCancel() {
-    console.log('onCancel');
     this.cancelForm.emit(false);
   }
 }

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { ResetPasswordComponent } from './resetpassword.component';
 
 describe('ResetPasswordComponent', () => {
-  let component: LoginComponent;
+  let component: ResetPasswordComponent;
   let fixture: ComponentFixture<ResetPasswordComponent>;
 
   beforeEach(async(() => {

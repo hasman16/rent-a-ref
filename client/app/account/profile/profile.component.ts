@@ -12,7 +12,7 @@ import { ProfileService } from '../../services/profile.service';
 import { UserService } from '../../services/user.service';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
-
+import { AddressType } from '../../shared/models/addressType';
 // End
 @Component({
   selector: 'app-profile',
@@ -20,24 +20,26 @@ import { ToastComponent } from '../../shared/toast/toast.component';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, CanComponentDeactivate {
-  paypalFlag = false;
-  checkFlag = false;
-  ccFlag = false;
-  paypal = '';
   data = {};
   user = {};
   person = {};
   addresses = [];
+  dummyAddress: AddressType = new AddressType({});
   phones = [];
-  available = { };
+  available = {};
   isLoading = true;
   allowEdit = false;
   middlenameFlag = false;
-  // edit = 'account/profile';
-  // id = this.auth.currentUser.id;
+
   abort = false;
   divPassword = false;
   editBio = false;
+  editPassword = false;
+  editPhone = false;
+  currentPhone = 0;
+
+  editAddress = false;
+  currentAddress = 0;
 
   constructor(private route: ActivatedRoute,
     private router: Router, private auth: AuthService,
@@ -82,23 +84,52 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     );
   }
 
-  onEdit() {
-    this.route.queryParams
-      .subscribe(
-      (queryParams: Params) => {
-        this.divPassword = queryParams['divPassword'] === 'password' ? true : false;
-      }
-    );
-    this.router.navigate(['edit-profile'], { relativeTo: this.route, queryParamsHandling: 'preserve' });
+  clearEdits() {
+    this.editBio = false;
+    this.editPassword = false;
+    this.editAddress = false;
+    this.editPhone = false;
+  }
+
+  setEditAddress(id: number = 0, value: boolean = false) {
+    this.clearEdits();
+    this.currentAddress = id;
+    this.editAddress = value;
+  }
+
+  setEditBio(value: boolean = false) {
+    this.clearEdits();
+    this.editBio = value;
+  }
+
+  setEditPassword(value: boolean = false) {
+    this.clearEdits();
+    this.editPassword = value;
+  }
+
+  setEditPhone(id: number = 0, value: boolean = false) {
+    this.clearEdits();
+    this.currentPhone = id;
+    this.editPhone = value;
+  }
+
+  onAddressSubmit(value) {
+    this.onFormCancel(false);
   }
 
   onBioSubmit(value) {
-    console.log('value:', value);
+    this.onFormCancel(false);
+  }
+
+  onPasswordSubmit(value) {
+    this.onFormCancel(false);
+  }
+
+  onPhoneSubmit(value) {
     this.onFormCancel(false);
   }
 
   onFormCancel(value) {
-    console.log('onFormCancel');
-    this.editBio = false;
+    this.clearEdits();
   }
 }

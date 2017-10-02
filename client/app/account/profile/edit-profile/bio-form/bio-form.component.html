@@ -1,7 +1,6 @@
-<div class="">
-  <div class="card-block numberbg">
+<div class="fadeInForm">
+  <div class="">
     <form [formGroup]="bioForm" (ngSubmit)="onSubmit()">
-      <p>Please fill in the fields below to update your information.</p>
       <div class="input-group" [ngClass]="{ 'has-danger': firstnameInvalid }">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
         <input class="form-control" name="firstname" formControlName="firstname" placeholder="Firstname">
@@ -28,8 +27,8 @@
       </div>
       <br>
       <div>
-        <button type="submit" class="btn btn-primary btn-sm" [disabled]="bioForm.invalid"> <i class="fa fa-save"></i> Save</button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onCancel($event)"><i class="fa fa-ban"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm" [disabled]="bioForm.invalid"> <i class="fa fa-save"></i>Save</button>
+        <button type="button" class="btn btn-secondary btn-sm" (click)="onCancel($event)"><i class="fa fa-times"></i>Cancel</button>
       </div>
     </form>
 

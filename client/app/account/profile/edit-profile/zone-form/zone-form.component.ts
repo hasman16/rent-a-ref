@@ -17,6 +17,7 @@ export class ZoneFormComponent implements OnInit {
   };
   @Input() states: any;
   @Output() saveZone = new EventEmitter();
+  @Output() cancelForm = new EventEmitter();
 
   zoneForm: FormGroup;
   aZone: AddressType;
@@ -77,5 +78,9 @@ export class ZoneFormComponent implements OnInit {
 
   onZoneSubmit() {
     this.saveZone.emit(this.zoneForm.value);
+  }
+
+  onCancel() {
+    this.cancelForm.emit(false);
   }
 }

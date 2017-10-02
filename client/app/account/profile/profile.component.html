@@ -2,9 +2,7 @@
 
   <div class="card col-sm-12">
     <div class="card">
-    <div class="card">
       <h4 class="card-header elegantshd bigFont">User's Profile</h4>
-      <!--<app-loading [condition]="isLoading"></app-loading>-->
 
       <div class="card-block card-outline-primary">
 
@@ -17,63 +15,67 @@
             </span>
           </div>
 
-          <div class="col-xs-12 col-sm-6">
-              <div class="card card-outline-info">
-                <div *ngIf="!editBio">
-                  <span class="card danger">
+          <div class="col-8" style="max-width: 700px; margin:auto auto;">
+              <div class="card">
+                <div *ngIf="!editBio" class="fadeInForm">
+                  <div>
                     <strong>Personal details</strong>
-                    <a [routerLink]="['edit-profile']" (click)="editBio=true" href="#" >Edit</a>
-                  </span>
+                    <a [routerLink]="[]" (click)="setEditBio(true)" href="#" >Edit</a>
+                  </div>
 
-                  <span class="list-group-item">
-                    <label>Firstname: </label>
-                    <strong>{{person.firstname}}</strong>
-                  </span>
+                  <div>
+                    <label class="profileLabel">Firstname:</label>
+                    <span class="profileItem">{{person.firstname}}</span>
+                  </div>
                   <ng-container *ngIf="middlenameFlag">
-                    <span class="list-group-item">
-                      <label>Middlename: </label>
-                      <strong>{{person.middlenames}}</strong>
-                    </span>
+                    <div>
+                      <label class="profileLabel">Middlename: </label>
+                      <span class="profileItem">{{person.middlenames}}</span>
+                    </div>
                   </ng-container>
 
-                  <span class="list-group-item">
-                    <label>Lastname:</label>
-                    <strong>{{person.lastname}}</strong>
-                  </span>
-                  <span class="list-group-item">
-                    <label>Gender:</label>
-                    <strong>{{person.gender}}</strong>
-                  </span>
-                  <span class="list-group-item">
-                    <label>D.O.B:</label>
-                    <strong>{{person.dob}}</strong>
-                  </span>
+                  <div>
+                    <label class="profileLabel">Lastname:</label>
+                    <span class="profileItem">{{person.lastname}}</span>
+                  </div>
+
+                  <div>
+                    <label class="profileLabel">Gender:</label>
+                    <span class="profileItem">{{person.gender}}</span>
+                  </div>
+
+                  <div>
+                    <label class="profileLabel">D.O.B:</label>
+                    <span class="profileItem">{{person.dob}}</span>
+                  </div>
                 </div>
                 <bio-form *ngIf="editBio" [person]="person" (saveBio)="onBioSubmit($event)" (cancelForm)="onFormCancel($event)"></bio-form>
             </div>
 
-            <div class="card card-outline-success">
-              <span class="card danger">
-                <strong>Credentials</strong>
-                <a [routerLink]="['edit-profile']" [queryParams]="{divPassword: auth.loggedIn===true ? 'password' : ''}" fragment="loading"
-                href="#" >Edit</a>
-              </span>
-              <span class="list-group-item">
-                <label>Email: </label>
-                <strong>{{user.email}}</strong>
-              </span>
-              <span class="list-group-item">
-                <label>Password: </label>
-                <strong>***********</strong>
-              </span>
+            <div class="card">
+              <div *ngIf="!editPassword">
+                <div>
+                  <strong>Credentials</strong>
+                  <a [routerLink]="[]" (click)="setEditPassword(true)" href="#" >Edit</a>
+                </div>
+                <div>
+                  <label class="profileLabel">Email: </label>
+                  <span class="profileItem">{{user.email}}</span>
+                </div>
+                <div>
+                  <label class="profileLabel">Password: </label>
+                  <span class="profileItem">***********</span>
+                </div>
+              </div>
+              <password-form *ngIf="editPassword" [password]="password" (savePassword)="onPasswordSubmit($event)" (cancelForm)="onFormCancel($event)"></password-form>
             </div>
 
-            <div class="card card-outline-warning">
+            <div class="card">
               <span class="card danger">
                 <strong>Phones</strong>
-                <a *ngIf="phones.length < 3" [routerLink]="['edit-profile']" [queryParams]="{divPhone: auth.loggedIn===true ? '0' : ''}" fragment="loading"
-                      href="#" >&nbsp;&nbsp;Add</a>
+                <a *ngIf="phones.length < 3" [routerLink]="[]" href="#" >&nbsp;&nbsp;Add</a>
               </span>
+
               <ng-container *ngIf="phones.length === 0">
                 <div class="list-group" *ngIf="addresses.length === 0">
                   <span class="list-group-item">
@@ -84,121 +86,62 @@
 
               <ng-container *ngIf="phones.length > 0">
                 <div class="list-group" *ngFor="let phone of phones">
-                  <a [routerLink]="['edit-profile']" [queryParams]="{divPhone: auth.loggedIn===true ? phone.id : ''}" fragment="loading"
-                          href="#" >Edit</a>
+                  <a [routerLink]="[]" href="#" >Edit</a>
                   <span class="list-group-item">
-                    <label>{{phone.description}} Phone:</label>
-                    <strong>{{phone.number}}</strong>
+                    <label class="profileLabel">{{phone.description}} Phone:</label>
+                    <span class="profileItem">{{phone.number}}</span>
                   </span>
                 </div>
               </ng-container>
             </div>
 
-            <div class="card card-outline-secondary">
-              <span class="card danger">
+            <div class="card">
+              <div>
                 <strong>Address</strong>
-                <a *ngIf="addresses.length < 4" [routerLink]="['edit-profile']" [queryParams]="{divAddress: auth.loggedIn===true ? '0' : ''}" fragment="loading"
-                  href="#" >&nbsp;&nbsp;Add</a>
-              </span>
+                <a *ngIf="addresses.length < 4" [routerLink]="[]" (click)="setEditAddress(0,true)" href="#" >&nbsp;&nbsp;Add</a>
+              </div>
 
-              <ng-container *ngIf="addresses.length === 0">
-                <div class="list-group" *ngIf="addresses.length === 0">
+              <ng-container *ngIf="!editAddress && addresses.length === 0">
+                <div class="list-group" *ngIf="!editAddress">
                   <span class="list-group-item">
                     <strong> There are no addresses set up for you.</strong>
                   </span>
                 </div>
               </ng-container>
+              <address-form *ngIf="editAddress && currentAddress === 0" [address]="dummyAddress" [states]="states" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
 
               <ng-container *ngIf="addresses.length > 0">
                 <div class="list-group" *ngFor="let address of addresses">
-                  <a [routerLink]="['edit-profile']" [queryParams]="{divAddress: auth.loggedIn===true ? address.id : ''}" fragment="loading"
-                      href="#" >Edit</a>
-                  <span class="list-group-item">
-                    <label>Address:</label>
-                    <strong>{{address.line1}}</strong>
-                  </span>
-                  <span class="list-group-item">
-                    <label>Address 1:</label>
-                    <strong>{{address.line2}}</strong>
-                  </span>
-                  <span class="list-group-item">
-                    <label>City:</label>
-                    <strong>{{address.city}}</strong>
-                  </span>
-                  <span class="list-group-item">
-                    <label>State: </label>
-                    <strong>{{address.state}}</strong>
-                  </span>
-                  <span class="list-group-item">
-                    <label>ZIP code:</label>
-                    <strong>{{address.zip}}</strong>
-                  </span>
+                  <div *ngIf="!editAddress">
+                    <a [routerLink]="[]" (click)="setEditAddress(address.id, true)" href="#">Edit</a>
+                    <div>
+                      <label class="profileLabel">Address:</label>
+                      <span class="profileItem">{{address.line1}}</span>
+                    </div>
+                    <div>
+                      <label class="profileLabel">Address 1:</label>
+                      <span class="profileItem">{{address.line2}}</span>
+                    </div>
+                    <div>
+                      <label class="profileLabel">City:</label>
+                      <span class="profileItem">{{address.city}}</span>
+                    </div>
+                    <div>
+                      <label class="profileLabel">State: </label>
+                      <span class="profileItem">{{address.state}}</span>
+                    </div>
+                    <div>
+                      <label class="profileLabel">ZIP code:</label>
+                      <span class="profileItem">{{address.zip}}</span>
+                    </div>
+                  </div>
+                  <address-form [address]="address" *ngIf="editAddress && currentAddress !=0" [states]="states" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
                 </div>
               </ng-container>
             </div>
 
-            <span class="list-group-item active">Where available to referee?
-              <a [routerLink]="['edit-profile']" [queryParams]="{divZone: auth.loggedIn===true ? 'zone' : ''}" fragment="loading"
-                href="#">
-                <span class="profile-text2">Edit</span>
-              </a>
-            </span>
-
-            <div class="list-group">
-                <span class="list-group-item">
-                  <label>City: </label>
-                  <strong>{{available.city}}</strong>
-                </span>
-                <span class="list-group-item">
-                  <label>State: </label>
-                  <strong>{{available.state}}</strong>
-                </span>
-                <span class="list-group-item">
-                  <label>ZIP code: </label>
-                  <strong>{{available.zip}}</strong>
-                </span>
-            </div>
-
-            <span class="list-group-item active">Payment
-              <a [routerLink]="['edit-profile']" [queryParams]="{divPayment: auth.loggedIn===true ? 'payment' : ''}" fragment="loading"
-              href="#">
-                <span class="profile-text2">Edit</span>
-              </a>
-            </span>
-
-            <div class="list-group">
-              <span>
-                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-                  <input type="checkbox" class="custom-control-input" [value]="paypalFlag" [(ngModel)]="paypalFlag" disabled>
-                  <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description">Paypal</span>
-                </label>
-              </span>
-
-              <span>
-                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-                  <input type="checkbox" class="custom-control-input" [value]="checkFlag" [(ngModel)]="checkFlag" disabled>
-                  <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description">Check </span>
-                </label>
-              </span>
-
-              <span>
-                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-                  <input type="checkbox" class="custom-control-input" [value]="ccFlag" [(ngModel)]="ccFlag" disabled>
-                  <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description">Credit Card </span>
-                </label>
-              </span>
-            </div>
-
-          </div>
-
-          <div class="col-xs-12 col-sm-6">
-            <router-outlet></router-outlet>
           </div>
 
       </div>
-    </div>
   </div>
 </div>

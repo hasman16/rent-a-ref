@@ -1,33 +1,29 @@
-<div class="card card-outline-secondary">
-  <div class="card-block numberbg">
+<div class="fadeInForm">
 
-    <form [formGroup]="addressForm" (ngSubmit)="onAddressSubmit()" *ngIf="showDivAddress else showDivAddressmsg">
-      <p>Update address. </p>
+    <form [formGroup]="addressForm" (ngSubmit)="onAddressSubmit()">
       <div class="profile-div">
         <div class="form-group" [ngClass]="{ 'has-danger': line1Invalid }">
-          <label class="center-block">Address:
-            <input class="form-control" formControlName="line1">
-          </label>
+          <label>Address Line 1</label>
+          <input class="form-control" formControlName="line1">
         </div>
         <div class="form-group">
-          <label class="center-block">Address 1:
-            <input class="form-control" formControlName="line2">
-          </label>
+          <label>Address Line 2</label>
+          <input class="form-control" formControlName="line2">
         </div>
         <div class="form-group" [ngClass]="{ 'has-danger': cityInvalid }">
-          <label class="center-block">City:
+          <label>City
             <input class="form-control" formControlName="city">
           </label>
         </div>
         <div class="form-group">
-          <label class="center-block">State:
+          <label class="center-block">State
             <select class="form-control" formControlName="state">
               <option *ngFor="let state of states" value="{{state.abbreviation}}">{{state.name}}</option>
             </select>
           </label>
         </div>
         <div class="form-group" [ngClass]="{ 'has-danger': zipInvalid }">
-          <label class="center-block">Zip Code:
+          <label class="center-block">Zip Code
             <input class="form-control" formControlName="zip">
           </label>
         </div>
@@ -35,15 +31,7 @@
 
       <div>
         <button type="submit" class="btn btn-primary btn-sm" [disabled]="addressForm.invalid"> <i class="fa fa-save"></i>Save</button>
-        <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+        <button class="btn btn-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-times"></i>Cancel</button>
       </div>
     </form>
-
-    <ng-template #showDivAddressmsg>
-      <blockquote>
-        <p>Your address was successfully updated.</p>
-      </blockquote>
-    </ng-template>
-
-  </div>
 </div>

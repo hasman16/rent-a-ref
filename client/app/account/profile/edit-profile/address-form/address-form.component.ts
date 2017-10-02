@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, AbstractControl, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { AddressType } from '../../../../shared/models/addressType';
 import { Observable } from 'rxjs/Observable';
@@ -20,13 +20,13 @@ export class AddressFormComponent implements OnInit {
   }
   @Input() states: any;
   @Output() saveAddress = new EventEmitter();
+  @Output() cancelForm = new EventEmitter();
 
   addressForm: FormGroup;
   anAddress: AddressType;
   mode: boolean = false;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
-  showDivAddress = true;
   line1Invalid = false;
   cityInvalid = false;
   zipInvalid = false;
@@ -84,5 +84,9 @@ export class AddressFormComponent implements OnInit {
 
   onAddressSubmit() {
     this.saveAddress.emit(this.addressForm.value);
+  }
+  
+  onCancel() {
+    this.cancelForm.emit(false);
   }
 }
