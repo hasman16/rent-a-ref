@@ -1,7 +1,6 @@
-<div class="card card-outline-warning fadeInForm">
+<div class="fadeInForm">
 
     <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()">
-      <p>Update your phone. </p>
       <div class="input-group" [ngClass]="{ 'has-danger': phoneForm.get('number').touched && phoneForm.get('number').invalid }">
 
         <label class="center-block">Phone:

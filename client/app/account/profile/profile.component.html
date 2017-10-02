@@ -73,32 +73,37 @@
             <div class="card">
               <span class="card danger">
                 <strong>Phones</strong>
-                <a *ngIf="phones.length < 3" [routerLink]="[]" href="#" >&nbsp;&nbsp;Add</a>
+                <a *ngIf="phones.length < 3" [routerLink]="[]"  (click)="setEditPhone(0,true)" href="#" >&nbsp;&nbsp;Add</a>
               </span>
 
-              <ng-container *ngIf="phones.length === 0">
+              <ng-container *ngIf="!editPhone && phones.length === 0">
                 <div class="list-group" *ngIf="addresses.length === 0">
                   <span class="list-group-item">
                     <strong>There are no phones set up for you.</strong>
                   </span>
                 </div>
               </ng-container>
+              <phone-form *ngIf="editPhone && currentPhone === 0" [phone]="dummyPhone" (savePhone)="onPhoneSubmit($event)"></phone-form>
 
               <ng-container *ngIf="phones.length > 0">
-                <div class="list-group" *ngFor="let phone of phones">
-                  <a [routerLink]="[]" href="#" >Edit</a>
-                  <span class="list-group-item">
-                    <label class="profileLabel">{{phone.description}} Phone:</label>
-                    <span class="profileItem">{{phone.number}}</span>
-                  </span>
+                <div *ngIf="!editPhone">
+                  <div class="list-group" *ngFor="let phone of phones">
+                    <a [routerLink]="[]" (click)="setEditPhone(phone.id,true)" href="#" >Edit</a>
+                    <span class="list-group-item">
+                      <label class="profileLabel">{{phone.description}} Phone:</label>
+                      <span class="profileItem">{{phone.number}}</span>
+                    </span>
+                  </div>
                 </div>
+                <phone-form *ngIf="editPhone && currentPhone != 0" [phone]="phone" (savePhone)="onPhoneSubmit($event)"></phone-form>
               </ng-container>
+
             </div>
 
             <div class="card">
               <div>
                 <strong>Address</strong>
-                <a *ngIf="addresses.length < 4" [routerLink]="[]" (click)="setEditAddress(0,true)" href="#" >&nbsp;&nbsp;Add</a>
+                <a *ngIf="addresses.length < 4" [routerLink]="[]" (click)="setEditAddress(0,true)" href="#">&nbsp;&nbsp;Add</a>
               </div>
 
               <ng-container *ngIf="!editAddress && addresses.length === 0">
@@ -108,7 +113,7 @@
                   </span>
                 </div>
               </ng-container>
-              <address-form *ngIf="editAddress && currentAddress === 0" [address]="dummyAddress" [states]="states" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
+              <address-form *ngIf="editAddress && currentAddress === 0" [address]="dummyAddress" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
 
               <ng-container *ngIf="addresses.length > 0">
                 <div class="list-group" *ngFor="let address of addresses">
@@ -135,7 +140,7 @@
                       <span class="profileItem">{{address.zip}}</span>
                     </div>
                   </div>
-                  <address-form [address]="address" *ngIf="editAddress && currentAddress !=0" [states]="states" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
+                  <address-form [address]="address" *ngIf="editAddress && currentAddress !=0" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
                 </div>
               </ng-container>
             </div>

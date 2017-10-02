@@ -2,8 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, AbstractControl, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { AddressType } from '../../../../shared/models/addressType';
+import { StatesService } from '../../../../services/states.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
+import _ from "lodash";
 
 @Component({
   selector: 'address-form',
@@ -12,26 +14,33 @@ import 'rxjs/add/operator/debounceTime';
 })
 export class AddressFormComponent implements OnInit {
   @Input() set address(anAddress: AddressType) {
-    this.anAddress = anAddress;
+    console.log('set address');
+    this.anAddress = _.cloneDeep(anAddress);
     this.fillForm();
   };
   @Input() set zoneMode(mode: boolean) {
     this.mode = mode;
   }
-  @Input() states: any;
+  @Input() set country(aCountry: string) {
+    console.log('set country:', aCountry);
+    this.countryName = aCountry || 'usa';
+    this.fillForm();
+  };
   @Output() saveAddress = new EventEmitter();
   @Output() cancelForm = new EventEmitter();
 
   addressForm: FormGroup;
   anAddress: AddressType;
+  countryName: string = 'usa';
   mode: boolean = false;
+  states: any;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
   line1Invalid = false;
   cityInvalid = false;
   zipInvalid = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private statesService: StatesService) {
     this.addressForm = this.formBuilder.group({
       line1: ['', [Validators.required, Validators.minLength(5),
       Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]],
@@ -69,6 +78,8 @@ export class AddressFormComponent implements OnInit {
   }
 
   fillForm() {
+    console.log('fillForm');
+    this.states = this.statesService.getStatesProvinces(this.countryName);
     this.addressForm.setValue({
       line1: this.anAddress.line1,
       line2: this.anAddress.line2,
@@ -85,7 +96,7 @@ export class AddressFormComponent implements OnInit {
   onAddressSubmit() {
     this.saveAddress.emit(this.addressForm.value);
   }
-  
+
   onCancel() {
     this.cancelForm.emit(false);
   }

@@ -13,6 +13,8 @@ import { UserService } from '../../services/user.service';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
 import { AddressType } from '../../shared/models/addressType';
+import { PhoneType } from '../../shared/models/phoneType';
+
 // End
 @Component({
   selector: 'app-profile',
@@ -26,6 +28,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   addresses = [];
   dummyAddress: AddressType = new AddressType({});
   phones = [];
+  dummyPhone: PhoneType = new PhoneType({});
   available = {};
   isLoading = true;
   allowEdit = false;

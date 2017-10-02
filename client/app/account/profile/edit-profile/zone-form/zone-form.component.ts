@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms';
 
 import { AddressType } from '../../../../shared/models/addressType';
+import { StatesService } from '../../../../services/states.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 
@@ -15,20 +16,25 @@ export class ZoneFormComponent implements OnInit {
     this.aZone = aZone;
     this.fillForm();
   };
-  @Input() states: any;
+  @Input() country(aCountry: string = 'usa') {
+    this.countryName = aCountry;
+    this.fillForm();
+  };
   @Output() saveZone = new EventEmitter();
   @Output() cancelForm = new EventEmitter();
 
   zoneForm: FormGroup;
   aZone: AddressType;
+  anAddress: AddressType;
+  countryName:string = 'usa';
+  states: any;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
-  showDivZone = true;
   radiusInvalid = false;
   cityInvalid = false;
   zipInvalid = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,  private statesService: StatesService) {
     this.zoneForm = this.formBuilder.group({
       city: ['', [Validators.required, Validators.minLength(2),
       Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
@@ -64,6 +70,7 @@ export class ZoneFormComponent implements OnInit {
   }
 
   fillForm() {
+    this.states = this.statesService.getStatesProvinces(this.countryName);
     this.zoneForm.setValue({
       city: this.aZone.city,
       state: this.aZone.state,
