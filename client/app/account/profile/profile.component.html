@@ -20,7 +20,7 @@
                 <div *ngIf="!editBio" class="fadeInForm">
                   <div>
                     <strong>Personal details</strong>
-                    <a [routerLink]="[]" (click)="setEditBio(true)" href="#" >Edit</a>
+                    <a [routerLink]="[]" (click)="setEditBio(true)" title="Edit personal details." href="#" >Edit</a>
                   </div>
 
                   <div>
@@ -46,7 +46,7 @@
 
                   <div>
                     <label class="profileLabel">D.O.B:</label>
-                    <span class="profileItem">{{person.dob}}</span>
+                    <span class="profileItem">{{birthday}}</span>
                   </div>
                 </div>
                 <bio-form *ngIf="editBio" [person]="person" (saveBio)="onBioSubmit($event)" (cancelForm)="onFormCancel($event)"></bio-form>
@@ -56,7 +56,7 @@
               <div *ngIf="!editPassword">
                 <div>
                   <strong>Credentials</strong>
-                  <a [routerLink]="[]" (click)="setEditPassword(true)" href="#" >Edit</a>
+                  <a [routerLink]="[]" (click)="setEditPassword(true)" title="Change password credentials." href="#" >Change</a>
                 </div>
                 <div>
                   <label class="profileLabel">Email: </label>
@@ -73,7 +73,7 @@
             <div class="card">
               <span class="card danger">
                 <strong>Phones</strong>
-                <a *ngIf="phones.length < 3" [routerLink]="[]"  (click)="setEditPhone(0,true)" href="#" >&nbsp;&nbsp;Add</a>
+                <a *ngIf="phones.length < 3" title="Add new phone." [routerLink]="[]"  (click)="setEditPhone(0,true)" href="#" >&nbsp;&nbsp;Add</a>
               </span>
 
               <ng-container *ngIf="!editPhone && phones.length === 0">
@@ -88,7 +88,7 @@
               <ng-container *ngIf="phones.length > 0">
                 <div *ngIf="!editPhone">
                   <div class="list-group" *ngFor="let phone of phones">
-                    <a [routerLink]="[]" (click)="setEditPhone(phone.id,true)" href="#" >Edit</a>
+                    <a [routerLink]="[]" title="Edit phone." (click)="setEditPhone(phone.id,true)" href="#" >Edit</a>
                     <span class="list-group-item">
                       <label class="profileLabel">{{phone.description}} Phone:</label>
                       <span class="profileItem">{{phone.number}}</span>
@@ -103,7 +103,7 @@
             <div class="card">
               <div>
                 <strong>Address</strong>
-                <a *ngIf="addresses.length < 4" [routerLink]="[]" (click)="setEditAddress(0,true)" href="#">&nbsp;&nbsp;Add</a>
+                <a *ngIf="addresses.length < 4" title="Add new address." [routerLink]="[]" (click)="setEditAddress(0,true)" href="#">&nbsp;&nbsp;Add</a>
               </div>
 
               <ng-container *ngIf="!editAddress && addresses.length === 0">
@@ -118,7 +118,7 @@
               <ng-container *ngIf="addresses.length > 0">
                 <div class="list-group" *ngFor="let address of addresses">
                   <div *ngIf="!editAddress">
-                    <a [routerLink]="[]" (click)="setEditAddress(address.id, true)" href="#">Edit</a>
+                    <a [routerLink]="[]" title="Edit Address." (click)="setEditAddress(address.id, true)" href="#">Edit</a>
                     <div>
                       <label class="profileLabel">Address:</label>
                       <span class="profileItem">{{address.line1}}</span>

@@ -39,8 +39,11 @@ body {
   }
 }
 
-button.btn > i.fa {
-  margin: auto 3px;
+button.btn {
+  margin: auto 2em auto 0.2em;
+  > i.fa {
+    margin: auto 0.2em;
+  }
 }
 .fadeInForm {
   opacity: 0;

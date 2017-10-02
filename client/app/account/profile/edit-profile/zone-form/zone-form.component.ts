@@ -3,6 +3,8 @@ import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from
 
 import { AddressType } from '../../../../shared/models/addressType';
 import { StatesService } from '../../../../services/states.service';
+import { AbstractFormComponent } from '../abstract-form';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 
@@ -11,7 +13,7 @@ import 'rxjs/add/operator/debounceTime';
   templateUrl: './zone-form.component.html',
   styleUrls: ['./zone-form.component.scss']
 })
-export class ZoneFormComponent implements OnInit {
+export class ZoneFormComponent extends AbstractFormComponent implements OnInit {
   @Input() set zone(aZone: AddressType) {
     this.aZone = aZone;
     this.fillForm();
@@ -21,20 +23,19 @@ export class ZoneFormComponent implements OnInit {
     this.fillForm();
   };
   @Output() saveZone = new EventEmitter();
-  @Output() cancelForm = new EventEmitter();
 
   zoneForm: FormGroup;
   aZone: AddressType;
   anAddress: AddressType;
   countryName:string = 'usa';
   states: any;
-  alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
-  zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
+
   radiusInvalid = false;
   cityInvalid = false;
   zipInvalid = false;
 
   constructor(private formBuilder: FormBuilder,  private statesService: StatesService) {
+    super();
     this.zoneForm = this.formBuilder.group({
       city: ['', [Validators.required, Validators.minLength(2),
       Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
@@ -47,26 +48,7 @@ export class ZoneFormComponent implements OnInit {
       Validators.maxLength(3), Validators.pattern('\\d{1,3}')]]
     });
 
-    let city = this.zoneForm.get('city');
-    let zip = this.zoneForm.get('zip');
-    let radius = this.zoneForm.get('radius');
-
-    this.validator(radius, 'radiusInvalid');
-    this.validator(city, 'cityInvalid');
-    this.validator(zip, 'zipInvalid');
-  }
-
-  validator(item: AbstractControl, name: string) {
-    item
-      .valueChanges
-      .debounceTime(1000)
-      .subscribe((value) => {
-        let result = false;
-        if (item.touched && item.invalid) {
-          result = true;
-        }
-        this[name] = result;
-      });
+    this.setUpValidators(this.zoneForm, ['city','zip', 'radius']);
   }
 
   fillForm() {
@@ -85,9 +67,5 @@ export class ZoneFormComponent implements OnInit {
 
   onZoneSubmit() {
     this.saveZone.emit(this.zoneForm.value);
-  }
-
-  onCancel() {
-    this.cancelForm.emit(false);
   }
 }

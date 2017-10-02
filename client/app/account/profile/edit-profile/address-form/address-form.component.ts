@@ -3,6 +3,8 @@ import { FormGroup, AbstractControl, Validators, FormBuilder, ReactiveFormsModul
 
 import { AddressType } from '../../../../shared/models/addressType';
 import { StatesService } from '../../../../services/states.service';
+import { AbstractFormComponent } from '../abstract-form';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import _ from "lodash";
@@ -12,9 +14,8 @@ import _ from "lodash";
   templateUrl: './address-form.component.html',
   styleUrls: ['./address-form.component.scss']
 })
-export class AddressFormComponent implements OnInit {
+export class AddressFormComponent extends AbstractFormComponent implements OnInit {
   @Input() set address(anAddress: AddressType) {
-    console.log('set address');
     this.anAddress = _.cloneDeep(anAddress);
     this.fillForm();
   };
@@ -22,25 +23,23 @@ export class AddressFormComponent implements OnInit {
     this.mode = mode;
   }
   @Input() set country(aCountry: string) {
-    console.log('set country:', aCountry);
     this.countryName = aCountry || 'usa';
     this.fillForm();
   };
   @Output() saveAddress = new EventEmitter();
-  @Output() cancelForm = new EventEmitter();
 
   addressForm: FormGroup;
   anAddress: AddressType;
   countryName: string = 'usa';
   mode: boolean = false;
   states: any;
-  alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
-  zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
+
   line1Invalid = false;
   cityInvalid = false;
   zipInvalid = false;
 
   constructor(private formBuilder: FormBuilder, private statesService: StatesService) {
+    super();
     this.addressForm = this.formBuilder.group({
       line1: ['', [Validators.required, Validators.minLength(5),
       Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]],
@@ -55,30 +54,11 @@ export class AddressFormComponent implements OnInit {
       zip: ['', [Validators.required, Validators.minLength(5),
       Validators.maxLength(10), Validators.pattern(this.zipRegex)]]
     });
-    let line1 = this.addressForm.get('line1');
-    let city = this.addressForm.get('city');
-    let zip = this.addressForm.get('zip');
 
-    this.validator(line1, 'line1Invalid');
-    this.validator(city, 'cityInvalid');
-    this.validator(zip, 'zipInvalid');
-  }
-
-  validator(item: AbstractControl, name: string) {
-    item
-      .valueChanges
-      .debounceTime(1000)
-      .subscribe((value) => {
-        let result = false;
-        if (item.touched && item.invalid) {
-          result = true;
-        }
-        this[name] = result;
-      });
+    this.setUpValidators(this.addressForm, ['line1','city','zip']);
   }
 
   fillForm() {
-    console.log('fillForm');
     this.states = this.statesService.getStatesProvinces(this.countryName);
     this.addressForm.setValue({
       line1: this.anAddress.line1,
@@ -97,7 +77,4 @@ export class AddressFormComponent implements OnInit {
     this.saveAddress.emit(this.addressForm.value);
   }
 
-  onCancel() {
-    this.cancelForm.emit(false);
-  }
 }

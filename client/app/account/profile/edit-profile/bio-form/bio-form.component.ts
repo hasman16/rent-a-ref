@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms';
 
 import { BioType } from '../../../../shared/models/bioType';
+import { AbstractFormComponent } from '../abstract-form';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 
@@ -12,19 +14,18 @@ import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
   templateUrl: './bio-form.component.html',
   styleUrls: ['./bio-form.component.scss']
 })
-export class BioFormComponent implements OnInit {
+export class BioFormComponent extends AbstractFormComponent implements OnInit {
   @Input() set person(aPerson: BioType) {
     this.aPerson = aPerson;
     this.fillForm();
   };
   @Input() states: any;
   @Output() saveBio = new EventEmitter();
-  @Output() cancelForm = new EventEmitter();
 
   bioForm: FormGroup;
   aPerson: BioType;
   mode: boolean = false;
-  alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
+
   showDivbio = true;
   firstnameInvalid = false;
   lastnameInvalid = false;
@@ -33,6 +34,7 @@ export class BioFormComponent implements OnInit {
   public dateModel;
 
   constructor(private formBuilder: FormBuilder) {
+    super();
     this.bioForm = this.formBuilder.group({
       firstname: ['', [Validators.required, Validators.minLength(2),
       Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
@@ -42,11 +44,7 @@ export class BioFormComponent implements OnInit {
       dob: ['', [<any>Validators.nullValidator]]
     });
 
-    let firstname = this.bioForm.get('firstname');
-    let lastname = this.bioForm.get('lastname');
-
-    this.validator(firstname, 'firstnameInvalid');
-    this.validator(lastname, 'lastnameInvalid');
+    this.setUpValidators(this.bioForm, ['firstname','lastname']);
   }
 
   public myDatePickerOptions: IMyDpOptions = {
@@ -56,19 +54,6 @@ export class BioFormComponent implements OnInit {
   onDateChanged(event: IMyDateModel) {
     console.log('onDateChanged(): ', event.date,
       ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-  }
-
-  validator(item: AbstractControl, name: string) {
-    item
-      .valueChanges
-      .debounceTime(1000)
-      .subscribe((value) => {
-        let result = false;
-        if (item.touched && item.invalid) {
-          result = true;
-        }
-        this[name] = result;
-      });
   }
 
   fillForm() {
@@ -91,7 +76,4 @@ export class BioFormComponent implements OnInit {
     this.saveBio.emit(this.bioForm.value);
   }
 
-  onCancel() {
-    this.cancelForm.emit(false);
-  }
 }

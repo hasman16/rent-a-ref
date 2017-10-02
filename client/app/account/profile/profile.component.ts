@@ -38,11 +38,14 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   divPassword = false;
   editBio = false;
   editPassword = false;
+
   editPhone = false;
   currentPhone = 0;
 
   editAddress = false;
   currentAddress = 0;
+
+  birthday ='';
 
   constructor(private route: ActivatedRoute,
     private router: Router, private auth: AuthService,
@@ -67,6 +70,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
         this.person = res.person;
         this.addresses = res.addresses;
         this.phones = res.phones;
+        this.birthday = moment(res.person.dob).format('LL');
         if (JSON.stringify(res.person.middlenames) !== 'null') {
           this.middlenameFlag = true;
         }
