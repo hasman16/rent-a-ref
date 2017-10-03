@@ -100,5 +100,5 @@ export default function OrganizationController(models, ResponseService) {
     create: create,
     update: update,
     deleteOne: deleteOne
-  }
+  };
 }

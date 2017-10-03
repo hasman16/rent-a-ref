@@ -20,7 +20,7 @@
 <ng-container>
   <div style="margin: auto; max-width: 1000px; margin-top:50px">
     <data-table id="films-grid" headerTitle="Films" [items]="films" [itemCount]="filmCount" (reload)="reloadFilms($event)" [limit]="8"
-      [sortBy]="'rating'" [sortAsc]="false" [selectColumn]="true" [multiSelect]="false" [substituteRows]="false" [expandableRows]="true"
+      [sortBy]="'rating'" [sortAsc]="false" [selectColumn]="true" [multiSelect]="true" [substituteRows]="true" [expandableRows]="true"
       [translations]="translations" [indexColumnHeader]="'#'" [selectOnRowClick]="true">
       <ng-template #dataTableExpand let-item="item">
         <div [textContent]="item.description" style="padding: 5px; color: gray"></div>
