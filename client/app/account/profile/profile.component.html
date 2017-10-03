@@ -1,5 +1,7 @@
 <div class="row">
-
+  <!--
+  <app-loading [condition]="isLoading"></app-loading>
+-->
   <div class="card col-sm-12">
     <div class="card">
       <h4 class="card-header elegantshd bigFont">User's Profile</h4>
@@ -120,11 +122,11 @@
                   <div *ngIf="!editAddress">
                     <a [routerLink]="[]" title="Edit Address." (click)="setEditAddress(address.id, true)" href="#">Edit</a>
                     <div>
-                      <label class="profileLabel">Address:</label>
+                      <label class="profileLabel">Address Line 1:</label>
                       <span class="profileItem">{{address.line1}}</span>
                     </div>
                     <div>
-                      <label class="profileLabel">Address 1:</label>
+                      <label class="profileLabel">Address Line 2:</label>
                       <span class="profileItem">{{address.line2}}</span>
                     </div>
                     <div>
@@ -140,7 +142,7 @@
                       <span class="profileItem">{{address.zip}}</span>
                     </div>
                   </div>
-                  <address-form [address]="address" *ngIf="editAddress && currentAddress !=0" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
+                  <address-form [address]="address" *ngIf="editAddress && currentAddress === address.id" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
                 </div>
               </ng-container>
             </div>
@@ -149,4 +151,9 @@
 
       </div>
   </div>
+
+  <div class="overlay" *ngIf="isLoading">
+    <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+  </div>
+
 </div>
