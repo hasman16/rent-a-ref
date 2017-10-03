@@ -14,6 +14,7 @@ import { UserService } from '../../services/user.service';
 import { ToastComponent } from '../../shared/toast/toast.component';
 import { AddressType } from '../../shared/models/addressType';
 import { PhoneType } from '../../shared/models/phoneType';
+import _ from "lodash";
 
 // End
 @Component({
@@ -45,7 +46,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   editAddress = false;
   currentAddress = 0;
 
-  birthday ='';
+  birthday = '';
 
   constructor(private route: ActivatedRoute,
     private router: Router, private auth: AuthService,
@@ -63,17 +64,19 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   getProfile() {
+    this.isLoading = true;
     this.profileService.getProfile(this.auth.currentUser.id).subscribe(
       res => {
         this.data = res;
         this.user = res;
         this.person = res.person;
-        this.addresses = res.addresses;
-        this.phones = res.phones;
+        this.addresses = _.sortBy(res.addresses, 'id');
+        this.phones = _.sortBy(res.phones, 'id');
         this.birthday = moment(res.person.dob).format('LL');
         if (JSON.stringify(res.person.middlenames) !== 'null') {
           this.middlenameFlag = true;
         }
+        this.isLoading = false;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -96,6 +99,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     this.editPassword = false;
     this.editAddress = false;
     this.editPhone = false;
+    this.isLoading = false;
   }
 
   setEditAddress(id: number = 0, value: boolean = false) {
@@ -120,8 +124,17 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     this.editPhone = value;
   }
 
-  onAddressSubmit(value) {
-    this.onFormCancel(false);
+  onAddressSubmit(res) {
+    if (res.action === 'show_overlay') {
+      this.isLoading = true;
+    } else if (res.action === 'save_success') {
+      this.onFormCancel(false);
+      this.getProfile();
+    } else if (res.action === 'save_failure') {
+      this.isLoading = false;
+    } else {
+      this.onFormCancel(false);
+    }
   }
 
   onBioSubmit(value) {
