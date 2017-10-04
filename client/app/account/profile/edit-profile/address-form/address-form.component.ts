@@ -17,29 +17,29 @@ import _ from "lodash";
   styleUrls: ['./address-form.component.scss']
 })
 export class AddressFormComponent extends AbstractFormComponent implements OnInit {
-  @Input() set address(anAddress: AddressType) {
-    this.anAddress = _.cloneDeep(anAddress);
-    this.fillForm();
-  };
-  @Input() set zoneMode(mode: boolean) {
-    this.mode = mode;
-  }
-  @Input() set country(aCountry: string) {
-    this.countryName = aCountry || 'usa';
-    this.fillForm();
-  };
-  @Output() saveAddress = new EventEmitter();
-
   addressForm: FormGroup;
   anAddress: AddressType;
-  countryName: string = 'usa';
-  mode: boolean = false;
+  countryName = 'usa';
+  mode = false;
   states: any;
 
   line1Invalid = false;
   cityInvalid = false;
   zipInvalid = false;
   userId = 0;
+  @Output() saveAddress = new EventEmitter();
+  @Input() set address(anAddress: AddressType) {
+    this.anAddress = _.cloneDeep(anAddress);
+    this.fillForm();
+  }
+  @Input() set zoneMode(mode: boolean) {
+    this.mode = mode;
+  }
+  @Input() set country(aCountry: string) {
+    this.countryName = aCountry || 'usa';
+    this.fillForm();
+  }
+
 
   constructor(private formBuilder: FormBuilder, private profileService: ProfileService, private statesService: StatesService) {
     super();
@@ -58,7 +58,7 @@ export class AddressFormComponent extends AbstractFormComponent implements OnIni
       Validators.maxLength(10), Validators.pattern(this.zipRegex)]]
     });
 
-    this.setUpValidators(this.addressForm, ['line1','city','zip']);
+    this.setUpValidators(this.addressForm, ['line1', 'city', 'zip']);
   }
 
   fillForm() {
@@ -77,11 +77,11 @@ export class AddressFormComponent extends AbstractFormComponent implements OnIni
   }
 
   onAddressSubmit() {
-    let newAddress: AddressType = new AddressType(this.addressForm.value);
+    const newAddress: AddressType = new AddressType(this.addressForm.value);
     let observable: Observable<any>;
     newAddress.id = this.anAddress.id;
 
-    this.saveAddress.emit({ action:'show_overlay'});
+    this.saveAddress.emit({ action: 'show_overlay'});
 
     if (Number(newAddress.id) === 0) {
       observable = this.profileService.createAddress(newAddress);
@@ -89,11 +89,11 @@ export class AddressFormComponent extends AbstractFormComponent implements OnIni
       observable = this.profileService.updateAddress(newAddress);
     }
 
-    observable.subscribe(()=> {
-      this.saveAddress.emit({ action:'save_success'});
+    observable.subscribe(() => {
+      this.saveAddress.emit({ action: 'save_success'});
     },
     (err: HttpErrorResponse) => {
-      this.saveAddress.emit({ action:'save_failure'});
+      this.saveAddress.emit({ action: 'save_failure'});
     });
   }
 }

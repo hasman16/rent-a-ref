@@ -18,13 +18,13 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
   @Input() set person(aPerson: BioType) {
     this.aPerson = aPerson;
     this.fillForm();
-  };
+  }
   @Input() states: any;
   @Output() saveBio = new EventEmitter();
 
   bioForm: FormGroup;
   aPerson: BioType;
-  mode: boolean = false;
+  mode = false;
 
   showDivbio = true;
   firstnameInvalid = false;
@@ -44,7 +44,7 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
       dob: ['', [<any>Validators.nullValidator]]
     });
 
-    this.setUpValidators(this.bioForm, ['firstname','lastname']);
+    this.setUpValidators(this.bioForm, ['firstname', 'lastname']);
   }
 
   public myDatePickerOptions: IMyDpOptions = {

@@ -8,17 +8,16 @@ import { PhoneType } from '../../../../shared/models/phoneType';
   styleUrls: ['./phone-form.component.scss']
 })
 export class PhoneFormComponent implements OnInit {
-  @Input() set phone(aPhone: PhoneType) {
-    this.telephone = aPhone;
-    this.fillForm();
-  };
-  @Output() savePhone = new EventEmitter();
-  @Output() cancelForm = new EventEmitter();
-
   phoneForm: FormGroup;
   telephone: PhoneType;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   showDivPhone = true;
+  @Output() savePhone = new EventEmitter();
+  @Output() cancelForm = new EventEmitter();
+  @Input() set phone(aPhone: PhoneType) {
+    this.telephone = aPhone;
+    this.fillForm();
+  }
 
   constructor(private formBuilder: FormBuilder) {
     this.phoneForm = this.formBuilder.group({
@@ -44,7 +43,7 @@ export class PhoneFormComponent implements OnInit {
   onCancel() {
     this.cancelForm.emit(false);
   }
-  
+
   ngOnInit() {
     this.fillForm();
   }

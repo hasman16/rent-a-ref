@@ -22,14 +22,16 @@ import { BioType } from '../../../shared/models/bioType';
 })
 export class EditProfileComponent implements OnInit {
   messages: object = {
-    "password": "Change Your Password",
-    "bio": "Update Your Information",
-    "phone": "Update Your Phones",
-    "address": "Update Your Address",
-    "zone": "Update Your Available Zone",
-    "payment": "Update Your Payment"
+    'password': 'Change Your Password',
+    'bio': 'Update Your Information',
+    'phone': 'Update Your Phones',
+    'address': 'Update Your Address',
+    'zone': 'Update Your Available Zone',
+    'payment': 'Update Your Payment'
   };
-  message: string = "";
+
+  password: '';
+  message = '';
   divPasswordFlag = false;
   divBioFlag = false;
   divPhoneFlag = false;
@@ -43,7 +45,9 @@ export class EditProfileComponent implements OnInit {
   ccFlag = false;
   paypal = '';
 
-  user = { id: '', email: '' };
+  user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
+  // person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
+
   person: BioType;
 
   address: AddressType;
@@ -65,6 +69,7 @@ export class EditProfileComponent implements OnInit {
   public showDivZone = false;
   public showDivPayment = false;
 
+  passwordForm: FormGroup;
   paymentForm: FormGroup;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '^\\d{5}(?:[ -]{1}\\d{4})?$';
@@ -95,27 +100,27 @@ export class EditProfileComponent implements OnInit {
       data => {
         this.resetDivs();
         this.user = this.profileService.getData();
-        let action = "";
+        let action = '';
         if (data['divPassword'] === 'password') {
-          action = "password";
+          action = 'password';
           this.divPasswordFlag = true;
           this.showDivreset = true;
         } else if (data['divBio'] === 'bio') {
-          action = "bio";
+          action = 'bio';
           this.person = this.profileService.getPerson();
           this.divBioFlag = true;
           this.showDivbio = true;
         } else if (data['divPhone'] !== undefined) {
-          action = "phone";
+          action = 'phone';
           this.createPhoneForm(data);
         } else if (data['divAddress'] !== undefined) {
-          action = "address";
+          action = 'address';
           this.createAddressForm(data);
         } else if (data['divZone'] !== undefined) {
-          action = "zone";
+          action = 'zone';
           this.createZoneForm(data);
         } else if (data['divPayment'] === 'payment') {
-          action = "payment";
+          action = 'payment';
           this.divPaymentFlag = true;
           this.showDivPayment = true;
         }
@@ -126,8 +131,8 @@ export class EditProfileComponent implements OnInit {
   createAddressForm(data) {
     this.addresses = this.profileService.getAddresses();
 
-    let addressId = Number(data['divAddress']);
-    let address = this.addresses.find(function(address) {
+    const addressId = Number(data['divAddress']);
+    const address = this.addresses.find(function(address) {
       return Number(address.id) === addressId;
     });
 
@@ -140,8 +145,8 @@ export class EditProfileComponent implements OnInit {
   createPhoneForm(data) {
     this.phones = this.profileService.getPhones();
 
-    let phoneId = Number(data['divPhone']);
-    let phone = this.phones.find(function(phone) {
+    const phoneId = Number(data['divPhone']);
+    const phone = this.phones.find(function(phone) {
       return Number(phone.id) === phoneId;
     });
 
@@ -154,8 +159,8 @@ export class EditProfileComponent implements OnInit {
   createZoneForm(data) {
     this.areas = this.profileService.getAreas();
 
-    let areaId = Number(data['divAddress']);
-    let area = this.areas.find(function(area) {
+    const areaId = Number(data['divAddress']);
+    const area = this.areas.find(function(area) {
       return Number(area.id) === areaId;
     });
 

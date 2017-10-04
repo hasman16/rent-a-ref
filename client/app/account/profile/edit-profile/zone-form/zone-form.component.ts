@@ -14,25 +14,25 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./zone-form.component.scss']
 })
 export class ZoneFormComponent extends AbstractFormComponent implements OnInit {
-  @Input() set zone(aZone: AddressType) {
-    this.aZone = aZone;
-    this.fillForm();
-  };
-  @Input() country(aCountry: string = 'usa') {
-    this.countryName = aCountry;
-    this.fillForm();
-  };
-  @Output() saveZone = new EventEmitter();
-
   zoneForm: FormGroup;
   aZone: AddressType;
   anAddress: AddressType;
-  countryName:string = 'usa';
+  countryName = 'usa';
   states: any;
 
   radiusInvalid = false;
   cityInvalid = false;
   zipInvalid = false;
+  @Output() saveZone = new EventEmitter();
+  @Input() set zone(aZone: AddressType) {
+    this.aZone = aZone;
+    this.fillForm();
+  }
+  @Input() country(aCountry: string = 'usa') {
+    this.countryName = aCountry;
+    this.fillForm();
+  }
+
 
   constructor(private formBuilder: FormBuilder,  private statesService: StatesService) {
     super();
@@ -48,7 +48,7 @@ export class ZoneFormComponent extends AbstractFormComponent implements OnInit {
       Validators.maxLength(3), Validators.pattern('\\d{1,3}')]]
     });
 
-    this.setUpValidators(this.zoneForm, ['city','zip', 'radius']);
+    this.setUpValidators(this.zoneForm, ['city', 'zip', 'radius']);
   }
 
   fillForm() {

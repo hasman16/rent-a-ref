@@ -14,8 +14,9 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class AccountComponent implements OnInit {
 
   // user = {};
-  user = { id: '', email: '' };
-  person = { id: '' };
+  user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
+  person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
+
   isLoading = true;
 
   constructor(private auth: AuthService,

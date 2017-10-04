@@ -10,14 +10,15 @@ import { compareFields } from '../../../../shared/compareFields';
   styleUrls: ['./password-form.component.scss']
 })
 export class PasswordFormComponent extends AbstractFormComponent implements OnInit {
-  @Input() password: any;
-  @Output() savePassword = new EventEmitter();
-
   passwordForm: FormGroup;
   showDivreset = true;
 
   password1Invalid = false;
   password2Invalid = false;
+
+  @Output() savePassword = new EventEmitter();
+  @Input() password: any;
+
 
   constructor(private formBuilder: FormBuilder) {
     super();
@@ -28,7 +29,7 @@ export class PasswordFormComponent extends AbstractFormComponent implements OnIn
       <any>Validators.minLength(6)]]
     }, { validator: compareFields('password1', 'password2') });
 
-    this.setUpValidators(this.passwordForm, ['password1','password2']);
+    this.setUpValidators(this.passwordForm, ['password1', 'password2']);
   }
 
   onPasswordSubmit() {

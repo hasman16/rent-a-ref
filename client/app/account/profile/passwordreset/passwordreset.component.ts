@@ -27,7 +27,7 @@ export class PasswordresetComponent implements OnInit {
   ngOnInit() {
     this.emailForm = this.formBuilder.group({
       email: this.email
-    }); 
+    });
 
   }
 

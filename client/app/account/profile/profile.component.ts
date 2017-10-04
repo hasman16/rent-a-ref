@@ -24,8 +24,9 @@ import _ from "lodash";
 })
 export class ProfileComponent implements OnInit, CanComponentDeactivate {
   data = {};
-  user = {};
-  person = {};
+  user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
+  person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
+
   addresses = [];
   dummyAddress: AddressType = new AddressType({});
   phones = [];

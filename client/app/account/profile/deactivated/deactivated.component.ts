@@ -9,8 +9,8 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./deactivated.component.scss']
 })
 export class DeactivatedComponent implements OnInit {
-  user = { id: '', email: '' };
-  person = { id: '' };
+  user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
+  person = { id: '', firstname: '', lastname: '' };
 
   constructor(private auth: AuthService, private userService: UserService) { }
 
