@@ -40,7 +40,7 @@ export class PhoneFormComponent implements OnInit {
     this.savePhone.emit(this.phoneForm.value);
   }
 
-  onCancel() {
+  onCancel(event) {
     this.cancelForm.emit(false);
   }
 

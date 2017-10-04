@@ -36,7 +36,7 @@ export abstract class AbstractFormComponent {
 
   public abstract fillForm();
 
-  onCancel() {
+  onCancel(event) {
     this.cancelForm.emit(false);
   }
 }
