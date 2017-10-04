@@ -12,8 +12,8 @@ export default function BlogController(models, ResponseService) {
   }
 
   function getPostsByUser(req, res) {
-    let clauses = ResponseService.limitOffset({}, req);
-    let mainClauses = {
+    const clauses = ResponseService.limitOffset({}, req);
+    const mainClauses = {
       where: {
         id: req.params.user_id
       },
@@ -114,7 +114,7 @@ export default function BlogController(models, ResponseService) {
         where: {
           id: comment.id
         }
-      })
+      });
     }
     ResponseService.findObject(comment_id, 'Comment', res, doDelete, 204);
   }

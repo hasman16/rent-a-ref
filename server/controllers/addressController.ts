@@ -26,7 +26,7 @@ export default function AddressController(models, ResponseService) {
     const sequelize = models.sequelize;
     let anAddress = ResponseService.makeObject(req);
     delete anAddress.id;
-    
+
     sequelize.transaction(function(t) {
       return Address.create(anAddress, { transaction: t })
         .then(newAddress => {

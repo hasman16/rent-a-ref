@@ -62,7 +62,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
         }
 
         return updatePromise;
-      })
+      });
   }
 
   function failedLogin(res, user) {
@@ -75,7 +75,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
         attempts = 5;
         passcode = randomstring.generate();
         let content = 'There was more than 5 unsuccessful login attempts on your';
-        content += ' account. Use the temp passcode below to reset your password: '
+        content += ' account. Use the temp passcode below to reset your password: ';
         content += '\n\n ' + passcode;
 
         SendGridService.sendEmail({
@@ -114,9 +114,9 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
 
   function comparePassword(res, user, newUser) {
     const lock = newUser.lock;
-    console.log("comparePassword:", user.password, lock.password);
+    console.log('comparePassword:', user.password, lock.password);
     return bcrypt.compare(user.password, lock.password)
-    .then((result) =>{
+    .then((result) => {
         if (result) {
           console.log('got result');
           const person = newUser.person;
@@ -153,7 +153,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
   }
 
   function userStatus(res, newUser) {
-    let message = 'Contact Admin to enabled Account.'
+    let message = 'Contact Admin to enabled Account.';
     switch (newUser.status) {
       case 'suspended':
         message = 'Account suspended by the Admin.';
@@ -197,5 +197,5 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
 
   return {
     login
-  }
+  };
 }

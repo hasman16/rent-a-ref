@@ -54,12 +54,12 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
 
               return Person.create(person, { transaction: t })
                 .then(function(newPerson) {
-                  const hasPhone = /\d+/.test(req.body["phone"]);
+                  const hasPhone = /\d+/.test(req.body['phone']);
 
                   if (hasPhone) {
                     const phone = {
-                      "number": String(req.body["phone"]),
-                      "description": "other"
+                      'number': String(req.body['phone']),
+                      'description': 'other'
                     };
 
                     return Phone.create(phone, { transaction: t })
@@ -143,5 +143,5 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
   return {
     getProfile,
     registerUser
-  }
+  };
 }

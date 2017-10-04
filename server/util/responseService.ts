@@ -18,8 +18,8 @@ export default class ResponseService {
       offset: 0,
       limit: 10
     };
-    let limit = (parseInt(query.limit) || 10);
-    let offset = (parseInt(query.offset) || 0) * 10;
+    let limit = (parseInt(query.limit, 10) || 10);
+    let offset = (parseInt(query.offset, 10) || 0) * 10;
     let order = query.order || 'ASC';
 
     order = attributes.map(function(attribute) {
@@ -53,7 +53,7 @@ export default class ResponseService {
       } else {
         return callback(obj);
       }
-    }
+    };
     const Model = this.models[name];
 
     this.findOne(Model, obj_id, res, foundObject, status);
@@ -76,7 +76,7 @@ export default class ResponseService {
     };
 
     this.success(res, message, status);*/
-    if (!collection || (Array.isArray(collection) && collection.length == 0)) {
+    if (!collection || (Array.isArray(collection) && collection.length === 0)) {
       status = 204;
     }
 
@@ -109,7 +109,7 @@ export default class ResponseService {
   }
 
   permissionViolation(res) {
-    this.failure(res, "Forbidden: Permissions violation.");
+    this.failure(res, 'Forbidden: Permissions violation.');
   }
 
   executeAsAdmin(req, res, callback) {
