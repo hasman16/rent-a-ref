@@ -136,16 +136,16 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
 
   function sendPasscode(res, user) {
     const passcode = randomstring.generate();
-    let content = 'You are receiving this email because someone (presumably you), reported a lost password at http://www.ref-a-ref.com.'
-    content += '\n\n If it wasn\'t you, please ignore this email.'
-    content += '\n\n If it was you, however, click the link below to reset your '
-    content += '\n\n password.You can also copy and paste the link into your browser address bar.'
-    content += '\n\n '
+    let content = 'You are receiving this email because someone (presumably you), reported a lost password at http://www.ref-a-ref.com.';
+    content += '\n\n If it wasn\'t you, please ignore this email.';
+    content += '\n\n If it was you, however, click the link below to reset your ';
+    content += '\n\n password.You can also copy and paste the link into your browser address bar.';
+    content += '\n\n ';
 
-    content += 'Use the passcode to reset your password.'
-    content += '\n\n ' + passcode
-    content += '\n\n '
-    content += '\n\n Or you can copy the link below to launch the reset password page'
+    content += 'Use the passcode to reset your password.';
+    content += '\n\n ' + passcode;
+    content += '\n\n ';
+    content += '\n\n Or you can copy the link below to launch the reset password page';
     content += '\n\n http://localhost:4200/reset?passcode=' + passcode;
 
     bcrypt.hash(passcode, 12)

@@ -24,8 +24,8 @@ export default function PhoneController(models, ResponseService) {
 
   function makePhone(newPhone) {
     let phone = {
-      "number": newPhone.number,
-      "description": newPhone.description
+      'number': newPhone.number,
+      'description': newPhone.description
     };
     return phone;
   }
@@ -164,5 +164,5 @@ export default function PhoneController(models, ResponseService) {
     getByOrganization,
     updateByOrganization,
     deleteByOrganization
-  }
+  };
 }

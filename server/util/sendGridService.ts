@@ -17,7 +17,7 @@ export default new class SendGridService {
       let to = setter.to;
       if (!Array.isArray(setter.to)) {
         to = [setter.to];
-      };
+      }
       const emailAddresses = to.map((emailAddress) => {
         return {
           email: emailAddress
@@ -52,4 +52,4 @@ export default new class SendGridService {
     }
     return value;
   }
-}
+};

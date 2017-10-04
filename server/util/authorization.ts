@@ -1,5 +1,5 @@
 export default function authorization(dbModels) {
-  const models = dbModels
+  const models = dbModels;
 
   function checkIsAdmin(req) {
     const authorization = Number(req.decoded.accessLevel);
@@ -41,7 +41,7 @@ export default function authorization(dbModels) {
     const whereClause = {
       user_id: req.decoded.id,
       id: req.params.organization_id
-    }
+    };
 
     checkAssociation(whereClause, Organization, req, res, next);
   }
@@ -51,7 +51,7 @@ export default function authorization(dbModels) {
     const whereClause = {
       user_id: req.decoded.id,
       organization_id: req.params.organization_id
-    }
+    };
     checkAssociation(whereClause, Organizer, req, res, next);
   }
 
@@ -59,7 +59,7 @@ export default function authorization(dbModels) {
     const whereClause = {
       user_id: req.decoded.id,
       address_id: req.params.address_id
-    }
+    };
     const Model = models.UserAddress;
 
     checkAssociation(whereClause, Model, req, res, next);

@@ -20,7 +20,7 @@ export default function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'no',
       validate: {
-        isIn: [["no","pending","active","suspended"]]
+        isIn: [ ['no', 'pending', 'active', 'suspended'] ]
       }
     },
     can_organize: {
@@ -28,7 +28,7 @@ export default function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'no',
       validate: {
-        isIn: [["no","pending","active","suspended"]]
+        isIn: [ ['no', 'pending', 'active', 'suspended'] ]
       }
     },
     status: {
@@ -36,11 +36,11 @@ export default function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'no',
       validate: {
-        isIn: [["no","pending","active","suspended","locked"]]
+        isIn: [ ['no', 'pending', 'active', 'suspended', 'locked'] ]
       }
     }
   }, {
       paranoid: true, // mark as deleted but do not delete
       underscored: true // use underscore instead of camelCase.
     });
-};
+}

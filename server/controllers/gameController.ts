@@ -1,9 +1,9 @@
 export default function GameController(models, ResponseService) {
   const Game = models.Game;
-  const attributes = ['id', 'name', 'duration', 'referees']
+  const attributes = ['id', 'name', 'duration', 'referees'];
 
   function makeGame(newGame) {
-    let game = {
+    const game = {
       "name": newGame["name"],
       "duration": newGame['duration'],
       "referees": newGame['referees']
@@ -78,5 +78,5 @@ export default function GameController(models, ResponseService) {
     create: create,
     update: update,
     deleteOne: deleteOne
-  }
+  };
 }

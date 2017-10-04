@@ -4,7 +4,7 @@ export default function(sequelize, DataTypes) {
           type: DataTypes.INTEGER,
           allowNull: false,
           validate: {
-            isIn: [[5,10,15,20,25,30,35,40,45,50]]
+            isIn: [ [5, 10, 15, 20, 25, 30, 35, 40, 45, 50] ]
           }
         },
         city: {
@@ -26,4 +26,4 @@ export default function(sequelize, DataTypes) {
         paranoid: true, // mark as deleted but do not delete
         underscored: true // use underscore instead of camelCase.
     });
-};
+}

@@ -32,7 +32,7 @@ export default function AreaController(models, ResponseService) {
         where: {
           id: location.id
         }
-      })
+      });
     }
     ResponseService.findObject(location_id, 'Area', res, doDelete, 204);
   }
