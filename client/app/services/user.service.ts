@@ -61,7 +61,7 @@ export class UserService {
 
   //Zones
   createZone(information, user_id): Observable<any> {
-    return this.http.post(`/api/user/${user_id}/location_preference`, JSON.stringify(information), this.tokenService.getOptions());
+    return this.http.post(`/api/users/${user_id}/location_preference`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
   updateZone(information, zone_id: any): Observable<any> {

@@ -5,9 +5,9 @@ function GameController(models, ResponseService) {
     var attributes = ['id', 'name', 'duration', 'referees'];
     function makeGame(newGame) {
         var game = {
-            "name": newGame["name"],
-            "duration": newGame['duration'],
-            "referees": newGame['referees']
+            'name': newGame['name'],
+            'duration': newGame['duration'],
+            'referees': newGame['referees']
         };
         return game;
     }
