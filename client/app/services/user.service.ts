@@ -109,14 +109,14 @@ export class UserService {
 
   // Create an Organization
   createOrganization(information, user_id): Observable<any> {
-    return this.http.post(`/api/organization/${user_id}`, JSON.stringify(information), this.tokenService.getOptions());
+    return this.http.post(`/api/organizations/${user_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
   updateOrganization(information, Organization_id): Observable<any> {
-    return this.http.put(`/api/organization/${Organization_id}`, JSON.stringify(information), this.tokenService.getOptions());
+    return this.http.put(`/api/organizations/${Organization_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
   getOrganization(user_id: any): Observable<any> {
-    return this.http.get(`/api/organization/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
+    return this.http.get(`/api/organizations/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
   }
 }

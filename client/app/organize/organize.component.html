@@ -2,7 +2,7 @@
   <div class="card">
     <h4 class="elegantshd bigFont">Organize or Request Referee(s)</h4>
     <div class="card-block">
-      <ng-container *ngIf="userDatas.name === ''">
+      <ng-container *ngIf="userDatas.name !== ''">
       <blockquote>
         <button type="button" class="btn btn-primary btn-lg btn-block"><li data-toggle="modal" data-target="#orgline" (click)="organizeFlag = true">
           <!--<a routerLink="/privacy-policy" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">-->
