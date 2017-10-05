@@ -4,9 +4,9 @@ export default function GameController(models, ResponseService) {
 
   function makeGame(newGame) {
     const game = {
-      "name": newGame["name"],
-      "duration": newGame['duration'],
-      "referees": newGame['referees']
+      'name': newGame['name'],
+      'duration': newGame['duration'],
+      'referees': newGame['referees']
     };
 
     return game;

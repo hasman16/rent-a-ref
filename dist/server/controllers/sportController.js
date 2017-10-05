@@ -41,7 +41,7 @@ function SportController(models, ResponseService) {
     function returnSport(res, sport, status) {
         if (status === void 0) { status = 200; }
         var newSport = makeSport(sport);
-        newSport["id"] = sport.id;
+        newSport['id'] = sport.id;
         ResponseService.success(res, newSport, status);
     }
     function updateOne(req, res) {
@@ -69,7 +69,7 @@ function SportController(models, ResponseService) {
             return Sport.destroy(clause, { transaction: t })
                 .then(function (lines1) {
                 return Referee.destroy(clause, { transaction: t })
-                    .then(function (lines2) { return ResponseService.success(res, "Sport and Referees deleted:", totalLines(lines1, lines2), 204); });
+                    .then(function (lines2) { return ResponseService.success(res, 'Sport and Referees deleted:', totalLines(lines1, lines2), 204); });
             });
         })
             .catch(function (error) { return ResponseService.exception(res, error); });

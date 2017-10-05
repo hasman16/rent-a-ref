@@ -153,5 +153,5 @@ export default function AddressController(models, ResponseService) {
     getByOrganization,
     updateByOrganization,
     deleteByOrganization
-  }
+  };
 }

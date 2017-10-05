@@ -188,7 +188,7 @@ function insertLock(user, password, models) {
     password: password,
     passcode: null,
     user_id: user.id
-  })
+  });
 }
 
 function insertUser(models) {
@@ -202,7 +202,7 @@ function insertUser(models) {
         user.password = password;
         return User.findOne({
           where: { email: user.email }
-        })
+        });
       })
       .then(function(newUser) {
         if (!newUser) {

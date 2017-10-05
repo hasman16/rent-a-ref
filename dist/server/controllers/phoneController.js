@@ -31,7 +31,7 @@ function PhoneController(models, ResponseService) {
     function returnPhone(res, phone, status) {
         if (status === void 0) { status = 200; }
         var newPhone = makePhone(phone);
-        newPhone["id"] = phone.id;
+        newPhone['id'] = phone.id;
         ResponseService.success(res, newPhone, status);
     }
     function create(req, res, joinTable, joinModel) {

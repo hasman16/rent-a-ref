@@ -32,7 +32,7 @@ export default function PhoneController(models, ResponseService) {
 
   function returnPhone(res, phone, status = 200) {
     let newPhone = makePhone(phone);
-    newPhone["id"] = phone.id;
+    newPhone['id'] = phone.id;
     ResponseService.success(res, newPhone, status);
   }
 

@@ -77,7 +77,7 @@ export default function BlogController(models, ResponseService) {
         where: {
           id: post.id
         }
-      })
+      });
     }
     ResponseService.findObject(post_id, 'Post', res, doDelete, 204);
   }
@@ -129,5 +129,5 @@ export default function BlogController(models, ResponseService) {
     createComment,
     updateComment,
     deleteComment
-  }
+  };
 }

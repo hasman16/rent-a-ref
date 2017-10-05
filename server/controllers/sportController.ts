@@ -44,7 +44,7 @@ export default function SportController(models, ResponseService) {
 
   function returnSport(res, sport, status = 200) {
     let newSport = makeSport(sport);
-    newSport["id"] = sport.id;
+    newSport['id'] = sport.id;
     ResponseService.success(res, newSport, status);
   }
 
@@ -77,7 +77,7 @@ export default function SportController(models, ResponseService) {
       return Sport.destroy(clause, { transaction: t })
         .then(lines1 => {
           return Referee.destroy(clause, { transaction: t })
-            .then(lines2 => ResponseService.success(res, "Sport and Referees deleted:", totalLines(lines1, lines2), 204));
+            .then(lines2 => ResponseService.success(res, 'Sport and Referees deleted:', totalLines(lines1, lines2), 204));
         });
     })
       .catch(error => ResponseService.exception(res, error));
