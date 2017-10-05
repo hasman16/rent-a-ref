@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 
-import { AddressType } from "./../shared/models/addressType";
-import { BioType } from "./../shared/models/bioType";
-import { PhoneType } from "./../shared/models/phoneType";
+import { AddressType } from './../shared/models/addressType';
+import { BioType } from './../shared/models/bioType';
+import { PhoneType } from './../shared/models/phoneType';
 import { Observable } from 'rxjs/Observable';
-import _ from "lodash";
+import _ from 'lodash';
 
 @Injectable()
 export class ProfileService {
@@ -23,19 +23,19 @@ export class ProfileService {
     return _.cloneDeep(this.data);
   }
 
-  getPerson():BioType {
+  getPerson(): BioType {
     return _.cloneDeep(this.person);
   }
 
-  getAddresses():Array<AddressType> {
+  getAddresses(): Array<AddressType> {
     return _.cloneDeep(this.addresses);
   }
 
-  getAreas():Array<any> {
+  getAreas(): Array<any> {
     return _.cloneDeep(this.areas);
   }
 
-  getPhones():Array<PhoneType> {
+  getPhones(): Array<PhoneType> {
     return _.cloneDeep(this.phones);
   }
 
@@ -51,19 +51,19 @@ export class ProfileService {
       });
   }
 
-  createAddress(newAddress: AddressType):Observable<any> {
+  createAddress(newAddress: AddressType): Observable<any> {
     return this.userService.createAddress(newAddress, this.data.id);
   }
 
-  updateAddress(newAddress: AddressType):Observable<any> {
+  updateAddress(newAddress: AddressType): Observable<any> {
     return this.userService.updateAddress(newAddress, this.data.id, newAddress.id);
   }
 
-  createPhone(newPhone: PhoneType):Observable<any> {
+  createPhone(newPhone: PhoneType): Observable<any> {
     return this.userService.createPhone(newPhone, this.data.id);
   }
 
-  updatePhone(newPhone: PhoneType):Observable<any> {
+  updatePhone(newPhone: PhoneType): Observable<any> {
     return this.userService.updatePhone(newPhone, this.data.id, newPhone.id);
   }
 }

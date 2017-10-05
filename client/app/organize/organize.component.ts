@@ -22,7 +22,9 @@ export class OrganizeComponent implements OnInit {
   filmResource = new DataTableResource(films);
   films = [];
   filmCount = 0;
-
+  update: any = 'update';
+  create: any = 'create';
+  view: any = 'view';
   @ViewChild(DataTable) filmsTable;
   // special params:
 
@@ -41,6 +43,8 @@ export class OrganizeComponent implements OnInit {
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   userDatas = { id: '', name: '' };
   userData;
+  orgDataPhones = { id: '', name: '' };
+  
   showDivOrg_name = true;
   saveFlag = false;
 
@@ -51,6 +55,8 @@ export class OrganizeComponent implements OnInit {
   public dateModel;
 
   organizationForm: FormGroup;
+  organizationUpdateForm: FormGroup;
+  organizationViewForm: FormGroup;
   org_name = new FormControl('', [Validators.required, Validators.minLength(2),
   Validators.maxLength(90), Validators.pattern(this.alphaNumericRegex)]);
 
@@ -72,6 +78,16 @@ export class OrganizeComponent implements OnInit {
       org_name: ['', [Validators.required, Validators.minLength(2),
       Validators.maxLength(90), Validators.pattern(this.alphaNumericRegex)]]
     });
+    // Update
+    this.organizationUpdateForm = this.formBuilder.group({
+      org_name: ['', [Validators.required, Validators.minLength(2),
+      Validators.maxLength(90), Validators.pattern(this.alphaNumericRegex)]]
+    });
+    // View
+    this.organizationViewForm = this.formBuilder.group({
+      org_name: ['', [Validators.required, Validators.minLength(2),
+      Validators.maxLength(90), Validators.pattern(this.alphaNumericRegex)]]
+    });
 
     route.queryParams.subscribe(
       data => {
@@ -79,6 +95,7 @@ export class OrganizeComponent implements OnInit {
         this.org_name = this.userData;
         this.userDatas = {id: this.userData.id, name: this.userData.name};
         console.log('userData: ', this.userData);
+
       });
   }
 
@@ -93,6 +110,7 @@ export class OrganizeComponent implements OnInit {
 // Datatable end
 
   ngOnInit() {
+    // this.getOrganizations();
   }
 
   createOrganization() {
@@ -110,15 +128,26 @@ export class OrganizeComponent implements OnInit {
   }
 
   updateOrganization() {
-    this.userService.updateOrganization(this.organizationForm.value, this.userData.id).subscribe(
+    this.userService.updateOrganization(this.organizationUpdateForm.value, this.userData.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
       }
     );
   }
-
-
+/*
+  getOrganizations() {
+    this.userService.getOrganization(this.auth.currentUser.id).subscribe(
+      // data => this.users = data,
+      // error => console.log(error),
+      // () => this.isLoading = false
+      res => this.callSuccess(res),
+      (err: HttpErrorResponse) => {
+        this.callFailure(err);
+      }
+    );
+  }
+*/
   callSuccess(res) {
     this.org_name = res;
     console.log('callSuccess');

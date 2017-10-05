@@ -4,7 +4,7 @@
     <div class="card-block">
       <ng-container *ngIf="userDatas.name !== ''">
       <blockquote>
-        <button type="button" class="btn btn-primary btn-lg btn-block"><li data-toggle="modal" data-target="#orgline" (click)="organizeFlag = true">
+        <button type="button" class="btn btn-primary btn-lg btn-block"><li data-toggle="modal" data-target="#orgline" (click)="organizeFlag = create">
           <!--<a routerLink="/privacy-policy" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">-->
           <i class="fa fa-institution"></i><span class="general-links"> Click to Create an Organization</span>
         </li></button>        
@@ -12,7 +12,17 @@
 </ng-container>
 <ng-container *ngIf="userDatas.name !== ''">
 <ol class="breadcrumb">
-  <li class="breadcrumb-item active">Organization: <b>{{org_name}}</b></li>
+  <li class="breadcrumb-item active">Organization: <b>{{userDatas.name}}   </b>
+  <button type="button" class="btn btn-success btn-sm"><li data-toggle="modal" data-target="#orgline" (click)="organizeFlag = update">
+          <!--<a routerLink="/privacy-policy" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">-->
+          <i class="fa fa-institution"></i><span class="general-links"> update </span>
+        </li></button>  
+
+        <button type="button" class="btn btn-success btn-sm"><li data-toggle="modal" data-target="#orgline" (click)="organizeFlag = view">
+          <!--<a routerLink="/privacy-policy" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">-->
+          <i class="fa fa-eye"></i><span class="general-links"> View</span>
+        </li></button>
+  </li>
 </ol>
 
 </ng-container>
@@ -47,14 +57,14 @@
       <div id="orgline" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordineLabel" aria-hidden="true">
         <div class="modal-dialog">
 
-          <!-- Modal content-->
+          <!-- Modal content Create Orgaization-->
           <div class="modal-content">
-            <div class="modal-header" *ngIf="organizeFlag">
+            <div class="modal-header" *ngIf="organizeFlag === create">
               <button type="button" class="close" data-dismiss="modal">×</button>
-              <button></button>
+              
               <!--<h4 class="modal-title">What is your Organization name?</h4>-->
             </div>
-            <div class="modal-body" *ngIf="organizeFlag">
+            <div class="modal-body" *ngIf="organizeFlag === create">
               <div class="embed-responsive embed-responsive-16by9">
                 <!--<iframe class="embed-responsive-item" src="/assets/src/terms-conditions.txt" allowfullscreen></iframe>-->
                 <div class="col-xs-12 col-sm-12">
@@ -101,11 +111,128 @@
 </div>
               </div>              
               <!--<p><span class="blue-footer">Thank you</span></p>-->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            
+          </div>
+          <!--End Create Organization-->
+<!-- Modal content Update Orgaization-->
+<div class="modal-content">
+  <div class="modal-header" *ngIf="organizeFlag === update">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+
+    <!--<h4 class="modal-title">What is your Organization name?</h4>-->
+  </div>
+  <div class="modal-body" *ngIf="organizeFlag === update">
+    <div class="embed-responsive embed-responsive-16by9">
+      
+      <div class="col-xs-12 col-sm-12">        
+        <div class="card">
+          <h4 class="card-header elegantshd bigFont">Update Organization</h4>
+          <app-toast [message]="toast.message"></app-toast>
+
+          <div class="card-block">
+            <div class="card-block">
+              <div class="card card-outline-success">
+                <div class="card-block numberbg">
+
+                  <form [formGroup]="organizationUpdateForm" (ngSubmit)="updateOrganization()" *ngIf="showDivOrg_name else showUpdateDivresetmsg">
+                    <p>Please fill in the field below.</p>
+                    <div class="input-group" [ngClass]="setClassName()">
+                      <span class="input-group-addon"><i class="fa  fa-universal-access"></i></span>
+                      <input class="form-control" name="org_name" formControlName="org_name" placeholder="Organization Name" [(ngModel)]="userData.org_name"
+                        required>
+                    </div>
+
+                    <br>
+                    <div>
+                      <button type="submit" class="btn btn-primary btn-sm" [disabled]="organizationUpdateForm.invalid"><i class="fa fa-save"></i>Update</button>
+                      <!--<button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>-->
+                    </div>
+
+                  </form>
+
+                  <ng-template #showUpdateDivresetmsg>
+                    <blockquote>
+                      <p>Your Organization was successfully Updated.</p>
+                    </blockquote>
+                  </ng-template>
+
+                </div>
+              </div>
             </div>
           </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+  <!---->
+</div>
+          <!--End Update Organization-->
+          <!-- Modal content View Orgaization-->
+          <div class="modal-content">
+            <div class="modal-header" *ngIf="organizeFlag === view">
+              <button type="button" class="close" data-dismiss="modal">×</button>
+
+              <!--<h4 class="modal-title">What is your Organization name?</h4>-->
+            </div>
+            <div class="modal-body" *ngIf="organizeFlag === view">
+              <div class="embed-responsive embed-responsive-16by9">
+
+                <div class="col-xs-12 col-sm-12">
+                  <div class="card">
+                    <h4 class="card-header elegantshd bigFont">Organization Information</h4>
+                    <app-toast [message]="toast.message"></app-toast>
+
+                    <div class="card-block">
+                      <div class="card-block">
+                        <div class="card card-outline-success">
+                          <div class="card-block numberbg">
+
+                            <form [formGroup]="organizationViewForm" (ngSubmit)="updateOrganization()" *ngIf="showDivOrg_name else showDivresetmsg">
+                              
+                              <div class="input-group" [ngClass]="setClassName()">
+                                <span class="input-group-addon"><i class="fa  fa-universal-access"></i></span>
+                                <input class="form-control" name="org_name" formControlName="org_name" placeholder="Organization Name" [(ngModel)]="userData.org_name"
+                                  required>
+                              </div>
+
+                              <br>
+                              <div>
+                                <button type="submit" class="btn btn-primary btn-sm" [disabled]="organizationViewForm.invalid"><i class="fa fa-save"></i>Update</button>
+                                <!--<button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>-->
+                              </div>
+
+                            </form>
+
+                            <ng-template #showDivresetmsg>
+                              <blockquote>
+                                <p>Your Organization was successfully Updated.</p>
+                              </blockquote>
+                            </ng-template>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!---->
+          </div>
+          <!--End View Organization-->
+        </div>
         </div>
         <!--Modal end-->
     </div>

@@ -4,7 +4,7 @@ import { UserService } from './user.service';
 @Injectable()
 export class OrganizeService {
 
-  private org_data = { id: '', org_name: '' };
+  private org_data = { id: '', name: '' };
 
 
   constructor(private userService: UserService) {
