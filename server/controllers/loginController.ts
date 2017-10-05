@@ -114,11 +114,11 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
 
   function comparePassword(res, user, newUser) {
     const lock = newUser.lock;
-    console.log('comparePassword:', user.password, lock.password);
+    //console.log('comparePassword:', user.password, lock.password);
     return bcrypt.compare(user.password, lock.password)
     .then((result) => {
         if (result) {
-          console.log('got result');
+          //console.log('got result');
           const person = newUser.person;
           const user = {
             id: newUser.id,
@@ -131,11 +131,11 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
             can_organize: newUser.can_organize,
             status: newUser.status
           };
-          console.log('create token:', user, process.env.SECRET_TOKEN);
+          //console.log('create token:', user, process.env.SECRET_TOKEN);
           const token = jwt.sign(user, process.env.SECRET_TOKEN, {
             expiresIn: 1440 * 60
           });
-          console.log('go updateLock');
+          //console.log('go updateLock');
           return updateLock(user.id, function() {
             return {
               attempts: 0,

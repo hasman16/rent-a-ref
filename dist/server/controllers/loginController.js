@@ -103,11 +103,11 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
     }
     function comparePassword(res, user, newUser) {
         var lock = newUser.lock;
-        console.log('comparePassword:', user.password, lock.password);
+        //console.log('comparePassword:', user.password, lock.password);
         return bcrypt.compare(user.password, lock.password)
             .then(function (result) {
             if (result) {
-                console.log('got result');
+                //console.log('got result');
                 var person = newUser.person;
                 var user_1 = {
                     id: newUser.id,
@@ -120,11 +120,11 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
                     can_organize: newUser.can_organize,
                     status: newUser.status
                 };
-                console.log('create token:', user_1, process.env.SECRET_TOKEN);
+                //console.log('create token:', user, process.env.SECRET_TOKEN);
                 var token_1 = jwt.sign(user_1, process.env.SECRET_TOKEN, {
                     expiresIn: 1440 * 60
                 });
-                console.log('go updateLock');
+                //console.log('go updateLock');
                 return updateLock(user_1.id, function () {
                     return {
                         attempts: 0,

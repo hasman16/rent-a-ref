@@ -10,6 +10,7 @@ function organizationRoutes(setter, organizationCtrl) {
     var isOrgMember = authorization.isOrgMember;
     router.route('/organizers/:organization_id').get(authentication, organizationCtrl.getOrganizers);
     router.route('/organizations').get(authentication, organizationCtrl.getAll);
+    router.route('/users/:user_id/organizations').get(authentication, organizationCtrl.getByUser);
     router.route('/organizations').post(authentication, organizationCtrl.create);
     router.route('/organizations/:organization_id').get(authentication, organizationCtrl.getOne);
     router.route('/organizations/:organization_id').put(authentication, isOrgOwner, organizationCtrl.update);

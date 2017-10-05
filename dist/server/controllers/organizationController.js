@@ -10,6 +10,24 @@ function OrganizationController(models, ResponseService) {
             .then(function (results) { return ResponseService.successCollection(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
+    function getByUser(req, res) {
+        var User = models.User;
+        User.findOne({
+            where: {
+                id: req.params.user_id
+            },
+            include: [{
+                    model: Organization,
+                    through: {
+                        attributes: []
+                    }
+                }]
+        })
+            .then(function (results) {
+            ResponseService.success(res, results);
+        })
+            .catch(function (error) { return ResponseService.exception(res, error); });
+    }
     function getOrganizers(req, res) {
         var Organizer = models.Organizer;
         Organizer.findAll({
@@ -86,6 +104,7 @@ function OrganizationController(models, ResponseService) {
     }
     return {
         getAll: getAll,
+        getByUser: getByUser,
         getOrganizers: getOrganizers,
         getOne: getOne,
         create: create,
