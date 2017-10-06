@@ -177,6 +177,9 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
       },
       (err: HttpErrorResponse) => {
+        console.log(' Message: ', err);
+        console.log('An error occurred:', JSON.parse(err['_body']));
+        this.toast.setMessage('An error occurred:', JSON.parse(err['_body']) + 'danger');
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('status: ' + err.status + ' Message: ' + err.message);
@@ -189,7 +192,7 @@ export class RegisterComponent implements OnInit {
           // The response body may contain clues as to what went wrong,
           console.log(`Backend returned code ${err.status}, Error Message: ${err.statusText}, body was: ${err.error}`);
           console.log('status: ' + err.status + ' Message: ' + err);
-          this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
+          // this.toast.setMessage('An error occurred:', JSON.parse(err._body), 'danger');
          // this.toast.setMessage('Backend returned code: ' + err.status + ' Error Status: ' + err.statusText, 'danger');
 
 

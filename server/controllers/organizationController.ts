@@ -10,6 +10,26 @@ export default function OrganizationController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
+  function getByUser(req, res) {
+    const User = models.User;
+
+    User.findOne({
+      where: {
+        id: req.params.user_id
+      },
+      include: [{
+        model: Organization,
+        through: {
+          attributes: []
+        }
+      }]
+    })
+      .then(results => {
+        ResponseService.success(res, results);
+      })
+      .catch(error => ResponseService.exception(res, error));
+  }
+
   function getOrganizers(req, res) {
     const Organizer = models.Organizer;
 
@@ -94,11 +114,12 @@ export default function OrganizationController(models, ResponseService) {
   }
 
   return {
-    getAll: getAll,
-    getOrganizers: getOrganizers,
-    getOne: getOne,
-    create: create,
-    update: update,
-    deleteOne: deleteOne
+    getAll,
+    getByUser,
+    getOrganizers,
+    getOne,
+    create,
+    update,
+    deleteOne
   };
 }

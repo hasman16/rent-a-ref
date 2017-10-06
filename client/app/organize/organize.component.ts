@@ -110,11 +110,21 @@ export class OrganizeComponent implements OnInit {
 // Datatable end
 
   ngOnInit() {
-    // this.getOrganizations();
+    /*console.log('onInit: call createOrganization:', this.organizationForm.value);
+    this.organizationForm.setValue({
+      org_name: 'Testing testing'
+    });
+    this.createOrganization();*/
+  }
+
+  getOrgValue() {
+    const org = this.organizationForm.value;
+    return { name: org.org_name };
+
   }
 
   createOrganization() {
-    this.userService.createOrganization(this.organizationForm.value, this.auth.currentUser.id).subscribe(
+    this.userService.createOrganization(this.getOrgValue()).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
@@ -128,7 +138,12 @@ export class OrganizeComponent implements OnInit {
   }
 
   updateOrganization() {
+    /*
+
     this.userService.updateOrganization(this.organizationUpdateForm.value, this.userData.id).subscribe(
+*/
+    this.userService.updateOrganization(this.getOrgValue(), this.userData.id).subscribe(
+
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
@@ -150,7 +165,7 @@ export class OrganizeComponent implements OnInit {
 */
   callSuccess(res) {
     this.org_name = res;
-    console.log('callSuccess');
+    console.log('callSuccess: ' + res + ' name: ' + res.name);
     this.toast.setMessage(res.message, 'success');
     // this.onCancel();
     this.saveFlag = true;

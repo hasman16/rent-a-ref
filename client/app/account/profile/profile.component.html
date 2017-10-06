@@ -22,7 +22,7 @@
                 <div *ngIf="!editBio" class="fadeInForm">
                   <div>
                     <strong>Personal details</strong>
-                    <a [routerLink]="[]" (click)="setEditBio(true)" title="Edit personal details." href="#" >Edit</a>
+                    <button class="btn btn-primary btn-sm buttonSize" (click)="setEditBio(true)" title="Edit personal details.">EDIT</button>
                   </div>
 
                   <div>
@@ -58,8 +58,7 @@
               <div *ngIf="!editPassword">
                 <div>
                   <strong>Credentials</strong>
-                  <a [routerLink]="[]" (click)="setEditPassword(true)" title="Change password credentials." href="#" >Change</a>
-                </div>
+                  <button class="btn btn-primary btn-sm buttonSize" (click)="setEditPassword(true)" title="Change password credentials.">CHANGE</button>
                 <div>
                   <label class="profileLabel">Email: </label>
                   <span class="profileItem">{{user.email}}</span>
@@ -75,7 +74,7 @@
             <div class="card">
               <span class="card danger">
                 <strong>Phones</strong>
-                <a *ngIf="phones.length < 3" title="Add new phone." [routerLink]="[]"  (click)="setEditPhone(0,true)" href="#" >&nbsp;&nbsp;Add</a>
+                <button *ngIf="phones.length < 3" class="btn btn-primary btn-sm buttonSize"  title="Add new phone." (click)="setEditPhone(0,true)">ADD</button>
               </span>
 
               <ng-container *ngIf="!editPhone && phones.length === 0">
@@ -90,7 +89,7 @@
               <ng-container *ngIf="phones.length > 0">
                 <div *ngIf="!editPhone">
                   <div class="list-group" *ngFor="let phone of phones">
-                    <a [routerLink]="[]" title="Edit phone." (click)="setEditPhone(phone.id,true)" href="#" >Edit</a>
+                    <button *ngIf="phones.length < 3" class="btn btn-primary btn-sm buttonSize"  title="Edit phone." (click)="setEditPhone(phone.id,true)">EDIT</button>
                     <span class="list-group-item">
                       <label class="profileLabel">{{phone.description}} Phone:</label>
                       <span class="profileItem">{{phone.number}}</span>
@@ -105,7 +104,7 @@
             <div class="card">
               <div>
                 <strong>Address</strong>
-                <a *ngIf="addresses.length < 4" title="Add new address." [routerLink]="[]" (click)="setEditAddress(0,true)" href="#">&nbsp;&nbsp;Add</a>
+                <button *ngIf="addresses.length < 4" class="btn btn-primary btn-sm buttonSize" title="Add new address." (click)="setEditAddress(0,true)">ADD</button>
               </div>
 
               <ng-container *ngIf="!editAddress && addresses.length === 0">
@@ -120,7 +119,7 @@
               <ng-container *ngIf="addresses.length > 0">
                 <div class="list-group" *ngFor="let address of addresses">
                   <div *ngIf="!editAddress">
-                    <a [routerLink]="[]" title="Edit Address." (click)="setEditAddress(address.id, true)" href="#">Edit</a>
+                    <button  class="btn btn-primary btn-sm buttonSize" title="Edit address." (click)="setEditAddress(address.id,true)">EDIT</button>
                     <div>
                       <label class="profileLabel">Address Line 1:</label>
                       <span class="profileItem">{{address.line1}}</span>

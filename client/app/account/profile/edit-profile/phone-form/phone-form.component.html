@@ -1,7 +1,7 @@
 <div class="fadeInForm">
 
     <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()">
-      <div class="input-group" [ngClass]="{ 'has-danger': phoneForm.get('number').touched && phoneForm.get('number').invalid }">
+      <div class="input-group" [ngClass]="{ 'has-danger': descriptionInvalid || numberInvalid }">
 
         <label class="center-block">Phone:
           <select class="form-control" formControlName="description">

@@ -108,15 +108,23 @@ export class UserService {
   }
 
   // Create an Organization
-  createOrganization(information, user_id): Observable<any> {
-    return this.http.post(`/api/organizations/${user_id}`, JSON.stringify(information), this.tokenService.getOptions());
+  createOrganization(information): Observable<any> {
+    return this.http.post(`/api/organizations`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
   updateOrganization(information, Organization_id): Observable<any> {
     return this.http.put(`/api/organizations/${Organization_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
-  getOrganization(user_id: any): Observable<any> {
-    return this.http.get(`/api/organizations/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
+  getAllOrganizations(): Observable<any> {
+    return this.http.get(`/api/organizations`, this.tokenService.getOptions()).map(res => res.json());
+  }
+
+  getOrganization(organization_id: any): Observable<any> {
+    return this.http.get(`/api/organizations/${organization_id}`, this.tokenService.getOptions()).map(res => res.json());
+  }
+
+  getUserOrganization(user_id: any): Observable<any> {
+    return this.http.get(`/api/users/${user_id}/organizations`, this.tokenService.getOptions()).map(res => res.json());
   }
 }
