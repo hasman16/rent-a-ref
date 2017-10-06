@@ -56,18 +56,20 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
         middlenames: this.aPerson.middlenames,
         lastname: this.aPerson.lastname,
         gender: this.aPerson.gender,
-        dob: this.aPerson.dob
+        dob: this.getDate(this.aPerson.dob)
       });
-      this.setDate(this.aPerson.dob);
     }
   }
 
+  getDate(timestamp): any {
+    let date: Date = new Date(timestamp);
+    return { date: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() } };
+  }
+
   setDate(timestamp): void {
-    console.log('timestamp:', timestamp);
     if (timestamp) {
       // Set today using the setValue function
-      let date: Date = new Date(timestamp);
-      this.bioForm.patchValue({ dob: { date: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() } } });
+      this.bioForm.patchValue({ dob: this.getDate(timestamp) });
     } else {
       this.resetDate();
     }
@@ -87,10 +89,24 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
     this.fillForm();
   }
 
+  getEpoc(dob) {
+    let value: number = 0;
+
+    if (dob.epoc) {
+      value = Number(dob.epoc) * 1000;
+    } else {
+      const day = Number(dob.date.day);
+      const month = Number(dob.date.month) - 1;
+      const year = Number(dob.date.year);
+      value = new Date(year, month, day).getTime();
+    }
+
+    return value;
+  }
+
   onSubmit() {
     let bio = this.bioForm.value;
-
-    bio.dob = Number(bio.dob.epoc) * 1000;
+    bio.dob = this.getEpoc(bio.dob);
 
     this.userService.updatePerson(bio, this.aPerson.id).subscribe(() => {
       this.saveBio.emit({ action: 'save_success' });
