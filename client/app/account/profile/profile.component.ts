@@ -126,6 +126,22 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   onAddressSubmit(res) {
+    this.onFormSave(res);
+  }
+
+  onBioSubmit(res) {
+    this.onFormSave(res);
+  }
+
+  onPasswordSubmit(res) {
+    this.onFormSave(res);
+  }
+
+  onPhoneSubmit(res) {
+    this.onFormSave(res);
+  }
+
+  onFormSave(res:any) {
     if (res.action === 'show_overlay') {
       this.isLoading = true;
     } else if (res.action === 'save_success') {
@@ -136,18 +152,6 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     } else {
       this.onFormCancel(false);
     }
-  }
-
-  onBioSubmit(value) {
-    this.onFormCancel(false);
-  }
-
-  onPasswordSubmit(value) {
-    this.onFormCancel(false);
-  }
-
-  onPhoneSubmit(value) {
-    this.onFormCancel(false);
   }
 
   onFormCancel(value) {

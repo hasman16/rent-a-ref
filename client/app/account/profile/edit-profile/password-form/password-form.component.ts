@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { AbstractFormComponent } from '../abstract-form';
 import { compareFields } from '../../../../shared/compareFields';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector: 'password-form',
@@ -17,10 +19,10 @@ export class PasswordFormComponent extends AbstractFormComponent implements OnIn
   password2Invalid = false;
 
   @Output() savePassword = new EventEmitter();
-  @Input() password: any;
+  @Input() user: any;
 
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,  private userService: UserService) {
     super();
     this.passwordForm = this.formBuilder.group({
       password1: ['', [<any>Validators.required,
@@ -33,7 +35,13 @@ export class PasswordFormComponent extends AbstractFormComponent implements OnIn
   }
 
   onPasswordSubmit() {
-    this.savePassword.emit(this.passwordForm.value);
+    this.userService.changepassword(this.passwordForm.value, this.user.id)
+    .subscribe(() => {
+      this.savePassword.emit({ action: 'save_success'});
+    },
+    (err: HttpErrorResponse) => {
+      this.savePassword.emit({ action: 'save_failure'});
+    });
   }
 
   fillForm() {

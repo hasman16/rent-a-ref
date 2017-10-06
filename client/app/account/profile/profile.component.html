@@ -22,7 +22,6 @@
                 <div *ngIf="!editBio" class="fadeInForm">
                   <div>
                     <strong>Personal details</strong>
-                    <button class="btn btn-primary btn-sm buttonSize" (click)="setEditBio(true)" title="Edit personal details.">EDIT</button>
                   </div>
 
                   <div>
@@ -50,6 +49,8 @@
                     <label class="profileLabel">D.O.B:</label>
                     <span class="profileItem">{{birthday}}</span>
                   </div>
+
+                  <button class="btn btn-primary btn-sm buttonSize" (click)="setEditBio(true)" title="Edit personal details.">EDIT</button>
                 </div>
                 <bio-form *ngIf="editBio" [person]="person" (saveBio)="onBioSubmit($event)" (cancelForm)="onFormCancel($event)"></bio-form>
             </div>
@@ -58,7 +59,7 @@
               <div *ngIf="!editPassword">
                 <div>
                   <strong>Credentials</strong>
-                  <button class="btn btn-primary btn-sm buttonSize" (click)="setEditPassword(true)" title="Change password credentials.">CHANGE</button>
+                </div>
                 <div>
                   <label class="profileLabel">Email: </label>
                   <span class="profileItem">{{user.email}}</span>
@@ -67,14 +68,16 @@
                   <label class="profileLabel">Password: </label>
                   <span class="profileItem">***********</span>
                 </div>
+
+                <button class="btn btn-primary btn-sm buttonSize" (click)="setEditPassword(true)" title="Change password credentials.">CHANGE</button>
+
               </div>
-              <password-form *ngIf="editPassword" [password]="password" (savePassword)="onPasswordSubmit($event)" (cancelForm)="onFormCancel($event)"></password-form>
+              <password-form *ngIf="editPassword" [user]="user" (savePassword)="onPasswordSubmit($event)" (cancelForm)="onFormCancel($event)"></password-form>
             </div>
 
             <div class="card">
               <span class="card danger">
                 <strong>Phones</strong>
-                <button *ngIf="phones.length < 3" class="btn btn-primary btn-sm buttonSize"  title="Add new phone." (click)="setEditPhone(0,true)">ADD</button>
               </span>
 
               <ng-container *ngIf="!editPhone && phones.length === 0">
@@ -87,24 +90,25 @@
               <phone-form *ngIf="editPhone && currentPhone === 0" [phone]="dummyPhone" (savePhone)="onPhoneSubmit($event)"></phone-form>
 
               <ng-container *ngIf="phones.length > 0">
-                <div *ngIf="!editPhone">
-                  <div class="list-group" *ngFor="let phone of phones">
-                    <button *ngIf="phones.length < 3" class="btn btn-primary btn-sm buttonSize"  title="Edit phone." (click)="setEditPhone(phone.id,true)">EDIT</button>
+                <div class="list-group" *ngFor="let phone of phones">
+                  <div *ngIf="!editPhone">
+                    <button class="btn btn-primary btn-sm buttonSize"  title="Edit phone." (click)="setEditPhone(phone.id,true)">EDIT</button>
                     <span class="list-group-item">
                       <label class="profileLabel">{{phone.description}} Phone:</label>
                       <span class="profileItem">{{phone.number}}</span>
                     </span>
                   </div>
+                  <phone-form *ngIf="editPhone && currentPhone === phone.id" [phone]="phone" (savePhone)="onPhoneSubmit($event)"></phone-form>
                 </div>
-                <phone-form *ngIf="editPhone && currentPhone != 0" [phone]="phone" (savePhone)="onPhoneSubmit($event)"></phone-form>
               </ng-container>
+
+              <button *ngIf="!editPhone && phones.length < 3" class="btn btn-primary btn-sm buttonSize"  title="Add new phone." (click)="setEditPhone(0,true)">ADD</button>
 
             </div>
 
             <div class="card">
               <div>
                 <strong>Address</strong>
-                <button *ngIf="addresses.length < 4" class="btn btn-primary btn-sm buttonSize" title="Add new address." (click)="setEditAddress(0,true)">ADD</button>
               </div>
 
               <ng-container *ngIf="!editAddress && addresses.length === 0">
@@ -144,6 +148,8 @@
                   <address-form [address]="address" *ngIf="editAddress && currentAddress === address.id" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
                 </div>
               </ng-container>
+
+              <button *ngIf="!editAddress && addresses.length < 4" class="btn btn-primary btn-sm buttonSize" title="Add new address." (click)="setEditAddress(0,true)">ADD</button>
             </div>
 
           </div>
