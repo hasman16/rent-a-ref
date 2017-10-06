@@ -67,7 +67,7 @@ export class OrganizeComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder, private auth: AuthService,
-    public toast: ToastComponent, private userService: UserService, private route: ActivatedRoute,
+    public toast: ToastComponent, private route: ActivatedRoute,
     private router: Router, private statesService: StatesService, private organizeService: OrganizeService) {
     this.subscribeToParams(route);
     this.filmResource.count().then(count => this.filmCount = count);
@@ -91,7 +91,7 @@ export class OrganizeComponent implements OnInit {
 
     route.queryParams.subscribe(
       data => {
-        this.userData = this.organizeService.fetchOrganization(this.auth.currentUser.id);
+        this.userData = this.organizeService.getOrganization(this.auth.currentUser.id);
         this.org_name = this.userData;
         this.userDatas = {id: this.userData.id, name: this.userData.name};
         console.log('userData: ', this.userData);
@@ -124,7 +124,7 @@ export class OrganizeComponent implements OnInit {
   }
 
   createOrganization() {
-    this.userService.createOrganization(this.getOrgValue()).subscribe(
+    this.organizeService.createOrganization(this.getOrgValue()).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
@@ -138,12 +138,15 @@ export class OrganizeComponent implements OnInit {
   }
 
   updateOrganization() {
+
     /*
 
     this.userService.updateOrganization(this.organizationUpdateForm.value, this.userData.id).subscribe(
-*/
-    this.userService.updateOrganization(this.getOrgValue(), this.userData.id).subscribe(
 
+    this.userService.updateOrganization(this.getOrgValue(), this.userData.id).subscribe(
+*/
+
+    this.organizeService.updateOrganization(this.getOrgValue(), this.userData.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);

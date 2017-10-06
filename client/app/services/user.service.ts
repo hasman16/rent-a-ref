@@ -107,24 +107,4 @@ export class UserService {
     return this.http.put(`/api/users/${user_id}/phones/${phone_id}`, JSON.stringify(information), this.tokenService.getOptions());
   }
 
-  // Create an Organization
-  createOrganization(information): Observable<any> {
-    return this.http.post(`/api/organizations`, JSON.stringify(information), this.tokenService.getOptions());
-  }
-
-  updateOrganization(information, Organization_id): Observable<any> {
-    return this.http.put(`/api/organizations/${Organization_id}`, JSON.stringify(information), this.tokenService.getOptions());
-  }
-
-  getAllOrganizations(): Observable<any> {
-    return this.http.get(`/api/organizations`, this.tokenService.getOptions()).map(res => res.json());
-  }
-
-  getOrganization(organization_id: any): Observable<any> {
-    return this.http.get(`/api/organizations/${organization_id}`, this.tokenService.getOptions()).map(res => res.json());
-  }
-
-  getUserOrganization(user_id: any): Observable<any> {
-    return this.http.get(`/api/users/${user_id}/organizations`, this.tokenService.getOptions()).map(res => res.json());
-  }
 }
