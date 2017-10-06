@@ -21,7 +21,7 @@ import { BioType } from '../../../shared/models/bioType';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
-  messages: object = {
+  messages: any = {
     'password': 'Change Your Password',
     'bio': 'Update Your Information',
     'phone': 'Update Your Phones',
