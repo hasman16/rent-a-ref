@@ -30,6 +30,7 @@ $(document).ready(function() {
   }
 
   ngOnInit() {
+
     // give everything a chance to get loaded before starting the animation to reduce choppiness
     setTimeout(() => {
       this.generateData();

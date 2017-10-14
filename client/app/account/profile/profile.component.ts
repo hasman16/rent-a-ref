@@ -141,7 +141,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     this.onFormSave(res);
   }
 
-  onFormSave(res:any) {
+  onFormSave(res: any) {
     if (res.action === 'show_overlay') {
       this.isLoading = true;
     } else if (res.action === 'save_success') {
