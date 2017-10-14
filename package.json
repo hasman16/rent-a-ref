@@ -71,7 +71,7 @@
     "sendgrid": "^5.2.3",
     "sequelize": "^4.13.5",
     "tether": "^1.4.0",
-    "typescript": "2.33",
+    "typescript": "2.3.3",
     "zone.js": "^0.8.18"
   },
   "devDependencies": {

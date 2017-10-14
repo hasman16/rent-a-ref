@@ -5,7 +5,7 @@ import { AddressType } from './../shared/models/addressType';
 import { BioType } from './../shared/models/bioType';
 import { PhoneType } from './../shared/models/phoneType';
 import { Observable } from 'rxjs/Observable';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 @Injectable()
 export class ProfileService {

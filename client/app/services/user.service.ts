@@ -19,14 +19,13 @@ export class UserService {
   }
 
   getUsers(): Observable<any> {
-   // return this.http.get(`/api/users`).map(res => res.json());
     return this.http.get(`/api/users`, this.tokenService.getOptions()).map(res => res.json());
   }
 
   getUser(user_id: any): Observable<any> {
-
     return this.http.get(`/api/users/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
   }
+
   resetpassword(credentials): Observable<any> {
     return this.http.post('/api/resetpassword', JSON.stringify(credentials), this.tokenService.getOptions());
   }
