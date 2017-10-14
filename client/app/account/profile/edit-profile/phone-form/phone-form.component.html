@@ -12,8 +12,14 @@
             <option value="other">Other</option>
           </select>
 
-          <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-          <input class="form-control" formControlName="number">
+          <!--<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+          <input class="form-control" formControlName="number">-->
+          <div class="input-group required-field-block">
+            <span class="input-group-addon">
+              <i class="fa fa-phone"></i>
+            </span>
+            <input class="form-control" name="number" formControlName="number" placeholder="Phone Number" autofocus aria-describedby="basic-addon-phone">
+          </div>
         </label>
 
       </div>
