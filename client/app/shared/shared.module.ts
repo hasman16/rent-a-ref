@@ -35,8 +35,6 @@ import { PasswordresetComponent } from '../account/profile/passwordreset/passwor
     DeactivatedComponent,
     StandbyComponent,
     PasswordresetComponent
-
-
   ],
   providers: [
     ToastComponent
