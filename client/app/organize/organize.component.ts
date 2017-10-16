@@ -41,7 +41,7 @@ export class OrganizeComponent implements OnInit {
     this.fillForm(this.org_id);
   }
   // Initialize the organization id
-  org_data_address = { line1: '', line2: '', city: '', state: '', zip: '' };
+  org_data_address:AddressType;
   id: number;
   org_id: number;
   message = '';

@@ -12,6 +12,7 @@ const models = [
   'Game',
   'Image',
   'Lock',
+  'Match',
   'Organization',
   'Person',
   'Post',
@@ -86,12 +87,14 @@ models.forEach(function(model) {
 
   m.Game.belongsTo(sequelize.models.organizer);
 
-  m.User.belongsToMany(m.Game, {
-    through: 'match'
+  m.User.belongsToMany(m.Match, {
+    through: 'officiating'
   });
-  m.User.belongsToMany(m.Game, {
-    through: 'match'
+  m.Match.belongsToMany(m.User, {
+    through: 'officiating'
   });
+
+  m.Match.belongsTo(m.Sport);
 
   m.User.hasMany(m.Post);
   m.Post.hasMany(m.Comment);
