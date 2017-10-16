@@ -2,11 +2,16 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { PhoneType } from '../../../../shared/models/phoneType';
-import { ProfileService } from '../../../../services/profile.service';
+import { PhoneType } from '../../models/phoneType';
+import { ProfileService } from '../../../services/profile.service';
 
 import { AbstractFormComponent } from '../abstract-form';
 import { Observable } from 'rxjs/Observable';
+
+export interface IPhoneService {
+  createPhone(phone: PhoneType): Observable<any>,
+  updatePhone(phone: PhoneType): Observable<any>
+}
 
 @Component({
   selector: 'phone-form',
@@ -22,11 +27,12 @@ export class PhoneFormComponent extends AbstractFormComponent implements OnInit 
     this.telephone = aPhone;
     this.fillForm();
   }
+  @Input() phoneService: IPhoneService;
 
   numberInvalid = false;
   descriptionInvalid = false;
 
-  constructor(private formBuilder: FormBuilder, private profileService:ProfileService) {
+  constructor(private formBuilder: FormBuilder) {
     super();
     this.phoneForm = this.formBuilder.group({
       number: ['', [Validators.required,
@@ -47,24 +53,26 @@ export class PhoneFormComponent extends AbstractFormComponent implements OnInit 
   }
 
   onPhoneSubmit() {
-    const newPhone: PhoneType = new PhoneType(this.phoneForm.value);
-    let observable: Observable<any>;
-    newPhone.id = this.telephone.id;
+    if (this.phoneService) {
+      const newPhone: PhoneType = new PhoneType(this.phoneForm.value);
+      let observable: Observable<any>;
+      newPhone.id = this.telephone.id;
 
-    this.savePhone.emit({ action: 'show_overlay'});
+      this.savePhone.emit({ action: 'show_overlay' });
 
-    if (Number(newPhone.id) === 0) {
-      observable = this.profileService.createPhone(newPhone);
-    } else {
-      observable = this.profileService.updatePhone(newPhone);
+      if (Number(newPhone.id) === 0) {
+        observable = this.phoneService.createPhone(newPhone);
+      } else {
+        observable = this.phoneService.updatePhone(newPhone);
+      }
+
+      observable.subscribe(() => {
+        this.savePhone.emit({ action: 'save_success' });
+      },
+        (err: HttpErrorResponse) => {
+          this.savePhone.emit({ action: 'save_failure' });
+        });
     }
-
-    observable.subscribe(() => {
-      this.savePhone.emit({ action: 'save_success'});
-    },
-    (err: HttpErrorResponse) => {
-      this.savePhone.emit({ action: 'save_failure'});
-    });
   }
 
   ngOnInit() {

@@ -4,11 +4,15 @@ import { UserService } from './user.service';
 import { AddressType } from './../shared/models/addressType';
 import { BioType } from './../shared/models/bioType';
 import { PhoneType } from './../shared/models/phoneType';
+
+import { IAddressService } from '../shared/forms/address-form/address-form.component';
+import { IPhoneService } from './../shared/forms/phone-form/phone-form.component'
+
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
 
 @Injectable()
-export class ProfileService {
+export class ProfileService implements IAddressService, IPhoneService {
   private data;
   private person;
   private addresses = [];

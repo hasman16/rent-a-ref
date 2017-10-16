@@ -23,10 +23,10 @@ import { OrganizeService } from './services/organize.service';
 /* Components */
 import { AboutComponent } from './about/about.component';
 import { AccountComponent } from './account/account.component';
-import { AddressFormComponent } from './account/profile/edit-profile/address-form/address-form.component';
+import { AddressFormComponent } from './shared/forms/address-form/address-form.component';
 import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
-import { BioFormComponent } from './account/profile/edit-profile/bio-form/bio-form.component';
+import { BioFormComponent } from './shared/forms/bio-form/bio-form.component';
 import { BlogComponent } from './group/blog/blog.component';
 import { CareersComponent } from './group/careers/careers.component';
 import { CarouselComponent } from './carousel/carousel.component';
@@ -44,8 +44,8 @@ import { LogoutComponent } from './logout/logout.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { OrganizeComponent } from './organize/organize.component';
 import { PartnersComponent } from './group/partners/partners.component';
-import { PasswordFormComponent } from './account/profile/edit-profile/password-form/password-form.component';
-import { PhoneFormComponent } from './account/profile/edit-profile/phone-form/phone-form.component';
+import { PasswordFormComponent } from './shared/forms/password-form/password-form.component';
+import { PhoneFormComponent } from './shared/forms/phone-form/phone-form.component';
 import { PricingComponent } from './home/pricing/pricing.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { RefereeComponent } from './referee/referee.component';
@@ -54,7 +54,7 @@ import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
-import { ZoneFormComponent } from './account/profile/edit-profile/zone-form/zone-form.component';
+import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
 import { GamesComponent } from './games/games.component';
 
 /* Misc. */

@@ -3,8 +3,8 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { AbstractFormComponent } from '../abstract-form';
-import { compareFields } from '../../../../shared/compareFields';
-import { UserService } from '../../../../services/user.service';
+import { compareFields } from '../../compareFields';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'password-form',

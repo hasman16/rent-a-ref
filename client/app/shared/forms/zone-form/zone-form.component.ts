@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms';
 
-import { AddressType } from '../../../../shared/models/addressType';
-import { StatesService } from '../../../../services/states.service';
+import { AddressType } from '../../models/addressType';
+import { StatesService } from '../../../services/states.service';
 import { AbstractFormComponent } from '../abstract-form';
 
 import { Observable } from 'rxjs/Observable';

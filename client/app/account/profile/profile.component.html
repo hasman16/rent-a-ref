@@ -87,7 +87,7 @@
                   </span>
                 </div>
               </ng-container>
-              <phone-form *ngIf="editPhone && currentPhone === 0" [phone]="dummyPhone" (savePhone)="onPhoneSubmit($event)"></phone-form>
+              <phone-form *ngIf="editPhone && currentPhone === 0" [phoneService]="profileService" [phone]="dummyPhone" (savePhone)="onPhoneSubmit($event)"></phone-form>
 
               <ng-container *ngIf="phones.length > 0">
                 <div class="list-group" *ngFor="let phone of phones">
@@ -98,7 +98,7 @@
                       <span class="profileItem">{{phone.number}}</span>
                     </span>
                   </div>
-                  <phone-form *ngIf="editPhone && currentPhone === phone.id" [phone]="phone" (savePhone)="onPhoneSubmit($event)"></phone-form>
+                  <phone-form *ngIf="editPhone && currentPhone === phone.id" [phoneService]="profileService" [phone]="phone" (savePhone)="onPhoneSubmit($event)"></phone-form>
                 </div>
               </ng-container>
 
@@ -118,7 +118,7 @@
                   </span>
                 </div>
               </ng-container>
-              <address-form *ngIf="editAddress && currentAddress === 0" [address]="dummyAddress" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
+              <address-form *ngIf="editAddress && currentAddress === 0" [addressService]="profileService" [address]="dummyAddress" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
 
               <ng-container *ngIf="addresses.length > 0">
                 <div class="list-group" *ngFor="let address of addresses">
@@ -145,7 +145,7 @@
                       <span class="profileItem">{{address.zip}}</span>
                     </div>
                   </div>
-                  <address-form [address]="address" *ngIf="editAddress && currentAddress === address.id" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
+                  <address-form [addressService]="profileService" [address]="address" *ngIf="editAddress && currentAddress === address.id" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
                 </div>
               </ng-container>
 

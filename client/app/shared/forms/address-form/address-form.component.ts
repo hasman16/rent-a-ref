@@ -2,14 +2,18 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, AbstractControl, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { AddressType } from '../../../../shared/models/addressType';
-import { StatesService } from '../../../../services/states.service';
-import { ProfileService } from '../../../../services/profile.service';
+import { AddressType } from '../../models/addressType';
+import { StatesService } from '../../../services/states.service';
 import { AbstractFormComponent } from '../abstract-form';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import _ from "lodash";
+
+export interface IAddressService {
+  createAddress(address: AddressType): Observable<any>,
+  updateAddress(address: AddressType): Observable<any>
+}
 
 @Component({
   selector: 'address-form',
@@ -39,9 +43,9 @@ export class AddressFormComponent extends AbstractFormComponent implements OnIni
     this.countryName = aCountry || 'usa';
     this.fillForm();
   }
+  @Input() addressService: IAddressService;
 
-
-  constructor(private formBuilder: FormBuilder, private profileService: ProfileService, private statesService: StatesService) {
+  constructor(private formBuilder: FormBuilder, private statesService: StatesService) {
     super();
     this.addressForm = this.formBuilder.group({
       line1: ['', [Validators.required, Validators.minLength(5),
@@ -77,23 +81,25 @@ export class AddressFormComponent extends AbstractFormComponent implements OnIni
   }
 
   onAddressSubmit() {
-    const newAddress: AddressType = new AddressType(this.addressForm.value);
-    let observable: Observable<any>;
-    newAddress.id = this.anAddress.id;
+    if (this.addressService) {
+      const newAddress: AddressType = new AddressType(this.addressForm.value);
+      let observable: Observable<any>;
+      newAddress.id = this.anAddress.id;
 
-    this.saveAddress.emit({ action: 'show_overlay'});
+      this.saveAddress.emit({ action: 'show_overlay' });
 
-    if (Number(newAddress.id) === 0) {
-      observable = this.profileService.createAddress(newAddress);
-    } else {
-      observable = this.profileService.updateAddress(newAddress);
+      if (Number(newAddress.id) === 0) {
+        observable = this.addressService.createAddress(newAddress);
+      } else {
+        observable = this.addressService.updateAddress(newAddress);
+      }
+
+      observable.subscribe(() => {
+        this.saveAddress.emit({ action: 'save_success' });
+      },
+        (err: HttpErrorResponse) => {
+          this.saveAddress.emit({ action: 'save_failure' });
+        });
     }
-
-    observable.subscribe(() => {
-      this.saveAddress.emit({ action: 'save_success'});
-    },
-    (err: HttpErrorResponse) => {
-      this.saveAddress.emit({ action: 'save_failure'});
-    });
   }
 }

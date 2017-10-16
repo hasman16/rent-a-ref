@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { BioType } from '../../../../shared/models/bioType';
+import { BioType } from '../../models/bioType';
 import { AbstractFormComponent } from '../abstract-form';
-import { UserService } from '../../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
