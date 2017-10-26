@@ -8,11 +8,11 @@ import { AbstractFormComponent } from '../abstract-form';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
-import _ from "lodash";
+import _ from 'lodash';
 
 export interface IAddressService {
-  createAddress(address: AddressType): Observable<any>,
-  updateAddress(address: AddressType): Observable<any>
+  createAddress(address: AddressType): Observable<any>;
+  updateAddress(address: AddressType): Observable<any>;
 }
 
 @Component({
