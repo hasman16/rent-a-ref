@@ -2,15 +2,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { PhoneType } from '../../models/phoneType';
+import { PhoneModel } from '../../models/phoneModel';
 import { ProfileService } from '../../../services/profile.service';
 
 import { AbstractFormComponent } from '../abstract-form';
 import { Observable } from 'rxjs/Observable';
 
 export interface IPhoneService {
-  createPhone(phone: PhoneType): Observable<any>,
-  updatePhone(phone: PhoneType): Observable<any>
+  createPhone(phone: PhoneModel): Observable<any>,
+  updatePhone(phone: PhoneModel): Observable<any>
 }
 
 @Component({
@@ -20,10 +20,10 @@ export interface IPhoneService {
 })
 export class PhoneFormComponent extends AbstractFormComponent implements OnInit {
   phoneForm: FormGroup;
-  telephone: PhoneType;
+  telephone: PhoneModel;
 
   @Output() savePhone = new EventEmitter();
-  @Input() set phone(aPhone: PhoneType) {
+  @Input() set phone(aPhone: PhoneModel) {
     this.telephone = aPhone;
     this.fillForm();
   }
@@ -54,7 +54,7 @@ export class PhoneFormComponent extends AbstractFormComponent implements OnInit 
 
   onPhoneSubmit() {
     if (this.phoneService) {
-      const newPhone: PhoneType = new PhoneType(this.phoneForm.value);
+      const newPhone: PhoneModel = new PhoneModel(this.phoneForm.value);
       let observable: Observable<any>;
       newPhone.id = this.telephone.id;
 

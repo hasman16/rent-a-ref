@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { TokenService } from './token.service';
 import 'rxjs/add/operator/map';
-import { AddressType } from './../shared/models/addressType';
-import { BioType } from './../shared/models/bioType';
-import { PhoneType } from './../shared/models/phoneType';
+import { AddressModel } from './../shared/models/addressModel';
+import { BioModel } from './../shared/models/bioModel';
+import { PhoneModel } from './../shared/models/phoneModel';
 import { Observable } from 'rxjs/Observable';
 import _ from 'lodash';
 import { UserService } from './user.service';
@@ -24,11 +24,11 @@ export class OrganizeService {
     return _.cloneDeep(this.data);
   }
 
-  getAddresses(): Array<AddressType> {
+  getAddresses(): Array<AddressModel> {
     return _.cloneDeep(this.addresses);
   }
 
-  getPhones(): Array<PhoneType> {
+  getPhones(): Array<PhoneModel> {
     return _.cloneDeep(this.phones);
   }
 

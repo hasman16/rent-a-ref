@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 
-import { AddressType } from './../shared/models/addressType';
-import { BioType } from './../shared/models/bioType';
-import { PhoneType } from './../shared/models/phoneType';
+import { AddressModel } from './../shared/models/addressModel';
+import { BioModel } from './../shared/models/bioModel';
+import { PhoneModel } from './../shared/models/phoneModel';
 
 import { IAddressService } from '../shared/forms/address-form/address-form.component';
 import { IPhoneService } from './../shared/forms/phone-form/phone-form.component'
@@ -27,11 +27,11 @@ export class ProfileService implements IAddressService, IPhoneService {
     return _.cloneDeep(this.data);
   }
 
-  getPerson(): BioType {
+  getPerson(): BioModel {
     return _.cloneDeep(this.person);
   }
 
-  getAddresses(): Array<AddressType> {
+  getAddresses(): Array<AddressModel> {
     return _.cloneDeep(this.addresses);
   }
 
@@ -39,7 +39,7 @@ export class ProfileService implements IAddressService, IPhoneService {
     return _.cloneDeep(this.areas);
   }
 
-  getPhones(): Array<PhoneType> {
+  getPhones(): Array<PhoneModel> {
     return _.cloneDeep(this.phones);
   }
 
@@ -55,19 +55,19 @@ export class ProfileService implements IAddressService, IPhoneService {
       });
   }
 
-  createAddress(newAddress: AddressType): Observable<any> {
+  createAddress(newAddress: AddressModel): Observable<any> {
     return this.userService.createAddress(newAddress, this.data.id);
   }
 
-  updateAddress(newAddress: AddressType): Observable<any> {
+  updateAddress(newAddress: AddressModel): Observable<any> {
     return this.userService.updateAddress(newAddress, this.data.id, newAddress.id);
   }
 
-  createPhone(newPhone: PhoneType): Observable<any> {
+  createPhone(newPhone: PhoneModel): Observable<any> {
     return this.userService.createPhone(newPhone, this.data.id);
   }
 
-  updatePhone(newPhone: PhoneType): Observable<any> {
+  updatePhone(newPhone: PhoneModel): Observable<any> {
     return this.userService.updatePhone(newPhone, this.data.id, newPhone.id);
   }
 }

@@ -1,4 +1,4 @@
-export class PhoneType {
+export class PhoneModel {
   id: string;
   number: string = '';
   description: string = '';

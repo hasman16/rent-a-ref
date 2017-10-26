@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, AbstractControl, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { AddressType } from '../../models/addressType';
+import { AddressModel } from '../../models/addressModel';
 import { StatesService } from '../../../services/states.service';
 import { AbstractFormComponent } from '../abstract-form';
 
@@ -11,8 +11,8 @@ import 'rxjs/add/operator/debounceTime';
 import _ from "lodash";
 
 export interface IAddressService {
-  createAddress(address: AddressType): Observable<any>,
-  updateAddress(address: AddressType): Observable<any>
+  createAddress(address: AddressModel): Observable<any>,
+  updateAddress(address: AddressModel): Observable<any>
 }
 
 @Component({
@@ -22,7 +22,7 @@ export interface IAddressService {
 })
 export class AddressFormComponent extends AbstractFormComponent implements OnInit {
   addressForm: FormGroup;
-  anAddress: AddressType;
+  anAddress: AddressModel;
   countryName = 'usa';
   mode = false;
   states: any;
@@ -32,7 +32,7 @@ export class AddressFormComponent extends AbstractFormComponent implements OnIni
   zipInvalid = false;
   userId = 0;
   @Output() saveAddress = new EventEmitter();
-  @Input() set address(anAddress: AddressType) {
+  @Input() set address(anAddress: AddressModel) {
     this.anAddress = _.cloneDeep(anAddress);
     this.fillForm();
   }
@@ -82,7 +82,7 @@ export class AddressFormComponent extends AbstractFormComponent implements OnIni
 
   onAddressSubmit() {
     if (this.addressService) {
-      const newAddress: AddressType = new AddressType(this.addressForm.value);
+      const newAddress: AddressModel = new AddressModel(this.addressForm.value);
       let observable: Observable<any>;
       newAddress.id = this.anAddress.id;
 

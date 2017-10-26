@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { BioType } from '../../models/bioType';
+import { BioModel } from '../../models/bioModel';
 import { AbstractFormComponent } from '../abstract-form';
 import { UserService } from '../../../services/user.service';
 
@@ -17,14 +17,14 @@ import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
   styleUrls: ['./bio-form.component.scss']
 })
 export class BioFormComponent extends AbstractFormComponent implements OnInit {
-  @Input() set person(aPerson: BioType) {
+  @Input() set person(aPerson: BioModel) {
     this.aPerson = aPerson;
     this.fillForm();
   }
   @Output() saveBio = new EventEmitter();
 
   bioForm: FormGroup;
-  aPerson: BioType;
+  aPerson: BioModel;
   mode = false;
 
   showDivbio = true;
