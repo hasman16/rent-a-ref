@@ -1,0 +1,18 @@
+<div *ngIf="windowWidth > 599" id="master-wrapper"></div>
+<!--<div class="jumbotron vertical-center">-->
+<div class="container">
+        
+        <app-header></app-header>
+        <!--<app-header (featureSelected)="onNavigate($event)"></app-header>-->
+
+
+        <router-outlet></router-outlet>
+
+        <app-footer *ngIf="windowWidth > 599  else tabletFooter"></app-footer>
+
+        <ng-template #tabletFooter>
+                <app-footer-tablet></app-footer-tablet>
+        </ng-template>
+</div>
+
+<!--</div>-->

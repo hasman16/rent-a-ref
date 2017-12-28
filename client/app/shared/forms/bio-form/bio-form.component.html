@@ -1,0 +1,36 @@
+<div class="fadeInForm">
+  <div class="">
+    <form [formGroup]="bioForm" (ngSubmit)="onSubmit()">
+      <div class="input-group" [ngClass]="{ 'has-danger': firstnameInvalid }">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input class="form-control" name="firstname" formControlName="firstname" placeholder="Firstname">
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+        <input class="form-control" name="middlenames" formControlName="middlenames" placeholder="Middlename">
+      </div>
+      <div class="input-group" [ngClass]="{ 'has-danger': lastnameInvalid }">
+        <span class="input-group-addon"><i class="fa fa-user-circle-o"></i></span>
+        <input class="form-control" name="lastname" formControlName="lastname" placeholder="Lastname">
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
+        <select class="form-control" name="gender" formControlName="gender">
+          <option value="" selected disabled>Gender</option>
+          <option value="m">Male</option>
+          <option value="f">Female</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa  fa-birthday-cake"></i></span>
+        <my-date-picker name="dob" [options]="myDatePickerOptions"  formControlName="dob" placeholder="Date of birth"></my-date-picker>
+      </div>
+      <br>
+      <div>
+        <button type="submit" title="Save personal details." class="btn btn-primary btn-sm" [disabled]="bioForm.invalid"> <i class="fa fa-save"></i>Save</button>
+        <button type="button" title="Cancel personal details." class="btn btn-secondary btn-sm" (click)="onCancel($event)"><i class="fa fa-times"></i>Cancel</button>
+      </div>
+    </form>
+
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="card card-outline-success">
+  <div class="card-block numberbg">
+
+    <form [formGroup]="zoneForm" (ngSubmit)="onZoneSubmit()">
+      <p>Please update your availability zone. </p>
+      <div class="profile-div">
+
+        <div class="form-group" [ngClass]="{ 'has-danger': cityInvalid }">
+          <label class="center-block">City:
+            <input class="form-control" formControlName="city">
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="center-block">State:
+            <select class="form-control" formControlName="state">
+              <option *ngFor="let state of states" value="{{state.abbreviation}}">{{state.name}}</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-danger': zipInvalid }">
+          <label class="center-block">Zip Code:
+            <input class="form-control" formControlName="zip">
+          </label>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-danger': radiusInvalid }">
+          <label class="center-block">Travel Radius:
+            <input class="form-control" formControlName="radius">
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" title="Save new zone." class="btn btn-primary btn-sm" [disabled]="zoneForm.invalid"><i class="fa fa-save"></i>Save</button>
+        <button title="Cancel new zone." class="btn btn-secondary btn-sm" (click)="onCancel($event)"><i class="fa fa-times"></i>Cancel</button>
+      </div>
+    </form>
+
+  </div>
+</div>

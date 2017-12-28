@@ -1,0 +1,36 @@
+<app-toast [message]="toast.message"></app-toast>
+<div class="card col-sm-12">
+<div class="card">
+  <h4 class="card-header elegantshd bigFont">Login</h4>
+  <div class="card-block">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="input-group" [ngClass]="setClassEmail()">
+        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+
+        <input class="form-control" type="email" name="email" formControlName="email" placeholder="Email" autofocus>
+        <div [hidden]="this.email.valid || (this.email.pristine && !submitted)" class="alert alert-danger">
+           email is required
+        </div>
+      </div>
+      <div class="input-group" [ngClass]="setClassPassword()">
+        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+        <input class="form-control" type="password" name="password" formControlName="password" placeholder="Password">
+      </div>
+      <br>
+      
+      <button class="btn btn-primary btn-sm" type="submit" [disabled]="!loginForm.valid"><i class="fa fa-sign-in"></i> Login</button>
+
+      <!--<label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input" [value]="checkboxFlag" [(ngModel)]="checkboxFlag" (change)="checkboxFlag=!checkboxFlag">
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Remember me    </span>
+  </label>-->
+
+     <button class="btn btn-link" type="button" (click)="onForgot()"><i class="fa fa-sign-in"></i>Forgot Password</button>
+      <p>{{cookieValue}}</p>
+      <p>{{cookieCheck}}</p>
+    </form>
+    
+  </div>
+</div>
+</div>

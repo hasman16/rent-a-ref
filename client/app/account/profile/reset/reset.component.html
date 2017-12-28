@@ -1,0 +1,48 @@
+<div class="card col-sm-12">
+  <div class="card">
+    <h4 class="card-header elegantshd bigFont">Reset Your Password</h4>
+    <div class="card-block">
+      <div class="card">
+        <div class="card-block numberbg">     
+            
+
+              <form [formGroup]="passwordForm" (ngSubmit)="onResetSubmit()" *ngIf="showDivreset else showDivresetmsg">
+                <p>Please fill up the fields below to reset your password. </p>
+                <div class="input-group" [ngClass]="setClassEmail1()">
+                  <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                  <input class="form-control" type="email" name="email" formControlName="email" placeholder="Email" autofocus>
+                </div>
+                <div class="input-group" [ngClass]="setClassPasscode()">
+                  <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                  <input class="form-control" type="password" name="passcode" [(ngModel)]="passcode" formControlName="passcode" placeholder="Passcode">
+                </div>
+                <div class="input-group" [ngClass]="setClassPassword1()">
+                  <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                  <input class="form-control" type="password" name="password1" formControlName="password1" placeholder="New password">
+                </div>
+                <div class="input-group" [ngClass]="setClassPassword2()">
+                  <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                  <input class="form-control" type="password" name="password2" formControlName="password2" placeholder="Repeat new password">
+                </div>
+                <br>
+                <p><button type="submit" class="btn btn-primary btn-sm" [disabled]="!passwordForm.valid"> <i class="fa fa-paper-plane"></i>Submit</button>
+                  <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()"><i class="fa fa-ban"></i>Cancel</button>
+                </p>
+
+                <p>If you are still having some issues resetting your password, please, <span class="profile-text">contact us</span>                  and someone would get in touch with you.</p>
+
+              </form>
+            
+          
+          <ng-template #showDivresetmsg>
+            <blockquote cite="">
+              <p>Your password was successfully rest.</p>
+              <p>Please click this button to login
+                <button class="btn btn-primary btn-sm" type="button" (click)="onLogin()"><i class="fa fa-sign-in"></i>Login</button></p>
+            </blockquote>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
