@@ -10,10 +10,10 @@ import { ProfileService } from '../../../services/profile.service';
 import { StatesService } from '../../../services/states.service';
 import { UserService } from '../../../services/user.service';
 
-import { AddressType } from '../../../shared/models/addressType';
+import { AddressModel } from '../../../shared/models/addressModel';
 import { compareFields } from '../../../shared/compareFields';
-import { PhoneType } from '../../../shared/models/phoneType';
-import { BioType } from '../../../shared/models/bioType';
+import { PhoneModel } from '../../../shared/models/phoneModel';
+import { BioModel } from '../../../shared/models/bioModel';
 
 @Component({
   selector: 'app-edit-profile',
@@ -48,13 +48,13 @@ export class EditProfileComponent implements OnInit {
   user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
   // person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
 
-  person: BioType;
+  person: BioModel;
 
-  address: AddressType;
+  address: AddressModel;
   addresses = [];
   phones = [];
-  phone: PhoneType;
-  area: AddressType;
+  phone: PhoneModel;
+  area: AddressModel;
   areas = [];
 
   isLoading = true;
@@ -136,7 +136,7 @@ export class EditProfileComponent implements OnInit {
       return Number(address.id) === addressId;
     });
 
-    this.address = new AddressType(address);
+    this.address = new AddressModel(address);
 
     this.divAddressFlag = true;
     this.showDivAddress = true;
@@ -150,7 +150,7 @@ export class EditProfileComponent implements OnInit {
       return Number(phone.id) === phoneId;
     });
 
-    this.phone = new PhoneType(phone);
+    this.phone = new PhoneModel(phone);
 
     this.divPhoneFlag = true;
     this.showDivPhone = true;
@@ -164,7 +164,7 @@ export class EditProfileComponent implements OnInit {
       return Number(area.id) === areaId;
     });
 
-    this.area = new AddressType(area);
+    this.area = new AddressModel(area);
 
     this.divZoneFlag = true;
     this.showDivZone = true;
@@ -242,7 +242,7 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  onAddressSubmit(newAddress: AddressType) {
+  onAddressSubmit(newAddress: AddressModel) {
     if (Number(this.address.id) === 0) {
       this.createAddress(newAddress);
     } else {
@@ -250,7 +250,7 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  createAddress(newAddress: AddressType) {
+  createAddress(newAddress: AddressModel) {
     this.userService.createAddress(newAddress, this.user.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
@@ -261,7 +261,7 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  updateAddress(newAddress: AddressType) {
+  updateAddress(newAddress: AddressModel) {
     this.userService.updateAddress(newAddress, this.user.id, this.address.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
@@ -272,7 +272,7 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  onPhoneSubmit(newPhone: PhoneType) {
+  onPhoneSubmit(newPhone: PhoneModel) {
     if (Number(this.phone.id) === 0) {
       this.createPhone(newPhone);
     } else {
@@ -280,7 +280,7 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  createPhone(newPhone: PhoneType) {
+  createPhone(newPhone: PhoneModel) {
     this.userService.createPhone(newPhone, this.user.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
@@ -291,7 +291,7 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  updatePhone(newPhone: PhoneType) {
+  updatePhone(newPhone: PhoneModel) {
     this.userService.updatePhone(newPhone, this.user.id, this.phone.id).subscribe(
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
@@ -302,7 +302,7 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  onZoneSubmit(newZone: AddressType) {
+  onZoneSubmit(newZone: AddressModel) {
     this.userService.updateZone(newZone, this.user.id).subscribe(
       this.callSuccess,
       (err: HttpErrorResponse) => {

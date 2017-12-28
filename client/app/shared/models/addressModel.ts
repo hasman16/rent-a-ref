@@ -1,4 +1,4 @@
-export class AddressType {
+export class AddressModel {
   id: string;
   line1: string = '';
   line2: string = '';

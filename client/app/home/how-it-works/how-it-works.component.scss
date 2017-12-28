@@ -1,9 +1,153 @@
 .numberbg{
   background: url('/assets/images/circular.png') 0 0 no-repeat;
-  background-size: 30%;
-  background-position: center;    
+  background-size: 50%;
+  background-position: center;   
+ position:absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:0; bottom:0;
+        margin:auto;
+
+        /*this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
 }
 
+.rediconbg{
+  background: url('/assets/images/redicon.png') 0 0 no-repeat;
+  background-size: 12%;
+  background-position: top; 
+  position: absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:50px; bottom:0;
+        /*margin:auto;
+
+        this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+    
+}
+.onebg{
+  background: url('/assets/images/1.gif') 0 0 no-repeat;
+  background-size: 10%;
+  background-position: center; 
+   position: absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:0; bottom:0;
+        /*margin:auto;
+
+        this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+}
+.greeniconbg{
+  background: url('/assets/images/greenicon.png') 0 0 no-repeat;
+  background-size: 12%;
+  background-position: bottom; 
+  position: absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:-50px; bottom:0;
+        /*margin:auto;
+
+        this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+ 
+}
+
+
+.avatarbg{
+  background: url('/assets/images/avatar1.png') 0 0 no-repeat;
+  background-size: 12%;
+  background-position: top; 
+  position: absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:50px; bottom:0;
+        /*margin:auto;
+
+        this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+    
+}
+.twobg{
+  background: url('/assets/images/2.gif') 0 0 no-repeat;
+  background-size: 10%;
+  background-position: center; 
+   position: absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:0; bottom:0;
+        /*margin:auto;
+
+        this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+}
+.avatar1bg{
+  background: url('/assets/images/avatar1.png') 0 0 no-repeat;
+  background-size: 12%;
+  background-position: bottom; 
+  position: absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:-50px; bottom:0;
+        /*margin:auto;
+
+        this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+ 
+}
+
+.ccbg{
+  background: url('/assets/images/cc.png') 0 0 no-repeat;
+  background-size: 20%;
+  background-position: top; 
+  position: absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:50px; bottom:0;
+        /*margin:auto;
+
+        this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+    
+}
+.threebg{
+  background: url('/assets/images/3.gif') 0 0 no-repeat;
+  background-size: 10%;
+  background-position: center; 
+   position: absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:0; bottom:0;
+        /*margin:auto;
+
+        this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+}
+.cc1bg{
+  background: url('/assets/images/cc1.png') 0 0 no-repeat;
+  background-size: 20%;
+  background-position: bottom; 
+  position: absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:-50px; bottom:0;
+        /*margin:auto;
+
+        this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+ 
+}
 .elegantshd {
   color: #131313;
   background-color: #e7e5e4;

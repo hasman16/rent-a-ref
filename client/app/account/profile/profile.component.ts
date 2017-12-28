@@ -12,8 +12,8 @@ import { ProfileService } from '../../services/profile.service';
 import { UserService } from '../../services/user.service';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
-import { AddressType } from '../../shared/models/addressType';
-import { PhoneType } from '../../shared/models/phoneType';
+import { AddressModel } from '../../shared/models/addressModel';
+import { PhoneModel } from '../../shared/models/phoneModel';
 import _ from "lodash";
 
 // End
@@ -28,9 +28,9 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
 
   addresses = [];
-  dummyAddress: AddressType = new AddressType({});
+  dummyAddress: AddressModel = new AddressModel({});
   phones = [];
-  dummyPhone: PhoneType = new PhoneType({});
+  dummyPhone: PhoneModel = new PhoneModel({});
   available = {};
   isLoading = true;
   allowEdit = false;

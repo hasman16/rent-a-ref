@@ -11,11 +11,14 @@ import { OrganizeService } from '../services/organize.service';
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
 import { DataTable, DataTableTranslations, DataTableResource } from 'angular-4-data-table';
 import { films } from './organize-data';
-import { AddressType } from '../shared/models/addressType';
+import { AddressModel } from '../shared/models/addressModel';
 import { compareFields } from '../shared/compareFields';
-import { PhoneType } from '../shared/models/phoneType';
+import { PhoneModel } from '../shared/models/phoneModel';
 // import { AbstractFormComponent } from '../abstract-form';extends AbstractFormComponent
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/mergeMap';
 
 /*"angular-2-data-table": "^0.1.2", */
 @Component({
@@ -41,7 +44,7 @@ export class OrganizeComponent implements OnInit {
     this.fillForm(this.org_id);
   }
   // Initialize the organization id
-  org_data_address:AddressType;
+  org_data_address:AddressModel;
   id: number;
   org_id: number;
   message = '';
@@ -51,12 +54,12 @@ export class OrganizeComponent implements OnInit {
   };
   data = {};
   org_data = [];
-  address: AddressType;
+  address: AddressModel;
   addresses = [];
   phones = [];
-  phone: PhoneType;
-  dummyAddress: AddressType = new AddressType({});
-  dummyPhone: PhoneType = new PhoneType({});
+  phone: PhoneModel;
+  dummyAddress: AddressModel = new AddressModel({});
+  dummyPhone: PhoneModel = new PhoneModel({});
 
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '^\\d{5}(?:[ -]{1}\\d{4})?$';
@@ -96,6 +99,7 @@ export class OrganizeComponent implements OnInit {
   organizationForm: FormGroup;
   organizationUpdateForm: FormGroup;
   organizationViewForm: FormGroup;
+
   org_name = new FormControl('', [Validators.required, Validators.minLength(2),
     Validators.maxLength(90), Validators.pattern(this.alphaNumericRegex)]);
   line1 = new FormControl('', [Validators.required, Validators.minLength(5),
@@ -115,12 +119,6 @@ export class OrganizeComponent implements OnInit {
   Validators.maxLength(20)]);
   description = new FormControl('', [Validators.required, Validators.minLength(2),
   Validators.maxLength(10), Validators.pattern(this.alphaNumericRegex)]);
-/*
-  onDateChanged(event: IMyDateModel) {
-    console.log('onDateChanged(): ', event.date,
-      ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-  }
-*/
 
   constructor(private formBuilder: FormBuilder, private auth: AuthService,
     public toast: ToastComponent, private route: ActivatedRoute,
@@ -178,10 +176,6 @@ export class OrganizeComponent implements OnInit {
       Validators.maxLength(10), Validators.pattern(this.alphaNumericRegex)]]
     });
     // View
-    /*this.organizationViewForm = this.formBuilder.group({
-      org_name: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(90), Validators.pattern(this.alphaNumericRegex)]]
-    });*/
   }
 
   // Datatable start
@@ -213,6 +207,7 @@ export class OrganizeComponent implements OnInit {
 
     });
   }
+
   ngOnInit() {
     // this.getOrganizations();
     this.getUserOrganizations();
@@ -220,11 +215,7 @@ export class OrganizeComponent implements OnInit {
       this.isLoading = false;
     }
     // this.fillForm();
-    /*console.log('onInit: call createOrganization:', this.organizationForm.value);
-    this.organizationForm.setValue({
-      org_name: 'Testing testing'
-    });
-    this.createOrganization();*/
+
   }
 
   getOrgValue() {
@@ -260,58 +251,34 @@ export class OrganizeComponent implements OnInit {
   }
 
   createOrganization() {
-    this.organizeService.createOrganization(this.getOrgValue()).subscribe(
+    let organizationId=0;
+    this.organizeService
+    .createOrganization(this.getOrgValue())
+    .mergeMap( (res:any) => {
+      this.toast.setMessage('New Organization Successfully Created', 'success');
+      organizationId = JSON.parse(res['_body'])['id'];
+      return this.organizeService.createPhone(this.getOrgValue(), organizationId);
+    })
+    .mergeMap( (res:any) => {
+      this.toast.setMessage('New Organization Phone Successfully Created', 'success');
+      return this.organizeService.createAddress(this.getOrgValue(), organizationId);
+    })
+    .subscribe(
       res => {
-        this.callSuccess(res);
-        // console.log('Return msg: ', JSON.parse(res['statusText']));
-        // this.toast.setMessage(JSON.parse(res['statusText']), 'success');
-        // this.onCancel();
-        // this.message = JSON.parse(res['statusText']);
-
-        console.log('Message: ', res.ok);
         this.saveFlag = 'yes';
-        // console.log('saveFlag: ', this.saveFlag);
-        // Create Phone
-        this.responseParse = JSON.parse(res['_body']);
-        console.log('id: ', this.responseParse['id']);
-        if (res.ok) {
-          this.organizeService.createPhone(this.getOrgValue(), this.responseParse['id']).subscribe(
-            PhoneResponse => {
-              this.callSuccess(PhoneResponse);
-              console.log('PhoneResponse: ', PhoneResponse);
-              if (PhoneResponse.statusText === 'OK') {
-                // Create Address
-                console.log('Org id: ', this.responseParse['id']);
-                this.organizeService.createAddress(this.getOrgValue(), this.responseParse['id']).subscribe(
-                  AddressResponse => {
-                    this.callSuccess(AddressResponse);
-                    console.log('AddressResponse: ', AddressResponse);
-                    this.toast.setMessage('New Organization Successfully Created', 'success');
-                    this.showDivOrg_name = false;
-                  },
-                  (AddressErr: HttpErrorResponse) => {
-                    this.callFailure(AddressErr);
-                  }
-                );
-
-              }
-            },
-            (phoneErr: HttpErrorResponse) => {
-              this.callFailure(phoneErr);
-            }
-          );
-        }
-      }  ,
+        this.callSuccess(res);
+        this.showDivOrg_name = false;
+        this.toast.setMessage('New Organization Address Successfully Created', 'success');
+      },
       (err: HttpErrorResponse) => {
         this.callFailure(err);
+      },
+      () => {
+        this.saveFlag = 'yes';
+        this.showDivOrg_name = false;
       }
     );
-    /*if (this.saveFlag === 'yes') {
-      console.log('Reloading');
-      this.showDivOrg_name = false;
-      // Reload the page
-      this.router.navigate(['organizer', this.auth.currentUser.id], { relativeTo: this.route, queryParamsHandling: 'preserve' });
-    }*/
+
   }
 
   updateOrganization() {
@@ -356,19 +323,6 @@ export class OrganizeComponent implements OnInit {
       }
     );
   }
-/*
-  getOrganizations() {
-    this.userService.getOrganization(this.auth.currentUser.id).subscribe(
-      // data => this.users = data,
-      // error => console.log(error),
-      // () => this.isLoading = false
-      res => this.callSuccess(res),
-      (err: HttpErrorResponse) => {
-        this.callFailure(err);
-      }
-    );
-  }
-*/
 
   getOrganizations() {
     // this.isLoading = true;
@@ -449,15 +403,6 @@ export class OrganizeComponent implements OnInit {
           console.log('res user data: ', this.data);
           console.log('res name: ', this.org_name, ' this.org_id: ', this.org_id );
 
-          // this.responseParse = JSON.parse(res['_body']);
-          // console.log('id: ', this.responseParse['id'], 'Name: ', this.responseParse['name']);
-          /*
-          this.addresses = _.sortBy(res.addresses, 'id');
-          this.phones = _.sortBy(res.phones, 'id');
-          this.birthday = moment(res.person.dob).format('LL');
-          if (JSON.stringify(res.person.middlenames) !== 'null') {
-            this.middlenameFlag = true;
-          }*/
           this.isLoading = false;
         },
         (err: HttpErrorResponse) => {
@@ -476,39 +421,9 @@ export class OrganizeComponent implements OnInit {
       );
 }
 
-    // User Oganization
-    /*getOrganization() {
-      // this.isLoading = true;
-      this.organizeService.getOrganization(this.org_id).subscribe(
-        res => {
-          this.userDatas = res;
-          console.log('res org this.userDatas: ', this.userDatas);
-          this.org_name = res.name;
-          console.log('res name org: ', this.org_name, ' org_id: ', this.org_id);
-
-        },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            // A client-side or network error occurred. Handle it accordingly.
-            console.log('A client-side or network error occurred: ', JSON.parse(err['statusText']));
-          } else {
-            console.log('The backend returned an unsuccessful response: ', JSON.parse(err['statusText']));
-          }
-          this.isLoading = false;
-
-        }
-      );
-    }*/
-
   callSuccess(res) {
-    // this.org_name = res;
     console.log('callSuccess: ', res, ' name statusText: ', res.statusText);
     console.log('response _body:', JSON.parse(res['_body']));
-
-
-    // this.toast.setMessage(JSON.parse(res['statusText']), 'success');
-    // this.onCancel();
-    // this.saveFlag = true;
   }
 
   callFailure(err: HttpErrorResponse, message = 'Failed, Please try again') {
@@ -520,8 +435,6 @@ export class OrganizeComponent implements OnInit {
       // The response body may contain clues as to what went wrong,
       this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
     }
-
-    // this.resetDivs();
   }
 
   onChange(id) {

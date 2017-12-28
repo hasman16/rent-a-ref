@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms';
 
-import { AddressType } from '../../models/addressType';
+import { AddressModel } from '../../models/addressModel';
 import { StatesService } from '../../../services/states.service';
 import { AbstractFormComponent } from '../abstract-form';
 
@@ -15,8 +15,8 @@ import 'rxjs/add/operator/debounceTime';
 })
 export class ZoneFormComponent extends AbstractFormComponent implements OnInit {
   zoneForm: FormGroup;
-  aZone: AddressType;
-  anAddress: AddressType;
+  aZone: AddressModel;
+  anAddress: AddressModel;
   countryName = 'usa';
   states: any;
 
@@ -24,7 +24,7 @@ export class ZoneFormComponent extends AbstractFormComponent implements OnInit {
   cityInvalid = false;
   zipInvalid = false;
   @Output() saveZone = new EventEmitter();
-  @Input() set zone(aZone: AddressType) {
+  @Input() set zone(aZone: AddressModel) {
     this.aZone = aZone;
     this.fillForm();
   }

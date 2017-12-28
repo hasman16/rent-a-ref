@@ -1,4 +1,4 @@
-export class BioType {
+export class BioModel {
   id: string;
   firstname: string = '';
   middlenames: string = '';
