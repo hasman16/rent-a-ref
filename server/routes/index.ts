@@ -37,7 +37,7 @@ import phoneRoutes from './phoneRoutes';
 import sportRoutes from './sportRoutes';
 import userRoutes from './userRoutes';
 
-
+/*
 let client;
 if (process.env.REDIS_URL) {
   client = redis.createClient(process.env.REDIS_URL, {
@@ -52,8 +52,8 @@ if (process.env.REDIS_URL) {
 const store = new RedisStore({
   client: client
 });
-
-const bruteforce = new ExpressBrute(store);
+*/
+//const bruteforce = new ExpressBrute(store);
 
 export default function setRoutes(app, models) {
   const router = express.Router();

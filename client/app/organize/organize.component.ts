@@ -9,12 +9,9 @@ import { StatesService } from '../services/states.service';
 import { UserService } from '../services/user.service';
 import { OrganizeService } from '../services/organize.service';
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
-import { DataTable, DataTableTranslations, DataTableResource } from 'angular-4-data-table';
-import { films } from './organize-data';
 import { AddressModel } from '../shared/models/addressModel';
 import { compareFields } from '../shared/compareFields';
 import { PhoneModel } from '../shared/models/phoneModel';
-// import { AbstractFormComponent } from '../abstract-form';extends AbstractFormComponent
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/catch';
@@ -64,23 +61,8 @@ export class OrganizeComponent implements OnInit {
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '^\\d{5}(?:[ -]{1}\\d{4})?$';
   responseParse = '';
-  // Datadable start
-  filmResource = new DataTableResource(films);
-  films = [];
-  filmCount = 0;
-  update: any = 'update';
-  create: any = 'create';
-  view: any = 'view';
-  @ViewChild(DataTable) filmsTable;
   // special params:
 
-  translations = <DataTableTranslations>{
-    indexColumn: 'Index column',
-    expandColumn: 'Expand column',
-    selectColumn: 'Select column',
-    paginationLimit: 'Max results',
-    paginationRange: 'Result range'
-  };
 // Datatable end
   organizeFlag = false;
   selectedValue;
@@ -127,7 +109,6 @@ export class OrganizeComponent implements OnInit {
     this.states = this.statesService.getStatesProvinces(this.countryName);
     // this.setUpValidators(this.organizationForm, ['line1', 'city', 'zip']);
     this.subscribeToParams(route);
-    this.filmResource.count().then(count => this.filmCount = count);
   }
 
   subscribeToParams(route) {
@@ -178,17 +159,11 @@ export class OrganizeComponent implements OnInit {
     // View
   }
 
-  // Datatable start
-  reloadFilms(params) {
-    this.filmResource.query(params).then(films => this.films = films);
-  }
-
   cellColor(car) {
     return 'rgb(255, 255,' + (155 + Math.floor(100 - ((car.rating - 8.7) / 1.3) * 100)) + ')';
   }
 // Datatable end
   fillForm(org_id1) {
-    console.log('Current Org id: ', this.org_id, ' passed: ', org_id1);
     this.getOrganizations();
 
     this.states = this.statesService.getStatesProvinces(this.countryName);
