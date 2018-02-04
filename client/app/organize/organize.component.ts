@@ -17,7 +17,6 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
 
-/*"angular-2-data-table": "^0.1.2", */
 @Component({
   selector: 'app-organize',
   templateUrl: './organize.component.html',

@@ -10,8 +10,8 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./suspended.component.scss']
 })
 export class SuspendedComponent implements OnInit {
-  user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
-  person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
+  protected user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
+  protected person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
 
 
   constructor(private auth: AuthService, private router: Router, private userService: UserService) { }
@@ -19,6 +19,7 @@ export class SuspendedComponent implements OnInit {
   ngOnInit() {
     this.getProfile();
   }
+  
   onSubmit() {
     this.router.navigate(['passwordreset']);
   }

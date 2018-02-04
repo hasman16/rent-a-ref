@@ -1,5 +1,14 @@
 
 
+
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dd,dl,dt,li,ol,ul,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td
+{
+	font-family: "Arial", Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
 .container {
   max-width:95%;
   padding-left:20px;
@@ -11,15 +20,7 @@
 .wrapper{
       width: 60%;
       margin: 60px auto;
-    }
-    html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dd,dl,dt,li,ol,ul,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td
-	{
-	font-family: "Arial", Helvetica, sans-serif;
-	margin: 0;
-	padding: 0;
 }
- 
-
 
 .wrapper {
 	background: white;
@@ -49,7 +50,7 @@
 }
 
 .navigatorwidget li {
-font-size: 12px;	
+	font-size: 0.75rem;	
 }
 
 .navigatorwidget li a {
@@ -96,17 +97,16 @@ font-size: 12px;
 }
 
 .navigatorwidget li ul li a,.navigatorwidget li a:visited ul li a,.navigatorwidget li li a:link,.navigatorwidget li li a:visited
-	{
+{
 	font-weight: normal;
 	border-bottom: 0;
-	//background: url('../images/arrow.gif') 0 6px no-repeat;
 	text-decoration: underline;
 	padding: 3px 12px;
 	color:black;
-	}
+}
 
 .navigatorwidget li ul li a:hover,.navigatorwidget li a:visited ul li a:hover
-	{
+{
 	text-decoration: underline;
 	color: #faa21b;
 }
@@ -129,7 +129,6 @@ font-size: 12px;
 }
 
 .productnavigator.navigatorwidget li a:link, .navigatorwidget li a:visited {
-	//background: url('../images/arrow.gif') no-repeat scroll 0 6px transparent;
     border-bottom: 0 none;
     color: black;
     font-weight: normal;
@@ -336,7 +335,6 @@ border-bottom: 3px solid #111; background: #4d4d4d; background: -webkit-gradient
 	vertical-align:top;
 	width: 278px;
 	padding: 20px 20px 10px;
-	//background: url('../images/deck-divider.gif') right bottom no-repeat;
 	height: 180px;
 	*display:inline ;
 	*zoom:1;		
@@ -394,7 +392,6 @@ border-bottom: 3px solid #111; background: #4d4d4d; background: -webkit-gradient
 #deck ul li a {
 	color: white;
 	padding-left: 12px;
-	//background: url('../images/arrow.gif') 0 center no-repeat;
 }
 
 .clearfix {
@@ -410,7 +407,6 @@ border-bottom: 3px solid #111; background: #4d4d4d; background: -webkit-gradient
 	width: 100%;
 	clear: both;
 	float: left;
-	//ackground: white url('../images/footer.gif') center 0 no-repeat;
 	 height: 200px;
 }
 
@@ -1041,7 +1037,6 @@ width: 100%;
 	background:none;
 }
 #content a#request-brochure{
-    //background: url('../images/download_2012.jpg') repeat scroll 0 0 transparent;
     border: medium none;
     height: 92px;
     width: 240px;
@@ -1068,7 +1063,6 @@ width: 100%;
 .sliderContent .navigatorwidget{  margin-bottom: 15px; position: relative; width: 190px; }
 .sliderContent .navigatorwidget ul.product-detailed-navigator li { color: black; font-size: 12px; list-style-type: none; padding-left: 5px; padding-top: 10px; }
 .sliderContent .navigatorwidget ul.product-detailed-navigator li a, .sliderContent .navigatorwidget ul.product-detailed-navigator li a:visited,.sliderContent .navigatorwidget ul.product-detailed-navigator li a:link{ white-space: nowrap; 
-//background: url('../images/arrow.gif') no-repeat scroll 0 6px transparent; 
 border-bottom: 0 none; color: #FFFFFF; font-weight: normal; padding: 3px 12px; text-decoration: underline; text-transform:capitalize; }
 
 .imagegallerywidget h3{
@@ -1176,7 +1170,6 @@ border-bottom: 0 none; color: #FFFFFF; font-weight: normal; padding: 3px 12px; t
 }
 
 .newsletter.box {
-    //background: url('../images/newsletter-widget-background.png') repeat 0 0;
     border: none;
     height: 220px;
     width: 220px !important;
@@ -1392,17 +1385,7 @@ border:none;
 #slider-wrapper div.jqans-wrapper.default .jqans-content p {
 color: #333 !important;
 }
-/* CAROUSEL
-#slider-wrapper div.jqans-wrapper.default .jqans-stories &gt; list border bottom color
-#slider-wrapper div.jqans-wrapper.default .jqans-stories li &gt; carousel item background color, gradient and border top color
-#slider-wrapper div.jqans-wrapper.default .jqans-stories li.selected &gt; carousel item selected background color, gradient and border top color
-#slider-wrapper div.jqans-wrapper.default .jqans-stories li img &gt; carousel item image border and background, margin and padding
-#slider-wrapper div.jqans-wrapper.default .jqans-stories li.selected img &gt; carusel item image border when selected
-#slider-wrapper div.jqans-wrapper.default .jqans-stories li h3 &gt; carousel item paragraph font size, color and line height
-#slider-wrapper div.jqans-wrapper.default .jqans-stories li.selected h3 &gt; carousel item paragraph font size and color when selected
-#slider-wrapper div.jqans-wrapper.default .jqans-stories-selector li.selected div &gt; carousel item arrow color
-#slider-wrapper div.jqans-wrapper.default .jqans-stories-selector ul, #slider-wrapper div.jqans-wrapper.default .jqans-stories-selector li &gt; ensure transparency on selector background
-*/
+
 #slider-wrapper div.jqans-wrapper.default .jqans-stories {
 border-bottom-color:#DBE1E6;
 }
@@ -1451,15 +1434,7 @@ border-left: 10px solid transparent;
 background-color: transparent !important;
 background: transparent !important;
 }
-/* PAGINATION
-#slider-wrapper div.jqans-wrapper.default .jqans-pagination &gt; border bottom color and backround of the box containing pagination and slider controls
-#slider-wrapper div.jqans-wrapper.default .jqans-pagination-controls-back a &gt; previous button control color
-#slider-wrapper div.jqans-wrapper.default .jqans-pagination-controls-next a &gt; next button control color
-#slider-wrapper div.jqans-wrapper.default .jqans-pagination-controls-back a span &gt; fake element to make an arrow with pure css: it needs to be the same color as #slider-wrapper div.jqans-wrapper.default .jqans-pagination background color
-#slider-wrapper div.jqans-wrapper.default .jqans-pagination-controls-next a span &gt; fake element to make an arrow with pure css: it needs to be the same color as #slider-wrapper div.jqans-wrapper.default .jqans-pagination background color
-#slider-wrapper div.jqans-wrapper.default #control-play &gt; play button color
-#slider-wrapper div.jqans-wrapper.default #pause-left, #slider-wrapper div.jqans-wrapper.default #pause-right &gt; pause button color
-*/
+
 #slider-wrapper div.jqans-wrapper.default .jqans-pagination {
 border-bottom-color:#DBE1E6;
 background-color:#F9FAFA;

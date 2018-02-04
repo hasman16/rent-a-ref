@@ -4,8 +4,6 @@ import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from 
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import * as moment from 'moment';
-
 import { AuthService } from '../../services/auth.service';
 import { CanComponentDeactivate } from '../../services/can-deactivate-guard.service';
 import { ProfileService } from '../../services/profile.service';
@@ -14,7 +12,8 @@ import { UserService } from '../../services/user.service';
 import { ToastComponent } from '../../shared/toast/toast.component';
 import { AddressModel } from '../../shared/models/addressModel';
 import { PhoneModel } from '../../shared/models/phoneModel';
-import _ from "lodash";
+import * as _ from "lodash";
+import * as moment from 'moment';
 
 // End
 @Component({
@@ -23,31 +22,31 @@ import _ from "lodash";
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, CanComponentDeactivate {
-  data = {};
-  user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
-  person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
+  protected data = {};
+  protected user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
+  protected person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
 
-  addresses = [];
-  dummyAddress: AddressModel = new AddressModel({});
-  phones = [];
-  dummyPhone: PhoneModel = new PhoneModel({});
-  available = {};
-  isLoading = true;
-  allowEdit = false;
-  middlenameFlag = false;
+  protected addresses = [];
+  protected dummyAddress: AddressModel = new AddressModel({});
+  protected phones = [];
+  protected dummyPhone: PhoneModel = new PhoneModel({});
+  protected available = {};
+  protected isLoading = true;
+  protected allowEdit = false;
+  protected middlenameFlag = false;
 
-  abort = false;
-  divPassword = false;
-  editBio = false;
-  editPassword = false;
+  protected abort = false;
+  protected divPassword = false;
+  protected editBio = false;
+  protected editPassword = false;
 
-  editPhone = false;
-  currentPhone = 0;
+  protected editPhone = false;
+  protected currentPhone = 0;
 
-  editAddress = false;
-  currentAddress = 0;
+  protected editAddress = false;
+  protected currentAddress = 0;
 
-  birthday = '';
+  protected birthday = '';
 
   constructor(private route: ActivatedRoute,
     private router: Router, private auth: AuthService,

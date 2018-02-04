@@ -35,18 +35,6 @@ export class AccountComponent implements OnInit {
 
         this.person = res.person;
         this.isLoading = false;
-        /*this.addresses = res.addresses;
-        this.phones = res.phones;
-        this.address = this.addresses[0];
-        this.phone = this.phones[0];
-        this.selectedValue = res.person.gender;
-
-        if (res.person.dob !== '') {
-          const varYear = res.person.dob.substring(0, 4);
-          const varMonth = res.person.dob.substring(5, 7);
-          const varDay = res.person.dob.substring(8, 10);
-          this.dateModel = { date: { year: varYear, month: varMonth, day: varDay } };
-        }*/
       },
 
       (err: HttpErrorResponse) => {
@@ -77,21 +65,4 @@ export class AccountComponent implements OnInit {
   onRefereeActivate() {
     // Become a refereee
   }
-/*
-  getUser() {
-    // this.userService.getUser(this.auth.currentUser).subscribe(
-    this.userService.getUser(this.auth.currentUser.id).subscribe(
-      data => this.user = data,
-      error => console.log('Get user error: ', error),
-      () => this.isLoading = false
-    );
-  }
-
-  save(user) {
-    this.userService.editUser(user).subscribe(
-      res => this.toast.setMessage('account settings saved!', 'success'),
-      error => console.log(error)
-    );
-  }
-*/
 }

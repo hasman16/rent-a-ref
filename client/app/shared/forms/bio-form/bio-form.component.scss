@@ -1,11 +1,11 @@
 .input-group {
-  margin-bottom: 8px;
+  margin-bottom: 0.5em;
 
   .input-group-addon {
-    min-width: 42px;
+    min-width: 2.625em;
   }
 
   input + .input-group-addon {
-    min-width: 86px;
+    min-width: 5.375em;
   }
 }

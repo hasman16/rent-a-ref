@@ -17,6 +17,7 @@ export class FooterComponent implements OnInit {
   public getDate(): number {
     return this.dt && this.dt.getTime() || new Date().getTime();
   }
+  
   public today(): void {
     this.dt = new Date();
   }
