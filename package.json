@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "author": "Ahmadou Ndoung",
-  "description": "Sports Website project built using Angular 4, Express and Node.",
+  "description": "Sports Website project built using Angular 5, Express and Node.",
   "angular-cli": {},
   "scripts": {
     "ng": "ng",

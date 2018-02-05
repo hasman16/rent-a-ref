@@ -9,9 +9,9 @@ import { StatesService } from '../services/states.service';
 import { UserService } from '../services/user.service';
 import { OrganizeService } from '../services/organize.service';
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
-import { AddressModel } from '../shared/models/addressModel';
+import { Address } from '../shared/models/address';
 import { compareFields } from '../shared/compareFields';
-import { PhoneModel } from '../shared/models/phoneModel';
+import { Phone } from '../shared/models/phone';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/catch';
@@ -40,7 +40,7 @@ export class OrganizeComponent implements OnInit {
     this.fillForm(this.org_id);
   }
   // Initialize the organization id
-  org_data_address:AddressModel;
+  org_data_address:Address;
   id: number;
   org_id: number;
   message = '';
@@ -50,12 +50,12 @@ export class OrganizeComponent implements OnInit {
   };
   data = {};
   org_data = [];
-  address: AddressModel;
-  addresses = [];
-  phones = [];
-  phone: PhoneModel;
-  dummyAddress: AddressModel = new AddressModel({});
-  dummyPhone: PhoneModel = new PhoneModel({});
+  address: Address;
+  addresses: Address[] = [];
+  phones:Phone[] = [];
+  phone: Phone;
+  dummyAddress: Address = <Address>{};
+  dummyPhone: Phone = <Phone>{};
 
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '^\\d{5}(?:[ -]{1}\\d{4})?$';
@@ -106,7 +106,6 @@ export class OrganizeComponent implements OnInit {
     private router: Router, private statesService: StatesService, private organizeService: OrganizeService) {
 
     this.states = this.statesService.getStatesProvinces(this.countryName);
-    // this.setUpValidators(this.organizationForm, ['line1', 'city', 'zip']);
     this.subscribeToParams(route);
   }
 
@@ -161,6 +160,7 @@ export class OrganizeComponent implements OnInit {
   cellColor(car) {
     return 'rgb(255, 255,' + (155 + Math.floor(100 - ((car.rating - 8.7) / 1.3) * 100)) + ')';
   }
+
 // Datatable end
   fillForm(org_id1) {
     this.getOrganizations();
@@ -183,13 +183,10 @@ export class OrganizeComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getOrganizations();
     this.getUserOrganizations();
     if (this.Org_number === 0) {
       this.isLoading = false;
     }
-    // this.fillForm();
-
   }
 
   getOrgValue() {
@@ -207,6 +204,7 @@ export class OrganizeComponent implements OnInit {
       zip: org.zip
     };
   }
+
 // Update
   getOrgUpdateValue() {
     const org = this.organizationUpdateForm.value;
@@ -416,8 +414,6 @@ export class OrganizeComponent implements OnInit {
     this.getOrganizations();
     console.log('Event: ', id);
     // Reload the page
-    // this.router.navigate(['organizer', this.auth.currentUser.id], { relativeTo: this.route, queryParamsHandling: 'preserve' });
-
     this.router.navigate(['**'], { skipLocationChange: true });
     setTimeout(function () {
       this.router.navigate(['organizer', this.auth.currentUser.id],

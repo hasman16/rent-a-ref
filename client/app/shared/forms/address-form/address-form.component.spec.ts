@@ -2,11 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
-import { AddressModel } from '../../../../shared/models/addressModel';
+import { AddressModel } from './../../models/addressModel';
 
 import { AddressFormComponent } from './address-form.component';
-import { ProfileService } from '../../../../services/profile.service';
-import { StatesService } from '../../../../services/states.service';
+import { ProfileService } from './../../../services/profile.service';
+import { StatesService } from './../../../services/states.service';
 
 let profileServiceStub = {
   createAddress: function() { },

@@ -56,7 +56,6 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'passwordreset', component: PasswordresetComponent },
   { path: 'reset', component: ResetComponent },
-  // { path: 'account', component: AccountComponent, canActivate: [AuthGuardLogin] },
   {
     path: 'account/:id', component: AccountComponent, canActivate: [AuthGuardLogin]
   },
@@ -71,8 +70,6 @@ const routes: Routes = [
     children: [
       { path: 'edit-profile', component: EditProfileComponent }
     ] },
-  // { path: 'edit-profile', component: EditProfileComponent, canActivate: [AuthGuardAdmin] },
-  // { path: 'account/profile/:id/edit-profile', component: EditProfileComponent },
   { path: 'account/standby/:id', component: StandbyComponent },
   { path: 'account/suspended/:id', component: SuspendedComponent },
   { path: 'account/deactivated/:id', component: DeactivatedComponent },

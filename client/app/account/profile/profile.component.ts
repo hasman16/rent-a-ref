@@ -10,8 +10,8 @@ import { ProfileService } from '../../services/profile.service';
 import { UserService } from '../../services/user.service';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
-import { AddressModel } from '../../shared/models/addressModel';
-import { PhoneModel } from '../../shared/models/phoneModel';
+import { Address } from '../../shared/models/address';
+import { Phone } from '../../shared/models/phone';
 import * as _ from "lodash";
 import * as moment from 'moment';
 
@@ -26,10 +26,10 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   protected user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
   protected person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
 
-  protected addresses = [];
-  protected dummyAddress: AddressModel = new AddressModel({});
-  protected phones = [];
-  protected dummyPhone: PhoneModel = new PhoneModel({});
+  protected addresses: Address[];
+  protected dummyAddress: Address = <Address>{};
+  protected phones: Phone[];
+  protected dummyPhone: Phone = <Phone>{};
   protected available = {};
   protected isLoading = true;
   protected allowEdit = false;
@@ -51,7 +51,10 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   constructor(private route: ActivatedRoute,
     private router: Router, private auth: AuthService,
     private profileService: ProfileService,
-    private userService: UserService) { }
+    private userService: UserService) {
+      this.addresses = [];
+      this.phones = [];
+   }
 
   ngOnInit() {
     this.getProfile();

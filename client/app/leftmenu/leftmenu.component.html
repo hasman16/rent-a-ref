@@ -5,27 +5,30 @@
         <ul class="nav nav-pills flex-column">
           <li class="nav-item">
             <a [routerLink]="['/games']" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fa fa-trophy"></i> Games
-          </a>
+              <i class="fa fa-trophy"></i> Games
+            </a>
           </li>
-<li class="nav-item">
-          <a [routerLink]="['/referee']" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fa fa-users"></i> Officials
-          </a>
+          <li class="nav-item">
+            <a [routerLink]="['/referee']" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+              <i class="fa fa-users"></i> Officials
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" appSidebarToggler [routerLink]="['/dashboard']"><i class="fa fa-dashboard"></i>
-               <span>Dashboard</span></a>
+               <span>Dashboard</span>
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/api/reports']"><i class="fa fa-film"></i>
-               <span class="hidden-sm-down">Reports</span></a>
+               <span class="hidden-sm-down">Reports</span>
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"><i class="fa fa-book"></i>Analytics</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/fileupload']"><i class="fa fa-list"></i>File Upload</a>
+            <a class="nav-link" [routerLink]="['/fileupload']">
+              <i class="fa fa-list"></i>File Upload</a>
           </li>
         </ul>
 

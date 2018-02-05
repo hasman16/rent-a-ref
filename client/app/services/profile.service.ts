@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 
-import { AddressModel } from './../shared/models/addressModel';
-import { BioModel } from './../shared/models/bioModel';
-import { PhoneModel } from './../shared/models/phoneModel';
+import { Address } from './../shared/models/address';
+import { Bio } from './../shared/models/bio';
+import { Phone } from './../shared/models/phone';
 
 import { IAddressService } from '../shared/forms/address-form/address-form.component';
 import { IPhoneService } from './../shared/forms/phone-form/phone-form.component'
@@ -15,31 +15,33 @@ import * as _ from 'lodash';
 export class ProfileService implements IAddressService, IPhoneService {
   private data;
   private person;
-  private addresses = [];
-  private areas = [];
-  private phones = [];
+  private addresses: Address[];
+  private areas: any[];
+  private phones: Phone[];
 
   constructor(private userService: UserService) {
-
+      this.addresses = [];
+      this.phones = [];
+      this.areas = [];
   }
 
   getData() {
     return _.cloneDeep(this.data);
   }
 
-  getPerson(): BioModel {
+  getPerson(): Bio {
     return _.cloneDeep(this.person);
   }
 
-  getAddresses(): Array<AddressModel> {
+  getAddresses(): Address[] {
     return _.cloneDeep(this.addresses);
   }
 
-  getAreas(): Array<any> {
+  getAreas(): any[] {
     return _.cloneDeep(this.areas);
   }
 
-  getPhones(): Array<PhoneModel> {
+  getPhones(): Phone[] {
     return _.cloneDeep(this.phones);
   }
 
@@ -55,19 +57,19 @@ export class ProfileService implements IAddressService, IPhoneService {
       });
   }
 
-  createAddress(newAddress: AddressModel): Observable<any> {
+  createAddress(newAddress: Address): Observable<any> {
     return this.userService.createAddress(newAddress, this.data.id);
   }
 
-  updateAddress(newAddress: AddressModel): Observable<any> {
+  updateAddress(newAddress: Address): Observable<any> {
     return this.userService.updateAddress(newAddress, this.data.id, newAddress.id);
   }
 
-  createPhone(newPhone: PhoneModel): Observable<any> {
+  createPhone(newPhone: Phone): Observable<any> {
     return this.userService.createPhone(newPhone, this.data.id);
   }
 
-  updatePhone(newPhone: PhoneModel): Observable<any> {
+  updatePhone(newPhone: Phone): Observable<any> {
     return this.userService.updatePhone(newPhone, this.data.id, newPhone.id);
   }
 }
