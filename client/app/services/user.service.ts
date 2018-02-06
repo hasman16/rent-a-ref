@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { TokenService } from './token.service';
+import { Login } from './../shared/models/login';
+import { User } from './../shared/models/user';
 
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UserService {
+  private user: User = <User>{};
+  public userStream: Observable<User> = new BehaviorSubject(this.user);
 
   constructor(private http: Http, private tokenService: TokenService) { }
 
@@ -14,15 +19,15 @@ export class UserService {
     return this.http.post('/api/register', JSON.stringify(user), this.tokenService.getOptions()).map(res => res.json());
   }
 
-  login(credentials): Observable<any> {
-    return this.http.post('/api/login', JSON.stringify(credentials), this.tokenService.getOptions());
+  login(credentials): Observable<Login> {
+    return this.http.post('/api/login', JSON.stringify(credentials), this.tokenService.getOptions()).map(res => res.json());
   }
 
-  getUsers(): Observable<any> {
-    return this.http.get(`/api/users`, this.tokenService.getOptions()).map(res => res.json());
+  getUsers(): Observable<User[]> {
+    this.http.get(`/api/users`, this.tokenService.getOptions()).map(res => res.json());
   }
 
-  getUser(user_id: any): Observable<any> {
+  getUser(user_id: any): Observable<User> {
     return this.http.get(`/api/users/${user_id}`, this.tokenService.getOptions()).map(res => res.json());
   }
 

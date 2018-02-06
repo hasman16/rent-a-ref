@@ -21,16 +21,16 @@ export interface IAddressService {
   styleUrls: ['./address-form.component.scss']
 })
 export class AddressFormComponent extends AbstractFormComponent implements OnInit {
-  addressForm: FormGroup;
-  anAddress: Address;
-  countryName = 'usa';
-  mode = false;
-  states: any;
+  public addressForm: FormGroup;
+  protected anAddress: Address;
+  protected countryName:string = 'usa';
+  protected mode:boolean = false;
+  protected states: any;
 
-  line1Invalid = false;
-  cityInvalid = false;
-  zipInvalid = false;
-  userId = 0;
+  protected line1Invalid:boolean = false;
+  protected cityInvalid:boolean = false;
+  protected zipInvalid:boolean = false;
+  protected userId:number = 0;
   @Output() saveAddress = new EventEmitter();
   @Input() set address(anAddress: Address) {
     this.anAddress = _.cloneDeep(anAddress);

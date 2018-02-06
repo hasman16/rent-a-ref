@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
-import { AddressModel } from './../../models/addressModel';
+import { Address } from './../../models/address';
 
 import { AddressFormComponent } from './address-form.component';
 import { ProfileService } from './../../../services/profile.service';
