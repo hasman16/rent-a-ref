@@ -118,7 +118,7 @@ export class AuthService {
 
     if (setter) {
       const newUser = setter.user;
-      const accessLevel = newUser.accessLevel;
+      const authorization = newUser.authorization;
       this.loggedIn = true;
       this.currentUser = newUser;
       // ============================
@@ -134,7 +134,7 @@ export class AuthService {
         this.currentUser.role = 'Referee';
       }
       // ============================
-      this.isAdmin = (accessLevel === 1 || accessLevel === 2);
+      this.isAdmin = (authorization === 1 || authorization === 2);
       this.tokenService.setOptions(setter.token);
       localStorage.setItem('user', JSON.stringify(setter));
     }

@@ -130,10 +130,10 @@ export class LoginComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log('A client-side or network error occurred');
+          console.log('A client-side or network error occurred:',err);
           this.toast.setMessage('invalid email or password! ', 'danger');
         } else {
-          console.log('The backend returned an unsuccessful response code');
+          console.log('The backend returned an unsuccessful response code:', err);
           this.toast.setMessage('invalid email or password! ', 'danger');
         }
       }

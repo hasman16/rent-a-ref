@@ -118,7 +118,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
     return bcrypt.compare(user.password, lock.password)
     .then((result) => {
         if (result) {
-          //console.log('got result');
+          console.log('got result');
           const person = newUser.person;
           const user = {
             id: newUser.id,
@@ -173,7 +173,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
       email: req.body.email,
       password: req.body.password
     };
-
+    //console.log('try login:', user.email);
     User.findOne({
       where: { email: user.email },
       include: [{
@@ -182,6 +182,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
           model: Lock
         }]
     }).then(function(newUser) {
+      console.log('new User:', newUser);
       if (newUser) {
         if (newUser.status === 'active') {
           return comparePassword(res, user, newUser);

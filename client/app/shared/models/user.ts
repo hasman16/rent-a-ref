@@ -1,7 +1,6 @@
 export interface User {
   id?: string;
   email: string;
-  accessLevel?: string;
   authorization?: string;
   firstname?: string;
   lastname?: string;

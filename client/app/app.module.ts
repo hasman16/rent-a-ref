@@ -1,10 +1,12 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './providers/token.interceptor';
 
 /* Modules */
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
@@ -122,7 +124,7 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
+    HttpClientModule,
     MyDatePickerModule,
     CommonModule,
     RouterModule.forRoot(routes)
@@ -137,7 +139,12 @@ const routes: Routes = [
     UserService,
     OrganizeService,
     CookieService,
-    CanDeactivateGuardService
+    CanDeactivateGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   // Add bootstrap

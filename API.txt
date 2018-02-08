@@ -12,7 +12,7 @@ Returns:
     "user": {
         "id": 7,
         "email": "admin1@rentaref.com",
-        "accessLevel": 1,
+        "authorization": 1,
         "firstname": "Rod",
         "lastname": "Test",
         "can_referee": "active",

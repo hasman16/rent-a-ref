@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../../services/auth.service';
+//Models
+import { Address, Person, Phone, Profile, User } from './../../../shared/models/index';
 
 @Component({
   selector: 'app-standby',
@@ -9,9 +11,8 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./standby.component.scss']
 })
 export class StandbyComponent implements OnInit {
-  user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
-  person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
-
+  protected user:User = <User>{};
+  protected person:Person = <Person>{};
 
   constructor(private auth: AuthService, private userService: UserService) { }
 
@@ -21,11 +22,20 @@ export class StandbyComponent implements OnInit {
 
   getProfile() {
     this.userService.getProfile(this.auth.currentUser.id).subscribe(
-      res => {
-        this.user = res;
-
+      (res:Profile) => {
+        this.user = {
+          id: String(res.id),
+          email: res.email,
+          authorization: String(res.authorization),
+          firstname: res.person.firstname,
+          lastname: res.person.lastname,
+          role: '',
+          person_id: String(res.person.id),
+          can_referee: res.can_referee,
+          can_organize: res.can_organize,
+          status: res.status
+        } as User;
         this.person = res.person;
-        // this.isLoading = false;
       },
 
       (err: HttpErrorResponse) => {

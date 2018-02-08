@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../../services/auth.service';
+import { Address, Person, Phone, Profile, User } from './../../../shared/models/index';
 
 @Component({
   selector: 'app-suspended',
@@ -10,8 +11,8 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./suspended.component.scss']
 })
 export class SuspendedComponent implements OnInit {
-  protected user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
-  protected person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
+  protected user:User = <User>{};
+  protected person:Person = <Person>{};
 
 
   constructor(private auth: AuthService, private router: Router, private userService: UserService) { }
@@ -27,10 +28,19 @@ export class SuspendedComponent implements OnInit {
   getProfile() {
     this.userService.getProfile(this.auth.currentUser.id).subscribe(
       res => {
-        this.user = res;
-
+        this.user = {
+          id: String(res.id),
+          email: res.email,
+          authorization: String(res.authorization),
+          firstname: res.person.firstname,
+          lastname: res.person.lastname,
+          role: '',
+          person_id: String(res.person.id),
+          can_referee: res.can_referee,
+          can_organize: res.can_organize,
+          status: res.status
+        } as User;
         this.person = res.person;
-        // this.isLoading = false;
       },
 
       (err: HttpErrorResponse) => {
