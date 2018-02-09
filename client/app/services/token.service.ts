@@ -23,7 +23,7 @@ export class TokenService {
     if (this.token) {
       headers = headers.append('Authorization', 'Bearer ' + this.token);
     }
-    console.log('got headers');
+    
     return headers;
   }
 

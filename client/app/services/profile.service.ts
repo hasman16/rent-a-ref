@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
+
 import { UserService } from './user.service';
 
-import { Address } from './../shared/models/address';
-import { Bio } from './../shared/models/bio';
-import { Phone } from './../shared/models/phone';
+import { Address, Bio, Phone, Person, Profile } from './../shared/models/index';
 
 import { IAddressService } from '../shared/forms/address-form/address-form.component';
 import { IPhoneService } from './../shared/forms/phone-form/phone-form.component'
@@ -13,10 +12,10 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class ProfileService implements IAddressService, IPhoneService {
-  private data;
-  private person;
+  private data:Profile;
+  private person: Person;
   private addresses: Address[];
-  private areas: any[];
+  private areas: Address[];
   private phones: Phone[];
 
   constructor(private userService: UserService) {
@@ -37,7 +36,7 @@ export class ProfileService implements IAddressService, IPhoneService {
     return _.cloneDeep(this.addresses);
   }
 
-  getAreas(): any[] {
+  getAreas(): Address[] {
     return _.cloneDeep(this.areas);
   }
 

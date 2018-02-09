@@ -22,11 +22,11 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
-    return this.http.get(`/api/users`);
+    return <Observable<User[]>>this.http.get(`/api/users`);
   }
 
   getUser(user_id: any): Observable<User> {
-    return this.http.get(`/api/users/${user_id}`);
+    return <Observable<User>>this.http.get(`/api/users/${user_id}`);
   }
 
   resetpassword(credentials): Observable<any> {
@@ -50,7 +50,7 @@ export class UserService {
   }
 
   getProfile(user_id: any): Observable<Profile> {
-    return this.http.get(`/api/profile/${user_id}`);
+    return < Observable<Profile>>this.http.get(`/api/profile/${user_id}`);
   }
 
   getPerson(person_id: any): Observable<any> {

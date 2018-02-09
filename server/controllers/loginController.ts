@@ -182,7 +182,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
           model: Lock
         }]
     }).then(function(newUser) {
-      console.log('new User:', newUser);
+      //console.log('new User:', newUser);
       if (newUser) {
         if (newUser.status === 'active') {
           return comparePassword(res, user, newUser);

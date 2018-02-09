@@ -35,7 +35,6 @@ import { CanDeactivateGuardService } from './services/can-deactivate-guard.servi
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { OrganizeComponent } from './organize/organize.component';
 import { GamesComponent } from './games/games.component';
-// import { RichGridComponent } from './rich-grid-example/rich-grid.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
