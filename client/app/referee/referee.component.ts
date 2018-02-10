@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ToastComponent } from '../shared/toast/toast.component';
-import { AuthService } from '../services/auth.service';
-import { UserService } from '../services/user.service';
-import { ActivatedRoute, Params, Router, Data } from '@angular/router';
+import { AuthService, UserService } from '../services/index';
+//import { ActivatedRoute, Params, Router, Data } from '@angular/router';
 import { CanComponentDeactivate } from './../services/can-deactivate-guard.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -25,16 +24,15 @@ export class RefereeComponent implements OnInit, CanComponentDeactivate {
   ngOnInit() {
     this.getUsers();
   }
+
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (!this.allowEdit) {
       return true;
     }
   }
+  
   getUsers() {
     this.userService.getUsers().subscribe(
-      // data => this.users = data,
-      // error => console.log(error),
-      // () => this.isLoading = false
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
@@ -50,13 +48,11 @@ export class RefereeComponent implements OnInit, CanComponentDeactivate {
     );
   }
 
-
   callSuccess(res) {
     this.toast.setMessage(res.message, 'success');
     this.users = res;
     this.isLoading = false;
     console.log('this.users: ', this.users);
-    // this.onCancel();
   }
 
   callFailure(err: HttpErrorResponse, message = 'An error occurred') {
@@ -69,6 +65,5 @@ export class RefereeComponent implements OnInit, CanComponentDeactivate {
       this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
     }
     console.log('Error: ' + err.error + ' Status: ' + err.statusText);
-    // this.resetDivs();
   }
 }

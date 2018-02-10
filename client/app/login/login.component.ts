@@ -9,8 +9,10 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { ToastComponent } from '../shared/toast/toast.component';
 
-import { UserService } from '../services/user.service';
-import { AuthService } from '../services/auth.service';
+import { AuthService, UserService } from '../services/index';
+import { Login, User } from './../shared/models/index';
+
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-login',
@@ -72,9 +74,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(user) {
-    this.auth.login(user).subscribe(
-      res => {
-        const user = res.user;
+    this.auth.login(user)
+    .take(1)
+    .subscribe(
+      (login:Login) => {
+        const user:User = login.user;
 
         if (this.checkboxFlag) {
           const expireDate = new Date();
@@ -90,7 +94,7 @@ export class LoginComponent implements OnInit {
 
         // Check if the user is a referee/organizer and if his/she has not yet completed the profile form, then redirect him/her to the form
         // Organizer
-        switch (res.user.can_organize + ' ' + res.user.status) {
+        switch (user.can_organize + ' ' + user.status) {
           case ('pending standby'):
             this.router.navigate(['account/profile/' + user.id]);
             break;
@@ -123,7 +127,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['account/deactivated/' + user.id]);
             break;
           default:
-            this.router.navigate(['account/' + res.user.id ]);
+            this.router.navigate(['account/' + user.id ]);
             break;
         }
       },

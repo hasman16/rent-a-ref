@@ -20,8 +20,8 @@ export class RegisterComponent {
   protected fields: FormlyFieldConfig[];
 
   constructor(private router: Router,
-              public toast: ToastComponent,
-              private userService: UserService) {}
+    public toast: ToastComponent,
+    private userService: UserService) { }
 
   ngOnInit() {
     this.fields = [{
@@ -55,7 +55,7 @@ export class RegisterComponent {
         minLength: 5
       }
     },
-      {
+    {
       key: 'repeatemail',
       type: 'horizontalInput',
       templateOptions: {
@@ -63,10 +63,10 @@ export class RegisterComponent {
         label: 'Repeat email address',
         placeholder: 'Re-enter email',
         required: true,
-        minLength:5
+        minLength: 5
       }
     },
-      {
+    {
       key: 'password',
       type: 'horizontalInput',
       templateOptions: {
@@ -76,7 +76,7 @@ export class RegisterComponent {
         required: true
       }
     },
-     {
+    {
       key: 'repeatpassword',
       type: 'horizontalInput',
       templateOptions: {
@@ -86,7 +86,7 @@ export class RegisterComponent {
         required: true
       }
     },
-     {
+    {
       key: 'phone',
       type: 'horizontalInput',
       templateOptions: {
@@ -115,9 +115,9 @@ export class RegisterComponent {
 
     if (valid) {
       this.userService.register(user).subscribe(res => {
-          this.toast.setMessage(res.message, 'success');
-          this.router.navigate(['/login']);
-        },
+        this.toast.setMessage(res.message, 'success');
+        this.router.navigate(['/login']);
+      },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
             // A client-side or network error occurred. Handle it accordingly.

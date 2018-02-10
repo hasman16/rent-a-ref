@@ -2,20 +2,17 @@ import { Component, OnInit, ViewChild, Input  } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, EmailValidator, ReactiveFormsModule } from '@angular/forms';
-import * as moment from 'moment';
 import { ToastComponent } from '../shared/toast/toast.component';
-import { AuthService } from '../services/auth.service';
-import { StatesService } from '../services/states.service';
-import { UserService } from '../services/user.service';
-import { OrganizeService } from '../services/organize.service';
+import { AuthService, OrganizeService, StatesService, UserService } from '../services/index';
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
-import { Address } from '../shared/models/address';
+import { Address, Phone } from '../shared/models/index';
 import { compareFields } from '../shared/compareFields';
-import { Phone } from '../shared/models/phone';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-organize',

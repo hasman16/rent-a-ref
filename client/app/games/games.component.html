@@ -1,19 +1,19 @@
 <div class="row game">
-        <div class="col-md-4">
-                <app-leftmenu></app-leftmenu>
-        </div>
-        <div class="col-md-8">
-                <app-loading [condition]="isLoading"></app-loading>
+  <div class="col-md-4">
+    <app-leftmenu></app-leftmenu>
+  </div>
+  <div class="col-md-8">
+    <app-loading [condition]="isLoading"></app-loading>
 
-                <app-toast [message]="toast.message"></app-toast>
-                <div class="card" *ngIf="!isLoading">
-                        <h4>Game Assignment</h4>
+    <app-toast [message]="toast.message"></app-toast>
+    <div class="card" *ngIf="!isLoading">
+      <h4>Game Assignment</h4>
 
-                            <form [formGroup]="form" (ngSubmit)="submit(userModel)">
-                              <formly-form [model]="userModel" [fields]="userFields">
-                                <button type="submit" class="btn btn-default">Submit</button>
-                              </formly-form>
-                            </form>
-                </div>
-        </div>
+      <form [formGroup]="form" (ngSubmit)="submit(userModel)">
+        <formly-form [model]="userModel" [fields]="userFields">
+          <button type="submit" class="btn btn-default">Submit</button>
+        </formly-form>
+      </form>
+    </div>
+  </div>
 </div>

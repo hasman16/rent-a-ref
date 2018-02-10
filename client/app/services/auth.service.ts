@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 
 import { TokenService } from './token.service';
 import { UserService } from './user.service';
-import { Login } from './../shared/models/login';
-import { User } from './../shared/models/user';
+import { Login, User } from './../shared/models/index';
 
 @Injectable()
 export class AuthService {
@@ -30,8 +29,10 @@ export class AuthService {
   }
 
   login(emailAndPassword) {
-    return this.userService.login(emailAndPassword).map(
-      (login:Login) => {
+    return this.userService
+      .login(emailAndPassword)
+      .take(1)
+      .map((login:Login) => {
         const newUser = login.user;
         this.setCurrentUser({
           user: newUser,
@@ -62,7 +63,7 @@ export class AuthService {
         }
 
         // Referee
-        switch (login.user.can_referee + ' ' + login.user.status) {
+        switch (newUser.can_referee + ' ' + newUser.status) {
           case ('pending active'):
             // The referee account has been activated by the admin. Now he needs to complete his profile
             // this.router.navigate(['user/' + res.user.id + '/edit-profile']);
@@ -104,11 +105,10 @@ export class AuthService {
   }
 
   resetpassword(payload) {
-    return this.userService.resetpassword(payload).map(res => res.json()).map(
-      res => {
-        return res;
-      }
-    );
+    return this.userService
+    .resetpassword(payload)
+    .take(1)
+    .map(res => res.json());
   }
 
   setCurrentUser(setter) {
