@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
-import { AuthService } from '../services/auth.service';
-import { ToastComponent } from '../shared/toast/toast.component';
-import { CookieService } from 'ngx-cookie-service';
 import { HttpErrorResponse } from '@angular/common/http';
-import * as $ from 'jquery';
-import 'jquery-ui';
+
+import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { CookieService } from 'ngx-cookie-service';
+
+import { ToastComponent } from '../shared/toast/toast.component';
+
+import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,33 +18,23 @@ import 'jquery-ui';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  cookieValue = 'UNKNOWN';
-  cookieCheck = false;
-  checkboxFlag = false;
-  stringEmail = '';
-  submitted = false;
-  loginForm: FormGroup;
-  email = new FormControl('', [<any>Validators.required, <any>Validators.email]);
-  password = new FormControl('', [<any>Validators.required,
-    <any>Validators.minLength(6)]);
+  protected cookieValue = 'UNKNOWN';
+  protected cookieCheck = false;
+  protected checkboxFlag = false;
+  protected form = new FormGroup({});
+  protected model: any = {};
+  protected options: FormlyFormOptions = {};
+  protected fields: FormlyFieldConfig[];
 
   constructor(private auth: AuthService,
-              private formBuilder: FormBuilder,
               private router: Router,
               public toast: ToastComponent,
-              private cookieService: CookieService) {
-
-               }
+              private cookieService: CookieService) {}
 
   ngOnInit() {
     if (this.auth.loggedIn) {
       this.router.navigate(['/']);
     }
-
-    this.loginForm = this.formBuilder.group({
-      email: this.email,
-      password: this.password
-    });
 
     this.checkboxFlag = this.cookieService.get('checkboxFlag') === 'true' ? true: false;
 
@@ -49,29 +42,38 @@ export class LoginComponent implements OnInit {
       this.cookieValue = this.cookieService.get('email');
     }
 
-    if (this.cookieValue !== 'UNKNOWN') {
-      // this.email = JSON.stringify(this.cookieValue);
+    this.fields = [{
+      key: 'email',
+      type: 'horizontalInput',
+      templateOptions: {
+        type: 'email',
+        label: 'Email address',
+        placeholder: 'pele@soccer.com',
+        required: true,
+        minLength:5
+      }
+    },
+      {
+      key: 'password',
+      type: 'horizontalInput',
+      templateOptions: {
+        type: 'password',
+        label: 'Password',
+        placeholder: 'password',
+        required: true,
+        minLength: 5
+      }
     }
+    ];
   }
 
-  setClassEmail() {
-    return { 'has-danger': !this.email.pristine && !this.email.valid };
-  }
-
-  setClassPassword() {
-    return { 'has-danger': !this.password.pristine && !this.password.valid };
-  }
-
-  onForgot() {
+  forgot() {
     this.router.navigate(['passwordreset']);
   }
 
-  login() {
-    this.auth.login(this.loginForm.value).subscribe(
+  login(user) {
+    this.auth.login(user).subscribe(
       res => {
-
-        this.submitted = true;
-
         const user = res.user;
 
         if (this.checkboxFlag) {
@@ -87,8 +89,6 @@ export class LoginComponent implements OnInit {
         }
 
         // Check if the user is a referee/organizer and if his/she has not yet completed the profile form, then redirect him/her to the form
-
-        console.log('organizer:', user.can_organize + ' ' + user.status);
         // Organizer
         switch (res.user.can_organize + ' ' + res.user.status) {
           case ('pending standby'):
@@ -106,7 +106,6 @@ export class LoginComponent implements OnInit {
         }
 
         // Referee
-        console.log('Referee :', user.can_referee + ' ' + user.status);
         switch (user.can_referee + ' ' + user.status) {
           case ('pending active'):
             this.router.navigate(['account/profile/' + user.id]);
@@ -130,10 +129,8 @@ export class LoginComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log('A client-side or network error occurred:',err);
           this.toast.setMessage('invalid email or password! ', 'danger');
         } else {
-          console.log('The backend returned an unsuccessful response code:', err);
           this.toast.setMessage('invalid email or password! ', 'danger');
         }
       }

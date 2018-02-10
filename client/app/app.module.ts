@@ -6,6 +6,8 @@ import { TokenInterceptor } from './providers/token.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import {FormlyModule} from '@ngx-formly/core';
+import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -64,6 +66,8 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
+import { FormlyHorizontalWrapper } from './shared/formly/horizontal-wrapper';
+
 // rich grid
 import { LeftmenuComponent } from './leftmenu/leftmenu.component';
 import { BarchartComponent } from './barchart/barchart.component';
@@ -79,6 +83,7 @@ const routes: Routes = [
 ];
 @NgModule({
   declarations: [
+    FormlyHorizontalWrapper,
     AppComponent,
     AboutComponent,
     AccountComponent,
@@ -124,6 +129,11 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    FormlyModule.forRoot({
+      wrappers: [{ name: 'horizontalWrapper', component: FormlyHorizontalWrapper }],
+      types: [{ name: 'horizontalInput', extends: 'input', wrappers: ['fieldset', 'horizontalWrapper'] }],
+    }),
+    FormlyBootstrapModule,
     HttpClientModule,
     MyDatePickerModule,
     CommonModule,

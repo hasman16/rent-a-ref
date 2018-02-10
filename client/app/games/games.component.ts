@@ -8,6 +8,8 @@ import { CanComponentDeactivate } from './../services/can-deactivate-guard.servi
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ProfileService } from '../services/profile.service';
+import {FormGroup} from '@angular/forms';
+import {FormlyFieldConfig} from '@ngx-formly/core';
 
 @Component({
         selector: 'app-games',
@@ -15,20 +17,37 @@ import { ProfileService } from '../services/profile.service';
         styleUrls: ['./games.component.scss']
 })
 export class GamesComponent implements OnInit, CanComponentDeactivate {
-        isLoading = true;
-        allowEdit = false;
+        protected isLoading:boolean = true;
+        protected allowEdit:boolean = false;
+        protected form = new FormGroup({});
+          userModel = { email: 'email@gmail.com' };
+          userFields: Array<FormlyFieldConfig> = [{
+            key: 'email',
+            type: 'input',
+            templateOptions: {
+              type: 'email',
+              label: 'Email address',
+              placeholder: 'Enter email',
+              required: true,
+            }
+          }];
+
 
         constructor(public auth: AuthService,
                 public toast: ToastComponent, private profileService: ProfileService, private router: Router,
                 private userService: UserService) { }
 
         ngOnInit() {
-                // this.getUsers();
                 this.isLoading = false;
         }
+        
         canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
                 if (!this.allowEdit) {
                         return true;
                 }
+        }
+
+        submit(user) {
+                console.log(user);
         }
 }

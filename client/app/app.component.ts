@@ -16,17 +16,6 @@ export class AppComponent {
       console.log('Width on resize 1: ' + window.innerWidth);
       console.log('Height on resize 2: ' + window.innerHeight);
 
-    // Screen size example 2
-/*      window.onresize = (e) => {
-        ngZone.run(() => {
-          this.windowWidth = window.innerWidth;
-          console.log('Width on resize: ' + window.innerWidth);
-          console.log('Height on resize: ' + window.innerHeight);
-        });
-      };
-*/
-
-    // alert('testing');
     const destination_anim_bgs = new Array('assets/images/refereebg.jpg', 'assets/images/refereebg1.jpg', 'assets/images/refereebg12.jpg');
 
 
@@ -62,7 +51,6 @@ export class AppComponent {
       }
 
       let currImg = 0;
-     // const intID = setInterval(changeImg, 10000);
 
       /* image rotator */
       function changeImg() {
@@ -70,7 +58,6 @@ export class AppComponent {
           $(this).css('background', 'url(' + preloadArr[currImg++ % preloadArr.length].src + ') fixed center');
         }).animate({ opacity: 1 }, 200);
       }
-
 
     });
    }

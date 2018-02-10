@@ -11,6 +11,7 @@ export class LeftmenuComponent implements OnInit {
 
   ngOnInit() {
   }
+  
   toggleMenu() {
     console.log('toggle called!');
   }
