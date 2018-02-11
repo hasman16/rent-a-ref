@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
-import { ToastComponent } from '../shared/toast/toast.component';
-import { AuthService } from '../services/auth.service';
-import { UserService } from '../services/user.service';
-import { ActivatedRoute, Params, Router, Data } from '@angular/router';
-import { CanComponentDeactivate } from './../services/can-deactivate-guard.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Params, Router, Data } from '@angular/router';
+
+import { AuthService, CanComponentDeactivate, ProfileService, UserService } from '../services/index';
 import { Observable } from 'rxjs/Observable';
-import { ProfileService } from '../services/profile.service';
+import { ToastComponent } from '../shared/toast/toast.component';
+
 
 @Component({
   selector: 'app-admin',
@@ -30,10 +28,10 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
     private userService: UserService) { }
 
   ngOnInit() {
-    // this.getUsers();
     this.getProfile();
     this.isLoading = false;
   }
+  
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (!this.allowEdit) {
       return true;
@@ -60,10 +58,6 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
           console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
         }
         this.isLoading = false;
-        /*if (!this.auth.loggedIn) {
-          this.abort = true;
-          this.auth.logout();
-        }*/
       }
     );
   }
@@ -78,9 +72,6 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
 
   getUsers() {
     this.userService.getUsers().subscribe(
-      // data => this.users = data,
-      // error => console.log(error),
-      // () => this.isLoading = false
       res => this.callSuccess(res),
       (err: HttpErrorResponse) => {
         this.callFailure(err);
@@ -114,7 +105,5 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
       // The response body may contain clues as to what went wrong,
       this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
     }
-    console.log('Error: ' + err.error + ' Status: ' + err.statusText);
-    // this.resetDivs();
   }
 }

@@ -4,10 +4,7 @@ import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from 
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService } from '../../services/auth.service';
-import { CanComponentDeactivate } from '../../services/can-deactivate-guard.service';
-import { ProfileService } from '../../services/profile.service';
-import { UserService } from '../../services/user.service';
+import { AuthService, CanComponentDeactivate, ProfileService, UserService } from '../../services/index';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
 //Models
@@ -69,25 +66,25 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   getProfile() {
     this.isLoading = true;
     this.profileService.getProfile(this.auth.currentUser.id).subscribe(
-      (res:Profile) => {
-        this.data = res;
+      (profile: Profile) => {
+        this.data = profile;
         this.user = {
-          id: String(res.id),
-          email: res.email,
-          authorization: String(res.authorization),
-          firstname: res.person.firstname,
-          lastname: res.person.lastname,
+          id: String(profile.id),
+          email: profile.email,
+          authorization: String(profile.authorization),
+          firstname: profile.person.firstname,
+          lastname: profile.person.lastname,
           role: '',
-          person_id: String(res.person.id),
-          can_referee: res.can_referee,
-          can_organize: res.can_organize,
-          status: res.status
+          person_id: String(profile.person.id),
+          can_referee: profile.can_referee,
+          can_organize: rprofile.can_organize,
+          status: profile.status
         } as User;
-        this.person = res.person;
-        this.addresses = _.sortBy(res.addresses, 'id');
-        this.phones = _.sortBy(res.phones, 'id');
-        this.birthday = moment(res.person.dob).format('LL');
-        if (JSON.stringify(res.person.middlenames) !== 'null') {
+        this.person = profile.person;
+        this.addresses = _.sortBy(profile.addresses, 'id');
+        this.phones = _.sortBy(profile.phones, 'id');
+        this.birthday = moment(profile.person.dob).format('LL');
+        if (JSON.stringify(profile.person.middlenames) !== 'null') {
           this.middlenameFlag = true;
         }
         this.isLoading = false;

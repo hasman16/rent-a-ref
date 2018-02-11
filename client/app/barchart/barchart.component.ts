@@ -109,6 +109,4 @@ export class BarchartComponent implements OnInit, OnChanges {
       .attr('y', d => this.yScale(d[1]))
       .attr('height', d => this.height - this.yScale(d[1]));
   }
-
-
 }

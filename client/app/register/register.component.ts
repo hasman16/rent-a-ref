@@ -62,8 +62,16 @@ export class RegisterComponent {
         type: 'email',
         label: 'Repeat email address',
         placeholder: 'Re-enter email',
-        required: true,
-        minLength: 5
+        required: true
+      },
+      validators: {
+        fieldMatch: {
+          expression: (control) => control.value === this.model.email,
+          message: 'Email address Not Matching',
+        },
+      },
+      expressionProperties: {
+        'templateOptions.disabled': () => !this.form.get('email').valid,
       }
     },
     {
@@ -73,7 +81,8 @@ export class RegisterComponent {
         type: 'password',
         label: 'Password',
         placeholder: 'Enter password',
-        required: true
+        required: true,
+        minLength: 5
       }
     },
     {
@@ -84,6 +93,15 @@ export class RegisterComponent {
         label: 'Repeat password',
         placeholder: 'Repeat password',
         required: true
+      },
+      validators: {
+        fieldMatch: {
+          expression: (control) => control.value === this.model.password,
+          message: 'Password Not Matching',
+        },
+      },
+      expressionProperties: {
+        'templateOptions.disabled': () => !this.form.get('password').valid,
       }
     },
     {
