@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
+import { RepeatTypeComponent } from './shared/formly/repeat-section/repeat-section.type';
 
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
@@ -84,6 +85,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     FormlyHorizontalWrapper,
+    RepeatTypeComponent,
     AppComponent,
     AboutComponent,
     AccountComponent,
@@ -131,7 +133,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormlyModule.forRoot({
       wrappers: [{ name: 'horizontalWrapper', component: FormlyHorizontalWrapper }],
-      types: [{ name: 'horizontalInput', extends: 'input', wrappers: ['fieldset', 'horizontalWrapper'] }],
+      types: [{ name: 'horizontalInput', extends: 'input', wrappers: ['fieldset', 'horizontalWrapper'] },
+        { name: 'repeat', component: RepeatTypeComponent }
+      ],
     }),
     FormlyBootstrapModule,
     HttpClientModule,

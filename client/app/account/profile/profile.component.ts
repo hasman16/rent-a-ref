@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
           role: '',
           person_id: String(profile.person.id),
           can_referee: profile.can_referee,
-          can_organize: rprofile.can_organize,
+          can_organize: profile.can_organize,
           status: profile.status
         } as User;
         this.person = profile.person;
