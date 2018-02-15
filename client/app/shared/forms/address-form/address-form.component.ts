@@ -3,7 +3,7 @@ import { FormGroup, AbstractControl, Validators, FormBuilder, ReactiveFormsModul
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Address } from '../../models/address';
-import { StatesService } from '../../../services/states.service';
+import { StatesService } from '../../../services/index';
 import { AbstractFormComponent } from '../abstract-form';
 
 import { Observable } from 'rxjs/Observable';
@@ -22,7 +22,7 @@ export interface IAddressService {
 })
 export class AddressFormComponent extends AbstractFormComponent implements OnInit {
   public addressForm: FormGroup;
-  protected anAddress: Address;
+  protected anAddress: Address = <Address>{};
   protected countryName:string = 'usa';
   protected mode:boolean = false;
   protected states: any;
@@ -68,11 +68,11 @@ export class AddressFormComponent extends AbstractFormComponent implements OnIni
   fillForm() {
     this.states = this.statesService.getStatesProvinces(this.countryName);
     this.addressForm.setValue({
-      line1: this.anAddress.line1,
-      line2: this.anAddress.line2,
-      city: this.anAddress.city,
-      state: this.anAddress.state,
-      zip: this.anAddress.zip
+      line1: this.anAddress.line1 || '',
+      line2: this.anAddress.line2 || '',
+      city: this.anAddress.city || '',
+      state: this.anAddress.state || '',
+      zip: this.anAddress.zip || ''
     });
   }
 

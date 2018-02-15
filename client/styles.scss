@@ -41,6 +41,7 @@ button.btn {
     margin: auto 0.2em;
   }
 }
+*/
 .fadeInForm {
   opacity: 0;
   animation: fadeInForm 0.5s ease-in forwards;
@@ -50,7 +51,7 @@ button.btn {
   opacity: 1;
   animation: fadeOutForm 0.3s ease-out forwards;
 }
-*/
+
 @keyframes fadeInForm {
   0%{ opacity: 0 }
   100%{ opacity: 1}
@@ -91,6 +92,7 @@ button.btn {
 
 .profiles {
   max-width: 43.75rem;
+  //max-width:1000px;
   margin:auto auto;
 }
 

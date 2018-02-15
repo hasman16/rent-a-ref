@@ -47,22 +47,11 @@ export class OrganizeComponent implements OnInit {
           {
             className: 'flex-1',
             type: 'input',
-            key: 'firstName',
+            key: 'name',
             templateOptions: {
-              label: 'First Name',
+              label: 'Organization Name',
             },
-          },
-          {
-            className: 'flex-1',
-            type: 'input',
-            key: 'lastName',
-            templateOptions: {
-              label: 'Last Name',
-            },
-            expressionProperties: {
-              'templateOptions.disabled': '!model.firstName',
-            },
-          },
+          }
         ],
       },
       {

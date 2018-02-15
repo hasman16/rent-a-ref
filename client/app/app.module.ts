@@ -29,6 +29,8 @@ import { OrganizeService } from './services/organize.service';
 import { AboutComponent } from './about/about.component';
 import { AccountComponent } from './account/account.component';
 import { AddressFormComponent } from './shared/forms/address-form/address-form.component';
+import { HorizontalAddressFormComponent } from './shared/forms/address-form/horizontal-address-form/horizontal-address-form.component';
+
 import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
 import { BioFormComponent } from './shared/forms/bio-form/bio-form.component';
@@ -90,6 +92,7 @@ const routes: Routes = [
     AboutComponent,
     AccountComponent,
     AddressFormComponent,
+    HorizontalAddressFormComponent,
     AdminComponent,
     BioFormComponent,
     BlogComponent,

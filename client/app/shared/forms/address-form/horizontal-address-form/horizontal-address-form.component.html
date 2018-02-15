@@ -1,0 +1,40 @@
+<div class="fadeInForm">
+
+    <form [formGroup]="addressForm" (ngSubmit)="onAddressSubmit()">
+      <div class="form-row">
+        <div class="col-3" [ngClass]="{ 'has-danger': line1Invalid }">
+          <label>Address Line 1
+            <input class="form-control" formControlName="line1">
+          </label>
+        </div>
+        <div class="col-3">
+          <label>Address Line 2
+            <input class="form-control" formControlName="line2">
+          </label>
+        </div>
+        <div class="col-2" [ngClass]="{ 'has-danger': cityInvalid }">
+          <label>City
+            <input class="form-control" formControlName="city">
+          </label>
+        </div>
+        <div class="col-2">
+          <label class="center-block">State
+            <select class="form-control" formControlName="state">
+              <option *ngFor="let state of states" value="{{state.abbreviation}}">{{state.name}}</option>
+            </select>
+          </label>
+        </div>
+        <div class="col-2" [ngClass]="{ 'has-danger': zipInvalid }">
+          <label class="center-block">Zip Code
+            <input class="form-control" formControlName="zip">
+          </label>
+        </div>
+<!--
+        <div class="col-2">
+          <button type="submit" title="Save address" class="btn btn-primary btn-sm" [disabled]="addressForm.invalid"><i class="fa fa-save"></i></button>
+          <button class="btn btn-secondary btn-sm" title="Cancel address" (click)="onCancel($event)"><i class="fa fa-times"></i></button>
+        </div> -->
+      </div>
+
+    </form>
+</div>

@@ -5,12 +5,12 @@
 
       <div class="card-block card-outline-primary">
 
-        <div class="list-group">
-          <span class="list-group-item active">
-              <span class="btn btn-sm btn-primary disabled">User ID:&nbsp;&nbsp;{{user.id}}</span>
-          <span class="btn btn-sm btn-success disabled">Can Organize::&nbsp;&nbsp;{{user.can_organize}}</span>
-          <span class="btn btn-sm btn-warning disabled">Can Referee::&nbsp;&nbsp;{{user.can_referee}}</span>
-          <span class="btn btn-sm btn-danger disabled">Status::&nbsp;&nbsp;{{user.status}}</span>
+        <div class="list-group" style="margin-top: 2em;">
+          <span class="list-group-item">
+            <span class="btn btn-sm btn-primary disabled">User ID:&nbsp;&nbsp;{{user.id}}</span>
+            <span class="btn btn-sm btn-success disabled">Can Organize::&nbsp;&nbsp;{{user.can_organize}}</span>
+            <span class="btn btn-sm btn-warning disabled">Can Referee::&nbsp;&nbsp;{{user.can_referee}}</span>
+            <span class="btn btn-sm btn-danger disabled">Status::&nbsp;&nbsp;{{user.status}}</span>
           </span>
         </div>
 
@@ -115,7 +115,7 @@
                   </span>
               </div>
             </ng-container>
-            <address-form *ngIf="editAddress && currentAddress === 0" [addressService]="profileService" [address]="dummyAddress" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
+            <horizontal-address-form *ngIf="editAddress && currentAddress === 0" [addressService]="profileService" [address]="dummyAddress" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></horizontal-address-form>
 
             <ng-container *ngIf="addresses.length > 0">
               <div class="list-group" *ngFor="let address of addresses">
