@@ -1,37 +1,39 @@
-<app-loading [condition]="isLoading"></app-loading>
+<div class="row">
+  <div class="col-12">
 
-<app-toast [message]="toast.message"></app-toast>
+    <app-loading [condition]="isLoading"></app-loading>
+    <app-toast [message]="toast.message"></app-toast>
 
-<div class="card col-sm-12">
-<div class="card" *ngIf="!isLoading">
-  <h4 class="card-header">Account settings</h4>
-  <div class="card-block">
-    <button type="button" class="btn btn-primary btn-sm" disabled>User ID: #{{auth.currentUser.id}}  :  {{person.firstname}} {{person.lastname}}</button>
-    <div class="list-group">
-      <!-->can_organize":"active","can_referee":"active","status":"active"-->
-      <span class="list-group-item active">
-          <button type="button" class="btn btn-success btn-sm" disabled>Can Organize: {{user.can_organize}}</button>
-        <button type="button" class="btn btn-warning btn-sm" disabled>Can Referee: {{user.can_referee}}</button> <button type="button"
-          class="btn btn-danger btn-sm" disabled>Status: {{user.status}}</button>
-        <span *ngIf="user.can_referee == 'active'">
-          Available to referee: <select class="selectpicker" name="available" [(ngModel)]="user.available">      
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-        </span>
-        </span>
+    <div class="card" *ngIf="!isLoading">
+      <h4 class="card-header">Account settings</h4>
+      <div class="card-block">
+        <button type="button" class="btn btn-primary btn-sm" disabled>User ID: #{{auth.currentUser.id}}  :  {{person.firstname}} {{person.lastname}}</button>
+        <div class="list-group">
+          <!-->can_organize":"active","can_referee":"active","status":"active"-->
+          <span class="list-group-item active">
+            <button type="button" class="btn btn-success btn-sm" disabled>Can Organize: {{user.can_organize}}</button>
+          <button type="button" class="btn btn-warning btn-sm" disabled>Can Referee: {{user.can_referee}}</button> <button type="button"
+            class="btn btn-danger btn-sm" disabled>Status: {{user.status}}</button>
+          <span *ngIf="user.can_referee == 'active'">
+            Available to referee: <select class="selectpicker" name="available" [(ngModel)]="user.available">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+          </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="list-group" *ngIf="user.can_organize == 'no'">
+        <label>In order to organize events, you need to <button type="button" class="btn btn-sm btn-success" (click)="onActivate()">Activate </button> the Organizer account</label>
+      </div>
+      <div class="list-group" *ngIf="user.can_referee == 'no'">
+        <label>Do you want to be a referee? please click <button type="button" class="btn btn-sm btn-warning" (click)="onRefereeActivate()">Activate </button> to activate your referee account</label>
+      </div>
+      <div class="list-group" *ngIf="user.can_organize == 'active'">
+        <label>Please click <button type="button" class="btn btn-sm btn btn-success" (click)="onOrganize()">Organize </button> to <strong>organize or request referee(s)</strong> to your event(s)</label>
+      </div>
+      <h4 class="card-header elegantshd bigFont">Announcements</h4>
     </div>
   </div>
-
-  <div class="list-group" *ngIf="user.can_organize == 'no'">
-    <label>In order to organize events, you need to <button type="button" class="btn btn-sm btn-success" (click)="onActivate()">Activate </button> the Organizer account</label>
-  </div>
-  <div class="list-group" *ngIf="user.can_referee == 'no'">
-    <label>Do you want to be a referee? please click <button type="button" class="btn btn-sm btn-warning" (click)="onRefereeActivate()">Activate </button> to activate your referee account</label>
-  </div>
-  <div class="list-group" *ngIf="user.can_organize == 'active'">
-<label>Please click <button type="button" class="btn btn-sm btn btn-success" (click)="onOrganize()">Organize </button> to <strong>organize or request referee(s)</strong> to your event(s)</label>
-  </div>
-  <h4 class="card-header elegantshd bigFont">Announcements</h4>
-</div>
 </div>

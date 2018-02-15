@@ -1,105 +1,105 @@
-<div class="col-xs-12 col-sm-12">
-  <!--<div class="card col-sm-12">-->
-  <!--<div class="card" *ngIf="!isLoading">-->
-  <div class="card">
 
-    <h4 class="card-header elegantshd bigFont">{{message}}</h4>
 
-    <!--<app-loading [condition]="isLoading"></app-loading>-->
 
-    <app-toast [message]="toast.message"></app-toast>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
 
-    <div class="card-block" *ngIf="divPasswordFlag">
-      <div class="card-block">
-        <password-form [password]="password" (savePassword)="onPasswordSubmit($event)"></password-form>
+      <h4 class="card-header elegantshd bigFont">{{message}}</h4>
+
+      <app-toast [message]="toast.message"></app-toast>
+
+      <div class="card-block" *ngIf="divPasswordFlag">
+        <div class="card-block">
+          <password-form [password]="password" (savePassword)="onPasswordSubmit($event)"></password-form>
+        </div>
       </div>
-    </div>
 
-    <!--Bio info-->
-    <div class="card-block" *ngIf="divBioFlag">
-      <div class="card-block">
-        <bio-form [person]="person" (saveBio)="onBioSubmit($event)"></bio-form>
+      <!--Bio info-->
+      <div class="card-block" *ngIf="divBioFlag">
+        <div class="card-block">
+          <bio-form [person]="person" (saveBio)="onBioSubmit($event)"></bio-form>
+        </div>
       </div>
-    </div>
 
-    <!--Phones-->
-    <div class="card-block" *ngIf="divPhoneFlag">
-      <phone-form [phone]="phone" (savePhone)="onPhoneSubmit($event)"></phone-form>
-    </div>
-
-    <!--Address-->
-    <div class="card-block" *ngIf="divAddressFlag">
-      <div class="card-block">
-          <address-form [address]="address" [states]="states" (saveAddress)="onAddressSubmit($event)"></address-form>
+      <!--Phones-->
+      <div class="card-block" *ngIf="divPhoneFlag">
+        <phone-form [phone]="phone" (savePhone)="onPhoneSubmit($event)"></phone-form>
       </div>
-    </div>
 
-    <!--Available venue-->
-    <div class="card-block" *ngIf="divZoneFlag">
-      <div class="card-block">
-          <zone-form zone="zone"></zone-form>
+      <!--Address-->
+      <div class="card-block" *ngIf="divAddressFlag">
+        <div class="card-block">
+            <address-form [address]="address" [states]="states" (saveAddress)="onAddressSubmit($event)"></address-form>
+        </div>
       </div>
-    </div>
 
-    <!--Payment-->
-    <div class="card-block" *ngIf="divPaymentFlag">
-      <div class="card-block">
-        <div class="card card-outline-success">
-          <div class="card-block numberbg">
+      <!--Available venue-->
+      <div class="card-block" *ngIf="divZoneFlag">
+        <div class="card-block">
+            <zone-form zone="zone"></zone-form>
+        </div>
+      </div>
 
-            <form [formGroup]="passwordForm" (ngSubmit)="onPaymentSubmit()" *ngIf="showDivPayment else showDivPaymentmsg">
-              <p>Please update your payment preference. </p>
-              <div class="profile-div">
-                <div class="form-group">
-                  <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-                    <input type="checkbox" class="custom-control-input" [value]="paypalFlag" [(ngModel)]="paypalFlag" >
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Paypal </span>
-                    <input class="form-control" formControlName="paypalinfo">
-                  </label>
+      <!--Payment-->
+      <div class="card-block" *ngIf="divPaymentFlag">
+        <div class="card-block">
+          <div class="card card-outline-success">
+            <div class="card-block numberbg">
+
+              <form [formGroup]="passwordForm" (ngSubmit)="onPaymentSubmit()" *ngIf="showDivPayment else showDivPaymentmsg">
+                <p>Please update your payment preference. </p>
+                <div class="profile-div">
+                  <div class="form-group">
+                    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                      <input type="checkbox" class="custom-control-input" [value]="paypalFlag" [(ngModel)]="paypalFlag" >
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Paypal </span>
+                      <input class="form-control" formControlName="paypalinfo">
+                    </label>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                      <input type="checkbox" class="custom-control-input" [value]="checkFlag" [(ngModel)]="checkFlag" >
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Check </span>
+                    </label>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                      <input type="checkbox" class="custom-control-input" [value]="ccFlag" [(ngModel)]="ccFlag" >
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Credit Card </span>
+                      <input class="form-control" formControlName="ccinfo">
+                    </label>
+                  </div>
+
                 </div>
 
-                <div class="form-group">
-                  <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-                    <input type="checkbox" class="custom-control-input" [value]="checkFlag" [(ngModel)]="checkFlag" >
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Check </span>
-                  </label>
-                </div>
-
-                <div class="form-group">
-                  <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-                    <input type="checkbox" class="custom-control-input" [value]="ccFlag" [(ngModel)]="ccFlag" >
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Credit Card </span>
-                    <input class="form-control" formControlName="ccinfo">
-                  </label>
-                </div>
-
-              </div>
-
-              <div>
-                <button type="submit" class="btn btn-primary btn-sm" [disabled]="passwordForm.invalid">
-                  <i class="fa fa-save"></i>Save
+                <div>
+                  <button type="submit" class="btn btn-primary btn-sm" [disabled]="passwordForm.invalid">
+                    <i class="fa fa-save"></i>Save
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()">
+                <i class="fa fa-ban"></i>Cancel
                 </button>
-                <button class="btn btn-outline-secondary btn-sm" type="button" (click)="onCancel()">
-              <i class="fa fa-ban"></i>Cancel
-              </button>
-              </div>
-            </form>
+                </div>
+              </form>
+  
+              <ng-template #showDivPaymentmsg>
+                <blockquote>
+                  <p>Your payment preference was successfully updated.</p>
+                </blockquote>
+              </ng-template>
 
-
-            <ng-template #showDivPaymentmsg>
-              <blockquote>
-                <p>Your payment preference was successfully updated.</p>
-              </blockquote>
-            </ng-template>
-
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!--End-->
+      <!--End-->
+    </div>
   </div>
 </div>

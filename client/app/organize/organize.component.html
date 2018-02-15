@@ -1,8 +1,8 @@
-<app-toast [message]="toast.message"></app-toast>
-
 <div class="row">
   <div class="col-12">
     <div class="card">
+      <app-toast [message]="toast.message"></app-toast>
+
       <div class="form-size">
         <form [formGroup]="form" (ngSubmit)="submit(model)">
           <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form">
