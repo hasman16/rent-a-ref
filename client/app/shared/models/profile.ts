@@ -1,4 +1,5 @@
 import { Address } from './address';
+import { Organization } from './organization';
 import { Person } from './person';
 import { Phone } from './phone';
 
@@ -12,5 +13,6 @@ export interface Profile{
 	person: Person;
 	addresses: Address[];
 	areas: Address[];
-	phones: Phone[]
+	phones: Phone[];
+	organizations: Organization[]
 }

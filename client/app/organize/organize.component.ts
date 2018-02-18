@@ -5,7 +5,7 @@ import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, Email
 import { ToastComponent } from '../shared/toast/toast.component';
 import { AuthService, OrganizeService, StatesService, UserService } from '../services/index';
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
-import { Address, Phone } from '../shared/models/index';
+import { Address, Phone, Organization, Profile } from '../shared/models/index';
 import { compareFields } from '../shared/compareFields';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
@@ -21,7 +21,6 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
   styleUrls: ['./organize.component.scss']
 })
 export class OrganizeComponent implements OnInit {
-  isLoading = true;
   @Input() set country(aCountry: string) {
     this.countryName = aCountry || 'usa';
   }
@@ -31,15 +30,18 @@ export class OrganizeComponent implements OnInit {
   protected model: any = {};
   protected options: FormlyFormOptions = {};
   protected fields: FormlyFieldConfig[];
+  protected titles: string[] = ['Id','Organization Name'];
+  protected organizations: Organization[] = [];
+  protected isLoading: boolean = false;
 
   constructor(private auth: AuthService,
-    public toast: ToastComponent, private route: ActivatedRoute,
+    public toast: ToastComponent, private route: ActivatedRoute, 
     private router: Router, private statesService: StatesService, private organizeService: OrganizeService) {
 
     this.states = this.statesService.getStatesProvinces(this.countryName);
   }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.fields = [
       {
         fieldGroupClassName: 'display-flex',
@@ -125,8 +127,34 @@ export class OrganizeComponent implements OnInit {
       },
     ];
 
+    this.getOrganizations();
   }
 
+  getOrganizations(user_id?:any) {
+    user_id = user_id || this.auth.currentUser.id;
+
+     this.organizeService
+      .getUserOrganization(user_id)
+     .subscribe(
+      (profile: Profile) => {
+        console.log('data:', profile );
+        this.organizations = profile.organizations;
+        this.isLoading = false;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
+        } else {
+          console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
+        }
+        this.isLoading = false;
+        if (!this.auth.loggedIn) {
+          this.auth.logout();
+        }
+      }
+    );
+  }
 
   submit() {
     alert(JSON.stringify(this.model));

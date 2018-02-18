@@ -1,6 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './providers/token.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /* Modules */
 import { BrowserModule } from '@angular/platform-browser';
@@ -24,6 +25,16 @@ import { StatesService } from './services/states.service';
 import { TokenService } from './services/token.service';
 import { UserService } from './services/user.service';
 import { OrganizeService } from './services/organize.service';
+/*
+import { AccordionModule } from 'primeng/primeng';
+import { PanelModule } from 'primeng/primeng';
+import { ButtonModule } from 'primeng/primeng';
+import { RadioButtonModule } from 'primeng/primeng';
+*/
+import { AccordionModule } from 'primeng/components/accordion/accordion';
+import { PanelModule } from 'primeng/components/panel/panel';
+import { ButtonModule } from 'primeng/components/button/button';
+import { RadioButtonModule } from 'primeng/components/radioButton/radioButton';
 
 /* Components */
 import { AboutComponent } from './about/about.component';
@@ -132,8 +143,14 @@ const routes: Routes = [
     RoutingModule,
     SharedModule,
     BrowserModule,
+        BrowserAnimationsModule,
+
     FormsModule,
     ReactiveFormsModule,
+        AccordionModule,
+    PanelModule,
+    ButtonModule,
+    RadioButtonModule,
     FormlyModule.forRoot({
       wrappers: [{ name: 'horizontalWrapper', component: FormlyHorizontalWrapper }],
       types: [{ name: 'horizontalInput', extends: 'input', wrappers: ['fieldset', 'horizontalWrapper'] },

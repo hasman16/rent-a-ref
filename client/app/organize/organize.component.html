@@ -10,6 +10,31 @@
           </formly-form>
         </form>
       </div>
+
+      <div class="card">
+          <div>
+            <strong>Organizations</strong>
+          </div>
+
+          <table>
+        
+                <tr>
+                    <th *ngFor="let title of titles">
+                        {{title}}
+                    </th>
+                </tr>
+    
+                <tr *ngFor="let organization of organizations">
+                    <td>
+                        {{organization.id}}
+                    </td>
+                    <td>
+                        {{organization.name}}
+                    </td>
+                </tr>
+     
+          </table>
+        </div>
     </div>
   </div>
 </div>
