@@ -7,13 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import {FormlyModule} from '@ngx-formly/core';
-import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { RepeatTypeComponent } from './shared/formly/repeat-section/repeat-section.type';
+import { FormlyHorizontalWrapper } from './shared/formly/horizontal-wrapper';
 
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
@@ -34,7 +35,7 @@ import { RadioButtonModule } from 'primeng/primeng';
 import { AccordionModule } from 'primeng/components/accordion/accordion';
 import { PanelModule } from 'primeng/components/panel/panel';
 import { ButtonModule } from 'primeng/components/button/button';
-import { RadioButtonModule } from 'primeng/components/radioButton/radioButton';
+import { RadioButtonModule } from 'primeng/components/radiobutton/radiobutton';
 
 /* Components */
 import { AboutComponent } from './about/about.component';
@@ -49,7 +50,7 @@ import { BlogComponent } from './group/blog/blog.component';
 import { CareersComponent } from './group/careers/careers.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.component';
-import { ContactusComponent } from './group/contactus/contactus.component';
+import { ContactUsComponent } from './group/contactus/contactus.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import { FaqComponent } from './group/faq/faq.component';
 import { FooterComponent } from './footer/footer.component';
@@ -80,7 +81,7 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
-import { FormlyHorizontalWrapper } from './shared/formly/horizontal-wrapper';
+
 
 // rich grid
 import { LeftmenuComponent } from './leftmenu/leftmenu.component';
@@ -93,7 +94,7 @@ const routes: Routes = [
   { path: 'career', component: CareersComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'blog', component: BlogComponent },
-  { path: 'contact', component: ContactusComponent },
+  { path: 'contact', component: ContactUsComponent },
 ];
 @NgModule({
   declarations: [
@@ -110,7 +111,7 @@ const routes: Routes = [
     CareersComponent,
     CarouselComponent,
     CarouselItemComponent,
-    ContactusComponent,
+    ContactUsComponent,
     DropdownDirective,
     EditProfileComponent,
     FaqComponent,
@@ -143,18 +144,17 @@ const routes: Routes = [
     RoutingModule,
     SharedModule,
     BrowserModule,
-        BrowserAnimationsModule,
-
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-        AccordionModule,
+    AccordionModule,
     PanelModule,
     ButtonModule,
     RadioButtonModule,
     FormlyModule.forRoot({
       wrappers: [{ name: 'horizontalWrapper', component: FormlyHorizontalWrapper }],
       types: [{ name: 'horizontalInput', extends: 'input', wrappers: ['fieldset', 'horizontalWrapper'] },
-        { name: 'repeat', component: RepeatTypeComponent }
+      { name: 'repeat', component: RepeatTypeComponent }
       ],
     }),
     FormlyBootstrapModule,

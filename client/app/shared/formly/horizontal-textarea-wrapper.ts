@@ -2,7 +2,7 @@ import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { FieldWrapper } from '@ngx-formly/core';
 
 @Component({
-  selector: 'formly-horizontal-input-type',
+  selector: 'formly-horizontal-textarea-type',
   template: `<div class="row" style="text-align:right;">
       <label attr.for="{{key}}" class="col-4 form-control-label" style="padding-top: 6px;">{{ to.label }}</label>
       <div class="col">
@@ -10,6 +10,6 @@ import { FieldWrapper } from '@ngx-formly/core';
       </div>
     </div>`,
 })
-export class FormlyHorizontalWrapper extends FieldWrapper {
+export class FormlyHorizontalTextAreaWrapper extends FieldWrapper {
   @ViewChild('fieldComponent', { read: ViewContainerRef }) fieldComponent: ViewContainerRef;
 }

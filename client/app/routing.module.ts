@@ -11,7 +11,7 @@ import { AccountComponent } from './account/account.component';
 import { AdminComponent } from './admin/admin.component';
 import { BlogComponent } from './group/blog/blog.component';
 import { CareersComponent } from './group/careers/careers.component';
-import { ContactusComponent } from './group/contactus/contactus.component';
+import { ContactUsComponent } from './group/contactus/contactus.component';
 import { DeactivatedComponent } from './account/profile/deactivated/deactivated.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import { FaqComponent } from './group/faq/faq.component';
@@ -43,7 +43,7 @@ const routes: Routes = [
   { path: 'career', component: CareersComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'blog', component: BlogComponent },
-  { path: 'contact', component: ContactusComponent },
+  { path: 'contact', component: ContactUsComponent },
   { path: 'pricing', component: PricingComponent },
   { path: 'partners', component: PartnersComponent },
   { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
@@ -58,17 +58,18 @@ const routes: Routes = [
   {
     path: 'account/:id', component: AccountComponent, canActivate: [AuthGuardLogin]
   },
-    {
-      path: 'account/:id/schedule', component: ScheduleComponent, canActivate: [AuthGuardLogin]
+  {
+    path: 'account/:id/schedule', component: ScheduleComponent, canActivate: [AuthGuardLogin]
   },
-    {
-      path: 'organizer/:id', component: OrganizeComponent, canActivate: [AuthGuardLogin]
-    },
+  {
+    path: 'organizer/:id', component: OrganizeComponent, canActivate: [AuthGuardLogin]
+  },
   {
     path: 'account/profile/:id', component: ProfileComponent, canDeactivate: [CanDeactivateGuardService],
     children: [
       { path: 'edit-profile', component: EditProfileComponent }
-    ] },
+    ]
+  },
   { path: 'account/standby/:id', component: StandbyComponent },
   { path: 'account/suspended/:id', component: SuspendedComponent },
   { path: 'account/deactivated/:id', component: DeactivatedComponent },
