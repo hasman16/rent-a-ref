@@ -15,6 +15,7 @@ import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { RepeatTypeComponent } from './shared/formly/repeat-section/repeat-section.type';
 import { FormlyHorizontalWrapper } from './shared/formly/horizontal-wrapper';
+import { FormlyHorizontalTextAreaWrapper } from './shared/formly/horizontal-textarea-wrapper';
 
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
@@ -71,6 +72,7 @@ import { RefereeComponent } from './referee/referee.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
+import { RFBaseFormComponent } from './shared/formly/base-form/base-form.component';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
@@ -99,6 +101,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     FormlyHorizontalWrapper,
+    FormlyHorizontalTextAreaWrapper,
     RepeatTypeComponent,
     AppComponent,
     AboutComponent,
@@ -134,6 +137,7 @@ const routes: Routes = [
     RegisterComponent,
     ResetComponent,
     ResetPasswordComponent,
+    RFBaseFormComponent,
     ScheduleComponent,
     TermsAndConditionsComponent,
     ZoneFormComponent,
@@ -152,8 +156,10 @@ const routes: Routes = [
     ButtonModule,
     RadioButtonModule,
     FormlyModule.forRoot({
-      wrappers: [{ name: 'horizontalWrapper', component: FormlyHorizontalWrapper }],
+      wrappers: [{ name: 'horizontalWrapper', component: FormlyHorizontalWrapper },
+      { name:'horizontalTextareaWrapper', component: FormlyHorizontalTextAreaWrapper}],
       types: [{ name: 'horizontalInput', extends: 'input', wrappers: ['fieldset', 'horizontalWrapper'] },
+      { name: 'horizontalTextarea', extends: 'textarea', wrappers: ['fieldset', 'horizontalTextareaWrapper'] },
       { name: 'repeat', component: RepeatTypeComponent }
       ],
     }),

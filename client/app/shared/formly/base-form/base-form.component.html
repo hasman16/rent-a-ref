@@ -1,0 +1,5 @@
+<form [formGroup]="form" (ngSubmit)="login(model)">
+  <formly-form [model]="model" [fields]="fields">
+    <ng-content></ng-content>
+  </formly-form>
+</form>

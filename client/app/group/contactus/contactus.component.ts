@@ -63,9 +63,9 @@ export class ContactUsComponent implements OnInit {
     },
     {
       key: 'comment',
-      type: 'horizontalInput',
+      type: 'horizontalTextarea',
       templateOptions: {
-        type: 'text-area',
+        type: 'textarea',
         label: 'Comment',
         placeholder: '',
         required: true,
