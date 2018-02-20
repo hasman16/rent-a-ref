@@ -14,8 +14,8 @@ import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { RepeatTypeComponent } from './shared/formly/repeat-section/repeat-section.type';
-import { FormlyHorizontalWrapper } from './shared/formly/horizontal-wrapper';
-import { FormlyHorizontalTextAreaWrapper } from './shared/formly/horizontal-textarea-wrapper';
+import { FormlyHorizontalWrapper } from './shared/formly/horizontal-types/horizontal-wrapper';
+import { FormlyHorizontalTextAreaWrapper } from './shared/formly/horizontal-types/horizontal-textarea-wrapper';
 
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
@@ -27,16 +27,12 @@ import { StatesService } from './services/states.service';
 import { TokenService } from './services/token.service';
 import { UserService } from './services/user.service';
 import { OrganizeService } from './services/organize.service';
-/*
-import { AccordionModule } from 'primeng/primeng';
-import { PanelModule } from 'primeng/primeng';
-import { ButtonModule } from 'primeng/primeng';
-import { RadioButtonModule } from 'primeng/primeng';
-*/
+
 import { AccordionModule } from 'primeng/components/accordion/accordion';
 import { PanelModule } from 'primeng/components/panel/panel';
 import { ButtonModule } from 'primeng/components/button/button';
 import { RadioButtonModule } from 'primeng/components/radiobutton/radiobutton';
+import {CardModule} from 'primeng/card';
 
 /* Components */
 import { AboutComponent } from './about/about.component';
@@ -88,7 +84,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 // rich grid
 import { LeftmenuComponent } from './leftmenu/leftmenu.component';
 import { BarchartComponent } from './barchart/barchart.component';
-
+/*
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'how-it-works', component: HowItWorksComponent },
@@ -97,7 +93,7 @@ const routes: Routes = [
   { path: 'faq', component: FaqComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'contact', component: ContactUsComponent },
-];
+];*/
 @NgModule({
   declarations: [
     FormlyHorizontalWrapper,
@@ -155,6 +151,8 @@ const routes: Routes = [
     PanelModule,
     ButtonModule,
     RadioButtonModule,
+    CardModule,
+    FormlyBootstrapModule,
     FormlyModule.forRoot({
       wrappers: [{ name: 'horizontalWrapper', component: FormlyHorizontalWrapper },
       { name:'horizontalTextareaWrapper', component: FormlyHorizontalTextAreaWrapper}],
@@ -163,11 +161,10 @@ const routes: Routes = [
       { name: 'repeat', component: RepeatTypeComponent }
       ],
     }),
-    FormlyBootstrapModule,
     HttpClientModule,
     MyDatePickerModule,
-    CommonModule,
-    RouterModule.forRoot(routes)
+    CommonModule/*,
+    RouterModule.forRoot(routes)*/
   ],
   providers: [
     AuthService,

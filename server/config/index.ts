@@ -1,6 +1,9 @@
+const Sequelize = require("sequelize");
+
 const sequelizeSettings = {
   host: 'localhost',
   dialect: 'postgres',
+  operatorsAliases: Sequelize.Op,
   pool: {
     max: 5,
     min: 0,

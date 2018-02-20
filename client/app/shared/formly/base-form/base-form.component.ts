@@ -30,4 +30,5 @@ export class RFBaseFormComponent implements OnInit {
     this.fields = [];
   }
 
+  onSubmit(data:any){}
 }

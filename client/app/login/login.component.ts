@@ -29,16 +29,16 @@ export class LoginComponent implements OnInit {
   protected fields: FormlyFieldConfig[];
 
   constructor(private auth: AuthService,
-              private router: Router,
-              public toast: ToastComponent,
-              private cookieService: CookieService) {}
+    private router: Router,
+    public toast: ToastComponent,
+    private cookieService: CookieService) { }
 
   ngOnInit() {
     if (this.auth.loggedIn) {
       this.router.navigate(['/']);
     }
 
-    this.checkboxFlag = this.cookieService.get('checkboxFlag') === 'true' ? true: false;
+    this.checkboxFlag = this.cookieService.get('checkboxFlag') === 'true' ? true : false;
 
     if (this.checkboxFlag) {
       this.cookieValue = this.cookieService.get('email');
@@ -52,10 +52,10 @@ export class LoginComponent implements OnInit {
         label: 'Email address',
         placeholder: 'pele@soccer.com',
         required: true,
-        minLength:5
+        minLength: 5
       }
     },
-      {
+    {
       key: 'password',
       type: 'horizontalInput',
       templateOptions: {
@@ -73,12 +73,12 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['passwordreset']);
   }
 
-  login(user) {
-    this.auth.login(user)
-    .take(1)
-    .subscribe(
-      (login:Login) => {
-        const user:User = login.user;
+  onSubmit(data: any) {
+    this.auth.login(data)
+      .take(1)
+      .subscribe(
+      (login: Login) => {
+        const user: User = login.user;
 
         if (this.checkboxFlag) {
           const expireDate = new Date();
@@ -118,16 +118,16 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['account/standby/' + user.id]);
             break;
           case ('yes active'):
-            this.router.navigate(['account/' + user.id ]);
+            this.router.navigate(['account/' + user.id]);
             break;
           case ('yes locked'):
-            this.router.navigate(['account/suspended/' + user.id ]);
+            this.router.navigate(['account/suspended/' + user.id]);
             break;
           case ('no banned'):
             this.router.navigate(['account/deactivated/' + user.id]);
             break;
           default:
-            this.router.navigate(['account/' + user.id ]);
+            this.router.navigate(['account/' + user.id]);
             break;
         }
       },
@@ -138,7 +138,7 @@ export class LoginComponent implements OnInit {
           this.toast.setMessage('invalid email or password! ', 'danger');
         }
       }
-    );
+      );
 
   }
 }
