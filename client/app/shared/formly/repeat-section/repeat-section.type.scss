@@ -2,3 +2,16 @@
 	padding-right: 5px;
 	padding-left: 5px;
 }
+
+:host /deep/ .addButton {
+	margin: 2em 0;
+}
+
+:host /deep/ .card {
+	margin: 1.5em 0;
+}
+
+.buttonSize {
+	/*margin: auto 4px auto 0;*/
+	transform: scale(0.75);
+}

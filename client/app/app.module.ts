@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import {FormlyMaterialModule} from '@ngx-formly/material';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -39,6 +40,7 @@ import { AboutComponent } from './about/about.component';
 import { AccountComponent } from './account/account.component';
 import { AddressFormComponent } from './shared/forms/address-form/address-form.component';
 import { HorizontalAddressFormComponent } from './shared/forms/address-form/horizontal-address-form/horizontal-address-form.component';
+import { OrganizationFormComponent } from './shared/forms/organization-form/organization-form.component';
 
 import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
@@ -68,7 +70,7 @@ import { RefereeComponent } from './referee/referee.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
-import { RFBaseFormComponent } from './shared/formly/base-form/base-form.component';
+import { BaseFormComponent } from './shared/formly/base-form/base-form.component';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
@@ -84,16 +86,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 // rich grid
 import { LeftmenuComponent } from './leftmenu/leftmenu.component';
 import { BarchartComponent } from './barchart/barchart.component';
-/*
-const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'how-it-works', component: HowItWorksComponent },
-  { path: 'referee', component: RefereeComponent },
-  { path: 'career', component: CareersComponent },
-  { path: 'faq', component: FaqComponent },
-  { path: 'blog', component: BlogComponent },
-  { path: 'contact', component: ContactUsComponent },
-];*/
+
 @NgModule({
   declarations: [
     FormlyHorizontalWrapper,
@@ -104,6 +97,7 @@ const routes: Routes = [
     AccountComponent,
     AddressFormComponent,
     HorizontalAddressFormComponent,
+    OrganizationFormComponent,
     AdminComponent,
     BioFormComponent,
     BlogComponent,
@@ -133,7 +127,7 @@ const routes: Routes = [
     RegisterComponent,
     ResetComponent,
     ResetPasswordComponent,
-    RFBaseFormComponent,
+    BaseFormComponent,
     ScheduleComponent,
     TermsAndConditionsComponent,
     ZoneFormComponent,
@@ -163,8 +157,7 @@ const routes: Routes = [
     }),
     HttpClientModule,
     MyDatePickerModule,
-    CommonModule/*,
-    RouterModule.forRoot(routes)*/
+    CommonModule
   ],
   providers: [
     AuthService,

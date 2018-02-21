@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input  } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, EmailValidator, ReactiveFormsModule } from '@angular/forms';
@@ -24,30 +24,30 @@ export class OrganizeComponent implements OnInit {
   @Input() set country(aCountry: string) {
     this.countryName = aCountry || 'usa';
   }
-  protected countryName:string;
-  protected states:string[];
+  protected countryName: string;
+  protected states: string[];
   protected form = new FormGroup({});
   protected model: any = {};
   protected options: FormlyFormOptions = {};
   protected fields: FormlyFieldConfig[];
-  protected titles: string[] = ['Id','Organization Name'];
+  protected titles: string[] = ['Id', 'Organization Name'];
   protected organizations: Organization[] = [];
   protected isLoading: boolean = false;
 
   constructor(private auth: AuthService,
-    public toast: ToastComponent, private route: ActivatedRoute, 
+    public toast: ToastComponent, private route: ActivatedRoute,
     private router: Router, private statesService: StatesService, private organizeService: OrganizeService) {
 
     this.states = this.statesService.getStatesProvinces(this.countryName);
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.fields = [
       {
-        fieldGroupClassName: 'display-flex',
+        fieldGroupClassName: 'row',
         fieldGroup: [
           {
-            className: 'flex-1',
+            className: 'col-sm-12',
             type: 'input',
             key: 'name',
             templateOptions: {
@@ -60,69 +60,90 @@ export class OrganizeComponent implements OnInit {
         template: '<hr /><div><strong>Address:</strong></div>',
       },
       {
-        fieldGroupClassName: 'display-flex',
-        fieldGroup: [
-          {
-            className: 'flex-2',
-            type: 'input',
-            key: 'street1',
-            templateOptions: {
-              label: 'Street 1',
-            },
+        key: 'addresses',
+        type: 'repeat',
+        fieldArray: {
+          fieldGroupClassName: 'row',
+          templateOptions: {
+            btnText: 'Add Address',
           },
-          {
-            className: 'flex-2',
-            type: 'input',
-            key: 'street2',
-            templateOptions: {
-              label: 'Street 2',
+          fieldGroup: [
+            {
+              className: 'col-sm-3',
+              type: 'input',
+              key: 'address1',
+              templateOptions: {
+                label: 'Street 1',
+                required: true,
+              },
             },
-          },
-          {
-            className: 'flex-1',
-            type: 'input',
-            key: 'cityName',
-            templateOptions: {
-              label: 'City',
+            {
+              type: 'input',
+              key: 'address2',
+              className: 'col-sm-3',
+              templateOptions: {
+                type: 'text',
+                label: 'Street 2',
+              },
             },
-          },
-          {
-            className: 'flex-1',
-            type: 'input',
-            key: 'statename',
-            templateOptions: {
-              label: 'State',
+            {
+              type: 'input',
+              key: 'city',
+              className: 'col-sm-2',
+              templateOptions: {
+                label: 'City',
+              },
             },
-          },
-          {
-            className: 'flex-1',
-            type: 'input',
-            key: 'zip',
-            templateOptions: {
-              type: 'number',
-              label: 'Zip',
-              max: 99999,
-              min: 0,
-              pattern: '\\d{5}',
+            {
+              type: 'input',
+              key: 'state',
+              className: 'col-sm-2',
+              templateOptions: {
+                label: 'State',
+              },
             },
-          },
-        ],
-      },
-      {
-        template: '<hr />',
-      },
-      {
-        type: 'input',
-        key: 'otherInput',
-        templateOptions: {
-          label: 'Other Input',
+            {
+              type: 'input',
+              key: 'zip',
+              className: 'col-sm-2',
+              templateOptions: {
+                label: 'Zip',
+              },
+            }
+          ],
         },
       },
       {
-        type: 'checkbox',
-        key: 'otherToo',
-        templateOptions: {
-          label: 'Other Checkbox',
+        template: '<hr /><div><strong>Phones</strong></div>',
+      },
+      {
+        key: 'phones',
+        type: 'repeat',
+        fieldArray: {
+          fieldGroupClassName: 'row',
+          templateOptions: {
+            btnText: 'Add Phone',
+          },
+          fieldGroup: [
+            {
+              className: 'col-sm-6',
+              type: 'input',
+              key: 'type',
+              templateOptions: {
+                label: 'Type',
+                required: true,
+              },
+            },
+            {
+              type: 'input',
+              key: 'number',
+              className: 'col-sm-6',
+              templateOptions: {
+                type: 'text',
+                label: 'Number',
+              },
+            }
+          ],
         },
       },
     ];
@@ -130,14 +151,14 @@ export class OrganizeComponent implements OnInit {
     this.getOrganizations();
   }
 
-  getOrganizations(user_id?:any) {
+  getOrganizations(user_id?: any) {
     user_id = user_id || this.auth.currentUser.id;
 
-     this.organizeService
+    this.organizeService
       .getUserOrganization(user_id)
-     .subscribe(
+      .subscribe(
       (profile: Profile) => {
-        console.log('data:', profile );
+        console.log('data:', profile);
         this.organizations = profile.organizations;
         this.isLoading = false;
       },
@@ -153,7 +174,7 @@ export class OrganizeComponent implements OnInit {
           this.auth.logout();
         }
       }
-    );
+      );
   }
 
   submit() {
