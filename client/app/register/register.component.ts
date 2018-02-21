@@ -28,7 +28,7 @@ export class RegisterComponent {
       key: 'firstname',
       type: 'horizontalInput',
       templateOptions: {
-        type: 'horizontalInput',
+        type: 'text',
         label: 'Firstname',
         placeholder: 'Firstname',
         required: true
@@ -38,7 +38,7 @@ export class RegisterComponent {
       key: 'lastname',
       type: 'horizontalInput',
       templateOptions: {
-        type: 'horizontalInput',
+        type: 'text',
         label: 'Lastname',
         placeholder: 'Lastname',
         required: true
@@ -108,7 +108,7 @@ export class RegisterComponent {
       key: 'phone',
       type: 'horizontalInput',
       templateOptions: {
-        type: 'input',
+        type: 'text',
         label: 'Phone number',
         placeholder: 'Phone number',
         required: true

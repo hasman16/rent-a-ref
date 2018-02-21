@@ -32,7 +32,6 @@ export class ContactUsComponent implements OnInit {
       key: 'fullname',
       type: 'horizontalInput',
       templateOptions: {
-        type: 'input',
         label: 'Fullname',
         placeholder: 'John Smith',
         required: true,
@@ -54,9 +53,8 @@ export class ContactUsComponent implements OnInit {
       key: 'subject',
       type: 'horizontalInput',
       templateOptions: {
-        type: 'input',
-        label: 'Password',
-        placeholder: 'password',
+        label: 'Subject',
+        placeholder: 'Subject',
         required: true,
         minLength: 5
       }
@@ -67,7 +65,7 @@ export class ContactUsComponent implements OnInit {
       templateOptions: {
         type: 'textarea',
         label: 'Comment',
-        placeholder: '',
+        placeholder: 'Enter comment',
         required: true,
         minLength: 5
       }
