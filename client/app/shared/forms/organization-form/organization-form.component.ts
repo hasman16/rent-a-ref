@@ -116,12 +116,17 @@ export class OrganizationFormComponent implements OnInit {
           fieldGroup: [
             {
               className: 'col-sm-6',
-              type: 'input',
+              type: 'select',
               key: 'type',
               templateOptions: {
                 label: 'Type',
-                required: true,
-              },
+                options: [
+                  {label: 'Mobile', value: 'mobile'},
+                  {label: 'Home', value: 'home'},
+                  {label: 'Work', value: 'work'},
+                  {label: 'Other', value: 'other'}
+                ]
+              }
             },
             {
               type: 'input',
@@ -139,7 +144,8 @@ export class OrganizationFormComponent implements OnInit {
 
   }
 
-  onOrganizationSubmit() {
-
+  onSubmit(model: any):void {
+    console.log('mode:', model, typeof model);
   }
 }
+ 
