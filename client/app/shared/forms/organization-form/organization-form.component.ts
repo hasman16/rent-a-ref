@@ -31,6 +31,8 @@ export class OrganizationFormComponent implements OnInit {
             key: 'name',
             templateOptions: {
               label: 'Organization Name',
+              required: true,
+              minLength: 5
             },
           }
         ],
@@ -87,6 +89,14 @@ export class OrganizationFormComponent implements OnInit {
               className: 'col-sm-2',
               templateOptions: {
                 label: 'Zip',
+              },
+            },
+             {
+              type: 'input',
+              key: 'country',
+              className: 'col-sm-12',
+              templateOptions: {
+                label: 'Country',
               },
             }
           ],

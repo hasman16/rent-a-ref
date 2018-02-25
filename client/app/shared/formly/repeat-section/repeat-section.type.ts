@@ -27,8 +27,8 @@ export class RepeatTypeComponent extends FieldType implements OnInit {
   }
 
   add() {
-    const form = new FormGroup({}),
-      i = this.fields.length;
+    const form: FormGroup = new FormGroup({}),
+      i: number = this.fields.length;
 
     if (!this.model[i]) {
       this.model.push({});
