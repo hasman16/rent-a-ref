@@ -13,14 +13,13 @@ export class BaseFormComponent implements OnInit {
   };
   @Input('fields') set Fields(fields:FormlyFieldConfig[]) {
     this.fields = fields;
-    console.log('got fields:', fields);
   };
   @Input('options') set Options(options:FormlyFormOptions) {
     this.options = options;
   };
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
 
-  protected form = new FormGroup({});
+  public form = new FormGroup({});
   protected model: any = {};
   protected options: FormlyFormOptions = {};
   protected fields: FormlyFieldConfig[];
@@ -31,7 +30,7 @@ export class BaseFormComponent implements OnInit {
 
   }
 
-  onSubmit(model): void{
+  onSubmit(model:any): void{
     this.submitter.emit(model);
   }
 }

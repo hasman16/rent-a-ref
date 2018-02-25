@@ -71,7 +71,7 @@ export class OrganizeComponent implements OnInit {
       );
   }
 
-  onSubmit(model:any) {
+  onSubmit(model):void {
     console.log('organization data is:', model);
   }
 

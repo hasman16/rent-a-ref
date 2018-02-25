@@ -4,7 +4,7 @@
       <app-toast [message]="toast.message"></app-toast>
 
       <div class="form-size">
-        <organization-form (ngSubmit)="onSubmit(model)"></organization-form>
+        <organization-form (ngSubmit)="onSubmit($event)"></organization-form>
       </div>
 
       <div class="card">

@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-
+import { BaseFormComponent } from './../../formly/base-form/base-form.component';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
 
@@ -11,14 +11,19 @@ import * as _ from 'lodash';
   styleUrls: ['./organization-form.component.scss']
 })
 export class OrganizationFormComponent implements OnInit {
+  @ViewChild(BaseFormComponent) baseForm: BaseFormComponent;
   @Input('model') setModel(model:any) {
     this.model = model;
   };
+  @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
   protected model: any = {};
   protected modeName: string="Create Organization"
   protected fields: FormlyFieldConfig[];
+  protected disable: boolean = true;
 
-  constructor() { }
+  constructor() { 
+    this.disable = true;
+  }
 
   ngOnInit() {
     this.fields = [
@@ -73,6 +78,7 @@ export class OrganizationFormComponent implements OnInit {
               className: 'col-sm-2',
               templateOptions: {
                 label: 'City',
+                required: true
               },
             },
             {
@@ -81,6 +87,7 @@ export class OrganizationFormComponent implements OnInit {
               className: 'col-sm-2',
               templateOptions: {
                 label: 'State',
+                required: true
               },
             },
             {
@@ -89,6 +96,7 @@ export class OrganizationFormComponent implements OnInit {
               className: 'col-sm-2',
               templateOptions: {
                 label: 'Zip',
+                required: true
               },
             },
              {
@@ -120,6 +128,7 @@ export class OrganizationFormComponent implements OnInit {
               key: 'type',
               templateOptions: {
                 label: 'Type',
+                required: true,
                 options: [
                   {label: 'Mobile', value: 'mobile'},
                   {label: 'Home', value: 'home'},
@@ -135,6 +144,7 @@ export class OrganizationFormComponent implements OnInit {
               templateOptions: {
                 type: 'text',
                 label: 'Number',
+                required: true
               },
             }
           ],
@@ -144,8 +154,14 @@ export class OrganizationFormComponent implements OnInit {
 
   }
 
-  onSubmit(model: any):void {
-    console.log('mode:', model, typeof model);
+  onSubmit(model: any): void {
+    console.log('model:', model, typeof model);
+    this.submitter.emit(model);
+  }
+
+   ngAfterViewInit() {
+     console.log('baseForm:', this.baseForm);
+     this.disable = false;
   }
 }
  

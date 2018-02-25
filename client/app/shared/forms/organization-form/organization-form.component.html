@@ -1,3 +1,4 @@
-<base-form [fields]="fields" [model]="model" (ngSubmit)="onSubmit(model)">
-  <button type="submit" class="btn btn-primary btn-sm">{{modeName}}</button>
+<base-form [fields]="fields" [model]="model" (ngSubmit)="onSubmit($event)">
+  <button type="submit" class="btn btn-primary btn-sm" [disabled]="disable || !baseForm.form.valid">{{modeName}}</button>
 </base-form>
+{{baseForm.valid}}
