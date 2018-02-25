@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+
+import { StatesService, State } from './../../../services/states.service';
 import { BaseFormComponent } from './../../formly/base-form/base-form.component';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
@@ -10,22 +12,33 @@ import * as _ from 'lodash';
   templateUrl: './organization-form.component.html',
   styleUrls: ['./organization-form.component.scss']
 })
-export class OrganizationFormComponent implements OnInit {
+export class OrganizationFormComponent implements AfterViewInit, OnInit {
   @ViewChild(BaseFormComponent) baseForm: BaseFormComponent;
   @Input('model') setModel(model:any) {
     this.model = model;
   };
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
+
   protected model: any = {};
   protected modeName: string="Create Organization"
   protected fields: FormlyFieldConfig[];
   protected disable: boolean = true;
+  protected states: any[];
 
-  constructor() { 
+  constructor(private statesService: StatesService ) { 
     this.disable = true;
   }
 
   ngOnInit() {
+    this.states = _(this.statesService.getStatesProvinces())
+    .map((state: State) => {
+      return {
+        label: state.name,
+        value: state.abbreviation
+      }
+    })
+    .value();
+
     this.fields = [
       {
         fieldGroupClassName: 'row',
@@ -82,11 +95,12 @@ export class OrganizationFormComponent implements OnInit {
               },
             },
             {
-              type: 'input',
+              type: 'select',
               key: 'state',
               className: 'col-sm-2',
               templateOptions: {
                 label: 'State',
+                options: _.cloneDeep(this.states),
                 required: true
               },
             },
@@ -144,6 +158,7 @@ export class OrganizationFormComponent implements OnInit {
               templateOptions: {
                 type: 'text',
                 label: 'Number',
+                pattern: /(\d{3}-\d{3}-\d{4}|\d{10,})/,
                 required: true
               },
             }
@@ -154,14 +169,14 @@ export class OrganizationFormComponent implements OnInit {
 
   }
 
+  ngAfterViewInit() {
+     this.disable = false;
+  }
+
   onSubmit(model: any): void {
-    console.log('model:', model, typeof model);
     this.submitter.emit(model);
   }
 
-   ngAfterViewInit() {
-     console.log('baseForm:', this.baseForm);
-     this.disable = false;
-  }
+
 }
  
