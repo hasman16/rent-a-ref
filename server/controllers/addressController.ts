@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 export default function AddressController(models, ResponseService) {
   const Address = models.Address;
   const attributes = ['id', 'line1', 'line2', 'city', 'state', 'zip'];
@@ -44,6 +46,35 @@ export default function AddressController(models, ResponseService) {
     const table = models.OrganizationAddress;
     const model = { organization_id: req.params.organization_id };
     create(req, res, table, model);
+  }
+
+  function bulkCreate(req, res, joinTable, joinModel) {
+    const sequelize = models.sequelize;
+    let Addresses: any[] = _.map(req.body.address, (address) => {
+      let anAddress = _.cloneDeep(address);
+      delete anAddress.id;
+      return anAddress;
+    });
+
+    sequelize.transaction((t) => {
+      return Address.bulkCreate(Addresses, { transaction: t, returning: true })
+        .then((newAddresses: any[]) => {
+          return sequelize.Promise.each(newAddresses, (newAddress) => {
+            const model = Object.assign({}, joinModel, { address_id: newAddress.id });
+            return joinTable.create(model, { transaction: t });
+          });
+        })
+        .then(newAddresses => {
+          ResponseService.success(res, newAddresses, 201);
+        });
+    })
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function bulkCreateByOrganization(req, res) {
+    const table = models.OrganizationAddress;
+    const model = { organization_id: req.params.organization_id };
+    bulkCreate(req, res, table, model);
   }
 
   function getByOrganization(req, res) {
@@ -149,6 +180,7 @@ export default function AddressController(models, ResponseService) {
     updateByUser,
     deleteByUser,
 
+    bulkCreateByOrganization,
     createByOrganization,
     getByOrganization,
     updateByOrganization,

@@ -26,7 +26,7 @@ export class RepeatTypeComponent extends FieldType implements OnInit {
     }
   }
 
-  add() {
+  add(): void {
     const form: FormGroup = new FormGroup({}),
       i: number = this.fields.length;
 
@@ -39,7 +39,7 @@ export class RepeatTypeComponent extends FieldType implements OnInit {
     this.formControl.push(form);
   }
 
-  remove(i) {
+  remove(i: number): void {
     this.formControl.removeAt(i);
     this.model.splice(i, 1);
     this.fields.splice(i, 1);

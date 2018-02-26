@@ -1,4 +1,7 @@
-:host /deep/ .col-4, .col-3, .col-2, .col-1 {
+.col-1,
+.col-2,
+.col-3,
+:host /deep/ .col-4 {
 	padding-right: 5px;
 	padding-left: 5px;
 }
@@ -17,16 +20,17 @@
 }
 
 .close {
-	display:block;
-  color: #777;
-  font: 14px/100% arial, sans-serif;
-  position: absolute;
-  right: 5px;
-  text-decoration: none;
-  text-shadow: 0 1px 0 #fff;
-  top: 5px;
+	display: block;
+	color: #777;
+	font: 14px/100% arial, sans-serif;
+	position: absolute;
+	right: 5px;
+	text-decoration: none;
+	text-shadow: 0 1px 0 #fff;
+	top: 5px;
 }
 
 .close-thik:after {
-  content: '✖'; /* UTF-8 symbol */
+	content: '✖';
+	/* UTF-8 symbol */
 }

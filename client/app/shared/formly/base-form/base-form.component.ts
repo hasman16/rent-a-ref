@@ -8,13 +8,13 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
   styleUrls: ['./base-form.component.scss']
 })
 export class BaseFormComponent implements OnInit {
-  @Input('model') set Model(model:any) {
+  @Input('model') set Model(model: any) {
     this.model = model;
   };
-  @Input('fields') set Fields(fields:FormlyFieldConfig[]) {
+  @Input('fields') set Fields(fields: FormlyFieldConfig[]) {
     this.fields = fields;
   };
-  @Input('options') set Options(options:FormlyFormOptions) {
+  @Input('options') set Options(options: FormlyFormOptions) {
     this.options = options;
   };
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
@@ -24,13 +24,13 @@ export class BaseFormComponent implements OnInit {
   protected options: FormlyFormOptions = {};
   protected fields: FormlyFieldConfig[];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
 
   }
 
-  onSubmit(model:any): void{
+  onSubmit(model: any): void {
     this.submitter.emit(model);
   }
 }

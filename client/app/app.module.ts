@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
-import {FormlyMaterialModule} from '@ngx-formly/material';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -33,7 +33,7 @@ import { AccordionModule } from 'primeng/components/accordion/accordion';
 import { PanelModule } from 'primeng/components/panel/panel';
 import { ButtonModule } from 'primeng/components/button/button';
 import { RadioButtonModule } from 'primeng/components/radiobutton/radiobutton';
-import {CardModule} from 'primeng/card';
+import { CardModule } from 'primeng/card';
 
 /* Components */
 import { AboutComponent } from './about/about.component';
@@ -149,7 +149,7 @@ import { BarchartComponent } from './barchart/barchart.component';
     FormlyBootstrapModule,
     FormlyModule.forRoot({
       wrappers: [{ name: 'horizontalWrapper', component: FormlyHorizontalWrapper },
-      { name:'horizontalTextareaWrapper', component: FormlyHorizontalTextAreaWrapper}],
+      { name: 'horizontalTextareaWrapper', component: FormlyHorizontalTextAreaWrapper }],
       types: [{ name: 'horizontalInput', extends: 'input', wrappers: ['fieldset', 'horizontalWrapper'] },
       { name: 'horizontalTextarea', extends: 'textarea', wrappers: ['fieldset', 'horizontalTextareaWrapper'] },
       { name: 'repeat', component: RepeatTypeComponent }

@@ -11,6 +11,8 @@ export default function addressRoutes(setter, addressCtrl) {
   router.route('/addresses').get(authentication, isAdmin, addressCtrl.getAll);
 
   router.route('/organizations/:organization_id/addresses').post(authentication, addressCtrl.createByOrganization);
+  router.route('/organizations/:organization_id/addresses/bulk').post(authentication, addressCtrl.bulkCreateByOrganization);
+  
   router.route('/organizations/:organization_id/addresses').get(authentication, addressCtrl.getByOrganization);
   router.route('/organizations/:organization_id/addresses/:address_id').put(authentication, isOrgOwner, addressCtrl.updateByOrganization);
   router.route('/organizations/:organization_id/addresses/:address_id').patch(authentication, isOrgOwner, addressCtrl.updateByOrganization);

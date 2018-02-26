@@ -6,7 +6,6 @@ import { BaseFormComponent } from './../../formly/base-form/base-form.component'
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
 
-
 @Component({
   selector: 'organization-form',
   templateUrl: './organization-form.component.html',
@@ -14,30 +13,30 @@ import * as _ from 'lodash';
 })
 export class OrganizationFormComponent implements AfterViewInit, OnInit {
   @ViewChild(BaseFormComponent) baseForm: BaseFormComponent;
-  @Input('model') setModel(model:any) {
+  @Input('model') setModel(model: any) {
     this.model = model;
   };
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
 
   protected model: any = {};
-  protected modeName: string="Create Organization"
+  protected modeName: string = "Create Organization"
   protected fields: FormlyFieldConfig[];
   protected disable: boolean = true;
   protected states: any[];
 
-  constructor(private statesService: StatesService ) { 
+  constructor(private statesService: StatesService) {
     this.disable = true;
   }
 
   ngOnInit() {
     this.states = _(this.statesService.getStatesProvinces())
-    .map((state: State) => {
-      return {
-        label: state.name,
-        value: state.abbreviation
-      }
-    })
-    .value();
+      .map((state: State) => {
+        return {
+          label: state.name,
+          value: state.abbreviation
+        }
+      })
+      .value();
 
     this.fields = [
       {
@@ -113,7 +112,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
                 required: true
               },
             },
-             {
+            {
               type: 'input',
               key: 'country',
               className: 'col-sm-12',
@@ -144,10 +143,10 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
                 label: 'Type',
                 required: true,
                 options: [
-                  {label: 'Mobile', value: 'mobile'},
-                  {label: 'Home', value: 'home'},
-                  {label: 'Work', value: 'work'},
-                  {label: 'Other', value: 'other'}
+                  { label: 'Mobile', value: 'mobile' },
+                  { label: 'Home', value: 'home' },
+                  { label: 'Work', value: 'work' },
+                  { label: 'Other', value: 'other' }
                 ]
               }
             },
@@ -166,17 +165,13 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
         },
       },
     ];
-
   }
 
   ngAfterViewInit() {
-     this.disable = false;
+    this.disable = false;
   }
 
   onSubmit(model: any): void {
     this.submitter.emit(model);
   }
-
-
 }
- 
