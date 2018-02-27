@@ -111,6 +111,12 @@ export default function AddressController(models, ResponseService) {
     create(req, res, table, model);
   }
 
+  function bulkCreateByUser(req, res) {
+    const table = models.UserAddress;
+    const model = { user_id: req.params.user_id };
+    bulkCreate(req, res, table, model);
+  }
+
   function getByUser(req, res) {
     const User = models.User;
 
@@ -175,6 +181,7 @@ export default function AddressController(models, ResponseService) {
   return {
     getAll,
     getOne,
+    bulkCreateByUser,
     createByUser,
     getByUser,
     updateByUser,

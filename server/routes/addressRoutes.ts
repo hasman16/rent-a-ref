@@ -20,6 +20,7 @@ export default function addressRoutes(setter, addressCtrl) {
 
   router.use('/users/:user_id/addresses', authentication, isUserOrAdmin);
   router.route('/users/:user_id/addresses').post(addressCtrl.createByUser);
+  router.route('/users/:user_id/addresses/bulk').post(addressCtrl.bulkCreateByUser);
   router.route('/users/:user_id/addresses').get(addressCtrl.getByUser);
 
   router.use('/users/:user_id/addresses/:address_id', authentication, isUserOrAdmin);

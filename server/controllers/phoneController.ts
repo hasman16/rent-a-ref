@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 export default function PhoneController(models, ResponseService) {
   const Phone = models.Phone;
   const attributes = ['id', 'number', 'description'];
@@ -53,10 +55,39 @@ export default function PhoneController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
+  function bulkCreate(req, res, joinTable, joinModel) {
+    const sequelize = models.sequelize;
+    let Phones: any[] = _.map(req.body.phone, (phone) => {
+      let aPhone = _.cloneDeep(phone);
+      delete aPhone.id;
+      return aPhone;
+    });
+
+    sequelize.transaction((t) => {
+      return Phone.bulkCreate(Phones, { transaction: t, returning: true })
+        .then((newPhones: any[]) => {
+          return sequelize.Promise.each(newPhones, (newPhone) => {
+            const model = Object.assign({}, joinModel, { phone_id: newPhone.id });
+            return joinTable.create(model, { transaction: t });
+          });
+        })
+        .then(newPhones => {
+          ResponseService.success(res, newPhones, 201);
+        });
+    })
+      .catch(error => ResponseService.exception(res, error));
+  }
+
   function createByOrganization(req, res) {
     const table = models.OrganizationPhone;
     const model = { organization_id: req.params.organization_id };
     create(req, res, table, model);
+  }
+
+  function bulkCreateByOrganization(req, res) {
+    const table = models.OrganizationPhone;
+    const model = { organization_id: req.params.organization_id };
+    bulkCreate(req, res, table, model);
   }
 
   function getByOrganization(req, res) {
@@ -110,6 +141,12 @@ export default function PhoneController(models, ResponseService) {
     create(req, res, table, model);
   }
 
+  function bulkCreateByUser(req, res) {
+    const table = models.UserPhone;
+    const model = { user_id: req.params.user_id };
+    bulkCreate(req, res, table, model);
+  }
+
   function getByUser(req, res) {
     const User = models.User;
 
@@ -155,11 +192,13 @@ export default function PhoneController(models, ResponseService) {
   return {
     getAll,
     getOne,
+    bulkCreateByUser,
     createByUser,
     getByUser,
     updateByUser,
     deleteByUser,
 
+    bulkCreateByOrganization,
     createByOrganization,
     getByOrganization,
     updateByOrganization,
