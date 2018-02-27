@@ -4,14 +4,12 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, EmailValidator, ReactiveFormsModule } from '@angular/forms';
 import { ToastComponent } from '../shared/toast/toast.component';
 import { AuthService, OrganizeService, StatesService, UserService } from '../services/index';
-import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
 import { Address, Phone, Organization, Profile } from '../shared/models/index';
-import { compareFields } from '../shared/compareFields';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
+
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/mergeMap';
-import * as moment from 'moment';
+import 'rxjs/add/operator/combineLatest';
+import 'rxjs/add/operator/switchMap';
 
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
@@ -34,6 +32,10 @@ export class OrganizeComponent implements OnInit {
   protected organizations: Organization[] = [];
   protected isLoading: boolean = false;
 
+  protected editMode: boolean = false;
+  protected createMode: boolean = false;
+  protected updateMode: boolean = false;
+
   constructor(private auth: AuthService,
     public toast: ToastComponent, private route: ActivatedRoute,
     private router: Router, private statesService: StatesService, private organizeService: OrganizeService) {
@@ -42,7 +44,7 @@ export class OrganizeComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.getOrganizations();
+    this.getOrganizations();
   }
 
   getOrganizations(user_id?: any) {
@@ -52,9 +54,7 @@ export class OrganizeComponent implements OnInit {
       .getUserOrganization(user_id)
       .subscribe(
       (profile: Profile) => {
-        console.log('data:', profile);
         this.organizations = profile.organizations;
-        this.isLoading = false;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -63,16 +63,46 @@ export class OrganizeComponent implements OnInit {
         } else {
           console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
         }
+      },
+      () => {
         this.isLoading = false;
-        if (!this.auth.loggedIn) {
-          this.auth.logout();
-        }
       }
       );
   }
 
-  onSubmit(model):void {
+  submitNewOrganization(model):void {
     console.log('organization data is:', model);
+
+    this.organizeService
+      .createOrganization({
+        name: model.name
+      })
+      .switchMap(organization => {
+        const org_id: any = organization.id;
+        return Observable.combineLatest(
+         this.organizeService.bulkCreateAddresses(model.address, org_id),
+         this.organizeService.bulkCreatePhones(model.phone, org_id)
+         );
+      })
+      .subscribe(
+      ([addresses, phones]:[Array<Address>, Array<Phone>]) => {
+       console.log('it worked');
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
+        } else {
+          console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
+        }
+      },
+      () =>  {
+        this.getOrganizations();
+      }
+      );
   }
 
+  submitUpdate(model):void {
+    console.log('organization data is:', model);
+  }
 }

@@ -75,6 +75,15 @@ export class OrganizeService {
     return this.http.post(`/api/organizations/${org_id}/addresses`, JSON.stringify(newAddress));
   }
 
+  bulkCreateAddresses(newAddresses: Address[], org_id: any): Observable<Address[]> {
+    const model: any = { addresses: newAddresses };
+    return this.http
+          .post(`/api/organizations/${org_id}/addresses/bulk`, JSON.stringify(model))
+          .map((res: any) => {
+            return <Address[]> res.address;
+          });
+  }
+
   updateAddress(information, org_id, add_id): Observable<any> {
     return this.http.put(`/api/organizations/${org_id}/addresses/${add_id}`, JSON.stringify(information));
   }
@@ -85,6 +94,15 @@ export class OrganizeService {
 
   createPhone(newPhone: any, org_id): Observable<any> {
     return this.http.post(`/api/organizations/${org_id}/phones`, JSON.stringify(newPhone));
+  }
+
+  bulkCreatePhones(newPhones: Phone[], org_id): Observable<Phone[]> {
+    const model: any = { phones: newPhones };
+    return this.http
+          .post(`/api/organizations/${org_id}/phones/bulk`, JSON.stringify(newPhones))
+          .map((res: any) => {
+            return <Phone[]> res.phones;
+          });
   }
 
   updatePhone(newPhone: any, org_id): Observable<any> {

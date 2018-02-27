@@ -138,7 +138,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
             {
               className: 'col-sm-6',
               type: 'select',
-              key: 'type',
+              key: 'description',
               templateOptions: {
                 label: 'Type',
                 required: true,

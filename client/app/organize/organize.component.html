@@ -1,36 +1,43 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <app-toast [message]="toast.message"></app-toast>
 
-      <div class="form-size">
-        <organization-form (ngSubmit)="onSubmit($event)"></organization-form>
+      <app-toast [message]="toast.message"></app-toast>
+      
+      <div>
+        <strong>Organizations</strong>
       </div>
 
-      <div class="card">
-          <div>
-            <strong>Organizations</strong>
-          </div>
+      <div class="form-size" *ngIf="editMode">
+        <organization-form (ngSubmit)="submitNewOrganization($event)" *ngIf="createMode"></organization-form>
+        <organization-form (ngSubmit)="submitUpdate($event)" *ngIf="updateMode"></organization-form>
+      </div>
 
-          <table>
-        
-                <tr>
-                    <th *ngFor="let title of titles">
-                        {{title}}
-                    </th>
-                </tr>
-    
-                <tr *ngFor="let organization of organizations">
-                    <td>
-                        {{organization.id}}
-                    </td>
-                    <td>
-                        {{organization.name}}
-                    </td>
-                </tr>
-     
-          </table>
+      <div class="card" *ngIf="!editMode && (!organizations || organizations.length === 0)">
+        <div >
+          <strong>You have no Organizations</strong>
         </div>
+      </div>
+
+      <div class="card" *ngIf="!editMode && organizations && organizations.length > 0">
+        <table>
+          <tr>
+            <th *ngFor="let title of titles">
+                {{title}}
+            </th>
+          </tr>
+
+          <tr *ngFor="let organization of organizations">
+            <td>
+                {{organization.id}}
+            </td>
+            <td>
+                {{organization.name}}
+            </td>
+          </tr>
+        </table>
+      </div>
+
     </div>
   </div>
 </div>
