@@ -69,7 +69,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
             {
               className: 'col-sm-3',
               type: 'input',
-              key: 'address1',
+              key: 'line1',
               templateOptions: {
                 label: 'Street 1',
                 required: true,
@@ -77,7 +77,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
             },
             {
               type: 'input',
-              key: 'address2',
+              key: 'line2',
               className: 'col-sm-3',
               templateOptions: {
                 type: 'text',

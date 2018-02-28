@@ -3,11 +3,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, EmailValidator, ReactiveFormsModule } from '@angular/forms';
 import { ToastComponent } from '../shared/toast/toast.component';
-import { AuthService, OrganizeService, StatesService, UserService } from '../services/index';
+import { AuthService, OrganizeService, State, StatesService, UserService } from '../services/index';
 import { Address, Phone, Organization, Profile } from '../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 
-import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 
@@ -23,7 +22,7 @@ export class OrganizeComponent implements OnInit {
     this.countryName = aCountry || 'usa';
   }
   protected countryName: string;
-  protected states: string[];
+  protected states: State[];
   protected form = new FormGroup({});
   protected model: any = {};
   protected options: FormlyFormOptions = {};
@@ -32,15 +31,13 @@ export class OrganizeComponent implements OnInit {
   protected organizations: Organization[] = [];
   protected isLoading: boolean = false;
 
-  protected editMode: boolean = false;
-  protected createMode: boolean = false;
+  protected editMode: boolean = true;
+  protected createMode: boolean = true;
   protected updateMode: boolean = false;
 
   constructor(private auth: AuthService,
     public toast: ToastComponent, private route: ActivatedRoute,
     private router: Router, private statesService: StatesService, private organizeService: OrganizeService) {
-
-    this.states = this.statesService.getStatesProvinces(this.countryName);
   }
 
   ngOnInit() {
@@ -79,10 +76,12 @@ export class OrganizeComponent implements OnInit {
       })
       .switchMap(organization => {
         const org_id: any = organization.id;
-        return Observable.combineLatest(
-         this.organizeService.bulkCreateAddresses(model.address, org_id),
-         this.organizeService.bulkCreatePhones(model.phone, org_id)
-         );
+
+        return this.organizeService
+          .bulkCreateAddresses(model.addresses, org_id)
+          .combineLatest(
+            this.organizeService.bulkCreatePhones(model.phones, org_id)
+          );
       })
       .subscribe(
       ([addresses, phones]:[Array<Address>, Array<Phone>]) => {

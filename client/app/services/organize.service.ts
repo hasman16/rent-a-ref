@@ -98,8 +98,9 @@ export class OrganizeService {
 
   bulkCreatePhones(newPhones: Phone[], org_id): Observable<Phone[]> {
     const model: any = { phones: newPhones };
+
     return this.http
-          .post(`/api/organizations/${org_id}/phones/bulk`, JSON.stringify(newPhones))
+          .post(`/api/organizations/${org_id}/phones/bulk`, JSON.stringify(model))
           .map((res: any) => {
             return <Phone[]> res.phones;
           });

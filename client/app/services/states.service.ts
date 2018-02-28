@@ -32,11 +32,12 @@ export class StatesService {
     let data:State[] = [];
     country = _.toLower(_.trim(country));
 
-    if (country === 'us' || country === 'us' || country === 'america' || /^united\s+states/.test(country)) {
+    if (country === 'us' || country === 'usa' || country === 'america' || /^united\s+states/.test(country)) {
       data = _.cloneDeep(this.getStates());
     } else if (country === 'canada') {
       data = _.cloneDeep(this.getStates());
     }
+
     return data;
   }
 
