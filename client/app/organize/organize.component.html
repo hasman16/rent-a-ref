@@ -4,18 +4,18 @@
 
       <app-toast [message]="toast.message"></app-toast>
       
-      <div>
-        <strong>Organizations</strong>
-      </div>
-
       <div class="form-size" *ngIf="editMode">
         <organization-form (ngSubmit)="submitNewOrganization($event)" *ngIf="createMode"></organization-form>
         <organization-form (ngSubmit)="submitUpdate($event)" *ngIf="updateMode"></organization-form>
       </div>
 
-      <div class="card" *ngIf="!editMode && (!organizations || organizations.length === 0)">
-        <div >
-          <strong>You have no Organizations</strong>
+      <div class="card horizontal-and-vertical-centering " *ngIf="!editMode && (!organizations || organizations.length === 0)">
+        <div class="form-size">
+          <strong class="etched-text">You have no <i>organizations</i>.</strong>
+          <p>You need to create at least one organization. Then you can create and assign <i>events</i> to an organization.
+          <br />An event is the tornament and venue to which you assign games. Note a game can have the same address or a different address from avenue</p>
+          <button class="btn btn-primary btn-sm" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
+
         </div>
       </div>
 
