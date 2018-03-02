@@ -49,7 +49,8 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
             templateOptions: {
               label: 'Organization Name',
               required: true,
-              minLength: 5
+              minLength: 5,
+              pattern: /\w+[a-zA-Z0-9]/
             },
           }
         ],
@@ -109,7 +110,8 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
               className: 'col-sm-2',
               templateOptions: {
                 label: 'Zip',
-                required: true
+                required: true,
+                pattern: /\d{5}(\-\d{4})?/
               },
             },
             {

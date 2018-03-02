@@ -3,23 +3,22 @@
     <div class="card">
 
       <app-toast [message]="toast.message"></app-toast>
-      
-      <div class="form-size" *ngIf="editMode">
-        <organization-form (ngSubmit)="submitNewOrganization($event)" *ngIf="createMode"></organization-form>
-        <organization-form (ngSubmit)="submitUpdate($event)" *ngIf="updateMode"></organization-form>
+
+      <div class="form-size" *ngIf="showForm">
+        <organization-form (ngSubmit)="submitOrganization($event)" [model]="currentModel" [mode]="isEditing"></organization-form>
       </div>
 
-      <div class="card horizontal-and-vertical-centering " *ngIf="!editMode && (!organizations || organizations.length === 0)">
+      <div class="card horizontal-and-vertical-centering " *ngIf="!showForm && (!organizations || organizations.length === 0)">
         <div class="form-size">
           <strong class="etched-text">You have no <i>organizations</i>.</strong>
           <p>You need to create at least one organization. Then you can create and assign <i>events</i> to an organization.
           <br />An event is the tornament and venue to which you assign games. Note a game can have the same address or a different address from avenue</p>
-          <button class="btn btn-primary btn-sm" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
+          <button class="btn btn-primary btn-sm" (click)="goNewOrganization({})" title="Click to create new organization">New Organization</button>
 
         </div>
       </div>
 
-      <div class="card" *ngIf="!editMode && organizations && organizations.length > 0">
+      <div class="card" *ngIf="!showForm && organizations?.length > 0">
         <table>
           <tr>
             <th *ngFor="let title of titles">
@@ -27,7 +26,7 @@
             </th>
           </tr>
 
-          <tr *ngFor="let organization of organizations">
+          <tr *ngFor="let organization of organizations" (click)="editOrganization(organization.id);">
             <td>
                 {{organization.id}}
             </td>
@@ -36,6 +35,7 @@
             </td>
           </tr>
         </table>
+        <button class="btn btn-primary btn-sm" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
       </div>
 
     </div>

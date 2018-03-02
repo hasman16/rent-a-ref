@@ -25,15 +25,15 @@ export class OrganizeComponent implements OnInit {
   protected states: State[];
   protected form = new FormGroup({});
   protected model: any = {};
+  protected currentModel: any = {};
   protected options: FormlyFormOptions = {};
   protected fields: FormlyFieldConfig[];
   protected titles: string[] = ['Id', 'Organization Name'];
   protected organizations: Organization[] = [];
   protected isLoading: boolean = false;
 
-  protected editMode: boolean = false;
-  protected createMode: boolean = false;
-  protected updateMode: boolean = false;
+  protected showForm: boolean = false;
+  protected isEditing: boolean = false;
 
   constructor(private auth: AuthService,
     public toast: ToastComponent,
@@ -44,13 +44,30 @@ export class OrganizeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setOrganizeMode();
     this.getOrganizations();
   }
 
+  setOrganizeMode(): void {
+    this.currentModel = {};
+    this.isEditing = false;
+    this.showForm = false;
+  }
+
+  setEditMode(model): void {
+    this.currentModel = model;
+    this.isEditing = true;
+    this.showForm = true;
+  }
+
   goNewOrganization(): void {
-    this.updateMode = false;
-    this.createMode = true;
-    this.editMode = true;
+    this.currentModel = {};
+    this.isEditing = false;
+    this.showForm = true;
+  }
+
+  editOrganization(orgId: number): void {
+    console.log("edit:", orgId);
   }
 
   getOrganizations(user_id?: any) {
@@ -71,14 +88,29 @@ export class OrganizeComponent implements OnInit {
         }
       },
       () => {
+        this.setOrganizeMode();
         this.isLoading = false;
+        if (this.organizations.length === 0) {
+          this.setOrganizeMode();
+        }
       }
       );
   }
 
-  submitNewOrganization(model):void {
-    console.log('organization data is:', model);
+  submitOrganization(model): void {
 
+
+
+    if (this.isEditing) {
+      this.submitUpdateOrganization(model);
+    } else {
+      this.submitNewOrganization(model);
+    }
+  }
+
+  submitNewOrganization(model): void {
+    console.log('organization data is:', model);
+        this.isLoading = true;
     this.organizeService
       .createOrganization({
         name: model.name
@@ -88,13 +120,11 @@ export class OrganizeComponent implements OnInit {
 
         return this.organizeService
           .bulkCreateAddresses(model.addresses, org_id)
-          .combineLatest(
-            this.organizeService.bulkCreatePhones(model.phones, org_id)
-          );
+          .combineLatest(this.organizeService.bulkCreatePhones(model.phones, org_id));
       })
       .subscribe(
-      ([addresses, phones]:[Array<Address>, Array<Phone>]) => {
-       console.log('it worked');
+      ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
+        console.log('it worked');
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -104,12 +134,14 @@ export class OrganizeComponent implements OnInit {
           console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
         }
       },
-      () =>  {
+      () => {
         this.getOrganizations();
       });
   }
 
-  submitUpdate(model):void {
+  submitUpdateOrganization(model): void {
+        this.isLoading = true;
     console.log('organization data is:', model);
+        this.isLoading = false;
   }
 }
