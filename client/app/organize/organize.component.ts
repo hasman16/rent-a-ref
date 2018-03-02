@@ -6,6 +6,7 @@ import { ToastComponent } from '../shared/toast/toast.component';
 import { AuthService, OrganizeService, State, StatesService, UserService } from '../services/index';
 import { Address, Phone, Organization, Profile } from '../shared/models/index';
 import { Observable } from 'rxjs/Observable';
+import * as _ from 'lodash';
 
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
@@ -32,7 +33,6 @@ export class OrganizeComponent implements OnInit {
   protected organizations: Organization[] = [];
   protected isLoading: boolean = false;
 
-  protected showForm: boolean = false;
   protected isEditing: boolean = false;
 
   constructor(private auth: AuthService,
@@ -51,23 +51,21 @@ export class OrganizeComponent implements OnInit {
   setOrganizeMode(): void {
     this.currentModel = {};
     this.isEditing = false;
-    this.showForm = false;
   }
 
   setEditMode(model): void {
-    this.currentModel = model;
+    this.currentModel = _.cloneDeep(model);
     this.isEditing = true;
-    this.showForm = true;
+    console.log('currentModel:', this.currentModel);
   }
 
   goNewOrganization(): void {
-    this.currentModel = {};
-    this.isEditing = false;
-    this.showForm = true;
+    this.setEditMode({});
   }
 
   editOrganization(orgId: number): void {
-    console.log("edit:", orgId);
+    let currentModel: any = _.find(this.organizations, (organization) => organization.id == orgId);
+    this.setEditMode(currentModel);
   }
 
   getOrganizations(user_id?: any) {
@@ -98,19 +96,17 @@ export class OrganizeComponent implements OnInit {
   }
 
   submitOrganization(model): void {
-
-
-
-    if (this.isEditing) {
-      this.submitUpdateOrganization(model);
-    } else {
+    console.log('xxmodel:', model);
+    //if (this.isEditing) {
+      //this.submitUpdateOrganization(model);
+    //} else {
       this.submitNewOrganization(model);
-    }
+    //}
   }
 
   submitNewOrganization(model): void {
     console.log('organization data is:', model);
-        this.isLoading = true;
+    this.isLoading = true;
     this.organizeService
       .createOrganization({
         name: model.name
@@ -140,8 +136,8 @@ export class OrganizeComponent implements OnInit {
   }
 
   submitUpdateOrganization(model): void {
-        this.isLoading = true;
+    this.isLoading = true;
     console.log('organization data is:', model);
-        this.isLoading = false;
+    this.isLoading = false;
   }
 }
