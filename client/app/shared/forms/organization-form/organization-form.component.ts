@@ -14,7 +14,7 @@ import * as _ from 'lodash';
 export class OrganizationFormComponent implements AfterViewInit, OnInit {
   @ViewChild(BaseFormComponent) baseForm: BaseFormComponent;
   @Input('model') setModel(model: any) {
-    console.log('model is:', model);
+    console.log('xxx model is:', model);
     this.model = model;
   };
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();

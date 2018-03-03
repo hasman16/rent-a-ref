@@ -18,23 +18,31 @@
       </div>
 
       <div class="card" *ngIf="!isEditing && organizations?.length > 0">
-        <table class="form-size">
-          <tr>
-            <th *ngFor="let title of titles">
-              {{title}}
-            </th>
-          </tr>
+        <div class="form-size">
+          <table class="table table-striped">
+            <tr>
+              <th *ngFor="let title of titles" scope="col">
+                {{title}}
+              </th>
+            </tr>
 
-          <tr *ngFor="let organization of organizations" (click)="editOrganization(organization.id);">
-            <td>
-              {{organization.id}}
-            </td>
-            <td>
-              {{organization.name}}
-            </td>
-          </tr>
-        </table>
-        <button class="btn btn-primary btn-sm" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
+            <tr *ngFor="let organization of organizations" (click)="editOrganization(organization.id);">
+              <td>
+                {{organization.id}}
+              </td>
+              <td>
+                {{organization.name}}
+              </td>
+              <td>
+                <button class="btn btn-primary btn-sm" (click)="goNewOrganization()" title="Click to edit this organization">Edit</button>
+              </td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="goNewOrganization()" title="Click to delete organization">Delete</button>
+              </td>
+            </tr>
+          </table>
+          <button class="btn btn-primary btn-sm" style="max-width: 15em;padding: 1em auto" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
+        </div>
       </div>
 
     </div>

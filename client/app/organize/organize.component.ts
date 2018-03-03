@@ -29,7 +29,7 @@ export class OrganizeComponent implements OnInit {
   protected currentModel: any = {};
   protected options: FormlyFormOptions = {};
   protected fields: FormlyFieldConfig[];
-  protected titles: string[] = ['Id', 'Organization Name'];
+  protected titles: string[] = ['Id', 'Organization Name','',''];
   protected organizations: Organization[] = [];
   protected isLoading: boolean = false;
 
