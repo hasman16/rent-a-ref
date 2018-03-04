@@ -57,7 +57,7 @@ export default function PhoneController(models, ResponseService) {
 
   function bulkCreate(req, res, joinTable, joinModel) {
     const sequelize = models.sequelize;
-    let Phones: any[] = _.map(req.body.phone, (phone) => {
+    let Phones: any[] = _.map(req.body.phones, (phone) => {
       let aPhone = _.cloneDeep(phone);
       delete aPhone.id;
       return aPhone;

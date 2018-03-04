@@ -13,11 +13,11 @@ import * as _ from 'lodash';
 })
 export class OrganizationFormComponent implements AfterViewInit, OnInit {
   @ViewChild(BaseFormComponent) baseForm: BaseFormComponent;
-  @Input('model') setModel(model: any) {
-    console.log('xxx model is:', model);
+  @Input('model') set aModel(model: any) {
     this.model = model;
   };
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output('ngCancel') cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   protected model: any = {};
   protected modeName: string = "Create Organization"
@@ -26,7 +26,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
   protected states: any[];
 
   constructor(private statesService: StatesService) {
-    this.disable = true;
+    //this.disable = true;
   }
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
         ],
       },
       {
-        template: '<hr /><div><strong>Address:</strong></div>',
+        template: '<hr class="space-hr" /><div><strong>Address</strong></div>',
       },
       {
         key: 'addresses',
@@ -127,7 +127,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
         },
       },
       {
-        template: '<hr /><div><strong>Phones</strong></div>',
+        template: '<hr class="space-hr" /><div><strong>Phones</strong></div>',
       },
       {
         key: 'phones',
@@ -171,10 +171,14 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    this.disable = false;
+    //this.disable = false;
   }
 
   onSubmit(model: any): void {
     this.submitter.emit(model);
+  }
+
+  onCancel(event:MouseEvent): void {
+    this.cancelSubmitter.emit(true);
   }
 }

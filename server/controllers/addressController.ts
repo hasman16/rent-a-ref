@@ -50,7 +50,7 @@ export default function AddressController(models, ResponseService) {
 
   function bulkCreate(req, res, joinTable, joinModel) {
     const sequelize = models.sequelize;
-    let Addresses: any[] = _.map(req.body.address, (address) => {
+    let Addresses: any[] = _.map(req.body.addresses, (address) => {
       let anAddress = _.cloneDeep(address);
       delete anAddress.id;
       return anAddress;

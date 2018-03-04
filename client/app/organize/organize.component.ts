@@ -56,15 +56,15 @@ export class OrganizeComponent implements OnInit {
   setEditMode(model): void {
     this.currentModel = _.cloneDeep(model);
     this.isEditing = true;
-    console.log('currentModel:', this.currentModel);
   }
 
   goNewOrganization(): void {
-    this.setEditMode({});
+    this.setEditMode({ });
   }
 
   editOrganization(orgId: number): void {
     let currentModel: any = _.find(this.organizations, (organization) => organization.id == orgId);
+    //console.log('currentModel:::::', currentModel);
     this.setEditMode(currentModel);
   }
 
@@ -137,7 +137,7 @@ export class OrganizeComponent implements OnInit {
 
   submitUpdateOrganization(model): void {
     this.isLoading = true;
-    console.log('organization data is:', model);
+
     this.isLoading = false;
   }
 }

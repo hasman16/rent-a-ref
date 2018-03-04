@@ -4,8 +4,8 @@
 
       <app-toast [message]="toast.message"></app-toast>
 
-      <div class="form-size" *ngIf="isEditing">{{currentModel}}
-        <organization-form (ngSubmit)="submitOrganization($event)" [model]="currentModel"></organization-form>
+      <div class="form-size" *ngIf="isEditing">
+        <organization-form (ngSubmit)="submitOrganization($event)" (ngCancel)="setOrganizeMode($event)" [model]="currentModel"></organization-form>
       </div>
 
       <div class="card horizontal-and-vertical-centering " *ngIf="!isEditing && (!organizations || organizations.length === 0)">
@@ -34,13 +34,14 @@
                 {{organization.name}}
               </td>
               <td>
-                <button class="btn btn-primary btn-sm" (click)="goNewOrganization()" title="Click to edit this organization">Edit</button>
+                <button class="btn btn-primary btn-sm" (click)="editOrganization(organization.id)" title="Click to edit this organization">Edit</button>
               </td>
               <td>
                 <button class="btn btn-danger btn-sm" (click)="goNewOrganization()" title="Click to delete organization">Delete</button>
               </td>
             </tr>
           </table>
+          <hr />
           <button class="btn btn-primary btn-sm" style="max-width: 15em;padding: 1em auto" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
         </div>
       </div>

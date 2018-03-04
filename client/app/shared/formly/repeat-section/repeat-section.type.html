@@ -1,5 +1,5 @@
 <div *ngFor="let control of formControl.controls; let i = index;" class="card">
-	<span *ngIf="i!=0" (click)="remove(i)" class="close close-thik" title="close"></span>
+	<span *ngIf="i!=0" (click)="remove(i)" class="close close-thik" title="delete"></span>
   <formly-form
     [model]="model[i]"
     [fields]="fields[i]"
