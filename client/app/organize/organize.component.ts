@@ -64,8 +64,24 @@ export class OrganizeComponent implements OnInit {
 
   editOrganization(orgId: number): void {
     let currentModel: any = _.find(this.organizations, (organization) => organization.id == orgId);
-    //console.log('currentModel:::::', currentModel);
-    this.setEditMode(currentModel);
+    if (currentModel) {
+      this.organizeService
+        .getOrgAddresses(orgId)
+        .combineLatest(this.organizeService.getOrgPhones(orgId))
+        .take(1)
+        .map( ([addresses, phones]: [Array<any>, Array<any>]) => {
+          return [_.head(addresses), _.head(phones)];
+        })
+        .map( ([addresses, phones]: [any, any]) => {
+          console.log(addresses, phones);
+          return [addresses["addresses"], phones["phones"]];
+        })
+        .subscribe( ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
+          currentModel = _.cloneDeep(currentModel);
+          currentModel= Object.assign({}, currentModel, { "addresses" : addresses, "phones": phones });
+          this.setEditMode(currentModel);
+        });
+    }
   }
 
   getOrganizations(user_id?: any) {
@@ -96,12 +112,14 @@ export class OrganizeComponent implements OnInit {
   }
 
   submitOrganization(model): void {
-    console.log('xxmodel:', model);
-    //if (this.isEditing) {
-      //this.submitUpdateOrganization(model);
-    //} else {
+    console.log('xxmodel:', model, this.currentModel);
+
+    if (_.isNil(model.id) || !model.id) {
       this.submitNewOrganization(model);
-    //}
+    } else {
+     // this.submitUpdateOrganization(model);
+      this.setOrganizeMode();
+    }
   }
 
   submitNewOrganization(model): void {
@@ -135,7 +153,37 @@ export class OrganizeComponent implements OnInit {
       });
   }
 
+  private deletedAddresses(addresses: Address[]): Address[] {
+    let oldAddresses: Address[] = this.currentModel.addresses || [];
+    return _(addresses)
+              .filter((address: Address) => {
+                return !_.some(oldAddresses, (oldAddress: Address) => {
+                  return oldAddress.id === address.id;
+                });
+              })
+              .filter((address: Address) => !_.isNil(address.id))
+              .value();
+  }
+
+  private deletedPhones(phones: Phone[]): Phone[] {
+    let oldPhones: Phone[] = this.currentModel.phones || [];
+    return _(phones)
+              .filter((phone: Phone) => {
+                return !_.some(oldPhones, (oldPhone: Phone) => {
+                  return oldPhone.id === phone.id;
+                });
+              })
+              .filter((phone: Phone)=> !_.isNil(phone.id))
+              .value();
+  }
+
   submitUpdateOrganization(model): void {
+    let newPhones: Phone[] = _.filter(model.phones, (phone: Phone) => _.isNil(phone.id));
+    let newAddresses: Address[] = _.filter(model.addresses, (address: Address) => _.isNil(address.id));
+    
+    let deletedPhones: Phone[] = this.deletedPhones(model.phones);
+    let deletedAddresses: Address[] = this.deletedAddresses(model.address);
+
     this.isLoading = true;
 
     this.isLoading = false;

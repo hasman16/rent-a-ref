@@ -14,7 +14,7 @@ import * as _ from 'lodash';
 export class OrganizationFormComponent implements AfterViewInit, OnInit {
   @ViewChild(BaseFormComponent) baseForm: BaseFormComponent;
   @Input('model') set aModel(model: any) {
-    this.model = model;
+    this.model = _.cloneDeep(model);
   };
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
   @Output('ngCancel') cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -26,7 +26,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
   protected states: any[];
 
   constructor(private statesService: StatesService) {
-    //this.disable = true;
+    this.disable = true;
   }
 
   ngOnInit() {
@@ -171,7 +171,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    //this.disable = false;
+    this.disable = false;
   }
 
   onSubmit(model: any): void {
