@@ -1,5 +1,6 @@
-export interface Bio {
-  id?: string;
+import {BaseModel} from './base';
+
+export interface Bio extends BaseModel {
   firstname: string;
   middlenames: string;
   lastname: string;

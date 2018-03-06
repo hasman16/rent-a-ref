@@ -1,5 +1,6 @@
-export interface Address {
-  id?: string;
+import {BaseModel} from './base';
+
+export interface Address extends BaseModel {
   line1: string;
   line2: string;
   city: string;

@@ -1,5 +1,6 @@
-export interface Phone {
-  id?: string;
+import { BaseModel } from './base';
+
+export interface Phone extends BaseModel {
   number: string;
   description: string;
 }

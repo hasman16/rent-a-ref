@@ -1,5 +1,6 @@
-export interface Person {
-	id:number;
+import { BaseModel } from './base';
+
+export interface Person extends BaseModel {
 	firstname:string;
 	middlenames:string;
 	lastname:string;

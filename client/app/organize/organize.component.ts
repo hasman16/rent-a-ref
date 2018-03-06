@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, EmailValidator, ReactiveFormsModule } from '@angular/forms';
 import { ToastComponent } from '../shared/toast/toast.component';
 import { AuthService, OrganizeService, State, StatesService, UserService } from '../services/index';
-import { Address, Phone, Organization, Profile } from '../shared/models/index';
+import { Address, BaseModel, Phone, Organization, Profile } from '../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
 
@@ -153,39 +153,76 @@ export class OrganizeComponent implements OnInit {
       });
   }
 
-  private deletedAddresses(addresses: Address[]): Address[] {
-    let oldAddresses: Address[] = this.currentModel.addresses || [];
-    return _(addresses)
-              .filter((address: Address) => {
-                return !_.some(oldAddresses, (oldAddress: Address) => {
-                  return oldAddress.id === address.id;
+  private updatedPhones(newPhones: Phone[], oldPhones: Phone[]): Phone[] {
+    return this.updatedItems<Phone>(newPhones, oldPhones);
+  }
+
+  private updatedAddresses(newAddresses: Address[], oldAddresses: Address[]): Address[] {
+    return this.updatedItems<Address>(newAddresses, oldAddresses);
+  }
+
+  private updatedItems<T extends BaseModel>(newItems: T[], oldItems: T[]): T[] {
+    return _(newItems)
+            .filter((newItem: T) => {
+              let item: T = _.find(oldItems, (oldItem: T) => oldItem.id === newItem.id);
+              return item ? true: false;
+            })
+            .filter((item: T) => !_.isNil(item.id))
+            .value();
+  }
+
+  private deletedPhones(newPhones: Phone[], oldPhones: Phone[]): Phone[] {
+    return this.deleteItems<Phone>(newPhones, oldPhones);
+  }
+
+  private deletedAddresses(newAddresses: Address[], oldAddresses: Address[]): Address[] {
+    return this.deleteItems<Address>(newAddresses, oldAddresses);
+  }
+
+  private deleteItems<T extends BaseModel>(newItems: T[], oldItems: T[]): T[] {
+    return _(newItems)
+              .filter((newItem: T) => {
+                return !_.some(oldItems, (oldItem: T) => {
+                  return oldItem.id === newItem.id;
                 });
               })
-              .filter((address: Address) => !_.isNil(address.id))
+              .filter((item: T)=> !_.isNil(item.id))
               .value();
   }
 
-  private deletedPhones(phones: Phone[]): Phone[] {
-    let oldPhones: Phone[] = this.currentModel.phones || [];
-    return _(phones)
-              .filter((phone: Phone) => {
-                return !_.some(oldPhones, (oldPhone: Phone) => {
-                  return oldPhone.id === phone.id;
-                });
-              })
-              .filter((phone: Phone)=> !_.isNil(phone.id))
-              .value();
+  updateAddresses(addresses: Address[], org_id: number): Observable<Address> {
+    return _.map(addresses, (address: Address) => {
+      return this.organizeService.updateAddresses(address, org_id)
+    });
   }
 
   submitUpdateOrganization(model): void {
     let newPhones: Phone[] = _.filter(model.phones, (phone: Phone) => _.isNil(phone.id));
     let newAddresses: Address[] = _.filter(model.addresses, (address: Address) => _.isNil(address.id));
     
-    let deletedPhones: Phone[] = this.deletedPhones(model.phones);
-    let deletedAddresses: Address[] = this.deletedAddresses(model.address);
+    let deletedPhones: Phone[] =  this.deletedPhones(model.phone, this.currentModel.phones);
+    let deletedAddresses: Address[] = this.deletedAddresses(model.address, this.currentModel.addresses);
+
+    let updatedPhones: Phone[] =  this.updatedPhones(model.phone, this.currentModel.phones);
+    let updatedAddresses: Address[] = this.updatedAddresses(model.address, this.currentModel.addresses);
+
+    const org_id: any = model.id;
 
     this.isLoading = true;
-
+    /*
+    this.organizeService
+      .updateOrganization({
+        name: model.name
+      },9)
+      .switchMap(organization => {
+        return this.organizeService
+          .bulkCreateAddresses(newAddresses, org_id)
+          .combineLatest(this.organizeService.bulkCreatePhones(newPhones, org_id));
+      })
+      .switchMap( ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
+          
+      })
+      */
     this.isLoading = false;
   }
 }

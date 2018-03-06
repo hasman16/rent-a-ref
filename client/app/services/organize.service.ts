@@ -55,8 +55,8 @@ export class OrganizeService {
     return this.http.post(`/api/organizations`, JSON.stringify(information));
   }
 
-  updateOrganization(information, Organization_id): Observable<any> {
-    return this.http.put(`/api/organizations/${Organization_id}`, JSON.stringify(information));
+  updateOrganization(information, Organization_id): Observable<Address> {
+    return this.http.put<Address>(`/api/organizations/${Organization_id}`, JSON.stringify(information));
   }
 
   getAllOrganizations(): Observable<any> {
