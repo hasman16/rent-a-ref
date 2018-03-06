@@ -3,10 +3,10 @@ import * as _ from 'lodash';
 export default function PhoneController(models, ResponseService) {
   const Phone = models.Phone;
   const attributes = ['id', 'number', 'description'];
+  const joinMethod = (model) => (item) =>  Object.assign({}, model, { phone_id: item.id });
 
   // Get all
   function getAll(req, res) {
-              console.log('PhoneController getAll:', Phone);
     Phone.findAll({
       attributes: attributes
     })
@@ -39,56 +39,19 @@ export default function PhoneController(models, ResponseService) {
     ResponseService.success(res, newPhone, status);
   }
 
-  function create(req, res, joinTable, joinModel) {
-    const sequelize = models.sequelize;
-    const aPhone = makePhone(req.body);
+  function byOrganization(req, res, type) {
+    const table = models.OrganizationPhone;
+    const model = { organization_id: req.params.organization_id };
 
-    sequelize.transaction(function(t) {
-      return Phone.create(aPhone, { transaction: t })
-        .then(newPhone => {
-          const model = Object.assign({}, joinModel, { phone_id: newPhone.id });
-          return joinTable.create(model, { transaction: t })
-            .then(newModel => {
-              ResponseService.success(res, newModel);
-            });
-        });
-    })
-      .catch(error => ResponseService.exception(res, error));
-  }
-
-  function bulkCreate(req, res, joinTable, joinModel) {
-    const sequelize = models.sequelize;
-    let Phones: any[] = _.map(req.body.phones, (phone) => {
-      let aPhone = _.cloneDeep(phone);
-      delete aPhone.id;
-      return aPhone;
-    });
-
-    sequelize.transaction((t) => {
-      return Phone.bulkCreate(Phones, { transaction: t, returning: true })
-        .then((newPhones: any[]) => {
-          return sequelize.Promise.each(newPhones, (newPhone) => {
-            const model = Object.assign({}, joinModel, { phone_id: newPhone.id });
-            return joinTable.create(model, { transaction: t });
-          });
-        })
-        .then(newPhones => {
-          ResponseService.success(res, newPhones, 201);
-        });
-    })
-      .catch(error => ResponseService.exception(res, error));
+    ResponseService[type](req, res, Phone, table, joinMethod(model));
   }
 
   function createByOrganization(req, res) {
-    const table = models.OrganizationPhone;
-    const model = { organization_id: req.params.organization_id };
-    create(req, res, table, model);
+     byOrganization(req, res, 'create');
   }
 
   function bulkCreateByOrganization(req, res) {
-    const table = models.OrganizationPhone;
-    const model = { organization_id: req.params.organization_id };
-    bulkCreate(req, res, table, model);
+    byOrganization(req, res, 'bulkCreate');
   }
 
   function getByOrganization(req, res) {
@@ -136,16 +99,19 @@ export default function PhoneController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function createByUser(req, res) {
+  function byUser(req, res, type) {
     const table = models.UserPhone;
     const model = { user_id: req.params.user_id };
-    create(req, res, table, model);
+
+    ResponseService[type](req, res, Phone, table,  joinMethod(model));
+  }
+
+  function createByUser(req, res) {
+    byUser(req, res, 'create');
   }
 
   function bulkCreateByUser(req, res) {
-    const table = models.UserPhone;
-    const model = { user_id: req.params.user_id };
-    bulkCreate(req, res, table, model);
+    byUser(req, res, 'bulkCreate');
   }
 
   function getByUser(req, res) {

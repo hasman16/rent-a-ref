@@ -81,7 +81,6 @@ export default class ResponseService {
       return baseTable.create(item, { transaction: t })
         .then((newItem) => {
           const model = joinMethod(newItem);
-          console.log('modxxe:', model);
           return joinTable.create(model, { transaction: t });
         })
         .then(item => {
@@ -102,7 +101,6 @@ export default class ResponseService {
         .then((items) => {
           return sequelize.Promise.each(items, (item) => {
             const model = joinMethod(item);
-            console.log('bulk:', model)
             return joinTable.create(model, { transaction: t });
           });
         })
