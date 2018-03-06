@@ -6,6 +6,7 @@ export default function PhoneController(models, ResponseService) {
 
   // Get all
   function getAll(req, res) {
+              console.log('PhoneController getAll:', Phone);
     Phone.findAll({
       attributes: attributes
     })

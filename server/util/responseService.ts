@@ -1,16 +1,15 @@
+import * as _ from 'lodash';
+
 export default class ResponseService {
   models;
+  baseTable;
 
   constructor(models) {
     this.models = models;
   }
 
   makeObject(req) {
-    let obj = Object.assign({}, req.body);
-    delete obj.created_at;
-    delete obj.deleted_at;
-    delete obj.updated_at;
-    return obj;
+    return this.getItemFromBody(req);
   }
 
   limitOffset(clauses, req, attributes = ['id']) {
@@ -35,15 +34,108 @@ export default class ResponseService {
     return clauses;
   }
 
+  getItemFromBody(req) {
+    let obj = Object.assign({}, req.body);
+    return this.deleteItemDates(obj);
+  }
+
+  deleteItemDates(oldItem): any {
+    let item = _.cloneDeep(oldItem);
+    delete item.created_at;
+    delete item.deleted_at;
+    delete item.updated_at;
+    return item;
+  }
+
+  deleteId(oldItem): any {
+    let item = _.cloneDeep(oldItem);
+    delete item.id;
+    return item;
+  }
+
+  firstKeyFromReqBody(req): string {
+    return _.head(_.keys(req.body));
+  }
+
+  getArrayFromBody(req): any[] {
+     const key: string = this.firstKeyFromReqBody(req);
+     return req.body[key];
+  }
+
   findOne(Model, obj_id, res, callback, status = 200) {
     Model.findOne({
       where: {
         id: obj_id
       }
-    }).
-      then(callback)
+    })
+      .then(callback)
       .then(obj => this.success(res, obj, status))
       .catch(error => this.exception(res, error, 400));
+  }
+
+  create(req, res, baseTable, joinTable, joinMethod) {
+    const sequelize = this.models.sequelize;
+    const item = this.deleteId(this.getItemFromBody(req));
+
+    sequelize.transaction((t) => {
+      return baseTable.create(item, { transaction: t })
+        .then((newItem) => {
+          const model = joinMethod(newItem);
+          console.log('modxxe:', model);
+          return joinTable.create(model, { transaction: t });
+        })
+        .then(item => {
+          this.success(res, item, 201);
+        });
+    })
+      .catch(error => this.exception(res, error));
+  }
+
+  bulkCreate(req, res, baseTable, joinTable, joinMethod) {
+    const sequelize = this.models.sequelize;
+    let newItems: any[] = _.map(this.getArrayFromBody(req), (item) => {
+      return this.deleteItemDates(this.deleteId(item));
+    });
+
+    sequelize.transaction((t) => {
+      return baseTable.bulkCreate(newItems, { transaction: t, returning: true })
+        .then((items) => {
+          return sequelize.Promise.each(items, (item) => {
+            const model = joinMethod(item);
+            console.log('bulk:', model)
+            return joinTable.create(model, { transaction: t });
+          });
+        })
+        .then((items: any[]) => {
+          this.success(res, items, 201);
+        });
+    })
+      .catch(error => this.exception(res, error));
+  }
+
+  bulkUpdate(req, res) {
+    const sequelize = this.models.sequelize;
+    const items = _(this.getArrayFromBody(req))
+                            .filter(item => !_.isNil(item.id))
+                            .map(item => {
+                               return this.deleteItemDates(item);
+                            })
+                            .value();
+
+    sequelize.transaction((t) => {
+      return sequelize.Promise.each(items, item => {
+          return this.baseTable.update(item, {
+                where: {
+                  id: item.id
+                }
+              },
+              { transaction: t, returning: true });
+         })
+        .then(newItems => {
+          this.success(res, newItems, 201);
+        });
+    })
+      .catch(error => this.exception(res, error));
   }
 
   findObject(obj_id, name, res, callback, status = 200) {
@@ -91,7 +183,7 @@ export default class ResponseService {
   }
 
   exception(res, error, status = 500) {
-    console.log('errored:', error.message);
+    console.log('errored:', error);
     this.failure(res, 'An Internal Error Occurred', status);
   }
 

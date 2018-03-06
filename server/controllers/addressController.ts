@@ -1,15 +1,18 @@
+import {IAddress} from './../types/index';
 import * as _ from 'lodash';
+
 
 export default function AddressController(models, ResponseService) {
   const Address = models.Address;
   const attributes = ['id', 'line1', 'line2', 'city', 'state', 'zip'];
+  const joinMethod = (model) => (item) =>  Object.assign({}, model, { address_id: item.id });
 
   // Get all
   function getAll(req, res) {
     Address.findAll({
       attributes: attributes
     })
-      .then(results => ResponseService.success(res, results))
+      .then((addresses: IAddress[]) => ResponseService.success(res, addresses))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -20,61 +23,23 @@ export default function AddressController(models, ResponseService) {
       },
       attributes: attributes
     })
-      .then(result => ResponseService.success(res, result))
+      .then((address: IAddress) => ResponseService.success(res, address))
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function create(req, res, joinTable, joinModel) {
-    const sequelize = models.sequelize;
-    let anAddress = ResponseService.makeObject(req);
-    delete anAddress.id;
+  function byOrganization(req, res, type) {
+    const table = models.OrganizationAddress;
+    const model = { organization_id: req.params.organization_id };
 
-    sequelize.transaction(function(t) {
-      return Address.create(anAddress, { transaction: t })
-        .then(newAddress => {
-          const model = Object.assign({}, joinModel, { address_id: newAddress.id });
-          return joinTable.create(model, { transaction: t })
-            .then(newModel => {
-              ResponseService.success(res, newModel, 201);
-            });
-        });
-    })
-      .catch(error => ResponseService.exception(res, error));
+    ResponseService[type](req, res, Address, table, joinMethod(model));
   }
 
   function createByOrganization(req, res) {
-    const table = models.OrganizationAddress;
-    const model = { organization_id: req.params.organization_id };
-    create(req, res, table, model);
-  }
-
-  function bulkCreate(req, res, joinTable, joinModel) {
-    const sequelize = models.sequelize;
-    let Addresses: any[] = _.map(req.body.addresses, (address) => {
-      let anAddress = _.cloneDeep(address);
-      delete anAddress.id;
-      return anAddress;
-    });
-
-    sequelize.transaction((t) => {
-      return Address.bulkCreate(Addresses, { transaction: t, returning: true })
-        .then((newAddresses: any[]) => {
-          return sequelize.Promise.each(newAddresses, (newAddress) => {
-            const model = Object.assign({}, joinModel, { address_id: newAddress.id });
-            return joinTable.create(model, { transaction: t });
-          });
-        })
-        .then(newAddresses => {
-          ResponseService.success(res, newAddresses, 201);
-        });
-    })
-      .catch(error => ResponseService.exception(res, error));
+     byOrganization(req, res, 'create');
   }
 
   function bulkCreateByOrganization(req, res) {
-    const table = models.OrganizationAddress;
-    const model = { organization_id: req.params.organization_id };
-    bulkCreate(req, res, table, model);
+    byOrganization(req, res, 'bulkCreate');
   }
 
   function getByOrganization(req, res) {
@@ -97,6 +62,10 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
+  function bulkUpdateByOrganization(req, res) {
+    updateAddress(req, res);
+  }
+
   function updateByOrganization(req, res) {
     updateAddress(req, res);
   }
@@ -105,16 +74,19 @@ export default function AddressController(models, ResponseService) {
     deleteAddress(req, res);
   }
 
-  function createByUser(req, res) {
+  function byUser(req, res, type) {
     const table = models.UserAddress;
     const model = { user_id: req.params.user_id };
-    create(req, res, table, model);
+
+    ResponseService[type](req, res, Address, table,  joinMethod(model));
+  }
+
+  function createByUser(req, res) {
+    byUser(req, res, 'create');
   }
 
   function bulkCreateByUser(req, res) {
-    const table = models.UserAddress;
-    const model = { user_id: req.params.user_id };
-    bulkCreate(req, res, table, model);
+    byUser(req, res, 'bulkCreate');
   }
 
   function getByUser(req, res) {
