@@ -84,6 +84,15 @@ export class OrganizeService {
           });
   }
 
+  bulkUpdateAddresses(newAddresses: Address[], org_id: any): Observable<Address[]> {
+    const model: any = { addresses: newAddresses };
+    return this.http
+          .put(`/api/organizations/${org_id}/addresses/bulk`, JSON.stringify(model))
+          .map((res: any) => {
+            return <Address[]> res.address;
+          });
+  }
+
   updateAddress(information, org_id, add_id): Observable<any> {
     return this.http.put(`/api/organizations/${org_id}/addresses/${add_id}`, JSON.stringify(information));
   }

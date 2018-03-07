@@ -117,7 +117,7 @@ export class OrganizeComponent implements OnInit {
     if (_.isNil(model.id) || !model.id) {
       this.submitNewOrganization(model);
     } else {
-     // this.submitUpdateOrganization(model);
+      this.submitUpdateOrganization(model);
       this.setOrganizeMode();
     }
   }
@@ -190,12 +190,6 @@ export class OrganizeComponent implements OnInit {
               .value();
   }
 
-  updateAddresses(addresses: Address[], org_id: number): Observable<Address> {
-    return _.map(addresses, (address: Address) => {
-      return this.organizeService.updateAddresses(address, org_id)
-    });
-  }
-
   submitUpdateOrganization(model): void {
     let newPhones: Phone[] = _.filter(model.phones, (phone: Phone) => _.isNil(phone.id));
     let newAddresses: Address[] = _.filter(model.addresses, (address: Address) => _.isNil(address.id));
@@ -204,11 +198,20 @@ export class OrganizeComponent implements OnInit {
     let deletedAddresses: Address[] = this.deletedAddresses(model.address, this.currentModel.addresses);
 
     let updatedPhones: Phone[] =  this.updatedPhones(model.phone, this.currentModel.phones);
-    let updatedAddresses: Address[] = this.updatedAddresses(model.address, this.currentModel.addresses);
+    let updatedAddresses: Address[] = this.updatedAddresses(model.addresses, this.currentModel.addresses);
 
     const org_id: any = model.id;
 
     this.isLoading = true;
+
+    console.log('Modelling:', model);
+
+    this.organizeService
+      .bulkUpdateAddresses(updatedAddresses, org_id)
+      .subscribe((x) => {
+        console.log('objects:',x);
+      });
+
     /*
     this.organizeService
       .updateOrganization({

@@ -111,7 +111,7 @@ export default class ResponseService {
       .catch(error => this.exception(res, error));
   }
 
-  bulkUpdate(req, res) {
+  bulkUpdate(req, res, baseTable, joinTable, joinMethod) {
     const sequelize = this.models.sequelize;
     const items = _(this.getArrayFromBody(req))
                             .filter(item => !_.isNil(item.id))
@@ -119,21 +119,31 @@ export default class ResponseService {
                                return this.deleteItemDates(item);
                             })
                             .value();
-
+                            console.log('bulkUpdate===')
     sequelize.transaction((t) => {
-      return sequelize.Promise.each(items, item => {
-          return this.baseTable.update(item, {
-                where: {
-                  id: item.id
-                }
+      return sequelize.Promise.each(items, (item) => {
+        return joinTable.findOne({
+                where: joinMethod(item)
               },
-              { transaction: t, returning: true });
-         })
-        .then(newItems => {
-          this.success(res, newItems, 201);
-        });
+              { transaction: t, returning: true }
+            )
+            .then((newItem) => {
+              if (newItem) {
+                return baseTable.update(item, {
+                  where: {
+                    id: item.id
+                  }
+                },
+                { transaction: t, returning: true });
+              }
+            });
+      })
+     .then((items: any[]) => {
+        this.success(res, items, 200);
+      });
     })
-      .catch(error => this.exception(res, error));
+    .catch(error => this.exception(res, error));
+
   }
 
   findObject(obj_id, name, res, callback, status = 200) {

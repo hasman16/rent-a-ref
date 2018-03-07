@@ -19,9 +19,7 @@ export default function authorization(dbModels) {
   }
 
   function isUser(req, res, next) {
-    console.log('check isUser');
     if (checkIsUser(req)) {
-      console.log('passed');
       next();
     } else {
       permissionViolation(res, next);

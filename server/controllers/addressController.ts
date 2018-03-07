@@ -63,7 +63,8 @@ export default function AddressController(models, ResponseService) {
   }
 
   function bulkUpdateByOrganization(req, res) {
-    updateAddress(req, res);
+    console.log('bulkUpdateByOrganization');
+    byOrganization(req, res, 'bulkUpdate');
   }
 
   function updateByOrganization(req, res) {
@@ -87,6 +88,10 @@ export default function AddressController(models, ResponseService) {
 
   function bulkCreateByUser(req, res) {
     byUser(req, res, 'bulkCreate');
+  }
+
+  function bulkUpdateByUser(req, res) {
+    byUser(req, res, 'bulkUpdate');
   }
 
   function getByUser(req, res) {
@@ -153,16 +158,20 @@ export default function AddressController(models, ResponseService) {
   return {
     getAll,
     getOne,
-    bulkCreateByUser,
     createByUser,
     getByUser,
     updateByUser,
     deleteByUser,
 
-    bulkCreateByOrganization,
+    bulkCreateByUser,
+    bulkUpdateByUser,
+
     createByOrganization,
     getByOrganization,
     updateByOrganization,
-    deleteByOrganization
+    deleteByOrganization,
+
+    bulkCreateByOrganization,
+    bulkUpdateByOrganization
   };
 }
