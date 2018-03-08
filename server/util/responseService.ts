@@ -119,10 +119,9 @@ export default class ResponseService {
                                return this.deleteItemDates(item);
                             })
                             .value();
-                            console.log('bulkUpdate===')
-    sequelize.transaction((t) => {
-      return sequelize.Promise.each(items, (item) => {
-        return joinTable.findOne({
+
+    const runQuery= (t, item) => {
+      return joinTable.findOne({
                 where: joinMethod(item)
               },
               { transaction: t, returning: true }
@@ -137,6 +136,11 @@ export default class ResponseService {
                 { transaction: t, returning: true });
               }
             });
+    };
+
+    sequelize.transaction((t) => {
+      return sequelize.Promise.each(items, (item) => {
+        return runQuery(t, item);
       })
      .then((items: any[]) => {
         this.success(res, items, 200);

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Address, Bio, Phone, Person, Profile } from './../shared/models/index';
+import { Address, BaseModel, Bio, Phone, Person, Profile } from './../shared/models/index';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -75,23 +75,7 @@ export class OrganizeService {
     return this.http.post(`/api/organizations/${org_id}/addresses`, JSON.stringify(newAddress));
   }
 
-  bulkCreateAddresses(newAddresses: Address[], org_id: any): Observable<Address[]> {
-    const model: any = { addresses: newAddresses };
-    return this.http
-          .post(`/api/organizations/${org_id}/addresses/bulk`, JSON.stringify(model))
-          .map((res: any) => {
-            return <Address[]> res.address;
-          });
-  }
 
-  bulkUpdateAddresses(newAddresses: Address[], org_id: any): Observable<Address[]> {
-    const model: any = { addresses: newAddresses };
-    return this.http
-          .put(`/api/organizations/${org_id}/addresses/bulk`, JSON.stringify(model))
-          .map((res: any) => {
-            return <Address[]> res.address;
-          });
-  }
 
   updateAddress(information, org_id, add_id): Observable<any> {
     return this.http.put(`/api/organizations/${org_id}/addresses/${add_id}`, JSON.stringify(information));
@@ -105,17 +89,55 @@ export class OrganizeService {
     return this.http.post(`/api/organizations/${org_id}/phones`, JSON.stringify(newPhone));
   }
 
-  bulkCreatePhones(newPhones: Phone[], org_id): Observable<Phone[]> {
-    const model: any = { phones: newPhones };
-
-    return this.http
-          .post(`/api/organizations/${org_id}/phones/bulk`, JSON.stringify(model))
-          .map((res: any) => {
-            return <Phone[]> res.phones;
-          });
-  }
-
   updatePhone(newPhone: any, org_id): Observable<any> {
     return this.http.post(`/api/organizations/${org_id}/phones`, JSON.stringify(newPhone));
   }
+
+  //----------------------------------------------------------------------------------------------------
+  bulkCreate<T extends BaseModel>([url, model, indexName]:[string, any, string]): Observable<T[]> {
+    return this.http
+          .post(url, JSON.stringify(model))
+          .map((res: any) => {
+            return <T[]> res[indexName];
+          });
+  }
+
+  bulkUpdate<T extends BaseModel>([url, model, indexName]:[string, any, string]): Observable<T[]> {
+    return this.http
+          .put(url, JSON.stringify(model))
+          .map((res: any) => {
+            return <T[]> res[indexName];
+          });
+  }
+
+  bulkAddress(addresses: Address[], org_id): [string, any, string] {
+    const model: any = { addresses };
+    const url: string = `/api/organizations/${org_id}/addresses/bulk`;
+
+    return [url, model, 'addresses'];
+  }
+
+  bulkCreateAddresses(addresses: Address[], org_id: any): Observable<Address[]> {
+    return this.bulkCreate<Address>(this.bulkAddress(addresses, org_id));
+  }
+
+  bulkUpdateAddresses(addresses: Address[], org_id: any): Observable<Address[]> {
+    return this.bulkUpdate<Address>(this.bulkAddress(addresses, org_id));
+  }
+
+  bulkPhone(phones: Phone[], org_id): [string, any, string] {
+    const model: any = { phones };
+    const url: string = `/api/organizations/${org_id}/phones/bulk`;
+
+    return [url, model, 'phones'];
+  }
+
+  bulkCreatePhones(phones: Phone[], org_id): Observable<Phone[]> {
+    return this.bulkCreate<Phone>(this.bulkPhone(phones, org_id));
+  }
+
+  bulkUpdatePhones(phones: Phone[], org_id): Observable<Phone[]> {
+    return this.bulkUpdate<Phone>(this.bulkPhone(phones, org_id));
+  }
+
 }

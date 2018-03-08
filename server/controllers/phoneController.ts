@@ -54,6 +54,11 @@ export default function PhoneController(models, ResponseService) {
     byOrganization(req, res, 'bulkCreate');
   }
 
+  function bulkUpdateByOrganization(req, res) {
+    console.log('bulkUpdatephone:', req.body);
+    byOrganization(req, res, 'bulkUpdate');
+  }
+
   function getByOrganization(req, res) {
     const Organization = models.Organization;
 
@@ -114,6 +119,10 @@ export default function PhoneController(models, ResponseService) {
     byUser(req, res, 'bulkCreate');
   }
 
+  function bulkUpdateByUser(req, res) {
+    byUser(req, res, 'bulkUpdate');
+  }
+
   function getByUser(req, res) {
     const User = models.User;
 
@@ -160,12 +169,14 @@ export default function PhoneController(models, ResponseService) {
     getAll,
     getOne,
     bulkCreateByUser,
+    bulkUpdateByUser,
     createByUser,
     getByUser,
     updateByUser,
     deleteByUser,
 
     bulkCreateByOrganization,
+    bulkUpdateByOrganization,
     createByOrganization,
     getByOrganization,
     updateByOrganization,

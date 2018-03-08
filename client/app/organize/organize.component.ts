@@ -194,38 +194,45 @@ export class OrganizeComponent implements OnInit {
     let newPhones: Phone[] = _.filter(model.phones, (phone: Phone) => _.isNil(phone.id));
     let newAddresses: Address[] = _.filter(model.addresses, (address: Address) => _.isNil(address.id));
     
-    let deletedPhones: Phone[] =  this.deletedPhones(model.phone, this.currentModel.phones);
-    let deletedAddresses: Address[] = this.deletedAddresses(model.address, this.currentModel.addresses);
+    let deletedPhones: Phone[] =  this.deletedPhones(model.phones, this.currentModel.phones);
+    let deletedAddresses: Address[] = this.deletedAddresses(model.addresses, this.currentModel.addresses);
 
-    let updatedPhones: Phone[] =  this.updatedPhones(model.phone, this.currentModel.phones);
+    let updatedPhones: Phone[] =  this.updatedPhones(model.phones, this.currentModel.phones);
     let updatedAddresses: Address[] = this.updatedAddresses(model.addresses, this.currentModel.addresses);
 
     const org_id: any = model.id;
 
     this.isLoading = true;
 
-    console.log('Modelling:', model);
-
-    this.organizeService
-      .bulkUpdateAddresses(updatedAddresses, org_id)
-      .subscribe((x) => {
-        console.log('objects:',x);
-      });
-
-    /*
     this.organizeService
       .updateOrganization({
         name: model.name
-      },9)
+      },org_id)
       .switchMap(organization => {
         return this.organizeService
           .bulkCreateAddresses(newAddresses, org_id)
           .combineLatest(this.organizeService.bulkCreatePhones(newPhones, org_id));
       })
       .switchMap( ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
-          
+        return this.organizeService
+          .bulkUpdateAddresses(updatedAddresses, org_id)
+          .combineLatest(this.organizeService.bulkUpdatePhones(updatedPhones, org_id));
       })
-      */
-    this.isLoading = false;
+      .subscribe(
+      ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
+        console.log('submitUpdateOrganization worked');
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
+        } else {
+          console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
+        }
+      },
+      () => {
+        this.getOrganizations();
+      });
+      
   }
 }

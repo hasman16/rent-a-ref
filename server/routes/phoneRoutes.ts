@@ -10,7 +10,10 @@ export default function phoneRoutes(setter, phoneCtrl) {
   router.route('/phones').get(authentication, isAdmin, phoneCtrl.getAll);
 
   router.route('/organizations/:organization_id/phones').post(authentication, phoneCtrl.createByOrganization);
+  
   router.route('/organizations/:organization_id/phones/bulk').post(authentication, phoneCtrl.bulkCreateByOrganization);
+  router.route('/organizations/:organization_id/phones/bulk').put(authentication, isOrgOwner, phoneCtrl.bulkUpdateByOrganization);
+  router.route('/organizations/:organization_id/phones/bulk').patch(authentication, isOrgOwner, phoneCtrl.bulkUpdateByOrganization);
 
   router.route('/organizations/:organization_id/phones').get(authentication, phoneCtrl.getByOrganization);
   router.route('/organizations/:organization_id/phones/:phone_id').put(authentication, isOrgOwner, phoneCtrl.updateByOrganization);
