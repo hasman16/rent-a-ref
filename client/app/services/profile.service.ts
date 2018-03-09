@@ -56,19 +56,19 @@ export class ProfileService implements IAddressService, IPhoneService {
       });
   }
 
-  createAddress(newAddress: Address): Observable<any> {
+  createAddress(newAddress: Address): Observable<Address> {
     return this.userService.createAddress(newAddress, this.data.id);
   }
 
-  updateAddress(newAddress: Address): Observable<any> {
+  updateAddress(newAddress: Address): Observable<Address> {
     return this.userService.updateAddress(newAddress, this.data.id, newAddress.id);
   }
 
-  createPhone(newPhone: Phone): Observable<any> {
+  createPhone(newPhone: Phone): Observable<Phone> {
     return this.userService.createPhone(newPhone, this.data.id);
   }
 
-  updatePhone(newPhone: Phone): Observable<any> {
+  updatePhone(newPhone: Phone): Observable<Phone> {
     return this.userService.updatePhone(newPhone, this.data.id, newPhone.id);
   }
 }

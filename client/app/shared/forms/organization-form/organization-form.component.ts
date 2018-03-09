@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
-import { StatesService, State } from './../../../services/states.service';
+import { StatesService, State, Option } from './../../../services/states.service';
 import { BaseFormComponent } from './../../formly/base-form/base-form.component';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
@@ -23,21 +23,14 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
   protected modeName: string = "Create Organization"
   protected fields: FormlyFieldConfig[];
   protected disable: boolean = true;
-  protected states: any[];
+  protected states: Option[];
 
   constructor(private statesService: StatesService) {
     this.disable = true;
   }
 
   ngOnInit() {
-    this.states = _(this.statesService.getStatesProvinces())
-      .map((state: State) => {
-        return {
-          label: state.name,
-          value: state.abbreviation
-        }
-      })
-      .value();
+    this.states = this.statesService.getStatesProvinces();
 
     this.fields = [
       {

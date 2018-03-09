@@ -3,7 +3,7 @@ import { FormGroup, AbstractControl, Validators, FormBuilder, ReactiveFormsModul
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Address } from '../../models/address';
-import { StatesService } from '../../../services/index';
+import { StatesService, Option } from '../../../services/index';
 import { AbstractFormComponent } from '../abstract-form';
 
 import { Observable } from 'rxjs/Observable';
@@ -25,7 +25,7 @@ export class AddressFormComponent extends AbstractFormComponent implements OnIni
   protected anAddress: Address = <Address>{};
   protected countryName:string = 'usa';
   protected mode:boolean = false;
-  protected states: any;
+  protected states: Option[];
 
   protected line1Invalid:boolean = false;
   protected cityInvalid:boolean = false;

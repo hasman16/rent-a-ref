@@ -51,6 +51,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.component';
 import { ContactUsComponent } from './group/contactus/contactus.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
+import { EventsComponent } from './organize/events/events.component';
 import { FaqComponent } from './group/faq/faq.component';
 import { FooterComponent } from './footer/footer.component';
 import { FooterTabletComponent } from './footer/footer-tablet/footer-tablet.component';
@@ -107,6 +108,7 @@ import { BarchartComponent } from './barchart/barchart.component';
     ContactUsComponent,
     DropdownDirective,
     EditProfileComponent,
+    EventsComponent,
     FaqComponent,
     FooterComponent,
     FooterTabletComponent,

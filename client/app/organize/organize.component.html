@@ -26,7 +26,7 @@
               </th>
             </tr>
 
-            <tr *ngFor="let organization of organizations" (click)="editOrganization(organization.id);">
+            <tr *ngFor="let organization of organizations" (click)="editEvents(organization.id);" class="org-table-item ">
               <td>
                 {{organization.id}}
               </td>
@@ -42,7 +42,7 @@
             </tr>
           </table>
           <hr />
-          <button class="btn btn-primary btn-sm" style="max-width: 15em;padding: 1em auto" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
+          <button class="btn btn-primary btn-sm new-org-button" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
         </div>
       </div>
 

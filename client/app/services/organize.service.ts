@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Address, BaseModel, Bio, Phone, Person, Profile } from './../shared/models/index';
+import { Address, BaseModel, Bio, Phone, Person, Profile, Sport } from './../shared/models/index';
 
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
 
 import * as _ from 'lodash';
 
@@ -14,10 +16,12 @@ export class OrganizeService {
   private data;
   private addresses: Address[];
   private phones: Phone[];
+  private sports: Sport[];
 
   constructor(private http: HttpClient) {
     this.addresses =[];
     this.phones = [];
+    this.sports = [];
   }
 
   getData() {
@@ -32,9 +36,23 @@ export class OrganizeService {
     return _.cloneDeep(this.phones);
   }
 
+  getSports():Observable<Sport[]> {
+    let ob: Observable<Sport[]>;
+
+    if (!_.isArray(this.sports) || this.sports.length === 0) {
+      ob = this.http.get<Sport[]>(`/api/sports`)
+              .do((sports: Sport[]) => this.sports = _.cloneDeep(sports));
+    } else {
+      let bs: BehaviorSubject<Sport[]> = new BehaviorSubject<Sport[]>(null);
+      bs.next(_.cloneDeep(this.sports));
+      ob = bs;
+    }
+
+    return ob;
+  }
+
   // addresses
   getOrgAddresses(Organization_id: any): Observable<any> {
-    console.log('Fetching Address');
     return this.http.get(`/api/organizations/${Organization_id}/addresses`);
   }
 
@@ -43,7 +61,6 @@ export class OrganizeService {
   }
   // Phones
   getOrgPhones(Organization_id: any): Observable<any> {
-    console.log('Fetching Phones');
     return this.http.get(`/api/organizations/${Organization_id}/phones`);
   }
 

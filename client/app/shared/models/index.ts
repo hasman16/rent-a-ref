@@ -6,5 +6,6 @@ export * from './organization';
 export * from './person';
 export * from './phone';
 export * from './profile';
+export * from './sport';
 export * from './user';
 

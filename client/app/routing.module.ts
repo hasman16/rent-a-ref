@@ -14,6 +14,7 @@ import { CareersComponent } from './group/careers/careers.component';
 import { ContactUsComponent } from './group/contactus/contactus.component';
 import { DeactivatedComponent } from './account/profile/deactivated/deactivated.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
+import { EventsComponent } from './organize/events/events.component';
 import { FaqComponent } from './group/faq/faq.component';
 import { HomeComponent } from './home/home.component';
 import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
@@ -63,6 +64,9 @@ const routes: Routes = [
   },
   {
     path: 'organizer/:id', component: OrganizeComponent, canActivate: [AuthGuardLogin]
+  },
+  {
+    path: 'organizer/events/:id', component: EventsComponent, canDeactivate: [CanDeactivateGuardService]
   },
   {
     path: 'account/profile/:id', component: ProfileComponent, canDeactivate: [CanDeactivateGuardService],

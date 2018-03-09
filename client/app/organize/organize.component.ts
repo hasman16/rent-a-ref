@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, EmailValidator, ReactiveFormsModule } from '@angular/forms';
 import { ToastComponent } from '../shared/toast/toast.component';
 import { AuthService, OrganizeService, State, StatesService, UserService } from '../services/index';
-import { Address, BaseModel, Phone, Organization, Profile } from '../shared/models/index';
+import { Address, BaseModel, Phone, Organization, Profile, Sport } from '../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
 
@@ -29,7 +29,7 @@ export class OrganizeComponent implements OnInit {
   protected currentModel: any = {};
   protected options: FormlyFormOptions = {};
   protected fields: FormlyFieldConfig[];
-  protected titles: string[] = ['Id', 'Organization Name','',''];
+  protected titles: string[] = ['Id', 'Organization Name', '', ''];
   protected organizations: Organization[] = [];
   protected isLoading: boolean = false;
 
@@ -45,6 +45,7 @@ export class OrganizeComponent implements OnInit {
 
   ngOnInit() {
     this.setOrganizeMode();
+    this.getSports();
     this.getOrganizations();
   }
 
@@ -59,7 +60,7 @@ export class OrganizeComponent implements OnInit {
   }
 
   goNewOrganization(): void {
-    this.setEditMode({ });
+    this.setEditMode({});
   }
 
   editOrganization(orgId: number): void {
@@ -69,19 +70,26 @@ export class OrganizeComponent implements OnInit {
         .getOrgAddresses(orgId)
         .combineLatest(this.organizeService.getOrgPhones(orgId))
         .take(1)
-        .map( ([addresses, phones]: [Array<any>, Array<any>]) => {
+        .map(([addresses, phones]: [Array<any>, Array<any>]) => {
           return [_.head(addresses), _.head(phones)];
         })
-        .map( ([addresses, phones]: [any, any]) => {
-          console.log(addresses, phones);
+        .map(([addresses, phones]: [any, any]) => {
           return [addresses["addresses"], phones["phones"]];
         })
-        .subscribe( ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
+        .subscribe(([addresses, phones]: [Array<Address>, Array<Phone>]) => {
           currentModel = _.cloneDeep(currentModel);
-          currentModel= Object.assign({}, currentModel, { "addresses" : addresses, "phones": phones });
+          currentModel = Object.assign({}, currentModel, { "addresses": addresses, "phones": phones });
           this.setEditMode(currentModel);
         });
     }
+  }
+
+  getSports() {
+    this.organizeService
+        .getSports()
+        .subscribe((sports: Sport[]) => {
+          console.log('sports:', sports);
+        });
   }
 
   getOrganizations(user_id?: any) {
@@ -90,30 +98,28 @@ export class OrganizeComponent implements OnInit {
     this.organizeService
       .getUserOrganization(user_id)
       .subscribe(
-      (profile: Profile) => {
-        this.organizations = profile.organizations;
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
-        } else {
-          console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
-        }
-      },
-      () => {
-        this.setOrganizeMode();
-        this.isLoading = false;
-        if (this.organizations.length === 0) {
+        (profile: Profile) => {
+          this.organizations = profile.organizations;
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
+          } else {
+            console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
+          }
+        },
+        () => {
           this.setOrganizeMode();
+          this.isLoading = false;
+          if (this.organizations.length === 0) {
+            this.setOrganizeMode();
+          }
         }
-      }
       );
   }
 
   submitOrganization(model): void {
-    console.log('xxmodel:', model, this.currentModel);
-
     if (_.isNil(model.id) || !model.id) {
       this.submitNewOrganization(model);
     } else {
@@ -123,7 +129,6 @@ export class OrganizeComponent implements OnInit {
   }
 
   submitNewOrganization(model): void {
-    console.log('organization data is:', model);
     this.isLoading = true;
     this.organizeService
       .createOrganization({
@@ -131,26 +136,25 @@ export class OrganizeComponent implements OnInit {
       })
       .switchMap(organization => {
         const org_id: any = organization.id;
-
         return this.organizeService
           .bulkCreateAddresses(model.addresses, org_id)
           .combineLatest(this.organizeService.bulkCreatePhones(model.phones, org_id));
       })
       .subscribe(
-      ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
-        console.log('it worked');
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
-        } else {
-          console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
-        }
-      },
-      () => {
-        this.getOrganizations();
-      });
+        ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
+          console.log('it worked');
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
+          } else {
+            console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
+          }
+        },
+        () => {
+          this.getOrganizations();
+        });
   }
 
   private updatedPhones(newPhones: Phone[], oldPhones: Phone[]): Phone[] {
@@ -163,12 +167,12 @@ export class OrganizeComponent implements OnInit {
 
   private updatedItems<T extends BaseModel>(newItems: T[], oldItems: T[]): T[] {
     return _(newItems)
-            .filter((newItem: T) => {
-              let item: T = _.find(oldItems, (oldItem: T) => oldItem.id === newItem.id);
-              return item ? true: false;
-            })
-            .filter((item: T) => !_.isNil(item.id))
-            .value();
+      .filter((newItem: T) => {
+        let item: T = _.find(oldItems, (oldItem: T) => oldItem.id === newItem.id);
+        return item ? true : false;
+      })
+      .filter((item: T) => !_.isNil(item.id))
+      .value();
   }
 
   private deletedPhones(newPhones: Phone[], oldPhones: Phone[]): Phone[] {
@@ -181,23 +185,23 @@ export class OrganizeComponent implements OnInit {
 
   private deleteItems<T extends BaseModel>(newItems: T[], oldItems: T[]): T[] {
     return _(newItems)
-              .filter((newItem: T) => {
-                return !_.some(oldItems, (oldItem: T) => {
-                  return oldItem.id === newItem.id;
-                });
-              })
-              .filter((item: T)=> !_.isNil(item.id))
-              .value();
+      .filter((newItem: T) => {
+        return !_.some(oldItems, (oldItem: T) => {
+          return oldItem.id === newItem.id;
+        });
+      })
+      .filter((item: T) => !_.isNil(item.id))
+      .value();
   }
 
   submitUpdateOrganization(model): void {
     let newPhones: Phone[] = _.filter(model.phones, (phone: Phone) => _.isNil(phone.id));
     let newAddresses: Address[] = _.filter(model.addresses, (address: Address) => _.isNil(address.id));
-    
-    let deletedPhones: Phone[] =  this.deletedPhones(model.phones, this.currentModel.phones);
+
+    let deletedPhones: Phone[] = this.deletedPhones(model.phones, this.currentModel.phones);
     let deletedAddresses: Address[] = this.deletedAddresses(model.addresses, this.currentModel.addresses);
 
-    let updatedPhones: Phone[] =  this.updatedPhones(model.phones, this.currentModel.phones);
+    let updatedPhones: Phone[] = this.updatedPhones(model.phones, this.currentModel.phones);
     let updatedAddresses: Address[] = this.updatedAddresses(model.addresses, this.currentModel.addresses);
 
     const org_id: any = model.id;
@@ -207,32 +211,32 @@ export class OrganizeComponent implements OnInit {
     this.organizeService
       .updateOrganization({
         name: model.name
-      },org_id)
+      }, org_id)
       .switchMap(organization => {
         return this.organizeService
           .bulkCreateAddresses(newAddresses, org_id)
           .combineLatest(this.organizeService.bulkCreatePhones(newPhones, org_id));
       })
-      .switchMap( ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
+      .switchMap(([addresses, phones]: [Array<Address>, Array<Phone>]) => {
         return this.organizeService
           .bulkUpdateAddresses(updatedAddresses, org_id)
           .combineLatest(this.organizeService.bulkUpdatePhones(updatedPhones, org_id));
       })
       .subscribe(
-      ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
-        console.log('submitUpdateOrganization worked');
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
-        } else {
-          console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
-        }
-      },
-      () => {
-        this.getOrganizations();
-      });
-      
+        ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
+          console.log('submitUpdateOrganization worked');
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
+          } else {
+            console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
+          }
+        },
+        () => {
+          this.getOrganizations();
+        });
+
   }
 }
