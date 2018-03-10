@@ -1,9 +1,11 @@
 <div class="row">
   <div class="col-12">
-    <app-toast [message]="toast.message"></app-toast>
+
 
     <div class="card">
-      <div class="form-size">
+      <app-toast [message]="toast.message"></app-toast>
+
+      <div class="card form-size">
         <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
           <formly-form [model]="model" [fields]="fields">
           <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.valid">Create Event</button>
@@ -12,6 +14,7 @@
           </formly-form>
         </form>
       </div>
+
     </div>
   </div>
 </div>

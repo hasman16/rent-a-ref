@@ -46,27 +46,27 @@ export class EventsComponent implements OnInit {
 
   getSports() {
     this.organizeService
-        .getSports()
-        .subscribe((sports: Sport[]) => {
-          console.log('EventsComponent sports:', sports);
-          this.sports = sports;
-          this.generateForm();
-        });
+      .getSports()
+      .subscribe((sports: Sport[]) => {
+        console.log('EventsComponent sports:', sports);
+        this.sports = sports;
+        this.generateForm();
+      });
   }
 
   ngOnInit() {
-  	this.getSports();
+    this.getSports();
   }
 
   generateForm() {
-  	const SPORTS: Option[] = _(this.sports)
-  							.map((sport: Sport): Option => {
-  								return <Option>{
-  									label: sport.name,
-  									value: sport.id
-  								};
-  							})
-  							.value();
+    const SPORTS: Option[] = _(this.sports)
+      .map((sport: Sport): Option => {
+        return <Option>{
+          label: sport.name,
+          value: sport.id
+        };
+      })
+      .value();
 
     this.states = this.statesService.getStatesProvinces();
 
@@ -106,14 +106,14 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-12',
             type: 'radio',
-            key: 'event-type',
+            key: 'eventType',
             templateOptions: {
               label: 'What type of event',
               required: true,
               options: [
-                { label: 'League', value: 'league' },
-                { label: 'Tournament', value: 'tournament' },
-                { label: 'One off event', value: 'oneoff' }
+                { value: 'League', key: 'league' },
+                { value: 'Tournament', key: 'tournament' },
+                { value: 'One off event', key: 'oneoff' }
               ]
             }
           },
@@ -137,58 +137,58 @@ export class EventsComponent implements OnInit {
       {
         template: '<hr class="space-hr" /><div><strong>Address</strong></div>',
       },
- 	{
-          fieldGroupClassName: 'row',
-          fieldGroup: [
-            {
-              className: 'col-sm-3',
-              type: 'input',
-              key: 'line1',
-              templateOptions: {
-                label: 'Street 1',
-                required: true,
-              }
-            },
-            {
-              type: 'input',
-              key: 'line2',
-              className: 'col-sm-3',
-              templateOptions: {
-                type: 'text',
-                label: 'Street 2',
-              }
-            },
-            {
-              type: 'input',
-              key: 'city',
-              className: 'col-sm-2',
-              templateOptions: {
-                label: 'City',
-                required: true
-              }
-            },
-            {
-              type: 'select',
-              key: 'state',
-              className: 'col-sm-2',
-              templateOptions: {
-                label: 'State',
-                options: _.cloneDeep(this.states),
-                required: true
-              }
-            },
-            {
-              type: 'input',
-              key: 'zip',
-              className: 'col-sm-2',
-              templateOptions: {
-                label: 'Zip',
-                required: true,
-                pattern: /\d{5}(\-\d{4})?/
-              },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
+            className: 'col-sm-3',
+            type: 'input',
+            key: 'line1',
+            templateOptions: {
+              label: 'Street 1',
+              required: true,
             }
-          ]
-        }
+          },
+          {
+            type: 'input',
+            key: 'line2',
+            className: 'col-sm-3',
+            templateOptions: {
+              type: 'text',
+              label: 'Street 2',
+            }
+          },
+          {
+            type: 'input',
+            key: 'city',
+            className: 'col-sm-2',
+            templateOptions: {
+              label: 'City',
+              required: true
+            }
+          },
+          {
+            type: 'select',
+            key: 'state',
+            className: 'col-sm-2',
+            templateOptions: {
+              label: 'State',
+              options: _.cloneDeep(this.states),
+              required: true
+            }
+          },
+          {
+            type: 'input',
+            key: 'zip',
+            className: 'col-sm-2',
+            templateOptions: {
+              label: 'Zip',
+              required: true,
+              pattern: /\d{5}(\-\d{4})?/
+            },
+          }
+        ]
+      }
     ];
   }
 
