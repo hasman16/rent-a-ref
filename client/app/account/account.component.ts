@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastComponent } from '../shared/toast/toast.component';
-import { AuthService } from '../services/auth.service';
-import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Address, Person, Phone, Profile, User } from './../shared/models/index';
+import { AuthService, UserService } from '../services/index';
+import {
+  Address,
+  Person,
+  Phone,
+  Profile,
+  User
+} from './../shared/models/index';
 
 @Component({
   selector: 'app-account',
@@ -12,23 +17,24 @@ import { Address, Person, Phone, Profile, User } from './../shared/models/index'
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  protected user:User = <User>{};
-  protected person:Person = <Person>{};
+  protected user: User = <User>{};
+  protected person: Person = <Person>{};
 
-  isLoading = true;
+  protected isLoading: boolean = true;
 
-  constructor(private auth: AuthService,
-              public toast: ToastComponent,
-              private userService: UserService) { }
+  constructor(
+    private auth: AuthService,
+    private toast: ToastComponent,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
-    console.log('ngOnInit: getUser');
     this.getProfile();
   }
 
   getProfile() {
     this.userService.getProfile(this.auth.currentUser.id).subscribe(
-      (res:Profile) => {
+      (res: Profile) => {
         this.user = {
           id: String(res.id),
           email: res.email,
@@ -49,10 +55,13 @@ export class AccountComponent implements OnInit {
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
-          console.log('A client-side or network error occurred for the Profile');
+          console.log(
+            'A client-side or network error occurred for the Profile'
+          );
         } else {
-          console.log('The backend returned an unsuccessful response code for the profile');
-
+          console.log(
+            'The backend returned an unsuccessful response code for the profile'
+          );
         }
         // this.isLoading = false;
         if (!this.auth.loggedIn) {

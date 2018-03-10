@@ -83,104 +83,119 @@ import { CanDeactivateGuardService } from './services/can-deactivate-guard.servi
 import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
 
-
 // rich grid
 import { LeftmenuComponent } from './leftmenu/leftmenu.component';
 import { BarchartComponent } from './barchart/barchart.component';
 
 @NgModule({
-  declarations: [
-    FormlyHorizontalWrapper,
-    FormlyHorizontalTextAreaWrapper,
-    RepeatTypeComponent,
-    AppComponent,
-    AboutComponent,
-    AccountComponent,
-    AddressFormComponent,
-    HorizontalAddressFormComponent,
-    OrganizationFormComponent,
-    AdminComponent,
-    BioFormComponent,
-    BlogComponent,
-    CareersComponent,
-    CarouselComponent,
-    CarouselItemComponent,
-    ContactUsComponent,
-    DropdownDirective,
-    EditProfileComponent,
-    EventsComponent,
-    FaqComponent,
-    FooterComponent,
-    FooterTabletComponent,
-    HeaderComponent,
-    HomeComponent,
-    HowItWorksComponent,
-    LoginComponent,
-    LogoutComponent,
-    NotFoundComponent,
-    OrganizeComponent,
-    PartnersComponent,
-    PasswordFormComponent,
-    PhoneFormComponent,
-    PricingComponent,
-    ProfileComponent,
-    RefereeComponent,
-    GamesComponent,
-    RegisterComponent,
-    ResetComponent,
-    ResetPasswordComponent,
-    BaseFormComponent,
-    ScheduleComponent,
-    TermsAndConditionsComponent,
-    ZoneFormComponent,
-    LeftmenuComponent,
-    BarchartComponent
-  ],
-  imports: [
-    RoutingModule,
-    SharedModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AccordionModule,
-    PanelModule,
-    ButtonModule,
-    RadioButtonModule,
-    CardModule,
-    FormlyBootstrapModule,
-    FormlyModule.forRoot({
-      wrappers: [{ name: 'horizontalWrapper', component: FormlyHorizontalWrapper },
-      { name: 'horizontalTextareaWrapper', component: FormlyHorizontalTextAreaWrapper }],
-      types: [{ name: 'horizontalInput', extends: 'input', wrappers: ['fieldset', 'horizontalWrapper'] },
-      { name: 'horizontalTextarea', extends: 'textarea', wrappers: ['fieldset', 'horizontalTextareaWrapper'] },
-      { name: 'repeat', component: RepeatTypeComponent }
-      ],
-    }),
-    HttpClientModule,
-    MyDatePickerModule,
-    CommonModule
-  ],
-  providers: [
-    AuthService,
-    AuthGuardLogin,
-    AuthGuardAdmin,
-    TokenService,
-    ProfileService,
-    StatesService,
-    UserService,
-    OrganizeService,
-    CookieService,
-    CanDeactivateGuardService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    }
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  // Add bootstrap
-  bootstrap: [AppComponent]
+    declarations: [
+        FormlyHorizontalWrapper,
+        FormlyHorizontalTextAreaWrapper,
+        RepeatTypeComponent,
+        AppComponent,
+        AboutComponent,
+        AccountComponent,
+        AddressFormComponent,
+        HorizontalAddressFormComponent,
+        OrganizationFormComponent,
+        AdminComponent,
+        BioFormComponent,
+        BlogComponent,
+        CareersComponent,
+        CarouselComponent,
+        CarouselItemComponent,
+        ContactUsComponent,
+        DropdownDirective,
+        EditProfileComponent,
+        EventsComponent,
+        FaqComponent,
+        FooterComponent,
+        FooterTabletComponent,
+        HeaderComponent,
+        HomeComponent,
+        HowItWorksComponent,
+        LoginComponent,
+        LogoutComponent,
+        NotFoundComponent,
+        OrganizeComponent,
+        PartnersComponent,
+        PasswordFormComponent,
+        PhoneFormComponent,
+        PricingComponent,
+        ProfileComponent,
+        RefereeComponent,
+        GamesComponent,
+        RegisterComponent,
+        ResetComponent,
+        ResetPasswordComponent,
+        BaseFormComponent,
+        ScheduleComponent,
+        TermsAndConditionsComponent,
+        ZoneFormComponent,
+        LeftmenuComponent,
+        BarchartComponent
+    ],
+    imports: [
+        RoutingModule,
+        SharedModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AccordionModule,
+        PanelModule,
+        ButtonModule,
+        RadioButtonModule,
+        CardModule,
+        FormlyBootstrapModule,
+        FormlyModule.forRoot({
+            wrappers: [
+                {
+                    name: 'horizontalWrapper',
+                    component: FormlyHorizontalWrapper
+                },
+                {
+                    name: 'horizontalTextareaWrapper',
+                    component: FormlyHorizontalTextAreaWrapper
+                }
+            ],
+            types: [
+                {
+                    name: 'horizontalInput',
+                    extends: 'input',
+                    wrappers: ['fieldset', 'horizontalWrapper']
+                },
+                {
+                    name: 'horizontalTextarea',
+                    extends: 'textarea',
+                    wrappers: ['fieldset', 'horizontalTextareaWrapper']
+                },
+                { name: 'repeat', component: RepeatTypeComponent }
+            ]
+        }),
+        HttpClientModule,
+        MyDatePickerModule,
+        CommonModule
+    ],
+    providers: [
+        AuthService,
+        AuthGuardLogin,
+        AuthGuardAdmin,
+        TokenService,
+        ProfileService,
+        StatesService,
+        UserService,
+        OrganizeService,
+        CookieService,
+        CanDeactivateGuardService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
+        }
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    // Add bootstrap
+    bootstrap: [AppComponent]
 })
-
-export class AppModule { }
+export class AppModule {}

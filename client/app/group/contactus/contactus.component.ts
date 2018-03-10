@@ -20,57 +20,55 @@ import 'rxjs/add/operator/take';
   styleUrls: ['./contactus.component.scss']
 })
 export class ContactUsComponent implements OnInit {
-  protected form = new FormGroup({});
+  protected form: FormGroup = new FormGroup({});
   protected model: any = {};
   protected options: FormlyFormOptions = {};
   protected fields: FormlyFieldConfig[];
 
-  constructor(public toast: ToastComponent) { }
+  constructor(public toast: ToastComponent) {}
 
   ngOnInit() {
-    this.fields = [{
-      key: 'fullname',
-      type: 'input',
-      templateOptions: {
-        placeholder: 'Fullname',
-        required: true,
-        minLength: 5
-      }
-    },
-    {
-      key: 'email',
-      type: 'input',
-      templateOptions: {
-        type: 'email',
-        placeholder: 'Email Address',
-        required: true,
-        minLength: 5
-      }
-    },
-    {
-      key: 'subject',
-      type: 'input',
-      templateOptions: {
-        placeholder: 'Subject',
-        required: true,
-        minLength: 5
-      }
-    },
-    {
-      key: 'comment',
-      type: 'textarea',
-      templateOptions: {
+    this.fields = [
+      {
+        key: 'fullname',
+        type: 'input',
+        templateOptions: {
+          placeholder: 'Fullname',
+          required: true,
+          minLength: 5
+        }
+      },
+      {
+        key: 'email',
+        type: 'input',
+        templateOptions: {
+          type: 'email',
+          placeholder: 'Email Address',
+          required: true,
+          minLength: 5
+        }
+      },
+      {
+        key: 'subject',
+        type: 'input',
+        templateOptions: {
+          placeholder: 'Subject',
+          required: true,
+          minLength: 5
+        }
+      },
+      {
+        key: 'comment',
         type: 'textarea',
-        placeholder: 'Comment',
-        required: true,
-        minLength: 5
+        templateOptions: {
+          type: 'textarea',
+          placeholder: 'Comment',
+          required: true,
+          minLength: 5
+        }
       }
-    }
     ];
   }
 
-  onsubmit(model) {
-
-
-  }
+  onsubmit(model) {}
 }

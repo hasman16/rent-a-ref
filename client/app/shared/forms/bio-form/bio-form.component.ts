@@ -1,5 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  AbstractControl,
+  Validators,
+  FormBuilder
+} from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Bio } from '../../models/bio';
@@ -17,7 +23,8 @@ import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
   styleUrls: ['./bio-form.component.scss']
 })
 export class BioFormComponent extends AbstractFormComponent implements OnInit {
-  @Input() set person(aPerson: Bio) {
+  @Input()
+  set person(aPerson: Bio) {
     this.aPerson = aPerson;
     this.fillForm();
   }
@@ -31,22 +38,38 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
   firstnameInvalid = false;
   lastnameInvalid = false;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService
+  ) {
     super();
     this.bioForm = this.formBuilder.group({
-      firstname: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
-      middlenames: ['', [Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
-      lastname: ['', [Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
+      firstname: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(30),
+          Validators.pattern(this.alphaNumericRegex)
+        ]
+      ],
+      middlenames: [
+        '',
+        [Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]
+      ],
+      lastname: [
+        '',
+        [Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]
+      ],
       gender: ['', [<any>Validators.nullValidator]],
-      dob: [{ date: { year: 1998, month: 10, day: 9 } }, Validators.required]   // this example is initialized to specific date
+      dob: [{ date: { year: 1998, month: 10, day: 9 } }, Validators.required] // this example is initialized to specific date
     });
 
     this.setUpValidators(this.bioForm, ['firstname', 'lastname']);
   }
 
   public myDatePickerOptions: IMyDpOptions = {
-    dateFormat: 'yyyy-mm-dd',
+    dateFormat: 'yyyy-mm-dd'
   };
 
   fillForm() {
@@ -63,7 +86,13 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
 
   getDate(timestamp): any {
     let date: Date = new Date(timestamp);
-    return { date: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() } };
+    return {
+      date: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate()
+      }
+    };
   }
 
   setDate(timestamp): void {
@@ -108,12 +137,13 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
     let bio = this.bioForm.value;
     bio.dob = this.getEpoc(bio.dob);
 
-    this.userService.updatePerson(bio, this.aPerson.id).subscribe(() => {
-      this.saveBio.emit({ action: 'save_success' });
-    },
+    this.userService.updatePerson(bio, this.aPerson.id).subscribe(
+      () => {
+        this.saveBio.emit({ action: 'save_success' });
+      },
       (err: HttpErrorResponse) => {
         this.saveBio.emit({ action: 'save_failure' });
-      });
+      }
+    );
   }
-
 }

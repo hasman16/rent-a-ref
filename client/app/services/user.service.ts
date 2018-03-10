@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Login, Profile, User } from "./../shared/models/index";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Login, Profile, User } from './../shared/models/index';
 
-import { Observable } from "rxjs/Observable";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import "rxjs/add/operator/map";
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UserService {
@@ -14,12 +14,12 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   register(user): Observable<any> {
-    return this.http.post("/api/register", JSON.stringify(user));
+    return this.http.post('/api/register', JSON.stringify(user));
   }
 
   login(credentials): Observable<Login> {
     return <Observable<Login>>this.http.post(
-      "/api/login",
+      '/api/login',
       JSON.stringify(credentials)
     );
   }
@@ -33,11 +33,11 @@ export class UserService {
   }
 
   resetpassword(credentials): Observable<any> {
-    return this.http.post("/api/resetpassword", JSON.stringify(credentials));
+    return this.http.post('/api/resetpassword', JSON.stringify(credentials));
   }
 
   forgotpassword(email): Observable<any> {
-    return this.http.post("/api/forgotpassword", JSON.stringify(email));
+    return this.http.post('/api/forgotpassword', JSON.stringify(email));
   }
 
   changepassword(passwords, user_id): Observable<any> {

@@ -1,5 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, AbstractControl, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  AbstractControl,
+  Validators,
+  FormBuilder,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Address } from '../../models/address';
@@ -20,46 +26,84 @@ export interface IAddressService {
   templateUrl: './address-form.component.html',
   styleUrls: ['./address-form.component.scss']
 })
-export class AddressFormComponent extends AbstractFormComponent implements OnInit {
+export class AddressFormComponent extends AbstractFormComponent
+  implements OnInit {
   public addressForm: FormGroup;
   protected anAddress: Address = <Address>{};
-  protected countryName:string = 'usa';
-  protected mode:boolean = false;
+  protected countryName: string = 'usa';
+  protected mode: boolean = false;
   protected states: Option[];
 
-  protected line1Invalid:boolean = false;
-  protected cityInvalid:boolean = false;
-  protected zipInvalid:boolean = false;
-  protected userId:number = 0;
+  protected line1Invalid: boolean = false;
+  protected cityInvalid: boolean = false;
+  protected zipInvalid: boolean = false;
+  protected userId: number = 0;
   @Output() saveAddress = new EventEmitter();
-  @Input() set address(anAddress: Address) {
+  @Input()
+  set address(anAddress: Address) {
     this.anAddress = _.cloneDeep(anAddress);
     this.fillForm();
   }
-  @Input() set zoneMode(mode: boolean) {
+  @Input()
+  set zoneMode(mode: boolean) {
     this.mode = mode;
   }
-  @Input() set country(aCountry: string) {
+  @Input()
+  set country(aCountry: string) {
     this.countryName = aCountry || 'usa';
     this.fillForm();
   }
   @Input() addressService: IAddressService;
 
-  constructor(private formBuilder: FormBuilder, private statesService: StatesService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private statesService: StatesService
+  ) {
     super();
     this.addressForm = this.formBuilder.group({
-      line1: ['', [Validators.required, Validators.minLength(5),
-      Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]],
+      line1: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(100),
+          Validators.pattern(this.alphaNumericRegex)
+        ]
+      ],
 
-      line2: ['', [Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]],
+      line2: [
+        '',
+        [Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]
+      ],
 
-      city: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
+      city: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(30),
+          Validators.pattern(this.alphaNumericRegex)
+        ]
+      ],
 
-      state: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(this.alphaNumericRegex)]],
+      state: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(10),
+          Validators.pattern(this.alphaNumericRegex)
+        ]
+      ],
 
-      zip: ['', [Validators.required, Validators.minLength(5),
-      Validators.maxLength(10), Validators.pattern(this.zipRegex)]]
+      zip: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(10),
+          Validators.pattern(this.zipRegex)
+        ]
+      ]
     });
 
     this.setUpValidators(this.addressForm, ['line1', 'city', 'zip']);
@@ -94,12 +138,14 @@ export class AddressFormComponent extends AbstractFormComponent implements OnIni
         observable = this.addressService.updateAddress(newAddress);
       }
 
-      observable.subscribe(() => {
-        this.saveAddress.emit({ action: 'save_success' });
-      },
+      observable.subscribe(
+        () => {
+          this.saveAddress.emit({ action: 'save_success' });
+        },
         (err: HttpErrorResponse) => {
           this.saveAddress.emit({ action: 'save_failure' });
-        });
+        }
+      );
     }
   }
 }

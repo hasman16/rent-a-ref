@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { FieldType, FormlyFormBuilder } from '@ngx-formly/core';
+import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+
 import * as _ from 'lodash';
 
 @Component({
@@ -10,7 +12,7 @@ import * as _ from 'lodash';
 })
 export class RepeatTypeComponent extends FieldType implements OnInit {
   public formControl: FormArray;
-  protected fields = [];
+  protected fields: FormlyFieldConfig[] = [];
 
   constructor(private builder: FormlyFormBuilder) {
     super();

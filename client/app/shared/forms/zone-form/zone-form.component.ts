@@ -1,5 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  AbstractControl,
+  Validators,
+  FormBuilder
+} from '@angular/forms';
 
 import { Address } from '../../models/address';
 import { StatesService } from '../../../services/states.service';
@@ -24,28 +30,59 @@ export class ZoneFormComponent extends AbstractFormComponent implements OnInit {
   cityInvalid = false;
   zipInvalid = false;
   @Output() saveZone = new EventEmitter();
-  @Input() set zone(aZone: Address) {
+  @Input()
+  set zone(aZone: Address) {
     this.aZone = aZone;
     this.fillForm();
   }
-  @Input() country(aCountry: string = 'usa') {
+  @Input()
+  country(aCountry: string = 'usa') {
     this.countryName = aCountry;
     this.fillForm();
   }
 
-
-  constructor(private formBuilder: FormBuilder,  private statesService: StatesService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private statesService: StatesService
+  ) {
     super();
     this.zoneForm = this.formBuilder.group({
-      city: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]],
-      state: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(20), Validators.pattern(this.alphaNumericRegex)]],
-      zip: ['', [Validators.required, Validators.minLength(2),
-      Validators.maxLength(12), Validators.pattern(this.zipRegex)]],
-      radius: ['5', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(3), Validators.pattern('\\d{1,3}')]]
+      city: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(30),
+          Validators.pattern(this.alphaNumericRegex)
+        ]
+      ],
+      state: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          Validators.pattern(this.alphaNumericRegex)
+        ]
+      ],
+      zip: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(12),
+          Validators.pattern(this.zipRegex)
+        ]
+      ],
+      radius: [
+        '5',
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(3),
+          Validators.pattern('\\d{1,3}')
+        ]
+      ]
     });
 
     this.setUpValidators(this.zoneForm, ['city', 'zip', 'radius']);

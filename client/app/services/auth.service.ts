@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { TokenService } from "./token.service";
-import { UserService } from "./user.service";
-import { Login, User } from "./../shared/models/index";
+import { TokenService } from './token.service';
+import { UserService } from './user.service';
+import { Login, User } from './../shared/models/index';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +17,7 @@ export class AuthService {
     private tokenService: TokenService,
     private router: Router
   ) {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem('user');
     if (user) {
       this.setCurrentUser(JSON.parse(user));
     }
@@ -42,22 +42,22 @@ export class AuthService {
           });
 
           // Organizer
-          switch (newUser.can_organize + " " + newUser.status) {
-            case "pending standby":
+          switch (newUser.can_organize + ' ' + newUser.status) {
+            case 'pending standby':
               // The organizer has not yet completed the profile
               // this.router.navigate(['user/' + res.user.id + '/edit-profile']);
               break;
-            case "yes active":
+            case 'yes active':
               // The organizer is active and ready to go
               // this.router.navigate(['user/' + res.user.id + '/account']);
               break;
-            case "yes locked":
+            case 'yes locked':
               // The Organizer account is suspended due to failed login attempts
               // Kill his session
 
               this.resetState();
               break;
-            case "no banned":
+            case 'no banned':
               // The Organizer account is disabled by the admin
               // Kill his session
               this.resetState();
@@ -65,28 +65,28 @@ export class AuthService {
           }
 
           // Referee
-          switch (newUser.can_referee + " " + newUser.status) {
-            case "pending active":
+          switch (newUser.can_referee + ' ' + newUser.status) {
+            case 'pending active':
               // The referee account has been activated by the admin. Now he needs to complete his profile
               // this.router.navigate(['user/' + res.user.id + '/edit-profile']);
               break;
-            case "pending in_progress":
+            case 'pending in_progress':
               // The referee account has not yet been activated by the admin. Still in Standby
               // Kill his session
 
               this.resetState();
               break;
-            case "yes active":
+            case 'yes active':
               // The referee is active and ready to go
               // this.router.navigate(['user/' + res.user.id + '/account']);
               break;
-            case "yes locked":
+            case 'yes locked':
               // The referee account is suspended due to failed login attempts
               // Kill his session
 
               this.resetState();
               break;
-            case "no banned":
+            case 'no banned':
               // The referee account is disabled by the admin
               // Kill his session
 
@@ -95,15 +95,15 @@ export class AuthService {
           }
           return login;
         },
-        error => console.log("Error MSG: ", error)
+        error => console.log('Error MSG: ', error)
       );
   }
 
   logout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     this.resetState();
     this.setCurrentUser(null);
-    this.router.navigate(["/"]);
+    this.router.navigate(['/']);
   }
 
   resetpassword(payload) {
@@ -116,7 +116,7 @@ export class AuthService {
   setCurrentUser(setter) {
     this.resetState();
     this.tokenService.setOptions(null);
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
 
     if (setter) {
       const newUser = setter.user;
@@ -129,16 +129,16 @@ export class AuthService {
       this.currentUser.firstname = setter.user.firstname;
       this.currentUser.lastname = setter.user.lastname;
 
-      if (setter.user.can_organize === "yes") {
-        this.currentUser.role = "Organizer";
+      if (setter.user.can_organize === 'yes') {
+        this.currentUser.role = 'Organizer';
       }
-      if (setter.user.can_referee === "yes") {
-        this.currentUser.role = "Referee";
+      if (setter.user.can_referee === 'yes') {
+        this.currentUser.role = 'Referee';
       }
       // ============================
       this.isAdmin = authorization === 1 || authorization === 2;
       this.tokenService.setOptions(setter.token);
-      localStorage.setItem("user", JSON.stringify(setter));
+      localStorage.setItem('user', JSON.stringify(setter));
     }
   }
 }

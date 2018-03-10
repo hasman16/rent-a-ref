@@ -7,15 +7,11 @@ import * as $ from 'jquery';
   styleUrls: ['./how-it-works.component.scss']
 })
 export class HowItWorksComponent implements OnInit {
-
-  constructor() { 
-     $(document).ready(function () {
+  constructor() {
+    $(document).ready(function() {
       //alert('testing');
- 
-      });
+    });
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

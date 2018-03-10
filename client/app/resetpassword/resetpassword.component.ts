@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder
+} from '@angular/forms';
 
 import { AuthService } from '../services/auth.service';
 import { ToastComponent } from '../shared/toast/toast.component';
-
 
 @Component({
   selector: 'app-reset-password',
@@ -13,10 +17,14 @@ import { ToastComponent } from '../shared/toast/toast.component';
 })
 export class ResetPasswordComponent implements OnInit {
   resetPasswordForm: FormGroup;
-  password1 = new FormControl('', [<any>Validators.required,
-  <any>Validators.minLength(6)]);
-  password2 = new FormControl('', [<any>Validators.required,
-  <any>Validators.minLength(6)]);
+  password1 = new FormControl('', [
+    <any>Validators.required,
+    <any>Validators.minLength(6)
+  ]);
+  password2 = new FormControl('', [
+    <any>Validators.required,
+    <any>Validators.minLength(6)
+  ]);
   passcode = new FormControl('');
 
   constructor(
@@ -24,9 +32,8 @@ export class ResetPasswordComponent implements OnInit {
     private auth: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    public toast: ToastComponent) {
-
-  }
+    public toast: ToastComponent
+  ) {}
 
   ngOnInit() {
     let hasPasscode: boolean;
@@ -36,10 +43,9 @@ export class ResetPasswordComponent implements OnInit {
       this.router.navigate(['/']);
     }
 
-    this.route.params
-      .subscribe((params) => {
-        passcodeParam = params['passcode']
-      });
+    this.route.params.subscribe(params => {
+      passcodeParam = params['passcode'];
+    });
 
     hasPasscode = passcodeParam != undefined;
 
@@ -66,12 +72,12 @@ export class ResetPasswordComponent implements OnInit {
 
   resetPassword() {
     this.auth.resetpassword(this.resetPasswordForm.value).subscribe(
-      (res) => {
+      res => {
         const user = res.user;
       },
-      (error) => {
+      error => {
         this.toast.setMessage('Failed to reset password!', 'danger');
-      });
+      }
+    );
   }
-
 }

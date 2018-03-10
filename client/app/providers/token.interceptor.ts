@@ -12,12 +12,14 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor(public tokenService: TokenService) {}
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     let newRequest = request.clone({
       headers: this.tokenService.getHeaders()
     });
-    
+
     return next.handle(newRequest);
   }
 }

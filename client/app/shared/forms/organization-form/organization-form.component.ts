@@ -1,7 +1,19 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
-import { StatesService, State, Option } from './../../../services/states.service';
+import {
+  StatesService,
+  State,
+  Option
+} from './../../../services/states.service';
 import { BaseFormComponent } from './../../formly/base-form/base-form.component';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
@@ -13,14 +25,16 @@ import * as _ from 'lodash';
 })
 export class OrganizationFormComponent implements AfterViewInit, OnInit {
   @ViewChild(BaseFormComponent) baseForm: BaseFormComponent;
-  @Input('model') set aModel(model: any) {
+  @Input('model')
+  set aModel(model: any) {
     this.model = _.cloneDeep(model);
-  };
+  }
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
-  @Output('ngCancel') cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output('ngCancel')
+  cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   protected model: any = {};
-  protected modeName: string = "Create Organization"
+  protected modeName: string = 'Create Organization';
   protected fields: FormlyFieldConfig[];
   protected disable: boolean = true;
   protected states: Option[];
@@ -45,12 +59,12 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
               required: true,
               minLength: 5,
               pattern: /\w+[a-zA-Z0-9]/
-            },
+            }
           }
-        ],
+        ]
       },
       {
-        template: '<hr class="space-hr" /><div><strong>Address</strong></div>',
+        template: '<hr class="space-hr" /><div><strong>Address</strong></div>'
       },
       {
         key: 'addresses',
@@ -58,7 +72,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
         fieldArray: {
           fieldGroupClassName: 'row',
           templateOptions: {
-            btnText: 'Add Address',
+            btnText: 'Add Address'
           },
           fieldGroup: [
             {
@@ -67,8 +81,8 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
               key: 'line1',
               templateOptions: {
                 label: 'Street 1',
-                required: true,
-              },
+                required: true
+              }
             },
             {
               type: 'input',
@@ -76,8 +90,8 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
               className: 'col-sm-3',
               templateOptions: {
                 type: 'text',
-                label: 'Street 2',
-              },
+                label: 'Street 2'
+              }
             },
             {
               type: 'input',
@@ -86,7 +100,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
               templateOptions: {
                 label: 'City',
                 required: true
-              },
+              }
             },
             {
               type: 'select',
@@ -96,7 +110,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
                 label: 'State',
                 options: _.cloneDeep(this.states),
                 required: true
-              },
+              }
             },
             {
               type: 'input',
@@ -106,21 +120,21 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
                 label: 'Zip',
                 required: true,
                 pattern: /\d{5}(\-\d{4})?/
-              },
+              }
             },
             {
               type: 'input',
               key: 'country',
               className: 'col-sm-12',
               templateOptions: {
-                label: 'Country',
-              },
+                label: 'Country'
+              }
             }
-          ],
-        },
+          ]
+        }
       },
       {
-        template: '<hr class="space-hr" /><div><strong>Phones</strong></div>',
+        template: '<hr class="space-hr" /><div><strong>Phones</strong></div>'
       },
       {
         key: 'phones',
@@ -128,7 +142,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
         fieldArray: {
           fieldGroupClassName: 'row',
           templateOptions: {
-            btnText: 'Add Phone',
+            btnText: 'Add Phone'
           },
           fieldGroup: [
             {
@@ -155,11 +169,11 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
                 label: 'Number',
                 pattern: /(\d{3}-\d{3}-\d{4}|\d{10,})/,
                 required: true
-              },
+              }
             }
-          ],
-        },
-      },
+          ]
+        }
+      }
     ];
   }
 
@@ -171,7 +185,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
     this.submitter.emit(model);
   }
 
-  onCancel(event:MouseEvent): void {
+  onCancel(event: MouseEvent): void {
     this.cancelSubmitter.emit(true);
   }
 }

@@ -2,10 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Params, Router, Data } from '@angular/router';
 
-import { AuthService, CanComponentDeactivate, ProfileService, UserService } from '../services/index';
+import {
+  AuthService,
+  CanComponentDeactivate,
+  ProfileService,
+  UserService
+} from '../services/index';
+import {
+  Address,
+  Person,
+  Phone,
+  Profile,
+  User
+} from './../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { ToastComponent } from '../shared/toast/toast.component';
-
 
 @Component({
   selector: 'app-admin',
@@ -13,25 +24,30 @@ import { ToastComponent } from '../shared/toast/toast.component';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit, CanComponentDeactivate {
-  data = {};
-  user = {};
-  users = [];
-  person = {};
-  addresses = [];
-  phones = [];
-  available = {};
-  middlenameFlag = false;
-  isLoading = true;
-  allowEdit = false;
-  constructor(public auth: AuthService,
-    public toast: ToastComponent, private profileService: ProfileService, private router: Router,
-    private userService: UserService) { }
+  protected data: Profile = <Profile>{};
+  protected user: Profile = <Profile>{};
+  protected users: Profile[] = [];
+  protected person: Person = <Person>{};
+  protected addresses: Address[] = [];
+  protected phones: Phone[] = [];
+  protected available: any = {};
+  protected middlenameFlag: boolean = false;
+  protected isLoading: boolean = true;
+  protected allowEdit: boolean = false;
+
+  constructor(
+    public auth: AuthService,
+    public toast: ToastComponent,
+    private profileService: ProfileService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.getProfile();
     this.isLoading = false;
   }
-  
+
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (!this.allowEdit) {
       return true;
@@ -53,9 +69,15 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
-          console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
+          console.log(
+            'A client-side or network error occurred for the Profile',
+            this.auth.loggedIn
+          );
         } else {
-          console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
+          console.log(
+            'The backend returned an unsuccessful response code for the profile',
+            this.auth.loggedIn
+          );
         }
         this.isLoading = false;
       }
@@ -80,13 +102,14 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
   }
 
   deleteUser(user) {
-    this.userService.deleteUser(user).subscribe(
-      data => this.toast.setMessage('user deleted successfully.', 'success'),
-      error => console.log(error),
-      () => this.getUsers()
-    );
+    this.userService
+      .deleteUser(user)
+      .subscribe(
+        data => this.toast.setMessage('user deleted successfully.', 'success'),
+        error => console.log(error),
+        () => this.getUsers()
+      );
   }
-
 
   callSuccess(res) {
     this.toast.setMessage(res.message, 'success');

@@ -1,17 +1,37 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, EmailValidator, ReactiveFormsModule } from '@angular/forms';
-import { ToastComponent } from './../../shared/toast/toast.component';
-import { AuthService, Option, OrganizeService, State, StatesService, UserService } from './../../services/index';
-import { Address, BaseModel, Phone, Organization, Profile, Sport } from './../../shared/models/index';
-import { Observable } from 'rxjs/Observable';
-import * as _ from 'lodash';
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  EmailValidator,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
+import { ToastComponent } from './../../shared/toast/toast.component';
+import {
+  AuthService,
+  Option,
+  OrganizeService,
+  State,
+  StatesService,
+  UserService
+} from './../../services/index';
+import {
+  Address,
+  BaseModel,
+  Phone,
+  Organization,
+  Profile,
+  Sport
+} from './../../shared/models/index';
+
+import * as _ from 'lodash';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
-
-import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
   selector: 'rr-events',
@@ -19,7 +39,8 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
-  @Input() set country(aCountry: string) {
+  @Input()
+  set country(aCountry: string) {
     this.countryName = aCountry || 'usa';
   }
   protected countryName: string;
@@ -27,7 +48,7 @@ export class EventsComponent implements OnInit {
   protected form = new FormGroup({});
   protected model: any = {};
   protected currentModel: any = {};
-  protected options: FormlyFormOptions = {};
+  protected options: FormlyFormOptions = <FormlyFormOptions>{};
   protected fields: FormlyFieldConfig[];
 
   protected sports: Sport[];
@@ -36,22 +57,21 @@ export class EventsComponent implements OnInit {
 
   protected isEditing: boolean = false;
 
-  constructor(private auth: AuthService,
+  constructor(
+    private auth: AuthService,
     public toast: ToastComponent,
     private route: ActivatedRoute,
     private router: Router,
     private statesService: StatesService,
-    private organizeService: OrganizeService) {
-  }
+    private organizeService: OrganizeService
+  ) {}
 
   getSports() {
-    this.organizeService
-      .getSports()
-      .subscribe((sports: Sport[]) => {
-        console.log('EventsComponent sports:', sports);
-        this.sports = sports;
-        this.generateForm();
-      });
+    this.organizeService.getSports().subscribe((sports: Sport[]) => {
+      console.log('EventsComponent sports:', sports);
+      this.sports = sports;
+      this.generateForm();
+    });
   }
 
   ngOnInit() {
@@ -83,12 +103,12 @@ export class EventsComponent implements OnInit {
               required: true,
               minLength: 5,
               pattern: /\w+[a-zA-Z0-9]/
-            },
+            }
           }
-        ],
+        ]
       },
       {
-        template: '<hr class="space-hr" />',
+        template: '<hr class="space-hr" />'
       },
       {
         fieldGroupClassName: 'row',
@@ -131,11 +151,11 @@ export class EventsComponent implements OnInit {
               ]
             }
           }
-        ],
+        ]
       },
 
       {
-        template: '<hr class="space-hr" /><div><strong>Address</strong></div>',
+        template: '<hr class="space-hr" /><div><strong>Address</strong></div>'
       },
       {
         fieldGroupClassName: 'row',
@@ -146,7 +166,7 @@ export class EventsComponent implements OnInit {
             key: 'line1',
             templateOptions: {
               label: 'Street 1',
-              required: true,
+              required: true
             }
           },
           {
@@ -155,7 +175,7 @@ export class EventsComponent implements OnInit {
             className: 'col-sm-3',
             templateOptions: {
               type: 'text',
-              label: 'Street 2',
+              label: 'Street 2'
             }
           },
           {
@@ -185,13 +205,12 @@ export class EventsComponent implements OnInit {
               label: 'Zip',
               required: true,
               pattern: /\d{5}(\-\d{4})?/
-            },
+            }
           }
         ]
       }
     ];
   }
 
-  setOrganizeMode(): void {
-  }
+  setOrganizeMode(): void {}
 }

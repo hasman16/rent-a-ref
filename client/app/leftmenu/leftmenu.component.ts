@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-leftmenu',
-  templateUrl: './leftmenu.component.html',
-  styleUrls: ['./leftmenu.component.scss']
+	selector: 'app-leftmenu',
+	templateUrl: './leftmenu.component.html',
+	styleUrls: ['./leftmenu.component.scss']
 })
 export class LeftmenuComponent implements OnInit {
+	constructor() {}
 
-  constructor() { }
+	ngOnInit() {}
 
-  ngOnInit() {
-  }
-  
-  toggleMenu() {
-    console.log('toggle called!');
-  }
+	toggleMenu() {
+		console.log('toggle called!');
+	}
 }

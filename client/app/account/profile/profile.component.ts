@@ -1,15 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router, Data } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+  EmailValidator
+} from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
-import { AuthService, CanComponentDeactivate, ProfileService, UserService } from '../../services/index';
+import {
+  AuthService,
+  CanComponentDeactivate,
+  ProfileService,
+  UserService
+} from '../../services/index';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
 //Models
-import { Address, Person, Phone, Profile, User } from './../../shared/models/index';
-import * as _ from "lodash";
+import {
+  Address,
+  Person,
+  Phone,
+  Profile,
+  User
+} from './../../shared/models/index';
+
+import { Observable } from 'rxjs/Observable';
+import * as _ from 'lodash';
 import * as moment from 'moment';
 
 // End
@@ -19,39 +37,42 @@ import * as moment from 'moment';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, CanComponentDeactivate {
-  protected data:Profile = <Profile>{};
-  protected user:User = <User>{};
-  protected person:Person = <Person>{};
+  protected data: Profile = <Profile>{};
+  protected user: User = <User>{};
+  protected person: Person = <Person>{};
 
   protected addresses: Address[];
   protected dummyAddress: Address = <Address>{};
   protected phones: Phone[];
   protected dummyPhone: Phone = <Phone>{};
-  protected available = {};
-  protected isLoading = true;
-  protected allowEdit = false;
-  protected middlenameFlag = false;
+  protected available: any = {};
+  protected isLoading: boolean = true;
+  protected allowEdit: boolean = false;
+  protected middlenameFlag: boolean = false;
 
-  protected abort = false;
-  protected divPassword = false;
-  protected editBio = false;
-  protected editPassword = false;
+  protected abort: boolean = false;
+  protected divPassword: boolean = false;
+  protected editBio: boolean = false;
+  protected editPassword: boolean = false;
 
-  protected editPhone = false;
-  protected currentPhone = 0;
+  protected editPhone: boolean = false;
+  protected currentPhone: number = 0;
 
-  protected editAddress = false;
-  protected currentAddress = 0;
+  protected editAddress: boolean = false;
+  protected currentAddress: number = 0;
 
-  protected birthday = '';
+  protected birthday: string = '';
 
-  constructor(private route: ActivatedRoute,
-    private router: Router, private auth: AuthService,
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private auth: AuthService,
     private profileService: ProfileService,
-    private userService: UserService) {
-      this.addresses = [];
-      this.phones = [];
-   }
+    private userService: UserService
+  ) {
+    this.addresses = [];
+    this.phones = [];
+  }
 
   ngOnInit() {
     this.getProfile();
@@ -92,9 +113,15 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
-          console.log('A client-side or network error occurred for the Profile', this.auth.loggedIn);
+          console.log(
+            'A client-side or network error occurred for the Profile',
+            this.auth.loggedIn
+          );
         } else {
-          console.log('The backend returned an unsuccessful response code for the profile', this.auth.loggedIn);
+          console.log(
+            'The backend returned an unsuccessful response code for the profile',
+            this.auth.loggedIn
+          );
         }
         this.isLoading = false;
         if (!this.auth.loggedIn) {

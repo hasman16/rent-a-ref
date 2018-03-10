@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService, UserService } from '../../../services/index';
 //Models
-import { Address, Person, Phone, Profile, User } from './../../../shared/models/index';
+import {
+  Address,
+  Person,
+  Phone,
+  Profile,
+  User
+} from './../../../shared/models/index';
 
 @Component({
   selector: 'app-standby',
@@ -11,10 +16,10 @@ import { Address, Person, Phone, Profile, User } from './../../../shared/models/
   styleUrls: ['./standby.component.scss']
 })
 export class StandbyComponent implements OnInit {
-  protected user:User = <User>{};
-  protected person:Person = <Person>{};
+  protected user: User = <User>{};
+  protected person: Person = <Person>{};
 
-  constructor(private auth: AuthService, private userService: UserService) { }
+  constructor(private auth: AuthService, private userService: UserService) {}
 
   ngOnInit() {
     this.getProfile();
@@ -22,7 +27,7 @@ export class StandbyComponent implements OnInit {
 
   getProfile() {
     this.userService.getProfile(this.auth.currentUser.id).subscribe(
-      (res:Profile) => {
+      (res: Profile) => {
         this.user = {
           id: String(res.id),
           email: res.email,
@@ -41,10 +46,13 @@ export class StandbyComponent implements OnInit {
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
-          console.log('A client-side or network error occurred for the Profile');
+          console.log(
+            'A client-side or network error occurred for the Profile'
+          );
         } else {
-          console.log('The backend returned an unsuccessful response code for the profile');
-
+          console.log(
+            'The backend returned an unsuccessful response code for the profile'
+          );
         }
         // this.isLoading = false;
         if (!this.auth.loggedIn) {

@@ -1,6 +1,11 @@
-import { Component, EventEmitter, Output, OnInit, Directive } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  OnInit,
+  Directive
+} from '@angular/core';
 import { AuthService } from '../services/auth.service';
-
 
 @Component({
   selector: 'app-header',
@@ -8,10 +13,9 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
   @Output() featureSelected = new EventEmitter<string>();
   // This featureSelected would be use in the app.component.html
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService) {}
 
   ngOnInit() {
     // Check if session valid
@@ -23,6 +27,4 @@ export class HeaderComponent implements OnInit {
   onSelect(feature: string) {
     this.featureSelected.emit(feature);
   }
-
 }
-

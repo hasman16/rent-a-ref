@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastComponent } from '../shared/toast/toast.component';
-import { AuthService, UserService } from '../services/index';
-//import { ActivatedRoute, Params, Router, Data } from '@angular/router';
-import { CanComponentDeactivate } from './../services/can-deactivate-guard.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import {
+  AuthService,
+  CanComponentDeactivate,
+  UserService
+} from '../services/index';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -13,13 +15,14 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./referee.component.scss']
 })
 export class RefereeComponent implements OnInit, CanComponentDeactivate {
-
-  users = [];
-  isLoading = true;
-  allowEdit = false;
-  constructor(public auth: AuthService,
+  protected users = [];
+  protected isLoading: boolean = true;
+  protected allowEdit: boolean = false;
+  constructor(
+    public auth: AuthService,
     public toast: ToastComponent,
-    private userService: UserService) { }
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.getUsers();
@@ -30,7 +33,7 @@ export class RefereeComponent implements OnInit, CanComponentDeactivate {
       return true;
     }
   }
-  
+
   getUsers() {
     this.userService.getUsers().subscribe(
       res => this.callSuccess(res),
@@ -41,11 +44,13 @@ export class RefereeComponent implements OnInit, CanComponentDeactivate {
   }
 
   deleteUser(user) {
-    this.userService.deleteUser(user).subscribe(
-      data => this.toast.setMessage('user deleted successfully.', 'success'),
-      error => console.log(error),
-      () => this.getUsers()
-    );
+    this.userService
+      .deleteUser(user)
+      .subscribe(
+        data => this.toast.setMessage('user deleted successfully.', 'success'),
+        error => console.log(error),
+        () => this.getUsers()
+      );
   }
 
   callSuccess(res) {

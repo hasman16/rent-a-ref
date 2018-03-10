@@ -12,12 +12,7 @@ import { PasswordresetComponent } from '../account/profile/passwordreset/passwor
 // import { RichGridComponent } from '../rich-grid-example/rich-grid.component';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpModule
-  ],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
   exports: [
     // Shared Modules
     BrowserModule,
@@ -36,8 +31,6 @@ import { PasswordresetComponent } from '../account/profile/passwordreset/passwor
     StandbyComponent,
     PasswordresetComponent
   ],
-  providers: [
-    ToastComponent
-  ]
+  providers: [ToastComponent]
 })
-export class SharedModule { }
+export class SharedModule {}

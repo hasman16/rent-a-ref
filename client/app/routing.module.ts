@@ -57,37 +57,53 @@ const routes: Routes = [
   { path: 'passwordreset', component: PasswordresetComponent },
   { path: 'reset', component: ResetComponent },
   {
-    path: 'account/:id', component: AccountComponent, canActivate: [AuthGuardLogin]
+    path: 'account/:id',
+    component: AccountComponent,
+    canActivate: [AuthGuardLogin]
   },
   {
-    path: 'account/:id/schedule', component: ScheduleComponent, canActivate: [AuthGuardLogin]
+    path: 'account/:id/schedule',
+    component: ScheduleComponent,
+    canActivate: [AuthGuardLogin]
   },
   {
-    path: 'organizer/:id', component: OrganizeComponent, canActivate: [AuthGuardLogin]
+    path: 'organizer/:id',
+    component: OrganizeComponent,
+    canActivate: [AuthGuardLogin]
   },
   {
-    path: 'organizer/events/:id', component: EventsComponent, canDeactivate: [CanDeactivateGuardService]
+    path: 'organizer/events/:id',
+    component: EventsComponent,
+    canDeactivate: [CanDeactivateGuardService]
   },
   {
-    path: 'account/profile/:id', component: ProfileComponent, canDeactivate: [CanDeactivateGuardService],
-    children: [
-      { path: 'edit-profile', component: EditProfileComponent }
-    ]
+    path: 'account/profile/:id',
+    component: ProfileComponent,
+    canDeactivate: [CanDeactivateGuardService],
+    children: [{ path: 'edit-profile', component: EditProfileComponent }]
   },
   { path: 'account/standby/:id', component: StandbyComponent },
   { path: 'account/suspended/:id', component: SuspendedComponent },
   { path: 'account/deactivated/:id', component: DeactivatedComponent },
-  { path: 'account/admin/:id', component: AdminComponent, canActivate: [AuthGuardAdmin], canDeactivate: [CanDeactivateGuardService] },
+  {
+    path: 'account/admin/:id',
+    component: AdminComponent,
+    canActivate: [AuthGuardAdmin],
+    canDeactivate: [CanDeactivateGuardService]
+  },
   { path: 'officials', component: RefereeComponent },
   { path: 'games', component: GamesComponent },
   { path: 'notfound', component: NotFoundComponent },
-  { path: '**', redirectTo: '/notfound' },
+  { path: '**', redirectTo: '/notfound' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true } // For debugging purposes only
-  )],
+  imports: [
+    RouterModule.forRoot(
+      routes,
+      { enableTracing: true } // For debugging purposes only
+    )
+  ],
   exports: [RouterModule]
 })
-
-export class RoutingModule { }
+export class RoutingModule {}

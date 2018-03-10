@@ -1,19 +1,26 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  AbstractControl,
+  Validators,
+  FormBuilder,
+  EmailValidator
+} from '@angular/forms';
 import * as moment from 'moment';
 
 import { ToastComponent } from '../../../shared/toast/toast.component';
-import { AuthService } from '../../../services/auth.service';
-import { ProfileService } from '../../../services/profile.service';
-import { StatesService } from '../../../services/states.service';
-import { UserService } from '../../../services/user.service';
+import {
+  AuthService,
+  ProfileService,
+  StatesService,
+  UserService
+} from '../../../services/index';
 
-import { Address } from '../../../shared/models/address';
 import { compareFields } from '../../../shared/compareFields';
-import { Phone } from '../../../shared/models/phone';
-import { Bio } from '../../../shared/models/bio';
+import { Address, Bio, Phone, User } from '../../../shared/models/index';
 
 @Component({
   selector: 'app-edit-profile',
@@ -21,69 +28,80 @@ import { Bio } from '../../../shared/models/bio';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
-  messages: any = {
-    'password': 'Change Your Password',
-    'bio': 'Update Your Information',
-    'phone': 'Update Your Phones',
-    'address': 'Update Your Address',
-    'zone': 'Update Your Available Zone',
-    'payment': 'Update Your Payment'
+  private messages: any = {
+    password: 'Change Your Password',
+    bio: 'Update Your Information',
+    phone: 'Update Your Phones',
+    address: 'Update Your Address',
+    zone: 'Update Your Available Zone',
+    payment: 'Update Your Payment'
   };
 
-  password: '';
-  message = '';
-  divPasswordFlag = false;
-  divBioFlag = false;
-  divPhoneFlag = false;
+  password: string = '';
+  message: string = '';
+  divPasswordFlag: boolean = false;
+  divBioFlag: boolean = false;
+  divPhoneFlag: boolean = false;
 
-  divAddressFlag = false;
-  divZoneFlag = false;
-  divPaymentFlag = false;
+  divAddressFlag: boolean = false;
+  divZoneFlag: boolean = false;
+  divPaymentFlag: boolean = false;
 
-  paypalFlag = false;
-  checkFlag = false;
-  ccFlag = false;
-  paypal = '';
+  paypalFlag: boolean = false;
+  checkFlag: boolean = false;
+  ccFlag: boolean = false;
+  paypal: boolean = '';
 
-  user = { id: '', email: '', can_referee: '', can_organize: '', status: '' };
+  user: User = <User>{};
   // person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
 
   person: Bio;
 
   address: Address;
-  addresses: Address[] =[];
-  phones:Phone[]=[];
+  addresses: Address[] = [];
+  phones: Phone[] = [];
   phone: Phone;
   area: Address;
-  areas:Address[] = [];
+  areas: Address[] = [];
 
-  isLoading = true;
+  isLoading: boolean = true;
 
   states;
-  abort = false;
+  abort: boolean = false;
 
-  public showDivreset = false;
-  public showDivbio = false;
-  public showDivPhone = false;
-  public showDivAddress = false;
-  public showDivZone = false;
-  public showDivPayment = false;
+  public showDivreset: boolean = false;
+  public showDivbio: boolean = false;
+  public showDivPhone: boolean = false;
+  public showDivAddress: boolean = false;
+  public showDivZone: boolean = false;
+  public showDivPayment: boolean = false;
 
   passwordForm: FormGroup;
   paymentForm: FormGroup;
   alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
   zipRegex: '^\\d{5}(?:[ -]{1}\\d{4})?$';
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  email: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.email
+  ]);
 
-  paypalinfo = new FormControl('', [<any>Validators.nullValidator]);
-  check = new FormControl('', [<any>Validators.nullValidator]);
-  ccinfo = new FormControl('', [<any>Validators.nullValidator]);
+  paypalinfo: FormControl = new FormControl('', [
+    <any>Validators.nullValidator
+  ]);
+  check: FormControl = new FormControl('', [<any>Validators.nullValidator]);
+  ccinfo: FormControl = new FormControl('', [<any>Validators.nullValidator]);
 
-  constructor(private formBuilder: FormBuilder, private auth: AuthService,
-    public toast: ToastComponent, private profileService: ProfileService,
-    private userService: UserService, private route: ActivatedRoute,
-    private router: Router, private statesService: StatesService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private auth: AuthService,
+    public toast: ToastComponent,
+    private profileService: ProfileService,
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private statesService: StatesService
+  ) {
     this.subscribeToParams(route);
   }
 
@@ -96,36 +114,35 @@ export class EditProfileComponent implements OnInit {
       ccinfo: this.ccinfo
     });
 
-    route.queryParams.subscribe(
-      data => {
-        this.resetDivs();
-        this.user = this.profileService.getData();
-        let action = '';
-        if (data['divPassword'] === 'password') {
-          action = 'password';
-          this.divPasswordFlag = true;
-          this.showDivreset = true;
-        } else if (data['divBio'] === 'bio') {
-          action = 'bio';
-          this.person = this.profileService.getPerson();
-          this.divBioFlag = true;
-          this.showDivbio = true;
-        } else if (data['divPhone'] !== undefined) {
-          action = 'phone';
-          this.createPhoneForm(data);
-        } else if (data['divAddress'] !== undefined) {
-          action = 'address';
-          this.createAddressForm(data);
-        } else if (data['divZone'] !== undefined) {
-          action = 'zone';
-          this.createZoneForm(data);
-        } else if (data['divPayment'] === 'payment') {
-          action = 'payment';
-          this.divPaymentFlag = true;
-          this.showDivPayment = true;
-        }
-        this.message = this.messages[action];
-      });
+    route.queryParams.subscribe(data => {
+      this.resetDivs();
+      this.user = this.profileService.getData();
+      let action = '';
+      if (data['divPassword'] === 'password') {
+        action = 'password';
+        this.divPasswordFlag = true;
+        this.showDivreset = true;
+      } else if (data['divBio'] === 'bio') {
+        action = 'bio';
+        this.person = this.profileService.getPerson();
+        this.divBioFlag = true;
+        this.showDivbio = true;
+      } else if (data['divPhone'] !== undefined) {
+        action = 'phone';
+        this.createPhoneForm(data);
+      } else if (data['divAddress'] !== undefined) {
+        action = 'address';
+        this.createAddressForm(data);
+      } else if (data['divZone'] !== undefined) {
+        action = 'zone';
+        this.createZoneForm(data);
+      } else if (data['divPayment'] === 'payment') {
+        action = 'payment';
+        this.divPaymentFlag = true;
+        this.showDivPayment = true;
+      }
+      this.message = this.messages[action];
+    });
   }
 
   createAddressForm(data) {
@@ -150,7 +167,7 @@ export class EditProfileComponent implements OnInit {
       return Number(phone.id) === phoneId;
     });
 
-    this.phone = phone as Phone;
+    this.phone = <Phone>phone;
 
     this.divPhoneFlag = true;
     this.showDivPhone = true;
@@ -164,7 +181,7 @@ export class EditProfileComponent implements OnInit {
       return Number(area.id) === areaId;
     });
 
-    this.area = area as Address;
+    this.area = <Address>area;
 
     this.divZoneFlag = true;
     this.showDivZone = true;
@@ -175,10 +192,12 @@ export class EditProfileComponent implements OnInit {
   }
 
   save(user) {
-    this.userService.editUser(user).subscribe(
-      res => this.toast.setMessage('account settings saved!', 'success'),
-      error => console.log(error)
-    );
+    this.userService
+      .editUser(user)
+      .subscribe(
+        res => this.toast.setMessage('account settings saved!', 'success'),
+        error => console.log(error)
+      );
   }
 
   onCancel() {
@@ -205,7 +224,10 @@ export class EditProfileComponent implements OnInit {
     this.onCancel();
   }
 
-  callFailure(err: HttpErrorResponse, message = 'This email address does not exists') {
+  callFailure(
+    err: HttpErrorResponse,
+    message = 'This email address does not exists'
+  ) {
     if (err.error instanceof Error) {
       // A client-side or network error occurred. Handle it accordingly.
       this.toast.setMessage(message, 'danger');
@@ -262,14 +284,16 @@ export class EditProfileComponent implements OnInit {
   }
 
   updateAddress(newAddress: Address) {
-    this.userService.updateAddress(newAddress, this.user.id, this.address.id).subscribe(
-      res => this.callSuccess(res),
-      (err: HttpErrorResponse) => {
-        this.callFailure(err);
-        this.divAddressFlag = true;
-        this.showDivAddress = true;
-      }
-    );
+    this.userService
+      .updateAddress(newAddress, this.user.id, this.address.id)
+      .subscribe(
+        res => this.callSuccess(res),
+        (err: HttpErrorResponse) => {
+          this.callFailure(err);
+          this.divAddressFlag = true;
+          this.showDivAddress = true;
+        }
+      );
   }
 
   onPhoneSubmit(newPhone: Phone) {
@@ -292,36 +316,35 @@ export class EditProfileComponent implements OnInit {
   }
 
   updatePhone(newPhone: Phone) {
-    this.userService.updatePhone(newPhone, this.user.id, this.phone.id).subscribe(
-      res => this.callSuccess(res),
-      (err: HttpErrorResponse) => {
-        this.callFailure(err);
-        this.divPhoneFlag = true;
-        this.showDivPhone = true;
-      }
-    );
+    this.userService
+      .updatePhone(newPhone, this.user.id, this.phone.id)
+      .subscribe(
+        res => this.callSuccess(res),
+        (err: HttpErrorResponse) => {
+          this.callFailure(err);
+          this.divPhoneFlag = true;
+          this.showDivPhone = true;
+        }
+      );
   }
 
   onZoneSubmit(newZone: Address) {
-    this.userService.updateZone(newZone, this.user.id).subscribe(
-      this.callSuccess,
-      (err: HttpErrorResponse) => {
+    this.userService
+      .updateZone(newZone, this.user.id)
+      .subscribe(this.callSuccess, (err: HttpErrorResponse) => {
         this.callFailure(err);
         this.divZoneFlag = true;
         this.showDivZone = true;
-      }
-    );
+      });
   }
 
   onPaymentSubmit() {
-    this.userService.updatePayment(this.paymentForm.value, this.user).subscribe(
-      this.callSuccess,
-      (err: HttpErrorResponse) => {
+    this.userService
+      .updatePayment(this.paymentForm.value, this.user)
+      .subscribe(this.callSuccess, (err: HttpErrorResponse) => {
         this.callFailure(err);
         this.divPaymentFlag = true;
         this.showDivPayment = true;
-      }
-    );
+      });
   }
-
 }

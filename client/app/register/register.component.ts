@@ -12,114 +12,115 @@ import { ToastComponent } from '../shared/toast/toast.component';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-
 export class RegisterComponent {
-  protected form = new FormGroup({});
+  protected form: FormGroup = new FormGroup({});
   protected model: any = {};
-  protected options: FormlyFormOptions = {};
+  protected options: FormlyFormOptions = <FormlyFormOptions>{};
   protected fields: FormlyFieldConfig[];
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     public toast: ToastComponent,
-    private userService: UserService) { }
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
-    this.fields = [{
-      key: 'firstname',
-      type: 'horizontalInput',
-      templateOptions: {
-        type: 'text',
-        label: 'Firstname',
-        placeholder: 'Firstname',
-        required: true
-      }
-    },
-    {
-      key: 'lastname',
-      type: 'horizontalInput',
-      templateOptions: {
-        type: 'text',
-        label: 'Lastname',
-        placeholder: 'Lastname',
-        required: true
-      }
-    },
-    {
-      key: 'email',
-      type: 'horizontalInput',
-      templateOptions: {
-        type: 'email',
-        label: 'Email address',
-        placeholder: 'Enter email',
-        required: true,
-        minLength: 5
-      }
-    },
-    {
-      key: 'repeatemail',
-      type: 'horizontalInput',
-      templateOptions: {
-        type: 'email',
-        label: 'Repeat email address',
-        placeholder: 'Re-enter email',
-        required: true
+    this.fields = [
+      {
+        key: 'firstname',
+        type: 'horizontalInput',
+        templateOptions: {
+          type: 'text',
+          label: 'Firstname',
+          placeholder: 'Firstname',
+          required: true
+        }
       },
-      validators: {
-        fieldMatch: {
-          expression: (control) => control.value === this.model.email,
-          message: 'Email address Not Matching',
+      {
+        key: 'lastname',
+        type: 'horizontalInput',
+        templateOptions: {
+          type: 'text',
+          label: 'Lastname',
+          placeholder: 'Lastname',
+          required: true
+        }
+      },
+      {
+        key: 'email',
+        type: 'horizontalInput',
+        templateOptions: {
+          type: 'email',
+          label: 'Email address',
+          placeholder: 'Enter email',
+          required: true,
+          minLength: 5
+        }
+      },
+      {
+        key: 'repeatemail',
+        type: 'horizontalInput',
+        templateOptions: {
+          type: 'email',
+          label: 'Repeat email address',
+          placeholder: 'Re-enter email',
+          required: true
         },
-      },
-      expressionProperties: {
-        'templateOptions.disabled': () => !this.form.get('email').valid,
-      }
-    },
-    {
-      key: 'password',
-      type: 'horizontalInput',
-      templateOptions: {
-        type: 'password',
-        label: 'Password',
-        placeholder: 'Enter password',
-        required: true,
-        minLength: 5
-      }
-    },
-    {
-      key: 'repeatpassword',
-      type: 'horizontalInput',
-      templateOptions: {
-        type: 'password',
-        label: 'Repeat password',
-        placeholder: 'Repeat password',
-        required: true
-      },
-      validators: {
-        fieldMatch: {
-          expression: (control) => control.value === this.model.password,
-          message: 'Password Not Matching',
+        validators: {
+          fieldMatch: {
+            expression: control => control.value === this.model.email,
+            message: 'Email address Not Matching'
+          }
         },
+        expressionProperties: {
+          'templateOptions.disabled': () => !this.form.get('email').valid
+        }
       },
-      expressionProperties: {
-        'templateOptions.disabled': () => !this.form.get('password').valid,
+      {
+        key: 'password',
+        type: 'horizontalInput',
+        templateOptions: {
+          type: 'password',
+          label: 'Password',
+          placeholder: 'Enter password',
+          required: true,
+          minLength: 5
+        }
+      },
+      {
+        key: 'repeatpassword',
+        type: 'horizontalInput',
+        templateOptions: {
+          type: 'password',
+          label: 'Repeat password',
+          placeholder: 'Repeat password',
+          required: true
+        },
+        validators: {
+          fieldMatch: {
+            expression: control => control.value === this.model.password,
+            message: 'Password Not Matching'
+          }
+        },
+        expressionProperties: {
+          'templateOptions.disabled': () => !this.form.get('password').valid
+        }
+      },
+      {
+        key: 'phone',
+        type: 'horizontalInput',
+        templateOptions: {
+          type: 'text',
+          label: 'Phone number',
+          placeholder: 'Phone number',
+          required: true
+        }
       }
-    },
-    {
-      key: 'phone',
-      type: 'horizontalInput',
-      templateOptions: {
-        type: 'text',
-        label: 'Phone number',
-        placeholder: 'Phone number',
-        required: true
-      }
-    }
     ];
   }
 
   register(user) {
     let valid: boolean = false;
-    console.log(user);
 
     if (user.email !== user.repeatemail) {
       valid = false;
@@ -132,14 +133,18 @@ export class RegisterComponent {
     }
 
     if (valid) {
-      this.userService.register(user).subscribe(res => {
-        this.toast.setMessage(res.message, 'success');
-        this.router.navigate(['/login']);
-      },
+      this.userService.register(user).subscribe(
+        res => {
+          this.toast.setMessage(res.message, 'success');
+          this.router.navigate(['/login']);
+        },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
             // A client-side or network error occurred. Handle it accordingly.
-            this.toast.setMessage('This email address already exists', 'danger');
+            this.toast.setMessage(
+              'This email address already exists',
+              'danger'
+            );
           } else {
             // The backend returned an unsuccessful response code.
             // The response body may contain clues as to what went wrong,
