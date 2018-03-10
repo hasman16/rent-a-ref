@@ -30,30 +30,27 @@ export class ContactUsComponent implements OnInit {
   ngOnInit() {
     this.fields = [{
       key: 'fullname',
-      type: 'horizontalInput',
+      type: 'input',
       templateOptions: {
-        label: 'Fullname',
-        placeholder: 'John Smith',
+        placeholder: 'Fullname',
         required: true,
         minLength: 5
       }
     },
     {
       key: 'email',
-      type: 'horizontalInput',
+      type: 'input',
       templateOptions: {
         type: 'email',
-        label: 'Email address',
-        placeholder: 'pele@soccer.com',
+        placeholder: 'Email Address',
         required: true,
         minLength: 5
       }
     },
     {
       key: 'subject',
-      type: 'horizontalInput',
+      type: 'input',
       templateOptions: {
-        label: 'Subject',
         placeholder: 'Subject',
         required: true,
         minLength: 5
@@ -61,11 +58,10 @@ export class ContactUsComponent implements OnInit {
     },
     {
       key: 'comment',
-      type: 'horizontalTextarea',
+      type: 'textarea',
       templateOptions: {
         type: 'textarea',
-        label: 'Comment',
-        placeholder: 'Enter comment',
+        placeholder: 'Comment',
         required: true,
         minLength: 5
       }

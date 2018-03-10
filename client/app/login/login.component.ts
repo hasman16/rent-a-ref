@@ -46,22 +46,20 @@ export class LoginComponent implements OnInit {
 
     this.fields = [{
       key: 'email',
-      type: 'horizontalInput',
+      type: 'input',
       templateOptions: {
         type: 'email',
-        label: 'Email address',
-        placeholder: 'pele@soccer.com',
+        placeholder: 'Email Address',
         required: true,
         minLength: 5
       }
     },
     {
       key: 'password',
-      type: 'horizontalInput',
+      type: 'input',
       templateOptions: {
         type: 'password',
-        label: 'Password',
-        placeholder: 'password',
+        placeholder: 'Password',
         required: true,
         minLength: 5
       }

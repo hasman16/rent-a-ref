@@ -1,27 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { UserService } from './user.service';
+import { UserService } from "./user.service";
 
-import { Address, Bio, Phone, Person, Profile } from './../shared/models/index';
+import { Address, Bio, Phone, Person, Profile } from "./../shared/models/index";
 
-import { IAddressService } from '../shared/forms/address-form/address-form.component';
-import { IPhoneService } from './../shared/forms/phone-form/phone-form.component'
+import { IAddressService } from "../shared/forms/address-form/address-form.component";
+import { IPhoneService } from "./../shared/forms/phone-form/phone-form.component";
 
-import { Observable } from 'rxjs/Observable';
-import * as _ from 'lodash';
+import { Observable } from "rxjs/Observable";
+import * as _ from "lodash";
 
 @Injectable()
 export class ProfileService implements IAddressService, IPhoneService {
-  private data:Profile;
+  private data: Profile;
   private person: Person;
   private addresses: Address[];
   private areas: Address[];
   private phones: Phone[];
 
   constructor(private userService: UserService) {
-      this.addresses = [];
-      this.phones = [];
-      this.areas = [];
+    this.addresses = [];
+    this.phones = [];
+    this.areas = [];
   }
 
   getData() {
@@ -45,15 +45,14 @@ export class ProfileService implements IAddressService, IPhoneService {
   }
 
   getProfile(user_id: any) {
-    return this.userService.getProfile(user_id)
-      .map((res) => {
-        this.data = res;
-        this.person = res.person;
-        this.addresses = res.addresses;
-        this.phones = res.phones;
-        this.areas = res.areas;
-        return res;
-      });
+    return this.userService.getProfile(user_id).map(res => {
+      this.data = res;
+      this.person = res.person;
+      this.addresses = res.addresses;
+      this.phones = res.phones;
+      this.areas = res.areas;
+      return res;
+    });
   }
 
   createAddress(newAddress: Address): Observable<Address> {
@@ -61,7 +60,11 @@ export class ProfileService implements IAddressService, IPhoneService {
   }
 
   updateAddress(newAddress: Address): Observable<Address> {
-    return this.userService.updateAddress(newAddress, this.data.id, newAddress.id);
+    return this.userService.updateAddress(
+      newAddress,
+      this.data.id,
+      newAddress.id
+    );
   }
 
   createPhone(newPhone: Phone): Observable<Phone> {

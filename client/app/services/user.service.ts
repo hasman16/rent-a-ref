@@ -1,24 +1,27 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Login, Profile, User } from './../shared/models/index';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Login, Profile, User } from "./../shared/models/index";
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/map';
+import { Observable } from "rxjs/Observable";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import "rxjs/add/operator/map";
 
 @Injectable()
 export class UserService {
   private user: User = <User>{};
   public userStream: Observable<User> = new BehaviorSubject(this.user);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   register(user): Observable<any> {
-    return this.http.post('/api/register', JSON.stringify(user));
+    return this.http.post("/api/register", JSON.stringify(user));
   }
 
   login(credentials): Observable<Login> {
-    return <Observable<Login>>this.http.post('/api/login', JSON.stringify(credentials));
+    return <Observable<Login>>this.http.post(
+      "/api/login",
+      JSON.stringify(credentials)
+    );
   }
 
   getUsers(): Observable<User[]> {
@@ -30,15 +33,18 @@ export class UserService {
   }
 
   resetpassword(credentials): Observable<any> {
-    return this.http.post('/api/resetpassword', JSON.stringify(credentials));
+    return this.http.post("/api/resetpassword", JSON.stringify(credentials));
   }
 
   forgotpassword(email): Observable<any> {
-    return this.http.post('/api/forgotpassword', JSON.stringify(email));
+    return this.http.post("/api/forgotpassword", JSON.stringify(email));
   }
 
   changepassword(passwords, user_id): Observable<any> {
-    return this.http.put(`/api/changepassword/${user_id}`, JSON.stringify(passwords));
+    return this.http.put(
+      `/api/changepassword/${user_id}`,
+      JSON.stringify(passwords)
+    );
   }
 
   editUser(user): Observable<any> {
@@ -50,7 +56,7 @@ export class UserService {
   }
 
   getProfile(user_id: any): Observable<Profile> {
-    return < Observable<Profile>>this.http.get(`/api/profile/${user_id}`);
+    return <Observable<Profile>>this.http.get(`/api/profile/${user_id}`);
   }
 
   getPerson(person_id: any): Observable<any> {
@@ -58,21 +64,33 @@ export class UserService {
   }
 
   updatePerson(information, person_id): Observable<any> {
-    return this.http.put(`/api/people/${person_id}`, JSON.stringify(information));
+    return this.http.put(
+      `/api/people/${person_id}`,
+      JSON.stringify(information)
+    );
   }
 
   //Zones
   createZone(information, user_id): Observable<any> {
-    return this.http.post(`/api/users/${user_id}/location_preference`, JSON.stringify(information));
+    return this.http.post(
+      `/api/users/${user_id}/location_preference`,
+      JSON.stringify(information)
+    );
   }
 
   updateZone(information, zone_id: any): Observable<any> {
-    return this.http.put(`/api/location_preference/${zone_id}`, JSON.stringify(information));
+    return this.http.put(
+      `/api/location_preference/${zone_id}`,
+      JSON.stringify(information)
+    );
   }
 
   //Payments
   updatePayment(information, user): Observable<any> {
-    return this.http.put(`/api/payment/${user.id}`, JSON.stringify(information));
+    return this.http.put(
+      `/api/payment/${user.id}`,
+      JSON.stringify(information)
+    );
   }
 
   //addresses
@@ -85,11 +103,17 @@ export class UserService {
   }
 
   createAddress(information, user_id): Observable<any> {
-    return this.http.post(`/api/users/${user_id}/addresses`, JSON.stringify(information));
+    return this.http.post(
+      `/api/users/${user_id}/addresses`,
+      JSON.stringify(information)
+    );
   }
 
   updateAddress(information, user_id, address_id): Observable<any> {
-    return this.http.put(`/api/users/${user_id}/addresses/${address_id}`, JSON.stringify(information));
+    return this.http.put(
+      `/api/users/${user_id}/addresses/${address_id}`,
+      JSON.stringify(information)
+    );
   }
 
   //Phones
@@ -102,11 +126,16 @@ export class UserService {
   }
 
   createPhone(information, user_id): Observable<any> {
-    return this.http.post(`/api/users/${user_id}/phones`, JSON.stringify(information));
+    return this.http.post(
+      `/api/users/${user_id}/phones`,
+      JSON.stringify(information)
+    );
   }
 
   updatePhone(information, user_id, phone_id): Observable<any> {
-    return this.http.put(`/api/users/${user_id}/phones/${phone_id}`, JSON.stringify(information));
+    return this.http.put(
+      `/api/users/${user_id}/phones/${phone_id}`,
+      JSON.stringify(information)
+    );
   }
-
 }

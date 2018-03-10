@@ -6,7 +6,7 @@
       <div class="card form-size">
         <form [formGroup]="form" (ngSubmit)="register(model)">
           <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form">
-            <button type="submit" class="btn btn-primary btn-sm">Register</button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid">Register</button>
           </formly-form>
         </form>
       </div>

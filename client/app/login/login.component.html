@@ -3,10 +3,10 @@
     <app-toast [message]="toast.message"></app-toast>
 
     <div class="card">
-      <div class="form-size">
+      <div class="card form-size">
         <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
-          <formly-form [model]="model" [fields]="fields">
-            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-sign-in"></i>&nbsp;Login</button>
+          <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form">
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid"><i class="fa fa-sign-in"></i>&nbsp;Login</button>
             <button class="btn btn-link btn-sm" type="button" (click)="forgot()"><i class="fa fa-sign-in"></i>&nbsp;Forgot Password</button>
           </formly-form>
         </form>
