@@ -87,7 +87,20 @@ export class EventsComponent implements OnInit {
         };
       })
       .value();
-
+    let refereePay: Option[] = [];
+    for (let i = 30; i < 101; i + 5) {
+      refereePay.push(<Option>{
+        label: i + '',
+        value: i + ''
+      });
+    }
+    let refereesNeeded: Option[] = [];
+    for (let i = 1; i < 11; i++) {
+      refereesNeeded.push(<Option>{
+        label: i + '',
+        value: i + ''
+      });
+    }
     this.states = this.statesService.getStatesProvinces();
 
     this.fields = [
@@ -138,28 +151,55 @@ export class EventsComponent implements OnInit {
             }
           },
           {
+            template:
+              '<hr class="space-hr" /><div><strong>Age Groups</strong></div>'
+          },
+          {
             className: 'col-sm-12',
             type: 'checkbox',
-            key: 'age',
+            key: 'kids',
             templateOptions: {
-              label: 'Age Of Participants',
-              required: true,
-              options: [
-                { label: 'Kids 13 and Under', value: 'kids' },
-                { label: 'High School', value: 'high school' },
-                { label: 'Over 18', value: 'over18' }
-              ]
+              label: 'Kids 13 and Under',
+              required: true
+            }
+          },
+          {
+            className: 'col-sm-12',
+            type: 'checkbox',
+            key: 'teens',
+            templateOptions: {
+              label: 'High School',
+              required: true
+            }
+          },
+          {
+            className: 'col-sm-12',
+            type: 'checkbox',
+            key: 'adults',
+            templateOptions: {
+              label: 'Over 18',
+              required: true
             }
           }
         ]
       },
-
       {
         template: '<hr class="space-hr" /><div><strong>Address</strong></div>'
       },
       {
         fieldGroupClassName: 'row',
         fieldGroup: [
+          {
+            className: 'col-sm-12',
+            type: 'input',
+            key: 'venue',
+            templateOptions: {
+              label: 'Venue Name',
+              required: true,
+              minLength: 5,
+              pattern: /\w+[a-zA-Z0-9]/
+            }
+          },
           {
             className: 'col-sm-3',
             type: 'input',
@@ -205,6 +245,45 @@ export class EventsComponent implements OnInit {
               label: 'Zip',
               required: true,
               pattern: /\d{5}(\-\d{4})?/
+            }
+          }
+        ]
+      },
+
+      {
+        template: '<hr class="space-hr" />'
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
+            className: 'col-sm-12',
+            type: 'input',
+            key: 'eventDate',
+            templateOptions: {
+              label: 'Event Date',
+              type: 'date',
+              required: true
+            }
+          },
+          {
+            className: 'col-sm-12',
+            type: 'select',
+            key: 'refereesNeeded',
+            templateOptions: {
+              label: 'Referees Needed',
+              required: true,
+              options: refereesNeeded
+            }
+          },
+          {
+            className: 'col-sm-12',
+            type: 'select',
+            key: 'refereePay',
+            templateOptions: {
+              label: 'Referee Pay',
+              required: true,
+              options: refereePay
             }
           }
         ]

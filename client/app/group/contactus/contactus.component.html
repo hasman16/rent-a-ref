@@ -5,8 +5,8 @@
     <div class="card">
       <div class="form-size">
         <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
-          <formly-form [model]="model" [fields]="fields">
-            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-paper-plane-o"></i> Send</button>
+          <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form">
+            <button type="submit" class="btn btn-primary btn-sm"  [disabled]="form.invalid"><i class="fa fa-paper-plane-o"></i>&nbsp;Send</button>
           </formly-form> 
         </form>
       </div>

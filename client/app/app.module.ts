@@ -15,8 +15,11 @@ import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { RepeatTypeComponent } from './shared/formly/repeat-section/repeat-section.type';
-import { FormlyHorizontalWrapper } from './shared/formly/horizontal-types/horizontal-wrapper';
-import { FormlyHorizontalTextAreaWrapper } from './shared/formly/horizontal-types/horizontal-textarea-wrapper';
+import {
+    FormlyHorizontalWrapper,
+    FormlyHorizontalRadioWrapper,
+    FormlyHorizontalTextAreaWrapper
+} from './shared/formly/horizontal-types/index';
 
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
@@ -89,9 +92,6 @@ import { BarchartComponent } from './barchart/barchart.component';
 
 @NgModule({
     declarations: [
-        FormlyHorizontalWrapper,
-        FormlyHorizontalTextAreaWrapper,
-        RepeatTypeComponent,
         AppComponent,
         AboutComponent,
         AccountComponent,
@@ -109,6 +109,9 @@ import { BarchartComponent } from './barchart/barchart.component';
         EditProfileComponent,
         EventsComponent,
         FaqComponent,
+        FormlyHorizontalWrapper,
+        FormlyHorizontalRadioWrapper,
+        FormlyHorizontalTextAreaWrapper,
         FooterComponent,
         FooterTabletComponent,
         HeaderComponent,
@@ -126,6 +129,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         RefereeComponent,
         GamesComponent,
         RegisterComponent,
+        RepeatTypeComponent,
         ResetComponent,
         ResetPasswordComponent,
         BaseFormComponent,
@@ -155,6 +159,10 @@ import { BarchartComponent } from './barchart/barchart.component';
                     component: FormlyHorizontalWrapper
                 },
                 {
+                    name: 'horizontalRadioWrapper',
+                    component: FormlyHorizontalRadioWrapper
+                },
+                {
                     name: 'horizontalTextareaWrapper',
                     component: FormlyHorizontalTextAreaWrapper
                 }
@@ -164,6 +172,11 @@ import { BarchartComponent } from './barchart/barchart.component';
                     name: 'horizontalInput',
                     extends: 'input',
                     wrappers: ['fieldset', 'horizontalWrapper']
+                },
+                {
+                    name: 'horizontalRadio',
+                    extends: 'radio',
+                    wrappers: ['fieldset', 'horizontalRadioWrapper']
                 },
                 {
                     name: 'horizontalTextarea',
