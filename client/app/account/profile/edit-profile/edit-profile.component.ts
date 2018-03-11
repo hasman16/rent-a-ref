@@ -50,7 +50,7 @@ export class EditProfileComponent implements OnInit {
   paypalFlag: boolean = false;
   checkFlag: boolean = false;
   ccFlag: boolean = false;
-  paypal: boolean = '';
+  paypal: string = '';
 
   user: User = <User>{};
   // person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };

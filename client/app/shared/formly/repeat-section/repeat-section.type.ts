@@ -12,7 +12,7 @@ import * as _ from 'lodash';
 })
 export class RepeatTypeComponent extends FieldType implements OnInit {
   public formControl: FormArray;
-  protected fields: FormlyFieldConfig[] = [];
+  protected fields: Array<FormlyFieldConfig[]> = [];
 
   constructor(private builder: FormlyFormBuilder) {
     super();
