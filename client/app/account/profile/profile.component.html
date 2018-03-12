@@ -115,7 +115,7 @@
                   </span>
               </div>
             </ng-container>
-            <horizontal-address-form *ngIf="editAddress && currentAddress === 0" [addressService]="profileService" [address]="dummyAddress" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></horizontal-address-form>
+            <address-form *ngIf="editAddress && currentAddress === 0" [addressService]="profileService" [address]="dummyAddress" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
 
             <ng-container *ngIf="addresses.length > 0">
               <div class="list-group" *ngFor="let address of addresses">

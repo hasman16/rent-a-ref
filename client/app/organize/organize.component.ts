@@ -14,7 +14,6 @@ import { ToastComponent } from '../shared/toast/toast.component';
 import {
   AuthService,
   OrganizeService,
-  State,
   StatesService,
   UserService
 } from '../services/index';
@@ -22,9 +21,11 @@ import {
   Address,
   BaseModel,
   Phone,
+  Option,
   Organization,
   Profile,
-  Sport
+  Sport,
+  State
 } from '../shared/models/index';
 
 import * as _ from 'lodash';
@@ -116,6 +117,8 @@ export class OrganizeComponent implements OnInit {
       console.log('sports:', sports);
     });
   }
+
+  editEvents() {}
 
   getOrganizations(user_id?: any) {
     user_id = user_id || this.auth.currentUser.id;

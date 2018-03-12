@@ -20,7 +20,7 @@
         <div class="col-2">
           <label class="center-block">State
             <select class="form-control" formControlName="state">
-              <option *ngFor="let state of states" value="{{state.abbreviation}}">{{state.name}}</option>
+              <option *ngFor="let state of states" value="{{state.value}}">{{state.label}}</option>
             </select>
           </label>
         </div>

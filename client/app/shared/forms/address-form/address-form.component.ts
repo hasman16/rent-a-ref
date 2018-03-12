@@ -8,8 +8,8 @@ import {
 } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { Address } from '../../models/address';
-import { StatesService, Option } from '../../../services/index';
+import { Address, Option } from '../../models/index';
+import { StatesService } from '../../../services/index';
 import { AbstractFormComponent } from '../abstract-form';
 
 import { Observable } from 'rxjs/Observable';
@@ -111,6 +111,7 @@ export class AddressFormComponent extends AbstractFormComponent
 
   fillForm() {
     this.states = this.statesService.getStatesProvinces(this.countryName);
+
     this.addressForm.setValue({
       line1: this.anAddress.line1 || '',
       line2: this.anAddress.line2 || '',

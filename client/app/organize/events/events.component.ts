@@ -13,9 +13,7 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { ToastComponent } from './../../shared/toast/toast.component';
 import {
   AuthService,
-  Option,
   OrganizeService,
-  State,
   StatesService,
   UserService
 } from './../../services/index';
@@ -23,8 +21,10 @@ import {
   Address,
   BaseModel,
   Phone,
+  Option,
   Organization,
   Profile,
+  State,
   Sport
 } from './../../shared/models/index';
 
@@ -68,7 +68,6 @@ export class EventsComponent implements OnInit {
 
   getSports() {
     this.organizeService.getSports().subscribe((sports: Sport[]) => {
-      console.log('EventsComponent sports:', sports);
       this.sports = sports;
       this.generateForm();
     });
