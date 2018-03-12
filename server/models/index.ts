@@ -18,7 +18,7 @@ const models = [
   'Post',
   'Phone',
   'Sport',
-  'User',
+  'User'
 ];
 
 function herokuSetup() {
@@ -33,12 +33,12 @@ function localhostSetup() {
   console.log('=========== Database is:', serverName);
   // connect to database using sequelize
   return new Sequelize(
-    database.name, database.user,
+    database.name,
+    database.user,
     database.password,
     database.settings
   );
 }
-
 
 let sqlize;
 if (process.env.DATABASE_URL) {
@@ -86,6 +86,7 @@ models.forEach(function(model) {
   });
 
   m.Game.belongsTo(sequelize.models.organizer);
+  m.Game.belongsTo(m.Address);
 
   m.User.belongsToMany(m.Match, {
     through: 'officiating'
@@ -95,6 +96,8 @@ models.forEach(function(model) {
   });
 
   m.Match.belongsTo(m.Sport);
+  m.Match.belongsTo(m.Game);
+  m.Match.belongsTo(m.Address);
 
   m.User.hasMany(m.Post);
   m.Post.hasMany(m.Comment);

@@ -1,20 +1,23 @@
+import { IGame } from './../types/index';
+
 export default function GameController(models, ResponseService) {
   const Game = models.Game;
   const attributes = ['id', 'name', 'duration', 'referees'];
 
-  function makeGame(newGame) {
-    const game = {
-      'name': newGame['name'],
-      'duration': newGame['duration'],
-      'referees': newGame['referees']
+  function makeGame(game: IGame): IGame {
+    return <IGame>{
+      name: game.name,
+      duration: game.duration,
+      referees: game.referees,
+      type: game.type,
+      age: game.age,
+      pay: game.pay
     };
-
-    return game;
   }
 
   function returnGame(res, game, status = 200) {
-    let newGame = makeGame(game);
-    newGame["id"] = game.id;
+    let newGame: IGame = makeGame(game);
+    newGame.id = game.id;
     ResponseService.success(res, newGame, status);
   }
 
@@ -38,7 +41,7 @@ export default function GameController(models, ResponseService) {
   }
 
   function create(req, res) {
-    const game = makeGame(req.body);
+    const game: IGame = makeGame(req.body);
 
     Game.create(game)
       .then(newGame => {
@@ -48,7 +51,8 @@ export default function GameController(models, ResponseService) {
   }
 
   function update(req, res) {
-    const game = makeGame(req.body);
+    const game: IGame = makeGame(req.body);
+
     Game.update(game, {
       where: {
         id: req.params.game_id
@@ -59,17 +63,17 @@ export default function GameController(models, ResponseService) {
   }
 
   function deleteOne(req, res) {
-      const game_id = req.params.game_id;
+    const game_id = req.params.game_id;
 
-      function doDelete(game) {
-        return Game.destroy({
-          where: {
-            id: game.id
-          }
-        });
-      }
+    function doDelete(game) {
+      return Game.destroy({
+        where: {
+          id: game.id
+        }
+      });
+    }
 
-      ResponseService.findObject(game_id, 'Game', res, doDelete, 204);
+    ResponseService.findObject(game_id, 'Game', res, doDelete, 204);
   }
 
   return {
