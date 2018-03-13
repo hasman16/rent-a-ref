@@ -35,7 +35,7 @@ import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  selector: 'app-organize',
+  selector: 'rar-organize',
   templateUrl: './organize.component.html',
   styleUrls: ['./organize.component.scss']
 })
@@ -118,7 +118,9 @@ export class OrganizeComponent implements OnInit {
     });
   }
 
-  editEvents() {}
+  editEvents(org_id: number): void {
+    this.router.navigate(['/organizer/events/' + org_id]);
+  }
 
   getOrganizations(user_id?: any) {
     user_id = user_id || this.auth.currentUser.id;

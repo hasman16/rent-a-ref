@@ -34,7 +34,7 @@ import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  selector: 'rr-events',
+  selector: 'rar-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss']
 })
@@ -58,26 +58,25 @@ export class EventsComponent implements OnInit {
   protected isEditing: boolean = false;
 
   constructor(
-    private auth: AuthService,
-    public toast: ToastComponent,
-    private route: ActivatedRoute,
-    private router: Router,
-    private statesService: StatesService,
-    private organizeService: OrganizeService
+    protected auth: AuthService,
+    protected toast: ToastComponent,
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected statesService: StatesService,
+    protected organizeService: OrganizeService
   ) {}
 
-  getSports() {
+  protected getSports() {
     this.organizeService.getSports().subscribe((sports: Sport[]) => {
       this.sports = sports;
-      this.generateForm();
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getSports();
   }
 
-  generateForm() {
+  protected generateForm() {
     const SPORTS: Option[] = _(this.sports)
       .map((sport: Sport): Option => {
         return <Option>{
@@ -86,6 +85,7 @@ export class EventsComponent implements OnInit {
         };
       })
       .value();
+
     let refereePay: Option[] = [];
     for (let i = 30; i < 101; i + 5) {
       refereePay.push(<Option>{
@@ -94,12 +94,13 @@ export class EventsComponent implements OnInit {
       });
     }
     let refereesNeeded: Option[] = [];
-    for (let i = 1; i < 11; i++) {
+    for (let j = 1; j < 11; j++) {
       refereesNeeded.push(<Option>{
-        label: i + '',
-        value: i + ''
+        label: j + '',
+        value: j + ''
       });
     }
+
     this.states = this.statesService.getStatesProvinces();
 
     this.fields = [
@@ -248,7 +249,6 @@ export class EventsComponent implements OnInit {
           }
         ]
       },
-
       {
         template: '<hr class="space-hr" />'
       },
@@ -290,5 +290,9 @@ export class EventsComponent implements OnInit {
     ];
   }
 
-  setOrganizeMode(): void {}
+  public setOrganizeMode(): void {}
+  public goNewEvent(): void {}
+  public editEvents(): void {}
+  public onSubmit(model: any): void {}
+  public onCancel(): void {}
 }

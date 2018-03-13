@@ -19,7 +19,7 @@ import { Observable } from 'rxjs/Observable';
 import { ToastComponent } from '../shared/toast/toast.component';
 
 @Component({
-  selector: 'app-admin',
+  selector: 'rar-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })

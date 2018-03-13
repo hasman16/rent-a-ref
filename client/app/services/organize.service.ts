@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import {
   Address,
@@ -9,14 +9,15 @@ import {
   Person,
   Profile,
   Sport
-} from "./../shared/models/index";
+} from './../shared/models/index';
 
-import { Observable } from "rxjs/Observable";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/do";
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/take';
 
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 @Injectable()
 export class OrganizeService {
@@ -56,7 +57,7 @@ export class OrganizeService {
       ob = bs;
     }
 
-    return ob;
+    return ob.take(1);
   }
 
   // addresses
@@ -159,7 +160,7 @@ export class OrganizeService {
     const model: any = { addresses };
     const url: string = `/api/organizations/${org_id}/addresses/bulk`;
 
-    return [url, model, "addresses"];
+    return [url, model, 'addresses'];
   }
 
   bulkCreateAddresses(
@@ -180,7 +181,7 @@ export class OrganizeService {
     const model: any = { phones };
     const url: string = `/api/organizations/${org_id}/phones/bulk`;
 
-    return [url, model, "phones"];
+    return [url, model, 'phones'];
   }
 
   bulkCreatePhones(phones: Phone[], org_id): Observable<Phone[]> {

@@ -74,7 +74,7 @@ const routes: Routes = [
   {
     path: 'organizer/events/:id',
     component: EventsComponent,
-    canDeactivate: [CanDeactivateGuardService]
+    canActivate: [AuthGuardLogin]
   },
   {
     path: 'account/profile/:id',
