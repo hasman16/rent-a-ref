@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-12">
 
-    <div class="card horizontal-and-vertical-centering " *ngIf="!isEditing && (!events || events.length === 0)">
+    <div class="card horizontal-and-vertical-centering " *ngIf="!isEditing && (!games || games.length === 0)">
       <div class="form-size">
         <strong class="etched-text">You have no <i>Events</i>.</strong>
         <p>You need to create at least one event. Once the event you can create and assign <i>games</i> to the event.
@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" *ngIf="isEditing">
       <app-toast [message]="toast.message"></app-toast>
 
       <div class="card form-size">
@@ -25,7 +25,7 @@
 
     </div>
 
-    <div class="card" *ngIf="!isEditing && events?.length > 0">
+    <div class="card" *ngIf="!isEditing && games?.length > 0">
       <div class="form-size">
         <table class="table table-striped">
           <tr>
@@ -34,15 +34,15 @@
             </th>
           </tr>
 
-          <tr *ngFor="let anEvent of events" (click)="editEvents(anEvent.id);" class="org-table-item ">
+          <tr *ngFor="let game of games" (click)="editEvents(game.id);" class="org-table-item ">
             <td>
-              {{organization.id}}
+              {{game.id}}
             </td>
             <td>
-              {{organization.name}}
+              {{game.name}}
             </td>
             <td>
-              <button class="btn btn-primary btn-sm" (click)="editEvent(anEvent.id)" title="Click to edit this event">Edit</button>
+              <button class="btn btn-primary btn-sm" (click)="editEvent(game.id)" title="Click to edit this event">Edit</button>
             </td>
             <td>
               <button class="btn btn-danger btn-sm" (click)="goNewEvent()" title="Click to delete event">Delete</button>
@@ -53,7 +53,6 @@
         <button class="btn btn-primary btn-sm new-org-button" (click)="goNewEvent()" title="Click to create new event">New Event</button>
       </div>
     </div>
+
   </div>
-
-
 </div>

@@ -17,8 +17,8 @@ import 'rxjs/add/operator/debounceTime';
 import * as _ from 'lodash';
 
 export interface IAddressService {
-  createAddress(address: Address): Observable<any>;
-  updateAddress(address: Address): Observable<any>;
+  createAddress(address: Address): Observable<Address>;
+  updateAddress(address: Address): Observable<Address>;
 }
 
 @Component({
@@ -128,12 +128,12 @@ export class AddressFormComponent extends AbstractFormComponent
   onAddressSubmit() {
     if (this.addressService) {
       const newAddress: Address = this.addressForm.value as Address;
-      let observable: Observable<any>;
+      let observable: Observable<Address>;
       newAddress.id = this.anAddress.id;
 
       this.saveAddress.emit({ action: 'show_overlay' });
 
-      if (Number(newAddress.id) === 0) {
+      if (_.isNil(newAddress.id) || parseInt(newAddress.id) === 0) {
         observable = this.addressService.createAddress(newAddress);
       } else {
         observable = this.addressService.updateAddress(newAddress);

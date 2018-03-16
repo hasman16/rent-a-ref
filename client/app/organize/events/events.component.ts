@@ -52,7 +52,7 @@ export class EventsComponent implements OnInit {
   protected fields: FormlyFieldConfig[];
 
   protected sports: Sport[];
-  protected organizations: Organization[] = [];
+  protected games: any[] = [];
   protected isLoading: boolean = false;
 
   protected isEditing: boolean = false;
@@ -93,6 +93,7 @@ export class EventsComponent implements OnInit {
         value: i + ''
       });
     }
+
     let refereesNeeded: Option[] = [];
     for (let j = 1; j < 11; j++) {
       refereesNeeded.push(<Option>{
@@ -291,8 +292,12 @@ export class EventsComponent implements OnInit {
   }
 
   public setOrganizeMode(): void {}
-  public goNewEvent(): void {}
+  public goNewGames(): void {
+    this.isEditing = true;
+  }
   public editEvents(): void {}
-  public onSubmit(model: any): void {}
+  public onSubmit(model: any): void {
+    console.log('Model:', model);
+  }
   public onCancel(): void {}
 }
