@@ -122,8 +122,6 @@ models.forEach(function(model) {
     through: 'organization_phone'
   });
 
-
-
   module.exports.Referee = sequelize.models.referee;
   module.exports.Match = sequelize.models.match;
   module.exports.Organizer = sequelize.models.organizer;

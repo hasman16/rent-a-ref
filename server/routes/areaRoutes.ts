@@ -9,8 +9,8 @@ export default function areaRoutes(setter, areaCtrl) {
   router.use('/users/:user_id/location_preference', authentication, isUserOrAdmin);
   router.route('/users/:user_id/location_preference').post(areaCtrl.createLocation);
 
-  router.use('/location_preference/:location_id', authentication);
-  router.route('/location_preference/:location_id').put(areaCtrl.updateLocation);
-  router.route('/location_preference/:location_id').patch(areaCtrl.updateLocation);
-  router.route('/location_preference/:location_id').delete(areaCtrl.deleteLocation);
+  router.use('/users/:user_id/location_preference/:location_id', authentication, isUserOrAdmin);
+  router.route('/users/:user_id/location_preference/:location_id').put(areaCtrl.updateLocation);
+  router.route('/users/:user_id/location_preference/:location_id').patch(areaCtrl.updateLocation);
+  router.route('/users/:user_id/location_preference/:location_id').delete(areaCtrl.deleteLocation);
 }

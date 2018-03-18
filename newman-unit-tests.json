@@ -16,7 +16,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a49f10cc-ad19-427c-a460-274b3dbeb543",
+								"id": "7b9bcf33-d190-4ec5-b9ea-e4aba54809c2",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -30,7 +30,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is admin1'] = user.authorization === 1;",
+									"tests['Expect authorization is admin1'] = user.authorization === 1;",
 									"tests['Doe not return password'] = user.password === undefined;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
@@ -89,7 +89,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4c3f7884-138e-45c8-84ce-8ff00d286655",
+								"id": "8f7768e8-355f-43c8-83fc-a0cd2a66800a",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -103,7 +103,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is admin2'] = user.authorization === 2;",
+									"tests['Expect authorization is admin2'] = user.authorization === 2;",
 									"tests['Doe not return password'] = user.password === undefined;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
@@ -162,7 +162,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d063a84b-1247-4451-9ba2-47c11a6a79d9",
+								"id": "55cc2c57-18d9-4ede-bdc6-24bb909c3b82",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -176,7 +176,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.authorization === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Doe not return password'] = user.password === undefined;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
@@ -235,7 +235,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9ea3fd79-a282-4afd-add9-5507c8378bab",
+								"id": "663f2e35-9ef2-4db0-9346-917a2741364a",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -249,7 +249,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.authorization === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Doe not return password'] = user.password === undefined;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
@@ -308,6 +308,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "bc6d2d9f-3ea4-4c4b-89d9-034d6d0cf6dd",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -319,7 +320,7 @@
 									"tests['Doesnot return token'] = !responseBody.has('token');",
 									"tests['Expect token to be undefined'] = data.token === undefined;",
 									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
-									"tests['Expect accessLevel is undefined'] = data.accessLevel === undefined;"
+									"tests['Expect authorization is undefined'] = data.authorization === undefined;"
 								]
 							}
 						}
@@ -362,7 +363,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "288b9944-1cbb-451e-8179-7a440612f339",
+								"id": "82f31f4c-b1cb-48b4-9323-a46210aae98b",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -374,7 +375,7 @@
 									"tests['Doesnot return token'] = !responseBody.has('token');",
 									"tests['Expect token to be undefined'] = data.token === undefined;",
 									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
-									"tests['Expect accessLevel is undefined'] = data.accessLevel === undefined;"
+									"tests['Expect authorization is undefined'] = data.authorization === undefined;"
 								]
 							}
 						}
@@ -485,7 +486,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "192006c8-33b9-4613-97b2-ca1a95aab81e",
+								"id": "04fb2f1c-29ff-4992-9f82-118cc682d31d",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -499,7 +500,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.authorization === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Doe not return password'] = user.password === undefined;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
@@ -935,7 +936,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d9d8b25b-5042-44e7-90a2-d46e344b8b04",
+								"id": "aae46acf-fd8a-45df-8799-7e991258bdcb",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -949,7 +950,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.authorization === 1;",
+									"tests['Expect authorization is user'] = user.authorization === 1;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -1358,7 +1359,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3fdba700-955e-48cb-b3b9-20ef0a1a5896",
+								"id": "1b4c4204-b251-401d-b8c2-9c2d36ed87c3",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -1372,7 +1373,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.authorization === 1;",
+									"tests['Expect authorization is user'] = user.authorization === 1;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -2087,31 +2088,22 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organizers/:id",
+					"name": "localhost:3000/api/organizations/:id",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "8559c48f-1fef-42d4-a472-0a48824be8e7",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 200;",
 									"tests['Returns an id'] = responseBody.has('id');",
 									"tests['Returns a name'] = responseBody.has('name');",
-									"tests['Returns number of periods'] = responseBody.has('periods');",
-									"tests['Returns duration of game'] = responseBody.has('duration');",
-									"tests['Returns number ofreferees'] = responseBody.has('referees');",
 									"",
+									"tests['Expect name to be non empty streing'] = item.name.length > 0;",
 									"",
-									"tests['Expect sport id to be a number'] = /\\d+/.test(item.id);",
-									"tests['Expect sport to have name'] = item.name.length > 0;",
-									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
-									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
-									"",
-									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
-									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
-									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
-									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+									""
 								]
 							}
 						}
@@ -2142,14 +2134,14 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/organizers/{{organizationId}}",
+							"raw": "localhost:3000/api/organizations/{{organizationId}}",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"api",
-								"organizers",
+								"organizations",
 								"{{organizationId}}"
 							]
 						}
@@ -2222,26 +2214,21 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "aef57526-4613-4973-8f21-d139879a2faa",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 200;",
-									"tests['Returns an id'] = responseBody.has('id');",
-									"tests['Returns a name'] = responseBody.has('name');",
-									"tests['Returns number of periods'] = responseBody.has('periods');",
-									"tests['Returns duration of game'] = responseBody.has('duration');",
-									"tests['Returns number ofreferees'] = responseBody.has('referees');",
+									"tests['Returns data'] = item instanceof Array === true;",
+									"var org = item[0];",
+									"var phone = org[\"phones\"][0];",
+									"tests['Returns an id'] = org.id > 0;",
+									"tests['Returns a name'] = org.name.length > 0;",
+									"tests['Returns a user id'] = org.user_id > 0;",
 									"",
-									"",
-									"tests['Expect sport id to be a number'] = /\\d+/.test(item.id);",
-									"tests['Expect sport to have name'] = item.name.length > 0;",
-									"tests['Expect periods to be a number'] = /\\d+/.test(item.periods);",
-									"tests['Expect periods to be greater than zero'] = item.periods > 0;",
-									"",
-									"tests['Expect duration to be a number'] = /\\d+/.test(item.duration);",
-									"tests['Expect duration to be greater than zero'] = item.duration > 0;",
-									"tests['Expect referees to be a number'] = /\\d+/.test(item.referees);",
-									"tests['Expect referees to be greater than zero'] = item.referees > 0;"
+									"tests['phone has id'] = phone.id > 0;",
+									"tests['phone has a number'] = phone[\"number\"].length > 0;",
+									"tests['phone has a description'] = /^(mobile|home|work|other)$/.test(phone.description) === true;"
 								]
 							}
 						}
@@ -3680,7 +3667,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d6883e3d-32ca-4a81-a741-f394bbe53603",
+								"id": "23f23e0b-1179-4660-a8c2-6bd4f923fcee",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3694,7 +3681,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -3754,6 +3741,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "a81037e3-2e1d-4cd0-b79e-90c19a432d7d",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3761,11 +3749,11 @@
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success is false'] = data.success === false;",
 									"tests['Returns message'] = responseBody.has('message');",
-									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Permission Violation\";",
+									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Forbidden: Permission Violation.\";",
 									"tests['Doesnot return token'] = !responseBody.has('token');",
 									"tests['Expect token to be undefined'] = data.token === undefined;",
-									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
-									"tests['Expect accessLevel is undefined'] = data.accessLevel === undefined;"
+									"tests['Does not return authorization'] = !responseBody.has('authorization');",
+									"tests['Expect authorization is undefined'] = data.authorization === undefined;"
 								]
 							}
 						}
@@ -3815,14 +3803,16 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "ce2904f8-4471-4dd0-b6b2-983e563bcb50",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 200;",
-									"tests['Returns success'] = responseBody.has('success');",
-									"tests['Returns success is false'] = data.success === true;",
-									"tests['Returns a element data'] = responseBody.has('data');",
-									"tests['Returns data'] = data.data instanceof Array === true;"
+									"tests['Returns firstname'] = responseBody.has('firstname');",
+									"tests['Returns lastname'] = responseBody.has('lastname');",
+									"tests['Returns middlename'] = responseBody.has('middlename');",
+									"tests['Returns an id'] = responseBody.has('id');",
+									""
 								]
 							}
 						}
@@ -3873,14 +3863,15 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "1c767609-2323-490b-8428-0044ac21d2b7",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 200;",
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success is false'] = data.success === true;",
-									"tests['Returns a element data'] = responseBody.has('data');",
-									"tests['Returns data'] = data.data instanceof Array === true;"
+									"tests['Returns a element data'] = responseBody.has('message');",
+									""
 								]
 							}
 						}
@@ -3943,14 +3934,15 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "cf083c97-73b2-4594-a0b2-d0000d698834",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 200;",
-									"tests['Returns success'] = responseBody.has('success');",
-									"tests['Returns success is false'] = data.success === true;",
-									"tests['Returns a element data'] = responseBody.has('data');",
-									"tests['Returns data'] = data.data instanceof Array === true;"
+									"tests['Returns firstname'] = responseBody.has('firstname');",
+									"tests['Returns lastname'] = responseBody.has('lastname');",
+									"tests['Returns middlename'] = responseBody.has('middlename');",
+									"tests['Returns an id'] = responseBody.has('id');"
 								]
 							}
 						}
@@ -4007,7 +3999,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e8de8a20-9377-48c0-9691-6102df3b0be1",
+								"id": "4e1841be-cbf5-4949-9a72-f344ee36a8ee",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4021,7 +4013,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -4080,6 +4072,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "da1c76d6-1f8a-41d9-b570-2e1af0e625c0",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4087,10 +4080,10 @@
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success is false'] = data.success === false;",
 									"tests['Returns message'] = responseBody.has('message');",
-									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Permission Violation\";",
+									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Forbidden: Permission Violation.\";",
 									"tests['Doesnot return token'] = !responseBody.has('token');",
 									"tests['Expect token to be undefined'] = data.token === undefined;",
-									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
+									"tests['Does not return authorization'] = !responseBody.has('authorization');",
 									"tests['Expect accessLevel is undefined'] = data.accessLevel === undefined;"
 								]
 							}
@@ -4136,74 +4129,16 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/users/:id/phones",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 200;",
-									"tests['Returns success'] = responseBody.has('success');",
-									"tests['Returns success is false'] = data.success === true;",
-									"tests['Returns a element data'] = responseBody.has('data');",
-									"tests['Returns data'] = data.data instanceof Array === true;"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{authoriztionToken}}"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "admin2@rentaref.com",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "admin2",
-									"description": "",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "localhost:3000/api/users/{{userId}}/phones",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"users",
-								"{{userId}}",
-								"phones"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "localhost:3000/api/users/:id/phone - mobile",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "ea766fdf-92d9-4fc3-bd93-a0bc552e565d",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Status code is 200'] = responseCode.code === 201;",
 									"tests['Returns an id'] = responseBody.has('user_id');",
 									"tests['Returns a name'] = responseBody.has('phone_id');",
 									"",
@@ -4270,10 +4205,11 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "2ba73f27-b95d-4620-92c2-93cb9af7401b",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Status code is 200'] = responseCode.code === 201;",
 									"tests['Returns an id'] = responseBody.has('user_id');",
 									"tests['Returns a name'] = responseBody.has('phone_id');",
 									"",
@@ -4340,10 +4276,11 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "62f40415-c1c9-4fae-ae06-725a9ab76dcb",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Status code is 200'] = responseCode.code === 201;",
 									"tests['Returns an id'] = responseBody.has('user_id');",
 									"tests['Returns a name'] = responseBody.has('phone_id');",
 									"",
@@ -4383,6 +4320,67 @@
 								{
 									"key": "description",
 									"value": "other",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"phones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/users/:id/phones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e989e63d-f0f2-437a-979c-77d6aa47ff61",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Returns data'] = data instanceof Array === true;",
+									"var phone = data[0];",
+									"tests['phone has id'] = phone.id > 0;",
+									"tests['phone has a number'] = phone[\"number\"].length > 0;",
+									"tests['phone has a description'] = /^(mobile|home|work|other)$/.test(phone.description) === true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
 									"description": "",
 									"type": "text"
 								}
@@ -4483,7 +4481,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c5f14f37-2b7c-40ea-a7a0-277662fded8f",
+								"id": "594ab064-ce33-43a2-b2b5-1e8d21c13b3b",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4497,7 +4495,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is administrator'] = user.accessLevel === 1;",
+									"tests['Expect authorization is administrator'] = user.authorization === 1;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -4556,14 +4554,12 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "9c3b9a7c-8591-403c-99a8-88615851597a",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 200;",
-									"tests['Returns success'] = responseBody.has('success');",
-									"tests['Returns success is false'] = data.success === true;",
-									"tests['Returns a element data'] = responseBody.has('data');",
-									"tests['Returns data'] = data.data instanceof Array === true;"
+									"tests['Returns data'] = data instanceof Array === true;"
 								]
 							}
 						}
@@ -4683,10 +4679,11 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "f32386df-4800-4bc0-8c19-3b044593c80b",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 200;",
+									"tests['Status code is 200'] = responseCode.code === 201;",
 									"tests['Returns an id'] = responseBody.has('id');",
 									"tests['Returns a name'] = responseBody.has('name');",
 									"tests['Returns number of periods'] = responseBody.has('periods');",
@@ -4852,7 +4849,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eac35d98-be4d-41e4-a7a8-87766921db3a",
+								"id": "08975c0b-0d24-48ac-8490-3eff6c0523c5",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4866,7 +4863,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -4924,14 +4921,12 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "e17ef4f6-51fd-4ce4-9bdd-798131a5adfe",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 200;",
-									"tests['Returns success'] = responseBody.has('success');",
-									"tests['Returns success is false'] = data.success === true;",
-									"tests['Returns a element data'] = responseBody.has('data');",
-									"tests['Returns data'] = data.data instanceof Array === true;"
+									"tests['Returns data'] = data instanceof Array === true;"
 								]
 							}
 						}
@@ -5051,6 +5046,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "3f5cc1f5-d7a8-4986-a599-4a31f9792616",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5058,7 +5054,7 @@
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success is false'] = data.success === false;",
 									"tests['Returns message'] = responseBody.has('message');",
-									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Permission Violation\";",
+									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Forbidden: Permission Violation.\";",
 									"tests['Doesnot return token'] = !responseBody.has('token');",
 									"tests['Expect token to be undefined'] = data.token === undefined;",
 									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
@@ -5124,6 +5120,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "496af8e4-5c56-479a-8fba-22f36c4302da",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5131,7 +5128,7 @@
 									"tests['Returns success'] = responseBody.has('success');",
 									"tests['Returns success is false'] = data.success === false;",
 									"tests['Returns message'] = responseBody.has('message');",
-									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Permission Violation\";",
+									"tests['Returns message is \"Permission Violation\"'] = data.message === \"Forbidden: Permission Violation.\";",
 									"tests['Doesnot return token'] = !responseBody.has('token');",
 									"tests['Expect token to be undefined'] = data.token === undefined;",
 									"tests['Does not return accessLevel'] = !responseBody.has('accessLevel');",
@@ -5204,7 +5201,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1bc51d67-d150-4f27-b974-3482c643fc4c",
+								"id": "b37a447a-3076-4c1d-9e77-a0db6c87c85a",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5218,7 +5215,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is administrator'] = user.accessLevel === 1;",
+									"tests['Expect authorization is administrator'] = user.authorization === 1;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -5687,7 +5684,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cf4bad12-837c-4ab2-a54c-ba9b78b4d672",
+								"id": "1680e5d5-502c-45bf-896c-32e30da5acdb",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5701,7 +5698,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -6075,7 +6072,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f033238-343f-40bf-af2c-27ab634d9b52",
+								"id": "795fa8ef-3678-44d9-842e-83577f2217cd",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -6089,7 +6086,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -6189,6 +6186,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "b0ca7187-65b5-4c59-b4db-9df474eb80cb",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -6202,14 +6200,14 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
 									"tests['Expect can_organize to be a string'] = /\\w+/.test(user.can_organize);",
 									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
 									"",
-									"postman.setGlobalVariable(\"administratorToken\", 'Bearer ' + data.token);",
+									"postman.setGlobalVariable(\"authoriztionToken\", 'Bearer ' + data.token);",
 									"postman.setGlobalVariable(\"userId\", data.user.id);"
 								]
 							}
@@ -6219,8 +6217,8 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded"
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6348,6 +6346,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "41916c6b-75c3-4045-bfaf-9863c107509f",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -6361,7 +6360,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -6412,6 +6411,48 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "localhost:3000/api/changepassword/:user_id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password1",
+									"value": "petepete",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "petepete",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/changepassword/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"changepassword",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -6425,7 +6466,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f77395e5-8575-44fb-be2c-b213091c3045",
+								"id": "e9809a93-95cc-44a1-a045-a6674f9c6889",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -6439,7 +6480,7 @@
 									"tests['Returns basic user info'] = responseBody.has('user');",
 									"var user = data.user;",
 									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
-									"tests['Expect accessLevel is user'] = user.accessLevel === 3;",
+									"tests['Expect authorization is user'] = user.authorization === 3;",
 									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
 									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
 									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
@@ -6710,26 +6751,17 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/location_preference/:area_id",
+					"name": "localhost:3000/api/users/user_id/location_preference/:area_id",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "e2135991-4119-4c63-848f-665ea110e521",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
-									"tests['Status code is 201'] = responseCode.code === 201;",
-									"tests['Returns a user_id'] = responseBody.has('user_id');",
-									"tests['Returns a address id'] = responseBody.has('address_id');",
-									"",
-									"",
-									"tests['Expect user id to be a number'] = /\\d+/.test(item.user_id);",
-									"tests['Expect user id not to be zero'] = item.user_id > 0;",
-									"tests['Expect user ids match'] = item.user_id == postman.getGlobalVariable(\"userId\");",
-									"",
-									"tests['Expect address id to be a number'] = /\\d+/.test(item.id);",
-									"tests['Expect address id not to zero'] = item.id > 0;",
-									"//postman.setGlobalVariable(\"locationId\", item.id);"
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									""
 								]
 							}
 						}
@@ -6751,7 +6783,7 @@
 							"urlencoded": [
 								{
 									"key": "radius",
-									"value": "5",
+									"value": "55",
 									"description": "",
 									"type": "text"
 								},
@@ -6776,13 +6808,15 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/location_preference/{{areaId}}",
+							"raw": "localhost:3000/api/users/{{userId}}/location_preference/{{areaId}}",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"api",
+								"users",
+								"{{userId}}",
 								"location_preference",
 								"{{areaId}}"
 							]

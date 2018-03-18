@@ -6,6 +6,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
 
   function unlockUser(user_id, password) {
     const sequelize = models.sequelize;
+    const Op = sequelize.Op;
 
     return sequelize.transaction(function(t) {
       return User.update({
@@ -13,7 +14,7 @@ export default function passwordController(bcrypt, jwt, models, ResponseService,
       }, {
           where: {
             id: user_id,
-            $or: [{
+            [Op.or]: [{
               status: 'active'
             },
             {

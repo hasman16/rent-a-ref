@@ -2,7 +2,7 @@ export default function authorization(dbModels) {
   const models = dbModels;
 
   function checkIsAdmin(req) {
-    const authorization = Number(req.decoded.accessLevel);
+    const authorization = Number(req.decoded.authorization);
     return (authorization === 1 || authorization === 2);
   }
 

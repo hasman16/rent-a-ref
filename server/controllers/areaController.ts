@@ -2,7 +2,7 @@ export default function AreaController(models, ResponseService) {
   const Area = models.Area;
 
   function createLocation(req, res) {
-    const area = Object.assign({}, req.body, { user_id: req.decoded.id });
+    const area = Object.assign({}, req.body, { user_id: req.params.user_id });
     Area.create(area)
       .then(result => ResponseService.success(res, result, 201))
       .catch(error => ResponseService.exception(res, error));
@@ -10,18 +10,19 @@ export default function AreaController(models, ResponseService) {
 
   function updateLocation(req, res) {
     const location_id = req.params.location_id;
-
+    const user_id = req.params.user_id;
+    
     function update(oldLocation) {
       let newLocation = Object.assign({}, req.body);
       delete newLocation.user_id;
       return Area.update(newLocation, {
         where: {
-          id: oldLocation.id,
-          user_id: req.decode.id
+          id: location_id,
+          user_id: user_id
         }
       });
     }
-    console.log('updateLocation');
+
     ResponseService.findObject(location_id, 'Area', res, update);
   }
 
