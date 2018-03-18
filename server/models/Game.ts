@@ -4,7 +4,6 @@ const Game = function(sequelize, DataTypes) {
 		{
 			name: DataTypes.STRING(64),
 			date: DataTypes.DATE,
-			type: DataTypes.STRING(64),
 			ages: DataTypes.STRING(64),
 			duration: DataTypes.INTEGER,
 			referees: DataTypes.INTEGER,

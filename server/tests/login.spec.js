@@ -19,7 +19,7 @@ describe('Login', () => {
         .post('/api/login')
         .send(login)
         .end((err, res) => {
-          res.should.have.status(300);
+          res.should.have.status(2000);
           res.body.should.be.a('array');
           res.body.length.should.be.eql(0);
           done();

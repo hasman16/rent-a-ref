@@ -27,7 +27,7 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function byOrganization(req, res, type) {
+  function processByOrganization(req, res, type) {
     const table = models.OrganizationAddress;
     const model = { organization_id: req.params.organization_id };
 
@@ -35,11 +35,11 @@ export default function AddressController(models, ResponseService) {
   }
 
   function createByOrganization(req, res) {
-     byOrganization(req, res, 'create');
+    processByOrganization(req, res, 'create');
   }
 
   function bulkCreateByOrganization(req, res) {
-    byOrganization(req, res, 'bulkCreate');
+    processByOrganization(req, res, 'bulkCreate');
   }
 
   function getByOrganization(req, res) {
@@ -63,8 +63,7 @@ export default function AddressController(models, ResponseService) {
   }
 
   function bulkUpdateByOrganization(req, res) {
-    console.log('bulkUpdateByOrganization');
-    byOrganization(req, res, 'bulkUpdate');
+    processByOrganization(req, res, 'bulkUpdate');
   }
 
   function updateByOrganization(req, res) {
@@ -75,7 +74,7 @@ export default function AddressController(models, ResponseService) {
     deleteAddress(req, res);
   }
 
-  function byUser(req, res, type) {
+  function executeByUser(req, res, type) {
     const table = models.UserAddress;
     const model = { user_id: req.params.user_id };
 
@@ -83,15 +82,15 @@ export default function AddressController(models, ResponseService) {
   }
 
   function createByUser(req, res) {
-    byUser(req, res, 'create');
+    executeByUser(req, res, 'create');
   }
 
   function bulkCreateByUser(req, res) {
-    byUser(req, res, 'bulkCreate');
+    executeByUser(req, res, 'bulkCreate');
   }
 
   function bulkUpdateByUser(req, res) {
-    byUser(req, res, 'bulkUpdate');
+    executeByUser(req, res, 'bulkUpdate');
   }
 
   function getByUser(req, res) {

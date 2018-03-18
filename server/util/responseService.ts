@@ -174,12 +174,6 @@ export default class ResponseService {
   }
 
   successCollection(res, collection, status = 200) {
-    /*const message = {
-      success: true,
-      data: collection
-    };
-
-    this.success(res, message, status);*/
     if (!collection || (Array.isArray(collection) && collection.length === 0)) {
       status = 204;
     }

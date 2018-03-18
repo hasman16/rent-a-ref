@@ -22,7 +22,7 @@ const models = [
 ];
 
 function herokuSetup() {
-  console.log('=========== Database is: heroku');
+  console.log('=========== Server is: heroku');
   return new Sequelize(process.env.DATABASE_URL);
 }
 
@@ -30,7 +30,7 @@ function localhostSetup() {
   const serverName = process.env.serverName || 'test';
   const configuration = config[serverName];
   const database = configuration.database;
-  console.log('=========== Database is:', serverName);
+  console.log('=========== Server is:', serverName);
   // connect to database using sequelize
   return new Sequelize(
     database.name,
@@ -86,7 +86,9 @@ models.forEach(function(model) {
   });
 
   m.Game.belongsTo(sequelize.models.organizer);
+  m.Game.belongsTo(m.Organization);
   m.Game.belongsTo(m.Address);
+  m.Game.belongsTo(m.Phone);
 
   m.User.belongsToMany(m.Match, {
     through: 'officiating'
@@ -98,6 +100,7 @@ models.forEach(function(model) {
   m.Match.belongsTo(m.Sport);
   m.Match.belongsTo(m.Game);
   m.Match.belongsTo(m.Address);
+  m.Match.belongsTo(m.Phone);
 
   m.User.hasMany(m.Post);
   m.Post.hasMany(m.Comment);
@@ -118,6 +121,8 @@ models.forEach(function(model) {
   m.Phone.belongsToMany(m.Organization, {
     through: 'organization_phone'
   });
+
+
 
   module.exports.Referee = sequelize.models.referee;
   module.exports.Match = sequelize.models.match;

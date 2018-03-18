@@ -8,7 +8,10 @@ function ensureAuthentication(req, res, next) {
         const bearer = bearerHeader.split(' ');
         bearerToken = bearer[1];
         req.token = bearerToken;
-        jwt.verify(bearerToken, process.env.SECRET_TOKEN, function(err, decoded) {
+        jwt.verify(bearerToken, process.env.SECRET_TOKEN, function(
+            err,
+            decoded
+        ) {
             if (err) {
                 res.status(401).json({
                     success: false,

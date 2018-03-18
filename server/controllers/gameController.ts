@@ -1,16 +1,16 @@
-import { IGame } from './../types/index';
+import { IAddress, IGame, IPhone } from './../types/index';
+import * as _ from 'lodash';
 
 export default function GameController(models, ResponseService) {
   const Game = models.Game;
-  const attributes = ['id', 'name', 'duration', 'referees'];
+  const attributes = ['id', 'name', 'duration', 'referees', 'pay', 'ages'];
 
   function makeGame(game: IGame): IGame {
     return <IGame>{
       name: game.name,
       duration: game.duration,
       referees: game.referees,
-      type: game.type,
-      age: game.age,
+      ages: game.ages,
       pay: game.pay
     };
   }
@@ -30,13 +30,21 @@ export default function GameController(models, ResponseService) {
   }
 
   function getOne(req, res) {
-    Game.findOne({
+    const Address = models.Address;
+    const Phone = models.Phone;
+
+    Game.findAll({
       where: {
         id: req.params.game_id
       },
-      attributes: attributes
+
+      include: [{
+        model: Address
+      },{
+        model: Phone
+      }]
     })
-      .then(result => ResponseService.success(res, result))
+      .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -76,11 +84,54 @@ export default function GameController(models, ResponseService) {
     ResponseService.findObject(game_id, 'Game', res, doDelete, 204);
   }
 
+  function createGameAddressPhone(req, res) {
+    const sequelize = models.sequelize;
+    const Address = models.Address;
+    const Phone = models.Phone;
+
+    let game: IGame = <IGame>ResponseService.getItemFromBody(req);
+    let address: IAddress = _.cloneDeep(game.address);
+    let phone: IPhone = _.cloneDeep(game.phone);
+
+    delete game.address;
+    delete game.phone;
+    game.organization_id = req.params.organization_id;
+
+    sequelize.transaction((t) => {
+      return Address.create(address, { transaction: t })
+        .then((newAddress) => {
+          game.address_id = newAddress.id;
+          return Phone.create(phone, { transaction: t });
+        })
+        .then((newPhone) => {
+          game.phone_id = newPhone.id;
+          return Game.create(game, { transaction: t });
+        });     
+    })
+      .then(result => {
+        let aGame = ResponseService.deleteItemDates(result);
+        ResponseService.success(res, aGame, 201);
+      })
+    .catch(error => this.exception(res, error));
+  }
+
+  function getGameAddress(req, res) {
+    this.getOne(req, res);
+  }
+
+  function updateGameAddress(req, res) { }
+  function deleteGameAddress(req, res) { }
+
   return {
     getAll: getAll,
     getOne: getOne,
     create: create,
     update: update,
-    deleteOne: deleteOne
+    deleteOne: deleteOne,
+
+    getGameAddress,
+    createGameAddressPhone,
+    updateGameAddress,
+    deleteGameAddress
   };
 }
