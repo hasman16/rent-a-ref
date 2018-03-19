@@ -20,6 +20,7 @@ import {
     FormlyHorizontalRadioWrapper,
     FormlyHorizontalTextAreaWrapper
 } from './shared/formly/horizontal-types/index';
+import { GoogleMapComponent  } from './googlemap/google-map.component';
 
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
@@ -114,6 +115,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         FormlyHorizontalTextAreaWrapper,
         FooterComponent,
         FooterTabletComponent,
+        GoogleMapComponent,
         HeaderComponent,
         HomeComponent,
         HowItWorksComponent,

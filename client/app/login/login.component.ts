@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit {
         path = 'account/standby/' + userId;
         break;
       case 'yes active':
-        path = 'account/' + user.id;
+        path = 'account/' + userId;
         break;
       case 'yes locked':
         path = 'account/suspended/' + userId;
