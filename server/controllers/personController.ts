@@ -1,3 +1,5 @@
+import {IPerson} from './../types/index';
+
 export default function PersonController(models, ResponseService) {
   const Person = models.Person;
   const attributes = ['id', 'firstname', 'middlenames', 'lastname'];
@@ -23,7 +25,7 @@ export default function PersonController(models, ResponseService) {
   }
 
   function makePerson(newPerson) {
-    return {
+    return <IPerson>{
       firstname: newPerson.firstname,
       middlenames: newPerson.middlenames,
       lastname: newPerson.lastname,
@@ -32,7 +34,9 @@ export default function PersonController(models, ResponseService) {
   }
 
   function create(req, res) {
-    const aPerson =  ResponseService.makeObject(req);
+    let aPerson = ResponseService.getItemFromBody(req);
+    delete aPerson.id;
+
     Person.create(aPerson)
       .then(newPerson => {
         ResponseService.success(res, newPerson, 201);
@@ -41,7 +45,10 @@ export default function PersonController(models, ResponseService) {
   }
 
   function update(req, res) {
-    let aPerson =  ResponseService.makeObject(req);
+    let aPerson = ResponseService.getItemFromBody(req);
+    delete aPerson.id;
+    delete aPerson.user_id;
+
     if (aPerson.dob) {
       aPerson.dob = Number(aPerson.dob);
     }

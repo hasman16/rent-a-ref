@@ -194,7 +194,7 @@ export default class ResponseService {
   }
 
   isAdmin(req) {
-    const authorization = req.decoded.accessLevel;
+    const authorization = Number(req.decoded.authorization);
     return (authorization === 1 || authorization === 2);
   }
 
