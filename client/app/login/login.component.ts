@@ -75,6 +75,54 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['passwordreset']);
   }
 
+  routeOrganizer(canOrganize:string, userStatus:string, userId:string):string {
+    let path: string = '';
+    // Check if the user is a referee/organizer and if his/she has not yet completed the profile form, then redirect him/her to the form
+    // Organizer
+    switch (canOrganize + ' ' + userStatus) {
+      case 'pending standby':
+        path = 'account/profile/' + userId;
+        break;
+      case 'yes active':
+        path = 'account/' + userId;
+        break;
+      case 'yes locked':
+        path = 'account/suspended/' + userId;
+        break;
+      case 'no banned':
+        path = 'account/deactivated/' + userId;
+        break;
+    }
+    return path;
+  }
+
+  routeUser(canReferee: string, userStatus: string, userId: string): string {
+    let path: string = '';
+
+    // Referee
+    switch (canReferee + ' ' + userStatus) {
+      case 'pending active':
+        path = 'account/profile/' + userId;
+        break;
+      case 'pending in_progress':
+        path = 'account/standby/' + userId;
+        break;
+      case 'yes active':
+        path = 'account/' + user.id;
+        break;
+      case 'yes locked':
+        path = 'account/suspended/' + userId;
+        break;
+      case 'no banned':
+        path = 'account/deactivated/' + userId;
+        break;
+      default:
+        path = 'account/' + userId;
+        break;
+    }
+    return path;
+  }
+
   onSubmit(data: any) {
     this.auth
       .login(data)
@@ -82,6 +130,10 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (login: Login) => {
           const user: User = login.user;
+          const userId = user.id;
+          const userStatus = user.status;
+          let path1: string = this.routeOrganizer(user.can_organize, userStatus, userId);
+          let path2: string = this.routeUser(user.can_referee, userStatus, userId);
 
           if (this.checkboxFlag) {
             const expireDate = new Date();
@@ -95,43 +147,10 @@ export class LoginComponent implements OnInit {
             this.cookieService.delete('email');
           }
 
-          // Check if the user is a referee/organizer and if his/she has not yet completed the profile form, then redirect him/her to the form
-          // Organizer
-          switch (user.can_organize + ' ' + user.status) {
-            case 'pending standby':
-              this.router.navigate(['account/profile/' + user.id]);
-              break;
-            case 'yes active':
-              this.router.navigate(['account/' + user.id]);
-              break;
-            case 'yes locked':
-              this.router.navigate(['account/suspended/' + user.id]);
-              break;
-            case 'no banned':
-              this.router.navigate(['account/deactivated/' + user.id]);
-              break;
-          }
-
-          // Referee
-          switch (user.can_referee + ' ' + user.status) {
-            case 'pending active':
-              this.router.navigate(['account/profile/' + user.id]);
-              break;
-            case 'pending in_progress':
-              this.router.navigate(['account/standby/' + user.id]);
-              break;
-            case 'yes active':
-              this.router.navigate(['account/' + user.id]);
-              break;
-            case 'yes locked':
-              this.router.navigate(['account/suspended/' + user.id]);
-              break;
-            case 'no banned':
-              this.router.navigate(['account/deactivated/' + user.id]);
-              break;
-            default:
-              this.router.navigate(['account/' + user.id]);
-              break;
+          if (path1.length > 0) {
+            this.router.navigate([path1]);
+          } else if (path2.length > 0) {
+            this.router.navigate([path2]);
           }
         },
         (err: HttpErrorResponse) => {

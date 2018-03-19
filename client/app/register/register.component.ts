@@ -120,37 +120,28 @@ export class RegisterComponent {
   }
 
   register(user) {
-    let valid: boolean = false;
-
     if (user.email !== user.repeatemail) {
-      valid = false;
       this.toast.setMessage('Emails do not match', 'danger');
-    }
-
-    if (user.password !== user.passwordrepeat) {
-      valid = false;
+      return;
+    } else if (user.password !== user.repeatpassword) {
       this.toast.setMessage('Passwords do not match', 'danger');
+      return;
     }
 
-    if (valid) {
-      this.userService.register(user).subscribe(
-        res => {
-          this.toast.setMessage(res.message, 'success');
-          this.router.navigate(['/login']);
-        },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            // A client-side or network error occurred. Handle it accordingly.
-            this.toast.setMessage(
-              'This email address already exists',
-              'danger'
-            );
-          } else {
-            // The backend returned an unsuccessful response code.
-            // The response body may contain clues as to what went wrong,
-          }
+    this.userService.register(user).subscribe(
+      res => {
+        this.toast.setMessage(res.message, 'success');
+        this.router.navigate(['/login']);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          this.toast.setMessage('This email address already exists', 'danger');
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
         }
-      );
-    }
+      }
+    );
   }
 }
