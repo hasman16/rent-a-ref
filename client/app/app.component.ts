@@ -12,74 +12,34 @@ export class AppComponent {
   windowWidth: number = window.innerWidth;
 
   constructor(public auth: AuthService, private ngZone: NgZone) {
-    console.log('Width on resize 1: ' + window.innerWidth);
-    console.log('Height on resize 2: ' + window.innerHeight);
 
-    const destination_anim_bgs = new Array(
+    const destination_anim_bgs = [
       'assets/images/refereebg.jpg',
       'assets/images/refereebg1.jpg',
-      'assets/images/refereebg12.jpg'
-    );
-
-    // destination_anim_bgs = [];
-
-    destination_anim_bgs.push(
       'assets/images/refereebg2.jpg',
       'assets/images/refereebg3.jpg',
-      'assets/images/refereebg4.jpg'
-    );
-    destination_anim_bgs.push(
+      'assets/images/refereebg4.jpg',
       'assets/images/refereebg5.jpg',
       'assets/images/refereebg6.jpg',
-      'assets/images/refereebg7.jpg'
-    );
-    destination_anim_bgs.push(
+      'assets/images/refereebg7.jpg',
       'assets/images/refereebg8.jpg',
       'assets/images/refereebg9.png',
-      'assets/images/refereebg10.jpg'
-    );
-    destination_anim_bgs.push('assets/images/refereebg11.jpg');
-    // destination_anim_bgs.push(destination_anim_bgs2);
-    // destination_anim_bgs.push(destination_anim_bgs3);
+      'assets/images/refereebg10.jpg',
+      'assets/images/refereebg11.jpg',
+      'assets/images/refereebg12.jpg'];
+
     $(document).ready(function() {
-      let imgArr = new Array(
-        'assets/images/refereebg.jpg',
-        'assets/images/refereebg1.jpg',
-        'assets/images/refereebg2.jpg'
-      );
-
-      imgArr.push(
-        'assets/images/refereebg3.jpg',
-        'assets/images/refereebg4.jpg',
-        'assets/images/refereebg5.jpg'
-      );
-      imgArr.push(
-        'assets/images/refereebg6.jpg',
-        'assets/images/refereebg7.jpg',
-        'assets/images/refereebg8.jpg'
-      );
-      imgArr.push(
-        'assets/images/refereebg9.png',
-        'assets/images/refereebg10.jpg',
-        'assets/images/refereebg11.jpg'
-      );
-      imgArr.push('assets/images/refereebg12.jpg');
-      // imgArr.push(imgArr3);
-
-      if (destination_anim_bgs[0]) {
-        imgArr = destination_anim_bgs;
-      }
-
-      const preloadArr = new Array();
-      let i;
+      let imgArr = destination_anim_bgs;
 
       /* preload images */
-      for (i = 0; i < imgArr.length; i++) {
-        preloadArr[i] = new Image();
-        preloadArr[i].src = imgArr[i];
-      }
+      const preloadArr = imgArr.map((image) => {
+        let img = new Image();
+        img.src = image;
+        return img;
+      });
 
       let currImg = 0;
+      const totalImages = preloadArr.length;
 
       /* image rotator */
       function changeImg() {
@@ -88,7 +48,7 @@ export class AppComponent {
             $(this).css(
               'background',
               'url(' +
-                preloadArr[currImg++ % preloadArr.length].src +
+                preloadArr[currImg++ % totalImages].src +
                 ') fixed center'
             );
           })
