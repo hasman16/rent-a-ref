@@ -2,7 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './providers/token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { RecaptchaModule } from 'ng-recaptcha';
 /* Modules */
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +20,7 @@ import {
     FormlyHorizontalRadioWrapper,
     FormlyHorizontalTextAreaWrapper
 } from './shared/formly/horizontal-types/index';
+import { AgmCoreModule } from '@agm/core';
 import { GoogleMapComponent  } from './googlemap/google-map.component';
 
 /* Services */
@@ -142,6 +143,9 @@ import { BarchartComponent } from './barchart/barchart.component';
         BarchartComponent
     ],
     imports: [
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
+        }),
         RoutingModule,
         SharedModule,
         BrowserModule,
@@ -153,6 +157,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         ButtonModule,
         RadioButtonModule,
         CardModule,
+        RecaptchaModule.forRoot(),
         FormlyBootstrapModule,
         FormlyModule.forRoot({
             wrappers: [

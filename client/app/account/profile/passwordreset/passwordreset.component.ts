@@ -31,7 +31,7 @@ export class PasswordresetComponent implements OnInit {
     private router: Router,
     public toast: ToastComponent,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.emailForm = this.formBuilder.group({
@@ -57,7 +57,7 @@ export class PasswordresetComponent implements OnInit {
         this.toast.setMessage(res.message, 'success');
         this.divMessage = res.message;
         this.hideShowDiv = true;
-        // this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -72,14 +72,8 @@ export class PasswordresetComponent implements OnInit {
             'danger'
           );
           this.hideShowDiv = false;
-
-          // this.toast.setMessage('Error Message: ' + err.error.message, 'danger');
         }
-      }
-      // error => console.log('An Error Occurred: ' + error),
-      // () => this.toast.setMessage('email already exists', 'danger')
-      // error => this.toast.setMessage('email already exists', 'danger')
-    );
+      });
   }
 
   setClassEmail() {

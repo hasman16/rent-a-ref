@@ -8,5 +8,6 @@ export interface IUser {
   person_id?: string;
   can_referee: string;
   can_organize: string;
-  status: string
+  status: string,
+  captcha?: any
 }

@@ -7,7 +7,14 @@
         <form [formGroup]="form" (ngSubmit)="register(model)">
           <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form">
             <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid">Register</button>
+            <br /><br />
+            <re-captcha
+              required
+              type="image"
+              siteKey="6Ldk6k0UAAAAAOGEPK-6NLb8Vc_kjsTIvb3lm_eb"
+            ></re-captcha>
           </formly-form>
+
         </form>
       </div>
     </div>

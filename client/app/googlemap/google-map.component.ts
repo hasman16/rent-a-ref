@@ -9,14 +9,14 @@ declare const google: any;
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
-
+  public DALLAS = { lat: 32.7767, lng: -96.7970 };
   constructor() { }
 
     ngOnInit() {
       let map;
       let marker;
       const DALLAS = {lat: 32.7767, lng: -96.7970};
-
+/*
         map = new google.maps.Map(document.getElementById('map'), {
             center: DALLAS,
             zoom: 7
@@ -27,5 +27,6 @@ export class GoogleMapComponent implements OnInit {
             map: map,
             title: 'Hello World!'
         });
+        */
     }
 }

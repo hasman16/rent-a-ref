@@ -1,4 +1,6 @@
+import { request } from 'request-promise';
 import * as randomstring from 'randomstring';
+import * as _ from 'lodash';
 
 export default function RegisterController(bcrypt, jwt, models, ResponseService, SendGridService) {
   const Address = models.Address;
@@ -80,7 +82,8 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
       authorization: 3,
       status: 'active',
       can_organize: 'no',
-      can_referee: 'no'
+      can_referee: 'no',
+      captcha: user.captcha
     };
     const isOrganizer = String(user.role).trim();
 
@@ -98,18 +101,37 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
   function registerUser(req, res) {
     const aUser = createNewUser(req.body);
 
-    User.findOne({
-      where: { email: aUser.email }
-    })
-      .then(userInDb => {
-        if (userInDb) {
-          ResponseService.failure(res, 'A user with that email address already exists.');
-        } else {
-          return bcrypt.hash(aUser.password, 12)
-            .then(password => {
-              return createUserPerson(req, res, aUser, password);
-            });
-        }
+    if (_.get(aUser,'captcha','') === '') {
+      ResponseService.exception(res, 'Missing recaptcha.', 403);
+    }
+
+    const siteKey = process.env.recaptchaKey;
+    var options = {
+      method: 'GET',
+      uri: 'https://google.com/recaptcha/api/siteverify',
+      qs: {
+        secret: siteKey, // -> uri + '?secret=xxxxx%20xxxxx'
+        response: aUser.captcha,
+        ip: req.connection.remoteAddress
+      },
+      json: true // Automatically parses the JSON string in the response
+    };
+
+    request(options)
+      .then((response) => {
+        return User.findOne({
+          where: { email: aUser.email }
+        })
+          .then(userInDb => {
+            if (userInDb) {
+              ResponseService.failure(res, 'A user with that email address already exists.');
+            } else {
+              return bcrypt.hash(aUser.password, 12)
+                .then(password => {
+                  return createUserPerson(req, res, aUser, password);
+                });
+            }
+          });
       })
       .catch(error => ResponseService.exception(res, error));
   }
