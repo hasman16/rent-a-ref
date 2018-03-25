@@ -1,4 +1,4 @@
-import {IAddress} from './../types/index';
+import {AddressModel} from './../types/index';
 import * as _ from 'lodash';
 
 
@@ -12,7 +12,7 @@ export default function AddressController(models, ResponseService) {
     Address.findAll({
       attributes: attributes
     })
-      .then((addresses: IAddress[]) => ResponseService.success(res, addresses))
+      .then((addresses: AddressModel[]) => ResponseService.success(res, addresses))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -23,7 +23,7 @@ export default function AddressController(models, ResponseService) {
       },
       attributes: attributes
     })
-      .then((address: IAddress) => ResponseService.success(res, address))
+      .then((address: AddressModel) => ResponseService.success(res, address))
       .catch(error => ResponseService.exception(res, error));
   }
 

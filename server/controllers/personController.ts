@@ -1,4 +1,4 @@
-import {IPerson} from './../types/index';
+import {PersonModel} from './../types/index';
 
 export default function PersonController(models, ResponseService) {
   const Person = models.Person;
@@ -24,8 +24,8 @@ export default function PersonController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function makePerson(newPerson) {
-    return <IPerson>{
+  function makePerson(newPerson): PersonModel {
+    return <PersonModel>{
       firstname: newPerson.firstname,
       middlenames: newPerson.middlenames,
       lastname: newPerson.lastname,

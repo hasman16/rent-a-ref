@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { UserService } from '../services/user.service';
 import { ToastComponent } from '../shared/toast/toast.component';
+import * as _ from 'lodash';
 
 @Component({
   moduleId: module.id,
@@ -17,7 +18,8 @@ export class RegisterComponent {
   protected model: any = {};
   protected options: FormlyFormOptions = <FormlyFormOptions>{};
   protected fields: FormlyFieldConfig[];
-
+  protected captchaResponse: string;
+    
   constructor(
     private router: Router,
     public toast: ToastComponent,
@@ -119,7 +121,17 @@ export class RegisterComponent {
     ];
   }
 
+  public resolvedRecaptcha(captchaResponse: string) {
+    console.log(`Resolved captcha with response ${captchaResponse}:`);
+    this.captchaResponse = captchaResponse;
+  }
+
   register(user) {
+    if (_.isNil(this.captchaResponse) || this.captchaResponse.length === 0) {
+      this.toast.setMessage('Recaptcha is required.', 'danger');
+      return;
+    }
+
     if (user.email !== user.repeatemail) {
       this.toast.setMessage('Emails do not match', 'danger');
       return;
@@ -127,6 +139,7 @@ export class RegisterComponent {
       this.toast.setMessage('Passwords do not match', 'danger');
       return;
     }
+    user.captcha = this.captchaResponse;
 
     this.userService.register(user).subscribe(
       res => {

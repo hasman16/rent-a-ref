@@ -1,4 +1,4 @@
-import { IUser } from './../types/index';
+import { UserModel } from './../types/index';
 import * as randomstring from 'randomstring';
 
 export default function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) {
@@ -121,7 +121,7 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
         if (result) {
           console.log('got result');
           const person = newUser.person;
-          const user = <IUser>{
+          const user = <UserModel>{
             id: newUser.id,
             email: newUser.email,
             authorization: newUser.authorization,

@@ -1,8 +1,8 @@
-import { IUser } from './user'
+import { UserModel } from './user'
 
-export interface ILogin {
+export interface LoginModel {
 	success: boolean;
 	message: string;
 	token: string;
-	user: IUser;
+	user: UserModel;
 }

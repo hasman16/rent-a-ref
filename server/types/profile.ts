@@ -1,18 +1,18 @@
-import { IAddress } from './address';
-import { IOrganization } from './organization';
-import { IPerson } from './person';
-import { IPhone } from './phone';
+import { AddressModel } from './address';
+import { OrganizationModel } from './organization';
+import { PersonModel } from './person';
+import { PhoneModel } from './phone';
 
-export interface IProfile{
+export interface IProfileModel{
 	id?: number;
 	email: string;
 	authorization: number;
 	can_referee: string;
 	can_organize: string;
 	status: string;
-	person: IPerson;
-	addresses: IAddress[];
-	areas: IAddress[];
-	phones: IPhone[];
-	organizations: IOrganization[]
+	person: PersonModel;
+	addresses: AddressModel[];
+	areas: AddressModel[];
+	phones: PhoneModel[];
+	organizations: OrganizationModel[]
 }

@@ -9,7 +9,7 @@
             <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid">Register</button>
             <br /><br />
             <re-captcha
-              required
+              (resolved)="resolvedRecaptcha($event)"
               type="image"
               siteKey="6Ldk6k0UAAAAAOGEPK-6NLb8Vc_kjsTIvb3lm_eb"
             ></re-captcha>

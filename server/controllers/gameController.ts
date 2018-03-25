@@ -1,12 +1,12 @@
-import { IAddress, IGame, IPhone } from './../types/index';
+import { AddressModel, GameModel, PhoneModel } from './../types/index';
 import * as _ from 'lodash';
 
 export default function GameController(models, ResponseService) {
   const Game = models.Game;
   const attributes = ['id', 'name', 'duration', 'referees', 'pay', 'ages'];
 
-  function makeGame(game: IGame): IGame {
-    return <IGame>{
+  function makeGame(game: GameModel): GameModel {
+    return <GameModel>{
       name: game.name,
       duration: game.duration,
       referees: game.referees,
@@ -16,7 +16,7 @@ export default function GameController(models, ResponseService) {
   }
 
   function returnGame(res, game, status = 200) {
-    let newGame: IGame = makeGame(game);
+    let newGame: GameModel = makeGame(game);
     newGame.id = game.id;
     ResponseService.success(res, newGame, status);
   }
@@ -49,7 +49,7 @@ export default function GameController(models, ResponseService) {
   }
 
   function create(req, res) {
-    const game: IGame = makeGame(req.body);
+    const game: GameModel = makeGame(req.body);
 
     Game.create(game)
       .then(newGame => {
@@ -59,7 +59,7 @@ export default function GameController(models, ResponseService) {
   }
 
   function update(req, res) {
-    const game: IGame = makeGame(req.body);
+    const game: GameModel = makeGame(req.body);
 
     Game.update(game, {
       where: {
@@ -89,9 +89,9 @@ export default function GameController(models, ResponseService) {
     const Address = models.Address;
     const Phone = models.Phone;
 
-    let game: IGame = <IGame>ResponseService.getItemFromBody(req);
-    let address: IAddress = _.cloneDeep(game.address);
-    let phone: IPhone = _.cloneDeep(game.phone);
+    let game: GameModel = <GameModel>ResponseService.getItemFromBody(req);
+    let address: AddressModel = _.cloneDeep(game.address);
+    let phone: PhoneModel = _.cloneDeep(game.phone);
 
     delete game.address;
     delete game.phone;

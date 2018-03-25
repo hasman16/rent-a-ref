@@ -1,7 +1,7 @@
-import { IAddress } from './address';
-import { IPhone } from './phone';
+import { AddressModel } from './address';
+import { PhoneModel } from './phone';
 
-export interface IGame {
+export interface GameModel {
 	id?: string;
 	name: string;
 	duration: number;
@@ -12,6 +12,6 @@ export interface IGame {
 	organization_id?: number;
 	phone_id?: number;
 	sport_id?: number;
-	address?: IAddress;
-	phone?: IPhone;
+	address?: AddressModel;
+	phone?: PhoneModel;
 }

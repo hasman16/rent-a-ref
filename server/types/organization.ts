@@ -1,9 +1,9 @@
-import { IAddress } from './address';
-import { IPhone } from './phone';
+import { AddressModel } from './address';
+import { PhoneModel } from './phone';
 
-export interface IOrganization {
+export interface OrganizationModel {
   id?: string;
   name: string;
-  addresses?: IAddress[];
-  phones?: IPhone[];
+  addresses?: AddressModel[];
+  phones?: PhoneModel[];
 }

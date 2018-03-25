@@ -1427,63 +1427,6 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/posts",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "d6fe9eb0-c252-443e-ba91-2d75756f85e8",
-								"type": "text/javascript",
-								"exec": [
-									"var data = JSON.parse(responseBody);",
-									"//tests['Status code is 200'] = responseCode.code === 200;",
-									"",
-									"",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{authoriztionToken}}"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "admin2@rentaref.com",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "admin2",
-									"description": "",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "localhost:3000/api/posts",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"posts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "localhost:3000/api/users/:id/posts",
 					"event": [
 						{

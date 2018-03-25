@@ -1,4 +1,4 @@
-import { request } from 'request-promise';
+import * as request from 'request-promise';
 import * as randomstring from 'randomstring';
 import * as _ from 'lodash';
 
@@ -107,7 +107,6 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
 
     const siteKey = process.env.recaptchaKey;
     var options = {
-      method: 'GET',
       uri: 'https://google.com/recaptcha/api/siteverify',
       qs: {
         secret: siteKey, // -> uri + '?secret=xxxxx%20xxxxx'
@@ -116,7 +115,7 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
       },
       json: true // Automatically parses the JSON string in the response
     };
-
+    console.log('Attempt request:');
     request(options)
       .then((response) => {
         return User.findOne({

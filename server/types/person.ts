@@ -1,4 +1,4 @@
-export interface IPerson {
+export interface PersonModel {
 	id?:number;
 	firstname:string;
 	middlenames:string;
