@@ -2,6 +2,7 @@ import * as request from 'request-promise';
 import * as randomstring from 'randomstring';
 import * as _ from 'lodash';
 
+//https://www.npmjs.com/package/ng-recaptcha
 export default function RegisterController(bcrypt, jwt, models, ResponseService, SendGridService) {
   const Address = models.Address;
   const Area = models.Area;

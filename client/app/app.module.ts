@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -146,6 +147,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
         }),
+        NgxDatatableModule,
         RoutingModule,
         SharedModule,
         BrowserModule,

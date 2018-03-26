@@ -10,12 +10,12 @@ export default function addressRoutes(setter, addressCtrl) {
 
   router.route('/addresses').get(authentication, isAdmin, addressCtrl.getAll);
   router.route('/organizations/:organization_id/addresses').get(authentication, addressCtrl.getByOrganization);
-  router.route('/organizations/:organization_id/addresses').post(authentication, addressCtrl.createByOrganization);
+  router.route('/organizations/:organization_id/addresses').post(authentication, addressCtrl.organizationCreateAddress);
 
   router.use('/organizations/:organization_id/addresses/bulk', authentication);
-  router.route('/organizations/:organization_id/addresses/bulk').post(addressCtrl.bulkCreateByOrganization);
-  router.route('/organizations/:organization_id/addresses/bulk').put(isOrgOwner, addressCtrl.bulkUpdateByOrganization);
-  router.route('/organizations/:organization_id/addresses/bulk').patch(isOrgOwner, addressCtrl.bulkUpdateByOrganization);
+  router.route('/organizations/:organization_id/addresses/bulk').post(addressCtrl.organizationBulkCreateAddresses);
+  router.route('/organizations/:organization_id/addresses/bulk').put(isOrgOwner, addressCtrl.organizationBulkUpdateAddresses);
+  router.route('/organizations/:organization_id/addresses/bulk').patch(isOrgOwner, addressCtrl.organizationBulkUpdateAddresses);
 
   router.use('/organizations/:organization_id/addresses/:address_id', authentication, isOrgOwner);
   router.route('/organizations/:organization_id/addresses/:address_id').put(addressCtrl.updateByOrganization);
@@ -24,12 +24,12 @@ export default function addressRoutes(setter, addressCtrl) {
 
   router.use('/users/:user_id/addresses', authentication, isUserOrAdmin);
   router.route('/users/:user_id/addresses').get(addressCtrl.getByUser);
-  router.route('/users/:user_id/addresses').post(addressCtrl.createByUser);
+  router.route('/users/:user_id/addresses').post(addressCtrl.userCreateAddress);
 
   router.use('/users/:user_id/addresses/bulk', authentication, isUserOrAdmin);
-  router.route('/users/:user_id/addresses/bulk').post( addressCtrl.bulkCreateByUser);
-  router.route('/users/:user_id/addresses/bulk').put(addressCtrl.bulkUpdateByUser);
-  router.route('/users/:user_id/addresses/bulk').patch(addressCtrl.bulkUpdateByUser);
+  router.route('/users/:user_id/addresses/bulk').post(addressCtrl.userBulkCreateAddresses);
+  router.route('/users/:user_id/addresses/bulk').put(addressCtrl.userBulkUpdateAddresses);
+  router.route('/users/:user_id/addresses/bulk').patch(addressCtrl.userBulkUpdateAddresses);
 
   router.use('/users/:user_id/addresses/:address_id', authentication, isUserOrAdmin);
   router.route('/users/:user_id/addresses/:address_id').put(addressCtrl.updateByUser);

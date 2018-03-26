@@ -13,15 +13,19 @@ export default class ResponseService {
   }
 
   limitOffset(clauses, req, attributes = ['id']) {
-    let query = req.query || {
-      offset: 0,
-      limit: 10
-    };
-    let limit = (parseInt(query.limit, 10) || 10);
+    let query = Object.assign(
+      {},
+      {
+        offset: 0,
+        limit: 10
+      },
+      req.query
+    );
+    let limit = parseInt(query.limit, 10) || 10;
     let offset = (parseInt(query.offset, 10) || 0) * 10;
     let order = query.order || 'ASC';
 
-    order = attributes.map(function(attribute) {
+    order = attributes.map(attribute => {
       return [attribute, order];
     });
 
@@ -58,8 +62,8 @@ export default class ResponseService {
   }
 
   getArrayFromBody(req): any[] {
-     const key: string = this.firstKeyFromReqBody(req);
-     return req.body[key];
+    const key: string = this.firstKeyFromReqBody(req);
+    return req.body[key];
   }
 
   findOne(Model, obj_id, res, callback, status = 200) {
@@ -73,85 +77,130 @@ export default class ResponseService {
       .catch(error => this.exception(res, error, 400));
   }
 
-  create(req, res, baseTable, joinTable, joinMethod) {
-    const sequelize = this.models.sequelize;
-    const item = this.deleteId(this.getItemFromBody(req));
-
-    sequelize.transaction((t) => {
-      return baseTable.create(item, { transaction: t })
-        .then((newItem) => {
-          const model = joinMethod(newItem);
-          return joinTable.create(model, { transaction: t });
-        })
-        .then(item => {
-          this.success(res, item, 201);
-        });
-    })
-      .catch(error => this.exception(res, error));
+  joinTableCreate(itemsJoin, tableJoin) {
+    return (t, item) => {
+      const model = itemsJoin(item);
+      return tableJoin.create(model, { transaction: t });
+    };
   }
 
-  bulkCreate(req, res, baseTable, joinTable, joinMethod) {
-    const sequelize = this.models.sequelize;
-    let newItems: any[] = _.map(this.getArrayFromBody(req), (item) => {
-      return this.deleteItemDates(this.deleteId(item));
-    });
-
-    sequelize.transaction((t) => {
-      return baseTable.bulkCreate(newItems, { transaction: t, returning: true })
-        .then((items) => {
-          return sequelize.Promise.each(items, (item) => {
-            const model = joinMethod(item);
-            return joinTable.create(model, { transaction: t });
-          });
-        })
-        .then((items: any[]) => {
-          this.success(res, items, 201);
-        });
-    })
-      .catch(error => this.exception(res, error));
-  }
-
-  bulkUpdate(req, res, baseTable, joinTable, joinMethod) {
-    const sequelize = this.models.sequelize;
-    const items = _(this.getArrayFromBody(req))
-                            .filter(item => !_.isNil(item.id))
-                            .map(item => {
-                               return this.deleteItemDates(item);
-                            })
-                            .value();
-
-    const runQuery= (t, item) => {
-      return joinTable.findOne({
-                where: joinMethod(item)
-              },
-              { transaction: t, returning: true }
-            )
-            .then((newItem) => {
-              if (newItem) {
-                return baseTable.update(item, {
-                  where: {
-                    id: item.id
-                  }
-                },
-                { transaction: t, returning: true });
-              }
-            });
+  baseTableCreate(baseTable, joinTableCreate) {
+    const createFunction = (t, item) => {
+      return baseTable.create(item, { transaction: t }).then(newItem => {
+        return joinTableCreate(t, newItem);
+      });
     };
 
-    sequelize.transaction((t) => {
-      return sequelize.Promise.each(items, (item) => {
-        return runQuery(t, item);
-      })
-     .then((items: any[]) => {
-        this.success(res, items, 200);
-      });
-    })
-    .catch(error => this.exception(res, error));
+    return _.bind(this.create, this, createFunction);
+  }
 
+  baseTableBulkCreate(baseTable, joinTableCreate) {
+    const sequelize = this.models.sequelize;
+    const createFunction = (t, items) => {
+      return baseTable
+        .bulkCreate(items, { transaction: t, returning: true })
+        .then(items => {
+          return sequelize.Promise.each(items, item => {
+            return joinTableCreate(t, item);
+          });
+        });
+    };
+
+    return _.bind(this.bulkCreate, this, createFunction);
+  }
+
+  bulkUpdateQuery(baseTable, joinTable, joinMethod) {
+    const query = (t, item) => {
+      return joinTable
+        .findOne(
+          {
+            where: joinMethod(item)
+          },
+          { transaction: t, returning: true }
+        )
+        .then(newItem => {
+          if (newItem) {
+            return baseTable.update(
+              item,
+              {
+                where: {
+                  id: item.id
+                }
+              },
+              { transaction: t, returning: true }
+            );
+          }
+        });
+    };
+
+    return _.bind(this.bulkUpdate, this, query);
+  }
+
+  selectBaseTableQuery(type, baseTable, joinTableCreate) {
+    let tableAction;
+    switch (type) {
+      case 'create':
+        tableAction = this.baseTableCreate(baseTable, joinTableCreate);
+        break;
+      case 'bulkCreate':
+        tableAction = this.baseTableBulkCreate(baseTable, joinTableCreate);
+        break;
+      default:
+        tableAction = (req, res) => this.exception(res, 'Unknown method');
+        break;
+    }
+
+    return tableAction;
+  }
+
+  executeCreate(res, createFunction, args) {
+    const sequelize = this.models.sequelize;
+    sequelize
+      .transaction(t => {
+        return createFunction(t, args).then(result => {
+          this.success(res, result, 201);
+        });
+      })
+      .catch(error => this.exception(res, error));
+  }
+
+  create(baseTableCreate, req, res) {
+    console.log('this is:');
+    const item = this.deleteId(this.getItemFromBody(req));
+    this.executeCreate(res, baseTableCreate, item);
+  }
+
+  getBulkItemsArrayFromBody(req, filterFunction) {
+    return _(this.getArrayFromBody(req))
+      .filter(filterFunction)
+      .map(item => this.deleteItemDates(item))
+      .value();
+  }
+
+  bulkCreate(baseTableBulkCreate, req, res) {
+    const filterFunction = item => _.isNil(item.id);
+    const newItems: any[] = this.getBulkItemsArrayFromBody(req, filterFunction);
+    this.executeCreate(res, baseTableBulkCreate, newItems);
+  }
+
+  bulkUpdate(bulkUpdateQuery, req, res) {
+    const sequelize = this.models.sequelize;
+    const filterFunction = item => !_.isNil(item.id);
+    const items = this.getBulkItemsArrayFromBody(req, filterFunction);
+
+    sequelize
+      .transaction(t => {
+        return sequelize.Promise.each(items, item => {
+          return bulkUpdateQuery(t, item);
+        }).then((items: any[]) => {
+          this.success(res, items, 200);
+        });
+      })
+      .catch(error => this.exception(res, error));
   }
 
   findObject(obj_id, name, res, callback, status = 200) {
-    const foundObject = (obj) => {
+    const foundObject = obj => {
       if (!obj) {
         this.failure(res, name + ' Not Found.', 404);
       } else {
@@ -195,7 +244,7 @@ export default class ResponseService {
 
   isAdmin(req) {
     const authorization = Number(req.decoded.authorization);
-    return (authorization === 1 || authorization === 2);
+    return authorization === 1 || authorization === 2;
   }
 
   isUser(req) {

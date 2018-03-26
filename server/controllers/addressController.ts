@@ -1,18 +1,20 @@
-import {AddressModel} from './../types/index';
+import { AddressModel } from './../types/index';
 import * as _ from 'lodash';
-
 
 export default function AddressController(models, ResponseService) {
   const Address = models.Address;
   const attributes = ['id', 'line1', 'line2', 'city', 'state', 'zip'];
-  const joinMethod = (model) => (item) =>  Object.assign({}, model, { address_id: item.id });
+  const joinMethod = model => item =>
+    Object.assign({}, model, { address_id: item.id });
 
   // Get all
   function getAll(req, res) {
     Address.findAll({
       attributes: attributes
     })
-      .then((addresses: AddressModel[]) => ResponseService.success(res, addresses))
+      .then((addresses: AddressModel[]) =>
+        ResponseService.success(res, addresses)
+      )
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -27,21 +29,6 @@ export default function AddressController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function processByOrganization(req, res, type) {
-    const table = models.OrganizationAddress;
-    const model = { organization_id: req.params.organization_id };
-
-    ResponseService[type](req, res, Address, table, joinMethod(model));
-  }
-
-  function createByOrganization(req, res) {
-    processByOrganization(req, res, 'create');
-  }
-
-  function bulkCreateByOrganization(req, res) {
-    processByOrganization(req, res, 'bulkCreate');
-  }
-
   function getByOrganization(req, res) {
     const Organization = models.Organization;
 
@@ -50,20 +37,18 @@ export default function AddressController(models, ResponseService) {
         id: req.params.organization_id
       },
       attributes: ['id', 'name', 'user_id'],
-      include: [{
-        model: Address,
-        attributes: attributes,
-        through: {
-          attributes: []
+      include: [
+        {
+          model: Address,
+          attributes: attributes,
+          through: {
+            attributes: []
+          }
         }
-      }]
+      ]
     })
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
-  }
-
-  function bulkUpdateByOrganization(req, res) {
-    processByOrganization(req, res, 'bulkUpdate');
   }
 
   function updateByOrganization(req, res) {
@@ -74,23 +59,67 @@ export default function AddressController(models, ResponseService) {
     deleteAddress(req, res);
   }
 
-  function executeByUser(req, res, type) {
-    const table = models.UserAddress;
+  function selectBaseTableQuery(type, joinTableCreate) {
+    return ResponseService.selectBaseTableQuery(type, Address, joinTableCreate);
+  }
+
+  function getBulkUpdateQuery(joinTable, joinMethod) {
+    return ResponseService.bulkUpdateQuery(Address, joinTable, joinMethod);
+  }
+
+  function getQuery(type, itemsJoin, joinTable) {
+    let query;
+
+    if (/bulkUpdate/gi.test(type)) {
+      query = getBulkUpdateQuery(joinTable, itemsJoin);
+    } else {
+      const joinTableCreate = ResponseService.joinTableCreate(
+        itemsJoin,
+        joinTable
+      );
+      query = selectBaseTableQuery(type, joinTableCreate);
+    }
+    return query;
+  }
+
+  function organizationExecuteQuery(req, res, type) {
+    const joinTable = models.OrganizationAddress;
+    const model = { organization_id: req.params.organization_id };
+    const itemsJoin = joinMethod(model);
+    const query = getQuery(type, itemsJoin, joinTable);
+    query(req, res);
+  }
+
+  function organizationCreateAddress(req, res) {
+    organizationExecuteQuery(req, res, 'create');
+  }
+
+  function organizationBulkCreateAddresses(req, res) {
+    organizationExecuteQuery(req, res, 'bulkCreate');
+  }
+
+  function organizationBulkUpdateAddresses(req, res) {
+    organizationExecuteQuery(req, res, 'bulkUpdate');
+  }
+
+  function userExecuteQuery(req, res, type) {
+    const joinTable = models.UserAddress;
     const model = { user_id: req.params.user_id };
-
-    ResponseService[type](req, res, Address, table,  joinMethod(model));
+    const itemsJoin = joinMethod(model);
+    const query = getQuery(type, itemsJoin, joinTable);
+    query(req, res);
   }
 
-  function createByUser(req, res) {
-    executeByUser(req, res, 'create');
+  function userCreateAddress(req, res) {
+    userExecuteQuery(req, res, 'create');
   }
 
-  function bulkCreateByUser(req, res) {
-    executeByUser(req, res, 'bulkCreate');
+  function userBulkCreateAddresses(req, res) {
+    userExecuteQuery(req, res, 'bulkCreate');
   }
 
-  function bulkUpdateByUser(req, res) {
-    executeByUser(req, res, 'bulkUpdate');
+  function userBulkUpdateAddresses(req, res) {
+    userExecuteQuery(req, res, 'bulkUpdate');
   }
 
   function getByUser(req, res) {
@@ -100,12 +129,14 @@ export default function AddressController(models, ResponseService) {
       where: {
         id: req.params.user_id
       },
-      include: [{
-        model: Address,
-        through: {
-          attributes: []
+      include: [
+        {
+          model: Address,
+          through: {
+            attributes: []
+          }
         }
-      }]
+      ]
     })
       .then(results => {
         ResponseService.success(res, results);
@@ -131,10 +162,9 @@ export default function AddressController(models, ResponseService) {
         where: {
           id: oldAddress.id
         }
-      })
-        .then(() => {
-          return Address.findById(oldAddress.id);
-        });
+      }).then(() => {
+        return Address.findById(oldAddress.id);
+      });
     }
 
     ResponseService.findObject(address_id, 'Address', res, update);
@@ -157,20 +187,20 @@ export default function AddressController(models, ResponseService) {
   return {
     getAll,
     getOne,
-    createByUser,
+    userCreateAddress,
     getByUser,
     updateByUser,
     deleteByUser,
 
-    bulkCreateByUser,
-    bulkUpdateByUser,
+    userBulkCreateAddresses,
+    userBulkUpdateAddresses,
 
-    createByOrganization,
+    organizationCreateAddress,
     getByOrganization,
     updateByOrganization,
     deleteByOrganization,
 
-    bulkCreateByOrganization,
-    bulkUpdateByOrganization
+    organizationBulkCreateAddresses,
+    organizationBulkUpdateAddresses
   };
 }

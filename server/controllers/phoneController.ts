@@ -3,7 +3,8 @@ import * as _ from 'lodash';
 export default function PhoneController(models, ResponseService) {
   const Phone = models.Phone;
   const attributes = ['id', 'number', 'description'];
-  const joinMethod = (model) => (item) =>  Object.assign({}, model, { phone_id: item.id });
+  const joinMethod = model => item =>
+    Object.assign({}, model, { phone_id: item.id });
 
   // Get all
   function getAll(req, res) {
@@ -27,8 +28,8 @@ export default function PhoneController(models, ResponseService) {
 
   function makePhone(newPhone) {
     let phone = {
-      'number': newPhone.number,
-      'description': newPhone.description
+      number: newPhone.number,
+      description: newPhone.description
     };
     return phone;
   }
@@ -39,26 +40,6 @@ export default function PhoneController(models, ResponseService) {
     ResponseService.success(res, newPhone, status);
   }
 
-  function byOrganization(req, res, type) {
-    const table = models.OrganizationPhone;
-    const model = { organization_id: req.params.organization_id };
-
-    ResponseService[type](req, res, Phone, table, joinMethod(model));
-  }
-
-  function createByOrganization(req, res) {
-     byOrganization(req, res, 'create');
-  }
-
-  function bulkCreateByOrganization(req, res) {
-    byOrganization(req, res, 'bulkCreate');
-  }
-
-  function bulkUpdateByOrganization(req, res) {
-    console.log('bulkUpdatephone:', req.body);
-    byOrganization(req, res, 'bulkUpdate');
-  }
-
   function getByOrganization(req, res) {
     const Organization = models.Organization;
 
@@ -67,20 +48,21 @@ export default function PhoneController(models, ResponseService) {
         id: req.params.organization_id
       },
       attributes: ['id', 'name', 'user_id'],
-      include: [{
-        model: Phone,
-        attributes: ['id', 'number', 'description'],
-        through: {
-          attributes: []
+      include: [
+        {
+          model: Phone,
+          attributes: ['id', 'number', 'description'],
+          through: {
+            attributes: []
+          }
         }
-      }]
+      ]
     })
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function updateByOrganization(req, res) {
-
     const aPhone = makePhone(req.body);
     Phone.update(aPhone, {
       where: {
@@ -94,7 +76,6 @@ export default function PhoneController(models, ResponseService) {
     })
       .then(result => ResponseService.success(res, 'Phone updated'))
       .catch(error => ResponseService.exception(res, error));
-
   }
 
   function deleteByOrganization(req, res) {
@@ -104,23 +85,67 @@ export default function PhoneController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function byUser(req, res, type) {
-    const table = models.UserPhone;
+  function selectBaseTableQuery(type, joinTableCreate) {
+    return ResponseService.selectBaseTableQuery(type, Phone, joinTableCreate);
+  }
+
+  function getBulkUpdateQuery(joinTable, joinMethod) {
+    return ResponseService.bulkUpdateQuery(Phone, joinTable, joinMethod);
+  }
+
+  function getQuery(type, itemsJoin, joinTable) {
+    let query;
+
+    if (/bulkUpdate/gi.test(type)) {
+      query = getBulkUpdateQuery(joinTable, itemsJoin);
+    } else {
+      const joinTableCreate = ResponseService.joinTableCreate(
+        itemsJoin,
+        joinTable
+      );
+      query = selectBaseTableQuery(type, joinTableCreate);
+    }
+    return query;
+  }
+
+  function organizationExecuteQuery(req, res, type) {
+    const joinTable = models.OrganizationPhone;
+    const model = { organization_id: req.params.organization_id };
+    const itemsJoin = joinMethod(model);
+    const query = getQuery(type, itemsJoin, joinTable);
+    query(req, res);
+  }
+
+  function organizationCreatePhone(req, res) {
+    organizationExecuteQuery(req, res, 'create');
+  }
+
+  function organizationBulkCreatePhones(req, res) {
+    organizationExecuteQuery(req, res, 'bulkCreate');
+  }
+
+  function organizationBulkUpdatePhones(req, res) {
+    organizationExecuteQuery(req, res, 'bulkUpdate');
+  }
+
+  function userExecuteQuery(req, res, type) {
+    const joinTable = models.UserPhone;
     const model = { user_id: req.params.user_id };
-
-    ResponseService[type](req, res, Phone, table,  joinMethod(model));
+    const itemsJoin = joinMethod(model);
+    const query = getQuery(type, itemsJoin, joinTable);
+    query(req, res);
   }
 
-  function createByUser(req, res) {
-    byUser(req, res, 'create');
+  function userCreatePhone(req, res) {
+    userExecuteQuery(req, res, 'create');
   }
 
-  function bulkCreateByUser(req, res) {
-    byUser(req, res, 'bulkCreate');
+  function userBulkCreatePhones(req, res) {
+    userExecuteQuery(req, res, 'bulkCreate');
   }
 
-  function bulkUpdateByUser(req, res) {
-    byUser(req, res, 'bulkUpdate');
+  function userBulkUpdatePhones(req, res) {
+    userExecuteQuery(req, res, 'bulkUpdate');
   }
 
   function getByUser(req, res) {
@@ -130,13 +155,15 @@ export default function PhoneController(models, ResponseService) {
       where: {
         id: req.params.user_id
       },
-      include: [{
-        model: Phone,
-        attributes: ['id', 'number', 'description'],
-        through: {
-          attributes: []
+      include: [
+        {
+          model: Phone,
+          attributes: ['id', 'number', 'description'],
+          through: {
+            attributes: []
+          }
         }
-      }]
+      ]
     })
       .then(results => {
         ResponseService.successCollection(res, results.phones);
@@ -161,23 +188,23 @@ export default function PhoneController(models, ResponseService) {
         id: req.params.phone_id
       }
     })
-      .then(result => ResponseService.success(res, 'Phone deleted',204))
+      .then(result => ResponseService.success(res, 'Phone deleted', 204))
       .catch(error => ResponseService.exception(res, error));
   }
 
   return {
     getAll,
     getOne,
-    bulkCreateByUser,
-    bulkUpdateByUser,
-    createByUser,
+    userBulkCreatePhones,
+    userBulkUpdatePhones,
+    userCreatePhone,
     getByUser,
     updateByUser,
     deleteByUser,
 
-    bulkCreateByOrganization,
-    bulkUpdateByOrganization,
-    createByOrganization,
+    organizationBulkCreatePhones,
+    organizationBulkUpdatePhones,
+    organizationCreatePhone,
     getByOrganization,
     updateByOrganization,
     deleteByOrganization

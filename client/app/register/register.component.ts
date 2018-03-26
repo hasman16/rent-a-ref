@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 import { ToastComponent } from '../shared/toast/toast.component';
 import * as _ from 'lodash';
 
+//https://www.npmjs.com/package/ng-recaptcha
 @Component({
   moduleId: module.id,
   selector: 'app-register',
