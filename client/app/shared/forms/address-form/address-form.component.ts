@@ -38,6 +38,7 @@ export class AddressFormComponent extends AbstractFormComponent
   protected cityInvalid: boolean = false;
   protected zipInvalid: boolean = false;
   protected userId: number = 0;
+  
   @Output() saveAddress = new EventEmitter();
   @Input()
   set address(anAddress: Address) {

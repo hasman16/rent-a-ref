@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   protected middlenameFlag: boolean = false;
 
   protected abort: boolean = false;
-  protected divPassword: boolean = false;
+  //protected divPassword: boolean = false;
   protected editBio: boolean = false;
   protected editPassword: boolean = false;
 

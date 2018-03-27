@@ -73,9 +73,9 @@
           </div>
 
           <div class="card">
-            <span class="card danger">
-                <strong>Phones</strong>
-              </span>
+            <div>
+              <strong>Phone</strong>
+            </div>
 
             <ng-container *ngIf="!editPhone && phones.length === 0">
               <div class="list-group" *ngIf="addresses.length === 0">
@@ -84,7 +84,7 @@
                   </span>
               </div>
             </ng-container>
-            <phone-form *ngIf="editPhone && currentPhone === 0" [phoneService]="profileService" [phone]="dummyPhone" (savePhone)="onPhoneSubmit($event)"></phone-form>
+            <phone-form *ngIf="editPhone && currentPhone === 0" [phoneService]="profileService" [phone]="dummyPhone" (savePhone)="onPhoneSubmit($event)" (cancelForm)="onFormCancel($event)"></phone-form>
 
             <ng-container *ngIf="phones.length > 0">
               <div class="list-group" *ngFor="let phone of phones">
@@ -95,7 +95,7 @@
                       <span class="profileItem">{{phone.number}}</span>
                   </span>
                 </div>
-                <phone-form *ngIf="editPhone && currentPhone === phone.id" [phoneService]="profileService" [phone]="phone" (savePhone)="onPhoneSubmit($event)"></phone-form>
+                <phone-form *ngIf="editPhone && currentPhone === phone.id" [phoneService]="profileService" [phone]="phone" (savePhone)="onPhoneSubmit($event)" (cancelForm)="onFormCancel($event)"></phone-form>
               </div>
             </ng-container>
 

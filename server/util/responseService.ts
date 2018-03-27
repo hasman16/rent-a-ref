@@ -165,7 +165,6 @@ export default class ResponseService {
   }
 
   create(baseTableCreate, req, res) {
-    console.log('this is:');
     const item = this.deleteId(this.getItemFromBody(req));
     this.executeCreate(res, baseTableCreate, item);
   }
@@ -238,7 +237,7 @@ export default class ResponseService {
   }
 
   exception(res, error, status = 500) {
-    console.log('errored:', error);
+    //console.log('errored:', error);
     this.failure(res, 'An Internal Error Occurred', status);
   }
 

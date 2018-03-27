@@ -12,6 +12,7 @@ import { ProfileService } from '../../../services/profile.service';
 
 import { AbstractFormComponent } from '../abstract-form';
 import { Observable } from 'rxjs/Observable';
+import * as _ from "lodash";
 
 export interface IPhoneService {
   createPhone(phone: Phone): Observable<any>;
@@ -25,8 +26,8 @@ export interface IPhoneService {
 })
 export class PhoneFormComponent extends AbstractFormComponent
   implements OnInit {
-  phoneForm: FormGroup;
-  telephone: Phone;
+  protected phoneForm: FormGroup;
+  protected telephone: Phone;
 
   @Output() savePhone = new EventEmitter();
   @Input()
@@ -36,8 +37,8 @@ export class PhoneFormComponent extends AbstractFormComponent
   }
   @Input() phoneService: IPhoneService;
 
-  numberInvalid = false;
-  descriptionInvalid = false;
+  protected numberInvalid: boolean = false;
+  protected descriptionInvalid: boolean = false;
 
   constructor(private formBuilder: FormBuilder) {
     super();
@@ -62,8 +63,8 @@ export class PhoneFormComponent extends AbstractFormComponent
 
   fillForm() {
     this.phoneForm.setValue({
-      number: this.telephone.number,
-      description: this.telephone.description
+      number: this.telephone.number || '',
+      description: this.telephone.description || ''
     });
   }
 
@@ -76,7 +77,7 @@ export class PhoneFormComponent extends AbstractFormComponent
 
       this.savePhone.emit({ action: 'show_overlay' });
 
-      if (Number(newPhone.id) === 0) {
+      if (_.isNil(newPhone.id) || parseInt(newPhone.id) === 0) {
         observable = this.phoneService.createPhone(newPhone);
       } else {
         observable = this.phoneService.updatePhone(newPhone);

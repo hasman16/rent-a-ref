@@ -6,14 +6,14 @@ import { Observable } from 'rxjs/Observable';
 export abstract class AbstractFormComponent {
   @Output() cancelForm = new EventEmitter();
 
-  alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
-  zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
+  protected alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
+  protected zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
 
-  currentForm: FormGroup;
+  protected currentForm: FormGroup;
 
   constructor() {}
 
-  setUpValidators(aForm:FormGroup, controls:string[]) {
+  protected setUpValidators(aForm:FormGroup, controls:string[]) {
     this.currentForm = aForm;
     controls.forEach((controlName) => {
       let control = this.currentForm.get(controlName);
@@ -21,7 +21,7 @@ export abstract class AbstractFormComponent {
     });
   }
 
-  validator(item: AbstractControl, name: string) {
+  protected validator(item: AbstractControl, name: string) {
     item
       .valueChanges
       .debounceTime(1000)
@@ -36,7 +36,7 @@ export abstract class AbstractFormComponent {
 
   public abstract fillForm();
 
-  onCancel(event) {
+  protected onCancel(event) {
     this.cancelForm.emit(false);
   }
 }

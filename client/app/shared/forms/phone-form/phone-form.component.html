@@ -3,7 +3,7 @@
     <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()">
       <div class="input-group" [ngClass]="{ 'has-danger': descriptionInvalid || numberInvalid }">
 
-        <label class="center-block">Phone:
+        <label class="center-block">
           <select class="form-control" formControlName="description">
             <option value="" selected disabled>Type</option>
             <option value="mobile">Mobile</option>
@@ -12,8 +12,6 @@
             <option value="other">Other</option>
           </select>
 
-          <!--<span class="input-group-addon"><i class="fa fa-phone"></i></span>
-          <input class="form-control" formControlName="number">-->
           <div class="input-group required-field-block">
             <span class="input-group-addon">
               <i class="fa fa-phone"></i>
