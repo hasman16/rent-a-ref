@@ -11,8 +11,8 @@ import { Address, Person, Phone, Profile, User } from './../../../shared/models/
   styleUrls: ['./suspended.component.scss']
 })
 export class SuspendedComponent implements OnInit {
-  protected user:User = <User>{};
-  protected person:Person = <Person>{};
+  public user:User = <User>{};
+  public person:Person = <Person>{};
 
 
   constructor(private auth: AuthService, private router: Router, private userService: UserService) { }

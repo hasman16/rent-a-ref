@@ -16,8 +16,8 @@ import {
   styleUrls: ['./standby.component.scss']
 })
 export class StandbyComponent implements OnInit {
-  protected user: User = <User>{};
-  protected person: Person = <Person>{};
+  public user: User = <User>{};
+  public person: Person = <Person>{};
 
   constructor(private auth: AuthService, private userService: UserService) {}
 

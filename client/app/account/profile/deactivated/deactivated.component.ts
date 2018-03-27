@@ -17,8 +17,8 @@ import {
   styleUrls: ['./deactivated.component.scss']
 })
 export class DeactivatedComponent implements OnInit {
-  protected user: User = <User>{};
-  protected person: Person = <Person>{};
+  public user: User = <User>{};
+  public person: Person = <Person>{};
 
   constructor(private auth: AuthService, private userService: UserService) {}
 
