@@ -4,8 +4,6 @@
 
       <a routerLink="/" class="nav-item nav-link navbar-brand" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> 
         <img src="assets/images/reficon1.png" class="img-fluid img-responsive img_reposition" alt="Rent A Ref">
-        <!--
-        <img src="assets/images/reftext.gif" class="img-fluid img-responsive img_reposition" alt="Responsive image" width="80%" max-width="90%"> -->
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -14,57 +12,57 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a routerLink="/" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-                <i class="fa fa-home"></i> Home
+              Home
             </a>      
           </li>
           <li class="nav-item">
             <a routerLink="/how-it-works" class="nav-item nav-link" routerLinkActive="active">
-              <i class="fa  fa-info-circle" aria-hidden="true"></i> How It Works
+              How It Works
             </a>   
           </li>
           <li class="nav-item">
             <a [routerLink]="['/organizer', auth.currentUser.id ]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
             [routerLinkActiveOptions]="{exact: true}">
-              <span *ngIf="auth.currentUser.can_organize == 'active'"><i class="fa fa-life-ring"></i> Organize</span>
+              <span *ngIf="auth.currentUser.can_organize == 'active'">Organize</span>
             </a>    
           </li>
           <li class="nav-item">
             <a [routerLink]="['/account', auth.currentUser.id, 'schedule' ]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
               [routerLinkActiveOptions]="{exact: true}">
-                <span *ngIf="auth.currentUser.can_referee == 'active'"><i class="fa fa-list-ul"></i> Schedule</span>
+                <span *ngIf="auth.currentUser.can_referee == 'active'">Schedule</span>
               </a> 
           </li>
           <li class="nav-item">
             <a [routerLink]="['/account/profile', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
               [routerLinkActiveOptions]="{exact: true}">
-                <i class="fa fa-user"></i> Profile
+                Profile
               </a>  
           </li>
           <li class="nav-item">
             <a [routerLink]="['/account', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
               [routerLinkActiveOptions]="{exact: true}">
-                <i class="fa fa-user"></i> Account ({{auth.currentUser.email}})
+                Account ({{auth.currentUser.email}})
               </a> 
           </li>
           <li class="nav-item">
             <a [routerLink]="['/account/admin', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin"
               [routerLinkActiveOptions]="{exact: true}">
-              <i class="fa fa-lock"></i> Admin
+              Admin
             </a>
           </li>
           <li class="nav-item">
             <a routerLink="/logout" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
-              <i class="fa fa-sign-out"></i> Logout
+              Logout
             </a>
           </li>   
           <li class="nav-item">
             <a routerLink="/login" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
-              <i class="fa fa-sign-in"></i> Login
+              Login
             </a>
           </li> 
           <li class="nav-item">
             <a routerLink="/register" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
-              <i class="fa fa-user-plus"></i> Register
+              Register
             </a> 
           </li>  
         </ul>
@@ -72,7 +70,3 @@
     </nav>    
   </div>
 </div>
-
-
-
-

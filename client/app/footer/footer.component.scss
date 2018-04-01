@@ -1,9 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
 footer { background-color:#0c1a1e; min-height:21.875em; font-family: 'Open Sans', sans-serif; }
 .footerleft { margin-top:50px; padding:0 2.25em; }
-.logofooter { margin-bottom:0.625em; font-size:1.5625em; color:#fff; font-weight:700;}
+.logofooter { margin-bottom:0.625em; font-size:1.5625em; color: white; font-weight:700;}
 
-.footerleft p { color:#fff; font-size:0.75em !important; font-family: 'Open Sans', sans-serif; margin-bottom:0.9375em;}
+.footerleft p { color: white; font-size:0.75em !important; font-family: 'Open Sans', sans-serif; margin-bottom:0.9375em;}
 .footerleft p i { width:1.25em; color:#999;}
 
 
@@ -29,12 +29,12 @@ footer { background-color:#0c1a1e; min-height:21.875em; font-family: 'Open Sans'
  .copyright { min-height:2.5em; background-color:#000000;}
  .copyright p { text-align:left; color:#FFF; padding:0.625em 0; margin-bottom:0;}
  .heading7 { font-size:1.3125em; font-weight:700; color:#d9d6d6; margin-bottom:1.375em;}
- .post p { font-size:0.75em; color:#FFF; line-height:1.25em;}
+ .post p { font-size:0.75em; color: white; line-height:1.25em;}
  .post p span { display:block; color:#8f8f8f;}
  .bottom_ul { list-style-type:none; float:right; margin-bottom:0}
  .bottom_ul li { float:left; line-height: 2.5em;}
  /*.bottom_ul li:after{ content:"/"; color:#FFF; margin-right:0.5em; margin-left: 0.5em;}*/
- .bottom_ul li a { color:#FFF;  font-size:0.75em;}
+ .bottom_ul li a { color: white;  font-size:0.75em;}
  @media (max-width: 768px) {
   .btn-responsive {
     padding:0.125em 0.25em;
@@ -53,7 +53,7 @@ footer { background-color:#0c1a1e; min-height:21.875em; font-family: 'Open Sans'
 }
 
 .general-links {
-  color: #ffffff;
+  color: white;
   cursor: pointer;
 }
 

@@ -34,6 +34,7 @@ export class ContactUsComponent implements OnInit {
         type: 'input',
         templateOptions: {
           placeholder: 'Fullname',
+          label: 'Fullname',
           required: true,
           minLength: 5
         }
@@ -44,6 +45,7 @@ export class ContactUsComponent implements OnInit {
         templateOptions: {
           type: 'email',
           placeholder: 'Email Address',
+          label: 'Email',
           required: true,
           minLength: 5
         }
@@ -53,6 +55,7 @@ export class ContactUsComponent implements OnInit {
         type: 'input',
         templateOptions: {
           placeholder: 'Subject',
+          label: 'Subject',
           required: true,
           minLength: 5
         }
@@ -63,6 +66,7 @@ export class ContactUsComponent implements OnInit {
         templateOptions: {
           type: 'textarea',
           placeholder: 'Comment',
+          label: 'Comment',
           required: true,
           minLength: 5
         }

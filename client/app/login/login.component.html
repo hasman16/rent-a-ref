@@ -6,13 +6,12 @@
       <div class="card form-size">
         <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
           <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form">
-            <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid"><i class="fa fa-sign-in"></i>&nbsp;Login</button>
-            <button class="btn btn-link btn-sm" type="button" (click)="forgot()"><i class="fa fa-sign-in"></i>&nbsp;Forgot Password</button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid">Login</button>
+            <button class="btn btn-link btn-sm" type="button" (click)="forgot()">Forgot Password</button>
           </formly-form>
         </form>
       </div>
     </div>
-<!--
-    <rar-google-map></rar-google-map> -->
+    <rar-google-map></rar-google-map>
   </div>
 </div>

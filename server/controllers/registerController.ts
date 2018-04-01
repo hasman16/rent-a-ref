@@ -2,6 +2,20 @@ import * as request from 'request-promise';
 import * as randomstring from 'randomstring';
 import * as _ from 'lodash';
 
+interface Payload {
+  firstname?: string,
+  lastname?: string,
+  email?: string,
+  password?: string,
+  authorization?: string,
+  role?: string;
+  phone?: string;
+  status?: string,
+  can_organize?: string,
+  can_referee?: string,
+  captcha?: string
+};
+
 //https://www.npmjs.com/package/ng-recaptcha
 export default function RegisterController(bcrypt, jwt, models, ResponseService, SendGridService) {
   const Address = models.Address;
@@ -25,18 +39,37 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
     });
   }
 
-  function createUserPerson(req, res, aUser, password) {
-    const sequelize = models.sequelize;
-
-    const user = {
-      email: aUser.email,
+  function getNewUserFromPayload(payload) {
+    const role = String(payload.role).trim();
+    const isOrganizer = /^organizer$/ig.test(role);
+    return {
+      email: payload.email,
       authorization: 3,
-      can_referee: aUser.can_referee,
-      can_organize: aUser.can_organize,
-      status: aUser.status
+      status: 'active',
+      can_organize: isOrganizer ? 'pending': 'no',
+      can_referee: isOrganizer ? 'no': 'pending'
+    };
+  }
+
+  function createUserPhone(t, payload, user_id) {
+    const phone = {
+      'number': String(payload.phone),
+      'description': 'other'
     };
 
-    return sequelize.transaction(function(t) {
+    return Phone.create(phone, { transaction: t })
+      .then(newPhone => {
+        const model = { user_id: user_id, phone_id: newPhone.id };
+        return models.UserPhone.create(model, { transaction: t})
+      });
+  }
+
+  function createUserPerson(req, res, payload, password) {
+    const sequelize = models.sequelize;
+    const user = getNewUserFromPayload(payload);
+    let newUserId;
+
+    return sequelize.transaction((t) => {
       return User.create(user, { transaction: t })
         .then(newUser => {
           const lock = {
@@ -45,95 +78,66 @@ export default function RegisterController(bcrypt, jwt, models, ResponseService,
             password: password,
             user_id: newUser.id
           };
-          return Lock.create(lock, { transaction: t })
-            .then(() => {
-              const person = {
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
-                gender: 'pending',
-                dob: new Date('1901'),
-                user_id: newUser.id
-              }
+          newUserId = newUser.id;
+          return Lock.create(lock, { transaction: t });
+        })
+        .then((newLock) => {
+          const person = {
+            firstname: payload.firstname,
+            lastname: payload.lastname,
+            gender: 'pending',
+            dob: new Date('1901'),
+            user_id: newUserId
+          }
+          return Person.create(person, { transaction: t });
+        })
+        .then((newPerson) => {
+          const hasPhone = /\d+/.test(payload.phone);
 
-              return Person.create(person, { transaction: t })
-                .then(function(newPerson) {
-                  const hasPhone = /\d+/.test(req.body['phone']);
-
-                  if (hasPhone) {
-                    const phone = {
-                      'number': String(req.body['phone']),
-                      'description': 'other'
-                    };
-
-                    return Phone.create(phone, { transaction: t })
-                      .then(newPhone => respondAndSendEmail(res, aUser.email));
-                  } else {
-                    respondAndSendEmail(res, aUser.email);
-                  }
-                });
-            });
+          if (hasPhone) {
+            return createUserPhone(t, payload, newUserId)
+              .then(() => respondAndSendEmail(res, payload.email));
+          } else {
+            respondAndSendEmail(res, payload.email);
+          }
         });
     });
   }
 
-  function createNewUser(user) {
-    let aUser = {
-      email: user.email,
-      password: user.password,
-      authorization: 3,
-      status: 'active',
-      can_organize: 'no',
-      can_referee: 'no',
-      captcha: user.captcha
-    };
-    const isOrganizer = String(user.role).trim();
-
-    if (/^organizer$/ig.test(isOrganizer)) {
-      aUser.can_referee = 'no';
-      aUser.can_organize = 'pending';
-    } else {
-      aUser.can_referee = 'pending';
-      aUser.can_organize = 'no';
-    }
-
-    return aUser;
-  }
-
   function registerUser(req, res) {
-    const aUser = createNewUser(req.body);
-
-    if (_.get(aUser,'captcha','') === '') {
-      ResponseService.exception(res, 'Missing recaptcha.', 403);
-    }
-
-    const siteKey = process.env.recaptchaKey;
-    var options = {
+    const payload =  <Payload>ResponseService.getItemFromBody(req);
+    const RECAPTCHA_KEY = process.env.RECAPTCHA_KEY;
+    const options = {
       uri: 'https://google.com/recaptcha/api/siteverify',
       qs: {
-        secret: siteKey, // -> uri + '?secret=xxxxx%20xxxxx'
-        response: aUser.captcha,
+        secret: RECAPTCHA_KEY, 
+        response: payload.captcha,
         ip: req.connection.remoteAddress
       },
-      json: true // Automatically parses the JSON string in the response
+      json: true 
     };
-    console.log('Attempt request:');
-    request(options)
-      .then((response) => {
-        return User.findOne({
-          where: { email: aUser.email }
-        })
-          .then(userInDb => {
-            if (userInDb) {
-              ResponseService.failure(res, 'A user with that email address already exists.');
-            } else {
-              return bcrypt.hash(aUser.password, 12)
-                .then(password => {
-                  return createUserPerson(req, res, aUser, password);
-                });
-            }
+
+    if (_.get(payload,'captcha','') === '') {
+      ResponseService.exception(res, 'Missing recaptcha.', 403);
+    } else {
+      request(options)
+        .then((response) => {
+          return User.findOne({
+            where: { email: payload.email }
           });
-      })
-      .catch(error => ResponseService.exception(res, error));
+        })
+        .then(userInDb => {
+          if (userInDb) {
+            ResponseService.failure(res, 'A user with that email address already exists.');
+          } else {
+            return bcrypt.hash(payload.password, 12);
+          }
+        })
+        .then(password => {
+          return createUserPerson(req, res, payload, password);
+        })
+        .catch(error => ResponseService.exception(res, error));
+    }
   }
 
   function getProfile(req, res) {
