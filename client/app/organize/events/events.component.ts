@@ -69,11 +69,27 @@ export class EventsComponent implements OnInit {
   protected getSports() {
     this.organizeService.getSports().subscribe((sports: Sport[]) => {
       this.sports = sports;
+      this.generateForm();
     });
   }
 
   public ngOnInit() {
     this.getSports();
+  }
+
+  public getOptions(start:number, end:number, step:number = 1):Option[] {
+    let i:number = start;
+    let arr:Option[] = [];
+    while(i < end) {
+      let x:string = String(i);
+      console.log('x:', x, i);
+      arr.push(<Option>{
+        label: x,
+        value: x
+      });
+      i+=step;
+    }
+    return arr;
   }
 
   protected generateForm() {
@@ -86,21 +102,8 @@ export class EventsComponent implements OnInit {
       })
       .value();
 
-    let refereePay: Option[] = [];
-    for (let i = 30; i < 101; i + 5) {
-      refereePay.push(<Option>{
-        label: i + '',
-        value: i + ''
-      });
-    }
-
-    let refereesNeeded: Option[] = [];
-    for (let j = 1; j < 11; j++) {
-      refereesNeeded.push(<Option>{
-        label: j + '',
-        value: j + ''
-      });
-    }
+    const refereePay: Option[] = this.getOptions(30,101,5);
+    const refereesNeeded: Option[] = this.getOptions(1,11,1);
 
     this.states = this.statesService.getStatesProvinces();
 
@@ -292,12 +295,16 @@ export class EventsComponent implements OnInit {
   }
 
   public setOrganizeMode(): void {}
-  public goNewGames(): void {
+
+  public goNewEvent(): void {
     this.isEditing = true;
   }
+
   public editEvents(): void {}
+
   public onSubmit(model: any): void {
     console.log('Model:', model);
   }
+
   public onCancel(): void {}
 }
