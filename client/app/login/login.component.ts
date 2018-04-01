@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
         type: 'input',
         templateOptions: {
           type: 'email',
+          label: 'email',
           placeholder: 'Email Address',
           required: true,
           minLength: 5
@@ -63,6 +64,7 @@ export class LoginComponent implements OnInit {
         type: 'input',
         templateOptions: {
           type: 'password',
+          label: 'password',
           placeholder: 'Password',
           required: true,
           minLength: 5
@@ -132,8 +134,8 @@ export class LoginComponent implements OnInit {
           const user: User = login.user;
           const userId = user.id;
           const userStatus = user.status;
-          let path1: string = this.routeOrganizer(user.can_organize, userStatus, userId);
-          let path2: string = this.routeUser(user.can_referee, userStatus, userId);
+          const path1: string = this.routeOrganizer(user.can_organize, userStatus, userId);
+          const path2: string = this.routeUser(user.can_referee, userStatus, userId);
 
           if (this.checkboxFlag) {
             const expireDate = new Date();

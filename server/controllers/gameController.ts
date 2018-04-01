@@ -108,10 +108,10 @@ export default function GameController(models, ResponseService) {
           return Game.create(game, { transaction: t });
         });     
     })
-      .then(result => {
-        let aGame = ResponseService.deleteItemDates(result);
-        ResponseService.success(res, aGame, 201);
-      })
+    .then(result => {
+      let aGame = ResponseService.deleteItemDates(result);
+      ResponseService.success(res, aGame, 201);
+    })
     .catch(error => this.exception(res, error));
   }
 

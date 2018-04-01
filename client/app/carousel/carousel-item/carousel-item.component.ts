@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'app-carousel-item',
 	templateUrl: './carousel-item.component.html',
 	styleUrls: ['./carousel-item.component.scss']
 })
-export class CarouselItemComponent implements OnInit {
-	isActive: boolean;
+export class CarouselItemComponent {
+	public isActive: boolean;
 	constructor() {}
-
-	ngOnInit() {}
 }

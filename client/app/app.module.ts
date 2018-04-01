@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './providers/token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { RecaptchaModule } from 'ng-recaptcha';
 /* Modules */
 import { BrowserModule } from '@angular/platform-browser';
@@ -160,7 +161,8 @@ import { BarchartComponent } from './barchart/barchart.component';
         RadioButtonModule,
         CardModule,
         RecaptchaModule.forRoot(),
-        FormlyBootstrapModule,
+        //FormlyBootstrapModule,
+        FormlyMaterialModule,
         FormlyModule.forRoot({
             wrappers: [
                 {

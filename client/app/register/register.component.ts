@@ -31,7 +31,7 @@ export class RegisterComponent {
     this.fields = [
       {
         key: 'firstname',
-        type: 'horizontalInput',
+        type: 'input',
         templateOptions: {
           type: 'text',
           label: 'Firstname',
@@ -41,7 +41,7 @@ export class RegisterComponent {
       },
       {
         key: 'lastname',
-        type: 'horizontalInput',
+        type: 'input',
         templateOptions: {
           type: 'text',
           label: 'Lastname',
@@ -51,7 +51,7 @@ export class RegisterComponent {
       },
       {
         key: 'email',
-        type: 'horizontalInput',
+        type: 'input',
         templateOptions: {
           type: 'email',
           label: 'Email address',
@@ -62,7 +62,7 @@ export class RegisterComponent {
       },
       {
         key: 'repeatemail',
-        type: 'horizontalInput',
+        type: 'input',
         templateOptions: {
           type: 'email',
           label: 'Repeat email address',
@@ -81,7 +81,7 @@ export class RegisterComponent {
       },
       {
         key: 'password',
-        type: 'horizontalInput',
+        type: 'input',
         templateOptions: {
           type: 'password',
           label: 'Password',
@@ -92,7 +92,7 @@ export class RegisterComponent {
       },
       {
         key: 'repeatpassword',
-        type: 'horizontalInput',
+        type: 'input',
         templateOptions: {
           type: 'password',
           label: 'Repeat password',
@@ -111,7 +111,7 @@ export class RegisterComponent {
       },
       {
         key: 'phone',
-        type: 'horizontalInput',
+        type: 'input',
         templateOptions: {
           type: 'text',
           label: 'Phone number',

@@ -4,7 +4,7 @@
 
       <app-toast [message]="toast.message"></app-toast>
 
-      <div class="form-size" *ngIf="isEditing">
+      <div class="card form-size" *ngIf="isEditing">
         <organization-form (ngSubmit)="submitOrganization($event)" (ngCancel)="setOrganizeMode($event)" [model]="currentModel"></organization-form>
       </div>
 
@@ -17,31 +17,36 @@
         </div>
       </div>
 
-      <div class="card" *ngIf="!isEditing && organizations?.length > 0">
+      <div class="" *ngIf="!isEditing && organizations?.length > 0">
         <div class="form-size">
-          <table class="table table-striped">
-            <tr>
-              <th *ngFor="let title of titles" scope="col">
-                {{title}}
-              </th>
-            </tr>
-
-            <tr *ngFor="let organization of organizations"  class="org-table-item ">
-              <td (click)="editEvents(organization.id);" >
-                {{organization.id}}
-              </td>
-              <td (click)="editEvents(organization.id);" >
-                {{organization.name}}
-              </td>
-              <td>
-                <button class="btn btn-primary btn-sm" (click)="editOrganization(organization.id)" title="Click to edit this organization">Edit</button>
-              </td>
-              <td>
-                <button class="btn btn-danger btn-sm" (click)="goNewOrganization()" title="Click to delete organization">Delete</button>
-              </td>
-            </tr>
+          <h1 class="etched-text">Available Organizations</h1>
+          <br />
+          <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th *ngFor="let title of titles" scope="col">
+                  {{title}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let organization of organizations"  class="org-table-item ">
+                <td (click)="editEvents(organization.id);" >
+                  {{organization.id}}
+                </td>
+                <td (click)="editEvents(organization.id);" >
+                  {{organization.name}}
+                </td>
+                <td>
+                  <button class="btn btn-primary btn-sm" (click)="editOrganization(organization.id)" title="Click to edit this organization">Edit</button>
+                </td>
+                <td>
+                  <button class="btn btn-danger btn-sm" (click)="goNewOrganization()" title="Click to delete organization">Delete</button>
+                </td>
+              </tr>
+            </tbody>
           </table>
-          <hr />
+          <br />
           <button class="btn btn-primary btn-sm new-org-button" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
         </div>
       </div>

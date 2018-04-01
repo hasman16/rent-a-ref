@@ -236,9 +236,9 @@ export default class ResponseService {
     });
   }
 
-  exception(res, error, status = 500) {
+  exception(res, error = 'An Internal Error Occurred', status = 500) {
     //console.log('errored:', error);
-    this.failure(res, 'An Internal Error Occurred', status);
+    this.failure(res, error, status);
   }
 
   isAdmin(req) {

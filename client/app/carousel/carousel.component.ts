@@ -14,18 +14,16 @@ import { CarouselItemComponent } from './carousel-item/carousel-item.component';
 export class CarouselComponent implements AfterContentInit {
   @Input() delay = 0;
   @ContentChildren(CarouselItemComponent) items: QueryList<CarouselItemComponent>;
-  activeItem: number;
+  public activeItem: number;
 
   ngAfterContentInit() {
     this.activeItem = 0;
-    const arrItems = this.items.toArray();
-    const max = arrItems.length;
+    const arrItems: CarouselItemComponent[] = this.items.toArray();
+    const TOTAL_ITEMS: number = arrItems.length;
 
     setInterval(() => {
-      for (let i = 0; i < max; i++) {
-        arrItems[i].isActive = (i === this.activeItem);
-      }
-      this.activeItem = (this.activeItem + 1) % max;
+      arrItems.forEach((c: CarouselItemComponent, i: number) => c.isActive = (i === this.activeItem));
+      this.activeItem = (this.activeItem++) % TOTAL_ITEMS;
     }, this.delay)
   }
 }

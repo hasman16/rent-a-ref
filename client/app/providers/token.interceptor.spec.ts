@@ -40,7 +40,6 @@ describe('TokenInterceptor', () => {
 		const httpRequest = httpMock.expectOne(`/api/users`);
 
 		expect(httpRequest.request.headers.has('Authorization'));
-
 		expect(httpRequest.request.headers.get('Authorization')).toBe(
 			'Bearer 12345ABCDE'
 		);
@@ -54,7 +53,6 @@ describe('TokenInterceptor', () => {
 		const httpRequest = httpMock.expectOne(`/api/users`);
 
 		expect(httpRequest.request.headers.has('Content-Type'));
-
 		expect(httpRequest.request.headers.get('Content-Type')).toBe(
 			'application/json'
 		);
@@ -68,7 +66,6 @@ describe('TokenInterceptor', () => {
 		const httpRequest = httpMock.expectOne(`/api/users`);
 
 		expect(httpRequest.request.headers.has('charset'));
-
 		expect(httpRequest.request.headers.get('charset')).toBe('UTF-8');
 	});
 });
