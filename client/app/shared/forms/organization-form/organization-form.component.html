@@ -1,6 +1,6 @@
 <base-form [fields]="fields" [model]="model" (ngSubmit)="onSubmit($event)">
 	<hr class="space-hr"/>
-  <button type="submit" class="btn btn-primary btn-sm" [disabled]="disable || !baseForm.form.valid">{{modeName}}</button>
+  <button type="submit" class="btn btn-primary btn-sm" [disabled]="disable || !baseForm.form.valid">{{submitText}}</button>
   <span class="spacer">&nbsp;</span>
   <button type="submit" class="btn btn-danger btn-sm" title="Cancel" (click)="onCancel($event)">Cancel</button>
 </base-form>

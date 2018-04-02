@@ -4,3 +4,10 @@
 	font-weight: bold;
 	color: #b8bec5;
 }
+:host /deep/ .card {
+	.form-size {
+		max-width: 70%;
+		min-width: 70%;
+		margin: auto;
+	}
+}

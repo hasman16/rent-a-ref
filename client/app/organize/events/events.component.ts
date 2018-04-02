@@ -51,7 +51,7 @@ export class EventsComponent implements OnInit {
   protected options: FormlyFormOptions = <FormlyFormOptions>{};
   protected fields: FormlyFieldConfig[];
 
-  protected sports: Sport[];
+  protected sports: Option[];
   protected games: any[] = [];
   protected isLoading: boolean = false;
 
@@ -66,34 +66,8 @@ export class EventsComponent implements OnInit {
     protected organizeService: OrganizeService
   ) {}
 
-  protected getSports() {
-    this.organizeService.getSports().subscribe((sports: Sport[]) => {
-      this.sports = sports;
-      this.generateForm();
-    });
-  }
-
   public ngOnInit() {
-    this.getSports();
-  }
-
-  public getOptions(start:number, end:number, step:number = 1):Option[] {
-    let i:number = start;
-    let arr:Option[] = [];
-    while(i < end) {
-      let x:string = String(i);
-      console.log('x:', x, i);
-      arr.push(<Option>{
-        label: x,
-        value: x
-      });
-      i+=step;
-    }
-    return arr;
-  }
-
-  protected generateForm() {
-    const SPORTS: Option[] = _(this.sports)
+    this.sports = _(this.route.snapshot.data.sports)
       .map((sport: Sport): Option => {
         return <Option>{
           label: sport.name,
@@ -102,10 +76,13 @@ export class EventsComponent implements OnInit {
       })
       .value();
 
-    const refereePay: Option[] = this.getOptions(30,101,5);
-    const refereesNeeded: Option[] = this.getOptions(1,11,1);
-
     this.states = this.statesService.getStatesProvinces();
+    this.generateForm();
+  }
+
+  protected generateForm() {
+    const SPORTS: Option[] = <Option[]>_.cloneDeep(this.sports);
+    const STATES: Option[] = <Option[]>_.cloneDeep(this.states);
 
     this.fields = [
       {
@@ -120,6 +97,16 @@ export class EventsComponent implements OnInit {
               required: true,
               minLength: 5,
               pattern: /\w+[a-zA-Z0-9]/
+            }
+          },
+          {
+            className: 'col-sm-12',
+            type: 'input',
+            key: 'eventDate',
+            templateOptions: {
+              label: 'Event Date',
+              type: 'date',
+              required: true
             }
           }
         ]
@@ -169,6 +156,19 @@ export class EventsComponent implements OnInit {
           },
           {
             className: 'col-sm-12',
+            type: 'input',
+            key: 'kidsReferees',
+            templateOptions: {
+              label: 'Number of Referees for Kids 13 and Under',
+              type: 'number',
+              min: 1,
+              max: 1000,
+              required: true
+            },
+            hideExpression: '!model.kids'
+          },
+          {
+            className: 'col-sm-12',
             type: 'checkbox',
             key: 'teens',
             templateOptions: {
@@ -178,12 +178,38 @@ export class EventsComponent implements OnInit {
           },
           {
             className: 'col-sm-12',
+            type: 'input',
+            key: 'teensReferees',
+            templateOptions: {
+              label: 'Number of Referees for High Schoolers',
+              type: 'number',
+              min: 1,
+              max: 1000,
+              required: true
+            },
+            hideExpression: '!model.teens'
+          },
+          {
+            className: 'col-sm-12',
             type: 'checkbox',
             key: 'adults',
             templateOptions: {
               label: 'Over 18',
               required: true
             }
+          },
+          {
+            className: 'col-sm-12',
+            type: 'input',
+            key: 'teensReferees',
+            templateOptions: {
+              label: 'Number of Referees for Over 18s',
+              type: 'number',
+              min: 1,
+              max: 1000,
+              required: true
+            },
+            hideExpression: '!model.adults'
           }
         ]
       },
@@ -237,7 +263,7 @@ export class EventsComponent implements OnInit {
             className: 'col-sm-2',
             templateOptions: {
               label: 'State',
-              options: _.cloneDeep(this.states),
+              options: STATES,
               required: true
             }
           },
@@ -249,44 +275,6 @@ export class EventsComponent implements OnInit {
               label: 'Zip',
               required: true,
               pattern: /\d{5}(\-\d{4})?/
-            }
-          }
-        ]
-      },
-      {
-        template: '<hr class="space-hr" />'
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12',
-            type: 'input',
-            key: 'eventDate',
-            templateOptions: {
-              label: 'Event Date',
-              type: 'date',
-              required: true
-            }
-          },
-          {
-            className: 'col-sm-12',
-            type: 'select',
-            key: 'refereesNeeded',
-            templateOptions: {
-              label: 'Referees Needed',
-              required: true,
-              options: refereesNeeded
-            }
-          },
-          {
-            className: 'col-sm-12',
-            type: 'select',
-            key: 'refereePay',
-            templateOptions: {
-              label: 'Referee Pay',
-              required: true,
-              options: refereePay
             }
           }
         ]

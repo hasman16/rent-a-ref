@@ -24,6 +24,8 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
   @ViewChild(BaseFormComponent) baseForm: BaseFormComponent;
   @Input('model')
   set aModel(model: any) {
+    const hasId: boolean = this.modelHasId(model);
+    this.submitText = this.getSubmitText(hasId);
     this.model = _.cloneDeep(model);
   }
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
@@ -31,13 +33,22 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
   cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   protected model: any = {};
-  protected modeName: string = 'Create Organization';
+  protected submitText: string;
   protected fields: FormlyFieldConfig[];
   protected disable: boolean = true;
   protected states: Option[];
 
   constructor(private statesService: StatesService) {
+    this.submitText = this.getSubmitText(false);
     this.disable = true;
+  }
+
+  modelHasId(model: any): boolean {
+    return _.has(model, 'id') && Number(model.id) > 0;
+  }
+
+  getSubmitText(hasId) {
+    return hasId ? 'Edit Organization' : 'Create Organization';
   }
 
   ngOnInit() {

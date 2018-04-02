@@ -24,7 +24,6 @@ import {
   Option,
   Organization,
   Profile,
-  Sport,
   State
 } from '../shared/models/index';
 
@@ -66,9 +65,10 @@ export class OrganizeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    const organizations: Organization[] = this.route.snapshot.data
+      .organizations;
+    this.organizations = _.isArray(organizations) ? organizations : [];
     this.setOrganizeMode();
-    this.getSports();
-    this.getOrganizations();
   }
 
   setOrganizeMode(): void {
@@ -110,12 +110,6 @@ export class OrganizeComponent implements OnInit {
           this.setEditMode(currentModel);
         });
     }
-  }
-
-  getSports() {
-    this.organizeService.getSports().subscribe((sports: Sport[]) => {
-      console.log('sports:', sports);
-    });
   }
 
   editEvents(org_id: number): void {

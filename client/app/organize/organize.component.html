@@ -3,8 +3,9 @@
     <div class="card">
 
       <app-toast [message]="toast.message"></app-toast>
-
+        <h1 class="etched-text">Create Organizations</h1>
       <div class="card form-size" *ngIf="isEditing">
+
         <organization-form (ngSubmit)="submitOrganization($event)" (ngCancel)="setOrganizeMode($event)" [model]="currentModel"></organization-form>
       </div>
 
