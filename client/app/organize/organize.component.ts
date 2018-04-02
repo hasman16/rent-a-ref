@@ -1,14 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import {
-  FormGroup,
-  FormControl,
-  FormBuilder,
-  EmailValidator,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
 import { ToastComponent } from '../shared/toast/toast.component';
 import {
@@ -44,13 +36,9 @@ export class OrganizeComponent implements OnInit {
     this.countryName = aCountry || 'usa';
   }
   protected countryName: string;
-  protected states: State[];
-  protected form: FormGroup = new FormGroup({});
-  protected model: any = {};
   protected currentModel: any = {};
-  protected options: FormlyFormOptions = <FormlyFormOptions>{};
-  protected fields: FormlyFieldConfig[];
   protected titles: string[] = ['Id', 'Organization Name', '', ''];
+  protected heading: string = 'You have no <i>organizations</i>.';
   protected organizations: Organization[] = [];
   protected isLoading: boolean = false;
   protected isEditing: boolean = false;
@@ -74,11 +62,34 @@ export class OrganizeComponent implements OnInit {
   setOrganizeMode(): void {
     this.currentModel = {};
     this.isEditing = false;
+    this.setHeadingTitle();
   }
 
   setEditMode(model): void {
     this.currentModel = _.cloneDeep(model);
     this.isEditing = true;
+    this.setHeadingTitle();
+  }
+
+  modelHasId(model: any): boolean {
+    return _.has(model, 'id') && Number(model.id) > 0;
+  }
+
+  getSubmitText(hasId) {
+    return hasId ? 'Edit Organization' : 'Create Organization';
+  }
+
+  setHeadingTitle(): void {
+    if (this.isEditing) {
+      const hasId = this.modelHasId(this.currentModel);
+      this.heading = this.getSubmitText(hasId);
+    } else {
+      if (this.organizations.length > 0) {
+        this.heading = 'Available Organizations';
+      } else {
+        this.heading = 'You have no <i>organizations</i>.';
+      }
+    }
   }
 
   goNewOrganization(): void {
