@@ -1560,14 +1560,15 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_64__resetpassword_resetpassword_component__ = __webpack_require__("./client/app/resetpassword/resetpassword.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_65__shared_formly_base_form_base_form_component__ = __webpack_require__("./client/app/shared/formly/base-form/base-form.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_66__account_schedule_schedule_component__ = __webpack_require__("./client/app/account/schedule/schedule.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_67__group_terms_and_conditions_terms_and_conditions_component__ = __webpack_require__("./client/app/group/terms-and-conditions/terms-and-conditions.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_68__shared_forms_zone_form_zone_form_component__ = __webpack_require__("./client/app/shared/forms/zone-form/zone-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_69__games_games_component__ = __webpack_require__("./client/app/games/games.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_70__shared_dropdown_directive__ = __webpack_require__("./client/app/shared/dropdown.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_71__services_can_deactivate_guard_service__ = __webpack_require__("./client/app/services/can-deactivate-guard.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_72_mydatepicker__ = __webpack_require__("./node_modules/mydatepicker/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_73__leftmenu_leftmenu_component__ = __webpack_require__("./client/app/leftmenu/leftmenu.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_74__barchart_barchart_component__ = __webpack_require__("./client/app/barchart/barchart.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_67__organize_stripe_stripe_component__ = __webpack_require__("./client/app/organize/stripe/stripe.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_68__group_terms_and_conditions_terms_and_conditions_component__ = __webpack_require__("./client/app/group/terms-and-conditions/terms-and-conditions.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_69__shared_forms_zone_form_zone_form_component__ = __webpack_require__("./client/app/shared/forms/zone-form/zone-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_70__games_games_component__ = __webpack_require__("./client/app/games/games.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_71__shared_dropdown_directive__ = __webpack_require__("./client/app/shared/dropdown.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_72__services_can_deactivate_guard_service__ = __webpack_require__("./client/app/services/can-deactivate-guard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_73_mydatepicker__ = __webpack_require__("./node_modules/mydatepicker/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_74__leftmenu_leftmenu_component__ = __webpack_require__("./client/app/leftmenu/leftmenu.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_75__barchart_barchart_component__ = __webpack_require__("./client/app/barchart/barchart.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1649,6 +1650,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 /* Misc. */
 
 
@@ -1675,7 +1677,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_41__carousel_carousel_component__["a" /* CarouselComponent */],
                 __WEBPACK_IMPORTED_MODULE_42__carousel_carousel_item_carousel_item_component__["a" /* CarouselItemComponent */],
                 __WEBPACK_IMPORTED_MODULE_43__group_contactus_contactus_component__["a" /* ContactUsComponent */],
-                __WEBPACK_IMPORTED_MODULE_70__shared_dropdown_directive__["a" /* DropdownDirective */],
+                __WEBPACK_IMPORTED_MODULE_71__shared_dropdown_directive__["a" /* DropdownDirective */],
                 __WEBPACK_IMPORTED_MODULE_44__account_profile_edit_profile_edit_profile_component__["a" /* EditProfileComponent */],
                 __WEBPACK_IMPORTED_MODULE_45__organize_events_events_component__["a" /* EventsComponent */],
                 __WEBPACK_IMPORTED_MODULE_46__group_faq_faq_component__["a" /* FaqComponent */],
@@ -1698,17 +1700,18 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_59__home_pricing_pricing_component__["a" /* PricingComponent */],
                 __WEBPACK_IMPORTED_MODULE_60__account_profile_profile_component__["a" /* ProfileComponent */],
                 __WEBPACK_IMPORTED_MODULE_61__referee_referee_component__["a" /* RefereeComponent */],
-                __WEBPACK_IMPORTED_MODULE_69__games_games_component__["a" /* GamesComponent */],
+                __WEBPACK_IMPORTED_MODULE_70__games_games_component__["a" /* GamesComponent */],
                 __WEBPACK_IMPORTED_MODULE_62__register_register_component__["a" /* RegisterComponent */],
                 __WEBPACK_IMPORTED_MODULE_13__shared_formly_repeat_section_repeat_section_type__["a" /* RepeatTypeComponent */],
                 __WEBPACK_IMPORTED_MODULE_63__account_profile_reset_reset_component__["a" /* ResetComponent */],
                 __WEBPACK_IMPORTED_MODULE_64__resetpassword_resetpassword_component__["a" /* ResetPasswordComponent */],
                 __WEBPACK_IMPORTED_MODULE_65__shared_formly_base_form_base_form_component__["a" /* BaseFormComponent */],
                 __WEBPACK_IMPORTED_MODULE_66__account_schedule_schedule_component__["a" /* ScheduleComponent */],
-                __WEBPACK_IMPORTED_MODULE_67__group_terms_and_conditions_terms_and_conditions_component__["a" /* TermsAndConditionsComponent */],
-                __WEBPACK_IMPORTED_MODULE_68__shared_forms_zone_form_zone_form_component__["a" /* ZoneFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_73__leftmenu_leftmenu_component__["a" /* LeftmenuComponent */],
-                __WEBPACK_IMPORTED_MODULE_74__barchart_barchart_component__["a" /* BarchartComponent */]
+                __WEBPACK_IMPORTED_MODULE_67__organize_stripe_stripe_component__["a" /* StripeComponent */],
+                __WEBPACK_IMPORTED_MODULE_68__group_terms_and_conditions_terms_and_conditions_component__["a" /* TermsAndConditionsComponent */],
+                __WEBPACK_IMPORTED_MODULE_69__shared_forms_zone_form_zone_form_component__["a" /* ZoneFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_74__leftmenu_leftmenu_component__["a" /* LeftmenuComponent */],
+                __WEBPACK_IMPORTED_MODULE_75__barchart_barchart_component__["a" /* BarchartComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_15__agm_core__["a" /* AgmCoreModule */].forRoot({
@@ -1764,7 +1767,7 @@ var AppModule = /** @class */ (function () {
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_72_mydatepicker__["MyDatePickerModule"],
+                __WEBPACK_IMPORTED_MODULE_73_mydatepicker__["MyDatePickerModule"],
                 __WEBPACK_IMPORTED_MODULE_12__angular_common__["CommonModule"]
             ],
             providers: [
@@ -1777,7 +1780,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_24__services_user_service__["a" /* UserService */],
                 __WEBPACK_IMPORTED_MODULE_25__services_organize_service__["a" /* OrganizeService */],
                 __WEBPACK_IMPORTED_MODULE_20_ngx_cookie_service__["a" /* CookieService */],
-                __WEBPACK_IMPORTED_MODULE_71__services_can_deactivate_guard_service__["a" /* CanDeactivateGuardService */],
+                __WEBPACK_IMPORTED_MODULE_72__services_can_deactivate_guard_service__["a" /* CanDeactivateGuardService */],
                 {
                     provide: __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HTTP_INTERCEPTORS */],
                     useClass: __WEBPACK_IMPORTED_MODULE_2__providers_token_interceptor__["a" /* TokenInterceptor */],
@@ -3529,7 +3532,7 @@ var EventsComponent = /** @class */ (function () {
 /***/ "./client/app/organize/organize.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-12\">\n    <div class=\"card\">\n\n      <app-toast [message]=\"toast.message\"></app-toast>\n      <h1 class=\"etched-text\" [innerHtml]=\"heading\"></h1>\n      <br />\n      <div class=\"card form-size\" *ngIf=\"isEditing\">\n\n        <organization-form (ngSubmit)=\"submitOrganization($event)\" (ngCancel)=\"setOrganizeMode($event)\" [model]=\"currentModel\"></organization-form>\n      </div>\n\n      <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"!isEditing && (!organizations || organizations.length === 0)\">\n        <div class=\"form-size\">\n          <p>You need to create at least one organization. Then you can create and assign <i>events</i> to an organization.\n            <br />An event is the tornament and venue to which you assign games. Note a game can have the same address or a different address from avenue</p>\n          <button class=\"btn btn-primary btn-sm\" (click)=\"goNewOrganization({})\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n      <div class=\"\" *ngIf=\"!isEditing && organizations?.length > 0\">\n        <div class=\"form-size\">\n          <br />\n          <table class=\"table table-bordered table-hover\">\n            <thead class=\"thead-light\">\n              <tr>\n                <th *ngFor=\"let title of titles\" scope=\"col\">\n                  {{title}}\n                </th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let organization of organizations\"  class=\"org-table-item \">\n                <td (click)=\"editEvents(organization.id);\" >\n                  {{organization.id}}\n                </td>\n                <td (click)=\"editEvents(organization.id);\" >\n                  {{organization.name}}\n                </td>\n                <td>\n                  <button class=\"btn btn-primary btn-sm\" (click)=\"editOrganization(organization.id)\" title=\"Click to edit this organization\">Edit</button>\n                </td>\n                <td>\n                  <button class=\"btn btn-danger btn-sm\" (click)=\"goNewOrganization()\" title=\"Click to delete organization\">Delete</button>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n          <br />\n          <button class=\"btn btn-primary btn-sm new-org-button\" (click)=\"goNewOrganization()\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-12\">\n    <div class=\"card\">\n\n      <app-toast [message]=\"toast.message\"></app-toast>\n      <h1 class=\"etched-text\" [innerHtml]=\"heading\"></h1>\n      <br />\n      <div class=\"card form-size\" *ngIf=\"isEditing\">\n\n        <organization-form (ngSubmit)=\"submitOrganization($event)\" (ngCancel)=\"setOrganizeMode($event)\" [model]=\"currentModel\"></organization-form>\n      </div>\n\n      <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"!isEditing && (!organizations || organizations.length === 0)\">\n        <div class=\"form-size\">\n          <p>You need to create at least one organization. Then you can create and assign <i>events</i> to an organization.\n            <br />An event is the tornament and venue to which you assign games. Note a game can have the same address or a different address from avenue</p>\n          <button class=\"btn btn-primary btn-sm\" (click)=\"goNewOrganization({})\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n      <div class=\"\" *ngIf=\"!isEditing && organizations?.length > 0\">\n        <div class=\"form-size\">\n          <br />\n          <table class=\"table table-bordered table-hover\">\n            <thead class=\"thead-light\">\n              <tr>\n                <th *ngFor=\"let title of titles\" scope=\"col\">\n                  {{title}}\n                </th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let organization of organizations\"  class=\"org-table-item \">\n                <td (click)=\"editEvents(organization.id);\" >\n                  {{organization.id}}\n                </td>\n                <td (click)=\"editEvents(organization.id);\" >\n                  {{organization.name}}\n                </td>\n                <td>\n                  <button class=\"btn btn-primary btn-sm\" (click)=\"editOrganization(organization.id)\" title=\"Click to edit this organization\">Edit</button>\n                </td>\n                <td>\n                  <button class=\"btn btn-danger btn-sm\" (click)=\"goNewOrganization()\" title=\"Click to delete organization\">Delete</button>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n          <br />\n          <button class=\"btn btn-primary btn-sm new-org-button\" (click)=\"goNewOrganization()\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n    </div>\n\n    <div class=\"card\">\n      Card:4242 4242 4242 4242 <br />\n      Date: 01/20<br />\n      CVC: 289<br />\n      Zip: 92888<br />\n      <rar-stripe></rar-stripe>\n    </div>\n\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -3810,6 +3813,150 @@ var OrganizeComponent = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_3__services_index__["b" /* OrganizeService */]])
     ], OrganizeComponent);
     return OrganizeComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./client/app/organize/stripe/stripe.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form #checkout=\"ngForm\" (ngSubmit)=\"onSubmit(checkout)\" class=\"checkout\">\n  <div class=\"form-row\">\n    <label for=\"card-info\">Stripe Payment</label>\n    <div id=\"card-info\" #cardInfo></div>\n\n    <div id=\"card-errors\" role=\"alert\" *ngIf=\"error\">{{ error }}</div>\n  </div>\n\n  <button type=\"submit\">Pay $7.77</button>\n</form>"
+
+/***/ }),
+
+/***/ "./client/app/organize/stripe/stripe.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = "form.checkout {\n  max-width: 500px;\n  margin: 2rem auto;\n  text-align: center;\n  border: 2px solid #eee;\n  border-radius: 8px;\n  padding: 1rem 2rem;\n  background: white;\n  font-family: monospace;\n  color: #525252;\n  font-size: 1.1rem; }\n\nform.checkout button {\n  padding: 0.5rem 1rem;\n  color: white;\n  background: coral;\n  border: none;\n  border-radius: 4px;\n  margin-top: 1rem; }\n\nform.checkout button:active {\n  background: #a54c2b; }\n\n.StripeElement {\n  margin: 1rem 0 1rem;\n  background-color: white;\n  padding: 8px 12px;\n  border-radius: 4px;\n  border: 1px solid transparent;\n  -webkit-box-shadow: 0 1px 3px 0 #e6ebf1;\n          box-shadow: 0 1px 3px 0 #e6ebf1;\n  -webkit-transition: box-shadow 150ms ease;\n  -webkit-transition: -webkit-box-shadow 150ms ease;\n  transition: -webkit-box-shadow 150ms ease;\n  transition: box-shadow 150ms ease;\n  transition: box-shadow 150ms ease, -webkit-box-shadow 150ms ease; }\n\n.StripeElement--focus {\n  -webkit-box-shadow: 0 1px 3px 0 #cfd7df;\n          box-shadow: 0 1px 3px 0 #cfd7df; }\n\n.StripeElement--invalid {\n  border-color: #fa755a; }\n\n.StripeElement--webkit-autofill {\n  background-color: #fefde5 !important; }\n\n#card-info {\n  min-width: 100%; }\n\nlabel {\n  width: 100%; }\n"
+
+/***/ }),
+
+/***/ "./client/app/organize/stripe/stripe.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StripeComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_index__ = __webpack_require__("./client/app/services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash__ = __webpack_require__("./node_modules/lodash/lodash.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+var StripeComponent = /** @class */ (function () {
+    function StripeComponent(cd, organizeService) {
+        this.cd = cd;
+        this.organizeService = organizeService;
+        this.cardHandler = this.onChange.bind(this);
+    }
+    StripeComponent.prototype.ngAfterViewInit = function () {
+        this.card = elements.create('card');
+        this.card.mount(this.cardInfo.nativeElement);
+        this.card.addEventListener('change', this.cardHandler);
+    };
+    StripeComponent.prototype.ngOnDestroy = function () {
+        this.card.removeEventListener('change', this.cardHandler);
+        this.card.destroy();
+    };
+    StripeComponent.prototype.onChange = function (_a) {
+        var error = _a.error;
+        if (error) {
+            this.error = error.message;
+        }
+        else {
+            this.error = null;
+        }
+        this.cd.detectChanges();
+    };
+    StripeComponent.prototype.onSubmit = function (form) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                stripe
+                    .createToken(this.card, {
+                    country: 'US',
+                    currency: 'usd'
+                })
+                    .then(function (result) {
+                    console.log('result:', result);
+                    if (!__WEBPACK_IMPORTED_MODULE_2_lodash__["has"](result, 'error')) {
+                        return _this.organizeService.makeStripePayment(1, result)
+                            .subscribe(function (success) {
+                            console.log('success:', success);
+                        }, function (err) {
+                            console.log('error processing card2:', err);
+                        });
+                    }
+                    else {
+                        console.log('failed payment');
+                    }
+                })
+                    .catch(function (err) {
+                    console.log('error processing card 1:', err);
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('cardInfo'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
+    ], StripeComponent.prototype, "cardInfo", void 0);
+    StripeComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'rar-stripe',
+            template: __webpack_require__("./client/app/organize/stripe/stripe.component.html"),
+            styles: [__webpack_require__("./client/app/organize/stripe/stripe.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"], __WEBPACK_IMPORTED_MODULE_1__services_index__["b" /* OrganizeService */]])
+    ], StripeComponent);
+    return StripeComponent;
 }());
 
 
@@ -4943,6 +5090,9 @@ var OrganizeService = /** @class */ (function () {
     };
     OrganizeService.prototype.bulkUpdatePhones = function (phones, org_id) {
         return this.bulkUpdate(this.bulkPhone(phones, org_id));
+    };
+    OrganizeService.prototype.makeStripePayment = function (org_id, payload) {
+        return this.http.post("/api/make_payment/" + org_id, JSON.stringify(payload));
     };
     OrganizeService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
