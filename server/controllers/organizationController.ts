@@ -1,3 +1,5 @@
+import { stripe } from 'stripe';
+
 export default function OrganizationController(models, ResponseService) {
   const Organization = models.Organization;
   const attributes = ['id', 'name', 'user_id'];
@@ -17,12 +19,14 @@ export default function OrganizationController(models, ResponseService) {
       where: {
         id: req.params.user_id
       },
-      include: [{
-        model: Organization,
-        through: {
-          attributes: []
+      include: [
+        {
+          model: Organization,
+          through: {
+            attributes: []
+          }
         }
-      }]
+      ]
     })
       .then(results => {
         ResponseService.success(res, results);
@@ -37,9 +41,11 @@ export default function OrganizationController(models, ResponseService) {
       where: {
         organization_id: req.params.organization_id
       },
-      include: [{
-        model: models.Person
-      }]
+      include: [
+        {
+          model: models.Person
+        }
+      ]
     })
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
@@ -65,24 +71,27 @@ export default function OrganizationController(models, ResponseService) {
       user_id: user_id
     };
 
-    sequelize.transaction(function(t) {
-      return Organization.create(organization, { transaction: t })
-        .then(newOrganization => {
-          const organizer = {
-            organization_id: newOrganization.id,
-            user_id: user_id
-          };
-          return Organizer.create(organizer, { transaction: t })
-            .then(newOrganizer => {
-              const org = {
-                id: newOrganization.id,
-                name: newOrganization.name,
-                user_id: newOrganization.user_id
-              };
-              ResponseService.success(res, org, 201);
-            });
-        });
-    })
+    sequelize
+      .transaction(function(t) {
+        return Organization.create(organization, { transaction: t }).then(
+          newOrganization => {
+            const organizer = {
+              organization_id: newOrganization.id,
+              user_id: user_id
+            };
+            return Organizer.create(organizer, { transaction: t }).then(
+              newOrganizer => {
+                const org = {
+                  id: newOrganization.id,
+                  name: newOrganization.name,
+                  user_id: newOrganization.user_id
+                };
+                ResponseService.success(res, org, 201);
+              }
+            );
+          }
+        );
+      })
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -100,17 +109,43 @@ export default function OrganizationController(models, ResponseService) {
   }
 
   function deleteOne(req, res) {
-      const organization_id = req.params.game_id;
+    const organization_id = req.params.game_id;
 
-      function doDelete(organization) {
-        return Organization.destroy({
-          where: {
-            id: organization.id
-          }
-        });
-      }
+    function doDelete(organization) {
+      return Organization.destroy({
+        where: {
+          id: organization.id
+        }
+      });
+    }
 
-      ResponseService.findObject(organization_id, 'Organization', res, doDelete, 204);
+    ResponseService.findObject(
+      organization_id,
+      'Organization',
+      res,
+      doDelete,
+      204
+    );
+  }
+
+  function makeStripePayment(req, res) {
+    const stripeHandler = stripe(process.env.STRIPE_KEY);
+    const token = req.body.stripeToken;
+
+    // Charge the user's card:
+    stripeHandler.charges
+      .create({
+        amount: 777,
+        currency: 'usd',
+        description: 'Example charge',
+        source: token
+      })
+      .then(charge => {
+        ResponseService.success(res, charge);
+      })
+      .catch(err => {
+        ResponseService.exception(res, err);
+      });
   }
 
   return {
@@ -120,6 +155,7 @@ export default function OrganizationController(models, ResponseService) {
     getOne,
     create,
     update,
-    deleteOne
+    deleteOne,
+    makeStripePayment
   };
 }

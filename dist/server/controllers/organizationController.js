@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var stripe_1 = require("stripe");
 function OrganizationController(models, ResponseService) {
     var Organization = models.Organization;
     var attributes = ['id', 'name', 'user_id'];
@@ -16,12 +17,14 @@ function OrganizationController(models, ResponseService) {
             where: {
                 id: req.params.user_id
             },
-            include: [{
+            include: [
+                {
                     model: Organization,
                     through: {
                         attributes: []
                     }
-                }]
+                }
+            ]
         })
             .then(function (results) {
             ResponseService.success(res, results);
@@ -34,9 +37,11 @@ function OrganizationController(models, ResponseService) {
             where: {
                 organization_id: req.params.organization_id
             },
-            include: [{
+            include: [
+                {
                     model: models.Person
-                }]
+                }
+            ]
         })
             .then(function (results) { return ResponseService.successCollection(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
@@ -59,15 +64,14 @@ function OrganizationController(models, ResponseService) {
             name: req.body.name,
             user_id: user_id
         };
-        sequelize.transaction(function (t) {
-            return Organization.create(organization, { transaction: t })
-                .then(function (newOrganization) {
+        sequelize
+            .transaction(function (t) {
+            return Organization.create(organization, { transaction: t }).then(function (newOrganization) {
                 var organizer = {
                     organization_id: newOrganization.id,
                     user_id: user_id
                 };
-                return Organizer.create(organizer, { transaction: t })
-                    .then(function (newOrganizer) {
+                return Organizer.create(organizer, { transaction: t }).then(function (newOrganizer) {
                     var org = {
                         id: newOrganization.id,
                         name: newOrganization.name,
@@ -102,6 +106,24 @@ function OrganizationController(models, ResponseService) {
         }
         ResponseService.findObject(organization_id, 'Organization', res, doDelete, 204);
     }
+    function makeStripePayment(req, res) {
+        var stripeHandler = stripe_1.stripe(process.env.STRIPE_KEY);
+        var token = req.body.stripeToken;
+        // Charge the user's card:
+        stripeHandler.charges
+            .create({
+            amount: 777,
+            currency: 'usd',
+            description: 'Example charge',
+            source: token
+        })
+            .then(function (charge) {
+            ResponseService.success(res, charge);
+        })
+            .catch(function (err) {
+            ResponseService.exception(res, err);
+        });
+    }
     return {
         getAll: getAll,
         getByUser: getByUser,
@@ -109,7 +131,8 @@ function OrganizationController(models, ResponseService) {
         getOne: getOne,
         create: create,
         update: update,
-        deleteOne: deleteOne
+        deleteOne: deleteOne,
+        makeStripePayment: makeStripePayment
     };
 }
 exports.default = OrganizationController;

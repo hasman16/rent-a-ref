@@ -23,7 +23,7 @@ import {
     FormlyHorizontalTextAreaWrapper
 } from './shared/formly/horizontal-types/index';
 import { AgmCoreModule } from '@agm/core';
-import { GoogleMapComponent  } from './googlemap/google-map.component';
+import { GoogleMapComponent } from './googlemap/google-map.component';
 
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
@@ -80,6 +80,7 @@ import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
 import { BaseFormComponent } from './shared/formly/base-form/base-form.component';
 import { ScheduleComponent } from './account/schedule/schedule.component';
+import { StripeComponent } from './organize/stripe/stripe.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
 import { GamesComponent } from './games/games.component';
@@ -139,6 +140,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         ResetPasswordComponent,
         BaseFormComponent,
         ScheduleComponent,
+        StripeComponent,
         TermsAndConditionsComponent,
         ZoneFormComponent,
         LeftmenuComponent,
@@ -146,7 +148,7 @@ import { BarchartComponent } from './barchart/barchart.component';
     ],
     imports: [
         AgmCoreModule.forRoot({
-          apiKey: 'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
+            apiKey: 'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
         }),
         NgxDatatableModule,
         RoutingModule,

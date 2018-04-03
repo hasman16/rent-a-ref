@@ -191,4 +191,11 @@ export class OrganizeService {
   bulkUpdatePhones(phones: Phone[], org_id): Observable<Phone[]> {
     return this.bulkUpdate<Phone>(this.bulkPhone(phones, org_id));
   }
+
+  makeStripePayment(org_id, payload):Observable<any> {
+    return this.http.post(
+      `/api/make_payment/${org_id}`,
+      JSON.stringify(payload)
+    );
+  }
 }
