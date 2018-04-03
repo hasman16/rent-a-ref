@@ -16,4 +16,6 @@ export default function organizationRoutes(setter, organizationCtrl) {
   router.route('/organizations/:organization_id').get(authentication, organizationCtrl.getOne);
   router.route('/organizations/:organization_id').put(authentication, isOrgOwner, organizationCtrl.update);
   router.route('/organizations/:organization_id').delete(authentication, isOrgOwner, organizationCtrl.deleteOne);
+
+  router.route('/make_payment').post(authentication, organizationCtrl.makeStripePayment);  
 }
