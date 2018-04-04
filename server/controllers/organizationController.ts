@@ -1,8 +1,9 @@
-import { stripe } from 'stripe';
+import * as Stripe from 'stripe';
 
 export default function OrganizationController(models, ResponseService) {
   const Organization = models.Organization;
   const attributes = ['id', 'name', 'user_id'];
+  const stripe = new Stripe(process.env.STRIPE_KEY);
 
   function getAll(req, res) {
     Organization.findAll({
@@ -129,11 +130,9 @@ export default function OrganizationController(models, ResponseService) {
   }
 
   function makeStripePayment(req, res) {
-    const stripeHandler = stripe(process.env.STRIPE_KEY);
-    const token = req.body.stripeToken;
-
+    const token = ResponseService.getItemFromBody(req);
     // Charge the user's card:
-    stripeHandler.charges
+    stripe.charges
       .create({
         amount: 777,
         currency: 'usd',

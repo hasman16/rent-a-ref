@@ -3924,14 +3924,9 @@ var StripeComponent = /** @class */ (function () {
                     currency: 'usd'
                 })
                     .then(function (result) {
-                    console.log('result:', result);
                     if (!__WEBPACK_IMPORTED_MODULE_2_lodash__["has"](result, 'error')) {
-                        return _this.organizeService.makeStripePayment(1, result)
-                            .subscribe(function (success) {
-                            console.log('success:', success);
-                        }, function (err) {
-                            console.log('error processing card2:', err);
-                        });
+                        console.log('result:', result);
+                        _this.makeStripePayment(result.token);
                     }
                     else {
                         console.log('failed payment');
@@ -3939,10 +3934,25 @@ var StripeComponent = /** @class */ (function () {
                 })
                     .catch(function (err) {
                     console.log('error processing card 1:', err);
+                    _this.errorOut(err);
                 });
                 return [2 /*return*/];
             });
         });
+    };
+    StripeComponent.prototype.makeStripePayment = function (token) {
+        var _this = this;
+        return this.organizeService.makeStripePayment(1, token).subscribe(function (success) {
+            console.log('success:', success);
+        }, function (err) {
+            console.log('error processing card2:', err);
+            _this.errorOut(err);
+        });
+    };
+    StripeComponent.prototype.errorOut = function (err) {
+        if (__WEBPACK_IMPORTED_MODULE_2_lodash__["has"](err, 'error.message.message')) {
+            this.error = err.error.message.message;
+        }
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('cardInfo'),
@@ -3954,7 +3964,8 @@ var StripeComponent = /** @class */ (function () {
             template: __webpack_require__("./client/app/organize/stripe/stripe.component.html"),
             styles: [__webpack_require__("./client/app/organize/stripe/stripe.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"], __WEBPACK_IMPORTED_MODULE_1__services_index__["b" /* OrganizeService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"],
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["b" /* OrganizeService */]])
     ], StripeComponent);
     return StripeComponent;
 }());

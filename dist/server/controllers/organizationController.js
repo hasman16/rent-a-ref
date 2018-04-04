@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var stripe_1 = require("stripe");
+var Stripe = require("stripe");
 function OrganizationController(models, ResponseService) {
     var Organization = models.Organization;
     var attributes = ['id', 'name', 'user_id'];
+    var stripe = new Stripe(process.env.STRIPE_KEY);
     function getAll(req, res) {
         Organization.findAll({
             attributes: attributes
@@ -107,10 +108,9 @@ function OrganizationController(models, ResponseService) {
         ResponseService.findObject(organization_id, 'Organization', res, doDelete, 204);
     }
     function makeStripePayment(req, res) {
-        var stripeHandler = stripe_1.stripe(process.env.STRIPE_KEY);
-        var token = req.body.stripeToken;
+        var token = ResponseService.getItemFromBody(req);
         // Charge the user's card:
-        stripeHandler.charges
+        stripe.charges
             .create({
             amount: 777,
             currency: 'usd',
