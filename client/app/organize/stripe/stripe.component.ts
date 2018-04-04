@@ -7,9 +7,8 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import {
-  OrganizeService,
-} from '../../services/index';
+import { HttpErrorResponse } from '@angular/common/http';
+import { OrganizeService } from '../../services/index';
 import * as _ from 'lodash';
 
 @Component({
@@ -24,7 +23,10 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
   public cardHandler = this.onChange.bind(this);
   public error: string;
 
-  constructor(private cd: ChangeDetectorRef, private organizeService: OrganizeService) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private organizeService: OrganizeService
+  ) {}
 
   public ngAfterViewInit() {
     this.card = elements.create('card');
@@ -48,27 +50,42 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
   }
 
   async onSubmit(form: NgForm) {
+
     stripe
       .createToken(this.card, {
         country: 'US',
         currency: 'usd'
       })
       .then(result => {
-        console.log('result:', result);
         if (!_.has(result, 'error')) {
-          return this.organizeService.makeStripePayment(1, result)
-          .subscribe(success => {
-            console.log('success:', success);
-          },
-          err => {
-            console.log('error processing card2:', err);
-          });
+          console.log('result:', result);
+          this.makeStripePayment(result.token);
         } else {
           console.log('failed payment');
         }
       })
-      .catch(err => {
+      .catch((err: HttpErrorResponse) => {
         console.log('error processing card 1:', err);
+        this.errorOut(err);
       });
   }
+
+  private makeStripePayment(token) {
+    return this.organizeService.makeStripePayment(1, token).subscribe(
+      success => {
+        console.log('success:', success);
+      },
+      (err: HttpErrorResponse) => {
+        console.log('error processing card2:', err);
+        this.errorOut(err);
+      }
+    );
+  }
+
+  private errorOut(err: HttpErrorResponse) {
+    if (_.has(err,'error.message.message'))
+      this.error = err.error.message.message;
+    }
+  }
+
 }
