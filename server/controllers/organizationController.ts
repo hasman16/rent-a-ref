@@ -132,12 +132,13 @@ export default function OrganizationController(models, ResponseService) {
   function makeStripePayment(req, res) {
     const token = ResponseService.getItemFromBody(req);
     // Charge the user's card:
+    console.log('token is:', token.id);
     stripe.charges
       .create({
         amount: 777,
         currency: 'usd',
         description: 'Example charge',
-        source: token
+        source: token.id
       })
       .then(charge => {
         ResponseService.success(res, charge);
