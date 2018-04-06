@@ -123,8 +123,8 @@ export class OrganizeComponent implements OnInit {
     }
   }
 
-  editEvents(org_id: number): void {
-    this.router.navigate(['/organizer/events/' + org_id]);
+  editEvents(organization_id: number): void {
+    this.router.navigate([`/organization/${organization_id}/events/`]);
   }
 
   getOrganizations(user_id?: any) {

@@ -13,7 +13,7 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { ToastComponent } from './../../shared/toast/toast.component';
 import {
   AuthService,
-  OrganizeService,
+  EventsService,
   StatesService,
   UserService
 } from './../../services/index';
@@ -58,15 +58,15 @@ export class EventsComponent implements OnInit {
   protected isEditing: boolean = false;
 
   constructor(
-    protected auth: AuthService,
     protected toast: ToastComponent,
     protected route: ActivatedRoute,
     protected router: Router,
     protected statesService: StatesService,
-    protected organizeService: OrganizeService
+    protected eventsService: EventsService
   ) {}
 
   public ngOnInit() {
+    this.games = _.cloneDeep(this.route.snapshot.data.games);
     this.sports = _(this.route.snapshot.data.sports)
       .map((sport: Sport): Option => {
         return <Option>{
@@ -91,7 +91,7 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-12',
             type: 'input',
-            key: 'name',
+            key: 'event_name',
             templateOptions: {
               label: 'Event Name',
               required: true,
@@ -102,7 +102,7 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-12',
             type: 'input',
-            key: 'eventDate',
+            key: 'date',
             templateOptions: {
               label: 'Event Date',
               type: 'date',
@@ -120,7 +120,7 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-12',
             type: 'select',
-            key: 'sport',
+            key: 'sport_id',
             templateOptions: {
               label: 'Type of Sport',
               required: true,
@@ -130,7 +130,7 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-12',
             type: 'radio',
-            key: 'eventType',
+            key: 'event_type',
             templateOptions: {
               label: 'What type of event',
               required: true,
@@ -157,7 +157,7 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-12',
             type: 'input',
-            key: 'kidsReferees',
+            key: 'kids_referees',
             templateOptions: {
               label: 'Number of Referees for Kids 13 and Under',
               type: 'number',
@@ -179,7 +179,7 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-12',
             type: 'input',
-            key: 'teensReferees',
+            key: 'teens_referees',
             templateOptions: {
               label: 'Number of Referees for High Schoolers',
               type: 'number',
@@ -201,7 +201,7 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-12',
             type: 'input',
-            key: 'teensReferees',
+            key: 'adults_referees',
             templateOptions: {
               label: 'Number of Referees for Over 18s',
               type: 'number',

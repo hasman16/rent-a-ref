@@ -37,8 +37,9 @@ import { ScheduleComponent } from './account/schedule/schedule.component';
 import { OrganizeComponent } from './organize/organize.component';
 import { GamesComponent } from './games/games.component';
 
-import { OrganizationsResolver } from './providers/Organizations.resolver';
-import { SportsResolver } from './providers/sports.resolver';
+import { EventsResolver } from './providers/resolvers/index';
+import { OrganizationsResolver } from './providers/resolvers/index';
+import { SportsResolver } from './providers/resolvers/index';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -70,7 +71,7 @@ const routes: Routes = [
     canActivate: [AuthGuardLogin]
   },
   {
-    path: 'organizer/:id',
+    path: 'organization/:id',
     component: OrganizeComponent,
     canActivate: [AuthGuardLogin],
     resolve: {
@@ -79,10 +80,11 @@ const routes: Routes = [
     }
   },
   {
-    path: 'organizer/events/:id',
+    path: 'organization/:id/events',
     component: EventsComponent,
     canActivate: [AuthGuardLogin],
     resolve: {
+      games: EventsResolver,
       sports: SportsResolver
     }
   },
@@ -114,7 +116,7 @@ const routes: Routes = [
       { enableTracing: true } // For debugging purposes only
     )
   ],
-  providers: [OrganizationsResolver, SportsResolver],
+  providers: [EventsResolver, OrganizationsResolver, SportsResolver],
   exports: [RouterModule]
 })
 export class RoutingModule {}

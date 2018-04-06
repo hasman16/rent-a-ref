@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from './providers/token.interceptor';
+import { TokenInterceptor } from './providers/interceptors/token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RecaptchaModule } from 'ng-recaptcha';
@@ -35,6 +35,7 @@ import { StatesService } from './services/states.service';
 import { TokenService } from './services/token.service';
 import { UserService } from './services/user.service';
 import { OrganizeService } from './services/organize.service';
+import { EventsService } from './services/events.service';
 
 import { AccordionModule } from 'primeng/components/accordion/accordion';
 import { PanelModule } from 'primeng/components/panel/panel';
@@ -212,6 +213,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         StatesService,
         UserService,
         OrganizeService,
+        EventsService,
         CookieService,
         CanDeactivateGuardService,
         {

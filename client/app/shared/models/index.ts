@@ -1,6 +1,7 @@
 export * from './base';
 export * from './address';
 export * from './bio';
+export * from './game';
 export * from './login';
 export * from './organization';
 export * from './person';

@@ -1,7 +1,7 @@
-import { AddressModel } from './address';
-import { PhoneModel } from './phone';
+import { Address } from './address';
+import { Phone } from './phone';
 
-export interface GameModel {
+export interface Game {
 	id?: string;
 	event_name?: string;
 	event_date?: string;
@@ -17,6 +17,6 @@ export interface GameModel {
 	sport_id?: number;
 	address_id?: string;
 	phone_id?: string;
-	address?: AddressModel;
-	phone?: PhoneModel;
+	address?: Address;
+	phone?: Phone;
 }

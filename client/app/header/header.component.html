@@ -21,9 +21,9 @@
             </a>   
           </li>
           <li class="nav-item">
-            <a [routerLink]="['/organizer', auth.currentUser.id ]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
+            <a [routerLink]="['/organization', auth.currentUser.id ]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
             [routerLinkActiveOptions]="{exact: true}">
-              <span *ngIf="auth.currentUser.can_organize == 'active'">Organize</span>
+              <span *ngIf="auth.currentUser.can_organize == 'active'">Organization</span>
             </a>    
           </li>
           <li class="nav-item">
