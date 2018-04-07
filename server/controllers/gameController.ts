@@ -3,7 +3,19 @@ import * as _ from 'lodash';
 
 export default function GameController(models, ResponseService) {
   const Game = models.Game;
-  const attributes = ['id', 'name', 'duration', 'referees', 'pay', 'ages'];
+  const attributes = [
+    'id',
+    'event_name',
+    'event_date',
+    'event_type',
+    'venue_name',
+    'kids_referees',
+    'teens_referees',
+    'adults_referees',
+    'kids_refs_pay',
+    'teens_refs_pay',
+    'adults_refs_pay'
+  ];
 
   function returnGame(res, game, status = 200) {
     let newGame: GameModel = <GameModel>ResponseService.deleteItemDates(game);
@@ -20,6 +32,7 @@ export default function GameController(models, ResponseService) {
   }
 
   function getAllByOrganization(req, res) {
+    console.log('getAllByOrganization');
     Game.findAll({
       attributes: attributes
     })
