@@ -8,10 +8,10 @@ import {
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class AuthGuardLogin implements CanActivate {
+export class AuthGuardLocked implements CanActivate {
 	constructor(public auth: AuthService, private router: Router) {}
 
 	canActivate() {
-		return this.auth.loggedIn && this.auth.isActive;
+		return this.auth.loggedIn && this.auth.currentUser.status == 'locked';
 	}
 }

@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
+import { AuthGuardLocked } from './services/auth-guard-locked.service';
+import { AuthGuardLogin } from './services/auth-guard-login.service';
+import { AuthGuardSuspended } from './services/auth-guard-suspended.service';
 
 import { AppComponent } from './app.component';
 
@@ -96,12 +98,12 @@ const routes: Routes = [
   },
   {
     path: 'account/:id/standby',
-    canActivate: [AuthGuardLogin],
+    canActivate: [AuthGuardLocked],
     component: StandbyComponent
   },
   {
     path: 'account/:id/suspended',
-    canActivate: [AuthGuardLogin],
+    canActivate: [AuthGuardSuspended],
     component: SuspendedComponent
   },
   {

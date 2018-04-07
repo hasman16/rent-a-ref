@@ -9,6 +9,7 @@ import { Login, User } from './../shared/models/index';
 export class AuthService {
   public loggedIn: boolean = false;
   public isAdmin: boolean = false;
+  public isActive: boolean = false;
 
   public currentUser: User = <User>{};
 
@@ -26,6 +27,7 @@ export class AuthService {
   protected resetState(): void {
     this.loggedIn = false;
     this.isAdmin = false;
+    this.isActive = false;
     this.currentUser = <User>{};
   }
 
@@ -44,22 +46,13 @@ export class AuthService {
           // Organizer
           switch (newUser.can_organize + ' ' + newUser.status) {
             case 'pending standby':
-              // The organizer has not yet completed the profile
-              // this.router.navigate(['user/' + res.user.id + '/edit-profile']);
               break;
             case 'yes active':
-              // The organizer is active and ready to go
-              // this.router.navigate(['user/' + res.user.id + '/account']);
               break;
             case 'yes locked':
-              // The Organizer account is suspended due to failed login attempts
-              // Kill his session
-
               this.resetState();
               break;
             case 'no banned':
-              // The Organizer account is disabled by the admin
-              // Kill his session
               this.resetState();
               break;
           }
@@ -67,29 +60,16 @@ export class AuthService {
           // Referee
           switch (newUser.can_referee + ' ' + newUser.status) {
             case 'pending active':
-              // The referee account has been activated by the admin. Now he needs to complete his profile
-              // this.router.navigate(['user/' + res.user.id + '/edit-profile']);
               break;
             case 'pending in_progress':
-              // The referee account has not yet been activated by the admin. Still in Standby
-              // Kill his session
-
               this.resetState();
               break;
             case 'yes active':
-              // The referee is active and ready to go
-              // this.router.navigate(['user/' + res.user.id + '/account']);
               break;
             case 'yes locked':
-              // The referee account is suspended due to failed login attempts
-              // Kill his session
-
               this.resetState();
               break;
             case 'no banned':
-              // The referee account is disabled by the admin
-              // Kill his session
-
               this.resetState();
               break;
           }
@@ -124,8 +104,8 @@ export class AuthService {
       this.loggedIn = true;
       this.currentUser = newUser;
       // ============================
-      this.currentUser.email = setter.user.email;
-      this.currentUser.id = setter.user.id;
+      this.currentUser.email = newUser.email;
+      this.currentUser.id = newUser.id;
       this.currentUser.firstname = setter.user.firstname;
       this.currentUser.lastname = setter.user.lastname;
 
@@ -137,6 +117,7 @@ export class AuthService {
       }
       // ============================
       this.isAdmin = authorization === 1 || authorization === 2;
+      this.isActive = newUser.status == 'active';
       this.tokenService.setOptions(setter.token);
       localStorage.setItem('user', JSON.stringify(setter));
     }

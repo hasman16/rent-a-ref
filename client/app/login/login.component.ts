@@ -77,22 +77,26 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['passwordreset']);
   }
 
-  routeOrganizer(canOrganize:string, userStatus:string, userId:string):string {
+  routeOrganizer(
+    canOrganize: string,
+    userStatus: string,
+    userId: string
+  ): string {
     let path: string = '';
     // Check if the user is a referee/organizer and if his/she has not yet completed the profile form, then redirect him/her to the form
     // Organizer
     switch (canOrganize + ' ' + userStatus) {
       case 'pending standby':
-        path = 'account/profile/' + userId;
+        path = `account/${userId}/profile`;
         break;
       case 'yes active':
-        path = 'account/' + userId;
+        path = `account/${userId}`;
         break;
       case 'yes locked':
-        path = 'account/suspended/' + userId;
+        path = `account/${userId}/suspended`;
         break;
       case 'no banned':
-        path = 'account/deactivated/' + userId;
+        path = `account/${userId}/deactivated`;
         break;
     }
     return path;
@@ -104,22 +108,22 @@ export class LoginComponent implements OnInit {
     // Referee
     switch (canReferee + ' ' + userStatus) {
       case 'pending active':
-        path = 'account/profile/' + userId;
+        path = `account/${userId}/profile`;
         break;
       case 'pending in_progress':
-        path = 'account/standby/' + userId;
+        path = `account/${userId}/standby`;
         break;
       case 'yes active':
-        path = 'account/' + userId;
+        path = `account/${userId}`;
         break;
       case 'yes locked':
-        path = 'account/suspended/' + userId;
+        path = `account/${userId}/suspended`;
         break;
       case 'no banned':
-        path = 'account/deactivated/' + userId;
+        path = `account/${userId}/deactivated`;
         break;
       default:
-        path = 'account/' + userId;
+        path = `account/${userId}`;
         break;
     }
     return path;
@@ -134,8 +138,16 @@ export class LoginComponent implements OnInit {
           const user: User = login.user;
           const userId = user.id;
           const userStatus = user.status;
-          const path1: string = this.routeOrganizer(user.can_organize, userStatus, userId);
-          const path2: string = this.routeUser(user.can_referee, userStatus, userId);
+          const path1: string = this.routeOrganizer(
+            user.can_organize,
+            userStatus,
+            userId
+          );
+          const path2: string = this.routeUser(
+            user.can_referee,
+            userStatus,
+            userId
+          );
 
           if (this.checkboxFlag) {
             const expireDate = new Date();
