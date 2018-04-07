@@ -71,7 +71,7 @@ const routes: Routes = [
     canActivate: [AuthGuardLogin]
   },
   {
-    path: 'organization/:id',
+    path: 'organization',
     component: OrganizeComponent,
     canActivate: [AuthGuardLogin],
     resolve: {
@@ -89,16 +89,28 @@ const routes: Routes = [
     }
   },
   {
-    path: 'account/profile/:id',
+    path: 'account/:id/profile',
     component: ProfileComponent,
     canDeactivate: [CanDeactivateGuardService],
     children: [{ path: 'edit-profile', component: EditProfileComponent }]
   },
-  { path: 'account/standby/:id', component: StandbyComponent },
-  { path: 'account/suspended/:id', component: SuspendedComponent },
-  { path: 'account/deactivated/:id', component: DeactivatedComponent },
   {
-    path: 'account/admin/:id',
+    path: 'account/:id/standby',
+    canActivate: [AuthGuardLogin],
+    component: StandbyComponent
+  },
+  {
+    path: 'account/:id/suspended',
+    canActivate: [AuthGuardLogin],
+    component: SuspendedComponent
+  },
+  {
+    path: 'account/:id/deactivated',
+    canActivate: [AuthGuardLogin],
+    component: DeactivatedComponent
+  },
+  {
+    path: 'admin',
     component: AdminComponent,
     canActivate: [AuthGuardAdmin],
     canDeactivate: [CanDeactivateGuardService]
