@@ -5,23 +5,21 @@ export default function GameController(models, ResponseService) {
   const Game = models.Game;
   const attributes = ['id', 'name', 'duration', 'referees', 'pay', 'ages'];
 
-  function makeGame(game: GameModel): GameModel {
-    return <GameModel>{
-      name: game.name,
-      duration: game.duration,
-      referees: game.referees,
-      ages: game.ages,
-      pay: game.pay
-    };
-  }
-
   function returnGame(res, game, status = 200) {
-    let newGame: GameModel = makeGame(game);
+    let newGame: GameModel = <GameModel>ResponseService.deleteItemDates(game);
     newGame.id = game.id;
     ResponseService.success(res, newGame, status);
   }
 
   function getAll(req, res) {
+    Game.findAll({
+      attributes: attributes
+    })
+      .then(results => ResponseService.success(res, results))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function getAllByOrganization(req, res) {
     Game.findAll({
       attributes: attributes
     })
@@ -38,18 +36,21 @@ export default function GameController(models, ResponseService) {
         id: req.params.game_id
       },
 
-      include: [{
-        model: Address
-      },{
-        model: Phone
-      }]
+      include: [
+        {
+          model: Address
+        },
+        {
+          model: Phone
+        }
+      ]
     })
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function create(req, res) {
-    const game: GameModel = makeGame(req.body);
+    const game: GameModel = <GameModel>ResponseService.getItemFromBody(req);
 
     Game.create(game)
       .then(newGame => {
@@ -59,7 +60,7 @@ export default function GameController(models, ResponseService) {
   }
 
   function update(req, res) {
-    const game: GameModel = makeGame(req.body);
+    const game: GameModel = <GameModel>ResponseService.getItemFromBody(req);
 
     Game.update(game, {
       where: {
@@ -88,46 +89,53 @@ export default function GameController(models, ResponseService) {
     const sequelize = models.sequelize;
     const Address = models.Address;
     const Phone = models.Phone;
+    const createGame = (t, game) => {
+      return Game.create(game, { transaction: t });
+    };
+    const createPhone = (t, game) => {
+      return Phone.create(phone, { transaction: t }).then(newPhone => {
+        game.phone_id = newPhone.id;
+        return createGame(t, game);
+      });
+    };
 
     let game: GameModel = <GameModel>ResponseService.getItemFromBody(req);
-    let address: AddressModel = _.cloneDeep(game.address);
-    let phone: PhoneModel = _.cloneDeep(game.phone);
+    const address: AddressModel = ResponseService.deleteItemDates(game.address);
+    const phone: PhoneModel = ResponseService.deleteItemDates(game.phone);
 
-    delete game.address;
-    delete game.phone;
+    delete game.address_id;
+    delete game.phone_id;
+
     game.organization_id = req.params.organization_id;
 
-    sequelize.transaction((t) => {
-      return Address.create(address, { transaction: t })
-        .then((newAddress) => {
+    sequelize
+      .transaction(t => {
+        return Address.create(address, { transaction: t }).then(newAddress => {
           game.address_id = newAddress.id;
-          return Phone.create(phone, { transaction: t });
-        })
-        .then((newPhone) => {
-          game.phone_id = newPhone.id;
-          return Game.create(game, { transaction: t });
-        });     
-    })
-    .then(result => {
-      let aGame = ResponseService.deleteItemDates(result);
-      ResponseService.success(res, aGame, 201);
-    })
-    .catch(error => this.exception(res, error));
+          return phone ? createPhone(t, game) : createGame(t, game);
+        });
+      })
+      .then(result => {
+        let aGame = ResponseService.deleteItemDates(result);
+        ResponseService.success(res, aGame, 201);
+      })
+      .catch(error => this.exception(res, error));
   }
 
   function getGameAddress(req, res) {
     this.getOne(req, res);
   }
 
-  function updateGameAddress(req, res) { }
-  function deleteGameAddress(req, res) { }
+  function updateGameAddress(req, res) {}
+  function deleteGameAddress(req, res) {}
 
   return {
-    getAll: getAll,
-    getOne: getOne,
-    create: create,
-    update: update,
-    deleteOne: deleteOne,
+    getAll,
+    getAllByOrganization,
+    getOne,
+    create,
+    update,
+    deleteOne,
 
     getGameAddress,
     createGameAddressPhone,

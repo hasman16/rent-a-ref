@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { OrganizeService } from './../services/index';
-import { Sport } from './../shared/models/index';
+import { OrganizeService } from './../../services/index';
+import { Sport } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
