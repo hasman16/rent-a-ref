@@ -5,14 +5,16 @@ var sequelize = null;
 // 1 - admin1
 // 2 - admin2
 // 3 - user
-var users = [{
+var users = [
+    {
         email: 'admin1@rentaref.com',
         password: 'admin1',
         authorization: 1,
         status: 'active',
         can_referee: 'active',
         can_organize: 'active'
-    }, {
+    },
+    {
         email: 'admin2@rentaref.com',
         password: 'admin2',
         authorization: 2,
@@ -35,7 +37,8 @@ var users = [{
         status: 'active',
         can_referee: 'active',
         can_organize: 'active'
-    }, {
+    },
+    {
         email: 'org22@rentaref.com',
         password: 'organ22',
         authorization: 3,
@@ -47,7 +50,7 @@ var users = [{
         email: 'org33@rentaref.com',
         password: 'organ33',
         authorization: 3,
-        status: 'active',
+        status: 'pending',
         can_referee: 'pending',
         can_organize: 'pending'
     },
@@ -73,7 +76,15 @@ var users = [{
         authorization: 3,
         status: 'active',
         can_referee: 'active',
-        can_organize: 'no'
+        can_organize: 'pending'
+    },
+    {
+        email: 'penny@mailinator.com',
+        password: 'penny1',
+        authorization: 3,
+        status: 'active',
+        can_referee: 'pending',
+        can_organize: 'active'
     },
     {
         email: 'ahmadou.mbouo@dstinc.com',
@@ -140,13 +151,20 @@ var people = [
         gender: 'm'
     },
     {
+        firstname: 'Penelope',
+        lastname: 'Pitstop',
+        email: 'penny@mailinator.com',
+        gender: 'f'
+    },
+    {
         firstname: 'Ahmadou',
         lastname: 'Ndoung',
         email: 'ahmadou.mbouo@dstinc.com',
         gender: 'm'
     }
 ];
-var sports = [{
+var sports = [
+    {
         name: 'Soccer',
         duration: 90,
         periods: 2,
@@ -157,7 +175,8 @@ var sports = [{
         duration: 80,
         periods: 2,
         referees: 3
-    }];
+    }
+];
 function insertSports(Sport) {
     sports.forEach(function (sport) {
         Sport.create(sport);
@@ -169,7 +188,7 @@ function insertPeople(User, Person) {
     });
     if (person) {
         person['user_id'] = User.id;
-        person['dob'] = (new Date()).getTime();
+        person['dob'] = new Date().getTime();
         return Person.create(person);
     }
 }
@@ -187,7 +206,8 @@ function insertUser(models) {
     var Person = models.Person;
     console.log('Attempting   to create users.');
     users.forEach(function (user) {
-        bcrypt.hash(user.password, 10)
+        bcrypt
+            .hash(user.password, 10)
             .then(function (password) {
             user.password = password;
             return User.findOne({
@@ -197,8 +217,7 @@ function insertUser(models) {
             .then(function (newUser) {
             if (!newUser) {
                 var password_1 = user.password;
-                return User.create(user)
-                    .then(function (aUser) {
+                return User.create(user).then(function (aUser) {
                     insertLock(aUser, password_1, models);
                     return aUser;
                 });
@@ -211,7 +230,7 @@ function insertUser(models) {
         })
             .catch(function (error) {
             console.log('error;', error);
-            throw (error);
+            throw error;
         });
     });
 }
@@ -219,7 +238,8 @@ function insertData(models, doInsert) {
     if (doInsert === void 0) { doInsert = false; }
     if (doInsert) {
         sequelize = models.sequelize;
-        sequelize.sync({
+        sequelize
+            .sync({
             force: true
         })
             .then(function () { return insertUser(models); })

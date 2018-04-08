@@ -2,7 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 function GameController(models, ResponseService) {
     var Game = models.Game;
-    var attributes = ['id', 'name', 'duration', 'referees', 'pay', 'ages'];
+    var attributes = [
+        'id',
+        'event_name',
+        'event_date',
+        'event_type',
+        'venue_name',
+        'status',
+        'kids_referees',
+        'teens_referees',
+        'adults_referees',
+        'kids_refs_pay',
+        'teens_refs_pay',
+        'adults_refs_pay'
+    ];
     function returnGame(res, game, status) {
         if (status === void 0) { status = 200; }
         var newGame = ResponseService.deleteItemDates(game);
@@ -17,8 +30,11 @@ function GameController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getAllByOrganization(req, res) {
+        console.log('getAllByOrganization:', req.params.organization_id);
         Game.findAll({
-            attributes: attributes
+            where: {
+                organization_id: req.params.organization_id
+            }
         })
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
@@ -79,7 +95,7 @@ function GameController(models, ResponseService) {
         var createGame = function (t, game) {
             return Game.create(game, { transaction: t });
         };
-        var createPhone = function (t, game) {
+        var createPhone = function (t, phone, game) {
             return Phone.create(phone, { transaction: t }).then(function (newPhone) {
                 game.phone_id = newPhone.id;
                 return createGame(t, game);
@@ -90,12 +106,15 @@ function GameController(models, ResponseService) {
         var phone = ResponseService.deleteItemDates(game.phone);
         delete game.address_id;
         delete game.phone_id;
+        delete game.address;
+        delete game.phone;
         game.organization_id = req.params.organization_id;
+        game.status = 'pending';
         sequelize
             .transaction(function (t) {
             return Address.create(address, { transaction: t }).then(function (newAddress) {
                 game.address_id = newAddress.id;
-                return phone ? createPhone(t, game) : createGame(t, game);
+                return phone ? createPhone(t, phone, game) : createGame(t, game);
             });
         })
             .then(function (result) {

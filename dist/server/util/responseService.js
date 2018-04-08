@@ -34,9 +34,11 @@ var ResponseService = /** @class */ (function () {
     };
     ResponseService.prototype.deleteItemDates = function (oldItem) {
         var item = _.cloneDeep(oldItem);
-        delete item.created_at;
-        delete item.deleted_at;
-        delete item.updated_at;
+        if (item) {
+            delete item.created_at;
+            delete item.deleted_at;
+            delete item.updated_at;
+        }
         return item;
     };
     ResponseService.prototype.deleteId = function (oldItem) {

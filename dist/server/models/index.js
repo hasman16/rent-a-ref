@@ -68,7 +68,7 @@ models.forEach(function (model) {
     m.Phone.belongsToMany(m.User, {
         through: 'user_phone'
     });
-    m.Game.belongsTo(exports.sequelize.models.organizer);
+    //m.Game.belongsTo(sequelize.models.organizer);
     m.Game.belongsTo(m.Organization);
     m.Game.belongsTo(m.Address);
     m.Game.belongsTo(m.Phone);
