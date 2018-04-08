@@ -72,6 +72,7 @@ models.forEach(function (model) {
     m.Game.belongsTo(m.Organization);
     m.Game.belongsTo(m.Address);
     m.Game.belongsTo(m.Phone);
+    m.Game.belongsTo(m.Sport);
     m.User.belongsToMany(m.Match, {
         through: 'officiating'
     });

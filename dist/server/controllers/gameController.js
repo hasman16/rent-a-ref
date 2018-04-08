@@ -1,25 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var _ = require("lodash");
 function GameController(models, ResponseService) {
     var Game = models.Game;
     var attributes = ['id', 'name', 'duration', 'referees', 'pay', 'ages'];
-    function makeGame(game) {
-        return {
-            name: game.name,
-            duration: game.duration,
-            referees: game.referees,
-            ages: game.ages,
-            pay: game.pay
-        };
-    }
     function returnGame(res, game, status) {
         if (status === void 0) { status = 200; }
-        var newGame = makeGame(game);
+        var newGame = ResponseService.deleteItemDates(game);
         newGame.id = game.id;
         ResponseService.success(res, newGame, status);
     }
     function getAll(req, res) {
+        Game.findAll({
+            attributes: attributes
+        })
+            .then(function (results) { return ResponseService.success(res, results); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
+    }
+    function getAllByOrganization(req, res) {
         Game.findAll({
             attributes: attributes
         })
@@ -33,17 +30,20 @@ function GameController(models, ResponseService) {
             where: {
                 id: req.params.game_id
             },
-            include: [{
+            include: [
+                {
                     model: Address
-                }, {
+                },
+                {
                     model: Phone
-                }]
+                }
+            ]
         })
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function create(req, res) {
-        var game = makeGame(req.body);
+        var game = ResponseService.getItemFromBody(req);
         Game.create(game)
             .then(function (newGame) {
             returnGame(res, newGame, 201);
@@ -51,7 +51,7 @@ function GameController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function update(req, res) {
-        var game = makeGame(req.body);
+        var game = ResponseService.getItemFromBody(req);
         Game.update(game, {
             where: {
                 id: req.params.game_id
@@ -76,21 +76,26 @@ function GameController(models, ResponseService) {
         var sequelize = models.sequelize;
         var Address = models.Address;
         var Phone = models.Phone;
-        var game = ResponseService.getItemFromBody(req);
-        var address = _.cloneDeep(game.address);
-        var phone = _.cloneDeep(game.phone);
-        delete game.address;
-        delete game.phone;
-        game.organization_id = req.params.organization_id;
-        sequelize.transaction(function (t) {
-            return Address.create(address, { transaction: t })
-                .then(function (newAddress) {
-                game.address_id = newAddress.id;
-                return Phone.create(phone, { transaction: t });
-            })
-                .then(function (newPhone) {
+        var createGame = function (t, game) {
+            return Game.create(game, { transaction: t });
+        };
+        var createPhone = function (t, game) {
+            return Phone.create(phone, { transaction: t }).then(function (newPhone) {
                 game.phone_id = newPhone.id;
-                return Game.create(game, { transaction: t });
+                return createGame(t, game);
+            });
+        };
+        var game = ResponseService.getItemFromBody(req);
+        var address = ResponseService.deleteItemDates(game.address);
+        var phone = ResponseService.deleteItemDates(game.phone);
+        delete game.address_id;
+        delete game.phone_id;
+        game.organization_id = req.params.organization_id;
+        sequelize
+            .transaction(function (t) {
+            return Address.create(address, { transaction: t }).then(function (newAddress) {
+                game.address_id = newAddress.id;
+                return phone ? createPhone(t, game) : createGame(t, game);
             });
         })
             .then(function (result) {
@@ -106,6 +111,7 @@ function GameController(models, ResponseService) {
     function deleteGameAddress(req, res) { }
     return {
         getAll: getAll,
+        getAllByOrganization: getAllByOrganization,
         getOne: getOne,
         create: create,
         update: update,
