@@ -3,8 +3,10 @@ const Game = function(sequelize, DataTypes) {
 		'game',
 		{
 			event_name: DataTypes.STRING(64),
-			event_date: DataTypes.DATE,
-			event_type: DataTypes.STRING(64),
+			event_date: {
+				type: DataTypes.DATE,
+				allowNull: false
+			},
 			venue_name: DataTypes.STRING(64),
 			kids_referees: {
 				type: DataTypes.INTEGER,
@@ -18,17 +20,25 @@ const Game = function(sequelize, DataTypes) {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
 			},
-			kids_refs_pay: {
+			kids_ref_pay: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
 			},
-			teens_refs_pay: {
+			teens_ref_pay: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
 			},
-			adults_refs_pay: {
+			adults_ref_pay: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
+			},
+			status: {
+				type: DataTypes.STRING(32),
+				allowNull: false,
+				defaultValue: 'none',
+				validate: {
+					isIn: [['none', 'pending', 'paid', 'cancelled', 'active']]
+				}
 			}
 		},
 		{

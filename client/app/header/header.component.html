@@ -11,7 +11,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a routerLink="/" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            <a routerLink="/" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
               Home
             </a>      
           </li>
@@ -21,7 +21,7 @@
             </a>   
           </li>
           <li class="nav-item">
-            <a [routerLink]="['/organization', auth.currentUser.id ]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
+            <a [routerLink]="['/organization']" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
             [routerLinkActiveOptions]="{exact: true}">
               <span *ngIf="auth.currentUser.can_organize == 'active'">Organization</span>
             </a>    
@@ -33,7 +33,7 @@
               </a> 
           </li>
           <li class="nav-item">
-            <a [routerLink]="['/account/profile', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
+            <a [routerLink]="['/account', auth.currentUser.id,'profile']" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
               [routerLinkActiveOptions]="{exact: true}">
                 Profile
               </a>  
@@ -41,11 +41,11 @@
           <li class="nav-item">
             <a [routerLink]="['/account', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
               [routerLinkActiveOptions]="{exact: true}">
-                Account ({{auth.currentUser.email}})
+                Account 
               </a> 
           </li>
           <li class="nav-item">
-            <a [routerLink]="['/account/admin', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin"
+            <a [routerLink]="['/admin']" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin"
               [routerLinkActiveOptions]="{exact: true}">
               Admin
             </a>

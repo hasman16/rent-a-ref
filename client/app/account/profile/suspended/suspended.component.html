@@ -3,17 +3,8 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <h4 class="card-header elegantshd bigFont">Account suspended</h4>
+      <h4 class="etched-text">Account suspended</h4>
       <div class="card-block">
-        <button type="button" class="btn btn-primary" disabled>User ID: #{{user.id}}  :  {{person.firstname}} {{person.lastname}}</button>
-        <div class="list-group">
-          <!-->can_organize":"active","can_referee":"active","status":"active"-->
-          <span class="list-group-item active">
-            <button type="button" class="btn btn-success" disabled>Can Organize: {{user.can_organize}}</button>
-          <button type="button" class="btn btn-warning" disabled>Can Referee: {{user.can_referee}}</button> <button type="button"
-            class="btn btn-danger" disabled>Status: {{user.status}}</button>
-          </span>
-        </div>
         <div class="card">
           <div class="card-block numberbg">
             <form name="resetForm" (ngSubmit)="onSubmit()">

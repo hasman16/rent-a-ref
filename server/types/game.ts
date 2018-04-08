@@ -6,6 +6,7 @@ export interface GameModel {
 	event_name?: string;
 	event_date?: string;
 	venue_name?: string;
+	status?: string;
 	kids_referees?: number;
 	teens_referees?: number;
 	adults_referees?: number;

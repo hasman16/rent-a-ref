@@ -45,9 +45,11 @@ export default class ResponseService {
 
   deleteItemDates(oldItem): any {
     let item = _.cloneDeep(oldItem);
-    delete item.created_at;
-    delete item.deleted_at;
-    delete item.updated_at;
+    if (item) {
+      delete item.created_at;
+      delete item.deleted_at;
+      delete item.updated_at;
+    }
     return item;
   }
 

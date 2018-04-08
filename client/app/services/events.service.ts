@@ -14,54 +14,54 @@ export class EventsService {
 
   constructor(private http: HttpClient) {}
 
-  getAllGames(): Observable<Game[]> {
+  public getAllGames(): Observable<Game[]> {
     return this.http.get<Game[]>(`/api/games`);
   }
 
-  getGame(game_id: string): Observable<Game> {
+  public getGame(game_id: string): Observable<Game> {
     return this.http.get(`/api/games/${game_id}`);
   }
 
-  getOrganizationGames(organization_id: string): Observable<Game[]> {
+  public getOrganizationGames(organization_id: string): Observable<Game[]> {
     const url = `/api/organization/${organization_id}/games`;
     return this.http.get<Game[]>(url);
   }
 
-  createGame(organization_id, game): Observable<Game> {
+  public createGame(organization_id, game): Observable<Game> {
     const url = `/api/organization/${organization_id}/games`;
     return this.postData(url, game);
   }
 
-  updateGame(game): Observable<Game> {
+  public updateGame(game): Observable<Game> {
     const url: string = `/api/games/${game.id}`;
     return this.putData(url, game);
   }
 
-  createAddress(game_id: string, address: Address): Observable<Game> {
+  public createAddress(game_id: string, address: Address): Observable<Game> {
     const url: string = `/api/games/${game_id}/addresses`;
     return this.postData(url, address);
   }
 
-  updateAddress(game_id: string, address: Address): Observable<Game> {
+  public updateAddress(game_id: string, address: Address): Observable<Game> {
     const url: string = `/api/games/${game_id}/addresses/${address.id}`;
     return this.putData(url, address);
   }
 
-  createPhone(game_id: string, phone: Phone): Observable<Game> {
+  public createPhone(game_id: string, phone: Phone): Observable<Game> {
     const url: string = `/api/games/${game_id}/phones`;
     return this.postData(url, phone);
   }
 
-  updatePhone(game_id: string, phone: Phone): Observable<Game> {
+  public updatePhone(game_id: string, phone: Phone): Observable<Game> {
     const url: string = `/api/games/${game_id}/phones/${phone.id}`;
     return this.putData(url, phone);
   }
 
-  postData<T extends BaseModel>(url: string, data: any): Observable<T> {
+  public postData<T extends BaseModel>(url: string, data: any): Observable<T> {
     return this.http.post<T>(url, JSON.stringify(data));
   }
 
-  putData<T extends BaseModel>(url: string, data: any): Observable<T> {
+  public putData<T extends BaseModel>(url: string, data: any): Observable<T> {
     return this.http.put<T>(url, JSON.stringify(data));
   }
 }

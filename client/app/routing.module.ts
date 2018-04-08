@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
+import { AuthGuardLocked } from './services/auth-guard-locked.service';
+import { AuthGuardLogin } from './services/auth-guard-login.service';
+import { AuthGuardSuspended } from './services/auth-guard-suspended.service';
 
 import { AppComponent } from './app.component';
 
@@ -71,7 +73,7 @@ const routes: Routes = [
     canActivate: [AuthGuardLogin]
   },
   {
-    path: 'organization/:id',
+    path: 'organization',
     component: OrganizeComponent,
     canActivate: [AuthGuardLogin],
     resolve: {
@@ -80,7 +82,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'organization/:id/events',
+    path: 'organization/:organization_id/events',
     component: EventsComponent,
     canActivate: [AuthGuardLogin],
     resolve: {
@@ -89,16 +91,28 @@ const routes: Routes = [
     }
   },
   {
-    path: 'account/profile/:id',
+    path: 'account/:id/profile',
     component: ProfileComponent,
     canDeactivate: [CanDeactivateGuardService],
     children: [{ path: 'edit-profile', component: EditProfileComponent }]
   },
-  { path: 'account/standby/:id', component: StandbyComponent },
-  { path: 'account/suspended/:id', component: SuspendedComponent },
-  { path: 'account/deactivated/:id', component: DeactivatedComponent },
   {
-    path: 'account/admin/:id',
+    path: 'account/:id/standby',
+    canActivate: [AuthGuardLocked],
+    component: StandbyComponent
+  },
+  {
+    path: 'account/:id/suspended',
+    canActivate: [AuthGuardSuspended],
+    component: SuspendedComponent
+  },
+  {
+    path: 'account/:id/deactivated',
+    canActivate: [AuthGuardLogin],
+    component: DeactivatedComponent
+  },
+  {
+    path: 'admin',
     component: AdminComponent,
     canActivate: [AuthGuardAdmin],
     canDeactivate: [CanDeactivateGuardService]

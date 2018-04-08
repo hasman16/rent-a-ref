@@ -17,7 +17,7 @@ export class OrganizationsResolver
 	) {}
 
 	resolve(route: ActivatedRouteSnapshot): Observable<Organization[]> {
-		const user_id = route.paramMap.get('id') || this.auth.currentUser.id;
+		const user_id = this.auth.currentUser.id;
 
 		return this.organizeService
 			.getUserOrganization(user_id)

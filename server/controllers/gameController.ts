@@ -3,7 +3,20 @@ import * as _ from 'lodash';
 
 export default function GameController(models, ResponseService) {
   const Game = models.Game;
-  const attributes = ['id', 'name', 'duration', 'referees', 'pay', 'ages'];
+  const attributes = [
+    'id',
+    'event_name',
+    'event_date',
+    'event_type',
+    'venue_name',
+    'status',
+    'kids_referees',
+    'teens_referees',
+    'adults_referees',
+    'kids_refs_pay',
+    'teens_refs_pay',
+    'adults_refs_pay'
+  ];
 
   function returnGame(res, game, status = 200) {
     let newGame: GameModel = <GameModel>ResponseService.deleteItemDates(game);
@@ -20,8 +33,11 @@ export default function GameController(models, ResponseService) {
   }
 
   function getAllByOrganization(req, res) {
+    console.log('getAllByOrganization:', req.params.organization_id);
     Game.findAll({
-      attributes: attributes
+      where: {
+        organization_id: req.params.organization_id
+      }
     })
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
@@ -92,31 +108,33 @@ export default function GameController(models, ResponseService) {
     const createGame = (t, game) => {
       return Game.create(game, { transaction: t });
     };
-    const createPhone = (t, game) => {
+    const createPhone = (t, phone, game) => {
       return Phone.create(phone, { transaction: t }).then(newPhone => {
         game.phone_id = newPhone.id;
         return createGame(t, game);
       });
     };
-
     let game: GameModel = <GameModel>ResponseService.getItemFromBody(req);
     const address: AddressModel = ResponseService.deleteItemDates(game.address);
     const phone: PhoneModel = ResponseService.deleteItemDates(game.phone);
 
     delete game.address_id;
     delete game.phone_id;
+    delete game.address;
+    delete game.phone;
 
     game.organization_id = req.params.organization_id;
+    game.status = 'pending';
 
     sequelize
       .transaction(t => {
         return Address.create(address, { transaction: t }).then(newAddress => {
           game.address_id = newAddress.id;
-          return phone ? createPhone(t, game) : createGame(t, game);
+          return phone ? createPhone(t, phone, game) : createGame(t, game);
         });
       })
       .then(result => {
-        let aGame = ResponseService.deleteItemDates(result);
+        const aGame = ResponseService.deleteItemDates(result);
         ResponseService.success(res, aGame, 201);
       })
       .catch(error => this.exception(res, error));
