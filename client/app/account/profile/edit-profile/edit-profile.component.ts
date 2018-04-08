@@ -53,7 +53,6 @@ export class EditProfileComponent implements OnInit {
   paypal: string = '';
 
   user: User = <User>{};
-  // person = { id: '', firstname: '', middlenames: '', lastname: '', dob: '' };
 
   person: Bio;
 

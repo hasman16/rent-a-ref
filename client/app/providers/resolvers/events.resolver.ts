@@ -13,7 +13,7 @@ export class EventsResolver implements Resolve<Observable<any>> {
 	constructor(protected eventsService: EventsService) {}
 
 	resolve(route: ActivatedRouteSnapshot): Observable<any> {
-		const organization_id = route.paramMap.get('id');
+		const organization_id = route.paramMap.get('organization_id');
 
 		return this.eventsService
 			.getOrganizationGames(organization_id)

@@ -6,14 +6,16 @@ let sequelize = null;
 // 2 - admin2
 // 3 - user
 
-const users = [{
-  email: 'admin1@rentaref.com',
-  password: 'admin1',
-  authorization: 1,
-  status: 'active',
-  can_referee: 'active',
-  can_organize: 'active'
-}, {
+const users = [
+  {
+    email: 'admin1@rentaref.com',
+    password: 'admin1',
+    authorization: 1,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'active'
+  },
+  {
     email: 'admin2@rentaref.com',
     password: 'admin2',
     authorization: 2,
@@ -36,7 +38,8 @@ const users = [{
     status: 'active',
     can_referee: 'active',
     can_organize: 'active'
-  }, {
+  },
+  {
     email: 'org22@rentaref.com',
     password: 'organ22',
     authorization: 3,
@@ -48,7 +51,7 @@ const users = [{
     email: 'org33@rentaref.com',
     password: 'organ33',
     authorization: 3,
-    status: 'active',
+    status: 'pending',
     can_referee: 'pending',
     can_organize: 'pending'
   },
@@ -74,7 +77,15 @@ const users = [{
     authorization: 3,
     status: 'active',
     can_referee: 'active',
-    can_organize: 'no'
+    can_organize: 'pending'
+  },
+  {
+    email: 'penny@mailinator.com',
+    password: 'penny1',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'pending',
+    can_organize: 'active'
   },
   {
     email: 'ahmadou.mbouo@dstinc.com',
@@ -142,6 +153,12 @@ const people = [
     gender: 'm'
   },
   {
+    firstname: 'Penelope',
+    lastname: 'Pitstop',
+    email: 'penny@mailinator.com',
+    gender: 'f'
+  },
+  {
     firstname: 'Ahmadou',
     lastname: 'Ndoung',
     email: 'ahmadou.mbouo@dstinc.com',
@@ -149,18 +166,20 @@ const people = [
   }
 ];
 
-const sports = [{
-  name: 'Soccer',
-  duration: 90,
-  periods: 2,
-  referees: 3
-},
+const sports = [
+  {
+    name: 'Soccer',
+    duration: 90,
+    periods: 2,
+    referees: 3
+  },
   {
     name: 'Rugby',
     duration: 80,
     periods: 2,
     referees: 3
-  }];
+  }
+];
 
 function insertSports(Sport) {
   sports.forEach(function(sport) {
@@ -175,7 +194,7 @@ function insertPeople(User, Person) {
 
   if (person) {
     person['user_id'] = User.id;
-    person['dob'] = (new Date()).getTime();
+    person['dob'] = new Date().getTime();
     return Person.create(person);
   }
 }
@@ -197,7 +216,8 @@ function insertUser(models) {
   console.log('Attempting   to create users.');
 
   users.forEach(function(user) {
-    bcrypt.hash(user.password, 10)
+    bcrypt
+      .hash(user.password, 10)
       .then(password => {
         user.password = password;
         return User.findOne({
@@ -207,11 +227,10 @@ function insertUser(models) {
       .then(function(newUser) {
         if (!newUser) {
           const password = user.password;
-          return User.create(user)
-            .then((aUser) => {
-              insertLock(aUser, password, models);
-              return aUser;
-            });
+          return User.create(user).then(aUser => {
+            insertLock(aUser, password, models);
+            return aUser;
+          });
         }
       })
       .then(aUser => {
@@ -219,11 +238,10 @@ function insertUser(models) {
           insertPeople(aUser, Person);
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('error;', error);
-        throw (error);
+        throw error;
       });
-
   });
 }
 
@@ -231,12 +249,13 @@ function insertData(models, doInsert: Boolean = false) {
   if (doInsert) {
     sequelize = models.sequelize;
 
-    sequelize.sync({
-      force: true
-    })
+    sequelize
+      .sync({
+        force: true
+      })
       .then(() => insertUser(models))
       .then(() => insertSports(models.Sport))
-      .catch((error) => {
+      .catch(error => {
         throw Error(error);
       });
   }

@@ -14,9 +14,9 @@
       <app-toast [message]="toast.message"></app-toast>
 
       <div class="card form-size">
-        <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
-          <formly-form [model]="model" [fields]="fields">
-          <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.valid">Create Event</button>
+        <form [formGroup]="form" (ngSubmit)="submitEvent(model)">
+          <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form">
+          <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid">buttonText</button>
           <span class="spacer">&nbsp;</span>
           <button type="submit" class="btn btn-danger btn-sm" title="Cancel" (click)="onCancel($event)">Cancel</button>
           </formly-form>

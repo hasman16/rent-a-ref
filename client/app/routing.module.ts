@@ -82,7 +82,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'organization/:id/events',
+    path: 'organization/:organization_id/events',
     component: EventsComponent,
     canActivate: [AuthGuardLogin],
     resolve: {

@@ -103,15 +103,16 @@ export default function GameController(models, ResponseService) {
     const Address = models.Address;
     const Phone = models.Phone;
     const createGame = (t, game) => {
+      console.log('createGame:', game);
       return Game.create(game, { transaction: t });
     };
-    const createPhone = (t, game) => {
+    const createPhone = (t, phone, game) => {
+      console.log('create phone');
       return Phone.create(phone, { transaction: t }).then(newPhone => {
         game.phone_id = newPhone.id;
         return createGame(t, game);
       });
     };
-
     let game: GameModel = <GameModel>ResponseService.getItemFromBody(req);
     const address: AddressModel = ResponseService.deleteItemDates(game.address);
     const phone: PhoneModel = ResponseService.deleteItemDates(game.phone);
@@ -125,11 +126,11 @@ export default function GameController(models, ResponseService) {
       .transaction(t => {
         return Address.create(address, { transaction: t }).then(newAddress => {
           game.address_id = newAddress.id;
-          return phone ? createPhone(t, game) : createGame(t, game);
+          return phone ? createPhone(t, phone, game) : createGame(t, game);
         });
       })
       .then(result => {
-        let aGame = ResponseService.deleteItemDates(result);
+        const aGame = ResponseService.deleteItemDates(result);
         ResponseService.success(res, aGame, 201);
       })
       .catch(error => this.exception(res, error));
