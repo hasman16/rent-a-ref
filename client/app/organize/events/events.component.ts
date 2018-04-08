@@ -51,6 +51,15 @@ export class EventsComponent implements OnInit {
   protected options: FormlyFormOptions = <FormlyFormOptions>{};
   protected fields: FormlyFieldConfig[];
 
+  protected titles: string[] = [
+    'id',
+    'Event Name',
+    'Event Date',
+    'Venue',
+    'Status',
+    '',
+    ''
+  ];
   protected sports: Option[];
   protected games: Game[] = [];
   protected isLoading: boolean = false;
@@ -109,7 +118,7 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-12',
             type: 'input',
-            key: 'date',
+            key: 'event_date',
             templateOptions: {
               label: 'Event Date',
               type: 'date',
@@ -364,18 +373,23 @@ export class EventsComponent implements OnInit {
   }
 
   public packmodel(model): Game {
+    const dateString: string = String(model.event_date);
+    const eventDate: number = Number(new Date(dateString).getDate());
     return <Game>{
-      adults: model.adults,
-      teens: model.teens,
-      kids: model.kids,
       adults_referees: model.adults_referees,
       teens_referees: model.teens_referees,
       kids_referees: model.kids_referees,
+
+      kids_ref_pay: model.kids_ref_pay,
+      teens_ref_pay: model.teens_ref_pay,
+      adults_ref_pay: model.adults_ref_pay,
+
       event_name: model.event_name,
       event_type: model.event_type,
       venue_name: model.venue_name,
+      status: model.status,
       sport_id: model.sport_id,
-      date: model.date,
+      event_date: eventDate,
       address: {
         line1: model.line1,
         line2: model.line2,

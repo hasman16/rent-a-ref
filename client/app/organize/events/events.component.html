@@ -39,7 +39,16 @@
               {{game.id}}
             </td>
             <td>
-              {{game.name}}
+              {{game.event_name}}
+            </td>
+            <td>
+              {{game.event_date}}
+            </td>
+            <td>
+              {{game.venue_name}}
+            </td>
+            <td>
+              {{game.status}}
             </td>
             <td>
               <button class="btn btn-primary btn-sm" (click)="editEvent(game.id)" title="Click to edit this event">Edit</button>

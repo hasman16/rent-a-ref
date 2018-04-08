@@ -9,6 +9,7 @@ export default function GameController(models, ResponseService) {
     'event_date',
     'event_type',
     'venue_name',
+    'status',
     'kids_referees',
     'teens_referees',
     'adults_referees',
@@ -32,9 +33,11 @@ export default function GameController(models, ResponseService) {
   }
 
   function getAllByOrganization(req, res) {
-    console.log('getAllByOrganization');
+    console.log('getAllByOrganization:', req.params.organization_id);
     Game.findAll({
-      attributes: attributes
+      where: {
+        organization_id: req.params.organization_id
+      }
     })
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
@@ -103,11 +106,9 @@ export default function GameController(models, ResponseService) {
     const Address = models.Address;
     const Phone = models.Phone;
     const createGame = (t, game) => {
-      console.log('createGame:', game);
       return Game.create(game, { transaction: t });
     };
     const createPhone = (t, phone, game) => {
-      console.log('create phone');
       return Phone.create(phone, { transaction: t }).then(newPhone => {
         game.phone_id = newPhone.id;
         return createGame(t, game);
@@ -119,8 +120,11 @@ export default function GameController(models, ResponseService) {
 
     delete game.address_id;
     delete game.phone_id;
+    delete game.address;
+    delete game.phone;
 
     game.organization_id = req.params.organization_id;
+    game.status = 'pending';
 
     sequelize
       .transaction(t => {

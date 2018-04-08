@@ -4,8 +4,9 @@ import { Phone } from './phone';
 export interface Game {
 	id?: string;
 	event_name?: string;
-	event_date?: string;
+	event_date?: number;
 	venue_name?: string;
+	status?: string;
 	kids_referees?: number;
 	teens_referees?: number;
 	adults_referees?: number;
@@ -15,8 +16,9 @@ export interface Game {
 	organization_id?: number;
 	user_id?: number;
 	sport_id?: number;
-	address_id?: string;
-	phone_id?: string;
+	address_id?: number;
+	phone_id?: number;
 	address?: Address;
 	phone?: Phone;
 }
+
