@@ -7,4 +7,5 @@ export interface Address extends BaseModel {
 	state: string;
 	zip: string;
 	radius?: string;
+	country?: string;
 }

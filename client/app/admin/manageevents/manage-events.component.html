@@ -1,0 +1,7 @@
+<div class="card" *ngIf="!isLoading">
+  <h4>Game Assignment</h4>
+  <app-loading [condition]="isLoading"></app-loading>
+
+  <app-toast [message]="toast.message"></app-toast>
+
+</div>

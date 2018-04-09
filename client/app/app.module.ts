@@ -75,7 +75,7 @@ import { PasswordFormComponent } from './shared/forms/password-form/password-for
 import { PhoneFormComponent } from './shared/forms/phone-form/phone-form.component';
 import { PricingComponent } from './home/pricing/pricing.component';
 import { ProfileComponent } from './account/profile/profile.component';
-import { RefereeComponent } from './referee/referee.component';
+import { ManageUsersComponent } from './admin/manageusers/manage-users.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
@@ -84,7 +84,7 @@ import { ScheduleComponent } from './account/schedule/schedule.component';
 import { StripeComponent } from './organize/stripe/stripe.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
-import { GamesComponent } from './games/games.component';
+import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
 
 /* Misc. */
 import { DropdownDirective } from './shared/dropdown.directive';
@@ -93,7 +93,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
 
 // rich grid
-import { LeftmenuComponent } from './leftmenu/leftmenu.component';
+import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
 import { BarchartComponent } from './barchart/barchart.component';
 
 @NgModule({
@@ -133,8 +133,8 @@ import { BarchartComponent } from './barchart/barchart.component';
         PhoneFormComponent,
         PricingComponent,
         ProfileComponent,
-        RefereeComponent,
-        GamesComponent,
+        ManageUsersComponent,
+        ManageEventsComponent,
         RegisterComponent,
         RepeatTypeComponent,
         ResetComponent,
@@ -144,7 +144,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         StripeComponent,
         TermsAndConditionsComponent,
         ZoneFormComponent,
-        LeftmenuComponent,
+        AdminMenuComponent,
         BarchartComponent
     ],
     imports: [

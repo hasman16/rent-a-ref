@@ -1,17 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LeftmenuComponent } from './leftmenu.component';
+import { AdminMenuComponent } from './admin-menu.component';
 
 xdescribe('LeftmenuComponent', () => {
   let component: LeftmenuComponent;
   let fixture: ComponentFixture<LeftmenuComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ LeftmenuComponent ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [LeftmenuComponent]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LeftmenuComponent);
