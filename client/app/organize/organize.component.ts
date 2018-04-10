@@ -37,7 +37,7 @@ export class OrganizeComponent implements OnInit {
   }
   protected countryName: string;
   protected currentModel: any = {};
-  protected titles: string[] = ['Id', 'Organization Name', '', ''];
+  protected titles: string[] = ['Organization Name', '', ''];
   protected heading: string = 'You have no <i>organizations</i>.';
   protected organizations: Organization[] = [];
   protected isLoading: boolean = false;

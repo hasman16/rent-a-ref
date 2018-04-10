@@ -29,6 +29,7 @@ import {
 } from './../../shared/models/index';
 
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
@@ -52,7 +53,6 @@ export class EventsComponent implements OnInit {
   protected fields: FormlyFieldConfig[];
 
   protected titles: string[] = [
-    'id',
     'Event Name',
     'Event Date',
     'Venue',
@@ -328,7 +328,14 @@ export class EventsComponent implements OnInit {
     ];
   }
 
-  public setEventsMode(): void {}
+  public formatDate(dateString: string): string {
+    return moment(dateString).format('LL');
+  }
+
+  public setEventsMode(): void {
+    this.isEditing = false;
+    this.isLoading = false;
+  }
 
   public goNewEvent(): void {
     this.model = {
@@ -339,7 +346,9 @@ export class EventsComponent implements OnInit {
     this.isEditing = true;
   }
 
-  public editEvents(): void {
+  public editEvents(game: Game): void {
+    this.model = this.convertGameToModel(game);
+    this.isLoading = false;
     this.isEditing = true;
   }
 
@@ -350,26 +359,51 @@ export class EventsComponent implements OnInit {
       (games: Game[]) => {
         this.games = _.cloneDeep(games);
       },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log(
-            'A client-side or network error occurred for the Profile'
-          );
-        } else {
-          console.log(
-            'The backend returned an unsuccessful response code for the profile'
-          );
-        }
-      },
+      (err: HttpErrorResponse) =>
+        this.callFailure(err, 'Failed to retrieve Events.'),
       () => {
         this.setEventsMode();
-        this.isLoading = false;
-        if (this.games.length === 0) {
-          this.setEventsMode();
-        }
       }
     );
+  }
+
+  public submitEvent(model: Game): void {
+    const game: Game = this.convertModelToGame(model);
+
+    if (_.isNil(model.id) || !model.id) {
+      this.submitNewEvent(game);
+    } else {
+      this.submitUpdateEvent(game);
+      this.setEventsMode();
+    }
+  }
+
+  public submitNewEvent(model: Game): void {
+    this.isLoading = true;
+    this.eventsService.createGame(this.organization_id, model).subscribe(
+      (game: Game) => {
+        this.toast.setMessage('Event created.', 'info');
+      },
+      (err: HttpErrorResponse) =>
+        this.callFailure(err, 'Failed to create new event.'),
+      () => {
+        this.getEvents();
+      }
+    );
+  }
+
+  public submitUpdateEvent(model: any): void {}
+
+  public callFailure(err: HttpErrorResponse, message = 'An error occurred') {
+    if (err.error instanceof Error) {
+      this.toast.setMessage(message, 'danger');
+    } else {
+      this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
+    }
+  }
+
+  public onCancel(): void {
+    this.setEventsMode();
   }
 
   public convertGameToModel(model: Game): any {
@@ -401,7 +435,8 @@ export class EventsComponent implements OnInit {
 
   public convertModelToGame(model): Game {
     const dateString: string = String(model.event_date);
-    const eventDate: number = Number(new Date(dateString).getDate());
+    const eventDate: number = Number(new Date(dateString).getTime());
+
     return <Game>{
       adults_referees: model.adults_referees,
       teens_referees: model.teens_referees,
@@ -425,46 +460,5 @@ export class EventsComponent implements OnInit {
         country: model.country
       }
     };
-  }
-
-  public submitEvent(model: Game): void {
-    const game: Game = this.convertModelToGame(model);
-
-    if (_.isNil(model.id) || !model.id) {
-      this.submitNewEvent(game);
-    } else {
-      this.submitUpdateEvent(game);
-      this.setEventsMode();
-    }
-  }
-
-  public submitNewEvent(model: Game): void {
-    this.isLoading = true;
-    this.eventsService.createGame(this.organization_id, model).subscribe(
-      (game: Game) => {
-        console.log('it worked');
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log(
-            'A client-side or network error occurred for the Profile'
-          );
-        } else {
-          console.log(
-            'The backend returned an unsuccessful response code for the profile'
-          );
-        }
-      },
-      () => {
-        this.getEvents();
-      }
-    );
-  }
-
-  public submitUpdateEvent(model: any): void {}
-
-  public onCancel(): void {
-    this.isEditing = false;
   }
 }

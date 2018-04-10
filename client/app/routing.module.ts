@@ -119,13 +119,13 @@ const routes: Routes = [
     canDeactivate: [CanDeactivateGuardService],
     children: [
       {
-        path: 'admin/manageusers',
+        path: 'manageusers',
         component: ManageUsersComponent,
         canActivate: [AuthGuardAdmin],
         resolve: { users: UserResolver }
       },
       {
-        path: 'admin/manageevents',
+        path: 'manageevents',
         component: ManageEventsComponent,
         canActivate: [AuthGuardAdmin]
       }
@@ -143,7 +143,12 @@ const routes: Routes = [
       { enableTracing: true } // For debugging purposes only
     )
   ],
-  providers: [EventsResolver, OrganizationsResolver, SportsResolver],
+  providers: [
+    EventsResolver,
+    OrganizationsResolver,
+    SportsResolver,
+    UserResolver
+  ],
   exports: [RouterModule]
 })
 export class RoutingModule {}

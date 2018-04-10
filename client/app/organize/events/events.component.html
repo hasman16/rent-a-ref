@@ -28,35 +28,35 @@
     <div class="card" *ngIf="!isEditing && games?.length > 0">
       <div class="form-size">
         <table class="table table-bordered table-hover">
-          <tr>
-            <th *ngFor="let title of titles" scope="col">
-              {{title}}
-            </th>
-          </tr>
-
-          <tr *ngFor="let game of games" (click)="editEvents(game.id);" class="org-table-item ">
-            <td>
-              {{game.id}}
-            </td>
-            <td>
-              {{game.event_name}}
-            </td>
-            <td>
-              {{game.event_date}}
-            </td>
-            <td>
-              {{game.venue_name}}
-            </td>
-            <td>
-              {{game.status}}
-            </td>
-            <td>
-              <button class="btn btn-primary btn-sm" (click)="editEvent(game.id)" title="Click to edit this event">Edit</button>
-            </td>
-            <td>
-              <button class="btn btn-danger btn-sm" (click)="goDeleteEvent(game.id)" title="Click to delete event">Delete</button>
-            </td>
-          </tr>
+          <thead class="thead-light">
+            <tr>
+              <th *ngFor="let title of titles" scope="col">
+                {{title}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let game of games" (click)="editEvents(game);" class="org-table-item ">
+              <td>
+                {{game.event_name}}
+              </td>
+              <td>
+                {{formatDate(game.event_date)}}
+              </td>
+              <td>
+                {{game.venue_name}}
+              </td>
+              <td>
+                {{game.status}}
+              </td>
+              <td>
+                <button class="btn btn-primary btn-sm" (click)="editEvents(game)" title="Click to edit this event">Edit</button>
+              </td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="goDeleteEvent(game)" title="Click to delete event">Delete</button>
+              </td>
+            </tr>
+          </tbody>
         </table>
         <hr />
         <button class="btn btn-primary btn-sm new-org-button" (click)="goNewEvent({})" title="Click to create new event">New Event</button>
