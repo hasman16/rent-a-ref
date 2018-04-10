@@ -1,27 +1,10 @@
 <div class="row admin">
   <div class="col-4">
-    <app-leftmenu></app-leftmenu>
+    <rar-admin-menu></rar-admin-menu>
   </div>
   <div class="col-8">
-    <div class="main-wrapper">
-      <app-loading [condition]="isLoading"></app-loading>
-
-      <app-toast [message]="toast.message"></app-toast>
-      <div class="card col-sm-12">
-        <div class="card" *ngIf="!isLoading">
-          <h4 class="card-header">Administrators Console</h4>
-          <div class="card-block">
-            <button type="button" class="btn btn-primary btn-sm" disabled><strong>User ID: #{{user.id}}  :  {{person.firstname}} {{person.lastname}}</strong></button>
-            <div class="list-group">
-              <span class="list-group-item active">
-                <button type="button" class="btn btn-success btn-sm" (click)="onOfficials()" ><strong>Officials</strong></button>
-                <button type="button" class="btn btn-warning btn-sm" (click)="onAssigning()"><strong>Games</strong></button>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   </div>
+  <app-loading [condition]="isLoading"></app-loading>
+  <app-toast [message]="toast.message"></app-toast>
 </div>

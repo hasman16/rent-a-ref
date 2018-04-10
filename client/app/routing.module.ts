@@ -27,7 +27,7 @@ import { PartnersComponent } from './group/partners/partners.component';
 import { PasswordresetComponent } from './account/profile/passwordreset/passwordreset.component';
 import { PricingComponent } from './home/pricing/pricing.component';
 import { ProfileComponent } from './account/profile/profile.component';
-import { RefereeComponent } from './referee/referee.component';
+import { ManageUsersComponent } from './admin/manageusers/manage-users.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
 import { StandbyComponent } from './account/profile/standby/standby.component';
@@ -37,16 +37,17 @@ import { ResetComponent } from './account/profile/reset/reset.component';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { OrganizeComponent } from './organize/organize.component';
-import { GamesComponent } from './games/games.component';
+import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
 
 import { EventsResolver } from './providers/resolvers/index';
 import { OrganizationsResolver } from './providers/resolvers/index';
 import { SportsResolver } from './providers/resolvers/index';
+import { UserResolver } from './providers/resolvers/index';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'how-it-works', component: HowItWorksComponent },
-  { path: 'referee', component: RefereeComponent },
+  { path: 'admin/manageusers', component: ManageUsersComponent },
   { path: 'career', component: CareersComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'blog', component: BlogComponent },
@@ -115,10 +116,22 @@ const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [AuthGuardAdmin],
-    canDeactivate: [CanDeactivateGuardService]
+    canDeactivate: [CanDeactivateGuardService],
+    children: [
+      {
+        path: 'admin/manageusers',
+        component: ManageUsersComponent,
+        canActivate: [AuthGuardAdmin],
+        resolve: { users: UserResolver }
+      },
+      {
+        path: 'admin/manageevents',
+        component: ManageEventsComponent,
+        canActivate: [AuthGuardAdmin]
+      }
+    ]
   },
-  { path: 'officials', component: RefereeComponent },
-  { path: 'games', component: GamesComponent },
+
   { path: 'notfound', component: NotFoundComponent },
   { path: '**', redirectTo: '/notfound' }
 ];

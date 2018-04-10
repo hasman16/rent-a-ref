@@ -372,7 +372,34 @@ export class EventsComponent implements OnInit {
     );
   }
 
-  public packmodel(model): Game {
+  public convertGameToModel(model: Game): any {
+    const address: Address = model.address;
+    return {
+      id: model.id,
+      adults_referees: model.adults_referees,
+      teens_referees: model.teens_referees,
+      kids_referees: model.kids_referees,
+
+      kids_ref_pay: model.kids_ref_pay,
+      teens_ref_pay: model.teens_ref_pay,
+      adults_ref_pay: model.adults_ref_pay,
+
+      event_name: model.event_name,
+      venue_name: model.venue_name,
+      status: model.status,
+      sport_id: model.sport_id,
+      event_date: model.event_date,
+
+      line1: address.line1,
+      line2: address.line2,
+      city: address.city,
+      state: address.state,
+      zip: address.zip,
+      country: address.country
+    };
+  }
+
+  public convertModelToGame(model): Game {
     const dateString: string = String(model.event_date);
     const eventDate: number = Number(new Date(dateString).getDate());
     return <Game>{
@@ -385,7 +412,6 @@ export class EventsComponent implements OnInit {
       adults_ref_pay: model.adults_ref_pay,
 
       event_name: model.event_name,
-      event_type: model.event_type,
       venue_name: model.venue_name,
       status: model.status,
       sport_id: model.sport_id,
@@ -402,8 +428,7 @@ export class EventsComponent implements OnInit {
   }
 
   public submitEvent(model: Game): void {
-    const game: Game = this.packmodel(model);
-    console.log('Model:', model);
+    const game: Game = this.convertModelToGame(model);
 
     if (_.isNil(model.id) || !model.id) {
       this.submitNewEvent(game);

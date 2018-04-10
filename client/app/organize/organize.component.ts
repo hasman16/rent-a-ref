@@ -134,20 +134,7 @@ export class OrganizeComponent implements OnInit {
       (profile: Profile) => {
         this.organizations = profile.organizations;
       },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log(
-            'A client-side or network error occurred for the Profile',
-            this.auth.loggedIn
-          );
-        } else {
-          console.log(
-            'The backend returned an unsuccessful response code for the profile',
-            this.auth.loggedIn
-          );
-        }
-      },
+      (err: HttpErrorResponse) => this.callFailure(err),
       () => {
         this.setOrganizeMode();
         this.isLoading = false;
@@ -185,20 +172,7 @@ export class OrganizeComponent implements OnInit {
         ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
           console.log('it worked');
         },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            // A client-side or network error occurred. Handle it accordingly.
-            console.log(
-              'A client-side or network error occurred for the Profile',
-              this.auth.loggedIn
-            );
-          } else {
-            console.log(
-              'The backend returned an unsuccessful response code for the profile',
-              this.auth.loggedIn
-            );
-          }
-        },
+        (err: HttpErrorResponse) => this.callFailure(err),
         () => {
           this.getOrganizations();
         }
@@ -307,23 +281,18 @@ export class OrganizeComponent implements OnInit {
         ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
           console.log('submitUpdateOrganization worked');
         },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            // A client-side or network error occurred. Handle it accordingly.
-            console.log(
-              'A client-side or network error occurred for the Profile',
-              this.auth.loggedIn
-            );
-          } else {
-            console.log(
-              'The backend returned an unsuccessful response code for the profile',
-              this.auth.loggedIn
-            );
-          }
-        },
+        (err: HttpErrorResponse) => this.callFailure(err),
         () => {
           this.getOrganizations();
         }
       );
+  }
+
+  callFailure(err: HttpErrorResponse, message = 'An error occurred') {
+    if (err.error instanceof Error) {
+      this.toast.setMessage(message, 'danger');
+    } else {
+      this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
+    }
   }
 }

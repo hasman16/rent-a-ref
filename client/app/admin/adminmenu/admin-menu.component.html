@@ -1,0 +1,32 @@
+<nav class="hidden-xs-down bg-inverse sidebar">
+  <div id="sidebarDefault">
+    <ul class="nav nav-pills flex-column">
+      <li class="nav-item">
+        <a [routerLink]="['./manageevents']" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          Events
+        </a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="['./manageusers']" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          Officials
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" appSidebarToggler [routerLink]="['./dashboard']">
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/api/reports']">
+           Reports
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Analytics</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['./fileupload']">File Upload</a>
+      </li>
+    </ul>
+  </div>
+</nav>

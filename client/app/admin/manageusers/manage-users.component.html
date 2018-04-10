@@ -1,0 +1,43 @@
+<div class="col-9 card">
+  <app-loading [condition]="isLoading"></app-loading>
+
+  <app-toast [message]="toast.message"></app-toast>
+  
+  <div *ngIf="!isLoading">
+    <!--<div class="card">-->
+    <h4 class="card-header">Registered users ({{users.length}})</h4>
+
+    <div class="card horizontal-and-vertical-centering " *ngIf="(!users || users.length === 0)">
+      <div class="form-size">
+        <p>There are no registered users.</p>
+      </div>
+    </div>
+
+    <div class="card-block" *ngIf="users && users.length > 0">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-default">
+          <tr>
+            <th>Email</th>
+            <th>Organizer</th>
+            <th>Referee</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.email}}</td>
+            <td>{{user.can_organize}}</td>
+            <td>{{user.can_referee}}</td>
+            <td>{{user.status}}</td>
+            <td>
+              <button class="btn btn-sm btn-danger" (click)="deleteUser(user)" [disabled]="auth.currentUser.id === user.id">
+              <i class="fa fa-trash"></i>
+            </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

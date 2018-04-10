@@ -67,29 +67,18 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
         }
       },
       (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log(
-            'A client-side or network error occurred for the Profile',
-            this.auth.loggedIn
-          );
-        } else {
-          console.log(
-            'The backend returned an unsuccessful response code for the profile',
-            this.auth.loggedIn
-          );
-        }
+        this.callFailure(err);
         this.isLoading = false;
       }
     );
   }
 
   onOfficials() {
-    this.router.navigate(['/officials']);
+    this.router.navigate(['admin/officials']);
   }
 
   onAssigning() {
-    this.router.navigate(['/games']);
+    this.router.navigate(['admin/games']);
   }
 
   getUsers() {
@@ -116,16 +105,12 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
     this.users = res;
     this.isLoading = false;
     console.log('this.users: ', this.users);
-    // this.onCancel();
   }
 
   callFailure(err: HttpErrorResponse, message = 'An error occurred') {
     if (err.error instanceof Error) {
-      // A client-side or network error occurred. Handle it accordingly.
       this.toast.setMessage(message, 'danger');
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
       this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
     }
   }
