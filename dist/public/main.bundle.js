@@ -1250,7 +1250,7 @@ var ScheduleComponent = /** @class */ (function () {
 /***/ "./client/app/admin/admin.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row admin\">\n  <div class=\"col-4\">\n    <app-leftmenu></app-leftmenu>\n  </div>\n  <div class=\"col-8\">\n    <div class=\"main-wrapper\">\n      <app-loading [condition]=\"isLoading\"></app-loading>\n\n      <app-toast [message]=\"toast.message\"></app-toast>\n      <div class=\"card col-sm-12\">\n        <div class=\"card\" *ngIf=\"!isLoading\">\n          <h4 class=\"card-header\">Administrators Console</h4>\n          <div class=\"card-block\">\n            <button type=\"button\" class=\"btn btn-primary btn-sm\" disabled><strong>User ID: #{{user.id}}  :  {{person.firstname}} {{person.lastname}}</strong></button>\n            <div class=\"list-group\">\n              <span class=\"list-group-item active\">\n                <button type=\"button\" class=\"btn btn-success btn-sm\" (click)=\"onOfficials()\" ><strong>Officials</strong></button>\n                <button type=\"button\" class=\"btn btn-warning btn-sm\" (click)=\"onAssigning()\"><strong>Games</strong></button>\n              </span>\n            </div>\n          </div>\n        </div>\n      </div>\n      <router-outlet></router-outlet>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"row admin\">\n  <div class=\"col-4\">\n    <rar-admin-menu></rar-admin-menu>\n  </div>\n  <div class=\"col-8\">\n    <router-outlet></router-outlet>\n  </div>\n  <app-loading [condition]=\"isLoading\"></app-loading>\n  <app-toast [message]=\"toast.message\"></app-toast>\n</div>"
 
 /***/ }),
 
@@ -1322,21 +1322,15 @@ var AdminComponent = /** @class */ (function () {
                 _this.middlenameFlag = true;
             }
         }, function (err) {
-            if (err.error instanceof Error) {
-                // A client-side or network error occurred. Handle it accordingly.
-                console.log('A client-side or network error occurred for the Profile', _this.auth.loggedIn);
-            }
-            else {
-                console.log('The backend returned an unsuccessful response code for the profile', _this.auth.loggedIn);
-            }
+            _this.callFailure(err);
             _this.isLoading = false;
         });
     };
     AdminComponent.prototype.onOfficials = function () {
-        this.router.navigate(['/officials']);
+        this.router.navigate(['admin/officials']);
     };
     AdminComponent.prototype.onAssigning = function () {
-        this.router.navigate(['/games']);
+        this.router.navigate(['admin/games']);
     };
     AdminComponent.prototype.getUsers = function () {
         var _this = this;
@@ -1355,17 +1349,13 @@ var AdminComponent = /** @class */ (function () {
         this.users = res;
         this.isLoading = false;
         console.log('this.users: ', this.users);
-        // this.onCancel();
     };
     AdminComponent.prototype.callFailure = function (err, message) {
         if (message === void 0) { message = 'An error occurred'; }
         if (err.error instanceof Error) {
-            // A client-side or network error occurred. Handle it accordingly.
             this.toast.setMessage(message, 'danger');
         }
         else {
-            // The backend returned an unsuccessful response code.
-            // The response body may contain clues as to what went wrong,
             this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
         }
     };
@@ -1382,6 +1372,238 @@ var AdminComponent = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */]])
     ], AdminComponent);
     return AdminComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./client/app/admin/adminmenu/admin-menu.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<nav class=\"hidden-xs-down bg-inverse sidebar\">\n  <div id=\"sidebarDefault\">\n    <ul class=\"nav nav-pills flex-column\">\n      <li class=\"nav-item\">\n        <a [routerLink]=\"['./manageevents']\" class=\"nav-item nav-link\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact: true}\">\n          Events\n        </a>\n      </li>\n      <li class=\"nav-item\">\n        <a [routerLink]=\"['./manageusers']\" class=\"nav-item nav-link\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact: true}\">\n          Officials\n        </a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" appSidebarToggler [routerLink]=\"['./dashboard']\">\n          Dashboard\n        </a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" [routerLink]=\"['/api/reports']\">\n           Reports\n        </a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" href=\"#\">Analytics</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" [routerLink]=\"['./fileupload']\">File Upload</a>\n      </li>\n    </ul>\n  </div>\n</nav>"
+
+/***/ }),
+
+/***/ "./client/app/admin/adminmenu/admin-menu.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = ".sidebar {\n  /*position: relative;*/\n  top: 0px;\n  bottom: 0;\n  left: 0;\n  z-index: 1000;\n  padding: 0px;\n  overflow-x: hidden;\n  overflow-y: auto;\n  /* Scrollable contents if viewport is shorter than content. */\n  border-right: 1px solid #eee;\n  width: 100%; }\n\n/* Sidebar navigation */\n\n.sidebar {\n  padding-left: 0;\n  padding-right: 0; }\n\n.sidebar .nav {\n  margin-bottom: 20px; }\n\n.sidebar .nav-item {\n  width: 100%; }\n\n.sidebar .nav-item + .nav-item {\n  margin-left: 0; }\n\n.sidebar .nav-link {\n  border-radius: 0;\n  color: whitesmoke; }\n"
+
+/***/ }),
+
+/***/ "./client/app/admin/adminmenu/admin-menu.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminMenuComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var AdminMenuComponent = /** @class */ (function () {
+    function AdminMenuComponent() {
+    }
+    AdminMenuComponent.prototype.ngOnInit = function () { };
+    AdminMenuComponent.prototype.toggleMenu = function () {
+        console.log('toggle called!');
+    };
+    AdminMenuComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'rar-admin-menu',
+            template: __webpack_require__("./client/app/admin/adminmenu/admin-menu.component.html"),
+            styles: [__webpack_require__("./client/app/admin/adminmenu/admin-menu.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], AdminMenuComponent);
+    return AdminMenuComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./client/app/admin/manageevents/manage-events.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"card\" *ngIf=\"!isLoading\">\n  <h4>Game Assignment</h4>\n  <app-loading [condition]=\"isLoading\"></app-loading>\n\n  <app-toast [message]=\"toast.message\"></app-toast>\n\n</div>"
+
+/***/ }),
+
+/***/ "./client/app/admin/manageevents/manage-events.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = ".game {\n  background-color: #4F4F6B; }\n"
+
+/***/ }),
+
+/***/ "./client/app/admin/manageevents/manage-events.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ManageEventsComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_toast_toast_component__ = __webpack_require__("./client/app/shared/toast/toast.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_index__ = __webpack_require__("./client/app/services/index.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ManageEventsComponent = /** @class */ (function () {
+    function ManageEventsComponent(auth, toast, router) {
+        this.auth = auth;
+        this.toast = toast;
+        this.router = router;
+        this.isLoading = true;
+        this.allowEdit = false;
+    }
+    ManageEventsComponent.prototype.ngOnInit = function () {
+        this.isLoading = false;
+    };
+    ManageEventsComponent.prototype.canDeactivate = function () {
+        if (!this.allowEdit) {
+            return true;
+        }
+    };
+    ManageEventsComponent.prototype.submit = function (user) {
+        console.log(user);
+    };
+    ManageEventsComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'rar-manage-events',
+            template: __webpack_require__("./client/app/admin/manageevents/manage-events.component.html"),
+            styles: [__webpack_require__("./client/app/admin/manageevents/manage-events.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__services_index__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_2__shared_toast_toast_component__["a" /* ToastComponent */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]])
+    ], ManageEventsComponent);
+    return ManageEventsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./client/app/admin/manageusers/manage-users.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"col-9 card\">\n  <app-loading [condition]=\"isLoading\"></app-loading>\n\n  <app-toast [message]=\"toast.message\"></app-toast>\n  \n  <div *ngIf=\"!isLoading\">\n    <!--<div class=\"card\">-->\n    <h4 class=\"card-header\">Registered users ({{users.length}})</h4>\n\n    <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"(!users || users.length === 0)\">\n      <div class=\"form-size\">\n        <p>There are no registered users.</p>\n      </div>\n    </div>\n\n    <div class=\"card-block\" *ngIf=\"users && users.length > 0\">\n      <table class=\"table table-bordered table-striped\">\n        <thead class=\"thead-default\">\n          <tr>\n            <th>Email</th>\n            <th>Organizer</th>\n            <th>Referee</th>\n            <th>Status</th>\n            <th>Actions</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let user of users\">\n            <td>{{user.email}}</td>\n            <td>{{user.can_organize}}</td>\n            <td>{{user.can_referee}}</td>\n            <td>{{user.status}}</td>\n            <td>\n              <button class=\"btn btn-sm btn-danger\" (click)=\"deleteUser(user)\" [disabled]=\"auth.currentUser.id === user.id\">\n              <i class=\"fa fa-trash\"></i>\n            </button>\n            </td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./client/app/admin/manageusers/manage-users.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = ".elegantshd {\n  color: #131313;\n  background-color: #e7e5e4;\n  letter-spacing: .15em;\n  text-shadow: 1px -1px 0 #767676, -1px 2px 1px #737272, -2px 4px 1px #767474, -3px 6px 1px #787777, -4px 8px 1px #7b7a7a, -5px 10px 1px #7f7d7d, -6px 12px 1px #828181, -7px 14px 1px #868585, -8px 16px 1px #8b8a89, -9px 18px 1px #8f8e8d, -10px 20px 1px #949392, -11px 22px 1px #999897, -12px 24px 1px #9e9c9c, -13px 26px 1px #a3a1a1, -14px 28px 1px #a8a6a6, -15px 30px 1px #adabab, -16px 32px 1px #b2b1b0, -17px 34px 1px #b7b6b5, -18px 36px 1px #bcbbba, -19px 38px 1px #c1bfbf, -20px 40px 1px #c6c4c4, -21px 42px 1px #cbc9c8, -22px 44px 1px #cfcdcd, -23px 46px 1px #d4d2d1, -24px 48px 1px #d8d6d5, -25px 50px 1px #dbdad9, -26px 52px 1px #dfdddc, -27px 54px 1px #e2e0df, -28px 56px 1px #e4e3e2; }\n\n.bigFont {\n  font-family: \"Avant Garde\", Avantgarde, \"Century Gothic\", CenturyGothic, \"AppleGothic\", sans-serif;\n  font-size: 40px;\n  padding: 3%;\n  text-align: center;\n  text-transform: uppercase;\n  text-rendering: optimizeLegibility;\n  font-weight: bolder; }\n"
+
+/***/ }),
+
+/***/ "./client/app/admin/manageusers/manage-users.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ManageUsersComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_toast_toast_component__ = __webpack_require__("./client/app/shared/toast/toast.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_index__ = __webpack_require__("./client/app/services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash__ = __webpack_require__("./node_modules/lodash/lodash.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var ManageUsersComponent = /** @class */ (function () {
+    function ManageUsersComponent(route, toast, userService) {
+        this.route = route;
+        this.toast = toast;
+        this.userService = userService;
+        this.users = [];
+        this.isLoading = true;
+        this.allowEdit = false;
+    }
+    ManageUsersComponent.prototype.ngOnInit = function () {
+        var users = this.route.snapshot.data.users;
+        this.users = __WEBPACK_IMPORTED_MODULE_4_lodash__["isArray"](users) ? __WEBPACK_IMPORTED_MODULE_4_lodash__["cloneDeep"](users) : [];
+        this.isLoading = false;
+        console.log('oh crap:', users);
+    };
+    ManageUsersComponent.prototype.canDeactivate = function () {
+        if (!this.allowEdit) {
+            return true;
+        }
+    };
+    ManageUsersComponent.prototype.getUsers = function () {
+        var _this = this;
+        this.userService
+            .getUsers()
+            .subscribe(function (res) { return _this.callSuccess(res); }, function (err) { return _this.callFailure(err); });
+    };
+    ManageUsersComponent.prototype.updateUser = function () {
+        var _this = this;
+        this.userService
+            .getUsers()
+            .subscribe(function (res) { return _this.callSuccess(res); }, function (err) { return _this.callFailure(err); });
+    };
+    ManageUsersComponent.prototype.deleteUser = function (user) {
+        var _this = this;
+        this.userService
+            .deleteUser(user)
+            .subscribe(function (data) { return _this.toast.setMessage('user deleted successfully.', 'success'); }, function (err) { return _this.callFailure(err); }, function () { return _this.getUsers(); });
+    };
+    ManageUsersComponent.prototype.callSuccess = function (res) {
+        this.toast.setMessage(res.message, 'success');
+        this.users = __WEBPACK_IMPORTED_MODULE_4_lodash__["isArray"](res) ? __WEBPACK_IMPORTED_MODULE_4_lodash__["cloneDeep"](res) : [];
+        this.isLoading = false;
+    };
+    ManageUsersComponent.prototype.callFailure = function (err, message) {
+        if (message === void 0) { message = 'An error occurred'; }
+        if (err.error instanceof Error) {
+            this.toast.setMessage(message, 'danger');
+        }
+        else {
+            this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
+        }
+    };
+    ManageUsersComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
+            selector: 'rar-manage-users',
+            template: __webpack_require__("./client/app/admin/manageusers/manage-users.component.html"),
+            styles: [__webpack_require__("./client/app/admin/manageusers/manage-users.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_2__shared_toast_toast_component__["a" /* ToastComponent */],
+            __WEBPACK_IMPORTED_MODULE_3__services_index__["f" /* UserService */]])
+    ], ManageUsersComponent);
+    return ManageUsersComponent;
 }());
 
 
@@ -1555,7 +1777,7 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__shared_forms_phone_form_phone_form_component__ = __webpack_require__("./client/app/shared/forms/phone-form/phone-form.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__home_pricing_pricing_component__ = __webpack_require__("./client/app/home/pricing/pricing.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_61__account_profile_profile_component__ = __webpack_require__("./client/app/account/profile/profile.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__referee_referee_component__ = __webpack_require__("./client/app/referee/referee.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__admin_manageusers_manage_users_component__ = __webpack_require__("./client/app/admin/manageusers/manage-users.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_63__register_register_component__ = __webpack_require__("./client/app/register/register.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_64__account_profile_reset_reset_component__ = __webpack_require__("./client/app/account/profile/reset/reset.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_65__resetpassword_resetpassword_component__ = __webpack_require__("./client/app/resetpassword/resetpassword.component.ts");
@@ -1564,11 +1786,11 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_68__organize_stripe_stripe_component__ = __webpack_require__("./client/app/organize/stripe/stripe.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_69__group_terms_and_conditions_terms_and_conditions_component__ = __webpack_require__("./client/app/group/terms-and-conditions/terms-and-conditions.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_70__shared_forms_zone_form_zone_form_component__ = __webpack_require__("./client/app/shared/forms/zone-form/zone-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_71__games_games_component__ = __webpack_require__("./client/app/games/games.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_71__admin_manageevents_manage_events_component__ = __webpack_require__("./client/app/admin/manageevents/manage-events.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_72__shared_dropdown_directive__ = __webpack_require__("./client/app/shared/dropdown.directive.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_73__services_can_deactivate_guard_service__ = __webpack_require__("./client/app/services/can-deactivate-guard.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_74_mydatepicker__ = __webpack_require__("./node_modules/mydatepicker/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_75__leftmenu_leftmenu_component__ = __webpack_require__("./client/app/leftmenu/leftmenu.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_75__admin_adminmenu_admin_menu_component__ = __webpack_require__("./client/app/admin/adminmenu/admin-menu.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_76__barchart_barchart_component__ = __webpack_require__("./client/app/barchart/barchart.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1701,8 +1923,8 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_59__shared_forms_phone_form_phone_form_component__["a" /* PhoneFormComponent */],
                 __WEBPACK_IMPORTED_MODULE_60__home_pricing_pricing_component__["a" /* PricingComponent */],
                 __WEBPACK_IMPORTED_MODULE_61__account_profile_profile_component__["a" /* ProfileComponent */],
-                __WEBPACK_IMPORTED_MODULE_62__referee_referee_component__["a" /* RefereeComponent */],
-                __WEBPACK_IMPORTED_MODULE_71__games_games_component__["a" /* GamesComponent */],
+                __WEBPACK_IMPORTED_MODULE_62__admin_manageusers_manage_users_component__["a" /* ManageUsersComponent */],
+                __WEBPACK_IMPORTED_MODULE_71__admin_manageevents_manage_events_component__["a" /* ManageEventsComponent */],
                 __WEBPACK_IMPORTED_MODULE_63__register_register_component__["a" /* RegisterComponent */],
                 __WEBPACK_IMPORTED_MODULE_13__shared_formly_repeat_section_repeat_section_type__["a" /* RepeatTypeComponent */],
                 __WEBPACK_IMPORTED_MODULE_64__account_profile_reset_reset_component__["a" /* ResetComponent */],
@@ -1712,7 +1934,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_68__organize_stripe_stripe_component__["a" /* StripeComponent */],
                 __WEBPACK_IMPORTED_MODULE_69__group_terms_and_conditions_terms_and_conditions_component__["a" /* TermsAndConditionsComponent */],
                 __WEBPACK_IMPORTED_MODULE_70__shared_forms_zone_form_zone_form_component__["a" /* ZoneFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_75__leftmenu_leftmenu_component__["a" /* LeftmenuComponent */],
+                __WEBPACK_IMPORTED_MODULE_75__admin_adminmenu_admin_menu_component__["a" /* AdminMenuComponent */],
                 __WEBPACK_IMPORTED_MODULE_76__barchart_barchart_component__["a" /* BarchartComponent */]
             ],
             imports: [
@@ -2160,98 +2382,6 @@ var FooterComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], FooterComponent);
     return FooterComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./client/app/games/games.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"row game\">\n  <div class=\"col-4\">\n    <app-leftmenu></app-leftmenu>\n  </div>\n  <div class=\"col-8\">\n    <app-loading [condition]=\"isLoading\"></app-loading>\n\n    <app-toast [message]=\"toast.message\"></app-toast>\n    <div class=\"card\" *ngIf=\"!isLoading\">\n      <h4>Game Assignment</h4>\n\n      <form [formGroup]=\"form\" (ngSubmit)=\"submit(userModel)\">\n        <formly-form [model]=\"userModel\" [fields]=\"userFields\">\n          <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n        </formly-form>\n      </form>\n    </div>\n  </div>\n</div>\n"
-
-/***/ }),
-
-/***/ "./client/app/games/games.component.scss":
-/***/ (function(module, exports) {
-
-module.exports = ".game {\n  background-color: #4F4F6B; }\n"
-
-/***/ }),
-
-/***/ "./client/app/games/games.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GamesComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_toast_toast_component__ = __webpack_require__("./client/app/shared/toast/toast.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_index__ = __webpack_require__("./client/app/services/index.ts");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-var GamesComponent = /** @class */ (function () {
-    function GamesComponent(auth, toast, profileService, router, userService) {
-        this.auth = auth;
-        this.toast = toast;
-        this.profileService = profileService;
-        this.router = router;
-        this.userService = userService;
-        this.isLoading = true;
-        this.allowEdit = false;
-        this.form = new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormGroup"]({});
-        this.userModel = { email: 'email@gmail.com' };
-        this.userFields = [
-            {
-                key: 'email',
-                type: 'input',
-                templateOptions: {
-                    type: 'email',
-                    label: 'Email address',
-                    placeholder: 'Enter email',
-                    required: true
-                }
-            }
-        ];
-    }
-    GamesComponent.prototype.ngOnInit = function () {
-        this.isLoading = false;
-    };
-    GamesComponent.prototype.canDeactivate = function () {
-        if (!this.allowEdit) {
-            return true;
-        }
-    };
-    GamesComponent.prototype.submit = function (user) {
-        console.log(user);
-    };
-    GamesComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'app-games',
-            template: __webpack_require__("./client/app/games/games.component.html"),
-            styles: [__webpack_require__("./client/app/games/games.component.scss")]
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__services_index__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_3__shared_toast_toast_component__["a" /* ToastComponent */],
-            __WEBPACK_IMPORTED_MODULE_4__services_index__["d" /* ProfileService */],
-            __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */],
-            __WEBPACK_IMPORTED_MODULE_4__services_index__["f" /* UserService */]])
-    ], GamesComponent);
-    return GamesComponent;
 }());
 
 
@@ -2894,58 +3024,6 @@ var PricingComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./client/app/leftmenu/leftmenu.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<nav class=\"hidden-xs-down bg-inverse sidebar\">\n  <div id=\"sidebarDefault\">\n    <ul class=\"nav nav-pills flex-column\">\n      <li class=\"nav-item\">\n        <a [routerLink]=\"['/games']\" class=\"nav-item nav-link\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact: true}\">\n          <i class=\"fa fa-trophy\"></i> Games\n        </a>\n      </li>\n      <li class=\"nav-item\">\n        <a [routerLink]=\"['/referee']\" class=\"nav-item nav-link\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact: true}\">\n          <i class=\"fa fa-users\"></i> Officials\n        </a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" appSidebarToggler [routerLink]=\"['/dashboard']\"><i class=\"fa fa-dashboard\"></i>\n           <span>Dashboard</span>\n        </a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" [routerLink]=\"['/api/reports']\"><i class=\"fa fa-film\"></i>\n           <span class=\"hidden-sm-down\">Reports</span>\n        </a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" href=\"#\"><i class=\"fa fa-book\"></i>Analytics</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" [routerLink]=\"['/fileupload']\">\n          <i class=\"fa fa-list\"></i>File Upload</a>\n      </li>\n    </ul>\n  </div>\n</nav>"
-
-/***/ }),
-
-/***/ "./client/app/leftmenu/leftmenu.component.scss":
-/***/ (function(module, exports) {
-
-module.exports = ".sidebar {\n  /*position: relative;*/\n  top: 0px;\n  bottom: 0;\n  left: 0;\n  z-index: 1000;\n  padding: 0px;\n  overflow-x: hidden;\n  overflow-y: auto;\n  /* Scrollable contents if viewport is shorter than content. */\n  border-right: 1px solid #eee;\n  width: 100%; }\n\n/* Sidebar navigation */\n\n.sidebar {\n  padding-left: 0;\n  padding-right: 0; }\n\n.sidebar .nav {\n  margin-bottom: 20px; }\n\n.sidebar .nav-item {\n  width: 100%; }\n\n.sidebar .nav-item + .nav-item {\n  margin-left: 0; }\n\n.sidebar .nav-link {\n  border-radius: 0;\n  color: whitesmoke; }\n"
-
-/***/ }),
-
-/***/ "./client/app/leftmenu/leftmenu.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LeftmenuComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var LeftmenuComponent = /** @class */ (function () {
-    function LeftmenuComponent() {
-    }
-    LeftmenuComponent.prototype.ngOnInit = function () { };
-    LeftmenuComponent.prototype.toggleMenu = function () {
-        console.log('toggle called!');
-    };
-    LeftmenuComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'app-leftmenu',
-            template: __webpack_require__("./client/app/leftmenu/leftmenu.component.html"),
-            styles: [__webpack_require__("./client/app/leftmenu/leftmenu.component.scss")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], LeftmenuComponent);
-    return LeftmenuComponent;
-}());
-
-
-
-/***/ }),
-
 /***/ "./client/app/login/login.component.html":
 /***/ (function(module, exports) {
 
@@ -3577,7 +3655,30 @@ var EventsComponent = /** @class */ (function () {
             }
         });
     };
-    EventsComponent.prototype.packmodel = function (model) {
+    EventsComponent.prototype.convertGameToModel = function (model) {
+        var address = model.address;
+        return {
+            id: model.id,
+            adults_referees: model.adults_referees,
+            teens_referees: model.teens_referees,
+            kids_referees: model.kids_referees,
+            kids_ref_pay: model.kids_ref_pay,
+            teens_ref_pay: model.teens_ref_pay,
+            adults_ref_pay: model.adults_ref_pay,
+            event_name: model.event_name,
+            venue_name: model.venue_name,
+            status: model.status,
+            sport_id: model.sport_id,
+            event_date: model.event_date,
+            line1: address.line1,
+            line2: address.line2,
+            city: address.city,
+            state: address.state,
+            zip: address.zip,
+            country: address.country
+        };
+    };
+    EventsComponent.prototype.convertModelToGame = function (model) {
         var dateString = String(model.event_date);
         var eventDate = Number(new Date(dateString).getDate());
         return {
@@ -3588,7 +3689,6 @@ var EventsComponent = /** @class */ (function () {
             teens_ref_pay: model.teens_ref_pay,
             adults_ref_pay: model.adults_ref_pay,
             event_name: model.event_name,
-            event_type: model.event_type,
             venue_name: model.venue_name,
             status: model.status,
             sport_id: model.sport_id,
@@ -3604,8 +3704,7 @@ var EventsComponent = /** @class */ (function () {
         };
     };
     EventsComponent.prototype.submitEvent = function (model) {
-        var game = this.packmodel(model);
-        console.log('Model:', model);
+        var game = this.convertModelToGame(model);
         if (__WEBPACK_IMPORTED_MODULE_5_lodash__["isNil"](model.id) || !model.id) {
             this.submitNewEvent(game);
         }
@@ -3798,15 +3897,7 @@ var OrganizeComponent = /** @class */ (function () {
         user_id = user_id || this.auth.currentUser.id;
         this.organizeService.getUserOrganization(user_id).subscribe(function (profile) {
             _this.organizations = profile.organizations;
-        }, function (err) {
-            if (err.error instanceof Error) {
-                // A client-side or network error occurred. Handle it accordingly.
-                console.log('A client-side or network error occurred for the Profile', _this.auth.loggedIn);
-            }
-            else {
-                console.log('The backend returned an unsuccessful response code for the profile', _this.auth.loggedIn);
-            }
-        }, function () {
+        }, function (err) { return _this.callFailure(err); }, function () {
             _this.setOrganizeMode();
             _this.isLoading = false;
             if (_this.organizations.length === 0) {
@@ -3839,15 +3930,7 @@ var OrganizeComponent = /** @class */ (function () {
             .subscribe(function (_a) {
             var addresses = _a[0], phones = _a[1];
             console.log('it worked');
-        }, function (err) {
-            if (err.error instanceof Error) {
-                // A client-side or network error occurred. Handle it accordingly.
-                console.log('A client-side or network error occurred for the Profile', _this.auth.loggedIn);
-            }
-            else {
-                console.log('The backend returned an unsuccessful response code for the profile', _this.auth.loggedIn);
-            }
-        }, function () {
+        }, function (err) { return _this.callFailure(err); }, function () {
             _this.getOrganizations();
         });
     };
@@ -3912,17 +3995,18 @@ var OrganizeComponent = /** @class */ (function () {
             .subscribe(function (_a) {
             var addresses = _a[0], phones = _a[1];
             console.log('submitUpdateOrganization worked');
-        }, function (err) {
-            if (err.error instanceof Error) {
-                // A client-side or network error occurred. Handle it accordingly.
-                console.log('A client-side or network error occurred for the Profile', _this.auth.loggedIn);
-            }
-            else {
-                console.log('The backend returned an unsuccessful response code for the profile', _this.auth.loggedIn);
-            }
-        }, function () {
+        }, function (err) { return _this.callFailure(err); }, function () {
             _this.getOrganizations();
         });
+    };
+    OrganizeComponent.prototype.callFailure = function (err, message) {
+        if (message === void 0) { message = 'An error occurred'; }
+        if (err.error instanceof Error) {
+            this.toast.setMessage(message, 'danger');
+        }
+        else {
+            this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
+        }
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
@@ -4203,6 +4287,9 @@ var EventsResolver = /** @class */ (function () {
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__organizations_resolver__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sports_resolver__ = __webpack_require__("./client/app/providers/resolvers/sports.resolver.ts");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__sports_resolver__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__user_resolver__ = __webpack_require__("./client/app/providers/resolvers/user.resolver.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__user_resolver__["a"]; });
+
 
 
 
@@ -4300,28 +4387,13 @@ var SportsResolver = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./client/app/referee/referee.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div style=\"background-color: #4F4F6B\">\n  <div class=\"row\">\n    <div class=\"col-sm-3\">\n      <app-leftmenu></app-leftmenu>\n    </div>\n    <div class=\"col-sm-9\">\n      <div class=\"main-wrapper\">\n        <app-loading [condition]=\"isLoading\"></app-loading>\n\n        <app-toast [message]=\"toast.message\"></app-toast>\n        <div class=\"card col-sm-12\">\n          <div class=\"card\" *ngIf=\"!isLoading\">\n            <!--<div class=\"card\">-->\n            <h4 class=\"card-header\">Registered users ({{users.length}})</h4>\n            <div class=\"card-block\">\n              <table class=\"table table-bordered table-striped\">\n                <thead class=\"thead-default\">\n                  <tr>\n                    <th>Username</th>\n                    <th>Email</th>\n                    <th>Role</th>\n                    <th>Actions</th>\n                  </tr>\n                </thead>\n                <tbody *ngIf=\"users.length === 0\">\n                  <tr>\n                    <td colspan=\"4\">There are no registered users.</td>\n                  </tr>\n                </tbody>\n                <tbody>\n                  <tr *ngFor=\"let user of users\">\n                    <td>{{user.username}}</td>\n                    <td>{{user.email}}</td>\n                    <td>{{user.role}}</td>\n                    <td>\n                      <button class=\"btn btn-sm btn-danger\" (click)=\"deleteUser(user)\" [disabled]=\"auth.currentUser.id === user._id\">\n                      <i class=\"fa fa-trash\"></i>\n                    </button>\n                    </td>\n                  </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
-
-/***/ }),
-
-/***/ "./client/app/referee/referee.component.scss":
-/***/ (function(module, exports) {
-
-module.exports = ".elegantshd {\n  color: #131313;\n  background-color: #e7e5e4;\n  letter-spacing: .15em;\n  text-shadow: 1px -1px 0 #767676, -1px 2px 1px #737272, -2px 4px 1px #767474, -3px 6px 1px #787777, -4px 8px 1px #7b7a7a, -5px 10px 1px #7f7d7d, -6px 12px 1px #828181, -7px 14px 1px #868585, -8px 16px 1px #8b8a89, -9px 18px 1px #8f8e8d, -10px 20px 1px #949392, -11px 22px 1px #999897, -12px 24px 1px #9e9c9c, -13px 26px 1px #a3a1a1, -14px 28px 1px #a8a6a6, -15px 30px 1px #adabab, -16px 32px 1px #b2b1b0, -17px 34px 1px #b7b6b5, -18px 36px 1px #bcbbba, -19px 38px 1px #c1bfbf, -20px 40px 1px #c6c4c4, -21px 42px 1px #cbc9c8, -22px 44px 1px #cfcdcd, -23px 46px 1px #d4d2d1, -24px 48px 1px #d8d6d5, -25px 50px 1px #dbdad9, -26px 52px 1px #dfdddc, -27px 54px 1px #e2e0df, -28px 56px 1px #e4e3e2; }\n\n.bigFont {\n  font-family: \"Avant Garde\", Avantgarde, \"Century Gothic\", CenturyGothic, \"AppleGothic\", sans-serif;\n  font-size: 40px;\n  padding: 3%;\n  text-align: center;\n  text-transform: uppercase;\n  text-rendering: optimizeLegibility;\n  font-weight: bolder; }\n"
-
-/***/ }),
-
-/***/ "./client/app/referee/referee.component.ts":
+/***/ "./client/app/providers/resolvers/user.resolver.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RefereeComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserResolver; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_toast_toast_component__ = __webpack_require__("./client/app/shared/toast/toast.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_index__ = __webpack_require__("./client/app/services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_index__ = __webpack_require__("./client/app/services/index.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4333,66 +4405,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
-var RefereeComponent = /** @class */ (function () {
-    function RefereeComponent(auth, toast, userService) {
-        this.auth = auth;
-        this.toast = toast;
+var UserResolver = /** @class */ (function () {
+    function UserResolver(userService) {
         this.userService = userService;
-        this.users = [];
-        this.isLoading = true;
-        this.allowEdit = false;
     }
-    RefereeComponent.prototype.ngOnInit = function () {
-        this.getUsers();
+    UserResolver.prototype.resolve = function () {
+        return this.userService.getUsers();
     };
-    RefereeComponent.prototype.canDeactivate = function () {
-        if (!this.allowEdit) {
-            return true;
-        }
-    };
-    RefereeComponent.prototype.getUsers = function () {
-        var _this = this;
-        this.userService.getUsers().subscribe(function (res) { return _this.callSuccess(res); }, function (err) {
-            _this.callFailure(err);
-        });
-    };
-    RefereeComponent.prototype.deleteUser = function (user) {
-        var _this = this;
-        this.userService
-            .deleteUser(user)
-            .subscribe(function (data) { return _this.toast.setMessage('user deleted successfully.', 'success'); }, function (error) { return console.log(error); }, function () { return _this.getUsers(); });
-    };
-    RefereeComponent.prototype.callSuccess = function (res) {
-        this.toast.setMessage(res.message, 'success');
-        this.users = res;
-        this.isLoading = false;
-        console.log('this.users: ', this.users);
-    };
-    RefereeComponent.prototype.callFailure = function (err, message) {
-        if (message === void 0) { message = 'An error occurred'; }
-        if (err.error instanceof Error) {
-            // A client-side or network error occurred. Handle it accordingly.
-            this.toast.setMessage(message, 'danger');
-        }
-        else {
-            // The backend returned an unsuccessful response code.
-            // The response body may contain clues as to what went wrong,
-            this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
-        }
-        console.log('Error: ' + err.error + ' Status: ' + err.statusText);
-    };
-    RefereeComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'app-referee',
-            template: __webpack_require__("./client/app/referee/referee.component.html"),
-            styles: [__webpack_require__("./client/app/referee/referee.component.scss")]
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_1__shared_toast_toast_component__["a" /* ToastComponent */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */]])
-    ], RefereeComponent);
-    return RefereeComponent;
+    UserResolver = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */]])
+    ], UserResolver);
+    return UserResolver;
 }());
 
 
@@ -4736,7 +4760,7 @@ var ResetPasswordComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__account_profile_passwordreset_passwordreset_component__ = __webpack_require__("./client/app/account/profile/passwordreset/passwordreset.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__home_pricing_pricing_component__ = __webpack_require__("./client/app/home/pricing/pricing.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__account_profile_profile_component__ = __webpack_require__("./client/app/account/profile/profile.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__referee_referee_component__ = __webpack_require__("./client/app/referee/referee.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__admin_manageusers_manage_users_component__ = __webpack_require__("./client/app/admin/manageusers/manage-users.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__register_register_component__ = __webpack_require__("./client/app/register/register.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__resetpassword_resetpassword_component__ = __webpack_require__("./client/app/resetpassword/resetpassword.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__account_profile_standby_standby_component__ = __webpack_require__("./client/app/account/profile/standby/standby.component.ts");
@@ -4746,7 +4770,7 @@ var ResetPasswordComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__services_can_deactivate_guard_service__ = __webpack_require__("./client/app/services/can-deactivate-guard.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__account_schedule_schedule_component__ = __webpack_require__("./client/app/account/schedule/schedule.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__organize_organize_component__ = __webpack_require__("./client/app/organize/organize.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__games_games_component__ = __webpack_require__("./client/app/games/games.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__admin_manageevents_manage_events_component__ = __webpack_require__("./client/app/admin/manageevents/manage-events.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__providers_resolvers_index__ = __webpack_require__("./client/app/providers/resolvers/index.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4793,10 +4817,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var routes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_16__home_home_component__["a" /* HomeComponent */] },
     { path: 'how-it-works', component: __WEBPACK_IMPORTED_MODULE_17__home_how_it_works_how_it_works_component__["a" /* HowItWorksComponent */] },
-    { path: 'referee', component: __WEBPACK_IMPORTED_MODULE_25__referee_referee_component__["a" /* RefereeComponent */] },
+    { path: 'admin/manageusers', component: __WEBPACK_IMPORTED_MODULE_25__admin_manageusers_manage_users_component__["a" /* ManageUsersComponent */] },
     { path: 'career', component: __WEBPACK_IMPORTED_MODULE_10__group_careers_careers_component__["a" /* CareersComponent */] },
     { path: 'faq', component: __WEBPACK_IMPORTED_MODULE_15__group_faq_faq_component__["a" /* FaqComponent */] },
     { path: 'blog', component: __WEBPACK_IMPORTED_MODULE_9__group_blog_blog_component__["a" /* BlogComponent */] },
@@ -4865,10 +4890,21 @@ var routes = [
         path: 'admin',
         component: __WEBPACK_IMPORTED_MODULE_8__admin_admin_component__["a" /* AdminComponent */],
         canActivate: [__WEBPACK_IMPORTED_MODULE_2__services_auth_guard_admin_service__["a" /* AuthGuardAdmin */]],
-        canDeactivate: [__WEBPACK_IMPORTED_MODULE_32__services_can_deactivate_guard_service__["a" /* CanDeactivateGuardService */]]
+        canDeactivate: [__WEBPACK_IMPORTED_MODULE_32__services_can_deactivate_guard_service__["a" /* CanDeactivateGuardService */]],
+        children: [
+            {
+                path: 'admin/manageusers',
+                component: __WEBPACK_IMPORTED_MODULE_25__admin_manageusers_manage_users_component__["a" /* ManageUsersComponent */],
+                canActivate: [__WEBPACK_IMPORTED_MODULE_2__services_auth_guard_admin_service__["a" /* AuthGuardAdmin */]],
+                resolve: { users: __WEBPACK_IMPORTED_MODULE_36__providers_resolvers_index__["d" /* UserResolver */] }
+            },
+            {
+                path: 'admin/manageevents',
+                component: __WEBPACK_IMPORTED_MODULE_35__admin_manageevents_manage_events_component__["a" /* ManageEventsComponent */],
+                canActivate: [__WEBPACK_IMPORTED_MODULE_2__services_auth_guard_admin_service__["a" /* AuthGuardAdmin */]]
+            }
+        ]
     },
-    { path: 'officials', component: __WEBPACK_IMPORTED_MODULE_25__referee_referee_component__["a" /* RefereeComponent */] },
-    { path: 'games', component: __WEBPACK_IMPORTED_MODULE_35__games_games_component__["a" /* GamesComponent */] },
     { path: 'notfound', component: __WEBPACK_IMPORTED_MODULE_20__not_found_not_found_component__["a" /* NotFoundComponent */] },
     { path: '**', redirectTo: '/notfound' }
 ];
@@ -4918,7 +4954,7 @@ var AuthGuardAdmin = /** @class */ (function () {
         this.router = router;
     }
     AuthGuardAdmin.prototype.canActivate = function () {
-        return this.auth.isAdmin;
+        return this.auth.isAdmin && this.auth.loggedIn;
     };
     AuthGuardAdmin = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
