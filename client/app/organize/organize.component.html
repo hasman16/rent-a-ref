@@ -32,9 +32,6 @@
             <tbody>
               <tr *ngFor="let organization of organizations"  class="org-table-item ">
                 <td (click)="editEvents(organization.id);" >
-                  {{organization.id}}
-                </td>
-                <td (click)="editEvents(organization.id);" >
                   {{organization.name}}
                 </td>
                 <td>
