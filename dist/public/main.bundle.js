@@ -1505,7 +1505,7 @@ var ManageEventsComponent = /** @class */ (function () {
 /***/ "./client/app/admin/manageusers/manage-users.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col-9 card\">\n  <app-loading [condition]=\"isLoading\"></app-loading>\n\n  <app-toast [message]=\"toast.message\"></app-toast>\n  \n  <div *ngIf=\"!isLoading\">\n    <!--<div class=\"card\">-->\n    <h4 class=\"card-header\">Registered users ({{users.length}})</h4>\n\n    <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"(!users || users.length === 0)\">\n      <div class=\"form-size\">\n        <p>There are no registered users.</p>\n      </div>\n    </div>\n\n    <div class=\"card-block\" *ngIf=\"users && users.length > 0\">\n      <table class=\"table table-bordered table-striped\">\n        <thead class=\"thead-default\">\n          <tr>\n            <th>Email</th>\n            <th>Organizer</th>\n            <th>Referee</th>\n            <th>Status</th>\n            <th>Actions</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let user of users\">\n            <td>{{user.email}}</td>\n            <td>{{user.can_organize}}</td>\n            <td>{{user.can_referee}}</td>\n            <td>{{user.status}}</td>\n            <td>\n              <button class=\"btn btn-sm btn-danger\" (click)=\"deleteUser(user)\" [disabled]=\"auth.currentUser.id === user.id\">\n              <i class=\"fa fa-trash\"></i>\n            </button>\n            </td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"card\">\n  <app-loading [condition]=\"isLoading\"></app-loading>\n\n  <app-toast [message]=\"toast.message\"></app-toast>\n  \n  <div *ngIf=\"!isLoading\">\n    <!--<div class=\"card\">-->\n    <h4 class=\"card-header\">Registered users ({{users.length}})</h4>\n\n    <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"(!users || users.length === 0)\">\n      <div class=\"form-size\">\n        <p>There are no registered users.</p>\n      </div>\n    </div>\n\n    <div class=\"card-block\" *ngIf=\"users && users.length > 0\">\n      <table class=\"table table-bordered table-striped\">\n        <thead class=\"thead-default\">\n          <tr>\n            <th>Email</th>\n            <th>Organizer</th>\n            <th>Referee</th>\n            <th>Status</th>\n            <th>Actions</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let user of users\">\n            <td>{{user.email}}</td>\n            <td>{{user.can_organize}}</td>\n            <td>{{user.can_referee}}</td>\n            <td>{{user.status}}</td>\n            <td>\n              <button class=\"btn btn-sm btn-danger\" (click)=\"deleteUser(user)\" [disabled]=\"auth.currentUser.id === user.id\">\n              <i class=\"fa fa-trash\"></i>\n            </button>\n            </td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -3300,7 +3300,7 @@ var NotFoundComponent = /** @class */ (function () {
 /***/ "./client/app/organize/events/events.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-12\">\n\n    <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"!isEditing && (!games || games.length === 0)\">\n      <div class=\"form-size\">\n        <strong class=\"etched-text\">You have no <i>Events</i>.</strong>\n        <p>You need to create at least one event. Once the event you can create and assign <i>games</i> to the event.\n          <br />Although creating games is optional, it allows more fine grained control of each event. Note a game can have the same address or a different address from avenue.</p>\n        <button class=\"btn btn-primary btn-sm\" (click)=\"goNewEvent({})\" title=\"Click to create new event\">New Event</button>\n      </div>\n    </div>\n\n    <div class=\"card\" *ngIf=\"isEditing\">\n      <app-toast [message]=\"toast.message\"></app-toast>\n\n      <div class=\"card form-size\">\n        <form [formGroup]=\"form\" (ngSubmit)=\"submitEvent(model)\">\n          <formly-form [model]=\"model\" [fields]=\"fields\" [options]=\"options\" [form]=\"form\">\n          <button type=\"submit\" class=\"btn btn-primary btn-sm\" [disabled]=\"form.invalid\">buttonText</button>\n          <span class=\"spacer\">&nbsp;</span>\n          <button type=\"submit\" class=\"btn btn-danger btn-sm\" title=\"Cancel\" (click)=\"onCancel($event)\">Cancel</button>\n          </formly-form>\n        </form>\n      </div>\n\n    </div>\n\n    <div class=\"card\" *ngIf=\"!isEditing && games?.length > 0\">\n      <div class=\"form-size\">\n        <table class=\"table table-bordered table-hover\">\n          <tr>\n            <th *ngFor=\"let title of titles\" scope=\"col\">\n              {{title}}\n            </th>\n          </tr>\n\n          <tr *ngFor=\"let game of games\" (click)=\"editEvents(game.id);\" class=\"org-table-item \">\n            <td>\n              {{game.id}}\n            </td>\n            <td>\n              {{game.event_name}}\n            </td>\n            <td>\n              {{game.event_date}}\n            </td>\n            <td>\n              {{game.venue_name}}\n            </td>\n            <td>\n              {{game.status}}\n            </td>\n            <td>\n              <button class=\"btn btn-primary btn-sm\" (click)=\"editEvent(game.id)\" title=\"Click to edit this event\">Edit</button>\n            </td>\n            <td>\n              <button class=\"btn btn-danger btn-sm\" (click)=\"goDeleteEvent(game.id)\" title=\"Click to delete event\">Delete</button>\n            </td>\n          </tr>\n        </table>\n        <hr />\n        <button class=\"btn btn-primary btn-sm new-org-button\" (click)=\"goNewEvent({})\" title=\"Click to create new event\">New Event</button>\n      </div>\n    </div>\n\n  </div>\n</div>"
+module.exports = "<div class=\"row\">\n  <div class=\"col-12\">\n\n    <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"!isEditing && (!games || games.length === 0)\">\n      <div class=\"form-size\">\n        <strong class=\"etched-text\">You have no <i>Events</i>.</strong>\n        <p>You need to create at least one event. Once the event you can create and assign <i>games</i> to the event.\n          <br />Although creating games is optional, it allows more fine grained control of each event. Note a game can have the same address or a different address from avenue.</p>\n        <button class=\"btn btn-primary btn-sm\" (click)=\"goNewEvent({})\" title=\"Click to create new event\">New Event</button>\n      </div>\n    </div>\n\n    <div class=\"card\" *ngIf=\"isEditing\">\n      <app-toast [message]=\"toast.message\"></app-toast>\n\n      <div class=\"card form-size\">\n        <form [formGroup]=\"form\" (ngSubmit)=\"submitEvent(model)\">\n          <formly-form [model]=\"model\" [fields]=\"fields\" [options]=\"options\" [form]=\"form\">\n          <button type=\"submit\" class=\"btn btn-primary btn-sm\" [disabled]=\"form.invalid\">buttonText</button>\n          <span class=\"spacer\">&nbsp;</span>\n          <button type=\"submit\" class=\"btn btn-danger btn-sm\" title=\"Cancel\" (click)=\"onCancel($event)\">Cancel</button>\n          </formly-form>\n        </form>\n      </div>\n\n    </div>\n\n    <div class=\"card\" *ngIf=\"!isEditing && games?.length > 0\">\n      <div class=\"form-size\">\n        <table class=\"table table-bordered table-hover\">\n          <thead class=\"thead-light\">\n            <tr>\n              <th *ngFor=\"let title of titles\" scope=\"col\">\n                {{title}}\n              </th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let game of games\" (click)=\"editEvents(game);\" class=\"org-table-item \">\n              <td>\n                {{game.event_name}}\n              </td>\n              <td>\n                {{formatDate(game.event_date)}}\n              </td>\n              <td>\n                {{game.venue_name}}\n              </td>\n              <td>\n                {{game.status}}\n              </td>\n              <td>\n                <button class=\"btn btn-primary btn-sm\" (click)=\"editEvents(game)\" title=\"Click to edit this event\">Edit</button>\n              </td>\n              <td>\n                <button class=\"btn btn-danger btn-sm\" (click)=\"goDeleteEvent(game)\" title=\"Click to delete event\">Delete</button>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n        <hr />\n        <button class=\"btn btn-primary btn-sm new-org-button\" (click)=\"goNewEvent({})\" title=\"Click to create new event\">New Event</button>\n      </div>\n    </div>\n\n  </div>\n</div>"
 
 /***/ }),
 
@@ -3323,8 +3323,10 @@ module.exports = ".etched-text {\n  text-shadow: 0 2px white;\n  font-size: 1.5r
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_index__ = __webpack_require__("./client/app/services/index.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__("./node_modules/lodash/lodash.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_combineLatest__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/combineLatest.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_switchMap__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/switchMap.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_moment__ = __webpack_require__("./node_modules/moment/moment.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_combineLatest__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/combineLatest.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_switchMap__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/switchMap.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3334,6 +3336,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -3355,7 +3358,6 @@ var EventsComponent = /** @class */ (function () {
         this.currentModel = {};
         this.options = {};
         this.titles = [
-            'id',
             'Event Name',
             'Event Date',
             'Venue',
@@ -3622,7 +3624,13 @@ var EventsComponent = /** @class */ (function () {
             }
         ];
     };
-    EventsComponent.prototype.setEventsMode = function () { };
+    EventsComponent.prototype.formatDate = function (dateString) {
+        return __WEBPACK_IMPORTED_MODULE_6_moment__(dateString).format('LL');
+    };
+    EventsComponent.prototype.setEventsMode = function () {
+        this.isEditing = false;
+        this.isLoading = false;
+    };
     EventsComponent.prototype.goNewEvent = function () {
         this.model = {
             adults: false,
@@ -3631,7 +3639,9 @@ var EventsComponent = /** @class */ (function () {
         };
         this.isEditing = true;
     };
-    EventsComponent.prototype.editEvents = function () {
+    EventsComponent.prototype.editEvents = function (game) {
+        this.model = this.convertGameToModel(game);
+        this.isLoading = false;
         this.isEditing = true;
     };
     EventsComponent.prototype.getEvents = function () {
@@ -3640,20 +3650,44 @@ var EventsComponent = /** @class */ (function () {
         this.eventsService.getOrganizationGames(this.organization_id).subscribe(function (games) {
             _this.games = __WEBPACK_IMPORTED_MODULE_5_lodash__["cloneDeep"](games);
         }, function (err) {
-            if (err.error instanceof Error) {
-                // A client-side or network error occurred. Handle it accordingly.
-                console.log('A client-side or network error occurred for the Profile');
-            }
-            else {
-                console.log('The backend returned an unsuccessful response code for the profile');
-            }
+            return _this.callFailure(err, 'Failed to retrieve Events.');
         }, function () {
             _this.setEventsMode();
-            _this.isLoading = false;
-            if (_this.games.length === 0) {
-                _this.setEventsMode();
-            }
         });
+    };
+    EventsComponent.prototype.submitEvent = function (model) {
+        var game = this.convertModelToGame(model);
+        if (__WEBPACK_IMPORTED_MODULE_5_lodash__["isNil"](model.id) || !model.id) {
+            this.submitNewEvent(game);
+        }
+        else {
+            this.submitUpdateEvent(game);
+            this.setEventsMode();
+        }
+    };
+    EventsComponent.prototype.submitNewEvent = function (model) {
+        var _this = this;
+        this.isLoading = true;
+        this.eventsService.createGame(this.organization_id, model).subscribe(function (game) {
+            _this.toast.setMessage('Event created.', 'info');
+        }, function (err) {
+            return _this.callFailure(err, 'Failed to create new event.');
+        }, function () {
+            _this.getEvents();
+        });
+    };
+    EventsComponent.prototype.submitUpdateEvent = function (model) { };
+    EventsComponent.prototype.callFailure = function (err, message) {
+        if (message === void 0) { message = 'An error occurred'; }
+        if (err.error instanceof Error) {
+            this.toast.setMessage(message, 'danger');
+        }
+        else {
+            this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
+        }
+    };
+    EventsComponent.prototype.onCancel = function () {
+        this.setEventsMode();
     };
     EventsComponent.prototype.convertGameToModel = function (model) {
         var address = model.address;
@@ -3680,7 +3714,7 @@ var EventsComponent = /** @class */ (function () {
     };
     EventsComponent.prototype.convertModelToGame = function (model) {
         var dateString = String(model.event_date);
-        var eventDate = Number(new Date(dateString).getDate());
+        var eventDate = Number(new Date(dateString).getTime());
         return {
             adults_referees: model.adults_referees,
             teens_referees: model.teens_referees,
@@ -3702,37 +3736,6 @@ var EventsComponent = /** @class */ (function () {
                 country: model.country
             }
         };
-    };
-    EventsComponent.prototype.submitEvent = function (model) {
-        var game = this.convertModelToGame(model);
-        if (__WEBPACK_IMPORTED_MODULE_5_lodash__["isNil"](model.id) || !model.id) {
-            this.submitNewEvent(game);
-        }
-        else {
-            this.submitUpdateEvent(game);
-            this.setEventsMode();
-        }
-    };
-    EventsComponent.prototype.submitNewEvent = function (model) {
-        var _this = this;
-        this.isLoading = true;
-        this.eventsService.createGame(this.organization_id, model).subscribe(function (game) {
-            console.log('it worked');
-        }, function (err) {
-            if (err.error instanceof Error) {
-                // A client-side or network error occurred. Handle it accordingly.
-                console.log('A client-side or network error occurred for the Profile');
-            }
-            else {
-                console.log('The backend returned an unsuccessful response code for the profile');
-            }
-        }, function () {
-            _this.getEvents();
-        });
-    };
-    EventsComponent.prototype.submitUpdateEvent = function (model) { };
-    EventsComponent.prototype.onCancel = function () {
-        this.isEditing = false;
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
@@ -3761,7 +3764,7 @@ var EventsComponent = /** @class */ (function () {
 /***/ "./client/app/organize/organize.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-12\">\n    <div class=\"card\">\n\n      <app-toast [message]=\"toast.message\"></app-toast>\n      <h1 class=\"etched-text\" [innerHtml]=\"heading\"></h1>\n      <br />\n      <div class=\"card form-size\" *ngIf=\"isEditing\">\n\n        <organization-form (ngSubmit)=\"submitOrganization($event)\" (ngCancel)=\"setOrganizeMode($event)\" [model]=\"currentModel\"></organization-form>\n      </div>\n\n      <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"!isEditing && (!organizations || organizations.length === 0)\">\n        <div class=\"form-size\">\n          <p>You need to create at least one organization. Then you can create and assign <i>events</i> to an organization.\n            <br />An event is the tornament and venue to which you assign games. Note a game can have the same address or a different address from avenue</p>\n          <button class=\"btn btn-primary btn-sm\" (click)=\"goNewOrganization({})\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n      <div class=\"\" *ngIf=\"!isEditing && organizations?.length > 0\">\n        <div class=\"form-size\">\n          <br />\n          <table class=\"table table-bordered table-hover\">\n            <thead class=\"thead-light\">\n              <tr>\n                <th *ngFor=\"let title of titles\" scope=\"col\">\n                  {{title}}\n                </th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let organization of organizations\"  class=\"org-table-item \">\n                <td (click)=\"editEvents(organization.id);\" >\n                  {{organization.id}}\n                </td>\n                <td (click)=\"editEvents(organization.id);\" >\n                  {{organization.name}}\n                </td>\n                <td>\n                  <button class=\"btn btn-primary btn-sm\" (click)=\"editOrganization(organization.id)\" title=\"Click to edit this organization\">Edit</button>\n                </td>\n                <td>\n                  <button class=\"btn btn-danger btn-sm\" (click)=\"goNewOrganization()\" title=\"Click to delete organization\">Delete</button>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n          <br />\n          <button class=\"btn btn-primary btn-sm new-org-button\" (click)=\"goNewOrganization()\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n    </div>\n\n    <div class=\"card\">\n      Card:4242 4242 4242 4242 <br />\n      Date: 01/20<br />\n      CVC: 289<br />\n      Zip: 92888<br />\n      <rar-stripe></rar-stripe>\n    </div>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-12\">\n    <div class=\"card\">\n\n      <app-toast [message]=\"toast.message\"></app-toast>\n      <h1 class=\"etched-text\" [innerHtml]=\"heading\"></h1>\n      <br />\n      <div class=\"card form-size\" *ngIf=\"isEditing\">\n\n        <organization-form (ngSubmit)=\"submitOrganization($event)\" (ngCancel)=\"setOrganizeMode($event)\" [model]=\"currentModel\"></organization-form>\n      </div>\n\n      <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"!isEditing && (!organizations || organizations.length === 0)\">\n        <div class=\"form-size\">\n          <p>You need to create at least one organization. Then you can create and assign <i>events</i> to an organization.\n            <br />An event is the tornament and venue to which you assign games. Note a game can have the same address or a different address from avenue</p>\n          <button class=\"btn btn-primary btn-sm\" (click)=\"goNewOrganization({})\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n      <div class=\"\" *ngIf=\"!isEditing && organizations?.length > 0\">\n        <div class=\"form-size\">\n          <br />\n          <table class=\"table table-bordered table-hover\">\n            <thead class=\"thead-light\">\n              <tr>\n                <th *ngFor=\"let title of titles\" scope=\"col\">\n                  {{title}}\n                </th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let organization of organizations\"  class=\"org-table-item \">\n                <td (click)=\"editEvents(organization.id);\" >\n                  {{organization.name}}\n                </td>\n                <td>\n                  <button class=\"btn btn-primary btn-sm\" (click)=\"editOrganization(organization.id)\" title=\"Click to edit this organization\">Edit</button>\n                </td>\n                <td>\n                  <button class=\"btn btn-danger btn-sm\" (click)=\"goNewOrganization()\" title=\"Click to delete organization\">Delete</button>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n          <br />\n          <button class=\"btn btn-primary btn-sm new-org-button\" (click)=\"goNewOrganization()\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n    </div>\n\n    <div class=\"card\">\n      Card:4242 4242 4242 4242 <br />\n      Date: 01/20<br />\n      CVC: 289<br />\n      Zip: 92888<br />\n      <rar-stripe></rar-stripe>\n    </div>\n\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -3810,7 +3813,7 @@ var OrganizeComponent = /** @class */ (function () {
         this.statesService = statesService;
         this.organizeService = organizeService;
         this.currentModel = {};
-        this.titles = ['Id', 'Organization Name', '', ''];
+        this.titles = ['Organization Name', '', ''];
         this.heading = 'You have no <i>organizations</i>.';
         this.organizations = [];
         this.isLoading = false;
@@ -4893,13 +4896,13 @@ var routes = [
         canDeactivate: [__WEBPACK_IMPORTED_MODULE_32__services_can_deactivate_guard_service__["a" /* CanDeactivateGuardService */]],
         children: [
             {
-                path: 'admin/manageusers',
+                path: 'manageusers',
                 component: __WEBPACK_IMPORTED_MODULE_25__admin_manageusers_manage_users_component__["a" /* ManageUsersComponent */],
                 canActivate: [__WEBPACK_IMPORTED_MODULE_2__services_auth_guard_admin_service__["a" /* AuthGuardAdmin */]],
                 resolve: { users: __WEBPACK_IMPORTED_MODULE_36__providers_resolvers_index__["d" /* UserResolver */] }
             },
             {
-                path: 'admin/manageevents',
+                path: 'manageevents',
                 component: __WEBPACK_IMPORTED_MODULE_35__admin_manageevents_manage_events_component__["a" /* ManageEventsComponent */],
                 canActivate: [__WEBPACK_IMPORTED_MODULE_2__services_auth_guard_admin_service__["a" /* AuthGuardAdmin */]]
             }
@@ -4917,7 +4920,12 @@ var RoutingModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forRoot(routes, { enableTracing: true } // For debugging purposes only
                 )
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_36__providers_resolvers_index__["a" /* EventsResolver */], __WEBPACK_IMPORTED_MODULE_36__providers_resolvers_index__["b" /* OrganizationsResolver */], __WEBPACK_IMPORTED_MODULE_36__providers_resolvers_index__["c" /* SportsResolver */]],
+            providers: [
+                __WEBPACK_IMPORTED_MODULE_36__providers_resolvers_index__["a" /* EventsResolver */],
+                __WEBPACK_IMPORTED_MODULE_36__providers_resolvers_index__["b" /* OrganizationsResolver */],
+                __WEBPACK_IMPORTED_MODULE_36__providers_resolvers_index__["c" /* SportsResolver */],
+                __WEBPACK_IMPORTED_MODULE_36__providers_resolvers_index__["d" /* UserResolver */]
+            ],
             exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
         })
     ], RoutingModule);
@@ -8100,6 +8108,8 @@ var map = {
 	"./mk.js": "./node_modules/moment/locale/mk.js",
 	"./ml": "./node_modules/moment/locale/ml.js",
 	"./ml.js": "./node_modules/moment/locale/ml.js",
+	"./mn": "./node_modules/moment/locale/mn.js",
+	"./mn.js": "./node_modules/moment/locale/mn.js",
 	"./mr": "./node_modules/moment/locale/mr.js",
 	"./mr.js": "./node_modules/moment/locale/mr.js",
 	"./ms": "./node_modules/moment/locale/ms.js",
