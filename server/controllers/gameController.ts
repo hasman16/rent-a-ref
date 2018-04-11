@@ -47,11 +47,10 @@ export default function GameController(models, ResponseService) {
     const Address = models.Address;
     const Phone = models.Phone;
 
-    Game.findAll({
+    Game.find({
       where: {
         id: req.params.game_id
       },
-
       include: [
         {
           model: Address

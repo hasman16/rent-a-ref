@@ -48,7 +48,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
   }
 
   getSubmitText(hasId) {
-    return hasId ? 'Edit Organization' : 'Create Organization';
+    return hasId ? 'Update' : 'Create';
   }
 
   ngOnInit() {

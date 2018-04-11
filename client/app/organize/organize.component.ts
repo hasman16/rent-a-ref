@@ -76,7 +76,7 @@ export class OrganizeComponent implements OnInit {
   }
 
   getSubmitText(hasId) {
-    return hasId ? 'Edit Organization' : 'Create Organization';
+    return hasId ? 'Update Organization' : 'Create Organization';
   }
 
   setHeadingTitle(): void {
