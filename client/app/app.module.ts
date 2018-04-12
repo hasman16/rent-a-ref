@@ -8,6 +8,8 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './material.module';
+
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyMaterialModule } from '@ngx-formly/material';
@@ -148,13 +150,16 @@ import { BarchartComponent } from './barchart/barchart.component';
         BarchartComponent
     ],
     imports: [
+        BrowserModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
         }),
         NgxDatatableModule,
+
         RoutingModule,
         SharedModule,
-        BrowserModule,
+
+        MaterialModule,
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
