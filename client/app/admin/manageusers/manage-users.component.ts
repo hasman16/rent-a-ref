@@ -4,7 +4,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
-import { CanComponentDeactivate, UserService } from '../../services/index';
+import {
+  AuthService,
+  CanComponentDeactivate,
+  UserService
+} from '../../services/index';
 import { User } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
@@ -18,18 +22,18 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
   protected users: User[] = [];
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
+  protected currentUser: User = <User>{};
 
   constructor(
     private route: ActivatedRoute,
     public toast: ToastComponent,
-    private userService: UserService
+    private userService: UserService,
+    private auth: AuthService
   ) {}
 
   ngOnInit() {
-    const users: User[] = this.route.snapshot.data.users;
-    this.users = _.isArray(users) ? _.cloneDeep(users) : [];
-    this.isLoading = false;
-    console.log('oh crap:', users);
+    this.currentUser = this.auth.getCurrentUser();
+    this.getUsers();
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {

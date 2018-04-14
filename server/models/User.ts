@@ -36,7 +36,7 @@ export default function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'no',
       validate: {
-        isIn: [ ['no', 'pending', 'active', 'suspended', 'locked'] ]
+        isIn: [ ['no', 'pending', 'active', 'suspended', 'locked', 'banned'] ]
       }
     }
   }, {

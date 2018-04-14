@@ -85,8 +85,10 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   getProfile() {
+    const currentUser: User = this.auth.getCurrentUser();
+
     this.isLoading = true;
-    this.profileService.getProfile(this.auth.currentUser.id).subscribe(
+    this.profileService.getProfile(currentUser.id).subscribe(
       (profile: Profile) => {
         this.data = profile;
         this.user = {

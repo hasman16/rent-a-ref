@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService, OrganizeService } from './../../services/index';
-import { Organization, Profile } from './../../shared/models/index';
+import { Organization, Profile, User } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
@@ -17,7 +17,9 @@ export class OrganizationsResolver
 	) {}
 
 	resolve(route: ActivatedRouteSnapshot): Observable<Organization[]> {
-		const user_id = this.auth.currentUser.id;
+		const currentUser: User = this.auth.getCurrentUser();
+
+		const user_id = currentUser.id;
 
 		return this.organizeService
 			.getUserOrganization(user_id)

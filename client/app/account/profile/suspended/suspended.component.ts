@@ -3,7 +3,13 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../../services/auth.service';
-import { Address, Person, Phone, Profile, User } from './../../../shared/models/index';
+import {
+  Address,
+  Person,
+  Phone,
+  Profile,
+  User
+} from './../../../shared/models/index';
 
 @Component({
   selector: 'app-suspended',
@@ -11,22 +17,27 @@ import { Address, Person, Phone, Profile, User } from './../../../shared/models/
   styleUrls: ['./suspended.component.scss']
 })
 export class SuspendedComponent implements OnInit {
-  public user:User = <User>{};
-  public person:Person = <Person>{};
+  public user: User = <User>{};
+  public person: Person = <Person>{};
 
-
-  constructor(private auth: AuthService, private router: Router, private userService: UserService) { }
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.getProfile();
   }
-  
+
   onSubmit() {
     this.router.navigate(['passwordreset']);
   }
 
   getProfile() {
-    this.userService.getProfile(this.auth.currentUser.id).subscribe(
+    const currentUser: User = this.auth.getCurrentUser();
+
+    this.userService.getProfile(currentUser.id).subscribe(
       res => {
         this.user = {
           id: String(res.id),
@@ -46,10 +57,13 @@ export class SuspendedComponent implements OnInit {
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
-          console.log('A client-side or network error occurred for the Profile');
+          console.log(
+            'A client-side or network error occurred for the Profile'
+          );
         } else {
-          console.log('The backend returned an unsuccessful response code for the profile');
-
+          console.log(
+            'The backend returned an unsuccessful response code for the profile'
+          );
         }
         // this.isLoading = false;
         if (!this.auth.loggedIn) {

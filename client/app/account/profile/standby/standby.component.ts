@@ -26,7 +26,9 @@ export class StandbyComponent implements OnInit {
   }
 
   getProfile() {
-    this.userService.getProfile(this.auth.currentUser.id).subscribe(
+    const currentUser: User = this.auth.getCurrentUser();
+
+    this.userService.getProfile(currentUser.id).subscribe(
       (res: Profile) => {
         this.user = {
           id: String(res.id),

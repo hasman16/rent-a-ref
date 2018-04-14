@@ -16,7 +16,8 @@ import {
   Option,
   Organization,
   Profile,
-  State
+  State,
+  User
 } from '../shared/models/index';
 
 import * as _ from 'lodash';
@@ -128,7 +129,9 @@ export class OrganizeComponent implements OnInit {
   }
 
   getOrganizations(user_id?: any) {
-    user_id = user_id || this.auth.currentUser.id;
+    const currentUser: User = this.auth.getCurrentUser();
+
+    user_id = user_id || currentUser.id;
 
     this.organizeService.getUserOrganization(user_id).subscribe(
       (profile: Profile) => {

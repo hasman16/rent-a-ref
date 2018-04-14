@@ -25,15 +25,13 @@ export default function GameController(models, ResponseService) {
   }
 
   function getAll(req, res) {
-    Game.findAll({
-      attributes: attributes
-    })
+    console.log('getAll games');
+    Game.findAll()
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
   function getAllByOrganization(req, res) {
-    console.log('getAllByOrganization:', req.params.organization_id);
     Game.findAll({
       where: {
         organization_id: req.params.organization_id
