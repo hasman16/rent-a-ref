@@ -35,6 +35,10 @@
   border: 1px solid #eee;
 }
 
+.sortable-table th {
+  cursor: pointer;
+}
+
 .avatar {
   min-width: 100px;
 

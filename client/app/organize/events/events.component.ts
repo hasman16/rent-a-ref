@@ -355,33 +355,34 @@ export class EventsComponent implements OnInit {
   }
 
   public editEvents(game: Game): void {
-    const referees = (value) => value && value>0;
+    const referees = value => value && value > 0;
 
     if (!this.isLoading) {
       this.isLoading = false;
 
       this.eventsService
-      .getGame(game.id)
-      .take(1)
-      .subscribe((aGame:Game) => {
-        console.log('got game:', game);
-        const model = this.convertGameToModel(aGame);
-        model.kids = referees(model.kids_referees);
-        model.teens = referees(model.teens_referees);
-        model.adults = referees(model.adults_referees);
+        .getGame(game.id)
+        .take(1)
+        .subscribe(
+          (aGame: Game) => {
+            console.log('got game:', game);
+            const model = this.convertGameToModel(aGame);
+            model.kids = referees(model.kids_referees);
+            model.teens = referees(model.teens_referees);
+            model.adults = referees(model.adults_referees);
 
-        this.model = _.cloneDeep(model);
-        this.buttonText = 'Update';
-        this.isEditing = true;
-      },
-        (err: HttpErrorResponse) =>{
-          this.callFailure(err, 'Failed to retrieve Event.');
-          this.setEventsMode();
-        },
-        () => { 
-          this.isLoading = false;
-        }
-      ); 
+            this.model = _.cloneDeep(model);
+            this.buttonText = 'Update';
+            this.isEditing = true;
+          },
+          (err: HttpErrorResponse) => {
+            this.callFailure(err, 'Failed to retrieve Event.');
+            this.setEventsMode();
+          },
+          () => {
+            this.isLoading = false;
+          }
+        );
     }
   }
 
@@ -389,18 +390,18 @@ export class EventsComponent implements OnInit {
     this.isLoading = true;
 
     this.eventsService
-    .getOrganizationGames(this.organization_id)
-    .take(1)
-    .subscribe(
-      (games: Game[]) => {
-        this.games = _.cloneDeep(games);
-      },
-      (err: HttpErrorResponse) =>
-        this.callFailure(err, 'Failed to retrieve Events.'),
-      () => {
-        this.setEventsMode();
-      }
-    );
+      .getOrganizationGames(this.organization_id)
+      .take(1)
+      .subscribe(
+        (games: Game[]) => {
+          this.games = _.cloneDeep(games);
+        },
+        (err: HttpErrorResponse) =>
+          this.callFailure(err, 'Failed to retrieve Events.'),
+        () => {
+          this.setEventsMode();
+        }
+      );
   }
 
   public submitEvent(model: Game): void {

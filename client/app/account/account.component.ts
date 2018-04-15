@@ -20,8 +20,6 @@ export class AccountComponent implements OnInit {
   protected user: User = <User>{};
   protected person: Person = <Person>{};
 
-  protected isLoading: boolean = true;
-
   constructor(
     private auth: AuthService,
     private toast: ToastComponent,
@@ -51,7 +49,6 @@ export class AccountComponent implements OnInit {
         } as User;
 
         this.person = res.person;
-        this.isLoading = false;
       },
 
       (err: HttpErrorResponse) => {

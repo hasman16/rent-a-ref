@@ -1,26 +1,23 @@
-<div class="card" *ngIf="!isLoading">
+<div class="card">
   <h4>Game Assignment</h4>
-  <app-loading [condition]="isLoading"></app-loading>
 
-  <app-toast [message]="toast.message"></app-toast>
+  <div class="card-block" *ngIf="games && games.length > 0">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-default">
+        <tr>
+          <th>Email</th>
+          <th>Organizer</th>
+          <th>Referee</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let game of games">
+          <td>{{game}}</td>
 
-    <div class="card-block" *ngIf="games && games.length > 0">
-      <table class="table table-bordered table-striped">
-        <thead class="thead-default">
-          <tr>
-            <th>Email</th>
-            <th>Organizer</th>
-            <th>Referee</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let game of games">
-            <td>{{game}}</td>
-
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

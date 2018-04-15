@@ -22,6 +22,7 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
   protected users: User[] = [];
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
+  protected sortOrder: string = 'asc';
   protected currentUser: User = <User>{};
 
   constructor(
@@ -43,12 +44,26 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
   }
 
   getUsers() {
+    const paramsObj = {
+      //can_referee: 'pending'
+    };
+    const query = {
+      params: paramsObj
+    };
     this.userService
-      .getUsers()
+      .getUsers(query)
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
       );
+  }
+
+  sortTable(predicate: string = ''): void {
+    const users: User = _.cloneDeep(this.users);
+    predicate = predicate == 'organize' ? 'can_organize' : predicate;
+    predicate = predicate == 'referee' ? 'can_referee' : predicate;
+    this.users = _.orderBy(this.users, predicate, this.sortOrder);
+    this.sortOrder = this.sortOrder == 'asc' ? 'desc' : 'asc';
   }
 
   updateUser() {

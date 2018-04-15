@@ -4,14 +4,21 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpResponse,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { TokenService } from './../../services/token.service';
+import { TokenService } from './../../services/index';
+import { LoaderService } from './../../shared/loader/index';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/do';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(public tokenService: TokenService) {}
+  constructor(
+    private tokenService: TokenService,
+    private loaderService: LoaderService
+  ) {}
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -19,7 +26,23 @@ export class TokenInterceptor implements HttpInterceptor {
     let newRequest = request.clone({
       headers: this.tokenService.getHeaders()
     });
+    this.loaderService.show();
 
-    return next.handle(newRequest);
+    return next.handle(newRequest).do(
+      (event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          // do stuff with response if you want
+        }
+      },
+      (err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 401) {
+            // redirect to the login route
+            // or show a modal
+          }
+        }
+      },
+      () => this.loaderService.hide()
+    );
   }
 }

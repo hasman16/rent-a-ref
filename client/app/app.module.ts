@@ -26,6 +26,7 @@ import {
 } from './shared/formly/horizontal-types/index';
 import { AgmCoreModule } from '@agm/core';
 import { GoogleMapComponent } from './googlemap/google-map.component';
+import { LoaderComponent, LoaderService } from './shared/loader/index';
 
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
@@ -101,6 +102,7 @@ import { BarchartComponent } from './barchart/barchart.component';
 @NgModule({
     declarations: [
         AppComponent,
+        LoaderComponent,
         AboutComponent,
         AccountComponent,
         AddressFormComponent,
@@ -221,6 +223,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         EventsService,
         CookieService,
         CanDeactivateGuardService,
+        LoaderService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,

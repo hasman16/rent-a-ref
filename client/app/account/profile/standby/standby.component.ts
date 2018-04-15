@@ -56,9 +56,8 @@ export class StandbyComponent implements OnInit {
             'The backend returned an unsuccessful response code for the profile'
           );
         }
-        // this.isLoading = false;
+
         if (!this.auth.loggedIn) {
-          // this.abort = true;
           this.auth.logout();
         }
       }

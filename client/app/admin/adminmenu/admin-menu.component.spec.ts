@@ -2,20 +2,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminMenuComponent } from './admin-menu.component';
 
-xdescribe('LeftmenuComponent', () => {
-  let component: LeftmenuComponent;
-  let fixture: ComponentFixture<LeftmenuComponent>;
+xdescribe('AdminMenuComponent', () => {
+  let component: AdminMenuComponent;
+  let fixture: ComponentFixture<AdminMenuComponent>;
 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        declarations: [LeftmenuComponent]
+        declarations: [AdminMenuComponent]
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LeftmenuComponent);
+    fixture = TestBed.createComponent(AdminMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

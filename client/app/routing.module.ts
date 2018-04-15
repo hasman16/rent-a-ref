@@ -121,8 +121,7 @@ const routes: Routes = [
       {
         path: 'manageusers',
         component: ManageUsersComponent,
-        canActivate: [AuthGuardAdmin],
-        resolve: { users: UserResolver }
+        canActivate: [AuthGuardAdmin]
       },
       {
         path: 'manageevents',

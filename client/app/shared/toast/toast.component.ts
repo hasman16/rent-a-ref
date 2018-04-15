@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ToastService } from './toast.service';
+import { Toast } from './toast';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-toast',
@@ -8,7 +11,23 @@ import { Component, Input } from '@angular/core';
 export class ToastComponent {
 	@Input() message = { body: '', type: '' };
 
-	setMessage(body, type, time = 10000) {
+	private toastSubscription: Subscription;
+
+	constructor(private toastService: ToastService) {}
+
+	ngOnInit() {
+		this.toastService.toasts.subscribe((toast: Toast) => {
+			this.setMessage(toast.body, toast.type);
+		});
+	}
+
+	ngOnDestroy() {
+		if (this.toastSubscription) {
+			this.toastSubscription.unsubscribe();
+		}
+	}
+
+	public setMessage(body, type, time = 10000) {
 		this.message.body = body;
 		this.message.type = type;
 		setTimeout(() => {
