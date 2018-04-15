@@ -10,7 +10,5 @@ export class AdminMenuComponent implements OnInit {
 
 	ngOnInit() {}
 
-	toggleMenu() {
-		console.log('toggle called!');
-	}
+	toggleMenu() {}
 }

@@ -4,11 +4,14 @@ import {
 	HttpTestingController
 } from '@angular/common/http/testing';
 import { UserService, TokenService } from './../../services/index';
+import { LoaderService } from './../../shared/loader/index';
 import { TokenInterceptor } from './token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Subject } from 'rxjs/Subject';
 
 describe('TokenInterceptor', () => {
 	let service: UserService;
+	let loadService: LoaderService;
 	let tokenService: TokenService;
 	let httpMock: HttpTestingController;
 
@@ -17,6 +20,7 @@ describe('TokenInterceptor', () => {
 			imports: [HttpClientTestingModule],
 			providers: [
 				UserService,
+				LoaderService,
 				TokenService,
 				{
 					provide: HTTP_INTERCEPTORS,
@@ -27,6 +31,7 @@ describe('TokenInterceptor', () => {
 		});
 
 		service = TestBed.get(UserService);
+		loadService = TestBed.get(LoaderService);
 		tokenService = TestBed.get(TokenService);
 		tokenService.setOptions('12345ABCDE');
 		httpMock = TestBed.get(HttpTestingController);
