@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OrganizeService } from '../../services/index';
 import * as _ from 'lodash';
-
+//https://github.com/stripe/stripe-payments-demo
 @Component({
   selector: 'rar-stripe',
   templateUrl: './stripe.component.html',
@@ -29,7 +29,21 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   public ngAfterViewInit() {
-    this.card = elements.create('card');
+    this.card = elements.create('card', {
+      style: {
+        base: {
+          iconColor: '#666EE8',
+          color: '#31325F',
+          lineHeight: '40px',
+          fontWeight: 300,
+          fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+          fontSize: '18px',
+          '::placeholder': {
+            color: '#CFD7E0'
+          }
+        }
+      }
+    });
     this.card.mount(this.cardInfo.nativeElement);
 
     this.card.addEventListener('change', this.cardHandler);
@@ -50,7 +64,6 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
   }
 
   async onSubmit(form: NgForm) {
-
     stripe
       .createToken(this.card, {
         country: 'US',
@@ -83,9 +96,8 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
   }
 
   private errorOut(err: HttpErrorResponse) {
-    if (_.has(err,'error.message.message')) {
+    if (_.has(err, 'error.message.message')) {
       this.error = err.error.message.message;
     }
   }
-
 }

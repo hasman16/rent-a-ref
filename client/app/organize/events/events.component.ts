@@ -66,7 +66,7 @@ export class EventsComponent implements OnInit {
 
   protected isEditing: boolean = false;
   protected organization_id: string = '';
-  public buttonText: string = 'Create Event';
+  public buttonText: string = 'Create';
 
   constructor(
     protected toast: ToastComponent,
@@ -77,11 +77,11 @@ export class EventsComponent implements OnInit {
   ) {
     this.route.params.subscribe(params => {
       this.organization_id = params['organization_id'];
-      console.log('organization_id:', this.organization_id);
     });
   }
 
   public ngOnInit() {
+    this.setEventsMode();
     this.games = _.cloneDeep(this.route.snapshot.data.games);
     this.sports = _(this.route.snapshot.data.sports)
       .map((sport: Sport): Option => {
@@ -337,34 +337,71 @@ export class EventsComponent implements OnInit {
     this.isLoading = false;
   }
 
-  public goNewEvent(): void {
-    this.model = {
-      adults: false,
-      teens: false,
-      kids: false
-    };
+  public prepareModel(model: any): any {
+    return Object.assign(
+      {
+        adults: false,
+        teens: false,
+        kids: false
+      },
+      model
+    );
+  }
+
+  public createNewEvent(): void {
+    this.model = this.prepareModel({});
+    this.buttonText = 'Create';
     this.isEditing = true;
   }
 
   public editEvents(game: Game): void {
-    this.model = this.convertGameToModel(game);
-    this.isLoading = false;
-    this.isEditing = true;
+    const referees = value => value && value > 0;
+
+    if (!this.isLoading) {
+      this.isLoading = false;
+
+      this.eventsService
+        .getGame(game.id)
+        .take(1)
+        .subscribe(
+          (aGame: Game) => {
+            console.log('got game:', game);
+            const model = this.convertGameToModel(aGame);
+            model.kids = referees(model.kids_referees);
+            model.teens = referees(model.teens_referees);
+            model.adults = referees(model.adults_referees);
+
+            this.model = _.cloneDeep(model);
+            this.buttonText = 'Update';
+            this.isEditing = true;
+          },
+          (err: HttpErrorResponse) => {
+            this.callFailure(err, 'Failed to retrieve Event.');
+            this.setEventsMode();
+          },
+          () => {
+            this.isLoading = false;
+          }
+        );
+    }
   }
 
   public getEvents(): void {
     this.isLoading = true;
 
-    this.eventsService.getOrganizationGames(this.organization_id).subscribe(
-      (games: Game[]) => {
-        this.games = _.cloneDeep(games);
-      },
-      (err: HttpErrorResponse) =>
-        this.callFailure(err, 'Failed to retrieve Events.'),
-      () => {
-        this.setEventsMode();
-      }
-    );
+    this.eventsService
+      .getOrganizationGames(this.organization_id)
+      .take(1)
+      .subscribe(
+        (games: Game[]) => {
+          this.games = _.cloneDeep(games);
+        },
+        (err: HttpErrorResponse) =>
+          this.callFailure(err, 'Failed to retrieve Events.'),
+        () => {
+          this.setEventsMode();
+        }
+      );
   }
 
   public submitEvent(model: Game): void {
@@ -407,8 +444,19 @@ export class EventsComponent implements OnInit {
   }
 
   public convertGameToModel(model: Game): any {
-    const address: Address = model.address;
-    return {
+    const eventDate: string = _.trim(model.event_date).split('T')[0];
+    let tempModel = _.cloneDeep(model);
+    delete tempModel.address;
+    delete tempModel.phone;
+    tempModel.event_date = eventDate;
+    return Object.assign({}, model.address, tempModel);
+  }
+
+  public convertModelToGame(model): Game {
+    const dateString: string = String(model.event_date);
+    const eventDate: number = Number(new Date(dateString).getTime());
+
+    return <Game>{
       id: model.id,
       adults_referees: model.adults_referees,
       teens_referees: model.teens_referees,
@@ -419,38 +467,12 @@ export class EventsComponent implements OnInit {
       adults_ref_pay: model.adults_ref_pay,
 
       event_name: model.event_name,
-      venue_name: model.venue_name,
-      status: model.status,
-      sport_id: model.sport_id,
-      event_date: model.event_date,
-
-      line1: address.line1,
-      line2: address.line2,
-      city: address.city,
-      state: address.state,
-      zip: address.zip,
-      country: address.country
-    };
-  }
-
-  public convertModelToGame(model): Game {
-    const dateString: string = String(model.event_date);
-    const eventDate: number = Number(new Date(dateString).getTime());
-
-    return <Game>{
-      adults_referees: model.adults_referees,
-      teens_referees: model.teens_referees,
-      kids_referees: model.kids_referees,
-
-      kids_ref_pay: model.kids_ref_pay,
-      teens_ref_pay: model.teens_ref_pay,
-      adults_ref_pay: model.adults_ref_pay,
-
-      event_name: model.event_name,
-      venue_name: model.venue_name,
-      status: model.status,
-      sport_id: model.sport_id,
+      event_type: model.event_type,
       event_date: eventDate,
+      venue_name: model.venue_name,
+      status: model.status,
+      sport_id: model.sport_id,
+
       address: {
         line1: model.line1,
         line2: model.line2,

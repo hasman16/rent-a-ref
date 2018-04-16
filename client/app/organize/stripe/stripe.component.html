@@ -1,3 +1,4 @@
+<!--
 <form #checkout="ngForm" (ngSubmit)="onSubmit(checkout)" class="checkout">
   <div class="form-row">
     <label for="card-info">Stripe Payment</label>
@@ -8,3 +9,23 @@
 
   <button type="submit">Pay $7.77</button>
 </form>
+
+<mat-card>
+  <mat-slider></mat-slider>
+  <mat-slider disabled></mat-slider>
+  <mat-slider value="75"></mat-slider>
+</mat-card>
+-->
+<mat-card>
+<form #checkout="ngForm" (ngSubmit)="onSubmit(checkout)" class="checkout">
+  <div class="form-row">
+    <label for="card-info">Stripe Payment</label>
+    <div id="card-info" #cardInfo></div>
+
+    <div id="card-errors" role="alert" *ngIf="error">{{ error }}</div>
+  </div>
+
+  <button mat-raised-button type="submit">Pay $7.77</button>
+</form>
+</mat-card>
+

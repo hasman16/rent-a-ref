@@ -6,14 +6,15 @@ import {
 	RouterStateSnapshot
 } from '@angular/router';
 import { AuthService } from './auth.service';
+import { User } from '../shared/models/index';
 
 @Injectable()
 export class AuthGuardSuspended implements CanActivate {
 	constructor(public auth: AuthService, private router: Router) {}
 
 	canActivate() {
-		return (
-			this.auth.loggedIn && this.auth.currentUser.status == 'suspended'
-		);
+		const currentUser: User = this.auth.getCurrentUser();
+
+		return this.auth.loggedIn && currentUser.status == 'suspended';
 	}
 }

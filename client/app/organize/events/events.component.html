@@ -6,7 +6,7 @@
         <strong class="etched-text">You have no <i>Events</i>.</strong>
         <p>You need to create at least one event. Once the event you can create and assign <i>games</i> to the event.
           <br />Although creating games is optional, it allows more fine grained control of each event. Note a game can have the same address or a different address from avenue.</p>
-        <button class="btn btn-primary btn-sm" (click)="goNewEvent({})" title="Click to create new event">New Event</button>
+        <button class="btn btn-primary btn-sm" (click)="createNewEvent()" title="Click to create new event">New Event</button>
       </div>
     </div>
 
@@ -16,7 +16,7 @@
       <div class="card form-size">
         <form [formGroup]="form" (ngSubmit)="submitEvent(model)">
           <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form">
-          <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid">buttonText</button>
+          <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid">{{buttonText}}</button>
           <span class="spacer">&nbsp;</span>
           <button type="submit" class="btn btn-danger btn-sm" title="Cancel" (click)="onCancel($event)">Cancel</button>
           </formly-form>
@@ -47,19 +47,27 @@
                 {{game.venue_name}}
               </td>
               <td>
+
+              <ng-container *ngIf="game.status!=='pending'">
                 {{game.status}}
+              </ng-container>
+
+              <ng-container *ngIf="game.status=='pending'">
+                <button class="btn btn-success btn-sm" (click)="editEvents(game)" title="Click to pay for this event">Pay</button>
+              </ng-container>
+
               </td>
               <td>
                 <button class="btn btn-primary btn-sm" (click)="editEvents(game)" title="Click to edit this event">Edit</button>
               </td>
               <td>
-                <button class="btn btn-danger btn-sm" (click)="goDeleteEvent(game)" title="Click to delete event">Delete</button>
+                <button class="btn btn-danger btn-sm" (click)="deleteEvent(game)" title="Click to delete event">Delete</button>
               </td>
             </tr>
           </tbody>
         </table>
         <hr />
-        <button class="btn btn-primary btn-sm new-org-button" (click)="goNewEvent({})" title="Click to create new event">New Event</button>
+        <button class="btn btn-primary btn-sm new-org-button" (click)="createNewEvent()" title="Click to create new event">New Event</button>
       </div>
     </div>
 

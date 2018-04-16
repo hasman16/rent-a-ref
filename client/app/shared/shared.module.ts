@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { ToastComponent } from './toast/toast.component';
+import { ToastComponent, ToastService } from './toast/index';
 import { LoadingComponent } from './loading/loading.component';
 import { SuspendedComponent } from '../account/profile/suspended/suspended.component';
 import { DeactivatedComponent } from '../account/profile/deactivated/deactivated.component';
@@ -31,6 +31,6 @@ import { PasswordresetComponent } from '../account/profile/passwordreset/passwor
     StandbyComponent,
     PasswordresetComponent
   ],
-  providers: [ToastComponent]
+  providers: [ToastComponent, ToastService]
 })
 export class SharedModule {}

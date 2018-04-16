@@ -17,12 +17,12 @@ export default class ResponseService {
       {},
       {
         offset: 0,
-        limit: 10
+        limit: 20
       },
       req.query
     );
-    let limit = parseInt(query.limit, 10) || 10;
-    let offset = (parseInt(query.offset, 10) || 0) * 10;
+    let limit = parseInt(query.limit, 10) || 20;
+    let offset = (parseInt(query.offset, 10) || 0) * 20;
     let order = query.order || 'ASC';
 
     order = attributes.map(attribute => {
@@ -35,6 +35,7 @@ export default class ResponseService {
     clauses.offest = offset;
     clauses.limit = limit;
     clauses.order = order;
+
     return clauses;
   }
 

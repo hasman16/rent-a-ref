@@ -55,7 +55,9 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
   }
 
   getProfile() {
-    this.profileService.getProfile(this.auth.currentUser.id).subscribe(
+    const currentUser: User = this.auth.getCurrentUser();
+
+    this.profileService.getProfile(currentUser.id).subscribe(
       res => {
         this.data = res;
         this.user = res;

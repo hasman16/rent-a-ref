@@ -1,12 +1,40 @@
-
-export default function UserController(models, ResponseService, SendGridService) {
+export default function UserController(
+  models,
+  ResponseService,
+  SendGridService
+) {
   const User = models.User;
-  const attributes = ['id', 'email', 'authorization', 'can_organize', 'can_referee', 'status'];
+  const attributes = [
+    'id',
+    'email',
+    'authorization',
+    'can_organize',
+    'can_referee',
+    'status'
+  ];
+
+  function getParams(req) {
+    const clauses = {
+      attributes: attributes,
+      where: {}
+    };
+    const query = req.query;
+    let order = [];
+    if (query.can_referee) {
+      order.push['can_referee'];
+      clauses.where['can_referee'] = query.can_referee;
+    }
+    if (order.length === 0) {
+      order = undefined;
+    }
+
+    return ResponseService.limitOffset(clauses, req, order);
+  }
 
   function getAll(req, res) {
-    User.findAll({
-      attributes: attributes,
-    })
+    const params = getParams(req);
+
+    User.findAll(params)
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
@@ -70,5 +98,5 @@ export default function UserController(models, ResponseService, SendGridService)
     getOne: getOne,
     update: update,
     deleteOne: deleteOne
-  }
+  };
 }

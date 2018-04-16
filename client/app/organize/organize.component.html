@@ -14,11 +14,11 @@
         <div class="form-size">
           <p>You need to create at least one organization. Then you can create and assign <i>events</i> to an organization.
             <br />An event is the tornament and venue to which you assign games. Note a game can have the same address or a different address from avenue</p>
-          <button class="btn btn-primary btn-sm" (click)="goNewOrganization({})" title="Click to create new organization">New Organization</button>
+          <button mat-raised-button color="primary" class="btn btn-primary btn-sm" (click)="goNewOrganization({})" title="Click to create new organization">New Organization</button>
         </div>
       </div>
 
-      <div class="" *ngIf="!isEditing && organizations?.length > 0">
+      <div  *ngIf="!isEditing && organizations?.length > 0">
         <div class="form-size">
           <br />
           <table class="table table-bordered table-hover">

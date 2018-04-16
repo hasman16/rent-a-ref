@@ -8,6 +8,8 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './material.module';
+
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyMaterialModule } from '@ngx-formly/material';
@@ -24,6 +26,7 @@ import {
 } from './shared/formly/horizontal-types/index';
 import { AgmCoreModule } from '@agm/core';
 import { GoogleMapComponent } from './googlemap/google-map.component';
+import { LoaderComponent, LoaderService } from './shared/loader/index';
 
 /* Services */
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
@@ -99,6 +102,7 @@ import { BarchartComponent } from './barchart/barchart.component';
 @NgModule({
     declarations: [
         AppComponent,
+        LoaderComponent,
         AboutComponent,
         AccountComponent,
         AddressFormComponent,
@@ -148,13 +152,16 @@ import { BarchartComponent } from './barchart/barchart.component';
         BarchartComponent
     ],
     imports: [
+        BrowserModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
         }),
         NgxDatatableModule,
+
         RoutingModule,
         SharedModule,
-        BrowserModule,
+
+        MaterialModule,
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
@@ -216,6 +223,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         EventsService,
         CookieService,
         CanDeactivateGuardService,
+        LoaderService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,

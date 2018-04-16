@@ -77,53 +77,25 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['passwordreset']);
   }
 
-  routeOrganizer(
-    canOrganize: string,
-    userStatus: string,
-    userId: string
-  ): string {
+  redirectUser(userStatus: string, userId: string) {
     let path: string = '';
-    // Check if the user is a referee/organizer and if his/she has not yet completed the profile form, then redirect him/her to the form
-    // Organizer
-    switch (canOrganize + ' ' + userStatus) {
-      case 'pending standby':
+    switch (userStatus) {
+      case 'active':
         path = `account/${userId}/profile`;
         break;
-      case 'yes active':
-        path = `account/${userId}`;
-        break;
-      case 'yes locked':
-        path = `account/${userId}/suspended`;
-        break;
-      case 'no banned':
-        path = `account/${userId}/deactivated`;
-        break;
-    }
-    return path;
-  }
-
-  routeUser(canReferee: string, userStatus: string, userId: string): string {
-    let path: string = '';
-
-    // Referee
-    switch (canReferee + ' ' + userStatus) {
-      case 'pending active':
-        path = `account/${userId}/profile`;
-        break;
-      case 'pending in_progress':
+      case 'pending':
         path = `account/${userId}/standby`;
         break;
-      case 'yes active':
-        path = `account/${userId}`;
-        break;
-      case 'yes locked':
+      case 'locked':
         path = `account/${userId}/suspended`;
         break;
-      case 'no banned':
+      case 'banned':
         path = `account/${userId}/deactivated`;
+        this.auth.resetState();
         break;
       default:
-        path = `account/${userId}`;
+        path = '/';
+        this.auth.resetState();
         break;
     }
     return path;
@@ -138,16 +110,7 @@ export class LoginComponent implements OnInit {
           const user: User = login.user;
           const userId = user.id;
           const userStatus = user.status;
-          const path1: string = this.routeOrganizer(
-            user.can_organize,
-            userStatus,
-            userId
-          );
-          const path2: string = this.routeUser(
-            user.can_referee,
-            userStatus,
-            userId
-          );
+          const path: string = this.redirectUser(userStatus, userId);
 
           if (this.checkboxFlag) {
             const expireDate = new Date();
@@ -161,11 +124,7 @@ export class LoginComponent implements OnInit {
             this.cookieService.delete('email');
           }
 
-          if (path1.length > 0) {
-            this.router.navigate([path1]);
-          } else if (path2.length > 0) {
-            this.router.navigate([path2]);
-          }
+          this.router.navigate([path]);
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {

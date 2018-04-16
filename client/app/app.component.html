@@ -1,6 +1,6 @@
 <div *ngIf="windowWidth > 599" id="master-wrapper"></div>
 <div class="container">
- 
+	<app-toast></app-toast>
 	<app-header></app-header>
 
 	<router-outlet></router-outlet>
@@ -10,4 +10,8 @@
 	<ng-template #tabletFooter>
 	    <app-footer-tablet></app-footer-tablet>
 	</ng-template>
+	<rar-loader></rar-loader>
+
 </div>
+
+

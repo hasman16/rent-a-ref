@@ -2,17 +2,32 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { ToastComponent } from './toast.component';
+import { ToastService } from './toast.service';
+import { Toast } from './toast';
+
+import { Subject } from 'rxjs/Subject';
 
 describe('ToastComponent', () => {
   let component: ToastComponent;
   let fixture: ComponentFixture<ToastComponent>;
+  let mockToastService: Subject<Toast>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ToastComponent ]
+  beforeEach(
+    async(() => {
+      mockToastService = new Subject();
+      TestBed.configureTestingModule({
+        declarations: [ToastComponent],
+        providers: [
+          {
+            provide: ToastService,
+            useValue: {
+              toasts: mockToastService
+            }
+          }
+        ]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ToastComponent);

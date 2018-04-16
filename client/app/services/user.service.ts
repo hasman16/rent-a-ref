@@ -24,7 +24,7 @@ export class UserService {
     );
   }
 
-  getUsers(): Observable<User[]> {
+  getUsers(queryParams: any = null): Observable<User[]> {
     return <Observable<User[]>>this.http.get(`/api/users`);
   }
 

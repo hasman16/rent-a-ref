@@ -6,11 +6,14 @@ import { AuthGuardLogin } from './auth-guard-login.service';
 import { AuthService } from './auth.service';
 
 describe('AuthGuardService', () => {
+  let mockCurrentUser = {
+    status: ''
+  };
   let mockAuthService = {
     loggedIn: false,
     isActive: false,
-    currentUser: {
-      status: ''
+    getCurrentUser: () => {
+      return mockCurrentUser;
     }
   };
 
