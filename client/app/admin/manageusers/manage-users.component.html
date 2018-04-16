@@ -1,11 +1,12 @@
-<div class="card">
+<div class="card" style="min-height: 300px;">
   <h4>Manage Users</h4>
 
-  <div class="card horizontal-and-vertical-centering " *ngIf="(!users || users.length === 0)">
+  <div class="card-block horizontal-and-vertical-centering " *ngIf="(!users || users.length === 0)">
     <div class="form-size">
       <p>There are no registered users.</p>
     </div>
   </div>
+
   <div class="card-block" *ngIf="users && users.length > 0">
     <table class="table table-bordered table-striped sortable-table" >
       <thead class="thead-default">

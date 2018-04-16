@@ -113,20 +113,17 @@ const routes: Routes = [
     component: DeactivatedComponent
   },
   {
-    path: 'admin',
+    path: 'admin/:id',
     component: AdminComponent,
     canActivate: [AuthGuardAdmin],
-    canDeactivate: [CanDeactivateGuardService],
     children: [
       {
         path: 'manageusers',
-        component: ManageUsersComponent,
-        canActivate: [AuthGuardAdmin]
+        component: ManageUsersComponent
       },
       {
-        path: 'manageevents',
-        component: ManageEventsComponent,
-        canActivate: [AuthGuardAdmin]
+        path: '',
+        component: ManageEventsComponent
       }
     ]
   },

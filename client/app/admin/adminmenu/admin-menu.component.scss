@@ -1,14 +1,15 @@
 .sidebar {
   /*position: relative;*/
   top: 0px;
-  bottom: 0;
+  bottom: 0px;
   left: 0;
   z-index: 1000;
-  padding: 0px;
+  padding: 2rem 0;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   border-right: 1px solid #eee;
   width: 100%;
+  position: relative;
 }
 
 /* Sidebar navigation */
@@ -33,3 +34,4 @@
   border-radius: 0;
   color: whitesmoke;
 }
+
