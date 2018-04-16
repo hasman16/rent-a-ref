@@ -12,10 +12,10 @@ var ResponseService = /** @class */ (function () {
         if (attributes === void 0) { attributes = ['id']; }
         var query = Object.assign({}, {
             offset: 0,
-            limit: 10
+            limit: 20
         }, req.query);
-        var limit = parseInt(query.limit, 10) || 10;
-        var offset = (parseInt(query.offset, 10) || 0) * 10;
+        var limit = parseInt(query.limit, 10) || 20;
+        var offset = (parseInt(query.offset, 10) || 0) * 20;
         var order = query.order || 'ASC';
         order = attributes.map(function (attribute) {
             return [attribute, order];

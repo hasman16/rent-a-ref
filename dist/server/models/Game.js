@@ -7,6 +7,14 @@ var Game = function (sequelize, DataTypes) {
             type: DataTypes.DATE,
             allowNull: false
         },
+        event_type: {
+            type: DataTypes.STRING(32),
+            allowNull: false,
+            defaultValue: '',
+            validate: {
+                isIn: [['league', 'tournament', 'oneoff']]
+            }
+        },
         venue_name: DataTypes.STRING(64),
         kids_referees: {
             type: DataTypes.INTEGER,

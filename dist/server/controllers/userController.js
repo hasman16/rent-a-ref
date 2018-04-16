@@ -2,11 +2,33 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 function UserController(models, ResponseService, SendGridService) {
     var User = models.User;
-    var attributes = ['id', 'email', 'authorization', 'can_organize', 'can_referee', 'status'];
-    function getAll(req, res) {
-        User.findAll({
+    var attributes = [
+        'id',
+        'email',
+        'authorization',
+        'can_organize',
+        'can_referee',
+        'status'
+    ];
+    function getParams(req) {
+        var clauses = {
             attributes: attributes,
-        })
+            where: {}
+        };
+        var query = req.query;
+        var order = [];
+        if (query.can_referee) {
+            order.push['can_referee'];
+            clauses.where['can_referee'] = query.can_referee;
+        }
+        if (order.length === 0) {
+            order = undefined;
+        }
+        return ResponseService.limitOffset(clauses, req, order);
+    }
+    function getAll(req, res) {
+        var params = getParams(req);
+        User.findAll(params)
             .then(function (results) { return ResponseService.successCollection(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }

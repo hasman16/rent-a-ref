@@ -23,14 +23,12 @@ function GameController(models, ResponseService) {
         ResponseService.success(res, newGame, status);
     }
     function getAll(req, res) {
-        Game.findAll({
-            attributes: attributes
-        })
+        console.log('getAll games');
+        Game.findAll()
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getAllByOrganization(req, res) {
-        console.log('getAllByOrganization:', req.params.organization_id);
         Game.findAll({
             where: {
                 organization_id: req.params.organization_id
@@ -42,7 +40,7 @@ function GameController(models, ResponseService) {
     function getOne(req, res) {
         var Address = models.Address;
         var Phone = models.Phone;
-        Game.findAll({
+        Game.find({
             where: {
                 id: req.params.game_id
             },
