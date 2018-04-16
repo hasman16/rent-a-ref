@@ -122,7 +122,10 @@ const routes: Routes = [
       { path: '', redirectTo: 'manageevents', pathMatch: 'full' },
       {
         path: 'manageusers',
-        component: ManageUsersComponent
+        component: ManageUsersComponent,
+        resolve: {
+          users: UserResolver
+        }
       },
       {
         path: 'manageevents',

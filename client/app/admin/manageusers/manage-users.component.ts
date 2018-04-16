@@ -33,8 +33,12 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
   ) {}
 
   ngOnInit() {
+    const users: User[] = this.route.snapshot.data.users;
     this.currentUser = this.auth.getCurrentUser();
-    this.getUsers();
+    this.users = _.isArray(users) ? _.cloneDeep(users) : [];
+    if (this.users.length === 0) {
+      this.getUsers();
+    }
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
