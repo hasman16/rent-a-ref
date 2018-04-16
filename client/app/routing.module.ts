@@ -112,22 +112,24 @@ const routes: Routes = [
     canActivate: [AuthGuardLogin],
     component: DeactivatedComponent
   },
+  { path: 'admin', redirectTo: 'admin/0', pathMatch: 'full' },
+
   {
     path: 'admin/:id',
     component: AdminComponent,
     canActivate: [AuthGuardAdmin],
     children: [
+      { path: '', redirectTo: 'manageevents', pathMatch: 'full' },
       {
         path: 'manageusers',
         component: ManageUsersComponent
       },
       {
-        path: '',
+        path: 'manageevents',
         component: ManageEventsComponent
       }
     ]
   },
-
   { path: 'notfound', component: NotFoundComponent },
   { path: '**', redirectTo: '/notfound' }
 ];
