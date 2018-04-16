@@ -1,20 +1,44 @@
 <div class="card">
-  <h4>Event Assignment</h4>
+
+  <h1 class="etched-text"> Event Assignment</h1>
 
   <div class="card-block" *ngIf="games && games.length > 0">
-    <table class="table table-bordered table-striped">
-      <thead class="thead-default">
+    <table class="table table-bordered table-hover">
+      <thead class="thead-light">
         <tr>
-          <th>Email</th>
-          <th>Organizer</th>
-          <th>Referee</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th *ngFor="let title of titles" scope="col">
+            {{title}}
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let game of games">
-          <td>{{game}}</td>
+        <tr *ngFor="let game of games" (click)="editEvents(game);" class="org-table-item ">
+          <td>
+            {{game.event_name}}
+          </td>
+          <td>
+            {{formatDate(game.event_date)}}
+          </td>
+          <td>
+            {{game.venue_name}}
+          </td>
+          <td>
+
+          <ng-container *ngIf="game.status!=='pending'">
+            {{game.status}}
+          </ng-container>
+
+          <ng-container *ngIf="game.status=='pending'">
+            <button class="btn btn-success btn-sm" (click)="editEvents(game)" title="Click to pay for this event">Pay</button>
+          </ng-container>
+
+          </td>
+          <td>
+            <button class="btn btn-primary btn-sm">Edit</button>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-sm" >Delete</button>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -9,7 +9,18 @@ import {
   EventsService
 } from './../../services/index';
 import * as _ from 'lodash';
-import { User, Game } from '../../shared/models/index';
+import {
+  Address,
+  BaseModel,
+  Game,
+  Phone,
+  Option,
+  Organization,
+  State,
+  Sport,
+  User
+} from '../../shared/models/index';
+
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -20,8 +31,16 @@ import { Observable } from 'rxjs/Observable';
 export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
+  protected titles: string[] = [
+    'Event Name',
+    'Event Date',
+    'Venue',
+    'Status',
+    '',
+    ''
+  ];
+  protected sports: Option[];
   protected games: Game[] = [];
-
   constructor(
     public auth: AuthService,
     public toast: ToastComponent,
