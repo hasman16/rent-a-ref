@@ -13,28 +13,10 @@ export default function UserController(
     'status'
   ];
 
-  function getParams(req) {
-    const clauses = {
-      attributes: attributes,
-      where: {}
-    };
-    const query = req.query;
-    let order = [];
-    if (query.can_referee) {
-      order.push['can_referee'];
-      clauses.where['can_referee'] = query.can_referee;
-    }
-    if (order.length === 0) {
-      order = undefined;
-    }
-
-    return ResponseService.limitOffset(clauses, req, order);
-  }
-
   function getAll(req, res) {
-    const params = getParams(req);
+    const clause = ResponseService.makeClause(req);
 
-    User.findAll(params)
+    User.findAll(clause)
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }

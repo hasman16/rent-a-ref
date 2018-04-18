@@ -8,6 +8,24 @@
   </div>
 
   <div class="card-block" *ngIf="users && users.length > 0">
+    <ngx-datatable class="material"
+      [rows]="rows"
+      [columns]="columns"
+
+        [loadingIndicator]="loadingIndicator"
+
+        [columnMode]="'force'"
+        [headerHeight]="40"
+        [summaryRow]="true"
+        [summaryPosition]="'bottom'"
+        [footerHeight]="40"
+        [limit]="10"
+        [rowHeight]="'auto'"
+        [reorderable]="reorderable"
+      >
+    </ngx-datatable>
+
+    <!--
     <table class="table table-bordered table-hover sortable-table" >
       <thead class="thead-light">
         <tr>
@@ -32,6 +50,7 @@
         </tr>
       </tbody>
     </table>
+  -->
   </div>
 
 </div>

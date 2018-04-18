@@ -1,4 +1,4 @@
-import {PersonModel} from './../types/index';
+import { PersonModel } from './../types/index';
 
 export default function PersonController(models, ResponseService) {
   const Person = models.Person;
@@ -6,9 +6,9 @@ export default function PersonController(models, ResponseService) {
 
   // Get all
   function getAll(req, res) {
-    Person.findAll({
-      attributes: attributes
-    })
+    const clause = ResponseService.makeClause(req);
+
+    Person.findAll(clause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
@@ -64,7 +64,7 @@ export default function PersonController(models, ResponseService) {
 
   function deleteOne(req, res) {
     Person.destroy({
-      where:{
+      where: {
         id: req.params.person_id
       }
     })
@@ -78,5 +78,5 @@ export default function PersonController(models, ResponseService) {
     create: create,
     update: update,
     deleteOne: deleteOne
-  }
+  };
 }

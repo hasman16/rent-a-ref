@@ -8,9 +8,9 @@ export default function PhoneController(models, ResponseService) {
 
   // Get all
   function getAll(req, res) {
-    Phone.findAll({
-      attributes: attributes
-    })
+    const clause = ResponseService.makeClause(req);
+
+    Phone.findAll(clause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }

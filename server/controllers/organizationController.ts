@@ -6,9 +6,9 @@ export default function OrganizationController(models, ResponseService) {
   const stripe = new Stripe(process.env.STRIPE_KEY);
 
   function getAll(req, res) {
-    Organization.findAll({
-      attributes: attributes
-    })
+    const clause = ResponseService.makeClause(req);
+
+    Organization.findAll(clause)
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
