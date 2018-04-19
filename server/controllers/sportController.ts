@@ -4,9 +4,9 @@ export default function SportController(models, ResponseService) {
 
   // Get all
   function getAll(req, res) {
-    Sport.findAll({
-      attributes: attributes
-    })
+    const clause = ResponseService.makeClause(req);
+
+    Sport.findAll(clause)
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
@@ -73,13 +73,19 @@ export default function SportController(models, ResponseService) {
       }
     };
 
-    sequelize.transaction(function(t) {
-      return Sport.destroy(clause, { transaction: t })
-        .then(lines1 => {
-          return Referee.destroy(clause, { transaction: t })
-            .then(lines2 => ResponseService.success(res, 'Sport and Referees deleted:', totalLines(lines1, lines2), 204));
+    sequelize
+      .transaction(function(t) {
+        return Sport.destroy(clause, { transaction: t }).then(lines1 => {
+          return Referee.destroy(clause, { transaction: t }).then(lines2 =>
+            ResponseService.success(
+              res,
+              'Sport and Referees deleted:',
+              totalLines(lines1, lines2),
+              204
+            )
+          );
         });
-    })
+      })
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -89,5 +95,5 @@ export default function SportController(models, ResponseService) {
     create: create,
     updateOne: updateOne,
     deleteOne: deleteOne
-  }
+  };
 }

@@ -25,6 +25,14 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
   protected sortOrder: string = 'asc';
   protected currentUser: User = <User>{};
 
+  protected columns: any[] = [
+    { name: 'Email', prop: 'email' },
+    { name: 'Organizer', prop: 'can_organize' },
+    { name: 'Referee', prop: 'can_referee' },
+    { name: 'Status', prop: 'status' }
+  ];
+  protected rows: any[];
+
   constructor(
     private route: ActivatedRoute,
     public toast: ToastComponent,
@@ -36,8 +44,9 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
     const users: User[] = this.route.snapshot.data.users;
     this.currentUser = this.auth.getCurrentUser();
     this.users = _.isArray(users) ? _.cloneDeep(users) : [];
+    this.rows = this.users;
     if (this.users.length === 0) {
-      this.getUsers();
+      //this.getUsers();
     }
   }
 

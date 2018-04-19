@@ -25,8 +25,9 @@ export default function GameController(models, ResponseService) {
   }
 
   function getAll(req, res) {
-    console.log('getAll games');
-    Game.findAll()
+    const clause = ResponseService.makeClause(req);
+
+    Game.findAll(clause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }

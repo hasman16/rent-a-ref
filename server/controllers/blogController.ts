@@ -4,9 +4,9 @@ export default function BlogController(models, ResponseService) {
   const User = models.User;
 
   function getAllPosts(req, res) {
-    const clauses = ResponseService.limitOffset({}, req);
+    const clause = ResponseService.makeClause(req);
 
-    Post.findAll(clauses)
+    Post.findAll(clause)
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
@@ -18,12 +18,14 @@ export default function BlogController(models, ResponseService) {
         id: req.params.user_id
       },
       attributes: ['id', 'email', 'status'],
-      include: [{
-        model: Post,
-        limit: clauses.limit,
-        offset: clauses.offset,
-        order: clauses.order
-      }]
+      include: [
+        {
+          model: Post,
+          limit: clauses.limit,
+          offset: clauses.offset,
+          order: clauses.order
+        }
+      ]
     };
     console.log('getPostsByUser');
 
@@ -37,12 +39,14 @@ export default function BlogController(models, ResponseService) {
       where: {
         id: req.params.post_id
       },
-      include: [{
-        model: Comment,
-        limit: 10,
-        offset: 0,
-        order: 'ASC'
-      }]
+      include: [
+        {
+          model: Comment,
+          limit: 10,
+          offset: 0,
+          order: 'ASC'
+        }
+      ]
     })
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));

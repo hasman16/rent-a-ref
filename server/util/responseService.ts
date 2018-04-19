@@ -12,7 +12,37 @@ export default class ResponseService {
     return this.getItemFromBody(req);
   }
 
-  limitOffset(clauses, req, attributes = ['id']) {
+  makeClause(req) {
+    const clause = {
+      where: this.whereClause({}, req)
+    };
+    return this.limitOffset(clause, req);
+  }
+
+  whereClause(where, req) {
+    const Op = this.models.sequelize.Op;
+
+    let attributepairs = String(req.query.search).split(',');
+
+    let keyvalues = attributepairs
+      .map(keyvalue => {
+        return keyvalue.split('|');
+      })
+      .filter(entries => _.isArray(entries) && entries.length === 2)
+      .map(entries => {
+        let value = (entries[1] || '') + '%';
+        let key = entries[0] || 'badkey';
+        let obj = {};
+        obj[key] = {
+          [Op.like]: value
+        };
+        return obj;
+      });
+
+    return Object.assign(where, ...keyvalues);
+  }
+
+  limitOffset(clauses, req) {
     let query = Object.assign(
       {},
       {
@@ -24,8 +54,9 @@ export default class ResponseService {
     let limit = parseInt(query.limit, 10) || 20;
     let offset = (parseInt(query.offset, 10) || 0) * 20;
     let order = query.order || 'ASC';
+    let sortby = String(query.sortby || 'id').split(',');
 
-    order = attributes.map(attribute => {
+    order = sortby.map(attribute => {
       return [attribute, order];
     });
 
