@@ -52,7 +52,7 @@ export default class ResponseService {
       req.query
     );
     let limit = parseInt(query.limit, 10) || 20;
-    let offset = (parseInt(query.offset, 10) || 0) * 20;
+    let offset = parseInt(query.offset, 10) || 0;
     let order = query.order || 'ASC';
     let sortby = String(query.sortby || 'id').split(',');
 
@@ -63,10 +63,10 @@ export default class ResponseService {
     offset = Math.max(offset, 0);
     limit = Math.max(limit, 1);
     limit = Math.min(limit, 20);
-    clauses.offest = offset;
+    clauses.offset = offset;
     clauses.limit = limit;
     clauses.order = order;
-
+    console.log('clauses:', clauses.offset, req.query.offset);
     return clauses;
   }
 

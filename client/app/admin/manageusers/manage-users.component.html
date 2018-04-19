@@ -9,19 +9,20 @@
 
   <div class="card-block" *ngIf="users && users.length > 0">
     <ngx-datatable class="material"
-      [rows]="rows"
+      [rows]="users"
       [columns]="columns"
-
-        [loadingIndicator]="loadingIndicator"
-
-        [columnMode]="'force'"
-        [headerHeight]="40"
-        [summaryRow]="true"
-        [summaryPosition]="'bottom'"
-        [footerHeight]="40"
-        [limit]="10"
-        [rowHeight]="'auto'"
-        [reorderable]="reorderable"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [externalSorting]="true"
+      [loadingIndicator]="isLoading"
+      (sort)="onSort($event)"
+      [externalPaging]="true"
+      [count]="page.total_elements"
+      [offset]="page.offset"
+      [limit]="page.limit"
+      (page)='setPage($event)'
       >
     </ngx-datatable>
 

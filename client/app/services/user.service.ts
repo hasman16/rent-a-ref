@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Login, Profile, User } from './../shared/models/index';
 
 import { Observable } from 'rxjs/Observable';
@@ -25,7 +25,12 @@ export class UserService {
   }
 
   getUsers(queryParams: any = null): Observable<User[]> {
-    return <Observable<User[]>>this.http.get(`/api/users`);
+    /*const params: HttpParams = new HttpParams({
+      fromObject: queryParams
+    });*/
+    return <Observable<User[]>>this.http.get(`/api/users`, {
+      params: queryParams
+    });
   }
 
   getUser(user_id: any): Observable<User> {

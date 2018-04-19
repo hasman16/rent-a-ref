@@ -9,9 +9,14 @@ import {
   CanComponentDeactivate,
   UserService
 } from '../../services/index';
-import { User } from './../../shared/models/index';
+import { Page, User } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
+
+interface Sorts {
+  dir: string;
+  prop: string;
+}
 
 @Component({
   selector: 'rar-manage-users',
@@ -24,6 +29,7 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
   protected allowEdit: boolean = false;
   protected sortOrder: string = 'asc';
   protected currentUser: User = <User>{};
+  protected page: Page;
 
   protected columns: any[] = [
     { name: 'Email', prop: 'email' },
@@ -38,16 +44,16 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
     public toast: ToastComponent,
     private userService: UserService,
     private auth: AuthService
-  ) {}
+  ) {
+    this.resetPaging();
+  }
 
   ngOnInit() {
     const users: User[] = this.route.snapshot.data.users;
     this.currentUser = this.auth.getCurrentUser();
     this.users = _.isArray(users) ? _.cloneDeep(users) : [];
     this.rows = this.users;
-    if (this.users.length === 0) {
-      //this.getUsers();
-    }
+    this.getUsers(this.page);
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
@@ -56,32 +62,43 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  getUsers() {
-    const paramsObj = {
-      //can_referee: 'pending'
-    };
-    const query = {
-      params: paramsObj
-    };
+  getUsers(params: any) {
+    this.isLoading = true;
     this.userService
-      .getUsers(query)
+      .getUsers(params)
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
       );
   }
 
-  sortTable(predicate: string = ''): void {
-    const users: User = _.cloneDeep(this.users);
-    predicate = predicate == 'organize' ? 'can_organize' : predicate;
-    predicate = predicate == 'referee' ? 'can_referee' : predicate;
-    this.users = _.orderBy(this.users, predicate, this.sortOrder);
-    this.sortOrder = this.sortOrder == 'asc' ? 'desc' : 'asc';
+  onSort(sorting): void {
+    const sorter: Sorts = <Sorts>sorting.sorts[0];
+    this.page.order = sorter.dir;
+    this.page.sortby = sorter.prop;
+    this.page.offset = 0;
+  }
+
+  setPage(paging): void {
+    this.page.offset = paging.offset;
+    this.getUsers(this.page);
+  }
+
+  resetPaging(): void {
+    this.page = <Page>{
+      offset: 0,
+      limit: 5,
+      total_elements: 0,
+      total_pages: 0,
+      sortby: '',
+      order: '',
+      search: ''
+    };
   }
 
   updateUser() {
     this.userService
-      .getUsers()
+      .getUsers(this.page)
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
@@ -89,19 +106,23 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
   }
 
   deleteUser(user) {
-    this.userService
-      .deleteUser(user)
-      .subscribe(
-        data => this.toast.setMessage('user deleted successfully.', 'success'),
-        (err: HttpErrorResponse) => this.callFailure(err),
-        () => this.getUsers()
-      );
+    this.userService.deleteUser(user).subscribe(
+      data => this.toast.setMessage('user deleted successfully.', 'success'),
+      (err: HttpErrorResponse) => this.callFailure(err),
+      () => {
+        this.resetPaging();
+        this.getUsers(this.page);
+      }
+    );
   }
 
   callSuccess(res) {
     this.toast.setMessage(res.message, 'success');
-    this.users = _.isArray(res) ? _.cloneDeep(res) : [];
+    this.users = _.isArray(res.rows) ? _.cloneDeep(res.rows) : [];
+    this.page.total_elements = res.count || 0;
+    this.page.total_pages = this.page.total_elements / this.page.limit;
     this.isLoading = false;
+    console.log(':::', res.count, this.users, this.page.total_pages);
   }
 
   callFailure(err: HttpErrorResponse, message = 'An error occurred') {
@@ -110,5 +131,6 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
     } else {
       this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
     }
+    this.isLoading = false;
   }
 }
