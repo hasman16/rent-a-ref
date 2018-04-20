@@ -124,7 +124,7 @@ const routes: Routes = [
         path: 'manageusers',
         component: ManageUsersComponent,
         resolve: {
-          users: UserResolver
+          userData: UserResolver
         }
       },
       {

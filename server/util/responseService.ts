@@ -53,20 +53,20 @@ export default class ResponseService {
     );
     let limit = parseInt(query.limit, 10) || 20;
     let offset = parseInt(query.offset, 10) || 0;
-    let order = query.order || 'ASC';
     let sortby = String(query.sortby || 'id').split(',');
+    let order = _.toUpper(query.order);
+    order = _.includes(['ASC', 'DESC'], order) ? order : 'ASC';
 
     order = sortby.map(attribute => {
       return [attribute, order];
     });
 
     offset = Math.max(offset, 0);
-    limit = Math.max(limit, 1);
-    limit = Math.min(limit, 20);
-    clauses.offset = offset;
+    limit = Math.min(Math.max(limit, 1), 20);
     clauses.limit = limit;
+    clauses.offset = offset * limit;
     clauses.order = order;
-    console.log('clauses:', clauses.offset, req.query.offset);
+
     return clauses;
   }
 

@@ -9,7 +9,6 @@ import { SuspendedComponent } from '../account/profile/suspended/suspended.compo
 import { DeactivatedComponent } from '../account/profile/deactivated/deactivated.component';
 import { StandbyComponent } from '../account/profile/standby/standby.component';
 import { PasswordresetComponent } from '../account/profile/passwordreset/passwordreset.component';
-// import { RichGridComponent } from '../rich-grid-example/rich-grid.component';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],

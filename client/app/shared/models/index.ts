@@ -14,3 +14,5 @@ export * from './country';
 export * from './state';
 export * from './option';
 export * from './page';
+export * from './paged-data';
+export * from './sorts';

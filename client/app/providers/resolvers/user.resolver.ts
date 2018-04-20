@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { UserService } from './../../services/index';
-import { User } from './../../shared/models/index';
+import { PagingService, UserService } from './../../services/index';
+import { Page, PagedData } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class UserResolver implements Resolve<Observable<User[]>> {
-	constructor(protected userService: UserService) {}
+export class UserResolver implements Resolve<Observable<PagedData>> {
+	constructor(
+		protected pagingService: PagingService,
+		protected userService: UserService
+	) {}
 
-	resolve(): Observable<User[]> {
-		return this.userService.getUsers();
+	resolve(): Observable<PagedData> {
+		const pagingInfo: Page = this.pagingService.getDefaultPager();
+		return this.userService.getUsers(pagingInfo);
 	}
 }

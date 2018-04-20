@@ -8,3 +8,4 @@ export * from './profile.service';
 export * from './states.service';
 export * from './token.service';
 export * from './user.service';
+export * from './paging.service';

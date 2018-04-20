@@ -7,16 +7,12 @@ import { ToastComponent } from '../../shared/toast/toast.component';
 import {
   AuthService,
   CanComponentDeactivate,
+  PagingService,
   UserService
 } from '../../services/index';
-import { Page, User } from './../../shared/models/index';
+import { Page, PagedData, Sorts, User } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
-
-interface Sorts {
-  dir: string;
-  prop: string;
-}
 
 @Component({
   selector: 'rar-manage-users',
@@ -27,7 +23,6 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
   protected users: User[] = [];
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
-  protected sortOrder: string = 'asc';
   protected currentUser: User = <User>{};
   protected page: Page;
 
@@ -37,23 +32,22 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
     { name: 'Referee', prop: 'can_referee' },
     { name: 'Status', prop: 'status' }
   ];
-  protected rows: any[];
 
   constructor(
     private route: ActivatedRoute,
     public toast: ToastComponent,
     private userService: UserService,
-    private auth: AuthService
+    private auth: AuthService,
+    private pagingService: PagingService
   ) {
-    this.resetPaging();
+    this.page = _.cloneDeep(this.pagingService.getDefaultPager());
   }
 
   ngOnInit() {
-    const users: User[] = this.route.snapshot.data.users;
+    const pagedData: PagedData = this.route.snapshot.data.userData;
     this.currentUser = this.auth.getCurrentUser();
-    this.users = _.isArray(users) ? _.cloneDeep(users) : [];
-    this.rows = this.users;
-    this.getUsers(this.page);
+    this.processPagedData(pagedData);
+    this.isLoading = false;
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
@@ -73,27 +67,14 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
   }
 
   onSort(sorting): void {
-    const sorter: Sorts = <Sorts>sorting.sorts[0];
-    this.page.order = sorter.dir;
-    this.page.sortby = sorter.prop;
-    this.page.offset = 0;
+    const page: Page = this.pagingService.sortColumn(this.page, sorting);
+    this.page = _.cloneDeep(page);
+    this.getUsers(this.page);
   }
 
   setPage(paging): void {
     this.page.offset = paging.offset;
     this.getUsers(this.page);
-  }
-
-  resetPaging(): void {
-    this.page = <Page>{
-      offset: 0,
-      limit: 5,
-      total_elements: 0,
-      total_pages: 0,
-      sortby: '',
-      order: '',
-      search: ''
-    };
   }
 
   updateUser() {
@@ -110,19 +91,23 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
       data => this.toast.setMessage('user deleted successfully.', 'success'),
       (err: HttpErrorResponse) => this.callFailure(err),
       () => {
-        this.resetPaging();
+        this.page = this.pagingService.getDefaultPager();
         this.getUsers(this.page);
       }
     );
   }
 
-  callSuccess(res) {
-    this.toast.setMessage(res.message, 'success');
-    this.users = _.isArray(res.rows) ? _.cloneDeep(res.rows) : [];
-    this.page.total_elements = res.count || 0;
-    this.page.total_pages = this.page.total_elements / this.page.limit;
+  processPagedData(data: PagedData): void {
+    let [page, newData] = this.pagingService.processPagedData(this.page, data);
+    console.log('page:', newData);
+    this.page = page;
+    this.users = newData;
+  }
+
+  callSuccess(data: PagedData) {
+    this.processPagedData(data);
+    this.toast.setMessage('users data retrieved', 'success');
     this.isLoading = false;
-    console.log(':::', res.count, this.users, this.page.total_pages);
   }
 
   callFailure(err: HttpErrorResponse, message = 'An error occurred') {
