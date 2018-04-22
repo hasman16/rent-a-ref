@@ -5,8 +5,8 @@ function BlogController(models, ResponseService) {
     var Comment = models.Comment;
     var User = models.User;
     function getAllPosts(req, res) {
-        var clauses = ResponseService.limitOffset({}, req);
-        Post.findAll(clauses)
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        Post.findAndCountAll(clause)
             .then(function (results) { return ResponseService.successCollection(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
@@ -17,12 +17,14 @@ function BlogController(models, ResponseService) {
                 id: req.params.user_id
             },
             attributes: ['id', 'email', 'status'],
-            include: [{
+            include: [
+                {
                     model: Post,
                     limit: clauses.limit,
                     offset: clauses.offset,
                     order: clauses.order
-                }]
+                }
+            ]
         };
         console.log('getPostsByUser');
         User.findOne(mainClauses)
@@ -34,12 +36,14 @@ function BlogController(models, ResponseService) {
             where: {
                 id: req.params.post_id
             },
-            include: [{
+            include: [
+                {
                     model: Comment,
                     limit: 10,
                     offset: 0,
                     order: 'ASC'
-                }]
+                }
+            ]
         })
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });

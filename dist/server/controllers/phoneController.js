@@ -8,9 +8,8 @@ function PhoneController(models, ResponseService) {
     }; };
     // Get all
     function getAll(req, res) {
-        Phone.findAll({
-            attributes: attributes
-        })
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        Phone.findAndCountAll(clause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }

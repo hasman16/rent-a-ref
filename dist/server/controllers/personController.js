@@ -5,9 +5,8 @@ function PersonController(models, ResponseService) {
     var attributes = ['id', 'firstname', 'middlenames', 'lastname'];
     // Get all
     function getAll(req, res) {
-        Person.findAll({
-            attributes: attributes
-        })
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        Person.findAndCountAll(clause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }

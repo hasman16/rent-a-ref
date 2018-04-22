@@ -8,25 +8,53 @@ var ResponseService = /** @class */ (function () {
     ResponseService.prototype.makeObject = function (req) {
         return this.getItemFromBody(req);
     };
-    ResponseService.prototype.limitOffset = function (clauses, req, attributes) {
-        if (attributes === void 0) { attributes = ['id']; }
+    ResponseService.prototype.produceSearchAndSortClause = function (req) {
+        var whereClause = {
+            where: this.produceWhereClause(req)
+        };
+        var limitOffSetSort = this.produceLimitOffsetAndSort(req);
+        return Object.assign(whereClause, limitOffSetSort);
+    };
+    ResponseService.prototype.produceWhereClause = function (req) {
+        var Op = this.models.sequelize.Op;
+        var attributepairs = String(req.query.search).split(',');
+        var keyvalues = attributepairs
+            .map(function (keyvalue) {
+            return keyvalue.split('|');
+        })
+            .filter(function (entries) { return _.isArray(entries) && entries.length === 2; })
+            .map(function (entries) {
+            var value = (entries[1] || '') + '%';
+            var key = entries[0] || 'badkey';
+            var obj = {};
+            obj[key] = (_a = {},
+                _a[Op.like] = value,
+                _a);
+            return obj;
+            var _a;
+        });
+        return Object.assign.apply(Object, [{}].concat(keyvalues));
+    };
+    ResponseService.prototype.produceLimitOffsetAndSort = function (req) {
         var query = Object.assign({}, {
             offset: 0,
             limit: 20
         }, req.query);
         var limit = parseInt(query.limit, 10) || 20;
-        var offset = (parseInt(query.offset, 10) || 0) * 20;
-        var order = query.order || 'ASC';
-        order = attributes.map(function (attribute) {
+        var offset = parseInt(query.offset, 10) || 0;
+        var sortby = String(query.sortby || 'id').split(',');
+        var order = _.toUpper(query.order);
+        order = _.includes(['ASC', 'DESC'], order) ? order : 'ASC';
+        order = sortby.map(function (attribute) {
             return [attribute, order];
         });
-        offset = Math.max(offset, 0);
-        limit = Math.max(limit, 1);
-        limit = Math.min(limit, 20);
-        clauses.offest = offset;
-        clauses.limit = limit;
-        clauses.order = order;
-        return clauses;
+        limit = Math.min(Math.max(limit, 1), 20);
+        offset = Math.max(offset, 0) * limit;
+        return {
+            limit: limit,
+            offset: offset,
+            order: order
+        };
     };
     ResponseService.prototype.getItemFromBody = function (req) {
         var obj = Object.assign({}, req.body);

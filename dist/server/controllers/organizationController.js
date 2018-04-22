@@ -6,9 +6,8 @@ function OrganizationController(models, ResponseService) {
     var attributes = ['id', 'name', 'user_id'];
     var stripe = new Stripe(process.env.STRIPE_KEY);
     function getAll(req, res) {
-        Organization.findAll({
-            attributes: attributes
-        })
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        Organization.findAndCountAll(clause)
             .then(function (results) { return ResponseService.successCollection(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }

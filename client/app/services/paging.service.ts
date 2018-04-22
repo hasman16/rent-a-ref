@@ -4,12 +4,13 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class PagingService {
+	private LIMIT: number = 10;
 	constructor() {}
 
 	getDefaultPager(): Page {
 		return <Page>{
 			offset: 0,
-			limit: 10,
+			limit: this.LIMIT,
 			total_elements: 0,
 			total_pages: 0,
 			sortby: '',
@@ -30,6 +31,7 @@ export class PagingService {
 	processPagedData(page: Page, data: PagedData): [Page, Array<any>] {
 		const newData: any = _.isArray(data.rows) ? _.cloneDeep(data.rows) : [];
 		let pager: Page = _.cloneDeep(page);
+		pager.limit = Math.min(Math.max(pager.limit,0), this.LIMIT);
 		pager.total_elements = data.count || 0;
 		pager.total_pages = Math.ceil(pager.total_elements / pager.limit);
 

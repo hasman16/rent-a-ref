@@ -98,7 +98,6 @@ export default function passwordController(
           switch (newUser.status) {
             case 'active':
               return generatePassword(res, user, newUser);
-              break;
             case 'banned':
               message = 'Account banned by the Admin.';
               break;

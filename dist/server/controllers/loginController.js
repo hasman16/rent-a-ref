@@ -40,12 +40,12 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
             where: {
                 user_id: user_id
             }
-        })
-            .then(function (newLock) {
+        }).then(function (newLock) {
             var lock = callback(newLock.attempts, newLock.passcode);
             var updatePromise;
             if (lock.attempts >= 5) {
-                updatePromise = bcrypt.hash(lock.passcode, 12)
+                updatePromise = bcrypt
+                    .hash(lock.passcode, 12)
                     .then(function (passcode) {
                     lock.passcode = passcode;
                     return doUpdate(lock);
@@ -68,7 +68,8 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
                 attempts = 5;
                 passcode = randomstring.generate();
                 var content = 'There was more than 5 unsuccessful login attempts on your';
-                content += ' account. Use the temp passcode below to reset your password: ';
+                content +=
+                    ' account. Use the temp passcode below to reset your password: ';
                 content += '\n\n ' + passcode;
                 SendGridService.sendEmail({
                     to: user.email,
@@ -83,8 +84,7 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
                 passcode: passcode
             };
         }
-        return updateLock(user.id, callback)
-            .then(function () {
+        return updateLock(user.id, callback).then(function () {
             var message = 'Authorization failed';
             res.status(403).json({
                 success: false,
@@ -104,10 +104,11 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
     function comparePassword(res, user, newUser) {
         var lock = newUser.lock;
         //console.log('comparePassword:', user.password, lock.password);
-        return bcrypt.compare(user.password, lock.password)
+        return bcrypt
+            .compare(user.password, lock.password)
             .then(function (result) {
             if (result) {
-                console.log('got result');
+                //console.log('got result');
                 var person = newUser.person;
                 var user_1 = {
                     id: newUser.id,
@@ -143,6 +144,9 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
     function userStatus(res, newUser) {
         var message = 'Contact Admin to enabled Account.';
         switch (newUser.status) {
+            case 'banned':
+                message = 'Account banned by the Admin.';
+                break;
             case 'suspended':
                 message = 'Account suspended by the Admin.';
                 break;
@@ -163,12 +167,16 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
         //console.log('try login:', user.email);
         User.findOne({
             where: { email: user.email },
-            include: [{
+            include: [
+                {
                     model: Person
-                }, {
+                },
+                {
                     model: Lock
-                }]
-        }).then(function (newUser) {
+                }
+            ]
+        })
+            .then(function (newUser) {
             //console.log('new User:', newUser);
             if (newUser) {
                 if (newUser.status === 'active') {

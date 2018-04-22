@@ -5,9 +5,8 @@ function SportController(models, ResponseService) {
     var attributes = ['id', 'name', 'periods', 'duration', 'referees'];
     // Get all
     function getAll(req, res) {
-        Sport.findAll({
-            attributes: attributes
-        })
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        Sport.findAndCountAll(clause)
             .then(function (results) { return ResponseService.successCollection(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
@@ -65,11 +64,12 @@ function SportController(models, ResponseService) {
                 id: req.params.sport_id
             }
         };
-        sequelize.transaction(function (t) {
-            return Sport.destroy(clause, { transaction: t })
-                .then(function (lines1) {
-                return Referee.destroy(clause, { transaction: t })
-                    .then(function (lines2) { return ResponseService.success(res, 'Sport and Referees deleted:', totalLines(lines1, lines2), 204); });
+        sequelize
+            .transaction(function (t) {
+            return Sport.destroy(clause, { transaction: t }).then(function (lines1) {
+                return Referee.destroy(clause, { transaction: t }).then(function (lines2) {
+                    return ResponseService.success(res, 'Sport and Referees deleted:', totalLines(lines1, lines2), 204);
+                });
             });
         })
             .catch(function (error) { return ResponseService.exception(res, error); });

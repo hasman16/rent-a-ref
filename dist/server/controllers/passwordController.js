@@ -14,15 +14,16 @@ function passwordController(bcrypt, jwt, models, ResponseService, SendGridServic
                 where: (_a = {
                         id: user_id
                     },
-                    _a[Op.or] = [{
+                    _a[Op.or] = [
+                        {
                             status: 'active'
                         },
                         {
                             status: 'locked'
-                        }],
+                        }
+                    ],
                     _a)
-            }, { transation: t })
-                .then(function (user) {
+            }, { transation: t }).then(function (user) {
                 return Lock.update({
                     attempts: 0,
                     passcode: null,
@@ -40,15 +41,13 @@ function passwordController(bcrypt, jwt, models, ResponseService, SendGridServic
     function resetSuccess(res) {
         ResponseService.success(res, {
             success: true,
-            message: 'Password has been reset successfully.',
+            message: 'Password has been reset successfully.'
         }, 201);
     }
     function generatePassword(res, user, newUser) {
-        return bcrypt.hash(user.password1, 12)
-            .then(function (password) {
+        return bcrypt.hash(user.password1, 12).then(function (password) {
             if (user.password1 === user.password2) {
-                return unlockUser(newUser.id, password)
-                    .then(function () { return resetSuccess(res); });
+                return unlockUser(newUser.id, password).then(function () { return resetSuccess(res); });
             }
             else {
                 ResponseService.failure(res, 'Password1 and Password2 do not match.', 403);
@@ -59,20 +58,26 @@ function passwordController(bcrypt, jwt, models, ResponseService, SendGridServic
         var user = {
             id: req.params.user_id,
             password1: req.body.password1,
-            password2: req.body.password2,
+            password2: req.body.password2
         };
-        console.log('changepassword:', user);
+        //console.log('changepassword:', user);
         User.findOne({
             where: { id: user.id },
-            include: [{
+            include: [
+                {
                     model: Lock
-                }]
-        }).then(function (newUser) {
+                }
+            ]
+        })
+            .then(function (newUser) {
             var message = 'Unknown user.';
             if (newUser) {
                 switch (newUser.status) {
                     case 'active':
                         return generatePassword(res, user, newUser);
+                    case 'banned':
+                        message = 'Account banned by the Admin.';
+                        break;
                     case 'locked':
                         message = 'Account is locked check your mail.';
                         break;
@@ -90,7 +95,8 @@ function passwordController(bcrypt, jwt, models, ResponseService, SendGridServic
     }
     function comparePasscode(res, user, newUser) {
         var lock = newUser.lock;
-        return bcrypt.compare(user.passcode, lock.passcode)
+        return bcrypt
+            .compare(user.passcode, lock.passcode)
             .then(function (result) {
             if (result) {
                 return generatePassword(res, user, newUser);
@@ -110,10 +116,13 @@ function passwordController(bcrypt, jwt, models, ResponseService, SendGridServic
         };
         User.findOne({
             where: { email: user.email },
-            include: [{
+            include: [
+                {
                     model: Lock
-                }]
-        }).then(function (newUser) {
+                }
+            ]
+        })
+            .then(function (newUser) {
             var message = 'Unknown username.';
             if (newUser) {
                 var status_1 = newUser.status;
@@ -134,20 +143,24 @@ function passwordController(bcrypt, jwt, models, ResponseService, SendGridServic
     function sendPasscode(res, user) {
         var passcode = randomstring.generate();
         var content = 'You are receiving this email because someone (presumably you), reported a lost password at http://www.ref-a-ref.com.';
-        content += '\n\n If it wasn\'t you, please ignore this email.';
-        content += '\n\n If it was you, however, click the link below to reset your ';
-        content += '\n\n password.You can also copy and paste the link into your browser address bar.';
+        content += "\n\n If it wasn't you, please ignore this email.";
+        content +=
+            '\n\n If it was you, however, click the link below to reset your ';
+        content +=
+            '\n\n password.You can also copy and paste the link into your browser address bar.';
         content += '\n\n ';
         content += 'Use the passcode to reset your password.';
         content += '\n\n ' + passcode;
         content += '\n\n ';
-        content += '\n\n Or you can copy the link below to launch the reset password page';
+        content +=
+            '\n\n Or you can copy the link below to launch the reset password page';
         content += '\n\n http://localhost:4200/reset?passcode=' + passcode;
-        bcrypt.hash(passcode, 12)
+        bcrypt
+            .hash(passcode, 12)
             .then(function (newPasscode) {
             return Lock.update({
                 passcode: newPasscode,
-                passcode_age: (new Date())
+                passcode_age: new Date()
             }, {
                 where: {
                     user_id: user.id
@@ -171,14 +184,17 @@ function passwordController(bcrypt, jwt, models, ResponseService, SendGridServic
     }
     function forgotpassword(req, res) {
         var user = {
-            email: req.body.email,
+            email: req.body.email
         };
         User.findOne({
             where: { email: user.email },
-            include: [{
+            include: [
+                {
                     model: Lock
-                }]
-        }).then(function (newUser) {
+                }
+            ]
+        })
+            .then(function (newUser) {
             var message = 'Unknown username.';
             if (newUser) {
                 var status_2 = newUser.status;

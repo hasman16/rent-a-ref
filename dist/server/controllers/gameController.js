@@ -23,8 +23,8 @@ function GameController(models, ResponseService) {
         ResponseService.success(res, newGame, status);
     }
     function getAll(req, res) {
-        console.log('getAll games');
-        Game.findAll()
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        Game.findAndCountAll(clause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
