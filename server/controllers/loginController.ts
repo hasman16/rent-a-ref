@@ -1,69 +1,84 @@
 import { UserModel } from './../types/index';
 import * as randomstring from 'randomstring';
 
-export default function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) {
+export default function LoginController(
+  bcrypt,
+  jwt,
+  models,
+  ResponseService,
+  SendGridService
+) {
   const User = models.User;
   const Lock = models.Lock;
   const Person = models.Person;
 
   function lockUser(user_id) {
-    return User.update({
-      status: 'locked'
-    }, {
+    return User.update(
+      {
+        status: 'locked'
+      },
+      {
         where: {
           id: user_id,
           status: 'active'
         }
-      });
+      }
+    );
   }
 
   function unlockUser(user_id) {
-    User.update({
-      status: 'active'
-    }, {
+    User.update(
+      {
+        status: 'active'
+      },
+      {
         where: {
           id: user_id,
           status: 'locked'
         }
-      });
+      }
+    );
   }
 
   function updateLock(user_id, callback) {
     function doUpdate(lock) {
-      return Lock.update({
-        attempts: lock.attempts,
-        passcode: lock.passcode
-      }, {
+      return Lock.update(
+        {
+          attempts: lock.attempts,
+          passcode: lock.passcode
+        },
+        {
           where: {
             user_id: user_id
           }
-        });
+        }
+      );
     }
 
     return Lock.findOne({
       where: {
         user_id: user_id
       }
-    })
-      .then(newLock => {
-        const lock = callback(newLock.attempts, newLock.passcode);
-        let updatePromise;
+    }).then(newLock => {
+      const lock = callback(newLock.attempts, newLock.passcode);
+      let updatePromise;
 
-        if (lock.attempts >= 5) {
-          updatePromise = bcrypt.hash(lock.passcode, 12)
-            .then(passcode => {
-              lock.passcode = passcode;
-              return doUpdate(lock);
-            })
-            .then(() => {
-              lockUser(user_id);
-            });
-        } else {
-          updatePromise = doUpdate(lock);
-        }
+      if (lock.attempts >= 5) {
+        updatePromise = bcrypt
+          .hash(lock.passcode, 12)
+          .then(passcode => {
+            lock.passcode = passcode;
+            return doUpdate(lock);
+          })
+          .then(() => {
+            lockUser(user_id);
+          });
+      } else {
+        updatePromise = doUpdate(lock);
+      }
 
-        return updatePromise;
-      });
+      return updatePromise;
+    });
   }
 
   function failedLogin(res, user) {
@@ -75,8 +90,10 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
       if (attempts >= 5) {
         attempts = 5;
         passcode = randomstring.generate();
-        let content = 'There was more than 5 unsuccessful login attempts on your';
-        content += ' account. Use the temp passcode below to reset your password: ';
+        let content =
+          'There was more than 5 unsuccessful login attempts on your';
+        content +=
+          ' account. Use the temp passcode below to reset your password: ';
         content += '\n\n ' + passcode;
 
         SendGridService.sendEmail({
@@ -93,33 +110,37 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
       };
     }
 
-    return updateLock(user.id, callback)
-      .then(function() {
-        const message = 'Authorization failed';
-        res.status(403).json({
-          success: false,
-          message: message,
-          attempts: dummy
-        });
+    return updateLock(user.id, callback).then(function() {
+      const message = 'Authorization failed';
+      res.status(403).json({
+        success: false,
+        message: message,
+        attempts: dummy
       });
+    });
   }
 
   function loginSuccess(res, token, user) {
-    ResponseService.success(res, {
-      success: true,
-      message: 'Authorization success',
-      token: token,
-      user: user
-    }, 201);
+    ResponseService.success(
+      res,
+      {
+        success: true,
+        message: 'Authorization success',
+        token: token,
+        user: user
+      },
+      201
+    );
   }
 
   function comparePassword(res, user, newUser) {
     const lock = newUser.lock;
     //console.log('comparePassword:', user.password, lock.password);
-    return bcrypt.compare(user.password, lock.password)
-    .then((result) => {
+    return bcrypt
+      .compare(user.password, lock.password)
+      .then(result => {
         if (result) {
-          console.log('got result');
+          //console.log('got result');
           const person = newUser.person;
           const user = <UserModel>{
             id: newUser.id,
@@ -145,7 +166,6 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
           }).then(() => {
             loginSuccess(res, token, user);
           });
-
         } else {
           return failedLogin(res, newUser);
         }
@@ -156,6 +176,9 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
   function userStatus(res, newUser) {
     let message = 'Contact Admin to enabled Account.';
     switch (newUser.status) {
+      case 'banned':
+        message = 'Account banned by the Admin.';
+        break;
       case 'suspended':
         message = 'Account suspended by the Admin.';
         break;
@@ -177,23 +200,27 @@ export default function LoginController(bcrypt, jwt, models, ResponseService, Se
     //console.log('try login:', user.email);
     User.findOne({
       where: { email: user.email },
-      include: [{
-        model: Person
-      }, {
+      include: [
+        {
+          model: Person
+        },
+        {
           model: Lock
-        }]
-    }).then(function(newUser) {
-      //console.log('new User:', newUser);
-      if (newUser) {
-        if (newUser.status === 'active') {
-          return comparePassword(res, user, newUser);
-        } else {
-          return userStatus(res, newUser);
         }
-      } else {
-        ResponseService.failure(res, 'Unknown username or password');
-      }
+      ]
     })
+      .then(function(newUser) {
+        //console.log('new User:', newUser);
+        if (newUser) {
+          if (newUser.status === 'active') {
+            return comparePassword(res, user, newUser);
+          } else {
+            return userStatus(res, newUser);
+          }
+        } else {
+          ResponseService.failure(res, 'Unknown username or password');
+        }
+      })
       .catch(error => ResponseService.exception(res, error));
   }
 

@@ -30,19 +30,20 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(newRequest).do(
       (event: HttpEvent<any>) => {
+        this.loaderService.hide();
         if (event instanceof HttpResponse) {
           // do stuff with response if you want
         }
       },
       (err: any) => {
+        this.loaderService.hide();
         if (err instanceof HttpErrorResponse) {
           if (err.status === 401) {
             // redirect to the login route
             // or show a modal
           }
         }
-      },
-      () => this.loaderService.hide()
+      }
     );
   }
 }

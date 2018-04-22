@@ -1,4 +1,4 @@
-<div class="card" style="min-height: 300px;">
+<div class="card" style="min-height: 750px;">
   <h1 class="etched-text">Manage Users</h1>
   
   <div class="card-block horizontal-and-vertical-centering " *ngIf="(!users || users.length === 0)">
@@ -26,32 +26,7 @@
       >
     </ngx-datatable>
 
-    <!--
-    <table class="table table-bordered table-hover sortable-table" >
-      <thead class="thead-light">
-        <tr>
-          <th (click)="sortTable('email')">Email</th>
-          <th (click)="sortTable('organize')">Organizer</th>
-          <th (click)="sortTable('referee')">Referee</th>
-          <th (click)="sortTable('status')">Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{user.email}}</td>
-          <td>{{user.can_organize}}</td>
-          <td>{{user.can_referee}}</td>
-          <td>{{user.status}}</td>
-          <td>
-            <button class="btn btn-sm btn-danger" (click)="deleteUser(user)" [disabled]="currentUser.id === user.id">
-            <i class="fa fa-wrench"></i>
-          </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  -->
+ 
   </div>
 
 </div>
