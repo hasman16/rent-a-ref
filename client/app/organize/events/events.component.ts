@@ -23,6 +23,8 @@ import {
   Game,
   Phone,
   Option,
+  Page,
+  PagedData,
   Organization,
   State,
   Sport
@@ -83,7 +85,7 @@ export class EventsComponent implements OnInit {
   public ngOnInit() {
     this.setEventsMode();
     this.games = _.cloneDeep(this.route.snapshot.data.games);
-    this.sports = _(this.route.snapshot.data.sports)
+    this.sports = _(this.route.snapshot.data.sportsData.rows)
       .map((sport: Sport): Option => {
         return <Option>{
           label: sport.name,

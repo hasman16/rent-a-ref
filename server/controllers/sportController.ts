@@ -4,9 +4,9 @@ export default function SportController(models, ResponseService) {
 
   // Get all
   function getAll(req, res) {
-    const clause = ResponseService.makeClause(req);
+    const clause = ResponseService.produceSearchAndSortClause(req);
 
-    Sport.findAll(clause)
+    Sport.findAndCountAll(clause)
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }

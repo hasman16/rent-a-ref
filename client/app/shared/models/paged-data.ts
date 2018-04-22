@@ -1,4 +1,4 @@
 export interface PagedData {
-	count: number;
-	rows: any[];
+	count?: number;
+	rows?: any[];
 }

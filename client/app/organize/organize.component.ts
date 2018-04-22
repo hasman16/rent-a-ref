@@ -15,6 +15,8 @@ import {
   Phone,
   Option,
   Organization,
+  Page,
+  PagedData,
   Profile,
   State,
   User

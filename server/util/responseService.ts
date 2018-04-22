@@ -12,14 +12,16 @@ export default class ResponseService {
     return this.getItemFromBody(req);
   }
 
-  makeClause(req) {
-    const clause = {
-      where: this.whereClause({}, req)
+  produceSearchAndSortClause(req) {
+    const whereClause = {
+      where: this.produceWhereClause(req)
     };
-    return this.limitOffset(clause, req);
+    const limitOffSetSort = this.produceLimitOffsetAndSort(req);
+
+    return Object.assign(whereClause, limitOffSetSort);
   }
 
-  whereClause(where, req) {
+  produceWhereClause(req) {
     const Op = this.models.sequelize.Op;
 
     let attributepairs = String(req.query.search).split(',');
@@ -39,10 +41,10 @@ export default class ResponseService {
         return obj;
       });
 
-    return Object.assign(where, ...keyvalues);
+    return Object.assign({}, ...keyvalues);
   }
 
-  limitOffset(clauses, req) {
+  produceLimitOffsetAndSort(req) {
     let query = Object.assign(
       {},
       {
@@ -63,11 +65,12 @@ export default class ResponseService {
 
     offset = Math.max(offset, 0);
     limit = Math.min(Math.max(limit, 1), 20);
-    clauses.limit = limit;
-    clauses.offset = offset * limit;
-    clauses.order = order;
 
-    return clauses;
+    return {
+      limit,
+      offset,
+      order
+    };
   }
 
   getItemFromBody(req) {

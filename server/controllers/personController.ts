@@ -6,9 +6,9 @@ export default function PersonController(models, ResponseService) {
 
   // Get all
   function getAll(req, res) {
-    const clause = ResponseService.makeClause(req);
+    const clause = ResponseService.produceSearchAndSortClause(req);
 
-    Person.findAll(clause)
+    Person.findAndCountAll(clause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }

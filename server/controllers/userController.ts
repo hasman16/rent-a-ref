@@ -14,7 +14,7 @@ export default function UserController(
   ];
 
   function getAll(req, res) {
-    const clause = ResponseService.makeClause(req);
+    const clause = ResponseService.produceSearchAndSortClause(req);
 
     User.findAndCountAll(clause)
       .then(results => {

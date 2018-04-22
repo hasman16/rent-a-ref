@@ -25,9 +25,9 @@ export default function GameController(models, ResponseService) {
   }
 
   function getAll(req, res) {
-    const clause = ResponseService.makeClause(req);
+    const clause = ResponseService.produceSearchAndSortClause(req);
 
-    Game.findAll(clause)
+    Game.findAndCountAll(clause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
