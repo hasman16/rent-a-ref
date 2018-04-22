@@ -63,8 +63,8 @@ export default class ResponseService {
       return [attribute, order];
     });
 
-    offset = Math.max(offset, 0);
     limit = Math.min(Math.max(limit, 1), 20);
+    offset = Math.max(offset, 0) * limit;
 
     return {
       limit,
