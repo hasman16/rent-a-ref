@@ -12,14 +12,16 @@ export default class ResponseService {
     return this.getItemFromBody(req);
   }
 
-  makeClause(req) {
-    const clause = {
-      where: this.whereClause({}, req)
+  produceSearchAndSortClause(req) {
+    const whereClause = {
+      where: this.produceWhereClause(req)
     };
-    return this.limitOffset(clause, req);
+    const limitOffSetSort = this.produceLimitOffsetAndSort(req);
+
+    return Object.assign(whereClause, limitOffSetSort);
   }
 
-  whereClause(where, req) {
+  produceWhereClause(req) {
     const Op = this.models.sequelize.Op;
 
     let attributepairs = String(req.query.search).split(',');
@@ -39,10 +41,10 @@ export default class ResponseService {
         return obj;
       });
 
-    return Object.assign(where, ...keyvalues);
+    return Object.assign({}, ...keyvalues);
   }
 
-  limitOffset(clauses, req) {
+  produceLimitOffsetAndSort(req) {
     let query = Object.assign(
       {},
       {
@@ -52,22 +54,23 @@ export default class ResponseService {
       req.query
     );
     let limit = parseInt(query.limit, 10) || 20;
-    let offset = (parseInt(query.offset, 10) || 0) * 20;
-    let order = query.order || 'ASC';
+    let offset = parseInt(query.offset, 10) || 0;
     let sortby = String(query.sortby || 'id').split(',');
+    let order = _.toUpper(query.order);
+    order = _.includes(['ASC', 'DESC'], order) ? order : 'ASC';
 
     order = sortby.map(attribute => {
       return [attribute, order];
     });
 
-    offset = Math.max(offset, 0);
-    limit = Math.max(limit, 1);
-    limit = Math.min(limit, 20);
-    clauses.offest = offset;
-    clauses.limit = limit;
-    clauses.order = order;
+    limit = Math.min(Math.max(limit, 1), 20);
+    offset = Math.max(offset, 0) * limit;
 
-    return clauses;
+    return {
+      limit,
+      offset,
+      order
+    };
   }
 
   getItemFromBody(req) {

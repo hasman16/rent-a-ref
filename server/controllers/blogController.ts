@@ -4,9 +4,9 @@ export default function BlogController(models, ResponseService) {
   const User = models.User;
 
   function getAllPosts(req, res) {
-    const clause = ResponseService.makeClause(req);
+    const clause = ResponseService.produceSearchAndSortClause(req);
 
-    Post.findAll(clause)
+    Post.findAndCountAll(clause)
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
   }

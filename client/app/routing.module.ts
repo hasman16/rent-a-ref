@@ -79,7 +79,7 @@ const routes: Routes = [
     canActivate: [AuthGuardLogin],
     resolve: {
       organizations: OrganizationsResolver,
-      sports: SportsResolver
+      sportsData: SportsResolver
     }
   },
   {
@@ -88,7 +88,7 @@ const routes: Routes = [
     canActivate: [AuthGuardLogin],
     resolve: {
       games: EventsResolver,
-      sports: SportsResolver
+      sportsData: SportsResolver
     }
   },
   {
@@ -124,7 +124,7 @@ const routes: Routes = [
         path: 'manageusers',
         component: ManageUsersComponent,
         resolve: {
-          users: UserResolver
+          userData: UserResolver
         }
       },
       {

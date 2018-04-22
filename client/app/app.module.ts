@@ -38,6 +38,7 @@ import { StatesService } from './services/states.service';
 import { TokenService } from './services/token.service';
 import { UserService } from './services/user.service';
 import { OrganizeService } from './services/organize.service';
+import { PagingService } from './services/paging.service';
 import { EventsService } from './services/events.service';
 
 import { AccordionModule } from 'primeng/components/accordion/accordion';
@@ -224,6 +225,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         CookieService,
         CanDeactivateGuardService,
         LoaderService,
+        PagingService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,

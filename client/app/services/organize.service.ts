@@ -7,6 +7,7 @@ import {
   Bio,
   Phone,
   Person,
+  PagedData,
   Profile,
   Sport
 } from './../shared/models/index';
@@ -24,12 +25,12 @@ export class OrganizeService {
   private data;
   private addresses: Address[];
   private phones: Phone[];
-  private sports: Sport[];
+  private sportsData: PagedData;
 
   constructor(private http: HttpClient) {
     this.addresses = [];
     this.phones = [];
-    this.sports = [];
+    this.sportsData = <PagedData>{};
   }
 
   getData() {
@@ -44,16 +45,20 @@ export class OrganizeService {
     return _.cloneDeep(this.phones);
   }
 
-  getSports(): Observable<Sport[]> {
-    let ob: Observable<Sport[]>;
+  getSports(queryParams: any = null): Observable<PagedData> {
+    let ob: Observable<PagedData>;
 
-    if (!_.isArray(this.sports) || this.sports.length === 0) {
+    if (!_.isArray(this.sportsData.rows) || this.sportsData.rows.length === 0) {
       ob = this.http
-        .get<Sport[]>(`/api/sports`)
-        .do((sports: Sport[]) => (this.sports = _.cloneDeep(sports)));
+        .get<PagedData>(`/api/sports`, {
+          params: queryParams
+        })
+        .do(
+          (sportsData: PagedData) => (this.sportsData = _.cloneDeep(sportsData))
+        );
     } else {
-      let bs: BehaviorSubject<Sport[]> = new BehaviorSubject<Sport[]>(null);
-      bs.next(_.cloneDeep(this.sports));
+      let bs: BehaviorSubject<PagedData> = new BehaviorSubject<PagedData>(null);
+      bs.next(_.cloneDeep(this.sportsData));
       ob = bs;
     }
 
@@ -192,7 +197,7 @@ export class OrganizeService {
     return this.bulkUpdate<Phone>(this.bulkPhone(phones, org_id));
   }
 
-  makeStripePayment(org_id, payload):Observable<any> {
+  makeStripePayment(org_id, payload): Observable<any> {
     return this.http.post(
       `/api/make_payment/${org_id}`,
       JSON.stringify(payload)

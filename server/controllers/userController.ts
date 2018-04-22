@@ -14,10 +14,12 @@ export default function UserController(
   ];
 
   function getAll(req, res) {
-    const clause = ResponseService.makeClause(req);
+    const clause = ResponseService.produceSearchAndSortClause(req);
 
-    User.findAll(clause)
-      .then(results => ResponseService.successCollection(res, results))
+    User.findAndCountAll(clause)
+      .then(results => {
+        ResponseService.successCollection(res, results);
+      })
       .catch(error => ResponseService.exception(res, error));
   }
 
