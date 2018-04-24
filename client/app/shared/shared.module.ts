@@ -9,6 +9,8 @@ import { SuspendedComponent } from '../account/profile/suspended/suspended.compo
 import { DeactivatedComponent } from '../account/profile/deactivated/deactivated.component';
 import { StandbyComponent } from '../account/profile/standby/standby.component';
 import { PasswordresetComponent } from '../account/profile/passwordreset/passwordreset.component';
+import { UploadButtonComponent } from './uploadbutton/upload-button.component';
+import { UploaderComponent } from './uploader/uploader.component';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
@@ -20,7 +22,9 @@ import { PasswordresetComponent } from '../account/profile/passwordreset/passwor
     HttpModule,
     // Shared Components
     ToastComponent,
-    LoadingComponent
+    LoadingComponent,
+    UploadButtonComponent,
+    UploaderComponent
   ],
   declarations: [
     ToastComponent,
@@ -28,7 +32,9 @@ import { PasswordresetComponent } from '../account/profile/passwordreset/passwor
     SuspendedComponent,
     DeactivatedComponent,
     StandbyComponent,
-    PasswordresetComponent
+    PasswordresetComponent,
+    UploadButtonComponent,
+    UploaderComponent
   ],
   providers: [ToastComponent, ToastService]
 })

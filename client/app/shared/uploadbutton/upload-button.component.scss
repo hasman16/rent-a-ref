@@ -1,0 +1,15 @@
+.uploadButton {
+  position: relative;
+  cursor: pointer;
+  input[type='file'] {
+    position: absolute;
+    display: block;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+  b {
+    cursor: pointer;
+  }
+}

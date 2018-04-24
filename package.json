@@ -68,6 +68,7 @@
     "mydatepicker": "^2.0.31",
     "ng-recaptcha": "^3.0.3",
     "ng2-smart-table": "^1.2.2",
+    "ngx-bootstrap": "^2.0.4",
     "ngx-cookie-service": "^1.0.9",
     "pg": "^7.3.0",
     "popper.js": "^1.12.5",
