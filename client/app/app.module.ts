@@ -14,6 +14,7 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -74,6 +75,8 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { OrganizeComponent } from './organize/organize.component';
+import { CropImageModalComponent } from './organize/crop-image-modal/crop-image-modal.component';
+
 import { PartnersComponent } from './group/partners/partners.component';
 import { PasswordFormComponent } from './shared/forms/password-form/password-form.component';
 import { PhoneFormComponent } from './shared/forms/phone-form/phone-form.component';
@@ -133,6 +136,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         LogoutComponent,
         NotFoundComponent,
         OrganizeComponent,
+        CropImageModalComponent,
         PartnersComponent,
         PasswordFormComponent,
         PhoneFormComponent,
@@ -210,6 +214,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         }),
         HttpClientModule,
         MyDatePickerModule,
+        ImageCropperModule,
         CommonModule
     ],
     providers: [

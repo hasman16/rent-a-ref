@@ -14,6 +14,7 @@ import {
 import { ToastService } from './../toast/toast.service';
 import { Toast } from './../toast';
 import { Subscription } from 'rxjs/Subscription';
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'rar-uploader',
@@ -24,10 +25,12 @@ export class UploaderComponent implements AfterViewInit, OnInit, OnDestroy {
 	@ViewChild('uploader') uploadElement: ElementRef;
 
 	@Input() multiple: boolean = false;
-	@Output() file = new EventEmitter();
+	@Output() selectedFiles: EventEmitter<FileList> = new EventEmitter();
+	@Output() selectedFilesEvent: EventEmitter<any> = new EventEmitter();
 
 	private toastSubscription: Subscription;
 	private uploadLabel: string = 'Upload Image';
+	private files: FileList = null;
 
 	constructor(
 		private elem: ElementRef,
@@ -43,8 +46,15 @@ export class UploaderComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.setUp();
 	}
 
-	uploadImages(images: FileList): void {
-		console.log('=========>images:', images);
+	uploadedImages(images: FileList): void {
+		console.log('uploadedImages:', images);
+		this.files = images;
+		this.selectedFiles.emit(images);
+	}
+
+	uploadedImagesEvent($event: any): void {
+		console.log('uploadedImagesEvent:', $event);
+		this.selectedFilesEvent.emit($event);
 	}
 
 	dragEnter($event) {
@@ -57,6 +67,7 @@ export class UploaderComponent implements AfterViewInit, OnInit, OnDestroy {
 		$event.preventDefault();
 		const dt = $event.dataTransfer;
 		const files = dt.files;
+		this.files = files;
 	}
 
 	dragOver($event) {

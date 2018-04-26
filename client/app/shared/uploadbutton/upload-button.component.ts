@@ -25,8 +25,8 @@ export class UploadButtonComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	@Input() multiple: boolean = false;
 	@Input() uploadLabel: string = 'Upload';
-	@Output('selectedFiles')
-	fileselected: EventEmitter<FileList> = new EventEmitter();
+	@Output() selectedFiles: EventEmitter<FileList> = new EventEmitter();
+	@Output() selectedFilesEvent: EventEmitter<any> = new EventEmitter();
 
 	private uploadInput = null;
 	private newNode: Node;
@@ -70,7 +70,8 @@ export class UploadButtonComponent implements AfterViewInit, OnInit, OnDestroy {
 	uploadImages($event) {
 		const files: FileList = <FileList>$event.target.files;
 		console.log('!!!selected:', $event, files);
-		this.fileselected.emit(files);
+		this.selectedFiles.emit(files);
+		this.selectedFilesEvent.emit($event);
 		this.addUploadElement();
 	}
 }

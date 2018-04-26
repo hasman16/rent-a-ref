@@ -11,6 +11,7 @@ import { StandbyComponent } from '../account/profile/standby/standby.component';
 import { PasswordresetComponent } from '../account/profile/passwordreset/passwordreset.component';
 import { UploadButtonComponent } from './uploadbutton/upload-button.component';
 import { UploaderComponent } from './uploader/uploader.component';
+import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
@@ -24,7 +25,8 @@ import { UploaderComponent } from './uploader/uploader.component';
     ToastComponent,
     LoadingComponent,
     UploadButtonComponent,
-    UploaderComponent
+    UploaderComponent,
+    ImageCropperComponent
   ],
   declarations: [
     ToastComponent,
@@ -34,7 +36,8 @@ import { UploaderComponent } from './uploader/uploader.component';
     StandbyComponent,
     PasswordresetComponent,
     UploadButtonComponent,
-    UploaderComponent
+    UploaderComponent,
+    ImageCropperComponent
   ],
   providers: [ToastComponent, ToastService]
 })

@@ -2,6 +2,9 @@
   <div class="uploader" #uploader>
     <div class="dragText">Drag images here</div>
     <div class="clickText">or</div>
-    <rar-upload-button [uploadLabel]="uploadLabel" (selectedFiles)="uploadImages"></rar-upload-button>
+    <rar-upload-button [uploadLabel]="uploadLabel"
+    	(selectedFiles)="uploadedImages($event)"
+		(selectedFilesEvent)="uploadedImagesEvent($event)"
+    ></rar-upload-button>
   </div>
 </div>
