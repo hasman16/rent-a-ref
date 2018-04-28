@@ -1,0 +1,12 @@
+.container {
+	min-height: 400px;
+	max-height: 500px;
+	max-width: 1000px;
+}
+
+.cropper-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+}

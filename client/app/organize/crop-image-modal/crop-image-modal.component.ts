@@ -1,16 +1,11 @@
 //https://github.com/Mawi137/ngx-image-cropper
 import {
-	AfterViewInit,
 	Component,
-	EventEmitter,
-	Input,
-	Output,
 	OnDestroy,
 	OnInit,
 	ElementRef,
 	Renderer2,
-	ChangeDetectorRef,
-	ViewChild
+	ChangeDetectorRef
 } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -36,15 +31,12 @@ export class CropImageModalComponent implements OnInit {
 	ngOnInit() {}
 
 	selectedFiles(files: FileList): void {
-		console.log('CropImageModalComponent:', files);
 		this.files = files;
 	}
 
 	selectedFilesEvent(event: any): void {
-		console.log('CropImageModalComponent:', event);
 		this.imageChangedEvent = event;
 		this.selectedTab = 'cropping';
-		console.log('switch tabs');
 	}
 
 	imageCropped(image: string) {

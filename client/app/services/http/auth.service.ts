@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { TokenService } from './token.service';
+import { TokenService } from '../interceptors/index';
 import { UserService } from './user.service';
-import { Login, User } from './../shared/models/index';
+import { Login, User } from './../../shared/models/index';
 import * as _ from 'lodash';
 
 @Injectable()

@@ -7,7 +7,7 @@ import {
   FormBuilder
 } from '@angular/forms';
 
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/index';
 import { ToastComponent } from '../shared/toast/toast.component';
 
 @Component({

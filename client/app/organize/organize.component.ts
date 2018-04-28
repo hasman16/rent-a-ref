@@ -64,7 +64,6 @@ export class OrganizeComponent implements OnInit {
   }
 
   openModal(event): void {
-    console.log('openMoal');
     this.showDialog = true;
   }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { AuthService, OrganizeService } from './../../services/index';
+import { AuthService, OrganizeService } from './../http/index';
 import { Organization, Profile, User } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';

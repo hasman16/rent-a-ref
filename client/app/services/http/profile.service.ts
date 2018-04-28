@@ -1,14 +1,19 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
+import { UserService } from './user.service';
 
-import { UserService } from "./user.service";
+import {
+  Address,
+  Bio,
+  Phone,
+  Person,
+  Profile
+} from './../../shared/models/index';
 
-import { Address, Bio, Phone, Person, Profile } from "./../shared/models/index";
+import { IAddressService } from './../../shared/forms/address-form/address-form.component';
+import { IPhoneService } from './../../shared/forms/phone-form/phone-form.component';
 
-import { IAddressService } from "../shared/forms/address-form/address-form.component";
-import { IPhoneService } from "./../shared/forms/phone-form/phone-form.component";
-
-import { Observable } from "rxjs/Observable";
-import * as _ from "lodash";
+import { Observable } from 'rxjs/Observable';
+import * as _ from 'lodash';
 
 @Injectable()
 export class ProfileService implements IAddressService, IPhoneService {

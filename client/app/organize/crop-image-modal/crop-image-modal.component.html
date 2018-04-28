@@ -1,5 +1,11 @@
-<div style="min-height: 400px; max-height: 500px; max-width: 1000px;">
-	<div *ngIf="selectedTab=='cropping'" style="width:100%; display: flex;justify-content: center ;align-items: flex-end;">
+<div class="container">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#">Home</a></li>
+		<li><a href="#">Menu 1</a></li>
+		<li><a href="#">Menu 2</a></li>
+		<li><a href="#">Menu 3</a></li>
+	</ul>
+	<div *ngIf="selectedTab=='cropping'" class="cropper-container">
 		<image-cropper
 		    [imageChangedEvent]="imageChangedEvent"
 		    [maintainAspectRatio]="true"
@@ -15,8 +21,7 @@
 		<img [src]="croppedImage" width="200"/>
 	</div>
 
-
-	<div style="" *ngIf="selectedTab =='loading'">
+	<div *ngIf="selectedTab =='loading'">
 		<rar-uploader (selectedFilesEvent)="selectedFilesEvent($event)"></rar-uploader>
 	</div>
 </div>

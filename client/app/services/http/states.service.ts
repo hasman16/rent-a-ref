@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Country, Option, State } from './../shared/models/index';
+import { Country, Option, State } from './../../shared/models/index';
 import * as _ from 'lodash';
 
 @Injectable()

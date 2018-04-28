@@ -1,11 +1,10 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from './providers/interceptors/token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RecaptchaModule } from 'ng-recaptcha';
 /* Modules */
 import { BrowserModule } from '@angular/platform-browser';
+import { CoreModule } from './services/core.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
@@ -28,26 +27,6 @@ import {
 } from './shared/formly/horizontal-types/index';
 import { AgmCoreModule } from '@agm/core';
 import { GoogleMapComponent } from './googlemap/google-map.component';
-import { LoaderComponent, LoaderService } from './shared/loader/index';
-
-/* Services */
-import { AuthGuardAdmin } from './services/auth-guard-admin.service';
-import { AuthGuardLogin } from './services/auth-guard-login.service';
-import { AuthService } from './services/auth.service';
-import { CookieService } from 'ngx-cookie-service';
-import { ProfileService } from './services/profile.service';
-import { StatesService } from './services/states.service';
-import { TokenService } from './services/token.service';
-import { UserService } from './services/user.service';
-import { OrganizeService } from './services/organize.service';
-import { PagingService } from './services/paging.service';
-import { EventsService } from './services/events.service';
-
-import { AccordionModule } from 'primeng/components/accordion/accordion';
-import { PanelModule } from 'primeng/components/panel/panel';
-import { ButtonModule } from 'primeng/components/button/button';
-import { RadioButtonModule } from 'primeng/components/radiobutton/radiobutton';
-import { CardModule } from 'primeng/card';
 
 /* Components */
 import { AboutComponent } from './about/about.component';
@@ -96,7 +75,6 @@ import { ManageEventsComponent } from './admin/manageevents/manage-events.compon
 
 /* Misc. */
 import { DropdownDirective } from './shared/dropdown.directive';
-import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
 
@@ -107,7 +85,6 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
 @NgModule({
     declarations: [
         AppComponent,
-        LoaderComponent,
         AboutComponent,
         AccountComponent,
         AddressFormComponent,
@@ -171,11 +148,6 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        AccordionModule,
-        PanelModule,
-        ButtonModule,
-        RadioButtonModule,
-        CardModule,
         RecaptchaModule.forRoot(),
         //FormlyBootstrapModule,
         FormlyMaterialModule,
@@ -217,28 +189,10 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         MyDatePickerModule,
         ImageCropperModule,
         NgbModule.forRoot(),
+        CoreModule,
         CommonModule
     ],
-    providers: [
-        AuthService,
-        AuthGuardLogin,
-        AuthGuardAdmin,
-        TokenService,
-        ProfileService,
-        StatesService,
-        UserService,
-        OrganizeService,
-        EventsService,
-        CookieService,
-        CanDeactivateGuardService,
-        LoaderService,
-        PagingService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: TokenInterceptor,
-            multi: true
-        }
-    ],
+    providers: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     // Add bootstrap
     bootstrap: [AppComponent]

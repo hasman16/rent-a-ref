@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Login, PagedData, Profile, User } from './../shared/models/index';
+import { Login, PagedData, Profile, User } from './../../shared/models/index';
 
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';

@@ -8,11 +8,11 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Phone } from '../../models/phone';
-import { ProfileService } from '../../../services/profile.service';
+import { ProfileService } from '../../../services/index';
 
 import { AbstractFormComponent } from '../abstract-form';
 import { Observable } from 'rxjs/Observable';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 export interface IPhoneService {
   createPhone(phone: Phone): Observable<any>;

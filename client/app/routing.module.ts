@@ -1,10 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuardAdmin } from './services/auth-guard-admin.service';
-import { AuthGuardLocked } from './services/auth-guard-locked.service';
-import { AuthGuardLogin } from './services/auth-guard-login.service';
-import { AuthGuardSuspended } from './services/auth-guard-suspended.service';
+import {
+  AuthGuardAdmin,
+  AuthGuardLocked,
+  AuthGuardLogin,
+  AuthGuardSuspended,
+  CanDeactivateGuardService,
+  EventsResolver,
+  OrganizationsResolver,
+  SportsResolver,
+  UserResolver
+} from './services/index';
 
 import { AppComponent } from './app.component';
 
@@ -34,15 +41,9 @@ import { StandbyComponent } from './account/profile/standby/standby.component';
 import { SuspendedComponent } from './account/profile/suspended/suspended.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
-import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { OrganizeComponent } from './organize/organize.component';
 import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
-
-import { EventsResolver } from './providers/resolvers/index';
-import { OrganizationsResolver } from './providers/resolvers/index';
-import { SportsResolver } from './providers/resolvers/index';
-import { UserResolver } from './providers/resolvers/index';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -144,12 +145,7 @@ const routes: Routes = [
       { enableTracing: true } // For debugging purposes only
     )
   ],
-  providers: [
-    EventsResolver,
-    OrganizationsResolver,
-    SportsResolver,
-    UserResolver
-  ],
+  providers: [],
   exports: [RouterModule]
 })
 export class RoutingModule {}

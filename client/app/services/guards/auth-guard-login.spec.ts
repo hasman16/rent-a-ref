@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 
 import { AuthGuardLogin } from './auth-guard-login.service';
-import { AuthService } from './auth.service';
+import { AuthService } from './../http/index';
 
 describe('AuthGuardService', () => {
   let mockCurrentUser = {

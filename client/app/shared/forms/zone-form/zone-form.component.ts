@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 
 import { Address } from '../../models/address';
-import { StatesService } from '../../../services/states.service';
+import { StatesService } from '../../../services/index';
 import { AbstractFormComponent } from '../abstract-form';
 
 import { Observable } from 'rxjs/Observable';

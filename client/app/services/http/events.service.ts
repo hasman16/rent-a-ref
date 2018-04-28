@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Address, BaseModel, Game, Phone } from './../shared/models/index';
+import { Address, BaseModel, Game, Phone } from './../../shared/models/index';
 
 import { Observable } from 'rxjs/Observable';
 

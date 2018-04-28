@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import {
-	OrganizeService,
-	PagingService,
-	UserService
-} from './../../services/index';
+import { OrganizeService, PagingService, UserService } from './../http/index';
 import { Page, PagedData, Sport } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 

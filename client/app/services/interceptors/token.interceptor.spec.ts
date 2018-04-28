@@ -3,7 +3,8 @@ import {
 	HttpClientTestingModule,
 	HttpTestingController
 } from '@angular/common/http/testing';
-import { UserService, TokenService } from './../../services/index';
+import { UserService } from './../../services/http/index';
+import { TokenService } from './token.service';
 import { LoaderService } from './../../shared/loader/index';
 import { TokenInterceptor } from './token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';

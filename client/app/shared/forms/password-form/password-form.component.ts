@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { AbstractFormComponent } from '../abstract-form';
 import { compareFields } from '../../compareFields';
-import { UserService } from '../../../services/user.service';
+import { UserService } from '../../../services/index';
 
 @Component({
   selector: 'password-form',

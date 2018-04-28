@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { Bio } from '../../models/bio';
 import { AbstractFormComponent } from '../abstract-form';
-import { UserService } from '../../../services/user.service';
+import { UserService } from '../../../services/index';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';

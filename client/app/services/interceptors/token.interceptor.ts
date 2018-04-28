@@ -9,7 +9,7 @@ import {
   HttpResponse,
   HttpErrorResponse
 } from '@angular/common/http';
-import { TokenService } from './../../services/index';
+import { TokenService } from './token.service';
 import { LoaderService } from './../../shared/loader/index';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -48,7 +48,7 @@ export class TokenInterceptor implements HttpInterceptor {
             // redirect to the login route
             // or show a modal
             console.log('redirecting to logout');
-            this.router.navigate(['logout']);
+            this.router.navigateByUrl('/logout');
           }
         }
       }

@@ -1,13 +1,13 @@
+//https://www.npmjs.com/package/ng-recaptcha
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { UserService } from '../services/user.service';
+import { UserService } from '../services/index';
 import { ToastComponent } from '../shared/toast/toast.component';
 import * as _ from 'lodash';
 
-//https://www.npmjs.com/package/ng-recaptcha
 @Component({
   moduleId: module.id,
   selector: 'app-register',
@@ -20,7 +20,7 @@ export class RegisterComponent {
   protected options: FormlyFormOptions = <FormlyFormOptions>{};
   protected fields: FormlyFieldConfig[];
   protected captchaResponse: string;
-    
+
   constructor(
     private router: Router,
     public toast: ToastComponent,
