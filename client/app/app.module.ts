@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyMaterialModule } from '@ngx-formly/material';
@@ -101,7 +102,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 // rich grid
 import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
-import { BarchartComponent } from './barchart/barchart.component';
+//import { BarchartComponent } from './barchart/barchart.component';
 
 @NgModule({
     declarations: [
@@ -153,8 +154,8 @@ import { BarchartComponent } from './barchart/barchart.component';
         StripeComponent,
         TermsAndConditionsComponent,
         ZoneFormComponent,
-        AdminMenuComponent,
-        BarchartComponent
+        AdminMenuComponent
+        //        BarchartComponent
     ],
     imports: [
         BrowserModule,
@@ -215,6 +216,7 @@ import { BarchartComponent } from './barchart/barchart.component';
         HttpClientModule,
         MyDatePickerModule,
         ImageCropperModule,
+        NgbModule.forRoot(),
         CommonModule
     ],
     providers: [

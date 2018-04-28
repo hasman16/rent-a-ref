@@ -1,6 +1,5 @@
 import { Component, NgZone, AfterViewInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
-import * as $ from 'jquery';
 
 @Component({
   moduleId: module.id,
@@ -12,7 +11,6 @@ export class AppComponent {
   windowWidth: number = window.innerWidth;
 
   constructor(public auth: AuthService, private ngZone: NgZone) {
-
     const destination_anim_bgs = [
       'assets/images/refereebg.jpg',
       'assets/images/refereebg1.jpg',
@@ -26,12 +24,8 @@ export class AppComponent {
       'assets/images/refereebg9.png',
       'assets/images/refereebg10.jpg',
       'assets/images/refereebg11.jpg',
-      'assets/images/refereebg12.jpg'];
-
-    $(document).ready(function() {
-      let imgArr = destination_anim_bgs;
-
-      /* preload images */
+      'assets/images/refereebg12.jpg'
+    ]; /*
       const preloadArr = imgArr.map((image) => {
         let img = new Image();
         img.src = image;
@@ -41,7 +35,7 @@ export class AppComponent {
       let currImg = 0;
       const totalImages = preloadArr.length;
 
-      /* image rotator */
+      /* image rotator */ /*
       function changeImg() {
         $('#master-wrapper')
           .animate({ opacity: 0 }, 200, function() {
@@ -54,6 +48,11 @@ export class AppComponent {
           })
           .animate({ opacity: 1 }, 200);
       }
-    });
+    });*/
+    /*
+    $(document).ready(function() {
+      let imgArr = destination_anim_bgs;
+
+      /* preload images */
   }
 }

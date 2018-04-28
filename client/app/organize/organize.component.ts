@@ -21,7 +21,7 @@ import {
   State,
   User
 } from '../shared/models/index';
-
+import { CropImageModalComponent } from './crop-image-modal/crop-image-modal.component';
 import * as _ from 'lodash';
 
 import { Observable } from 'rxjs/Observable';
@@ -45,6 +45,7 @@ export class OrganizeComponent implements OnInit {
   protected organizations: Organization[] = [];
   protected isLoading: boolean = false;
   protected isEditing: boolean = false;
+  public showDialog: boolean = false;
 
   constructor(
     private auth: AuthService,
@@ -60,6 +61,15 @@ export class OrganizeComponent implements OnInit {
       .organizations;
     this.organizations = _.isArray(organizations) ? organizations : [];
     this.setOrganizeMode();
+  }
+
+  openModal(event): void {
+    console.log('openMoal');
+    this.showDialog = true;
+  }
+
+  closeModel(): void {
+    this.showDialog = false;
   }
 
   setOrganizeMode(): void {

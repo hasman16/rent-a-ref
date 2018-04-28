@@ -48,6 +48,11 @@
         </div>
       </div>
 
+      <button (click)="openModal($event)" class="btn btn-primary">Pop Modal</button>
+      <rar-modal [(visible)]="showDialog">
+        <rar-cropper-image-modal></rar-cropper-image-modal>
+      </rar-modal>
+
     </div>
 <!--
     <div class="card">
@@ -58,7 +63,7 @@
       <rar-stripe></rar-stripe>
     </div>
 -->
-  <rar-cropper-image-modal></rar-cropper-image-modal>
+
   </div>
 
 

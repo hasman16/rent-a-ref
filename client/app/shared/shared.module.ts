@@ -12,6 +12,7 @@ import { PasswordresetComponent } from '../account/profile/passwordreset/passwor
 import { UploadButtonComponent } from './uploadbutton/upload-button.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ImageCropperComponent } from './image-cropper/image-cropper.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
@@ -26,7 +27,8 @@ import { ImageCropperComponent } from './image-cropper/image-cropper.component';
     LoadingComponent,
     UploadButtonComponent,
     UploaderComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    ModalComponent
   ],
   declarations: [
     ToastComponent,
@@ -37,7 +39,8 @@ import { ImageCropperComponent } from './image-cropper/image-cropper.component';
     PasswordresetComponent,
     UploadButtonComponent,
     UploaderComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    ModalComponent
   ],
   providers: [ToastComponent, ToastService]
 })

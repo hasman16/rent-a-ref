@@ -1,5 +1,6 @@
 //https://medium.com/@ryanchenkie_40935/angular-authentication-using-the-http-client-and-http-interceptors-2f9d1540eb8
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   HttpRequest,
   HttpHandler,
@@ -12,10 +13,12 @@ import { TokenService } from './../../services/index';
 import { LoaderService } from './../../shared/loader/index';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
+import * as _ from 'lodash';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor(
+    private router: Router,
     private tokenService: TokenService,
     private loaderService: LoaderService
   ) {}
@@ -38,9 +41,14 @@ export class TokenInterceptor implements HttpInterceptor {
       (err: any) => {
         this.loaderService.hide();
         if (err instanceof HttpErrorResponse) {
-          if (err.status === 401) {
+          if (
+            err.status === 401 &&
+            _.toLower(err.statusText) === 'unauthorized'
+          ) {
             // redirect to the login route
             // or show a modal
+            console.log('redirecting to logout');
+            this.router.navigate(['logout']);
           }
         }
       }

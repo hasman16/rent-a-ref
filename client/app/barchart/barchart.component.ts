@@ -1,4 +1,4 @@
-import {
+/*import {
   Component,
   OnInit,
   OnChanges,
@@ -137,3 +137,4 @@ export class BarchartComponent implements OnInit, OnChanges {
       .attr('height', d => this.height - this.yScale(d[1]));
   }
 }
+*/

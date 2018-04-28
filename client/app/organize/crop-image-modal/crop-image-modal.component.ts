@@ -12,6 +12,7 @@ import {
 	ChangeDetectorRef,
 	ViewChild
 } from '@angular/core';
+
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -19,8 +20,7 @@ import { Subscription } from 'rxjs/Subscription';
 	templateUrl: './crop-image-modal.component.html',
 	styleUrls: ['./crop-image-modal.component.scss']
 })
-export class CropImageModalComponent {
-	@Output() cropperError: EventEmitter<string> = new EventEmitter<string>();
+export class CropImageModalComponent implements OnInit {
 	protected allowImageTypes: string[] = [
 		'image/jpg',
 		'image/png',
@@ -29,8 +29,11 @@ export class CropImageModalComponent {
 	public imageChangedEvent: any = '';
 	public croppedImage: any = '';
 	public files: FileList;
+	public selectedTab: string = 'loading';
 
 	constructor(private elem: ElementRef, private renderer: Renderer2) {}
+
+	ngOnInit() {}
 
 	selectedFiles(files: FileList): void {
 		console.log('CropImageModalComponent:', files);
@@ -40,6 +43,8 @@ export class CropImageModalComponent {
 	selectedFilesEvent(event: any): void {
 		console.log('CropImageModalComponent:', event);
 		this.imageChangedEvent = event;
+		this.selectedTab = 'cropping';
+		console.log('switch tabs');
 	}
 
 	imageCropped(image: string) {
@@ -54,17 +59,5 @@ export class CropImageModalComponent {
 	loadImageFailed() {
 		// show message
 		console.log('image failed');
-	}
-
-	protected loadFile(file: File): void {
-		let fileReader: FileReader = new FileReader();
-		fileReader.addEventListener('load', ($event: any) => {
-			const type: string = $event.target.files[0].type;
-			if (this.allowImageTypes.includes(type)) {
-			} else {
-				this.cropperError.emit('Image type not allowed.');
-			}
-		});
-		fileReader.readAsDataURL(file);
 	}
 }
