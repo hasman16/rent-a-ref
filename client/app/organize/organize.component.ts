@@ -21,7 +21,7 @@ import {
   State,
   User
 } from '../shared/models/index';
-import { CropImageModalComponent } from './crop-image-modal/crop-image-modal.component';
+import { CropImageModalService } from '../shared/crop-image-modal/index';
 import * as _ from 'lodash';
 
 import { Observable } from 'rxjs/Observable';
@@ -53,7 +53,8 @@ export class OrganizeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private statesService: StatesService,
-    private organizeService: OrganizeService
+    private organizeService: OrganizeService,
+    private cropImageModalService: CropImageModalService
   ) {}
 
   ngOnInit() {
@@ -64,11 +65,11 @@ export class OrganizeComponent implements OnInit {
   }
 
   openModal(event): void {
-    this.showDialog = true;
+    this.cropImageModalService.show();
   }
 
-  closeModel(): void {
-    this.showDialog = false;
+  closeModal($event): void {
+    this.cropImageModalService.hide();
   }
 
   setOrganizeMode(): void {

@@ -1,18 +1,18 @@
 :host /deep/ .index-column,
 :host /deep/ .index-column-header {
-    text-align: right;
+  text-align: right;
 }
 
 :host /deep/ .data-table .data-table-row.selected {
-    background-color: #E4EDF9;
+  background-color: #e4edf9;
 }
 
 :host /deep/ .card {
-	.form-size {
-	  max-width: 70%;
-	  min-width: 70%;
-	  margin:auto;
-	}
+  .form-size {
+    max-width: 70%;
+    min-width: 70%;
+    margin: auto;
+  }
 }
 
 .horizontal-and-vertical-centering {
@@ -35,4 +35,8 @@
 .new-org-button {
   max-width: 15em;
   padding: 1em auto;
+}
+
+.display {
+  display: block;
 }

@@ -55,7 +55,6 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { OrganizeComponent } from './organize/organize.component';
-import { CropImageModalComponent } from './organize/crop-image-modal/crop-image-modal.component';
 
 import { PartnersComponent } from './group/partners/partners.component';
 import { PasswordFormComponent } from './shared/forms/password-form/password-form.component';
@@ -114,7 +113,6 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         LogoutComponent,
         NotFoundComponent,
         OrganizeComponent,
-        CropImageModalComponent,
         PartnersComponent,
         PasswordFormComponent,
         PhoneFormComponent,

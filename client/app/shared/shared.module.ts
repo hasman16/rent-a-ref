@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { HttpModule } from '@angular/http';
 
 import { ToastComponent, ToastService } from './toast/index';
@@ -13,7 +14,12 @@ import { PasswordresetComponent } from '../account/profile/passwordreset/passwor
 import { UploadButtonComponent } from './uploadbutton/upload-button.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ModalComponent } from './modal/modal.component';
+import { ModalService } from './modal/modal.service';
 import { MaterialModule } from '../material.module';
+import {
+  CropImageModalComponent,
+  CropImageModalService
+} from './crop-image-modal/index';
 
 @NgModule({
   imports: [
@@ -21,7 +27,8 @@ import { MaterialModule } from '../material.module';
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    ImageCropperModule
   ],
   exports: [
     // Shared Modules
@@ -35,7 +42,8 @@ import { MaterialModule } from '../material.module';
     LoaderComponent,
     LoadingComponent,
     UploadButtonComponent,
-    UploaderComponent
+    UploaderComponent,
+    CropImageModalComponent
   ],
   declarations: [
     ToastComponent,
@@ -47,8 +55,15 @@ import { MaterialModule } from '../material.module';
     PasswordresetComponent,
     UploadButtonComponent,
     UploaderComponent,
-    ModalComponent
+    ModalComponent,
+    CropImageModalComponent
   ],
-  providers: [LoaderService, ToastComponent, ToastService]
+  providers: [
+    CropImageModalService,
+    LoaderService,
+    ModalService,
+    ToastComponent,
+    ToastService
+  ]
 })
 export class SharedModule {}
