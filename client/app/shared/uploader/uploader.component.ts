@@ -53,7 +53,6 @@ export class UploaderComponent implements AfterViewInit, OnInit, OnDestroy {
 	}
 
 	uploadedImagesEvent($event: any): void {
-		console.log('uploadedImagesEvent:', $event);
 		this.selectedFilesEvent.emit($event);
 	}
 
@@ -68,6 +67,8 @@ export class UploaderComponent implements AfterViewInit, OnInit, OnDestroy {
 		const dt = $event.dataTransfer;
 		const files = dt.files;
 		this.files = files;
+		$event.target.files = files;
+		this.selectedFilesEvent.emit($event);
 	}
 
 	dragOver($event) {

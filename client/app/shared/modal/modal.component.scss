@@ -7,7 +7,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
-
+/*
 .dialog {
   z-index: 1000;
   position: fixed;
@@ -39,7 +39,13 @@
   right: 8px;
   font-size: 1.2em;
 }
-
+*/
 .display {
   display: block;
 }
+@media (min-width: 1200px) {
+  .modal-lg {
+    max-width: 1000px;
+  }
+}
+

@@ -55,11 +55,20 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 		this.subscription.forEach((sub: Subscription) => sub.unsubscribe());
 	}
 
-	selectedFiles(files: FileList): void {
+	public isSelectedTab(tab: string): boolean {
+		return this.selectedTab === tab;
+	}
+
+	public switchToTab($event, tab: string): void {
+		$event.preventDefault();
+		this.selectedTab = tab;
+	}
+
+	protected selectedFiles(files: FileList): void {
 		this.files = files;
 	}
 
-	selectedFilesEvent(event: any): void {
+	protected selectedFilesEvent(event: any): void {
 		this.imageChangedEvent = event;
 		this.selectedTab = 'cropping';
 	}
@@ -78,15 +87,15 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 		console.log('image failed');
 	}
 
-	openModal($event): void {
+	public openModal($event): void {
 		console.log('Modal Openned');
 	}
 
-	submitModal($event): void {
+	public submitModal($event): void {
 		console.log('submitModal Openned');
 	}
 
-	closeModal($event): void {
+	public closeModal($event): void {
 		console.log('Modal Closed');
 	}
 }

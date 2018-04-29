@@ -7,12 +7,17 @@
 >
 <div class="container">
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#">Home</a></li>
-		<li><a href="#">Menu 1</a></li>
-		<li><a href="#">Menu 2</a></li>
-		<li><a href="#">Menu 3</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" [class.active]="isSelectedTab('loading')"
+			(click)="switchToTab($event,'loading');">Upload</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" [class.active]="isSelectedTab('cropping')"
+			(click)="switchToTab($event,'cropping');">Crop</a></li>
 	</ul>
-	<div *ngIf="selectedTab=='cropping'" class="cropper-container">
+
+	<div *ngIf="isSelectedTab('loading')">
+		<rar-uploader (selectedFilesEvent)="selectedFilesEvent($event)"></rar-uploader>
+	</div>
+
+	<div *ngIf="isSelectedTab('cropping')" class="cropper-container">
 		<image-cropper
 		    [imageChangedEvent]="imageChangedEvent"
 		    [maintainAspectRatio]="true"
@@ -27,8 +32,5 @@
 		<img [src]="croppedImage" width="200"/>
 	</div>
 
-	<div *ngIf="selectedTab =='loading'">
-		<rar-uploader (selectedFilesEvent)="selectedFilesEvent($event)"></rar-uploader>
-	</div>
 </div>
 </rar-modal>
