@@ -5,7 +5,6 @@ import { FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { CookieService } from 'ngx-cookie-service';
 
 import { ToastComponent } from '../shared/toast/toast.component';
 
@@ -31,20 +30,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private router: Router,
-    public toast: ToastComponent,
-    private cookieService: CookieService
+    public toast: ToastComponent
   ) {}
 
   ngOnInit() {
     if (this.auth.loggedIn) {
       this.router.navigate(['/']);
-    }
-
-    this.checkboxFlag =
-      this.cookieService.get('checkboxFlag') === 'true' ? true : false;
-
-    if (this.checkboxFlag) {
-      this.cookieValue = this.cookieService.get('email');
     }
 
     this.fields = [
@@ -111,18 +102,6 @@ export class LoginComponent implements OnInit {
           const userId = user.id;
           const userStatus = user.status;
           const path: string = this.redirectUser(userStatus, userId);
-
-          if (this.checkboxFlag) {
-            const expireDate = new Date();
-            expireDate.setDate(expireDate.getDate() + 365 * 5);
-            this.cookieService.set('email', user.email);
-            this.cookieService.set('checkboxFlag', 'true');
-          } else {
-            // Delete cookie entry
-            this.cookieService.set('checkboxFlag', 'false');
-            this.cookieCheck = this.cookieService.check('email');
-            this.cookieService.delete('email');
-          }
 
           this.router.navigate([path]);
         },
