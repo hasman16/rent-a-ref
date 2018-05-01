@@ -52,6 +52,7 @@ export class ModalComponent implements OnInit {
   }
 
   public submitModal($event) {
+    console.log('modal submit clicked');
     this.updateVisibility(true);
     this.submit.emit(true);
   }

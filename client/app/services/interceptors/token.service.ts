@@ -18,15 +18,18 @@ export class TokenService {
     return this.options;
   }
 
-  getHeaders(): HttpHeaders {
+  getHeaders(url): HttpHeaders {
     let headers: HttpHeaders = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .append('charset', 'UTF-8');
+      .set('charset', 'UTF-8');
 
     if (this.token) {
       headers = headers.append('Authorization', 'Bearer ' + this.token);
     }
-
+    if (/upload/ig.test(url)) {
+      headers.append('Content-Type', undefined);
+    } else {
+      headers.append('Content-Type', 'application/json');
+    }
     return headers;
   }
 

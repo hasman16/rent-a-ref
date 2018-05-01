@@ -148,6 +148,15 @@ export default function OrganizationController(models, ResponseService) {
       });
   }
 
+  function uploadLogo(req, res) {
+
+    res.json(201, {
+      success: true,
+      message: 'upload success.'
+    });
+
+  }
+
   return {
     getAll,
     getByUser,
@@ -156,6 +165,7 @@ export default function OrganizationController(models, ResponseService) {
     create,
     update,
     deleteOne,
-    makeStripePayment
+    makeStripePayment,
+    uploadLogo
   };
 }

@@ -65,6 +65,7 @@ export class OrganizeComponent implements OnInit {
   }
 
   openModal(event): void {
+    this.cropImageModalService.setOrganizationId(1);
     this.cropImageModalService.show();
   }
 

@@ -6,6 +6,7 @@ export class CropImageModalService {
 	private modalSubject = new Subject<boolean>();
 
 	public modalState$ = this.modalSubject.asObservable();
+	public organization_id: any;
 
 	constructor() {}
 
@@ -16,5 +17,9 @@ export class CropImageModalService {
 
 	public hide() {
 		this.modalSubject.next(true);
+	}
+
+	public setOrganizationId(organization_id) {
+		this.organization_id = organization_id;
 	}
 }

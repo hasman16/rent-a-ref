@@ -7,6 +7,9 @@ import {
 	Renderer2,
 	ChangeDetectorRef
 } from '@angular/core';
+import {
+  OrganizeService
+} from './../../services/index';
 import { CropImageModalService } from './crop-image-modal.service';
 import { ModalService } from './../modal/modal.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -33,7 +36,8 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 		private elem: ElementRef,
 		private renderer: Renderer2,
 		private modalService: ModalService,
-		private cropImageModalService: CropImageModalService
+		private cropImageModalService: CropImageModalService,
+    	private organizeService: OrganizeService
 	) {}
 
 	ngOnInit() {
@@ -92,7 +96,16 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 	}
 
 	public submitModal($event): void {
-		console.log('submitModal Openned');
+		console.log('submitModal clicked:');
+		const formData = new FormData();
+
+		formData.append('photo', this.croppedImage);
+		this.organizeService.uploadLogo(this.cropImageModalService.organization_id, formData)
+		.subscribe(() => {
+			console.log('it worked');
+			},(err) => {
+				console.log('it screwed up');
+			});
 	}
 
 	public closeModal($event): void {

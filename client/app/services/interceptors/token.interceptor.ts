@@ -27,7 +27,7 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let newRequest = request.clone({
-      headers: this.tokenService.getHeaders()
+      headers: this.tokenService.getHeaders(request.url)
     });
     this.loaderService.show();
 
