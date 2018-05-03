@@ -104,7 +104,7 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 		.subscribe(() => {
 			console.log('it worked');
 			},(err) => {
-				console.log('it screwed up');
+				console.log('========>it screwed up:', err);
 			});
 	}
 

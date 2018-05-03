@@ -13,6 +13,8 @@ import { TokenService } from './token.service';
 import { LoaderService } from './../../shared/loader/index';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -31,14 +33,8 @@ export class TokenInterceptor implements HttpInterceptor {
     });
     this.loaderService.show();
 
-    return next.handle(newRequest).do(
-      (event: HttpEvent<any>) => {
-        this.loaderService.hide();
-        if (event instanceof HttpResponse) {
-          // do stuff with response if you want
-        }
-      },
-      (err: any) => {
+    return next.handle(newRequest)
+      .catch((err: any):Observable<any> => {
         this.loaderService.hide();
         if (err instanceof HttpErrorResponse) {
           if (
@@ -51,7 +47,7 @@ export class TokenInterceptor implements HttpInterceptor {
             this.router.navigateByUrl('/logout');
           }
         }
-      }
-    );
+        return Observable.throw(err);
+      });
   }
 }

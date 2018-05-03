@@ -149,7 +149,7 @@ export default function OrganizationController(models, ResponseService) {
   }
 
   function uploadLogo(req, res) {
-
+    console.log('req:', req);
     res.json(201, {
       success: true,
       message: 'upload success.'

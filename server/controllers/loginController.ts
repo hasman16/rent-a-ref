@@ -197,7 +197,7 @@ export default function LoginController(
       email: req.body.email,
       password: req.body.password
     };
-    //console.log('try login:', user.email);
+    //console.log('try login:', req.body);
     User.findOne({
       where: { email: user.email },
       include: [
