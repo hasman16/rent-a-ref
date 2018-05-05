@@ -34,6 +34,13 @@ export class TokenInterceptor implements HttpInterceptor {
     this.loaderService.show();
 
     return next.handle(newRequest)
+      .do((event: HttpEvent<any>) => {
+        this.loaderService.hide();
+
+        if (event instanceof HttpResponse) {
+          // do stuff with response if you want
+        }
+      })
       .catch((err: any):Observable<any> => {
         this.loaderService.hide();
         if (err instanceof HttpErrorResponse) {

@@ -1,7 +1,9 @@
 <rar-modal
-[title]="Upload"
-[submitText]="Save"
-[cancelText]="Cancel"
+[name]="modalName"
+[title]="title"
+[submitText]="submitText"
+[cancelText]="cancelText"
+[disableSubmit]="disableSubmit"
 (submit)="submitModal($event)"
 (cancel)="closeModal($event)"
 >

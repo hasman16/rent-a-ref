@@ -6,17 +6,17 @@ import { ModalState } from './modal';
 @Injectable()
 export class ModalService {
 	private modalSubject = new Subject<ModalState>();
+	private modals: Set<string> = new Set();
 
 	public modalState$ = this.modalSubject.asObservable();
 
 	constructor() {}
 
-	show() {
-		console.log('ModalService.show');
-		this.modalSubject.next(<ModalState>{ show: true });
+	show(name: string = '') {
+		this.modalSubject.next(<ModalState>{ show: true, name });
 	}
 
-	hide() {
-		this.modalSubject.next(<ModalState>{ show: false });
+	hide(name: string = '') {
+		this.modalSubject.next(<ModalState>{ show: false, name });
 	}
 }

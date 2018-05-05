@@ -20,14 +20,17 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
+  @Input('name') modalName: string = '';
   @Input() closable = true;
-  @Input() visible: boolean;
-  @Input() backText: string;
-  @Input() cancelText: string;
-  @Input() submitText: string;
+  @Input() visible: boolean = false;
+  @Input() backText: string = '';
+  @Input() cancelText: string = 'Cancel';
+  @Input() disableSubmit: boolean = false;
+  @Input() submitText: string = 'Submit';
   @Input() title: string;
 
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() submit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
   private subscription: Subscription[] = [];
@@ -37,7 +40,6 @@ export class ModalComponent implements OnInit {
   ngOnInit() {
     this.subscription.push(
       this.modalService.modalState$.subscribe((modalState: ModalState) => {
-        console.log('ModalComponent.value', modalState);
         if (modalState && modalState.show === true) {
           this.showModal(null);
         } else {
@@ -51,20 +53,25 @@ export class ModalComponent implements OnInit {
     this.subscription.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
+  public backModal($event) {
+    this.back.emit(true);
+  }
+
+  public closeModal($event) {
+    this.cancel.emit(true);
+    this.hideModal(null);
+  }
+
   public submitModal($event) {
-    console.log('modal submit clicked');
-    this.updateVisibility(true);
     this.submit.emit(true);
+  }
+
+  public hideModal($event) {
+    this.updateVisibility(false);
   }
 
   public showModal($event) {
     this.updateVisibility(true);
-    this.submit.emit(true);
-  }
-
-  public closeModal($event) {
-    this.updateVisibility(false);
-    this.cancel.emit(true);
   }
 
   protected updateVisibility(state: boolean): void {

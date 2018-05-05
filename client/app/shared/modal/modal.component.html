@@ -13,8 +13,12 @@
         <ng-content></ng-content>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeModal($event)">Close</button>
-        <button type="button" class="btn btn-primary" (click)="submitModal($event)">Save changes</button>
+        <button type="button" class="btn btn-secondary" 
+          *ngIf="backText" (click)="backModal($event)">{{backText}}</button>
+        <button type="button" class="btn btn-secondary" 
+          *ngIf="cancelText" (click)="closeModal($event)">{{cancelText}}</button>
+        <button type="button" class="btn btn-primary" [class.disabled]="disableSubmit"
+          *ngIf="submitText" (click)="submitModal($event)">{{submitText}}</button>
       </div>
     </div>
   </div>

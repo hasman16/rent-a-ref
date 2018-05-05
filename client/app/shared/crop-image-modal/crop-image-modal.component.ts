@@ -3,13 +3,13 @@ import {
 	Component,
 	OnDestroy,
 	OnInit,
+	Input,
+	Output,
 	ElementRef,
 	Renderer2,
 	ChangeDetectorRef
 } from '@angular/core';
-import {
-  OrganizeService
-} from './../../services/index';
+import { OrganizeService } from './../../services/index';
 import { CropImageModalService } from './crop-image-modal.service';
 import { ModalService } from './../modal/modal.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -21,30 +21,34 @@ import { Observable } from 'rxjs/Observable';
 	styleUrls: ['./crop-image-modal.component.scss']
 })
 export class CropImageModalComponent implements OnInit, OnDestroy {
+	protected modalName: string = 'xxx';
+	protected title: string = 'Upload Image';
+	protected submitText: string = 'Save Image';
+	protected disableSubmit: boolean = true;
+	protected cancelText: string = 'Cancel';
 	protected allowImageTypes: string[] = [
 		'image/jpg',
-		'image/png',
-		'image/gif'
+		'image/jpeg',
+		'image/png'
 	];
-	public imageChangedEvent: any = '';
-	public croppedImage: any = '';
-	public files: FileList;
-	public selectedTab: string = 'loading';
-	private subscription: Subscription[] = [];
+	protected imageChangedEvent: any = '';
+	protected croppedImage: any = '';
+	protected files: FileList;
+	protected selectedTab: string = 'loading';
+	protected subscription: Subscription[] = [];
 
 	constructor(
 		private elem: ElementRef,
 		private renderer: Renderer2,
 		private modalService: ModalService,
 		private cropImageModalService: CropImageModalService,
-    	private organizeService: OrganizeService
+		private organizeService: OrganizeService
 	) {}
 
 	ngOnInit() {
 		this.subscription.push(
 			this.cropImageModalService.modalState$.subscribe(
 				(value: boolean) => {
-					console.log('CropImageModalComponent.value', value);
 					if (value) {
 						this.modalService.show();
 					} else {
@@ -77,38 +81,93 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 		this.selectedTab = 'cropping';
 	}
 
-	imageCropped(image: string) {
+	public imageCropped(image: string) {
 		this.croppedImage = image;
+		this.disableSubmit = false;
 	}
 
-	imageLoaded() {
+	public imageLoaded() {
 		// show cropper
 		console.log('show cropper');
 	}
 
-	loadImageFailed() {
+	public loadImageFailed() {
 		// show message
 		console.log('image failed');
 	}
 
-	public openModal($event): void {
-		console.log('Modal Openned');
+	public closeModal($event): void {
+		this.cleanUp();
+	}
+
+	protected cleanUp(): void {
+		this.selectedTab = 'loading';
+		this.croppedImage = undefined;
 	}
 
 	public submitModal($event): void {
-		console.log('submitModal clicked:');
 		const formData = new FormData();
+		const uploadImage = this.b64toBlob(this.croppedImage);
 
-		formData.append('photo', this.croppedImage);
-		this.organizeService.uploadLogo(this.cropImageModalService.organization_id, formData)
-		.subscribe(() => {
-			console.log('it worked');
-			},(err) => {
-				console.log('========>it screwed up:', err);
-			});
+		if (uploadImage.size > 0) {
+			formData.append('photo', uploadImage);
+			this.organizeService
+				.uploadLogo(
+					this.cropImageModalService.organization_id,
+					formData
+				)
+				.subscribe(
+					() => {
+						console.log('it worked');
+					},
+					err => {
+						console.log('========>it screwed up:', err);
+					},
+					() => {
+						this.cleanUp();
+					}
+				);
+		} else {
+			this.cleanUp();
+		}
 	}
 
-	public closeModal($event): void {
-		console.log('Modal Closed');
+	/**
+	 * Convert a base64 string in a Blob according to the data and contentType.
+	 * https://ourcodeworld.com/articles/read/322/how-to-convert-a-base64-image-into-a-image-file-and-upload-it-with-an-asynchronous-form-using-jquery
+	 * @param b64Data {String} Pure base64 string without contentType
+	 * @param contentType {String} the content type of the file i.e (image/jpeg - image/png - text/plain)
+	 * @param sliceSize {Int} SliceSize to process the byteCharacters
+	 * @see http://stackoverflow.com/questions/16245767/creating-a-blob-from-a-base64-string-in-javascript
+	 * @return Blob
+	 */
+	protected b64toBlob(
+		b64Data: string = '',
+		contentType: string = 'image/png',
+		sliceSize: number = 512
+	): Blob {
+		let byteCharacters = atob(
+			b64Data.replace('data:image/png;base64,', '')
+		);
+		let byteArrays = [];
+
+		for (
+			let offset = 0;
+			offset < byteCharacters.length;
+			offset += sliceSize
+		) {
+			let slice = byteCharacters.slice(offset, offset + sliceSize);
+
+			let byteNumbers = new Array(slice.length);
+			for (let i = 0; i < slice.length; i++) {
+				byteNumbers[i] = slice.charCodeAt(i);
+			}
+
+			let byteArray = new Uint8Array(byteNumbers);
+
+			byteArrays.push(byteArray);
+		}
+
+		return new Blob(byteArrays, { type: contentType });
 	}
 }
