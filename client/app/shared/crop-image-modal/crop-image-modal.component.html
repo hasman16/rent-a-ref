@@ -22,6 +22,7 @@
 	<div *ngIf="isSelectedTab('cropping')" class="cropper-container">
 		<image-cropper
 		    [imageChangedEvent]="imageChangedEvent"
+		    [imageBase64]="initialImage"
 		    [maintainAspectRatio]="true"
 		    [aspectRatio]="1 / 1"
 		    [resizeToWidth]="200"

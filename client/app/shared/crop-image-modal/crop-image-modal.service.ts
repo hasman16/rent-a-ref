@@ -12,7 +12,6 @@ export class CropImageModalService {
 
 	public show() {
 		this.modalSubject.next(true);
-		console.log('CropImageModalService.show');
 	}
 
 	public hide() {

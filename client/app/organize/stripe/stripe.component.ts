@@ -1,3 +1,4 @@
+//https://github.com/stripe/stripe-payments-demo
 import {
   Component,
   AfterViewInit,
@@ -10,7 +11,7 @@ import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OrganizeService } from '../../services/index';
 import * as _ from 'lodash';
-//https://github.com/stripe/stripe-payments-demo
+
 @Component({
   selector: 'rar-stripe',
   templateUrl: './stripe.component.html',

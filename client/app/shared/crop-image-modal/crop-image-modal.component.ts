@@ -31,11 +31,12 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 		'image/jpeg',
 		'image/png'
 	];
-	protected imageChangedEvent: any = '';
+	protected imageChangedEvent: any = null;
 	protected croppedImage: any = '';
 	protected files: FileList;
 	protected selectedTab: string = 'loading';
 	protected subscription: Subscription[] = [];
+	protected initialImage: string = '';
 
 	constructor(
 		private elem: ElementRef,
@@ -103,6 +104,9 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 	protected cleanUp(): void {
 		this.selectedTab = 'loading';
 		this.croppedImage = undefined;
+		this.imageChangedEvent = null;
+		this.initialImage =
+			'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=	';
 	}
 
 	public submitModal($event): void {
