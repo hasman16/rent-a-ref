@@ -46,6 +46,7 @@ export class OrganizeComponent implements OnInit {
   protected isLoading: boolean = false;
   protected isEditing: boolean = false;
   public showDialog: boolean = false;
+  public defaultImage: string = 'assets/images/ball.png';
 
   constructor(
     private auth: AuthService,
@@ -62,6 +63,11 @@ export class OrganizeComponent implements OnInit {
       .organizations;
     this.organizations = _.isArray(organizations) ? organizations : [];
     this.setOrganizeMode();
+  }
+
+  getImageAddress(organization: Organization): string {
+    let url = _.get(organization, 'images[0].location', '');
+    return url;
   }
 
   openModal(organization: Organization): void {
