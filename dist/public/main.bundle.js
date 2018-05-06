@@ -1737,65 +1737,63 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_core_module__ = __webpack_require__("./client/app/services/core.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__material_module__ = __webpack_require__("./client/app/material.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ng_lazyload_image__ = __webpack_require__("./node_modules/ng-lazyload-image/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ng_lazyload_image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_ng_lazyload_image__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ng_bootstrap_ng_bootstrap__ = __webpack_require__("./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ngx_formly_core__ = __webpack_require__("./node_modules/@ngx-formly/core/@ngx-formly/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ngx_formly_material__ = __webpack_require__("./node_modules/@ngx-formly/material/@ngx-formly/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__swimlane_ngx_datatable__ = __webpack_require__("./node_modules/@swimlane/ngx-datatable/release/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__swimlane_ngx_datatable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__swimlane_ngx_datatable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_ngx_image_cropper__ = __webpack_require__("./node_modules/ngx-image-cropper/ngx-image-cropper.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__routing_module__ = __webpack_require__("./client/app/routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__shared_shared_module__ = __webpack_require__("./client/app/shared/shared.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__shared_formly_repeat_section_repeat_section_type__ = __webpack_require__("./client/app/shared/formly/repeat-section/repeat-section.type.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__shared_formly_horizontal_types_index__ = __webpack_require__("./client/app/shared/formly/horizontal-types/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__agm_core__ = __webpack_require__("./node_modules/@agm/core/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__googlemap_google_map_component__ = __webpack_require__("./client/app/googlemap/google-map.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__about_about_component__ = __webpack_require__("./client/app/about/about.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__account_account_component__ = __webpack_require__("./client/app/account/account.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__shared_forms_address_form_address_form_component__ = __webpack_require__("./client/app/shared/forms/address-form/address-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__shared_forms_address_form_horizontal_address_form_horizontal_address_form_component__ = __webpack_require__("./client/app/shared/forms/address-form/horizontal-address-form/horizontal-address-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__shared_forms_organization_form_organization_form_component__ = __webpack_require__("./client/app/shared/forms/organization-form/organization-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__admin_admin_component__ = __webpack_require__("./client/app/admin/admin.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_component__ = __webpack_require__("./client/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__shared_forms_bio_form_bio_form_component__ = __webpack_require__("./client/app/shared/forms/bio-form/bio-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__group_blog_blog_component__ = __webpack_require__("./client/app/group/blog/blog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__group_careers_careers_component__ = __webpack_require__("./client/app/group/careers/careers.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__carousel_carousel_component__ = __webpack_require__("./client/app/carousel/carousel.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__carousel_carousel_item_carousel_item_component__ = __webpack_require__("./client/app/carousel/carousel-item/carousel-item.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__group_contactus_contactus_component__ = __webpack_require__("./client/app/group/contactus/contactus.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__account_profile_edit_profile_edit_profile_component__ = __webpack_require__("./client/app/account/profile/edit-profile/edit-profile.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__organize_events_events_component__ = __webpack_require__("./client/app/organize/events/events.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__group_faq_faq_component__ = __webpack_require__("./client/app/group/faq/faq.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__footer_footer_component__ = __webpack_require__("./client/app/footer/footer.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__footer_footer_tablet_footer_tablet_component__ = __webpack_require__("./client/app/footer/footer-tablet/footer-tablet.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__header_header_component__ = __webpack_require__("./client/app/header/header.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__home_home_component__ = __webpack_require__("./client/app/home/home.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__home_how_it_works_how_it_works_component__ = __webpack_require__("./client/app/home/how-it-works/how-it-works.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__login_login_component__ = __webpack_require__("./client/app/login/login.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__logout_logout_component__ = __webpack_require__("./client/app/logout/logout.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__not_found_not_found_component__ = __webpack_require__("./client/app/not-found/not-found.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__organize_organize_component__ = __webpack_require__("./client/app/organize/organize.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__group_partners_partners_component__ = __webpack_require__("./client/app/group/partners/partners.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__shared_forms_password_form_password_form_component__ = __webpack_require__("./client/app/shared/forms/password-form/password-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__shared_forms_phone_form_phone_form_component__ = __webpack_require__("./client/app/shared/forms/phone-form/phone-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__home_pricing_pricing_component__ = __webpack_require__("./client/app/home/pricing/pricing.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__account_profile_profile_component__ = __webpack_require__("./client/app/account/profile/profile.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__admin_manageusers_manage_users_component__ = __webpack_require__("./client/app/admin/manageusers/manage-users.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__register_register_component__ = __webpack_require__("./client/app/register/register.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__account_profile_reset_reset_component__ = __webpack_require__("./client/app/account/profile/reset/reset.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__resetpassword_resetpassword_component__ = __webpack_require__("./client/app/resetpassword/resetpassword.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__shared_formly_base_form_base_form_component__ = __webpack_require__("./client/app/shared/formly/base-form/base-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__account_schedule_schedule_component__ = __webpack_require__("./client/app/account/schedule/schedule.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__organize_stripe_stripe_component__ = __webpack_require__("./client/app/organize/stripe/stripe.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__group_terms_and_conditions_terms_and_conditions_component__ = __webpack_require__("./client/app/group/terms-and-conditions/terms-and-conditions.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__shared_forms_zone_form_zone_form_component__ = __webpack_require__("./client/app/shared/forms/zone-form/zone-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__admin_manageevents_manage_events_component__ = __webpack_require__("./client/app/admin/manageevents/manage-events.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_61__shared_dropdown_directive__ = __webpack_require__("./client/app/shared/dropdown.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62_mydatepicker__ = __webpack_require__("./node_modules/mydatepicker/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_63__admin_adminmenu_admin_menu_component__ = __webpack_require__("./client/app/admin/adminmenu/admin-menu.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ng_bootstrap_ng_bootstrap__ = __webpack_require__("./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ngx_formly_core__ = __webpack_require__("./node_modules/@ngx-formly/core/@ngx-formly/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ngx_formly_material__ = __webpack_require__("./node_modules/@ngx-formly/material/@ngx-formly/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__swimlane_ngx_datatable__ = __webpack_require__("./node_modules/@swimlane/ngx-datatable/release/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__swimlane_ngx_datatable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__swimlane_ngx_datatable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ngx_image_cropper__ = __webpack_require__("./node_modules/ngx-image-cropper/ngx-image-cropper.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__routing_module__ = __webpack_require__("./client/app/routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__shared_shared_module__ = __webpack_require__("./client/app/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__shared_formly_repeat_section_repeat_section_type__ = __webpack_require__("./client/app/shared/formly/repeat-section/repeat-section.type.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__shared_formly_horizontal_types_index__ = __webpack_require__("./client/app/shared/formly/horizontal-types/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__agm_core__ = __webpack_require__("./node_modules/@agm/core/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__googlemap_google_map_component__ = __webpack_require__("./client/app/googlemap/google-map.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__about_about_component__ = __webpack_require__("./client/app/about/about.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__account_account_component__ = __webpack_require__("./client/app/account/account.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__shared_forms_address_form_address_form_component__ = __webpack_require__("./client/app/shared/forms/address-form/address-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__shared_forms_address_form_horizontal_address_form_horizontal_address_form_component__ = __webpack_require__("./client/app/shared/forms/address-form/horizontal-address-form/horizontal-address-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__shared_forms_organization_form_organization_form_component__ = __webpack_require__("./client/app/shared/forms/organization-form/organization-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__admin_admin_component__ = __webpack_require__("./client/app/admin/admin.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__app_component__ = __webpack_require__("./client/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__shared_forms_bio_form_bio_form_component__ = __webpack_require__("./client/app/shared/forms/bio-form/bio-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__group_blog_blog_component__ = __webpack_require__("./client/app/group/blog/blog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__group_careers_careers_component__ = __webpack_require__("./client/app/group/careers/careers.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__carousel_carousel_component__ = __webpack_require__("./client/app/carousel/carousel.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__carousel_carousel_item_carousel_item_component__ = __webpack_require__("./client/app/carousel/carousel-item/carousel-item.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__group_contactus_contactus_component__ = __webpack_require__("./client/app/group/contactus/contactus.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__account_profile_edit_profile_edit_profile_component__ = __webpack_require__("./client/app/account/profile/edit-profile/edit-profile.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__organize_events_events_component__ = __webpack_require__("./client/app/organize/events/events.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__group_faq_faq_component__ = __webpack_require__("./client/app/group/faq/faq.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__footer_footer_component__ = __webpack_require__("./client/app/footer/footer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__footer_footer_tablet_footer_tablet_component__ = __webpack_require__("./client/app/footer/footer-tablet/footer-tablet.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__header_header_component__ = __webpack_require__("./client/app/header/header.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__home_home_component__ = __webpack_require__("./client/app/home/home.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__home_how_it_works_how_it_works_component__ = __webpack_require__("./client/app/home/how-it-works/how-it-works.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__login_login_component__ = __webpack_require__("./client/app/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__logout_logout_component__ = __webpack_require__("./client/app/logout/logout.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__not_found_not_found_component__ = __webpack_require__("./client/app/not-found/not-found.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__organize_organize_component__ = __webpack_require__("./client/app/organize/organize.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__group_partners_partners_component__ = __webpack_require__("./client/app/group/partners/partners.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__shared_forms_password_form_password_form_component__ = __webpack_require__("./client/app/shared/forms/password-form/password-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__shared_forms_phone_form_phone_form_component__ = __webpack_require__("./client/app/shared/forms/phone-form/phone-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__home_pricing_pricing_component__ = __webpack_require__("./client/app/home/pricing/pricing.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__account_profile_profile_component__ = __webpack_require__("./client/app/account/profile/profile.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__admin_manageusers_manage_users_component__ = __webpack_require__("./client/app/admin/manageusers/manage-users.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__register_register_component__ = __webpack_require__("./client/app/register/register.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__account_profile_reset_reset_component__ = __webpack_require__("./client/app/account/profile/reset/reset.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__resetpassword_resetpassword_component__ = __webpack_require__("./client/app/resetpassword/resetpassword.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__shared_formly_base_form_base_form_component__ = __webpack_require__("./client/app/shared/formly/base-form/base-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__account_schedule_schedule_component__ = __webpack_require__("./client/app/account/schedule/schedule.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__organize_stripe_stripe_component__ = __webpack_require__("./client/app/organize/stripe/stripe.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__group_terms_and_conditions_terms_and_conditions_component__ = __webpack_require__("./client/app/group/terms-and-conditions/terms-and-conditions.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__shared_forms_zone_form_zone_form_component__ = __webpack_require__("./client/app/shared/forms/zone-form/zone-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__admin_manageevents_manage_events_component__ = __webpack_require__("./client/app/admin/manageevents/manage-events.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__shared_dropdown_directive__ = __webpack_require__("./client/app/shared/dropdown.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_61_mydatepicker__ = __webpack_require__("./node_modules/mydatepicker/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__admin_adminmenu_admin_menu_component__ = __webpack_require__("./client/app/admin/adminmenu/admin-menu.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1811,7 +1809,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
- //https://github.com/tjoskar/ng-lazyload-image
 
 
 
@@ -1878,83 +1875,83 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_27__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_21__about_about_component__["a" /* AboutComponent */],
-                __WEBPACK_IMPORTED_MODULE_22__account_account_component__["a" /* AccountComponent */],
-                __WEBPACK_IMPORTED_MODULE_23__shared_forms_address_form_address_form_component__["a" /* AddressFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_24__shared_forms_address_form_horizontal_address_form_horizontal_address_form_component__["a" /* HorizontalAddressFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_25__shared_forms_organization_form_organization_form_component__["a" /* OrganizationFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_26__admin_admin_component__["a" /* AdminComponent */],
-                __WEBPACK_IMPORTED_MODULE_28__shared_forms_bio_form_bio_form_component__["a" /* BioFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_29__group_blog_blog_component__["a" /* BlogComponent */],
-                __WEBPACK_IMPORTED_MODULE_30__group_careers_careers_component__["a" /* CareersComponent */],
-                __WEBPACK_IMPORTED_MODULE_31__carousel_carousel_component__["a" /* CarouselComponent */],
-                __WEBPACK_IMPORTED_MODULE_32__carousel_carousel_item_carousel_item_component__["a" /* CarouselItemComponent */],
-                __WEBPACK_IMPORTED_MODULE_33__group_contactus_contactus_component__["a" /* ContactUsComponent */],
-                __WEBPACK_IMPORTED_MODULE_61__shared_dropdown_directive__["a" /* DropdownDirective */],
-                __WEBPACK_IMPORTED_MODULE_34__account_profile_edit_profile_edit_profile_component__["a" /* EditProfileComponent */],
-                __WEBPACK_IMPORTED_MODULE_35__organize_events_events_component__["a" /* EventsComponent */],
-                __WEBPACK_IMPORTED_MODULE_36__group_faq_faq_component__["a" /* FaqComponent */],
-                __WEBPACK_IMPORTED_MODULE_18__shared_formly_horizontal_types_index__["c" /* FormlyHorizontalWrapper */],
-                __WEBPACK_IMPORTED_MODULE_18__shared_formly_horizontal_types_index__["a" /* FormlyHorizontalRadioWrapper */],
-                __WEBPACK_IMPORTED_MODULE_18__shared_formly_horizontal_types_index__["b" /* FormlyHorizontalTextAreaWrapper */],
-                __WEBPACK_IMPORTED_MODULE_37__footer_footer_component__["a" /* FooterComponent */],
-                __WEBPACK_IMPORTED_MODULE_38__footer_footer_tablet_footer_tablet_component__["a" /* FooterTabletComponent */],
-                __WEBPACK_IMPORTED_MODULE_20__googlemap_google_map_component__["a" /* GoogleMapComponent */],
-                __WEBPACK_IMPORTED_MODULE_39__header_header_component__["a" /* HeaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_40__home_home_component__["a" /* HomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_41__home_how_it_works_how_it_works_component__["a" /* HowItWorksComponent */],
-                __WEBPACK_IMPORTED_MODULE_42__login_login_component__["a" /* LoginComponent */],
-                __WEBPACK_IMPORTED_MODULE_43__logout_logout_component__["a" /* LogoutComponent */],
-                __WEBPACK_IMPORTED_MODULE_44__not_found_not_found_component__["a" /* NotFoundComponent */],
-                __WEBPACK_IMPORTED_MODULE_45__organize_organize_component__["a" /* OrganizeComponent */],
-                __WEBPACK_IMPORTED_MODULE_46__group_partners_partners_component__["a" /* PartnersComponent */],
-                __WEBPACK_IMPORTED_MODULE_47__shared_forms_password_form_password_form_component__["a" /* PasswordFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_48__shared_forms_phone_form_phone_form_component__["a" /* PhoneFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_49__home_pricing_pricing_component__["a" /* PricingComponent */],
-                __WEBPACK_IMPORTED_MODULE_50__account_profile_profile_component__["a" /* ProfileComponent */],
-                __WEBPACK_IMPORTED_MODULE_51__admin_manageusers_manage_users_component__["a" /* ManageUsersComponent */],
-                __WEBPACK_IMPORTED_MODULE_60__admin_manageevents_manage_events_component__["a" /* ManageEventsComponent */],
-                __WEBPACK_IMPORTED_MODULE_52__register_register_component__["a" /* RegisterComponent */],
-                __WEBPACK_IMPORTED_MODULE_17__shared_formly_repeat_section_repeat_section_type__["a" /* RepeatTypeComponent */],
-                __WEBPACK_IMPORTED_MODULE_53__account_profile_reset_reset_component__["a" /* ResetComponent */],
-                __WEBPACK_IMPORTED_MODULE_54__resetpassword_resetpassword_component__["a" /* ResetPasswordComponent */],
-                __WEBPACK_IMPORTED_MODULE_55__shared_formly_base_form_base_form_component__["a" /* BaseFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_56__account_schedule_schedule_component__["a" /* ScheduleComponent */],
-                __WEBPACK_IMPORTED_MODULE_57__organize_stripe_stripe_component__["a" /* StripeComponent */],
-                __WEBPACK_IMPORTED_MODULE_58__group_terms_and_conditions_terms_and_conditions_component__["a" /* TermsAndConditionsComponent */],
-                __WEBPACK_IMPORTED_MODULE_59__shared_forms_zone_form_zone_form_component__["a" /* ZoneFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_63__admin_adminmenu_admin_menu_component__["a" /* AdminMenuComponent */]
+                __WEBPACK_IMPORTED_MODULE_26__app_component__["a" /* AppComponent */],
+                __WEBPACK_IMPORTED_MODULE_20__about_about_component__["a" /* AboutComponent */],
+                __WEBPACK_IMPORTED_MODULE_21__account_account_component__["a" /* AccountComponent */],
+                __WEBPACK_IMPORTED_MODULE_22__shared_forms_address_form_address_form_component__["a" /* AddressFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_23__shared_forms_address_form_horizontal_address_form_horizontal_address_form_component__["a" /* HorizontalAddressFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_24__shared_forms_organization_form_organization_form_component__["a" /* OrganizationFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_25__admin_admin_component__["a" /* AdminComponent */],
+                __WEBPACK_IMPORTED_MODULE_27__shared_forms_bio_form_bio_form_component__["a" /* BioFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_28__group_blog_blog_component__["a" /* BlogComponent */],
+                __WEBPACK_IMPORTED_MODULE_29__group_careers_careers_component__["a" /* CareersComponent */],
+                __WEBPACK_IMPORTED_MODULE_30__carousel_carousel_component__["a" /* CarouselComponent */],
+                __WEBPACK_IMPORTED_MODULE_31__carousel_carousel_item_carousel_item_component__["a" /* CarouselItemComponent */],
+                __WEBPACK_IMPORTED_MODULE_32__group_contactus_contactus_component__["a" /* ContactUsComponent */],
+                __WEBPACK_IMPORTED_MODULE_60__shared_dropdown_directive__["a" /* DropdownDirective */],
+                __WEBPACK_IMPORTED_MODULE_33__account_profile_edit_profile_edit_profile_component__["a" /* EditProfileComponent */],
+                __WEBPACK_IMPORTED_MODULE_34__organize_events_events_component__["a" /* EventsComponent */],
+                __WEBPACK_IMPORTED_MODULE_35__group_faq_faq_component__["a" /* FaqComponent */],
+                __WEBPACK_IMPORTED_MODULE_17__shared_formly_horizontal_types_index__["c" /* FormlyHorizontalWrapper */],
+                __WEBPACK_IMPORTED_MODULE_17__shared_formly_horizontal_types_index__["a" /* FormlyHorizontalRadioWrapper */],
+                __WEBPACK_IMPORTED_MODULE_17__shared_formly_horizontal_types_index__["b" /* FormlyHorizontalTextAreaWrapper */],
+                __WEBPACK_IMPORTED_MODULE_36__footer_footer_component__["a" /* FooterComponent */],
+                __WEBPACK_IMPORTED_MODULE_37__footer_footer_tablet_footer_tablet_component__["a" /* FooterTabletComponent */],
+                __WEBPACK_IMPORTED_MODULE_19__googlemap_google_map_component__["a" /* GoogleMapComponent */],
+                __WEBPACK_IMPORTED_MODULE_38__header_header_component__["a" /* HeaderComponent */],
+                __WEBPACK_IMPORTED_MODULE_39__home_home_component__["a" /* HomeComponent */],
+                __WEBPACK_IMPORTED_MODULE_40__home_how_it_works_how_it_works_component__["a" /* HowItWorksComponent */],
+                __WEBPACK_IMPORTED_MODULE_41__login_login_component__["a" /* LoginComponent */],
+                __WEBPACK_IMPORTED_MODULE_42__logout_logout_component__["a" /* LogoutComponent */],
+                __WEBPACK_IMPORTED_MODULE_43__not_found_not_found_component__["a" /* NotFoundComponent */],
+                __WEBPACK_IMPORTED_MODULE_44__organize_organize_component__["a" /* OrganizeComponent */],
+                __WEBPACK_IMPORTED_MODULE_45__group_partners_partners_component__["a" /* PartnersComponent */],
+                __WEBPACK_IMPORTED_MODULE_46__shared_forms_password_form_password_form_component__["a" /* PasswordFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_47__shared_forms_phone_form_phone_form_component__["a" /* PhoneFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_48__home_pricing_pricing_component__["a" /* PricingComponent */],
+                __WEBPACK_IMPORTED_MODULE_49__account_profile_profile_component__["a" /* ProfileComponent */],
+                __WEBPACK_IMPORTED_MODULE_50__admin_manageusers_manage_users_component__["a" /* ManageUsersComponent */],
+                __WEBPACK_IMPORTED_MODULE_59__admin_manageevents_manage_events_component__["a" /* ManageEventsComponent */],
+                __WEBPACK_IMPORTED_MODULE_51__register_register_component__["a" /* RegisterComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__shared_formly_repeat_section_repeat_section_type__["a" /* RepeatTypeComponent */],
+                __WEBPACK_IMPORTED_MODULE_52__account_profile_reset_reset_component__["a" /* ResetComponent */],
+                __WEBPACK_IMPORTED_MODULE_53__resetpassword_resetpassword_component__["a" /* ResetPasswordComponent */],
+                __WEBPACK_IMPORTED_MODULE_54__shared_formly_base_form_base_form_component__["a" /* BaseFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_55__account_schedule_schedule_component__["a" /* ScheduleComponent */],
+                __WEBPACK_IMPORTED_MODULE_56__organize_stripe_stripe_component__["a" /* StripeComponent */],
+                __WEBPACK_IMPORTED_MODULE_57__group_terms_and_conditions_terms_and_conditions_component__["a" /* TermsAndConditionsComponent */],
+                __WEBPACK_IMPORTED_MODULE_58__shared_forms_zone_form_zone_form_component__["a" /* ZoneFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_62__admin_adminmenu_admin_menu_component__["a" /* AdminMenuComponent */]
                 //        BarchartComponent
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__["BrowserModule"],
-                __WEBPACK_IMPORTED_MODULE_19__agm_core__["a" /* AgmCoreModule */].forRoot({
+                __WEBPACK_IMPORTED_MODULE_18__agm_core__["a" /* AgmCoreModule */].forRoot({
                     apiKey: 'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
                 }),
-                __WEBPACK_IMPORTED_MODULE_11__swimlane_ngx_datatable__["NgxDatatableModule"],
-                __WEBPACK_IMPORTED_MODULE_14__routing_module__["a" /* RoutingModule */],
-                __WEBPACK_IMPORTED_MODULE_15__shared_shared_module__["a" /* SharedModule */],
+                __WEBPACK_IMPORTED_MODULE_10__swimlane_ngx_datatable__["NgxDatatableModule"],
+                __WEBPACK_IMPORTED_MODULE_13__routing_module__["a" /* RoutingModule */],
+                __WEBPACK_IMPORTED_MODULE_14__shared_shared_module__["a" /* SharedModule */],
                 __WEBPACK_IMPORTED_MODULE_6__material_module__["a" /* MaterialModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
                 __WEBPACK_IMPORTED_MODULE_5__angular_forms__["h" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_5__angular_forms__["m" /* ReactiveFormsModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ng_recaptcha__["RecaptchaModule"].forRoot(),
                 //FormlyBootstrapModule,
-                __WEBPACK_IMPORTED_MODULE_10__ngx_formly_material__["a" /* FormlyMaterialModule */],
-                __WEBPACK_IMPORTED_MODULE_9__ngx_formly_core__["d" /* FormlyModule */].forRoot({
+                __WEBPACK_IMPORTED_MODULE_9__ngx_formly_material__["a" /* FormlyMaterialModule */],
+                __WEBPACK_IMPORTED_MODULE_8__ngx_formly_core__["d" /* FormlyModule */].forRoot({
                     wrappers: [
                         {
                             name: 'horizontalWrapper',
-                            component: __WEBPACK_IMPORTED_MODULE_18__shared_formly_horizontal_types_index__["c" /* FormlyHorizontalWrapper */]
+                            component: __WEBPACK_IMPORTED_MODULE_17__shared_formly_horizontal_types_index__["c" /* FormlyHorizontalWrapper */]
                         },
                         {
                             name: 'horizontalRadioWrapper',
-                            component: __WEBPACK_IMPORTED_MODULE_18__shared_formly_horizontal_types_index__["a" /* FormlyHorizontalRadioWrapper */]
+                            component: __WEBPACK_IMPORTED_MODULE_17__shared_formly_horizontal_types_index__["a" /* FormlyHorizontalRadioWrapper */]
                         },
                         {
                             name: 'horizontalTextareaWrapper',
-                            component: __WEBPACK_IMPORTED_MODULE_18__shared_formly_horizontal_types_index__["b" /* FormlyHorizontalTextAreaWrapper */]
+                            component: __WEBPACK_IMPORTED_MODULE_17__shared_formly_horizontal_types_index__["b" /* FormlyHorizontalTextAreaWrapper */]
                         }
                     ],
                     types: [
@@ -1973,21 +1970,20 @@ var AppModule = /** @class */ (function () {
                             extends: 'textarea',
                             wrappers: ['fieldset', 'horizontalTextareaWrapper']
                         },
-                        { name: 'repeat', component: __WEBPACK_IMPORTED_MODULE_17__shared_formly_repeat_section_repeat_section_type__["a" /* RepeatTypeComponent */] }
+                        { name: 'repeat', component: __WEBPACK_IMPORTED_MODULE_16__shared_formly_repeat_section_repeat_section_type__["a" /* RepeatTypeComponent */] }
                     ]
                 }),
-                __WEBPACK_IMPORTED_MODULE_13__angular_common_http__["c" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_62_mydatepicker__["MyDatePickerModule"],
-                __WEBPACK_IMPORTED_MODULE_12_ngx_image_cropper__["a" /* ImageCropperModule */],
-                __WEBPACK_IMPORTED_MODULE_8__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_12__angular_common_http__["c" /* HttpClientModule */],
+                __WEBPACK_IMPORTED_MODULE_61_mydatepicker__["MyDatePickerModule"],
+                __WEBPACK_IMPORTED_MODULE_11_ngx_image_cropper__["a" /* ImageCropperModule */],
+                __WEBPACK_IMPORTED_MODULE_7__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_4__services_core_module__["a" /* CoreModule */],
-                __WEBPACK_IMPORTED_MODULE_7_ng_lazyload_image__["LazyLoadImageModule"],
-                __WEBPACK_IMPORTED_MODULE_16__angular_common__["CommonModule"]
+                __WEBPACK_IMPORTED_MODULE_15__angular_common__["CommonModule"]
             ],
             providers: [],
             schemas: [__WEBPACK_IMPORTED_MODULE_0__angular_core__["CUSTOM_ELEMENTS_SCHEMA"]],
             // Add bootstrap
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_27__app_component__["a" /* AppComponent */]]
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_26__app_component__["a" /* AppComponent */]]
         })
     ], AppModule);
     return AppModule;
@@ -3598,7 +3594,7 @@ var EventsComponent = /** @class */ (function () {
 /***/ "./client/app/organize/organize.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-12\">\n    <div class=\"card\">\n\n      <app-toast [message]=\"toast.message\"></app-toast>\n      <h1 class=\"etched-text\" [innerHtml]=\"heading\"></h1>\n      <br />\n      <div class=\"card form-size\" *ngIf=\"isEditing\">\n\n        <organization-form (ngSubmit)=\"submitOrganization($event)\" (ngCancel)=\"setOrganizeMode($event)\" [model]=\"currentModel\"></organization-form>\n      </div>\n\n      <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"!isEditing && (!organizations || organizations.length === 0)\">\n        <div class=\"form-size\">\n          <p>You need to create at least one organization. Then you can create and assign <i>events</i> to an organization.\n            <br />An event is the tornament and venue to which you assign games. Note a game can have the same address or a different address from avenue</p>\n          <button mat-raised-button color=\"primary\" class=\"btn btn-primary btn-sm\" (click)=\"goNewOrganization({})\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n      <div  *ngIf=\"!isEditing && organizations?.length > 0\">\n        <div class=\"form-size\">\n          <br />\n          <div class=\"row rar-list\"  *ngFor=\"let organization of organizations\" >\n            <div class=\"col-3 rar-logo\" (click)=\"openModal(organization)\" title=\"Upload Organization Logo.\">\n              <img [defaultImage]=\"defaultImage\"  [lazyLoad]=\"getImageAddress(organization)\" width=\"80\" alt=\"logo\">\n            </div>\n            <div class=\"col-5\" (click)=\"editEvents(organization.id);\" title=\"Edit Events.\">\n              <h2>{{organization.name}}</h2>\n            </div>\n            <div class=\"col-2\">\n              <div class=\"button-container\">\n                <button class=\"btn btn-primary btn-sm\" (click)=\"editOrganization(organization.id)\" title=\"Edit Organization.\">Edit</button>\n              </div>\n            </div>  \n            <div class=\"col-2\">\n              <div class=\"button-container\">\n                <button class=\"btn btn-danger btn-sm\" (click)=\"goNewOrganization()\" title=\"Click to delete organization\">Delete</button>\n              </div>\n            </div>\n          </div>\n          <!--\n          <table class=\"table table-bordered table-hover\">\n            <thead class=\"thead-light\">\n              <tr>\n                <th *ngFor=\"let title of titles\" scope=\"col\">\n                  {{title}}\n                </th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let organization of organizations\"  class=\"org-table-item \">\n                <td (click)=\"editEvents(organization.id);\" >\n                  {{organization.name}}\n                </td>\n                <td>\n                  <button class=\"btn btn-primary btn-sm\" (click)=\"editOrganization(organization.id)\" title=\"Click to edit this organization\">Edit</button>\n                </td>\n                <td>\n                  <button class=\"btn btn-danger btn-sm\" (click)=\"goNewOrganization()\" title=\"Click to delete organization\">Delete</button>\n                </td>\n              </tr>\n            </tbody>\n          </table> -->\n          <br />\n          <button class=\"btn btn-primary btn-sm new-org-button\" (click)=\"goNewOrganization()\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n      <rar-cropper-image-modal></rar-cropper-image-modal>\n    </div>\n<!--\n    <div class=\"card\">\n      Card:4242 4242 4242 4242 <br />\n      Date: 01/20<br />\n      CVC: 289<br />\n      Zip: 92888<br />\n      <rar-stripe></rar-stripe>\n    </div>\n-->\n\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-12\">\n    <div class=\"card\">\n\n      <app-toast [message]=\"toast.message\"></app-toast>\n      <h1 class=\"etched-text\" [innerHtml]=\"heading\"></h1>\n      <br />\n      <div class=\"card form-size\" *ngIf=\"isEditing\">\n\n        <organization-form (ngSubmit)=\"submitOrganization($event)\" (ngCancel)=\"setOrganizeMode($event)\" [model]=\"currentModel\"></organization-form>\n      </div>\n\n      <div class=\"card horizontal-and-vertical-centering \" *ngIf=\"!isEditing && (!organizations || organizations.length === 0)\">\n        <div class=\"form-size\">\n          <p>You need to create at least one organization. Then you can create and assign <i>events</i> to an organization.\n            <br />An event is the tornament and venue to which you assign games. Note a game can have the same address or a different address from avenue</p>\n          <button mat-raised-button color=\"primary\" class=\"btn btn-primary btn-sm\" (click)=\"goNewOrganization({})\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n      <div  *ngIf=\"!isEditing && organizations?.length > 0\">\n        <div class=\"form-size\">\n          <br />\n          <div class=\"row rar-list\"  *ngFor=\"let organization of organizations\" >\n            <div class=\"col-3 rar-logo\" (click)=\"openModal(organization)\" title=\"Upload Organization Logo.\">\n              <rar-image [errorImage]=\"defaultImage\"  [image]=\"getImageAddress(organization)\" [width]=\"80\" [alt]=\"logo\"></rar-image>\n            </div>\n            <div class=\"col-5\" (click)=\"editEvents(organization.id);\" title=\"Edit Events.\">\n              <h2>{{organization.name}}</h2>\n            </div>\n            <div class=\"col-2\">\n              <div class=\"button-container\">\n                <button class=\"btn btn-primary btn-sm\" (click)=\"editOrganization(organization.id)\" title=\"Edit Organization.\">Edit</button>\n              </div>\n            </div>  \n            <div class=\"col-2\">\n              <div class=\"button-container\">\n                <button class=\"btn btn-danger btn-sm\" (click)=\"goNewOrganization()\" title=\"Click to delete organization\">Delete</button>\n              </div>\n            </div>\n          </div>\n          <!--\n          <table class=\"table table-bordered table-hover\">\n            <thead class=\"thead-light\">\n              <tr>\n                <th *ngFor=\"let title of titles\" scope=\"col\">\n                  {{title}}\n                </th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let organization of organizations\"  class=\"org-table-item \">\n                <td (click)=\"editEvents(organization.id);\" >\n                  {{organization.name}}\n                </td>\n                <td>\n                  <button class=\"btn btn-primary btn-sm\" (click)=\"editOrganization(organization.id)\" title=\"Click to edit this organization\">Edit</button>\n                </td>\n                <td>\n                  <button class=\"btn btn-danger btn-sm\" (click)=\"goNewOrganization()\" title=\"Click to delete organization\">Delete</button>\n                </td>\n              </tr>\n            </tbody>\n          </table> -->\n          <br />\n          <button class=\"btn btn-primary btn-sm new-org-button\" (click)=\"goNewOrganization()\" title=\"Click to create new organization\">New Organization</button>\n        </div>\n      </div>\n\n      <rar-cropper-image-modal [destination]=\"destination\"></rar-cropper-image-modal>\n    </div>\n<!--\n    <div class=\"card\">\n      Card:4242 4242 4242 4242 <br />\n      Date: 01/20<br />\n      CVC: 289<br />\n      Zip: 92888<br />\n      <rar-stripe></rar-stripe>\n    </div>\n-->\n\n</div>\n"
 
 /***/ }),
 
@@ -3676,12 +3672,40 @@ var OrganizeComponent = /** @class */ (function () {
         return url;
     };
     OrganizeComponent.prototype.openModal = function (organization) {
-        this.cropImageModalService.setOrganizationId(organization.id);
+        this.destination = "/api/upload_logo/" + organization.id;
         this.cropImageModalService.show();
     };
     OrganizeComponent.prototype.closeModal = function ($event) {
+        console.log('close modal');
         this.cropImageModalService.hide();
     };
+    /*
+    public submitModal($event): void {
+      const formData = new FormData();
+      const uploadImage = this.b64toBlob(this.croppedImage);
+  
+      if (uploadImage.size > 0) {
+        formData.append('photo', uploadImage);
+        this.organizeService
+          .uploadLogo(
+            this.cropImageModalService.organization_id,
+            formData
+          )
+          .subscribe(
+            () => {
+              console.log('it worked');
+            },
+            err => {
+              console.log('========>it screwed up:', err);
+            },
+            () => {
+              this.cleanUp();
+            }
+          );
+      } else {
+        this.cleanUp();
+      }
+    }*/
     OrganizeComponent.prototype.setOrganizeMode = function () {
         this.currentModel = {};
         this.isEditing = false;
@@ -6347,12 +6371,14 @@ var CropImageModalComponent = /** @class */ (function () {
         console.log('image failed');
     };
     CropImageModalComponent.prototype.closeModal = function ($event) {
+        this.cropImageModalService.hide();
         this.cleanUp();
     };
     CropImageModalComponent.prototype.cleanUp = function () {
         this.selectedTab = 'loading';
         this.croppedImage = undefined;
         this.imageChangedEvent = null;
+        this.destination = '';
         this.initialImage =
             'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=	';
     };
@@ -6362,18 +6388,17 @@ var CropImageModalComponent = /** @class */ (function () {
         var uploadImage = this.b64toBlob(this.croppedImage);
         if (uploadImage.size > 0) {
             formData.append('photo', uploadImage);
-            this.organizeService
-                .uploadLogo(this.cropImageModalService.organization_id, formData)
+            this.cropImageModalService
+                .uploadImage(this.destination, formData)
                 .subscribe(function () {
-                console.log('it worked');
+                console.log('it worked.. closing modal');
+                _this.closeModal(null);
             }, function (err) {
                 console.log('========>it screwed up:', err);
-            }, function () {
-                _this.cleanUp();
             });
         }
         else {
-            this.cleanUp();
+            this.closeModal(null);
         }
     };
     /**
@@ -6402,6 +6427,10 @@ var CropImageModalComponent = /** @class */ (function () {
         }
         return new Blob(byteArrays, { type: contentType });
     };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", String)
+    ], CropImageModalComponent.prototype, "destination", void 0);
     CropImageModalComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'rar-cropper-image-modal',
@@ -6427,7 +6456,11 @@ var CropImageModalComponent = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CropImageModalService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__ = __webpack_require__("./node_modules/rxjs/_esm5/Subject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__ = __webpack_require__("./node_modules/rxjs/_esm5/Subject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_do__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/do.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_take__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/take.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6439,23 +6472,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
+
 var CropImageModalService = /** @class */ (function () {
-    function CropImageModalService() {
-        this.modalSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["a" /* Subject */]();
+    function CropImageModalService(http) {
+        this.http = http;
+        this.modalSubject = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["a" /* Subject */]();
         this.modalState$ = this.modalSubject.asObservable();
     }
     CropImageModalService.prototype.show = function () {
         this.modalSubject.next(true);
     };
     CropImageModalService.prototype.hide = function () {
-        this.modalSubject.next(true);
+        this.modalSubject.next(false);
     };
-    CropImageModalService.prototype.setOrganizationId = function (organization_id) {
-        this.organization_id = organization_id;
+    CropImageModalService.prototype.uploadImage = function (destination, formData) {
+        return this.http.post(destination, formData);
     };
     CropImageModalService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["b" /* HttpClient */]])
     ], CropImageModalService);
     return CropImageModalService;
 }());
@@ -8046,6 +8084,76 @@ var ZoneFormComponent = /** @class */ (function (_super) {
 
 /***/ }),
 
+/***/ "./client/app/shared/image/image.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = "img.ng-lazyloaded {\n  -webkit-animation: fadein 0.5s;\n          animation: fadein 0.5s; }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n"
+
+/***/ }),
+
+/***/ "./client/app/shared/image/image.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RaRImageComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var RaRImageComponent = /** @class */ (function () {
+    function RaRImageComponent() {
+        this.defaultImage = '/assets/images/loader.gif';
+        this.image = '';
+        this.errorImage = '';
+        this.offset = 100;
+        this.alt = '';
+    }
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", String)
+    ], RaRImageComponent.prototype, "defaultImage", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", String)
+    ], RaRImageComponent.prototype, "image", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", String)
+    ], RaRImageComponent.prototype, "errorImage", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", Number)
+    ], RaRImageComponent.prototype, "offset", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", Number)
+    ], RaRImageComponent.prototype, "width", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", String)
+    ], RaRImageComponent.prototype, "alt", void 0);
+    RaRImageComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'rar-image',
+            template: "\n        <img [defaultImage]=\"defaultImage\" [lazyLoad]=\"image\" [offset]=\"offset\" [errorImage]=\"errorImage\" width=\"{{width}}\" alt=\"{{alt}}\">\n    ",
+            styles: [__webpack_require__("./client/app/shared/image/image.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], RaRImageComponent);
+    return RaRImageComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./client/app/shared/loader/index.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -8411,19 +8519,22 @@ var ModalService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ngx_image_cropper__ = __webpack_require__("./node_modules/ngx-image-cropper/ngx-image-cropper.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__toast_index__ = __webpack_require__("./client/app/shared/toast/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__loader_index__ = __webpack_require__("./client/app/shared/loader/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__loading_loading_component__ = __webpack_require__("./client/app/shared/loading/loading.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__account_profile_suspended_suspended_component__ = __webpack_require__("./client/app/account/profile/suspended/suspended.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__account_profile_deactivated_deactivated_component__ = __webpack_require__("./client/app/account/profile/deactivated/deactivated.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__account_profile_standby_standby_component__ = __webpack_require__("./client/app/account/profile/standby/standby.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__account_profile_passwordreset_passwordreset_component__ = __webpack_require__("./client/app/account/profile/passwordreset/passwordreset.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__uploadbutton_upload_button_component__ = __webpack_require__("./client/app/shared/uploadbutton/upload-button.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__uploader_uploader_component__ = __webpack_require__("./client/app/shared/uploader/uploader.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modal_modal_component__ = __webpack_require__("./client/app/shared/modal/modal.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__modal_modal_service__ = __webpack_require__("./client/app/shared/modal/modal.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__material_module__ = __webpack_require__("./client/app/material.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__crop_image_modal_index__ = __webpack_require__("./client/app/shared/crop-image-modal/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_lazyload_image__ = __webpack_require__("./node_modules/ng-lazyload-image/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_lazyload_image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng_lazyload_image__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__toast_index__ = __webpack_require__("./client/app/shared/toast/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__loader_index__ = __webpack_require__("./client/app/shared/loader/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__loading_loading_component__ = __webpack_require__("./client/app/shared/loading/loading.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__account_profile_suspended_suspended_component__ = __webpack_require__("./client/app/account/profile/suspended/suspended.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__account_profile_deactivated_deactivated_component__ = __webpack_require__("./client/app/account/profile/deactivated/deactivated.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__account_profile_standby_standby_component__ = __webpack_require__("./client/app/account/profile/standby/standby.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__account_profile_passwordreset_passwordreset_component__ = __webpack_require__("./client/app/account/profile/passwordreset/passwordreset.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__uploadbutton_upload_button_component__ = __webpack_require__("./client/app/shared/uploadbutton/upload-button.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__uploader_uploader_component__ = __webpack_require__("./client/app/shared/uploader/uploader.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__modal_modal_component__ = __webpack_require__("./client/app/shared/modal/modal.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__modal_modal_service__ = __webpack_require__("./client/app/shared/modal/modal.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__image_image_component__ = __webpack_require__("./client/app/shared/image/image.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__material_module__ = __webpack_require__("./client/app/material.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__crop_image_modal_index__ = __webpack_require__("./client/app/shared/crop-image-modal/index.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8434,6 +8545,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+ //https://github.com/tjoskar/ng-lazyload-image
 
 
 
@@ -8456,10 +8569,11 @@ var SharedModule = /** @class */ (function () {
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["BrowserModule"],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_16__material_module__["a" /* MaterialModule */],
+                __WEBPACK_IMPORTED_MODULE_18__material_module__["a" /* MaterialModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["m" /* ReactiveFormsModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* HttpModule */],
-                __WEBPACK_IMPORTED_MODULE_3_ngx_image_cropper__["a" /* ImageCropperModule */]
+                __WEBPACK_IMPORTED_MODULE_3_ngx_image_cropper__["a" /* ImageCropperModule */],
+                __WEBPACK_IMPORTED_MODULE_5_ng_lazyload_image__["LazyLoadImageModule"]
             ],
             exports: [
                 // Shared Modules
@@ -8468,33 +8582,35 @@ var SharedModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["m" /* ReactiveFormsModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* HttpModule */],
                 // Shared Components
-                __WEBPACK_IMPORTED_MODULE_14__modal_modal_component__["a" /* ModalComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__toast_index__["a" /* ToastComponent */],
-                __WEBPACK_IMPORTED_MODULE_6__loader_index__["a" /* LoaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__loading_loading_component__["a" /* LoadingComponent */],
-                __WEBPACK_IMPORTED_MODULE_12__uploadbutton_upload_button_component__["a" /* UploadButtonComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__uploader_uploader_component__["a" /* UploaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_17__crop_image_modal_index__["a" /* CropImageModalComponent */]
+                __WEBPACK_IMPORTED_MODULE_15__modal_modal_component__["a" /* ModalComponent */],
+                __WEBPACK_IMPORTED_MODULE_6__toast_index__["a" /* ToastComponent */],
+                __WEBPACK_IMPORTED_MODULE_7__loader_index__["a" /* LoaderComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__loading_loading_component__["a" /* LoadingComponent */],
+                __WEBPACK_IMPORTED_MODULE_13__uploadbutton_upload_button_component__["a" /* UploadButtonComponent */],
+                __WEBPACK_IMPORTED_MODULE_14__uploader_uploader_component__["a" /* UploaderComponent */],
+                __WEBPACK_IMPORTED_MODULE_19__crop_image_modal_index__["a" /* CropImageModalComponent */],
+                __WEBPACK_IMPORTED_MODULE_17__image_image_component__["a" /* RaRImageComponent */]
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_5__toast_index__["a" /* ToastComponent */],
-                __WEBPACK_IMPORTED_MODULE_6__loader_index__["a" /* LoaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__loading_loading_component__["a" /* LoadingComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__account_profile_suspended_suspended_component__["a" /* SuspendedComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__account_profile_deactivated_deactivated_component__["a" /* DeactivatedComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__account_profile_standby_standby_component__["a" /* StandbyComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__account_profile_passwordreset_passwordreset_component__["a" /* PasswordresetComponent */],
-                __WEBPACK_IMPORTED_MODULE_12__uploadbutton_upload_button_component__["a" /* UploadButtonComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__uploader_uploader_component__["a" /* UploaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__modal_modal_component__["a" /* ModalComponent */],
-                __WEBPACK_IMPORTED_MODULE_17__crop_image_modal_index__["a" /* CropImageModalComponent */]
+                __WEBPACK_IMPORTED_MODULE_6__toast_index__["a" /* ToastComponent */],
+                __WEBPACK_IMPORTED_MODULE_7__loader_index__["a" /* LoaderComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__loading_loading_component__["a" /* LoadingComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__account_profile_suspended_suspended_component__["a" /* SuspendedComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__account_profile_deactivated_deactivated_component__["a" /* DeactivatedComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__account_profile_standby_standby_component__["a" /* StandbyComponent */],
+                __WEBPACK_IMPORTED_MODULE_12__account_profile_passwordreset_passwordreset_component__["a" /* PasswordresetComponent */],
+                __WEBPACK_IMPORTED_MODULE_13__uploadbutton_upload_button_component__["a" /* UploadButtonComponent */],
+                __WEBPACK_IMPORTED_MODULE_14__uploader_uploader_component__["a" /* UploaderComponent */],
+                __WEBPACK_IMPORTED_MODULE_15__modal_modal_component__["a" /* ModalComponent */],
+                __WEBPACK_IMPORTED_MODULE_19__crop_image_modal_index__["a" /* CropImageModalComponent */],
+                __WEBPACK_IMPORTED_MODULE_17__image_image_component__["a" /* RaRImageComponent */]
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_17__crop_image_modal_index__["b" /* CropImageModalService */],
-                __WEBPACK_IMPORTED_MODULE_6__loader_index__["b" /* LoaderService */],
-                __WEBPACK_IMPORTED_MODULE_15__modal_modal_service__["a" /* ModalService */],
-                __WEBPACK_IMPORTED_MODULE_5__toast_index__["a" /* ToastComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__toast_index__["b" /* ToastService */]
+                __WEBPACK_IMPORTED_MODULE_19__crop_image_modal_index__["b" /* CropImageModalService */],
+                __WEBPACK_IMPORTED_MODULE_7__loader_index__["b" /* LoaderService */],
+                __WEBPACK_IMPORTED_MODULE_16__modal_modal_service__["a" /* ModalService */],
+                __WEBPACK_IMPORTED_MODULE_6__toast_index__["a" /* ToastComponent */],
+                __WEBPACK_IMPORTED_MODULE_6__toast_index__["b" /* ToastService */]
             ]
         })
     ], SharedModule);
