@@ -47,6 +47,7 @@ export class OrganizeComponent implements OnInit {
   protected isEditing: boolean = false;
   public showDialog: boolean = false;
   public defaultImage: string = 'assets/images/ball.png';
+  public destination: string;
 
   constructor(
     private auth: AuthService,
@@ -71,14 +72,41 @@ export class OrganizeComponent implements OnInit {
   }
 
   openModal(organization: Organization): void {
-    this.cropImageModalService.setOrganizationId(organization.id);
+    this.destination = `/api/upload_logo/${organization.id}`;
     this.cropImageModalService.show();
   }
 
   closeModal($event): void {
+    console.log('close modal');
     this.cropImageModalService.hide();
   }
+  /*
+  public submitModal($event): void {
+    const formData = new FormData();
+    const uploadImage = this.b64toBlob(this.croppedImage);
 
+    if (uploadImage.size > 0) {
+      formData.append('photo', uploadImage);
+      this.organizeService
+        .uploadLogo(
+          this.cropImageModalService.organization_id,
+          formData
+        )
+        .subscribe(
+          () => {
+            console.log('it worked');
+          },
+          err => {
+            console.log('========>it screwed up:', err);
+          },
+          () => {
+            this.cleanUp();
+          }
+        );
+    } else {
+      this.cleanUp();
+    }
+  }*/
   setOrganizeMode(): void {
     this.currentModel = {};
     this.isEditing = false;

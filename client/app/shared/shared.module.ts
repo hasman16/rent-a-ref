@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { HttpModule } from '@angular/http';
+import { LazyLoadImageModule } from 'ng-lazyload-image'; //https://github.com/tjoskar/ng-lazyload-image
 
 import { ToastComponent, ToastService } from './toast/index';
 import { LoaderComponent, LoaderService } from './loader/index';
@@ -15,6 +16,7 @@ import { UploadButtonComponent } from './uploadbutton/upload-button.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ModalComponent } from './modal/modal.component';
 import { ModalService } from './modal/modal.service';
+import { RaRImageComponent } from './image/image.component';
 import { MaterialModule } from '../material.module';
 import {
   CropImageModalComponent,
@@ -28,7 +30,8 @@ import {
     MaterialModule,
     ReactiveFormsModule,
     HttpModule,
-    ImageCropperModule
+    ImageCropperModule,
+    LazyLoadImageModule
   ],
   exports: [
     // Shared Modules
@@ -43,7 +46,8 @@ import {
     LoadingComponent,
     UploadButtonComponent,
     UploaderComponent,
-    CropImageModalComponent
+    CropImageModalComponent,
+    RaRImageComponent
   ],
   declarations: [
     ToastComponent,
@@ -56,7 +60,8 @@ import {
     UploadButtonComponent,
     UploaderComponent,
     ModalComponent,
-    CropImageModalComponent
+    CropImageModalComponent,
+    RaRImageComponent
   ],
   providers: [
     CropImageModalService,

@@ -21,6 +21,7 @@ import { Observable } from 'rxjs/Observable';
 	styleUrls: ['./crop-image-modal.component.scss']
 })
 export class CropImageModalComponent implements OnInit, OnDestroy {
+	@Input() destination: string;
 	protected modalName: string = 'xxx';
 	protected title: string = 'Upload Image';
 	protected submitText: string = 'Save Image';
@@ -98,6 +99,7 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 	}
 
 	public closeModal($event): void {
+		this.cropImageModalService.hide();
 		this.cleanUp();
 	}
 
@@ -105,6 +107,7 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 		this.selectedTab = 'loading';
 		this.croppedImage = undefined;
 		this.imageChangedEvent = null;
+		this.destination = '';
 		this.initialImage =
 			'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=	';
 	}
@@ -115,24 +118,19 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 
 		if (uploadImage.size > 0) {
 			formData.append('photo', uploadImage);
-			this.organizeService
-				.uploadLogo(
-					this.cropImageModalService.organization_id,
-					formData
-				)
+			this.cropImageModalService
+				.uploadImage(this.destination, formData)
 				.subscribe(
 					() => {
-						console.log('it worked');
+						console.log('it worked.. closing modal');
+						this.closeModal(null);
 					},
 					err => {
 						console.log('========>it screwed up:', err);
-					},
-					() => {
-						this.cleanUp();
 					}
 				);
 		} else {
-			this.cleanUp();
+			this.closeModal(null);
 		}
 	}
 
