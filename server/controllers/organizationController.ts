@@ -15,6 +15,7 @@ export default function OrganizationController(models, ResponseService) {
 
   function getByUser(req, res) {
     const User = models.User;
+    const Image = models.Image;
 
     User.findOne({
       where: {
@@ -25,7 +26,15 @@ export default function OrganizationController(models, ResponseService) {
           model: Organization,
           through: {
             attributes: []
-          }
+          },
+          include: [
+            {
+              model: Image,
+              through: {
+                attributes: []
+              }
+            }
+          ]
         }
       ]
     })
@@ -175,33 +184,31 @@ export default function OrganizationController(models, ResponseService) {
     const file = req.file;
     //console.log('uploadLogon:', file);
     if (file) {
+      const sequelize = models.sequelize;
       const OrganizationImage = models.OrganizationImage;
       const Image = models.Image;
-      let anImage;
-
-      Image.create(file)
-        .then(image => {
-          const anImage = image;
-          return Organization.findById(req.params.organization_id);
-        })
-        .then(organization => {
-          return OrganizationImage.create({
-            image_id: anImage.id,
-            organization_id: organization.id
+      sequelize
+        .transaction(function(t) {
+          return Image.create(file, { transaction: t }).then(newImage => {
+            return Organization.findById(req.params.organization_id, {
+              transaction: t
+            }).then(organization => {
+              return OrganizationImage.create(
+                {
+                  image_id: newImage.id,
+                  organization_id: organization.id
+                },
+                {
+                  transaction: t
+                }
+              );
+            });
           });
         })
         .then(() => {
-          res.json(201, {
-            success: true,
-            message: 'upload success.'
-          });
+          ResponseService.success(res, 'Uploaded Image Successfully.');
         })
-        .catch(err => {
-          res.json(400, {
-            success: false,
-            message: err
-          });
-        });
+        .catch(error => ResponseService.exception(res, error));
     } else {
       res.json(400, {
         success: false,
