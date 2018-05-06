@@ -8,6 +8,7 @@ import { CoreModule } from './services/core.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
+import { LazyLoadImageModule } from 'ng-lazyload-image'; //https://github.com/tjoskar/ng-lazyload-image
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormlyModule } from '@ngx-formly/core';
@@ -188,6 +189,7 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         ImageCropperModule,
         NgbModule.forRoot(),
         CoreModule,
+        LazyLoadImageModule,
         CommonModule
     ],
     providers: [],

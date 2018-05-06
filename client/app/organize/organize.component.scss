@@ -40,3 +40,25 @@
 .display {
   display: block;
 }
+
+.rar-list {
+  padding: 10px 0px;
+  margin: 15px 5px;
+  border: 1px solid #ddd;
+}
+
+.rar-logo {
+  cursor: pointer;
+  img {
+    border: 1px solid #000;
+  }
+}
+
+.button-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 5px;
+}

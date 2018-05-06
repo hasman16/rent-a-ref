@@ -7,7 +7,7 @@ export default function OrganizationController(models, ResponseService) {
 
   function getAll(req, res) {
     const clause = ResponseService.produceSearchAndSortClause(req);
-
+    console.log('clause:::', clause);
     Organization.findAndCountAll(clause)
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
@@ -57,6 +57,11 @@ export default function OrganizationController(models, ResponseService) {
       where: {
         id: req.params.organization_id
       },
+      include: [
+        {
+          model: models.Image
+        }
+      ],
       attributes: attributes
     })
       .then(result => ResponseService.success(res, result))
@@ -147,14 +152,62 @@ export default function OrganizationController(models, ResponseService) {
         ResponseService.exception(res, err);
       });
   }
-
+  /*
+  { 
+    fieldname: 'photo',
+    originalname: 'blob',
+    encoding: '7bit',
+    mimetype: 'image/png',
+    size: 102722,
+    bucket: 'rentaref',
+    key: '1525549567462',
+    acl: 'private',
+    contentType: 'application/octet-stream',
+    contentDisposition: null,
+    storageClass: 'STANDARD',
+    serverSideEncryption: null,
+    metadata: { fieldName: 'photo' },
+    location: 'https://rentaref.s3.us-west-1.amazonaws.com/1525549567462',
+    etag: '"c1fdf2fd9f3a5dbc41bc9527415736a0"'
+  }
+*/
   function uploadLogo(req, res) {
-    console.log('req:', req);
-    res.json(201, {
-      success: true,
-      message: 'upload success.'
-    });
+    const file = req.file;
+    //console.log('uploadLogon:', file);
+    if (file) {
+      const OrganizationImage = models.OrganizationImage;
+      const Image = models.Image;
+      let anImage;
 
+      Image.create(file)
+        .then(image => {
+          const anImage = image;
+          return Organization.findById(req.params.organization_id);
+        })
+        .then(organization => {
+          return OrganizationImage.create({
+            image_id: anImage.id,
+            organization_id: organization.id
+          });
+        })
+        .then(() => {
+          res.json(201, {
+            success: true,
+            message: 'upload success.'
+          });
+        })
+        .catch(err => {
+          res.json(400, {
+            success: false,
+            message: err
+          });
+        });
+    } else {
+      res.json(400, {
+        success: false,
+        message: 'upload failed.'
+      });
+    }
   }
 
   return {

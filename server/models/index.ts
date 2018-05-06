@@ -109,6 +109,10 @@ models.forEach(function(model) {
   m.Comment.belongsTo(m.Post);
   m.Post.belongsTo(m.User);
 
+  m.Organization.belongsToMany(m.Image, {
+    through: 'organization_image'
+  });
+
   m.Organization.belongsToMany(m.Address, {
     through: 'organization_address'
   });
@@ -127,6 +131,7 @@ models.forEach(function(model) {
   module.exports.Match = sequelize.models.match;
   module.exports.Organizer = sequelize.models.organizer;
   module.exports.OrganizationAddress = sequelize.models.organization_address;
+  module.exports.OrganizationImage = sequelize.models.organization_image;
   module.exports.OrganizationPhone = sequelize.models.organization_phone;
   module.exports.UserAddress = sequelize.models.user_address;
   module.exports.UserPhone = sequelize.models.user_phone;

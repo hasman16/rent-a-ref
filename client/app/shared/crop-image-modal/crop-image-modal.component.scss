@@ -4,9 +4,11 @@
 	max-width: 1000px;
 }
 
-.cropper-container {
+.cropped-image {
 	width: 100%;
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: flex-end;
+	padding-bottom: 5px;
 }

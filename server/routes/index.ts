@@ -4,6 +4,10 @@ import * as bcrypt from 'bcryptjs';
 import * as redis from 'redis';
 import * as ExpressBrute from 'express-brute';
 import * as RedisStore from 'express-brute-redis';
+import * as aws from 'aws-sdk';
+import * as multer from 'multer';
+import * as multerS3 from 'multer-s3';
+import * as _ from 'lodash';
 
 // Middleware
 import authentication from './../util/authentication';
@@ -55,12 +59,50 @@ const store = new RedisStore({
 */
 //const bruteforce = new ExpressBrute(store);
 
+const allowedMimeTypes = /(jpeg|jpg|png|bmp|giff)$/;
+const config = {
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  region: 'us-west-1'
+};
+aws.config.update(config);
+
+aws.config.logger = console;
+
+const s3 = new aws.S3();
+const imageUploader = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.S3_BUCKET_NAME,
+    metadata: function(req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function(req, file, cb) {
+      const makeName = type => Date.now().toString() + '.' + type;
+      const filename = _.replace(file.mimetype, allowedMimeTypes, makeName);
+      console.log('filename:', filename);
+      cb(null, filename);
+    }
+  }),
+  fileFilter: function(req, files, cb) {
+    let mimeTypesRegex = allowedMimeTypes;
+    let mimeType = files.mimetype;
+
+    if (mimeTypesRegex.test(mimeType)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed!'), false);
+    }
+  }
+});
+
 export default function setRoutes(app, models) {
   const router = express.Router();
   const external = {
     authorization: authorization(models),
     authentication: authentication,
-    router: router
+    router: router,
+    imageUploader: imageUploader
   };
   const responseService = new ResponseService(models);
 
@@ -74,9 +116,27 @@ export default function setRoutes(app, models) {
   const sportCtrl = sportController(models, responseService);
 
   const userCtrl = userController(models, responseService, SendGridService);
-  const loginCtrl = loginController(bcrypt, jwt, models, responseService, SendGridService);
-  const passwordCtrl = passwordController(bcrypt, jwt, models, responseService, SendGridService);
-  const registerCtrl = registerController(bcrypt, jwt, models, responseService, SendGridService);
+  const loginCtrl = loginController(
+    bcrypt,
+    jwt,
+    models,
+    responseService,
+    SendGridService
+  );
+  const passwordCtrl = passwordController(
+    bcrypt,
+    jwt,
+    models,
+    responseService,
+    SendGridService
+  );
+  const registerCtrl = registerController(
+    bcrypt,
+    jwt,
+    models,
+    responseService,
+    SendGridService
+  );
 
   const ctrl = {
     loginCtrl,

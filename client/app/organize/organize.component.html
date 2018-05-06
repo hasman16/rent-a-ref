@@ -21,6 +21,25 @@
       <div  *ngIf="!isEditing && organizations?.length > 0">
         <div class="form-size">
           <br />
+          <div class="row rar-list"  *ngFor="let organization of organizations" >
+            <div class="col-3 rar-logo" (click)="openModal(organization)" title="Upload Organization Logo.">
+              <img src="assets/images/ball.png" width="80" alt="logo" >
+            </div>
+            <div class="col-5" (click)="editEvents(organization.id);" title="Edit Events.">
+              <h2>{{organization.name}}</h2>
+            </div>
+            <div class="col-2">
+              <div class="button-container">
+                <button class="btn btn-primary btn-sm" (click)="editOrganization(organization.id)" title="Edit Organization.">Edit</button>
+              </div>
+            </div>  
+            <div class="col-2">
+              <div class="button-container">
+                <button class="btn btn-danger btn-sm" (click)="goNewOrganization()" title="Click to delete organization">Delete</button>
+              </div>
+            </div>
+          </div>
+          <!--
           <table class="table table-bordered table-hover">
             <thead class="thead-light">
               <tr>
@@ -42,13 +61,11 @@
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
           <br />
           <button class="btn btn-primary btn-sm new-org-button" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
         </div>
       </div>
-
-      <button (click)="openModal($event)" class="btn btn-primary">Pop Modal</button>
 
       <rar-cropper-image-modal></rar-cropper-image-modal>
     </div>

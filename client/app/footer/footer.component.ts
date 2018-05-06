@@ -7,8 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   public dt: Date = new Date();
-  selectLoad = true;
-  privacy = false;
+  public selectLoad = true;
+  public privacy = false;
+  public year: number = new Date().getFullYear();
   constructor() {}
 
   ngOnInit() {}

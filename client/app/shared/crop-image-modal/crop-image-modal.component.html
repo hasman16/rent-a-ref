@@ -19,20 +19,26 @@
 		<rar-uploader (selectedFilesEvent)="selectedFilesEvent($event)"></rar-uploader>
 	</div>
 
-	<div *ngIf="isSelectedTab('cropping')" class="cropper-container">
-		<image-cropper
-		    [imageChangedEvent]="imageChangedEvent"
-		    [imageBase64]="initialImage"
-		    [maintainAspectRatio]="true"
-		    [aspectRatio]="1 / 1"
-		    [resizeToWidth]="200"
-		    [onlyScaleDown]="true"
-		    format="png"
-		    (imageCropped)="imageCropped($event)"
-		    (imageLoaded)="imageLoaded()"
-		    (loadImageFailed)="loadImageFailed()">
-		</image-cropper>
-		<img [src]="croppedImage" width="200"/>
+	<div *ngIf="isSelectedTab('cropping')" class="row">
+		<div class="col-9" style="max-height: 400px;">
+			<image-cropper
+			    [imageChangedEvent]="imageChangedEvent"
+			    [imageBase64]="initialImage"
+			    [maintainAspectRatio]="true"
+			    [aspectRatio]="1 / 1"
+			    [resizeToWidth]="200"
+			    [onlyScaleDown]="true"
+			    format="png"
+			    (imageCropped)="imageCropped($event)"
+			    (imageLoaded)="imageLoaded()"
+			    (loadImageFailed)="loadImageFailed()">
+			</image-cropper>
+		</div>
+		<div class="col-3">
+			<div class="cropped-image">
+				<img [src]="croppedImage" width="200"/>
+			</div>
+		</div>
 	</div>
 
 </div>
