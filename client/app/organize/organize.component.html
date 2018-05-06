@@ -23,7 +23,7 @@
           <br />
           <div class="row rar-list"  *ngFor="let organization of organizations" >
             <div class="col-3 rar-logo" (click)="openModal(organization)" title="Upload Organization Logo.">
-              <img [defaultImage]="defaultImage"  [lazyLoad]="getImageAddress(organization)" width="80" alt="logo">
+              <rar-image [errorImage]="defaultImage"  [image]="getImageAddress(organization)" [width]="80" [alt]="logo"></rar-image>
             </div>
             <div class="col-5" (click)="editEvents(organization.id);" title="Edit Events.">
               <h2>{{organization.name}}</h2>
@@ -67,7 +67,7 @@
         </div>
       </div>
 
-      <rar-cropper-image-modal></rar-cropper-image-modal>
+      <rar-cropper-image-modal [destination]="destination"></rar-cropper-image-modal>
     </div>
 <!--
     <div class="card">
