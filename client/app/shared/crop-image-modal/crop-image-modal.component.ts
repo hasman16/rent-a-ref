@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import { OrganizeService } from './../../services/index';
 import { CropImageModalService } from './crop-image-modal.service';
+import { UploadState, CropImageState } from './crop-image';
+
 import { ModalService } from './../modal/modal.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -122,15 +124,22 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 				.uploadImage(this.destination, formData)
 				.subscribe(
 					() => {
-						console.log('it worked.. closing modal');
 						this.closeModal(null);
+						this.cropImageModalService.message(<CropImageState>{
+							uploadState: UploadState.Success
+						});
 					},
 					err => {
-						console.log('========>it screwed up:', err);
+						this.cropImageModalService.message(<CropImageState>{
+							uploadState: UploadState.Error
+						});
 					}
 				);
 		} else {
 			this.closeModal(null);
+			this.cropImageModalService.message(<CropImageState>{
+				uploadState: UploadState.None
+			});
 		}
 	}
 

@@ -187,22 +187,43 @@ export default function OrganizationController(models, ResponseService) {
       const sequelize = models.sequelize;
       const OrganizationImage = models.OrganizationImage;
       const Image = models.Image;
+      const findOrganization = (newImage, t) => {
+        return Organization.findById(req.params.organization_id, {
+          transaction: t
+        }).then(organization => {
+          return deleteOrganizationImage(newImage, organization, t);
+        });
+      };
+      const deleteOrganizationImage = (newImage, organization, t) => {
+        return OrganizationImage.destroy(
+          {
+            where: {
+              organization_id: organization.id
+            }
+          },
+          {
+            transaction: t
+          }
+        ).then(() => {
+          return addOrganizationImage(newImage, organization, t);
+        });
+      };
+      const addOrganizationImage = (newImage, organization, t) => {
+        return OrganizationImage.create(
+          {
+            image_id: newImage.id,
+            organization_id: organization.id
+          },
+          {
+            transaction: t
+          }
+        );
+      };
+
       sequelize
         .transaction(function(t) {
           return Image.create(file, { transaction: t }).then(newImage => {
-            return Organization.findById(req.params.organization_id, {
-              transaction: t
-            }).then(organization => {
-              return OrganizationImage.create(
-                {
-                  image_id: newImage.id,
-                  organization_id: organization.id
-                },
-                {
-                  transaction: t
-                }
-              );
-            });
+            return findOrganization(newImage, t);
           });
         })
         .then(() => {

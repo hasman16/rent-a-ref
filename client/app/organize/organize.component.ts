@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
@@ -21,10 +21,15 @@ import {
   State,
   User
 } from '../shared/models/index';
-import { CropImageModalService } from '../shared/crop-image-modal/index';
+import {
+  CropImageModalService,
+  CropImageState,
+  UploadState
+} from '../shared/crop-image-modal/index';
 import * as _ from 'lodash';
 
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 
@@ -38,6 +43,7 @@ export class OrganizeComponent implements OnInit {
   set country(aCountry: string) {
     this.countryName = aCountry || 'usa';
   }
+  private subscriptions: Subscription[] = [];
   protected countryName: string;
   protected currentModel: any = {};
   protected titles: string[] = ['Organization Name', '', ''];
@@ -64,6 +70,19 @@ export class OrganizeComponent implements OnInit {
       .organizations;
     this.organizations = _.isArray(organizations) ? organizations : [];
     this.setOrganizeMode();
+    this.subscriptions.push(
+      this.cropImageModalService.cropImageSubject$.subscribe(
+        (cropImageState: CropImageState) => {
+          if (cropImageState.uploadState === UploadState.Success) {
+            this.getOrganizations();
+          }
+        }
+      )
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
   getImageAddress(organization: Organization): string {
@@ -80,33 +99,7 @@ export class OrganizeComponent implements OnInit {
     console.log('close modal');
     this.cropImageModalService.hide();
   }
-  /*
-  public submitModal($event): void {
-    const formData = new FormData();
-    const uploadImage = this.b64toBlob(this.croppedImage);
 
-    if (uploadImage.size > 0) {
-      formData.append('photo', uploadImage);
-      this.organizeService
-        .uploadLogo(
-          this.cropImageModalService.organization_id,
-          formData
-        )
-        .subscribe(
-          () => {
-            console.log('it worked');
-          },
-          err => {
-            console.log('========>it screwed up:', err);
-          },
-          () => {
-            this.cleanUp();
-          }
-        );
-    } else {
-      this.cleanUp();
-    }
-  }*/
   setOrganizeMode(): void {
     this.currentModel = {};
     this.isEditing = false;
