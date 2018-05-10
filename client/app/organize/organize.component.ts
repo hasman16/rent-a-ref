@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  Input
+} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
@@ -36,7 +44,8 @@ import 'rxjs/add/operator/switchMap';
 @Component({
   selector: 'rar-organize',
   templateUrl: './organize.component.html',
-  styleUrls: ['./organize.component.scss']
+  styleUrls: ['./organize.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrganizeComponent implements OnInit {
   @Input()
@@ -46,16 +55,17 @@ export class OrganizeComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   protected countryName: string;
   protected currentModel: any = {};
-  protected titles: string[] = ['Organization Name', '', ''];
-  protected heading: string = 'You have no <i>organizations</i>.';
-  protected organizations: Organization[] = [];
+  public titles: string[] = ['Organization Name', '', ''];
+  public heading: string = 'You have no <i>organizations</i>.';
+  public organizations: Organization[] = [];
   protected isLoading: boolean = false;
-  protected isEditing: boolean = false;
+  public isEditing: boolean = false;
   public showDialog: boolean = false;
   public defaultImage: string = 'assets/images/ball.png';
   public destination: string;
 
   constructor(
+    private cd: ChangeDetectorRef,
     private auth: AuthService,
     public toast: ToastComponent,
     private route: ActivatedRoute,
@@ -76,6 +86,7 @@ export class OrganizeComponent implements OnInit {
           if (cropImageState.uploadState === UploadState.Success) {
             this.getOrganizations();
           }
+          this.cd.markForCheck();
         }
       )
     );

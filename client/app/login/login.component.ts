@@ -22,10 +22,10 @@ export class LoginComponent implements OnInit {
   protected cookieValue: string = 'UNKNOWN';
   protected cookieCheck: boolean = false;
   protected checkboxFlag: boolean = false;
-  protected form: FormGroup = new FormGroup({});
-  protected model: any = {};
-  protected options: FormlyFormOptions = <FormlyFormOptions>{};
-  protected fields: FormlyFieldConfig[];
+  public form: FormGroup = new FormGroup({});
+  public model: any = {};
+  public options: FormlyFormOptions = <FormlyFormOptions>{};
+  public fields: FormlyFieldConfig[];
 
   constructor(
     private auth: AuthService,

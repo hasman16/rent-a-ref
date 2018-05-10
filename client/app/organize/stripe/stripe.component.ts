@@ -1,11 +1,12 @@
 //https://github.com/stripe/stripe-payments-demo
 import {
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
   AfterViewInit,
   OnDestroy,
   ViewChild,
-  ElementRef,
-  ChangeDetectorRef
+  ElementRef
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,7 +16,8 @@ import * as _ from 'lodash';
 @Component({
   selector: 'rar-stripe',
   templateUrl: './stripe.component.html',
-  styleUrls: ['./stripe.component.scss']
+  styleUrls: ['./stripe.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StripeComponent implements AfterViewInit, OnDestroy {
   @ViewChild('cardInfo') cardInfo: ElementRef;
@@ -81,6 +83,9 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
       .catch((err: HttpErrorResponse) => {
         console.log('error processing card 1:', err);
         this.errorOut(err);
+      })
+      .finally(() => {
+        this.cd.markForCheck();
       });
   }
 
@@ -92,6 +97,9 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
       (err: HttpErrorResponse) => {
         console.log('error processing card2:', err);
         this.errorOut(err);
+      },
+      () => {
+        this.cd.markForCheck();
       }
     );
   }

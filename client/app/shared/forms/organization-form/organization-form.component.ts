@@ -32,11 +32,11 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
   @Output('ngCancel')
   cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  protected model: any = {};
-  protected submitText: string;
-  protected fields: FormlyFieldConfig[];
-  protected disable: boolean = true;
-  protected states: Option[];
+  public model: any = {};
+  public submitText: string;
+  public fields: FormlyFieldConfig[];
+  public disable: boolean = true;
+  public states: Option[];
 
   constructor(private statesService: StatesService) {
     this.submitText = this.getSubmitText(false);

@@ -19,10 +19,11 @@ import {
 export class AccountComponent implements OnInit {
   protected user: User = <User>{};
   protected person: Person = <Person>{};
+  isLoading: boolean;
 
   constructor(
     private auth: AuthService,
-    private toast: ToastComponent,
+    public toast: ToastComponent,
     private userService: UserService
   ) {}
 

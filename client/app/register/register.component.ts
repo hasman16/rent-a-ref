@@ -15,10 +15,10 @@ import * as _ from 'lodash';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  protected form: FormGroup = new FormGroup({});
-  protected model: any = {};
-  protected options: FormlyFormOptions = <FormlyFormOptions>{};
-  protected fields: FormlyFieldConfig[];
+  public form: FormGroup = new FormGroup({});
+  public model: any = {};
+  public options: FormlyFormOptions = <FormlyFormOptions>{};
+  public fields: FormlyFieldConfig[];
   protected captchaResponse: string;
 
   constructor(

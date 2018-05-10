@@ -29,7 +29,7 @@ export class UploaderComponent implements AfterViewInit, OnInit, OnDestroy {
 	@Output() selectedFilesEvent: EventEmitter<any> = new EventEmitter();
 
 	private toastSubscription: Subscription;
-	private uploadLabel: string = 'Upload Image';
+	public uploadLabel: string = 'Upload Image';
 	private files: FileList = null;
 
 	constructor(

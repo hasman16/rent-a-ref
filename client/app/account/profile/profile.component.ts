@@ -38,28 +38,28 @@ import * as moment from 'moment';
 })
 export class ProfileComponent implements OnInit, CanComponentDeactivate {
   protected data: Profile = <Profile>{};
-  protected user: User = <User>{};
+  public user: User = <User>{};
   protected person: Person = <Person>{};
 
-  protected addresses: Address[];
+  public addresses: Address[];
   protected dummyAddress: Address = <Address>{};
-  protected phones: Phone[];
+  public phones: Phone[];
   protected dummyPhone: Phone = <Phone>{};
   protected available: any = {};
-  protected isLoading: boolean = true;
+  public isLoading: boolean = true;
   protected allowEdit: boolean = false;
   protected middlenameFlag: boolean = false;
 
   protected abort: boolean = false;
   //protected divPassword: boolean = false;
-  protected editBio: boolean = false;
-  protected editPassword: boolean = false;
+  public editBio: boolean = false;
+  public editPassword: boolean = false;
 
-  protected editPhone: boolean = false;
-  protected currentPhone: number = 0;
+  public editPhone: boolean = false;
+  public currentPhone: number = 0;
 
-  protected editAddress: boolean = false;
-  protected currentAddress: number = 0;
+  public editAddress: boolean = false;
+  public currentAddress: number = 0;
 
   protected birthday: string = '';
 

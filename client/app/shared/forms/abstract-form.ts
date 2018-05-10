@@ -13,30 +13,27 @@ export abstract class AbstractFormComponent {
 
   constructor() {}
 
-  protected setUpValidators(aForm:FormGroup, controls:string[]) {
+  protected setUpValidators(aForm: FormGroup, controls: string[]) {
     this.currentForm = aForm;
-    controls.forEach((controlName) => {
+    controls.forEach(controlName => {
       let control = this.currentForm.get(controlName);
       this.validator(control, controlName + 'Invalid');
     });
   }
 
   protected validator(item: AbstractControl, name: string) {
-    item
-      .valueChanges
-      .debounceTime(1000)
-      .subscribe((value) => {
-        let result = false;
-        if (item.touched && item.invalid) {
-          result = true;
-        }
-        this[name] = result;
-      });
+    item.valueChanges.debounceTime(1000).subscribe(value => {
+      let result = false;
+      if (item.touched && item.invalid) {
+        result = true;
+      }
+      this[name] = result;
+    });
   }
 
   public abstract fillForm();
 
-  protected onCancel(event) {
+  public onCancel(event) {
     this.cancelForm.emit(false);
   }
 }

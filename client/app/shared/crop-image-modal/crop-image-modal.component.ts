@@ -24,11 +24,11 @@ import { Observable } from 'rxjs/Observable';
 })
 export class CropImageModalComponent implements OnInit, OnDestroy {
 	@Input() destination: string;
-	protected modalName: string = 'xxx';
-	protected title: string = 'Upload Image';
-	protected submitText: string = 'Save Image';
-	protected disableSubmit: boolean = true;
-	protected cancelText: string = 'Cancel';
+	public modalName: string = 'xxx';
+	public title: string = 'Upload Image';
+	public submitText: string = 'Save Image';
+	public disableSubmit: boolean = true;
+	public cancelText: string = 'Cancel';
 	protected allowImageTypes: string[] = [
 		'image/jpg',
 		'image/jpeg',

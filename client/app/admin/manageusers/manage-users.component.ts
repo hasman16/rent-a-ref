@@ -20,7 +20,7 @@ import * as _ from 'lodash';
   styleUrls: ['./manage-users.component.scss']
 })
 export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
-  protected users: User[] = [];
+  public users: User[] = [];
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
   protected currentUser: User = <User>{};
