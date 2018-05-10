@@ -165,19 +165,36 @@ function OrganizationController(models, ResponseService) {
             var sequelize = models.sequelize;
             var OrganizationImage_1 = models.OrganizationImage;
             var Image_1 = models.Image;
+            var findOrganization_1 = function (newImage, t) {
+                return Organization.findById(req.params.organization_id, {
+                    transaction: t
+                }).then(function (organization) {
+                    return deleteOrganizationImage_1(newImage, organization, t);
+                });
+            };
+            var deleteOrganizationImage_1 = function (newImage, organization, t) {
+                return OrganizationImage_1.destroy({
+                    where: {
+                        organization_id: organization.id
+                    }
+                }, {
+                    transaction: t
+                }).then(function () {
+                    return addOrganizationImage_1(newImage, organization, t);
+                });
+            };
+            var addOrganizationImage_1 = function (newImage, organization, t) {
+                return OrganizationImage_1.create({
+                    image_id: newImage.id,
+                    organization_id: organization.id
+                }, {
+                    transaction: t
+                });
+            };
             sequelize
                 .transaction(function (t) {
                 return Image_1.create(file, { transaction: t }).then(function (newImage) {
-                    return Organization.findById(req.params.organization_id, {
-                        transaction: t
-                    }).then(function (organization) {
-                        return OrganizationImage_1.create({
-                            image_id: newImage.id,
-                            organization_id: organization.id
-                        }, {
-                            transaction: t
-                        });
-                    });
+                    return findOrganization_1(newImage, t);
                 });
             })
                 .then(function () {
