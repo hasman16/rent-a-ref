@@ -171,6 +171,7 @@ export class OrganizeComponent implements OnInit {
             phones: phones
           });
           this.setEditMode(currentModel);
+          this.cd.markForCheck();
         });
     }
   }
@@ -195,6 +196,7 @@ export class OrganizeComponent implements OnInit {
         if (this.organizations.length === 0) {
           this.setOrganizeMode();
         }
+        this.cd.markForCheck();
       }
     );
   }
