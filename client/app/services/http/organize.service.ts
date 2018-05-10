@@ -33,10 +33,6 @@ export class OrganizeService {
     this.sportsData = <PagedData>{};
   }
 
-  uploadLogo(Organization_id, data): Observable<any>{
-    return this.http.post(`/api/upload_logo/${Organization_id}`, data);
-  }
-
   getData() {
     return _.cloneDeep(this.data);
   }

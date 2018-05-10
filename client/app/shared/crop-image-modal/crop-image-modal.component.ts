@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import { OrganizeService } from './../../services/index';
 import { CropImageModalService } from './crop-image-modal.service';
+import { UploadState, CropImageState } from './crop-image';
+
 import { ModalService } from './../modal/modal.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -22,11 +24,11 @@ import { Observable } from 'rxjs/Observable';
 })
 export class CropImageModalComponent implements OnInit, OnDestroy {
 	@Input() destination: string;
-	protected modalName: string = 'xxx';
-	protected title: string = 'Upload Image';
-	protected submitText: string = 'Save Image';
-	protected disableSubmit: boolean = true;
-	protected cancelText: string = 'Cancel';
+	public modalName: string = 'xxx';
+	public title: string = 'Upload Image';
+	public submitText: string = 'Save Image';
+	public disableSubmit: boolean = true;
+	public cancelText: string = 'Cancel';
 	protected allowImageTypes: string[] = [
 		'image/jpg',
 		'image/jpeg',
@@ -122,15 +124,22 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 				.uploadImage(this.destination, formData)
 				.subscribe(
 					() => {
-						console.log('it worked.. closing modal');
 						this.closeModal(null);
+						this.cropImageModalService.message(<CropImageState>{
+							uploadState: UploadState.Success
+						});
 					},
 					err => {
-						console.log('========>it screwed up:', err);
+						this.cropImageModalService.message(<CropImageState>{
+							uploadState: UploadState.Error
+						});
 					}
 				);
 		} else {
 			this.closeModal(null);
+			this.cropImageModalService.message(<CropImageState>{
+				uploadState: UploadState.None
+			});
 		}
 	}
 

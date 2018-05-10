@@ -40,7 +40,7 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     ''
   ];
   protected sports: Option[];
-  protected games: Game[] = [];
+  public games: Game[] = [];
   constructor(
     public auth: AuthService,
     public toast: ToastComponent,

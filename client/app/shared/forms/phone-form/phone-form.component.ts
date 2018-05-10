@@ -26,7 +26,7 @@ export interface IPhoneService {
 })
 export class PhoneFormComponent extends AbstractFormComponent
   implements OnInit {
-  protected phoneForm: FormGroup;
+  public phoneForm: FormGroup;
   protected telephone: Phone;
 
   @Output() savePhone = new EventEmitter();
@@ -37,8 +37,8 @@ export class PhoneFormComponent extends AbstractFormComponent
   }
   @Input() phoneService: IPhoneService;
 
-  protected numberInvalid: boolean = false;
-  protected descriptionInvalid: boolean = false;
+  public numberInvalid: boolean = false;
+  public descriptionInvalid: boolean = false;
 
   constructor(private formBuilder: FormBuilder) {
     super();

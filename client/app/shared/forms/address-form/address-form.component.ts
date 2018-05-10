@@ -32,13 +32,13 @@ export class AddressFormComponent extends AbstractFormComponent
   protected anAddress: Address = <Address>{};
   protected countryName: string = 'usa';
   protected mode: boolean = false;
-  protected states: Option[];
+  public states: Option[];
 
-  protected line1Invalid: boolean = false;
-  protected cityInvalid: boolean = false;
-  protected zipInvalid: boolean = false;
+  public line1Invalid: boolean = false;
+  public cityInvalid: boolean = false;
+  public zipInvalid: boolean = false;
   protected userId: number = 0;
-  
+
   @Output() saveAddress = new EventEmitter();
   @Input()
   set address(anAddress: Address) {

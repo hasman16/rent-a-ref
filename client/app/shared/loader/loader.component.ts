@@ -10,7 +10,7 @@ import { LoaderState } from './loader';
     styleUrls: ['loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
-    private show = false;
+    public show = false;
 
     private subscription: Subscription;
 

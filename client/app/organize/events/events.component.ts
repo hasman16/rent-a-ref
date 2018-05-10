@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+  Input
+} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {
@@ -39,7 +46,8 @@ import 'rxjs/add/operator/switchMap';
 @Component({
   selector: 'rar-events',
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss']
+  styleUrls: ['./events.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EventsComponent implements OnInit {
   @Input()
@@ -63,14 +71,15 @@ export class EventsComponent implements OnInit {
     ''
   ];
   protected sports: Option[];
-  protected games: Game[] = [];
+  public games: Game[] = [];
   protected isLoading: boolean = false;
 
-  protected isEditing: boolean = false;
+  public isEditing: boolean = false;
   protected organization_id: string = '';
   public buttonText: string = 'Create';
 
   constructor(
+    private cd: ChangeDetectorRef,
     protected toast: ToastComponent,
     protected route: ActivatedRoute,
     protected router: Router,
@@ -186,28 +195,6 @@ export class EventsComponent implements OnInit {
             expressionProperties: {
               'templateOptions.required': 'model.kids'
             }
-            /*,
-            validators: {
-              fieldMatch: {
-                expression: control => {
-                  const test = item => {
-                    if (this.model[item]) {
-                      const value = item + '_referees';
-                      if (this.model[value] && this.model[value] > 0) {
-                        return true;
-                      }
-                    }
-                    return false;
-                  };
-                  let result = false;
-                  if (test('kids') || test('teens') || test('adults')) {
-                    result = true;
-                  }
-                  return result;
-                },
-                message: 'Select at least one age group.'
-              }
-            }*/
           },
           {
             className: 'col-sm-12',
@@ -383,6 +370,7 @@ export class EventsComponent implements OnInit {
           },
           () => {
             this.isLoading = false;
+            this.cd.markForCheck();
           }
         );
     }
@@ -402,6 +390,7 @@ export class EventsComponent implements OnInit {
           this.callFailure(err, 'Failed to retrieve Events.'),
         () => {
           this.setEventsMode();
+          this.cd.markForCheck();
         }
       );
   }
@@ -427,6 +416,7 @@ export class EventsComponent implements OnInit {
         this.callFailure(err, 'Failed to create new event.'),
       () => {
         this.getEvents();
+        this.cd.markForCheck();
       }
     );
   }

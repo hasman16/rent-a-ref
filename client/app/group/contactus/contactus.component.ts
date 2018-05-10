@@ -20,10 +20,10 @@ import 'rxjs/add/operator/take';
   styleUrls: ['./contactus.component.scss']
 })
 export class ContactUsComponent implements OnInit {
-  protected form: FormGroup = new FormGroup({});
-  protected model: any = {};
-  protected options: FormlyFormOptions = {};
-  protected fields: FormlyFieldConfig[];
+  public form: FormGroup = new FormGroup({});
+  public model: any = {};
+  public options: FormlyFormOptions = {};
+  public fields: FormlyFieldConfig[];
 
   constructor(public toast: ToastComponent) {}
 
@@ -74,5 +74,5 @@ export class ContactUsComponent implements OnInit {
     ];
   }
 
-  onsubmit(model) {}
+  onSubmit(model) {}
 }

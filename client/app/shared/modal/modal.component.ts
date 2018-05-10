@@ -16,7 +16,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'rar-modal',
-  templateUrl: '/modal.component.html',
+  templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {

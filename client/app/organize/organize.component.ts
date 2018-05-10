@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  Input
+} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
@@ -21,35 +29,43 @@ import {
   State,
   User
 } from '../shared/models/index';
-import { CropImageModalService } from '../shared/crop-image-modal/index';
+import {
+  CropImageModalService,
+  CropImageState,
+  UploadState
+} from '../shared/crop-image-modal/index';
 import * as _ from 'lodash';
 
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'rar-organize',
   templateUrl: './organize.component.html',
-  styleUrls: ['./organize.component.scss']
+  styleUrls: ['./organize.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrganizeComponent implements OnInit {
   @Input()
   set country(aCountry: string) {
     this.countryName = aCountry || 'usa';
   }
+  private subscriptions: Subscription[] = [];
   protected countryName: string;
   protected currentModel: any = {};
-  protected titles: string[] = ['Organization Name', '', ''];
-  protected heading: string = 'You have no <i>organizations</i>.';
-  protected organizations: Organization[] = [];
+  public titles: string[] = ['Organization Name', '', ''];
+  public heading: string = 'You have no <i>organizations</i>.';
+  public organizations: Organization[] = [];
   protected isLoading: boolean = false;
-  protected isEditing: boolean = false;
+  public isEditing: boolean = false;
   public showDialog: boolean = false;
   public defaultImage: string = 'assets/images/ball.png';
   public destination: string;
 
   constructor(
+    private cd: ChangeDetectorRef,
     private auth: AuthService,
     public toast: ToastComponent,
     private route: ActivatedRoute,
@@ -64,6 +80,20 @@ export class OrganizeComponent implements OnInit {
       .organizations;
     this.organizations = _.isArray(organizations) ? organizations : [];
     this.setOrganizeMode();
+    this.subscriptions.push(
+      this.cropImageModalService.cropImageSubject$.subscribe(
+        (cropImageState: CropImageState) => {
+          if (cropImageState.uploadState === UploadState.Success) {
+            this.getOrganizations();
+          }
+          this.cd.markForCheck();
+        }
+      )
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
   getImageAddress(organization: Organization): string {
@@ -80,33 +110,7 @@ export class OrganizeComponent implements OnInit {
     console.log('close modal');
     this.cropImageModalService.hide();
   }
-  /*
-  public submitModal($event): void {
-    const formData = new FormData();
-    const uploadImage = this.b64toBlob(this.croppedImage);
 
-    if (uploadImage.size > 0) {
-      formData.append('photo', uploadImage);
-      this.organizeService
-        .uploadLogo(
-          this.cropImageModalService.organization_id,
-          formData
-        )
-        .subscribe(
-          () => {
-            console.log('it worked');
-          },
-          err => {
-            console.log('========>it screwed up:', err);
-          },
-          () => {
-            this.cleanUp();
-          }
-        );
-    } else {
-      this.cleanUp();
-    }
-  }*/
   setOrganizeMode(): void {
     this.currentModel = {};
     this.isEditing = false;
@@ -167,6 +171,7 @@ export class OrganizeComponent implements OnInit {
             phones: phones
           });
           this.setEditMode(currentModel);
+          this.cd.markForCheck();
         });
     }
   }
@@ -191,6 +196,7 @@ export class OrganizeComponent implements OnInit {
         if (this.organizations.length === 0) {
           this.setOrganizeMode();
         }
+        this.cd.markForCheck();
       }
     );
   }

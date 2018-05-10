@@ -23,9 +23,9 @@ export class BaseFormComponent implements OnInit {
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
 
   public form: FormGroup = new FormGroup({});
-  protected model: any = {};
-  protected options: FormlyFormOptions = <FormlyFormOptions>{};
-  protected fields: FormlyFieldConfig[];
+  public model: any = {};
+  public options: FormlyFormOptions = <FormlyFormOptions>{};
+  public fields: FormlyFieldConfig[];
 
   constructor() {}
 
