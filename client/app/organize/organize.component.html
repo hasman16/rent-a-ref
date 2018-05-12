@@ -39,29 +39,7 @@
               </div>
             </div>
           </div>
-          <!--
-          <table class="table table-bordered table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th *ngFor="let title of titles" scope="col">
-                  {{title}}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let organization of organizations"  class="org-table-item ">
-                <td (click)="editEvents(organization.id);" >
-                  {{organization.name}}
-                </td>
-                <td>
-                  <button class="btn btn-primary btn-sm" (click)="editOrganization(organization.id)" title="Click to edit this organization">Edit</button>
-                </td>
-                <td>
-                  <button class="btn btn-danger btn-sm" (click)="goNewOrganization()" title="Click to delete organization">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table> -->
+
           <br />
           <button class="btn btn-primary btn-sm new-org-button" (click)="goNewOrganization()" title="Click to create new organization">New Organization</button>
         </div>
@@ -69,14 +47,6 @@
 
       <rar-cropper-image-modal [destination]="destination"></rar-cropper-image-modal>
     </div>
-<!--
-    <div class="card">
-      Card:4242 4242 4242 4242 <br />
-      Date: 01/20<br />
-      CVC: 289<br />
-      Zip: 92888<br />
-      <rar-stripe></rar-stripe>
-    </div>
--->
+
 
 </div>

@@ -17,6 +17,21 @@
 </mat-card>
 -->
 <mat-card>
+        <header>
+        <h1>Summary</h1>
+      </header>
+      <ul class="">
+        <li class="order-item">
+          <span class="">
+            <span>Kids Referee</span><span class="subtotal-calculation">1x32</span><span class="subtotal">$100</span>
+          </span>
+        </li>
+        <li class="order-item">
+          <span class="total-line">
+            <span>TOTAL</span><span class="total">$500</span>
+          </span>
+        </li>
+      </ul>
 <form #checkout="ngForm" (ngSubmit)="onSubmit(checkout)" class="checkout">
   <div class="form-row">
     <label for="card-info">Stripe Payment</label>
