@@ -43,6 +43,13 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 
+enum ViewState {
+  noEvents,
+  listEvents,
+  editEvent,
+  payForEvent
+}
+
 @Component({
   selector: 'rar-events',
   templateUrl: './events.component.html',
@@ -74,9 +81,9 @@ export class EventsComponent implements OnInit {
   public games: Game[] = [];
   protected isLoading: boolean = false;
 
-  public isEditing: boolean = false;
   protected organization_id: string = '';
   public buttonText: string = 'Create';
+  public viewState: ViewState = ViewState.noEvents;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -92,7 +99,6 @@ export class EventsComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.setEventsMode();
     this.games = _.cloneDeep(this.route.snapshot.data.games);
     this.sports = _(this.route.snapshot.data.sportsData.rows)
       .map((sport: Sport): Option => {
@@ -105,6 +111,7 @@ export class EventsComponent implements OnInit {
 
     this.states = this.statesService.getStatesProvinces();
     this.generateForm();
+    this.setEventsMode();
   }
 
   protected generateForm() {
@@ -322,8 +329,34 @@ export class EventsComponent implements OnInit {
   }
 
   public setEventsMode(): void {
-    this.isEditing = false;
     this.isLoading = false;
+    if (_.isArray(this.games) && this.games.length > 0) {
+      this.viewState = ViewState.listEvents;
+    } else {
+      this.viewState = ViewState.noEvents;
+    }
+  }
+
+  public isViewState(value: string): boolean {
+    let result: boolean = false;
+    switch (value) {
+      case 'noEvents':
+        result = this.viewState == ViewState.noEvents;
+        break;
+      case 'listEvents':
+        result = this.viewState == ViewState.listEvents;
+        break;
+      case 'editEvent':
+        result = this.viewState == ViewState.editEvent;
+        break;
+      case 'payingForEvent':
+        result = this.viewState == ViewState.payForEvent;
+        break;
+      default:
+        result = false;
+        break;
+    }
+    return result;
   }
 
   public prepareModel(model: any): any {
@@ -340,7 +373,11 @@ export class EventsComponent implements OnInit {
   public createNewEvent(): void {
     this.model = this.prepareModel({});
     this.buttonText = 'Create';
-    this.isEditing = true;
+    this.viewState = ViewState.editEvent;
+  }
+
+  public payForEvent(game): void {
+    this.viewState = ViewState.payForEvent;
   }
 
   public editEvents(game: Game): void {
@@ -362,7 +399,7 @@ export class EventsComponent implements OnInit {
 
             this.model = _.cloneDeep(model);
             this.buttonText = 'Update';
-            this.isEditing = true;
+            this.viewState = ViewState.editEvent;
           },
           (err: HttpErrorResponse) => {
             this.callFailure(err, 'Failed to retrieve Event.');

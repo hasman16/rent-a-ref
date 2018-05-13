@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-12">
 
-    <div class="card horizontal-and-vertical-centering " *ngIf="!isEditing && (!games || games.length === 0)">
+    <div class="card horizontal-and-vertical-centering " *ngIf="isViewState('noEvents')">
       <div class="form-size">
         <strong class="etched-text">You have no <i>Events</i>.</strong>
         <p>You need to create at least one event. Once the event you can create and assign <i>games</i> to the event.
@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="card" *ngIf="isEditing">
+    <div class="card" *ngIf="isViewState('editEvent');">
       <app-toast [message]="toast.message"></app-toast>
 
       <div class="card form-size">
@@ -25,7 +25,7 @@
 
     </div>
 
-    <div class="card" *ngIf="!isEditing && games?.length > 0">
+    <div class="card" *ngIf="isViewState('listEvents')">
       <div class="form-size">
         <table class="table table-bordered table-hover">
           <thead class="thead-light">
@@ -53,7 +53,7 @@
               </ng-container>
 
               <ng-container *ngIf="game.status=='pending'">
-                <button class="btn btn-success btn-sm" (click)="editEvents(game)" title="Click to pay for this event">Pay</button>
+                <button class="btn btn-success btn-sm" (click)="payForEvent(game)" title="Click to pay for this event">Pay</button>
               </ng-container>
 
               </td>
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" *ngIf="isViewState('payingForEvent')">
 
 <!--
     <div class="card">
