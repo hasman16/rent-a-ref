@@ -17,6 +17,7 @@ import { UploaderComponent } from './uploader/uploader.component';
 import { ModalComponent } from './modal/modal.component';
 import { ModalService } from './modal/modal.service';
 import { RaRImageComponent } from './image/image.component';
+import { StripeComponent } from './stripe/index';
 import { MaterialModule } from '../material.module';
 import {
   CropImageModalComponent,
@@ -47,7 +48,8 @@ import {
     UploadButtonComponent,
     UploaderComponent,
     CropImageModalComponent,
-    RaRImageComponent
+    RaRImageComponent,
+    StripeComponent
   ],
   declarations: [
     ToastComponent,
@@ -61,7 +63,8 @@ import {
     UploaderComponent,
     ModalComponent,
     CropImageModalComponent,
-    RaRImageComponent
+    RaRImageComponent,
+    StripeComponent
   ],
   providers: [
     CropImageModalService,

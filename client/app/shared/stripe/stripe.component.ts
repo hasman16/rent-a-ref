@@ -6,7 +6,10 @@ import {
   AfterViewInit,
   OnDestroy,
   ViewChild,
-  ElementRef
+  ElementRef,
+  Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -21,6 +24,8 @@ import * as _ from 'lodash';
 })
 export class StripeComponent implements AfterViewInit, OnDestroy {
   @ViewChild('cardInfo') cardInfo: ElementRef;
+  @Input() amount: number = 0;
+  @Output() finished: EventEmitter<boolean>;
 
   public card: any;
   public cardHandler = this.onChange.bind(this);

@@ -377,26 +377,38 @@ export class EventsComponent implements OnInit {
   }
 
   public payForEvent(game): void {
-    this.viewState = ViewState.payForEvent;
+    if (!this.isLoading) {
+      this.isLoading = true;
+
+      this.getEvent(game.id)
+        .take(1)
+        .subscribe(
+          (model: any) => {
+            console.log('got game:', game);
+            this.model = _.cloneDeep(model);
+            this.viewState = ViewState.payForEvent;
+          },
+          (err: HttpErrorResponse) => {
+            this.callFailure(err, 'Failed to retrieve Event.');
+            this.setEventsMode();
+          },
+          () => {
+            this.isLoading = false;
+            this.cd.markForCheck();
+          }
+        );
+    }
   }
 
   public editEvents(game: Game): void {
-    const referees = value => value && value > 0;
-
     if (!this.isLoading) {
-      this.isLoading = false;
+      this.isLoading = true;
 
-      this.eventsService
-        .getGame(game.id)
+      this.getEvent(game.id)
         .take(1)
         .subscribe(
-          (aGame: Game) => {
+          (model: any) => {
             console.log('got game:', game);
-            const model = this.convertGameToModel(aGame);
-            model.kids = referees(model.kids_referees);
-            model.teens = referees(model.teens_referees);
-            model.adults = referees(model.adults_referees);
-
             this.model = _.cloneDeep(model);
             this.buttonText = 'Update';
             this.viewState = ViewState.editEvent;
@@ -411,6 +423,21 @@ export class EventsComponent implements OnInit {
           }
         );
     }
+  }
+
+  public getEvent(id: string): Observable<any> {
+    const referees = value => value && value > 0;
+    return this.eventsService
+      .getGame(id)
+      .take(1)
+      .map((aGame: Game) => {
+        console.log('got game:', id);
+        const model = this.convertGameToModel(aGame);
+        model.kids = referees(model.kids_referees);
+        model.teens = referees(model.teens_referees);
+        model.adults = referees(model.adults_referees);
+        return model;
+      });
   }
 
   public getEvents(): void {

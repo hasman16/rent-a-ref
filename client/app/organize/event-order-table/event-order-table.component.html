@@ -1,0 +1,50 @@
+<div class="max-width">
+  <table class="table">
+    <tbody>
+      <tr class="org-table-item ">
+        <td class="text-left">
+          Kids Referees
+        </td>
+        <td class="text-right">
+          {{model.kids_referees}} x {{model.kids_ref_pay | currency:'USD'}}
+        </td>
+        <td class="text-right">
+        {{model.kids_ref_total | currency:'USD' }}
+        </td>
+      </tr>
+      <tr class="org-table-item ">
+        <td class="text-left">
+          Teens Referees
+        </td>
+        <td class="text-right">
+          {{model.teens_referees}} x {{model.teens_ref_pay | currency:'USD'}}
+        </td>
+        <td class="text-right">
+          {{model.teens_ref_total | currency:'USD'}}
+        </td>
+      </tr>
+      <tr class="org-table-item ">
+        <td class="text-left">
+          Adults Referees
+        </td>
+        <td class="text-right">
+          {{model.adults_referees}} x {{model.adults_ref_pay | currency:'USD'}}
+        </td>
+        <td class="text-right">
+          {{model.adults_ref_total | currency:'USD'}}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3"></td>
+      </tr>
+      <tr class="org-table-item ">
+        <td colspan="2" class="text-right">
+          TOTAL
+        </td>
+        <td class="text-right">
+          {{model.total | currency:'USD'}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

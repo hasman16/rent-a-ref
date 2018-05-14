@@ -73,17 +73,22 @@
 
     <div class="card" *ngIf="isViewState('payingForEvent')">
 
-<!--
-    <div class="card">
-      Card:4242 4242 4242 4242 <br />
-      Date: 01/20<br />
-      CVC: 289<br />
-      Zip: 92888<br />
-      <rar-stripe></rar-stripe>
-    </div>
--->
+      <mat-card>
+        <header>
+          <h1>Payment</h1>
+        </header>
+        <br />
+        <div class="row">
+          <div class="col-6">
+             <rar-stripe [amount]="amount"></rar-stripe>
+          </div>
 
-      <rar-stripe></rar-stripe>
+          <div class="col-6">
+            <event-order-table [model]="model"></event-order-table>
+          </div>
+        </div>
+      </mat-card>
+
     </div>
 
   </div>

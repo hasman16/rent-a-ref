@@ -45,6 +45,8 @@ import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.co
 import { ContactUsComponent } from './group/contactus/contactus.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import { EventsComponent } from './organize/events/events.component';
+import { EventOrderTableComponent } from './organize/event-order-table/event-order-table.component';
+
 import { FaqComponent } from './group/faq/faq.component';
 import { FooterComponent } from './footer/footer.component';
 import { FooterTabletComponent } from './footer/footer-tablet/footer-tablet.component';
@@ -67,7 +69,6 @@ import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
 import { BaseFormComponent } from './shared/formly/base-form/base-form.component';
 import { ScheduleComponent } from './account/schedule/schedule.component';
-import { StripeComponent } from './organize/stripe/stripe.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
 import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
@@ -99,6 +100,7 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         DropdownDirective,
         EditProfileComponent,
         EventsComponent,
+        EventOrderTableComponent,
         FaqComponent,
         FormlyHorizontalWrapper,
         FormlyHorizontalRadioWrapper,
@@ -126,7 +128,6 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         ResetPasswordComponent,
         BaseFormComponent,
         ScheduleComponent,
-        StripeComponent,
         TermsAndConditionsComponent,
         ZoneFormComponent,
         AdminMenuComponent
