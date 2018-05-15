@@ -6,9 +6,13 @@
           Kids Referees
         </td>
         <td class="text-right">
-          {{model.kids_referees}} x {{model.kids_ref_pay | currency:'USD'}}
+          {{model.kids_referees}} x 
         </td>
-        <td class="text-right">
+        <td class="text-right item-width">
+          <span (click)="update();inputKidsRefpay=true" *ngIf="!inputKidsRefpay">{{model.kids_ref_pay | currency:'USD'}}</span>
+          <input [(ngModel)]="model.kids_ref_pay" (blur)="update()" *ngIf="inputKidsRefpay" matInput type="number" placeholder="" required="true">
+        </td>
+        <td class="text-right item-width">
         {{model.kids_ref_total | currency:'USD' }}
         </td>
       </tr>
@@ -17,9 +21,13 @@
           Teens Referees
         </td>
         <td class="text-right">
-          {{model.teens_referees}} x {{model.teens_ref_pay | currency:'USD'}}
+          {{model.teens_referees}} x 
         </td>
-        <td class="text-right">
+        <td class="text-right item-width">
+          <span (click)="update();inputTeensRefpay=true" *ngIf="!inputTeensRefpay">{{model.teens_ref_pay | currency:'USD'}}</span>
+          <input [(ngModel)]="model.teens_ref_pay" (blur)="update()" *ngIf="inputTeensRefpay" matInput type="number" placeholder="" required="true">
+        </td>
+        <td class="text-right item-width">
           {{model.teens_ref_total | currency:'USD'}}
         </td>
       </tr>
@@ -28,17 +36,21 @@
           Adults Referees
         </td>
         <td class="text-right">
-          {{model.adults_referees}} x {{model.adults_ref_pay | currency:'USD'}}
+          {{model.adults_referees}} x 
         </td>
-        <td class="text-right">
+        <td class="text-right item-width">
+          <span *ngIf="!inputAdultRefpay" (click)="update();inputAdultRefpay=true">{{model.adults_ref_pay | currency:'USD'}}</span>
+          <input [(ngModel)]="model.adults_ref_pay" (blur)="update()" *ngIf="inputAdultRefpay" matInput type="number" placeholder="" required="true">
+        </td>
+        <td class="text-right item-width">
           {{model.adults_ref_total | currency:'USD'}}
         </td>
       </tr>
       <tr>
-        <td colspan="3"></td>
+        <td colspan="4"></td>
       </tr>
       <tr class="org-table-item ">
-        <td colspan="2" class="text-right">
+        <td colspan="3" class="text-right">
           TOTAL
         </td>
         <td class="text-right">
