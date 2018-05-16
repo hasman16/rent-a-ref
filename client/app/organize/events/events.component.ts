@@ -120,6 +120,9 @@ export class EventsComponent implements OnInit {
 
     this.fields = [
       {
+        template: '<div><strong>Event Information</strong></div>'
+      },
+      {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
@@ -139,6 +142,35 @@ export class EventsComponent implements OnInit {
             key: 'event_date',
             templateOptions: {
               label: 'Event Date',
+              type: 'date',
+              required: true
+            }
+          }
+        ]
+      },
+      {
+        template:
+          '<hr class="space-hr" /><div><strong>Event Duration</strong></div>'
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
+            className: 'col-sm-6',
+            type: 'input',
+            key: 'event_start',
+            templateOptions: {
+              label: 'Event Start',
+              type: 'date',
+              required: true
+            }
+          },
+          {
+            className: 'col-sm-6',
+            type: 'input',
+            key: 'event_end',
+            templateOptions: {
+              label: 'Event End',
               type: 'date',
               required: true
             }
@@ -174,13 +206,18 @@ export class EventsComponent implements OnInit {
                 { value: 'One off event', key: 'oneoff' }
               ]
             }
-          },
+          }
+        ]
+      },
+      {
+        template:
+          '<hr class="space-hr" /><div><strong>Age Groups</strong></div>'
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
           {
-            template:
-              '<hr class="space-hr" /><div><strong>Age Groups</strong></div>'
-          },
-          {
-            className: 'col-sm-12',
+            className: 'col-sm-4',
             type: 'checkbox',
             key: 'kids',
             templateOptions: {
@@ -189,22 +226,7 @@ export class EventsComponent implements OnInit {
             }
           },
           {
-            className: 'col-sm-12',
-            type: 'input',
-            key: 'kids_referees',
-            templateOptions: {
-              label: 'Number of Referees for Kids 13 and Under',
-              type: 'number',
-              min: 1,
-              max: 1000
-            },
-            hideExpression: '!model.kids',
-            expressionProperties: {
-              'templateOptions.required': 'model.kids'
-            }
-          },
-          {
-            className: 'col-sm-12',
+            className: 'col-sm-4',
             type: 'checkbox',
             key: 'teens',
             templateOptions: {
@@ -213,7 +235,36 @@ export class EventsComponent implements OnInit {
             }
           },
           {
-            className: 'col-sm-12',
+            className: 'col-sm-4',
+            type: 'checkbox',
+            key: 'adults',
+            templateOptions: {
+              label: 'Over 18',
+              required: true
+            }
+          }
+        ]
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
+            className: 'col-sm-4',
+            type: 'input',
+            key: 'kids_referees',
+            templateOptions: {
+              label: 'Number of Referees for Kids 13 and Under',
+              type: 'number',
+              min: 1,
+              max: 1000
+            },
+            expressionProperties: {
+              'templateOptions.required': 'model.kids',
+              'templateOptions.disabled': '!model.kids'
+            }
+          },
+          {
+            className: 'col-sm-4',
             type: 'input',
             key: 'teens_referees',
             templateOptions: {
@@ -223,22 +274,13 @@ export class EventsComponent implements OnInit {
               max: 1000,
               required: true
             },
-            hideExpression: '!model.teens',
             expressionProperties: {
-              'templateOptions.required': 'model.teens'
+              'templateOptions.required': 'model.teens',
+              'templateOptions.disabled': '!model.teens'
             }
           },
           {
-            className: 'col-sm-12',
-            type: 'checkbox',
-            key: 'adults',
-            templateOptions: {
-              label: 'Over 18',
-              required: true
-            }
-          },
-          {
-            className: 'col-sm-12',
+            className: 'col-sm-4',
             type: 'input',
             key: 'adults_referees',
             templateOptions: {
@@ -248,9 +290,9 @@ export class EventsComponent implements OnInit {
               max: 1000,
               required: true
             },
-            hideExpression: '!model.adults',
             expressionProperties: {
-              'templateOptions.required': 'model.adults'
+              'templateOptions.required': 'model.adults',
+              'templateOptions.disabled': '!model.adults'
             }
           }
         ]
