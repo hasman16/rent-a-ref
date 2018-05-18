@@ -85,6 +85,11 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
+  getImageAddress(): string {
+    let url = _.get(this.data, 'images[0].location', '');
+    return url;
+  }
+
   getProfile() {
     const currentUser: User = this.auth.getCurrentUser();
 

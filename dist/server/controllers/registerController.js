@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var request = require("request-promise");
 var _ = require("lodash");
-;
 //https://www.npmjs.com/package/ng-recaptcha
 function RegisterController(bcrypt, jwt, models, ResponseService, SendGridService) {
     var Address = models.Address;
@@ -11,6 +10,7 @@ function RegisterController(bcrypt, jwt, models, ResponseService, SendGridServic
     var Person = models.Person;
     var Phone = models.Phone;
     var User = models.User;
+    var Image = models.Image;
     function respondAndSendEmail(res, email) {
         ResponseService.success(res, {
             success: true,
@@ -25,7 +25,7 @@ function RegisterController(bcrypt, jwt, models, ResponseService, SendGridServic
     }
     function getNewUserFromPayload(payload) {
         var role = String(payload.role).trim();
-        var isOrganizer = /^organizer$/ig.test(role);
+        var isOrganizer = /^organizer$/gi.test(role);
         return {
             email: payload.email,
             authorization: 3,
@@ -36,11 +36,10 @@ function RegisterController(bcrypt, jwt, models, ResponseService, SendGridServic
     }
     function createUserPhone(t, payload, user_id) {
         var phone = {
-            'number': String(payload.phone),
-            'description': 'other'
+            number: String(payload.phone),
+            description: 'other'
         };
-        return Phone.create(phone, { transaction: t })
-            .then(function (newPhone) {
+        return Phone.create(phone, { transaction: t }).then(function (newPhone) {
             var model = { user_id: user_id, phone_id: newPhone.id };
             return models.UserPhone.create(model, { transaction: t });
         });
@@ -74,8 +73,9 @@ function RegisterController(bcrypt, jwt, models, ResponseService, SendGridServic
                 .then(function (newPerson) {
                 var hasPhone = /\d+/.test(payload.phone);
                 if (hasPhone) {
-                    return createUserPhone(t, payload, newUserId)
-                        .then(function () { return respondAndSendEmail(res, payload.email); });
+                    return createUserPhone(t, payload, newUserId).then(function () {
+                        return respondAndSendEmail(res, payload.email);
+                    });
                 }
                 else {
                     respondAndSendEmail(res, payload.email);
@@ -124,9 +124,11 @@ function RegisterController(bcrypt, jwt, models, ResponseService, SendGridServic
             where: {
                 id: req.params.user_id
             },
-            include: [{
+            include: [
+                {
                     model: Person
-                }, {
+                },
+                {
                     model: Address,
                     through: {
                         attributes: []
@@ -140,8 +142,16 @@ function RegisterController(bcrypt, jwt, models, ResponseService, SendGridServic
                     through: {
                         attributes: []
                     }
-                }]
-        }).then(function (result) { return ResponseService.success(res, result, 200); })
+                },
+                {
+                    model: Image,
+                    through: {
+                        attributes: []
+                    }
+                }
+            ]
+        })
+            .then(function (result) { return ResponseService.success(res, result, 200); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     return {

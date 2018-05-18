@@ -28,6 +28,14 @@ export default function UserController(
       where: {
         id: req.params.user_id
       },
+      include: [
+        {
+          model: Image,
+          through: {
+            attributes: []
+          }
+        }
+      ],
       attributes: attributes
     })
       .then(result => ResponseService.success(res, result))

@@ -23,6 +23,14 @@ function UserController(models, ResponseService, SendGridService) {
             where: {
                 id: req.params.user_id
             },
+            include: [
+                {
+                    model: Image,
+                    through: {
+                        attributes: []
+                    }
+                }
+            ],
             attributes: attributes
         })
             .then(function (result) { return ResponseService.success(res, result); })
