@@ -62,6 +62,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   public currentAddress: number = 0;
 
   protected birthday: string = '';
+  public defaultImage: string = 'assets/images/avatar2.png';
 
   constructor(
     private route: ActivatedRoute,

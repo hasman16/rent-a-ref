@@ -53,6 +53,9 @@ models.forEach(function (model) {
         through: 'referee'
     });
     m.User.hasMany(m.Organization);
+    m.User.belongsToMany(m.Image, {
+        through: 'user_image'
+    });
     m.User.belongsToMany(m.Organization, {
         through: 'organizer'
     });
@@ -110,5 +113,6 @@ models.forEach(function (model) {
     module.exports.OrganizationPhone = exports.sequelize.models.organization_phone;
     module.exports.UserAddress = exports.sequelize.models.user_address;
     module.exports.UserPhone = exports.sequelize.models.user_phone;
+    module.exports.UserImage = exports.sequelize.models.user_image;
 })(module.exports);
 //# sourceMappingURL=index.js.map

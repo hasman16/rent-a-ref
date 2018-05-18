@@ -65,12 +65,64 @@ function UserController(models, ResponseService, SendGridService) {
     function logout(req, res) {
         var user = makeUser(req.body);
     }
+    function uploadImage(req, res) {
+        var file = req.file;
+        //console.log('uploadLogon:', file);
+        if (file) {
+            var sequelize = models.sequelize;
+            var UserImage_1 = models.UserImage;
+            var Image_1 = models.Image;
+            var findUser_1 = function (newImage, t) {
+                return User.findById(req.params.user_id, {
+                    transaction: t
+                }).then(function (user) {
+                    return deleteUserImage_1(newImage, user, t);
+                });
+            };
+            var deleteUserImage_1 = function (newImage, user, t) {
+                return UserImage_1.destroy({
+                    where: {
+                        user_id: user.id
+                    }
+                }, {
+                    transaction: t
+                }).then(function () {
+                    return addUserImage_1(newImage, user, t);
+                });
+            };
+            var addUserImage_1 = function (newImage, user, t) {
+                return UserImage_1.create({
+                    image_id: newImage.id,
+                    user_id: user.id
+                }, {
+                    transaction: t
+                });
+            };
+            sequelize
+                .transaction(function (t) {
+                return Image_1.create(file, { transaction: t }).then(function (newImage) {
+                    return findUser_1(newImage, t);
+                });
+            })
+                .then(function () {
+                ResponseService.success(res, 'Uploaded Image Successfully.');
+            })
+                .catch(function (error) { return ResponseService.exception(res, error); });
+        }
+        else {
+            res.json(400, {
+                success: false,
+                message: 'upload failed.'
+            });
+        }
+    }
     return {
         logout: logout,
         getAll: getAll,
         getOne: getOne,
         update: update,
-        deleteOne: deleteOne
+        deleteOne: deleteOne,
+        uploadImage: uploadImage
     };
 }
 exports.default = UserController;

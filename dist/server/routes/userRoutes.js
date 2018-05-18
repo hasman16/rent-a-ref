@@ -4,7 +4,7 @@ function userRoutes(setter, ctrls) {
     var router = setter.router;
     var authentication = setter.authentication;
     var authorization = setter.authorization;
-    var uploads = setter.uploads;
+    var imageUploader = setter.imageUploader;
     var isUserOrAdmin = authorization.isUserOrAdmin;
     var isAdmin = authorization.isAdmin;
     var isUser = authorization.isUser;
@@ -20,8 +20,12 @@ function userRoutes(setter, ctrls) {
     router.use('/profile/:user_id', authentication, isUser);
     router.route('/profile/:user_id').get(registerCtrl.getProfile);
     //router.route('/profile/:user_id').get(authentication, isUser,registerCtrl.getProfile);
-    router.route('/changepassword/:user_id').put(authentication, isUser, passwordCtrl.changepassword);
-    router.route('/changepassword/:user_id').patch(authentication, isUser, passwordCtrl.changepassword);
+    router
+        .route('/changepassword/:user_id')
+        .put(authentication, isUser, passwordCtrl.changepassword);
+    router
+        .route('/changepassword/:user_id')
+        .patch(authentication, isUser, passwordCtrl.changepassword);
     router.route('/forgotpassword').post(passwordCtrl.forgotpassword);
     router.route('/resetpassword').post(passwordCtrl.resetpassword);
     router.use('/users/:user_id', authentication, isUserOrAdmin);
@@ -29,6 +33,9 @@ function userRoutes(setter, ctrls) {
     router.route('/users/:user_id').put(userCtrl.update);
     router.route('/users/:user_id').patch(userCtrl.update);
     router.route('/users/:user_id').delete(userCtrl.deleteOne);
+    router
+        .route('/upload_image/:user_id')
+        .post(authentication, imageUploader.single('image'), userCtrl.uploadImage);
 }
 exports.default = userRoutes;
 //# sourceMappingURL=userRoutes.js.map

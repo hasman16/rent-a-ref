@@ -67,6 +67,10 @@ models.forEach(function(model) {
 
   m.User.hasMany(m.Organization);
 
+  m.User.belongsToMany(m.Image, {
+    through: 'user_image'
+  });
+
   m.User.belongsToMany(m.Organization, {
     through: 'organizer'
   });
@@ -135,4 +139,5 @@ models.forEach(function(model) {
   module.exports.OrganizationPhone = sequelize.models.organization_phone;
   module.exports.UserAddress = sequelize.models.user_address;
   module.exports.UserPhone = sequelize.models.user_phone;
+  module.exports.UserImage = sequelize.models.user_image;
 })(module.exports);
