@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit
+} from '@angular/core';
 import { ActivatedRoute, Params, Router, Data } from '@angular/router';
 import {
   FormGroup,
@@ -25,8 +30,13 @@ import {
   Profile,
   User
 } from './../../shared/models/index';
-
+import {
+  CropImageModalService,
+  CropImageState,
+  UploadState
+} from './../../shared/crop-image-modal/index';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -34,9 +44,11 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent implements OnInit, CanComponentDeactivate {
+  private subscriptions: Subscription[] = [];
   protected data: Profile = <Profile>{};
   public user: User = <User>{};
   protected person: Person = <Person>{};
@@ -63,13 +75,16 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
 
   protected birthday: string = '';
   public defaultImage: string = 'assets/images/avatar2.png';
+  public destination: string;
 
   constructor(
+    private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     private auth: AuthService,
     private profileService: ProfileService,
-    private userService: UserService
+    private userService: UserService,
+    private cropImageModalService: CropImageModalService
   ) {
     this.addresses = [];
     this.phones = [];
@@ -77,6 +92,31 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
 
   ngOnInit() {
     this.getProfile();
+    this.subscriptions.push(
+      this.cropImageModalService.cropImageSubject$.subscribe(
+        (cropImageState: CropImageState) => {
+          if (cropImageState.uploadState === UploadState.Success) {
+            this.getProfile();
+          }
+          this.cd.markForCheck();
+        }
+      )
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
+  }
+
+  openModal(): void {
+    const user = this.user;
+    this.destination = `/api/upload_image/${user.id}`;
+    this.cropImageModalService.show();
+  }
+
+  closeModal($event): void {
+    console.log('close modal');
+    this.cropImageModalService.hide();
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
@@ -117,6 +157,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
           this.middlenameFlag = true;
         }
         this.isLoading = false;
+        this.cd.markForCheck();
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -136,6 +177,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
           this.abort = true;
           this.auth.logout();
         }
+        this.cd.markForCheck();
       }
     );
   }
@@ -197,6 +239,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     } else {
       this.onFormCancel(false);
     }
+    this.cd.markForCheck();
   }
 
   onFormCancel(value) {

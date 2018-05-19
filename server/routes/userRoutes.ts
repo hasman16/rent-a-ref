@@ -42,5 +42,5 @@ export default function userRoutes(setter, ctrls) {
 
   router
     .route('/upload_image/:user_id')
-    .post(authentication, imageUploader.single('image'), userCtrl.uploadImage);
+    .post(authentication, imageUploader.single('photo'), userCtrl.uploadImage);
 }
