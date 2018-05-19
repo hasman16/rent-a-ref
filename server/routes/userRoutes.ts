@@ -2,7 +2,8 @@ export default function userRoutes(setter, ctrls) {
   const router = setter.router;
   const authentication = setter.authentication;
   const authorization = setter.authorization;
-  const uploads = setter.uploads;
+  const imageUploader = setter.imageUploader;
+
   const isUserOrAdmin = authorization.isUserOrAdmin;
   const isAdmin = authorization.isAdmin;
   const isUser = authorization.isUser;
@@ -23,9 +24,13 @@ export default function userRoutes(setter, ctrls) {
   router.route('/profile/:user_id').get(registerCtrl.getProfile);
   //router.route('/profile/:user_id').get(authentication, isUser,registerCtrl.getProfile);
 
-  router.route('/changepassword/:user_id').put(authentication, isUser, passwordCtrl.changepassword);
-  router.route('/changepassword/:user_id').patch(authentication, isUser, passwordCtrl.changepassword);
-  
+  router
+    .route('/changepassword/:user_id')
+    .put(authentication, isUser, passwordCtrl.changepassword);
+  router
+    .route('/changepassword/:user_id')
+    .patch(authentication, isUser, passwordCtrl.changepassword);
+
   router.route('/forgotpassword').post(passwordCtrl.forgotpassword);
   router.route('/resetpassword').post(passwordCtrl.resetpassword);
 
@@ -34,4 +39,8 @@ export default function userRoutes(setter, ctrls) {
   router.route('/users/:user_id').put(userCtrl.update);
   router.route('/users/:user_id').patch(userCtrl.update);
   router.route('/users/:user_id').delete(userCtrl.deleteOne);
+
+  router
+    .route('/upload_image/:user_id')
+    .post(authentication, imageUploader.single('image'), userCtrl.uploadImage);
 }

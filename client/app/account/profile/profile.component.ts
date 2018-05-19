@@ -62,6 +62,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   public currentAddress: number = 0;
 
   protected birthday: string = '';
+  public defaultImage: string = 'assets/images/avatar2.png';
 
   constructor(
     private route: ActivatedRoute,
@@ -82,6 +83,11 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     if (!this.allowEdit) {
       return true;
     }
+  }
+
+  getImageAddress(): string {
+    let url = _.get(this.data, 'images[0].location', '');
+    return url;
   }
 
   getProfile() {

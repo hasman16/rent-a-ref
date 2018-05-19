@@ -16,7 +16,9 @@
 
         <div class="col-8 profiles">
           <div class="card">
-            
+            <div class="col-3 rar-logo" title="Upload User Image.">
+              <rar-image [errorImage]="defaultImage" [image]="getImageAddress()" [width]="120"></rar-image>
+            </div>
           </div>
           <div class="card">
             <div *ngIf="!editBio" class="fadeInForm">

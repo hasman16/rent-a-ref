@@ -28,6 +28,14 @@ export default function UserController(
       where: {
         id: req.params.user_id
       },
+      include: [
+        {
+          model: Image,
+          through: {
+            attributes: []
+          }
+        }
+      ],
       attributes: attributes
     })
       .then(result => ResponseService.success(res, result))
@@ -76,11 +84,70 @@ export default function UserController(
     const user = makeUser(req.body);
   }
 
+  function uploadImage(req, res) {
+    const file = req.file;
+    //console.log('uploadLogon:', file);
+    if (file) {
+      const sequelize = models.sequelize;
+      const UserImage = models.UserImage;
+      const Image = models.Image;
+      const findUser = (newImage, t) => {
+        return User.findById(req.params.user_id, {
+          transaction: t
+        }).then(user => {
+          return deleteUserImage(newImage, user, t);
+        });
+      };
+      const deleteUserImage = (newImage, user, t) => {
+        return UserImage.destroy(
+          {
+            where: {
+              user_id: user.id
+            }
+          },
+          {
+            transaction: t
+          }
+        ).then(() => {
+          return addUserImage(newImage, user, t);
+        });
+      };
+      const addUserImage = (newImage, user, t) => {
+        return UserImage.create(
+          {
+            image_id: newImage.id,
+            user_id: user.id
+          },
+          {
+            transaction: t
+          }
+        );
+      };
+
+      sequelize
+        .transaction(function(t) {
+          return Image.create(file, { transaction: t }).then(newImage => {
+            return findUser(newImage, t);
+          });
+        })
+        .then(() => {
+          ResponseService.success(res, 'Uploaded Image Successfully.');
+        })
+        .catch(error => ResponseService.exception(res, error));
+    } else {
+      res.json(400, {
+        success: false,
+        message: 'upload failed.'
+      });
+    }
+  }
+
   return {
-    logout: logout,
-    getAll: getAll,
-    getOne: getOne,
-    update: update,
-    deleteOne: deleteOne
+    logout,
+    getAll,
+    getOne,
+    update,
+    deleteOne,
+    uploadImage
   };
 }
