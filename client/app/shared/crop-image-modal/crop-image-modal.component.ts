@@ -53,7 +53,6 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 		this.subscription.push(
 			this.cropImageModalService.modalState$.subscribe(
 				(value: boolean) => {
-					debugger;
 					if (value) {
 						this.modalService.show();
 					} else {
@@ -102,8 +101,9 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 	}
 
 	public closeModal($event): void {
-		debugger;
-		this.cropImageModalService.hide();
+		this.cropImageModalService.message(<CropImageState>{
+			uploadState: UploadState.Close
+		});
 		this.cleanUp();
 	}
 
