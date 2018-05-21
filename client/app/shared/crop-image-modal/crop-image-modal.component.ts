@@ -135,13 +135,15 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 						this.cropImageModalService.message(<CropImageState>{
 							uploadState: UploadState.Error
 						});
-					}
+					},
+					() => this.cropImageModalService.hide()
 				);
 		} else {
-			this.closeModal(null);
+			//this.closeModal(null);
 			this.cropImageModalService.message(<CropImageState>{
 				uploadState: UploadState.None
 			});
+			this.cropImageModalService.hide();
 		}
 	}
 
