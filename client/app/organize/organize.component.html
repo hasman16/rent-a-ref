@@ -21,11 +21,11 @@
       <div  *ngIf="!isEditing && organizations?.length > 0">
         <div class="form-size">
           <br />
-          <div class="row rar-list"  *ngFor="let organization of organizations" >
-            <div class="col-3 rar-logo" (click)="openModal(organization)" title="Upload Organization Logo.">
+          <div class="row shadow rar-list"  *ngFor="let organization of organizations" >
+            <div class="col-2 rar-logo" (click)="openModal(organization)" title="Upload Organization Logo.">
               <rar-image [errorImage]="defaultImage"  [image]="getImageAddress(organization)" [width]="80" [alt]="logo"></rar-image>
             </div>
-            <div class="col-5" (click)="editEvents(organization.id);" title="Edit Events.">
+            <div class="col-6" (click)="editEvents(organization.id);" title="Edit Events.">
               <h2>{{organization.name}}</h2>
             </div>
             <div class="col-2">

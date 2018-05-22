@@ -38,6 +38,6 @@ export class CropImageModalService {
 		destination: string,
 		formData: FormData
 	): Observable<any> {
-		return this.http.post(destination, formData);
+		return this.http.post(destination, formData, { reportProgress: true });
 	}
 }
