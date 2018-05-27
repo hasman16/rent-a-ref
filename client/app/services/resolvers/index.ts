@@ -1,3 +1,4 @@
+export * from './admin-events.resolver';
 export * from './events.resolver';
 export * from './organizations.resolver';
 export * from './sports.resolver';

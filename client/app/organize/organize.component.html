@@ -26,7 +26,7 @@
               <rar-image [errorImage]="defaultImage"  [image]="getImageAddress(organization)" [width]="80" [alt]="logo"></rar-image>
             </div>
             <div class="col-6" (click)="editEvents(organization.id);" title="Edit Events.">
-              <h2>{{organization.name}}</h2>
+              <h2 class="contrain-text" title="{{organization.name}}">{{organization.name}}</h2>
             </div>
             <div class="col-2">
               <div class="button-container">

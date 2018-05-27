@@ -7,6 +7,7 @@ import {
   AuthGuardLogin,
   AuthGuardSuspended,
   CanDeactivateGuardService,
+  AdminEventsResolver,
   EventsResolver,
   OrganizationsResolver,
   SportsResolver,
@@ -114,7 +115,6 @@ const routes: Routes = [
     component: DeactivatedComponent
   },
   { path: 'admin', redirectTo: 'admin/0', pathMatch: 'full' },
-
   {
     path: 'admin/:id',
     component: AdminComponent,
@@ -130,7 +130,10 @@ const routes: Routes = [
       },
       {
         path: 'manageevents',
-        component: ManageEventsComponent
+        component: ManageEventsComponent,
+        resolve: {
+          eventsData: AdminEventsResolver
+        }
       }
     ]
   },

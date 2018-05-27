@@ -18,6 +18,7 @@ import {
 } from './http/index';
 import { TokenInterceptor, TokenService } from './interceptors/index';
 import {
+  AdminEventsResolver,
   EventsResolver,
   OrganizationsResolver,
   SportsResolver,
@@ -36,6 +37,7 @@ import {
     StatesService,
     TokenService,
     UserService,
+    AdminEventsResolver,
     EventsResolver,
     OrganizationsResolver,
     SportsResolver,
