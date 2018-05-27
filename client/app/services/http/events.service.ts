@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { Address, BaseModel, Game, Phone } from './../../shared/models/index';
+import {
+  Address,
+  BaseModel,
+  Game,
+  PagedData,
+  Phone
+} from './../../shared/models/index';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -14,8 +20,14 @@ export class EventsService {
 
   constructor(private http: HttpClient) {}
 
-  public getAllGames(): Observable<Game[]> {
-    return this.http.get<Game[]>(`/api/games`);
+  public getPrices(): Observable<any> {
+    return this.http.get<any>(`/api/prices`);
+  }
+
+  public getAllGames(queryParams: any = null): Observable<PagedData> {
+    return <Observable<PagedData>>this.http.get(`/api/games`, {
+      params: queryParams
+    });
   }
 
   public getGame(game_id: string): Observable<Game> {

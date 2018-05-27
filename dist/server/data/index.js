@@ -177,10 +177,25 @@ var sports = [
         referees: 3
     }
 ];
+var prices = [
+    {
+        description: 'kids',
+        price: 105
+    },
+    {
+        description: 'teens',
+        price: 120
+    },
+    {
+        description: 'adults',
+        price: 135
+    }
+];
+function insertPrices(Price) {
+    return Price.bulkCreate(prices);
+}
 function insertSports(Sport) {
-    sports.forEach(function (sport) {
-        Sport.create(sport);
-    });
+    Sport.bulkCreate(sports);
 }
 function insertPeople(User, Person) {
     var person = people.find(function (aPerson) {
@@ -244,6 +259,7 @@ function insertData(models, doInsert) {
         })
             .then(function () { return insertUser(models); })
             .then(function () { return insertSports(models.Sport); })
+            .then(function () { return insertPrices(models.Price); })
             .catch(function (error) {
             throw Error(error);
         });

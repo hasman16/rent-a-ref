@@ -12,31 +12,31 @@ const Game = function(sequelize, DataTypes) {
 				allowNull: false,
 				defaultValue: '',
 				validate: {
-					isIn: [['league', 'tournament' , 'oneoff']]
+					isIn: [['league', 'tournament', 'oneoff']]
 				}
 			},
 			venue_name: DataTypes.STRING(64),
-			kids_referees: {
+			kids_games: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
 			},
-			teens_referees: {
+			teen_games: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
 			},
-			adults_referees: {
+			adult_games: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
 			},
-			kids_ref_pay: {
+			kids_game_price: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
 			},
-			teens_ref_pay: {
+			teen_game_price: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
 			},
-			adults_ref_pay: {
+			adult_game_price: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
 			},

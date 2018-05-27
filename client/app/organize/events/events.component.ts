@@ -65,6 +65,7 @@ export class EventsComponent implements OnInit {
   protected states: Option[];
   protected form = new FormGroup({});
   protected model: any = {};
+  protected prices: any[] = [];
   protected currentModel: any = {};
   protected options: FormlyFormOptions = <FormlyFormOptions>{};
   protected fields: FormlyFieldConfig[];
@@ -147,7 +148,7 @@ export class EventsComponent implements OnInit {
             }
           }
         ]
-      },
+      } /*
       {
         template:
           '<hr class="space-hr" /><div><strong>Event Duration</strong></div>'
@@ -176,7 +177,7 @@ export class EventsComponent implements OnInit {
             }
           }
         ]
-      },
+      },*/,
       {
         template: '<hr class="space-hr" />'
       },
@@ -251,9 +252,9 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-4',
             type: 'input',
-            key: 'kids_referees',
+            key: 'kids_games',
             templateOptions: {
-              label: 'Number of Referees for Kids 13 and Under',
+              label: 'Number games for Kids 13 and Under.',
               type: 'number',
               min: 1,
               max: 1000
@@ -266,9 +267,9 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-4',
             type: 'input',
-            key: 'teens_referees',
+            key: 'teen_games',
             templateOptions: {
-              label: 'Number of Referees for High Schoolers',
+              label: 'Number of games for High Schooler.',
               type: 'number',
               min: 1,
               max: 1000,
@@ -282,9 +283,9 @@ export class EventsComponent implements OnInit {
           {
             className: 'col-sm-4',
             type: 'input',
-            key: 'adults_referees',
+            key: 'adult_games',
             templateOptions: {
-              label: 'Number of Referees for Over 18s',
+              label: 'Number of games for Over 18s.',
               type: 'number',
               min: 1,
               max: 1000,
@@ -418,16 +419,50 @@ export class EventsComponent implements OnInit {
     this.viewState = ViewState.editEvent;
   }
 
-  public payForEvent(game): void {
+  protected prepareForPayment(model: any, prices: any): any {
+    prices.forEach(price => {
+      switch (price.description) {
+        case 'kids':
+          model.kids_game_price = price.price;
+          break;
+        case 'teens':
+          model.teen_game_price = price.price;
+          break;
+        case 'adults':
+          model.adult_game_price = price.price;
+          break;
+      }
+    });
+    model = Object.assign(
+      {},
+      {
+        kids_games_total: 0,
+        teen_games_total: 0,
+        adult_games_total: 0
+      },
+      model
+    );
+
+    model.kids_games_total = model.kids_game_price * model.kids_games;
+    model.teen_games_total = model.teen_game_price * model.teen_games;
+    model.adult_games_total = model.adult_game_price * model.adult_games;
+
+    model['total'] =
+      model.kids_games_total + model.teen_games_total + model.adult_games_total;
+    return model;
+  }
+
+  protected payForEvent(game): void {
     if (!this.isLoading) {
       this.isLoading = true;
 
       this.getEvent(game.id)
+        .combineLatest(this.eventsService.getPrices())
         .take(1)
         .subscribe(
-          (model: any) => {
-            console.log('got game:', game);
-            this.model = _.cloneDeep(model);
+          ([model, prices]: [any, any]) => {
+            const aModel = this.prepareForPayment(model, prices);
+            this.model = _.cloneDeep(aModel);
             this.viewState = ViewState.payForEvent;
           },
           (err: HttpErrorResponse) => {
@@ -468,16 +503,15 @@ export class EventsComponent implements OnInit {
   }
 
   public getEvent(id: string): Observable<any> {
-    const referees = value => value && value > 0;
+    const games = value => value && value > 0;
     return this.eventsService
       .getGame(id)
       .take(1)
       .map((aGame: Game) => {
-        console.log('got game:', id);
         const model = this.convertGameToModel(aGame);
-        model.kids = referees(model.kids_referees);
-        model.teens = referees(model.teens_referees);
-        model.adults = referees(model.adults_referees);
+        model.kids = games(model.kids_games);
+        model.teens = games(model.teen_games);
+        model.adults = games(model.adult_games);
         return model;
       });
   }
@@ -556,13 +590,13 @@ export class EventsComponent implements OnInit {
 
     return <Game>{
       id: model.id,
-      adults_referees: model.adults_referees,
-      teens_referees: model.teens_referees,
-      kids_referees: model.kids_referees,
+      adult_games: model.adult_games,
+      teen_games: model.teen_games,
+      kids_games: model.kids_games,
 
-      kids_ref_pay: model.kids_ref_pay,
-      teens_ref_pay: model.teens_ref_pay,
-      adults_ref_pay: model.adults_ref_pay,
+      kids_game_price: model.kids_game_price,
+      teen_game_price: model.teen_game_price,
+      adult_game_price: model.adult_game_price,
 
       event_name: model.event_name,
       event_type: model.event_type,

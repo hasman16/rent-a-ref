@@ -5,7 +5,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
 import {
-  AuthService,
   CanComponentDeactivate,
   PagingService,
   UserService
@@ -37,7 +36,6 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
     private route: ActivatedRoute,
     public toast: ToastComponent,
     private userService: UserService,
-    private auth: AuthService,
     private pagingService: PagingService
   ) {
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
@@ -45,7 +43,6 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
 
   ngOnInit() {
     const pagedData: PagedData = this.route.snapshot.data.userData;
-    this.currentUser = this.auth.getCurrentUser();
     this.processPagedData(pagedData);
     this.isLoading = false;
   }
@@ -99,7 +96,6 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
 
   processPagedData(data: PagedData): void {
     let [page, newData] = this.pagingService.processPagedData(this.page, data);
-    console.log('page:', newData);
     this.page = page;
     this.users = newData;
   }

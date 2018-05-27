@@ -126,6 +126,13 @@ function GameController(models, ResponseService) {
     }
     function updateGameAddress(req, res) { }
     function deleteGameAddress(req, res) { }
+    function getPrices(req, res) {
+        var sequelize = models.sequelize;
+        var Price = models.Price;
+        Price.findAll()
+            .then(function (results) { return ResponseService.success(res, results); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
+    }
     return {
         getAll: getAll,
         getAllByOrganization: getAllByOrganization,
@@ -133,6 +140,7 @@ function GameController(models, ResponseService) {
         create: create,
         update: update,
         deleteOne: deleteOne,
+        getPrices: getPrices,
         getGameAddress: getGameAddress,
         createGameAddressPhone: createGameAddressPhone,
         updateGameAddress: updateGameAddress,

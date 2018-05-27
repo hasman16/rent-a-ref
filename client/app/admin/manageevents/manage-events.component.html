@@ -1,46 +1,30 @@
 <div class="card">
 
   <h1 class="etched-text"> Event Assignment</h1>
-
-  <div class="card-block" *ngIf="games && games.length > 0">
-    <table class="table table-bordered table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th *ngFor="let title of titles" scope="col">
-            {{title}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let game of games" (click)="editEvents(game);" class="org-table-item ">
-          <td>
-            {{game.event_name}}
-          </td>
-          <td>
-            {{formatDate(game.event_date)}}
-          </td>
-          <td>
-            {{game.venue_name}}
-          </td>
-          <td>
-
-          <ng-container *ngIf="game.status!=='pending'">
-            {{game.status}}
-          </ng-container>
-
-          <ng-container *ngIf="game.status=='pending'">
-            <button class="btn btn-success btn-sm" (click)="editEvents(game)" title="Click to pay for this event">Pay</button>
-          </ng-container>
-
-          </td>
-          <td>
-            <button class="btn btn-primary btn-sm">Edit</button>
-          </td>
-          <td>
-            <button class="btn btn-danger btn-sm" >Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="card-block horizontal-and-vertical-centering " *ngIf="(!games || games.length === 0)">
+    <div class="form-size">
+      <p>There is no events data.</p>
+    </div>
   </div>
+  <div class="card-block" *ngIf="games && games.length > 0">
+    <ngx-datatable class="bootstrap"
+      [rows]="games"
+      [columns]="columns"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [externalSorting]="true"
+      [loadingIndicator]="isLoading"
+      (sort)="onSort($event)"
+      [externalPaging]="true"
+      [count]="page.total_elements"
+      [offset]="page.offset"
+      [limit]="page.limit"
+      (page)='setPage($event)'
+      >
+    </ngx-datatable>
+ 
+  </div>
+
 </div>

@@ -3,47 +3,44 @@
     <tbody>
       <tr class="org-table-item ">
         <td class="text-left">
-          Kids Referees
+          Kids Games
         </td>
         <td class="text-right">
-          {{model.kids_referees}} x 
+          {{model.kids_games}} x 
         </td>
         <td class="text-right item-width">
-          <span (click)="update();inputKidsRefpay=true" *ngIf="!inputKidsRefpay">{{model.kids_ref_pay | currency:'USD'}}</span>
-          <input [(ngModel)]="model.kids_ref_pay" (blur)="update()" *ngIf="inputKidsRefpay" matInput type="number" placeholder="" required="true">
+          {{model.kids_game_price | currency:'USD'}}
         </td>
         <td class="text-right item-width">
-        {{model.kids_ref_total | currency:'USD' }}
+        {{model.kids_games_total | currency:'USD' }}
         </td>
       </tr>
       <tr class="org-table-item ">
         <td class="text-left">
-          Teens Referees
+          Teen Games
         </td>
         <td class="text-right">
-          {{model.teens_referees}} x 
+          {{model.teen_games}} x 
         </td>
         <td class="text-right item-width">
-          <span (click)="update();inputTeensRefpay=true" *ngIf="!inputTeensRefpay">{{model.teens_ref_pay | currency:'USD'}}</span>
-          <input [(ngModel)]="model.teens_ref_pay" (blur)="update()" *ngIf="inputTeensRefpay" matInput type="number" placeholder="" required="true">
+          {{model.teen_game_price | currency:'USD'}}
         </td>
         <td class="text-right item-width">
-          {{model.teens_ref_total | currency:'USD'}}
+          {{model.teen_games_total | currency:'USD'}}
         </td>
       </tr>
       <tr class="org-table-item ">
         <td class="text-left">
-          Adults Referees
+          Adult Games
         </td>
         <td class="text-right">
-          {{model.adults_referees}} x 
+          {{model.adult_games}} x 
         </td>
         <td class="text-right item-width">
-          <span *ngIf="!inputAdultRefpay" (click)="update();inputAdultRefpay=true">{{model.adults_ref_pay | currency:'USD'}}</span>
-          <input [(ngModel)]="model.adults_ref_pay" (blur)="update()" *ngIf="inputAdultRefpay" matInput type="number" placeholder="" required="true">
+          {{model.adult_game_price | currency:'USD'}}
         </td>
         <td class="text-right item-width">
-          {{model.adults_ref_total | currency:'USD'}}
+          {{model.adult_games_total | currency:'USD'}}
         </td>
       </tr>
       <tr>

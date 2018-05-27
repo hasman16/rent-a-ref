@@ -15,8 +15,9 @@ var models = [
     'Match',
     'Organization',
     'Person',
-    'Post',
     'Phone',
+    'Post',
+    'Price',
     'Sport',
     'User'
 ];
