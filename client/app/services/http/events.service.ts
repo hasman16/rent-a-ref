@@ -14,6 +14,10 @@ export class EventsService {
 
   constructor(private http: HttpClient) {}
 
+  public getPrices(): Observable<any> {
+    return this.http.get<any>(`/api/prices`);
+  }
+
   public getAllGames(): Observable<Game[]> {
     return this.http.get<Game[]>(`/api/games`);
   }

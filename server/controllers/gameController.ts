@@ -145,6 +145,14 @@ export default function GameController(models, ResponseService) {
   function updateGameAddress(req, res) {}
   function deleteGameAddress(req, res) {}
 
+  function getPrices(req, res) {
+    const sequelize = models.sequelize;
+    const Price = models.Price;
+    Price.findAll()
+      .then(results => ResponseService.success(res, results))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
   return {
     getAll,
     getAllByOrganization,
@@ -152,7 +160,7 @@ export default function GameController(models, ResponseService) {
     create,
     update,
     deleteOne,
-
+    getPrices,
     getGameAddress,
     createGameAddressPhone,
     updateGameAddress,

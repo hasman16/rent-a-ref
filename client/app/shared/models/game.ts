@@ -7,12 +7,12 @@ export interface Game {
 	event_date?: number;
 	venue_name?: string;
 	status?: string;
-	kids_referees?: number;
-	teens_referees?: number;
-	adults_referees?: number;
-	kids_ref_pay?: number;
-	teens_ref_pay?: number;
-	adults_ref_pay?: number;
+	kids_games?: number;
+	teen_games?: number;
+	adult_games?: number;
+	kids_game_price?: number;
+	teen_game_price?: number;
+	adult_game_price?: number;
 	organization_id?: number;
 	user_id?: number;
 	sport_id?: number;

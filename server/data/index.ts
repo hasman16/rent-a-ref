@@ -181,14 +181,31 @@ const sports = [
   }
 ];
 
+const prices = [
+  {
+    description: 'kids',
+    price: 105
+  },
+  {
+    description: 'teens',
+    price: 120
+  },
+  {
+    description: 'adults',
+    price: 135
+  }
+];
+
+function insertPrices(Price) {
+  return Price.bulkCreate(prices);
+}
+
 function insertSports(Sport) {
-  sports.forEach(function(sport) {
-    Sport.create(sport);
-  });
+  Sport.bulkCreate(sports);
 }
 
 function insertPeople(User, Person) {
-  let person = people.find(function(aPerson) {
+  let person = people.find(aPerson => {
     return aPerson.email === User.email;
   });
 
@@ -255,6 +272,7 @@ function insertData(models, doInsert: Boolean = false) {
       })
       .then(() => insertUser(models))
       .then(() => insertSports(models.Sport))
+      .then(() => insertPrices(models.Price))
       .catch(error => {
         throw Error(error);
       });

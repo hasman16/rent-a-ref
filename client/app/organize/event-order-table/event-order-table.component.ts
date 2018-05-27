@@ -20,18 +20,15 @@ export class EventOrderTableComponent implements OnInit {
     this.model = Object.assign(
       {},
       {
-        kids_ref_total: 0,
-        teens_ref_total: 0,
-        adults_ref_total: 0
+        kids_games_total: 0,
+        teen_games_total: 0,
+        adult_games_total: 0
       },
       model
     );
     this.update();
   }
 
-  public inputKidsRefpay: boolean = false;
-  public inputTeensRefpay: boolean = false;
-  public inputAdultRefpay: boolean = false;
   public model: any;
   constructor(private cd: ChangeDetectorRef) {}
 
@@ -39,15 +36,13 @@ export class EventOrderTableComponent implements OnInit {
 
   update(): void {
     const model = this.model;
-    this.inputAdultRefpay = false;
-    this.inputKidsRefpay = false;
-    this.inputTeensRefpay = false;
-    (model.kids_ref_total = model.kids_ref_pay * model.kids_referees),
-      (model.teens_ref_total = model.teens_ref_pay * model.teens_referees),
-      (model.adults_ref_total = model.adults_ref_pay * model.adults_referees);
+    model.kids_games_total = model.kids_game_price * model.kids_games;
+    model.teen_games_total = model.teen_game_price * model.teen_games;
+    model.adult_games_total = model.adult_game_price * model.adult_games;
 
     model.total =
-      model.kids_ref_total + model.teens_ref_total + model.adults_ref_total;
+      model.kids_games_total + model.teen_games_total + model.adult_games_total;
+    console.log('total:', model.total, model);
     this.cd.markForCheck();
   }
 }
