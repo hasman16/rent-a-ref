@@ -419,7 +419,40 @@ export class EventsComponent implements OnInit {
     this.viewState = ViewState.editEvent;
   }
 
-  public payForEvent(game): void {
+  protected prepareForPayment(model: any, prices: any): any {
+    prices.forEach(price => {
+      switch (price.description) {
+        case 'kids':
+          model.kids_game_price = price.price;
+          break;
+        case 'teens':
+          model.teen_game_price = price.price;
+          break;
+        case 'adults':
+          model.adult_game_price = price.price;
+          break;
+      }
+    });
+    model = Object.assign(
+      {},
+      {
+        kids_games_total: 0,
+        teen_games_total: 0,
+        adult_games_total: 0
+      },
+      model
+    );
+
+    model.kids_games_total = model.kids_game_price * model.kids_games;
+    model.teen_games_total = model.teen_game_price * model.teen_games;
+    model.adult_games_total = model.adult_game_price * model.adult_games;
+
+    model['total'] =
+      model.kids_games_total + model.teen_games_total + model.adult_games_total;
+    return model;
+  }
+
+  protected payForEvent(game): void {
     if (!this.isLoading) {
       this.isLoading = true;
 
@@ -428,21 +461,8 @@ export class EventsComponent implements OnInit {
         .take(1)
         .subscribe(
           ([model, prices]: [any, any]) => {
-            console.log('got model, prices:', model, prices);
-            this.model = _.cloneDeep(model);
-            prices.forEach(price => {
-              switch (price.description) {
-                case 'kids':
-                  this.model.kids_game_price = price.price;
-                  break;
-                case 'teens':
-                  this.model.teen_game_price = price.price;
-                  break;
-                case 'adults':
-                  this.model.adult_game_price = price.price;
-                  break;
-              }
-            });
+            const aModel = this.prepareForPayment(model, prices);
+            this.model = _.cloneDeep(aModel);
             this.viewState = ViewState.payForEvent;
           },
           (err: HttpErrorResponse) => {
@@ -488,7 +508,6 @@ export class EventsComponent implements OnInit {
       .getGame(id)
       .take(1)
       .map((aGame: Game) => {
-        console.log('got game:', id);
         const model = this.convertGameToModel(aGame);
         model.kids = games(model.kids_games);
         model.teens = games(model.teen_games);
