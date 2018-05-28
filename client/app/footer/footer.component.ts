@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   public dt: Date = new Date();
-  public selectLoad = true;
+  public terms = false;
   public privacy = false;
   public year: number = new Date().getFullYear();
   constructor() {}
@@ -20,5 +20,23 @@ export class FooterComponent implements OnInit {
 
   public today(): void {
     this.dt = new Date();
+  }
+
+  showPrivacy(): void {
+    this.privacy = true;
+    this.hideTerms(null);
+  }
+
+  hidePrivacy(event): void {
+    this.privacy = false;
+  }
+
+  showTerms(): void {
+    this.terms = true;
+    this.hidePrivacy(null);
+  }
+
+  hideTerms(event): void {
+    this.terms = false;
   }
 }

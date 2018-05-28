@@ -7,13 +7,14 @@ import {
 	Output,
 	ElementRef,
 	Renderer2,
-	ChangeDetectorRef
+	ChangeDetectorRef,
+	ViewChild
 } from '@angular/core';
 import { OrganizeService } from './../../services/index';
 import { CropImageModalService } from './crop-image-modal.service';
 import { UploadState, CropImageState } from './crop-image';
 
-import { ModalService } from './../modal/modal.service';
+import { ModalComponent } from './../modal/modal.component';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
@@ -23,6 +24,7 @@ import { Observable } from 'rxjs/Observable';
 	styleUrls: ['./crop-image-modal.component.scss']
 })
 export class CropImageModalComponent implements OnInit, OnDestroy {
+	@ViewChild('uploaderModal') uploadModal: ModalComponent;
 	@Input() destination: string;
 	public modalName: string = 'xxx';
 	public title: string = 'Upload Image';
@@ -44,7 +46,6 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 	constructor(
 		private elem: ElementRef,
 		private renderer: Renderer2,
-		private modalService: ModalService,
 		private cropImageModalService: CropImageModalService,
 		private organizeService: OrganizeService
 	) {}
@@ -54,9 +55,9 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 			this.cropImageModalService.modalState$.subscribe(
 				(value: boolean) => {
 					if (value) {
-						this.modalService.show();
+						this.uploadModal.showModal(null);
 					} else {
-						this.modalService.hide();
+						this.uploadModal.closeModal(null);
 					}
 				}
 			)
@@ -139,7 +140,6 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 					() => this.cropImageModalService.hide()
 				);
 		} else {
-			//this.closeModal(null);
 			this.cropImageModalService.message(<CropImageState>{
 				uploadState: UploadState.None
 			});
