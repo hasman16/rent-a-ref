@@ -50,6 +50,7 @@ import { EventOrderTableComponent } from './organize/event-order-table/event-ord
 import { FaqComponent } from './group/faq/faq.component';
 import { FooterComponent } from './footer/footer.component';
 import { FooterTabletComponent } from './footer/footer-tablet/footer-tablet.component';
+import { PrivacyModalComponent, TermsModalComponent } from './footer/index';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
@@ -107,6 +108,8 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         FormlyHorizontalTextAreaWrapper,
         FooterComponent,
         FooterTabletComponent,
+        PrivacyModalComponent,
+        TermsModalComponent,
         GoogleMapComponent,
         HeaderComponent,
         HomeComponent,

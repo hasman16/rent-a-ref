@@ -1,0 +1,14 @@
+<rar-modal
+[name]="privacy"
+[title]="title"
+[submitText]="submitText"
+(submit)="submitModal($event)"
+(cancel)="closeModal($event)"
+#privacy
+>
+  <div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item" src="/assets/src/privacy.txt" allowfullscreen></iframe>
+  </div>
+
+  <p><span class="blue-footer">Thank you</span></p>
+</rar-modal>

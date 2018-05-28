@@ -8,7 +8,6 @@ import {
   EventEmitter
 } from '@angular/core';
 
-import { ModalService } from './modal.service';
 import { ModalState } from './modal';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -35,19 +34,9 @@ export class ModalComponent implements OnInit {
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
   private subscription: Subscription[] = [];
 
-  constructor(private modalService: ModalService) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.subscription.push(
-      this.modalService.modalState$.subscribe((modalState: ModalState) => {
-        if (modalState && modalState.show === true) {
-          this.showModal(null);
-        } else {
-          this.closeModal(null);
-        }
-      })
-    );
-  }
+  ngOnInit() {}
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub: Subscription) => sub.unsubscribe());

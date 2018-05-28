@@ -22,17 +22,16 @@
             <span class="general-links"> Career</span>
           </a>
         </li>
-        <li data-toggle="modal" data-target="#ordine" (click)="privacy = true">
+        <li data-toggle="modal" data-target="#ordine" (click)="showPrivacy()">
           <i class="fa fa-file-text-o"></i><span class="general-links"> Privacy Policy</span>
         </li>
-        <li data-toggle="modal" data-target="#ordine" (click)="selectLoad = true; privacy = false">
-            <!--<a routerLink="/terms-and-conditions" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">-->
+        <li data-toggle="modal" (click)="showTerms()">
           <i class="fa fa-eye"></i>
           <span class="general-links"> Terms & Conditions( Referee )</span>
         </li>
-        <li data-toggle="modal" data-target="#ordine" (click)="selectLoad = false; privacy = false">
+        <li data-toggle="modal" (click)="showTerms()">
           <i class="fa fa-eye"></i>
-          <span class="general-links"> Terms & Conditions( Organizer )</span>
+          <span class="general-links"> Terms & Conditions( Organizer )</span> 
         </li>
         <li>
           <a routerLink="/faq" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
@@ -100,68 +99,9 @@
 </div>
 
 <!-- Modal start Terms & Conditions Referee-->
-<div id="ordine" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ordineLabel" aria-hidden="true">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header" *ngIf="!privacy">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <button></button><h4 class="modal-title">Rend-A-Ref Terms and Conditions</h4>
-      </div>
-      <div class="modal-header" *ngIf="privacy">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <button></button>
-        <h4 class="modal-title">Rend-A-Ref Privacy Policy</h4>
-      </div>
-      <div class="modal-body" *ngIf="!privacy">
-        <div class="embed-responsive embed-responsive-16by9" *ngIf="selectLoad">
-          <iframe class="embed-responsive-item" src="/assets/src/terms-conditions.txt" allowfullscreen></iframe>
-        </div>
-        <div class="embed-responsive embed-responsive-16by9" *ngIf="!selectLoad">
-          <iframe class="embed-responsive-item" src="/assets/src/terms-condition-organizer.txt" allowfullscreen></iframe>
-        </div>
-        <p><span class="blue-footer">Thank you</span></p>
-      </div>
-      <!--Privacy start-->
-      <div class="modal-body" *ngIf="privacy">
-        <div class="embed-responsive embed-responsive-16by9">
-          <iframe class="embed-responsive-item" src="/assets/src/privacy.txt" allowfullscreen></iframe>
-        </div>
-
-        <p><span class="blue-footer">Thank you</span></p>
-      </div>
-      <!--Privacy end-->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+<privacy-modal [show]="privacy" (hide)="hidePrivacy($event)"></privacy-modal>
 <!--Modal end-->
 
 <!-- Modal start Terms & Conditions Organizer-->
-<div id="ordineOrganizer" class="modal fade" tabindex="-2" role="dialog" aria-labelledby="ordineLabel" aria-hidden="true">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Rend-A-Ref Terms and Conditions</h4>
-      </div>
-      <div class="modal-body">
-        <div class="embed-responsive embed-responsive-16by9">
-          <iframe class="embed-responsive-item" src="/assets/src/terms-conditions.txt" allowfullscreen></iframe>
-        </div>
-        <p><span class="blue-footer">Thank you</span></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+<terms-modal [show]="terms" (hide)="hideTerms($event)"></terms-modal>
 <!--Modal end-->

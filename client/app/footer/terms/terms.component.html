@@ -1,0 +1,13 @@
+<rar-modal
+[name]="terms"
+[title]="title"
+[submitText]="submitText"
+(submit)="submitModal($event)"
+(cancel)="closeModal($event)"
+#terms
+>
+  <div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item" src="/assets/src/terms-conditions.txt" allowfullscreen></iframe>
+  </div>
+  <p><span class="blue-footer">Thank you</span></p>
+</rar-modal>

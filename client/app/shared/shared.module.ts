@@ -15,63 +15,61 @@ import { PasswordresetComponent } from '../account/profile/passwordreset/passwor
 import { UploadButtonComponent } from './uploadbutton/upload-button.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ModalComponent } from './modal/modal.component';
-import { ModalService } from './modal/modal.service';
 import { RaRImageComponent } from './image/image.component';
 import { StripeComponent } from './stripe/index';
 import { MaterialModule } from '../material.module';
 import {
-  CropImageModalComponent,
-  CropImageModalService
+    CropImageModalComponent,
+    CropImageModalService
 } from './crop-image-modal/index';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    FormsModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    HttpModule,
-    ImageCropperModule,
-    LazyLoadImageModule
-  ],
-  exports: [
-    // Shared Modules
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpModule,
-    // Shared Components
-    ModalComponent,
-    ToastComponent,
-    LoaderComponent,
-    LoadingComponent,
-    UploadButtonComponent,
-    UploaderComponent,
-    CropImageModalComponent,
-    RaRImageComponent,
-    StripeComponent
-  ],
-  declarations: [
-    ToastComponent,
-    LoaderComponent,
-    LoadingComponent,
-    SuspendedComponent,
-    DeactivatedComponent,
-    StandbyComponent,
-    PasswordresetComponent,
-    UploadButtonComponent,
-    UploaderComponent,
-    ModalComponent,
-    CropImageModalComponent,
-    RaRImageComponent,
-    StripeComponent
-  ],
-  providers: [
-    CropImageModalService,
-    LoaderService,
-    ModalService,
-    ToastComponent,
-    ToastService
-  ]
+    imports: [
+        BrowserModule,
+        FormsModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        HttpModule,
+        ImageCropperModule,
+        LazyLoadImageModule
+    ],
+    exports: [
+        // Shared Modules
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpModule,
+        // Shared Components
+        ModalComponent,
+        ToastComponent,
+        LoaderComponent,
+        LoadingComponent,
+        UploadButtonComponent,
+        UploaderComponent,
+        CropImageModalComponent,
+        RaRImageComponent,
+        StripeComponent
+    ],
+    declarations: [
+        ToastComponent,
+        LoaderComponent,
+        LoadingComponent,
+        SuspendedComponent,
+        DeactivatedComponent,
+        StandbyComponent,
+        PasswordresetComponent,
+        UploadButtonComponent,
+        UploaderComponent,
+        ModalComponent,
+        CropImageModalComponent,
+        RaRImageComponent,
+        StripeComponent
+    ],
+    providers: [
+        CropImageModalService,
+        LoaderService,
+        ToastComponent,
+        ToastService
+    ]
 })
 export class SharedModule {}
