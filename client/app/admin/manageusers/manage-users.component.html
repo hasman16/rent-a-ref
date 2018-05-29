@@ -23,6 +23,10 @@
       [offset]="page.offset"
       [limit]="page.limit"
       (page)='setPage($event)'
+      [selected]="selected"
+      [selectionType]="'single'"
+      (activate)="onActivate($event)"
+      (select)='onSelect($event)'
       >
     </ngx-datatable>
  

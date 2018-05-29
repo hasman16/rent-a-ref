@@ -9,7 +9,6 @@
   <div class="card-block" *ngIf="games && games.length > 0">
     <ngx-datatable class="bootstrap"
       [rows]="games"
-      [columns]="columns"
       [columnMode]="'force'"
       [headerHeight]="50"
       [footerHeight]="50"
@@ -23,6 +22,14 @@
       [limit]="page.limit"
       (page)='setPage($event)'
       >
+      <ngx-datatable-column name="Event Name" prop="event_name" editable="false"></ngx-datatable-column>
+      <ngx-datatable-column name="Event Date" prop="event_date" editable="true">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{ value | date :'MMM dd, yyyy' }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Venue" prop="venue_name" editable="true"></ngx-datatable-column>
+      <ngx-datatable-column name="Status" prop="status" editable="true"></ngx-datatable-column>
     </ngx-datatable>
  
   </div>

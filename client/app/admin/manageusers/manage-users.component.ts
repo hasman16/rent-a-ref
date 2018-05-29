@@ -24,7 +24,7 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
   protected allowEdit: boolean = false;
   protected currentUser: User = <User>{};
   protected page: Page;
-
+  protected selected: any[] = [];
   protected columns: any[] = [
     { name: 'Email', prop: 'email' },
     { name: 'Organizer', prop: 'can_organize' },
@@ -113,5 +113,13 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
       this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
     }
     this.isLoading = false;
+  }
+
+  public onSelect({ selected }): void {
+    console.log('Select Event', selected, this.selected);
+  }
+
+  public onActivate(event): void {
+    console.log('Activate Event', event);
   }
 }
