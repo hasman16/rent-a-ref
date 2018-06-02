@@ -8,23 +8,19 @@ import { CoreModule } from './services/core.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
-
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { RepeatTypeComponent } from './shared/formly/repeat-section/repeat-section.type';
-import {
-    FormlyHorizontalWrapper,
-    FormlyHorizontalRadioWrapper,
-    FormlyHorizontalTextAreaWrapper
-} from './shared/formly/horizontal-types/index';
+
 import { AgmCoreModule } from '@agm/core';
 import { GoogleMapComponent } from './googlemap/google-map.component';
 
@@ -33,7 +29,6 @@ import { AboutComponent } from './about/about.component';
 import { AccountComponent } from './account/account.component';
 import { AddressFormComponent } from './shared/forms/address-form/address-form.component';
 import { HorizontalAddressFormComponent } from './shared/forms/address-form/horizontal-address-form/horizontal-address-form.component';
-import { OrganizationFormComponent } from './shared/forms/organization-form/organization-form.component';
 
 import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
@@ -44,7 +39,11 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.component';
 import { ContactUsComponent } from './group/contactus/contactus.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
-import { EventsComponent } from './organize/events/events.component';
+import {
+    EventsComponent,
+    EventsComponentService
+} from './organize/events/index';
+
 import { EventOrderTableComponent } from './organize/event-order-table/event-order-table.component';
 
 import { FaqComponent } from './group/faq/faq.component';
@@ -68,7 +67,6 @@ import { ManageUsersComponent } from './admin/manageusers/manage-users.component
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
-import { BaseFormComponent } from './shared/formly/base-form/base-form.component';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
@@ -81,7 +79,12 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 // rich grid
 import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
-//import { BarchartComponent } from './barchart/barchart.component';
+import {
+    FormlyHorizontalWrapper,
+    FormlyHorizontalRadioWrapper,
+    FormlyHorizontalTextAreaWrapper,
+    RepeatTypeComponent
+} from './shared/formly/index';
 
 @NgModule({
     declarations: [
@@ -90,7 +93,6 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         AccountComponent,
         AddressFormComponent,
         HorizontalAddressFormComponent,
-        OrganizationFormComponent,
         AdminComponent,
         BioFormComponent,
         BlogComponent,
@@ -103,9 +105,6 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         EventsComponent,
         EventOrderTableComponent,
         FaqComponent,
-        FormlyHorizontalWrapper,
-        FormlyHorizontalRadioWrapper,
-        FormlyHorizontalTextAreaWrapper,
         FooterComponent,
         FooterTabletComponent,
         PrivacyModalComponent,
@@ -126,15 +125,16 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         ManageUsersComponent,
         ManageEventsComponent,
         RegisterComponent,
-        RepeatTypeComponent,
         ResetComponent,
         ResetPasswordComponent,
-        BaseFormComponent,
         ScheduleComponent,
         TermsAndConditionsComponent,
         ZoneFormComponent,
-        AdminMenuComponent
-        //        BarchartComponent
+        AdminMenuComponent,
+        RepeatTypeComponent,
+        FormlyHorizontalWrapper,
+        FormlyHorizontalRadioWrapper,
+        FormlyHorizontalTextAreaWrapper
     ],
     imports: [
         BrowserModule,
@@ -150,7 +150,6 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        RecaptchaModule.forRoot(),
         //FormlyBootstrapModule,
         FormlyMaterialModule,
         FormlyModule.forRoot({
@@ -187,6 +186,8 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
                 { name: 'repeat', component: RepeatTypeComponent }
             ]
         }),
+        RecaptchaModule.forRoot(),
+
         HttpClientModule,
         MyDatePickerModule,
         ImageCropperModule,
@@ -194,7 +195,7 @@ import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
         CoreModule,
         CommonModule
     ],
-    providers: [],
+    providers: [EventsComponentService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     // Add bootstrap
     bootstrap: [AppComponent]
