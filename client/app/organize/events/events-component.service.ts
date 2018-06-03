@@ -36,8 +36,24 @@ import * as moment from 'moment';
 export class EventsComponentService {
 	constructor(
 		private http: HttpClient,
+		protected statesService: StatesService,
 		protected eventsService: EventsService
 	) {}
+
+	public mapSportsAsOptions(sports: Sport[]): Option[] {
+		return _(sports)
+			.map((sport: Sport): Option => {
+				return <Option>{
+					label: sport.name,
+					value: sport.id
+				};
+			})
+			.value();
+	}
+
+	public getStatesProvinces() {
+		return this.statesService.getStatesProvinces();
+	}
 
 	public getEvent(id: string): Observable<any> {
 		const games = value => value && value > 0;
@@ -51,6 +67,14 @@ export class EventsComponentService {
 				model.adults = games(model.adult_games);
 				return model;
 			});
+	}
+
+	public createEvent(org_id: string, model: any): Observable<any> {
+		return this.eventsService.createGame(org_id, model);
+	}
+
+	public getOrganizationGames(org_id: string): Observable<any> {
+		return this.eventsService.getOrganizationGames(org_id);
 	}
 
 	public payForEvent(gameId: string): Observable<[any, any]> {

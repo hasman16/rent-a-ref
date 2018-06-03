@@ -1,4 +1,5 @@
 import { AddressModel } from './address';
+import { PhoneModel } from './phone';
 
 export interface MatchModel {
 	id?: string;
@@ -6,5 +7,7 @@ export interface MatchModel {
 	duration: number;
 	type: string;
 	age: string;
-	address: AddressModel[]
+	game_id: string;
+	address: AddressModel[];
+	phone?: PhoneModel;
 }

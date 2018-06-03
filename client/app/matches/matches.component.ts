@@ -59,4 +59,6 @@ export class MatchesComponent implements OnInit {
   ngOnDestroy() {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
+
+  public createNewMatch(): void {}
 }
