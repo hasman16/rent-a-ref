@@ -71,6 +71,7 @@ import { ScheduleComponent } from './account/schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
 import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
+import { MatchesComponent } from './matches/matches.component';
 
 /* Misc. */
 import { DropdownDirective } from './shared/dropdown.directive';
@@ -124,6 +125,7 @@ import {
         ProfileComponent,
         ManageUsersComponent,
         ManageEventsComponent,
+        MatchesComponent,
         RegisterComponent,
         ResetComponent,
         ResetPasswordComponent,

@@ -6,7 +6,8 @@ import { ToastComponent } from '../../shared/toast/toast.component';
 import {
   CanComponentDeactivate,
   EventsService,
-  PagingService
+  PagingService,
+  StatesService
 } from './../../services/index';
 
 import {
@@ -41,7 +42,8 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     { name: 'Venue', prop: 'venue_name' },
     { name: 'Status', prop: 'status' }
   ];
-  protected sports: Option[];
+  public sports: Option[];
+  public states: Option[];
   public games: Game[] = [];
   protected page: Page;
   public isEditing: boolean = false;
@@ -52,14 +54,28 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     private route: ActivatedRoute,
     public toast: ToastComponent,
     private eventsService: EventsService,
-    private pagingService: PagingService
+    private pagingService: PagingService,
+    protected statesService: StatesService
   ) {
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
   }
 
   ngOnInit() {
-    const pagedData: PagedData = this.route.snapshot.data.eventsData;
-    this.processPagedData(pagedData);
+    const [gamesData, sportsData]: [
+      PagedData,
+      PagedData
+    ] = this.route.snapshot.data.eventsData;
+    this.sports = _(sportsData.rows)
+      .map((sport: Sport): Option => {
+        return <Option>{
+          label: sport.name,
+          value: sport.id
+        };
+      })
+      .value();
+
+    this.states = this.statesService.getStatesProvinces();
+    this.processPagedData(gamesData);
     this.isLoading = false;
   }
 

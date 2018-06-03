@@ -34,6 +34,7 @@ import {
 import { BaseFormComponent } from './formly/base-form/base-form.component';
 import { OrganizationFormComponent } from './forms/organization-form/organization-form.component';
 import { EventsFormComponent } from './forms/events-form/events-form.component';
+import { MatchesFormComponent } from './forms/matches-form/matches-form.component';
 
 @NgModule({
     imports: [
@@ -101,7 +102,8 @@ import { EventsFormComponent } from './forms/events-form/events-form.component';
         StripeComponent,
         BaseFormComponent,
         OrganizationFormComponent,
-        EventsFormComponent
+        EventsFormComponent,
+        MatchesFormComponent
     ],
     declarations: [
         ToastComponent,
@@ -119,7 +121,8 @@ import { EventsFormComponent } from './forms/events-form/events-form.component';
         StripeComponent,
         BaseFormComponent,
         OrganizationFormComponent,
-        EventsFormComponent
+        EventsFormComponent,
+        MatchesFormComponent
     ],
     providers: [
         CropImageModalService,

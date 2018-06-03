@@ -43,12 +43,13 @@
   <div class="card-block" *ngIf="isEditing">
     <ul class="nav nav-pills">
       <li class="nav-item"><a class="nav-link" href="#" [class.active]="isSelectedTab('editEvent')"
-        (click)="switchToTab($event,'editEvent');">Edit Event</a>
+        (click)="switchToTab($event,'editEvent');">Event</a>
       </li>
       <li class="nav-item"><a class="nav-link" href="#" [class.active]="isSelectedTab('addMatch')"
-        (click)="switchToTab($event,'addMatch');">Add Games</a>
+        (click)="switchToTab($event,'addMatch');">Games</a>
       </li>
     </ul>
+    <br />
 
     <div *ngIf="isSelectedTab('editEvent')">
       <div class="card form-size">
@@ -60,7 +61,7 @@
     </div>
 
     <div *ngIf="isSelectedTab('addMatch')" class="row">
-asdfasdfasd
+      <rar-matches></rar-matches>
     </div>
   </div>
 </div>
