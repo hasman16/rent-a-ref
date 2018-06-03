@@ -6,7 +6,8 @@ import { ToastComponent } from '../../shared/toast/toast.component';
 import {
   CanComponentDeactivate,
   EventsService,
-  PagingService
+  PagingService,
+  StatesService
 } from './../../services/index';
 
 import {
@@ -41,21 +42,40 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     { name: 'Venue', prop: 'venue_name' },
     { name: 'Status', prop: 'status' }
   ];
-  protected sports: Option[];
+  public sports: Option[];
+  public states: Option[];
   public games: Game[] = [];
   protected page: Page;
+  public isEditing: boolean = false;
+  protected selected: any[] = [];
+  protected selectedTab: string = 'editEvent';
+
   constructor(
     private route: ActivatedRoute,
     public toast: ToastComponent,
     private eventsService: EventsService,
-    private pagingService: PagingService
+    private pagingService: PagingService,
+    protected statesService: StatesService
   ) {
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
   }
 
   ngOnInit() {
-    const pagedData: PagedData = this.route.snapshot.data.eventsData;
-    this.processPagedData(pagedData);
+    const [gamesData, sportsData]: [
+      PagedData,
+      PagedData
+    ] = this.route.snapshot.data.eventsData;
+    this.sports = _(sportsData.rows)
+      .map((sport: Sport): Option => {
+        return <Option>{
+          label: sport.name,
+          value: sport.id
+        };
+      })
+      .value();
+
+    this.states = this.statesService.getStatesProvinces();
+    this.processPagedData(gamesData);
     this.isLoading = false;
   }
 
@@ -65,18 +85,40 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  onSort(sorting): void {
+  public isSelectedTab(tab: string): boolean {
+    return this.selectedTab === tab;
+  }
+
+  public switchToTab($event, tab: string): void {
+    $event.preventDefault();
+    this.selectedTab = tab;
+  }
+
+  public onSelect({ selected }): void {
+    console.log('Select Event', selected, this.selected);
+    this.isEditing = true;
+  }
+
+  public onActivate(event): void {
+    console.log('Activate Event', event);
+  }
+
+  public onSort(sorting): void {
     const page: Page = this.pagingService.sortColumn(this.page, sorting);
     this.page = _.cloneDeep(page);
     this.getEvents(this.page);
   }
 
-  setPage(paging): void {
+  public setPage(paging): void {
     this.page.offset = paging.offset;
     this.getEvents(this.page);
   }
 
-  getEvents(params: any) {
+  public editEvent(game): void {
+    console.log('edit events:', game);
+  }
+
+  public getEvents(params: any) {
     this.isLoading = true;
     this.eventsService
       .getAllGames(params)
@@ -86,24 +128,26 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
       );
   }
 
-  updateEvents() {}
+  public updateEvents() {}
 
-  deleteEvent(user) {}
+  public deleteEvent(user) {
+    console.log('delete:', user);
+  }
 
-  processPagedData(data: PagedData): void {
+  public processPagedData(data: PagedData): void {
     let [page, newData] = this.pagingService.processPagedData(this.page, data);
     console.log('page:', newData);
     this.page = page;
     this.games = newData;
   }
 
-  callSuccess(data: PagedData) {
+  protected callSuccess(data: PagedData) {
     this.processPagedData(data);
     this.toast.setMessage('Events data retrieved', 'success');
     this.isLoading = false;
   }
 
-  callFailure(err: HttpErrorResponse, message = 'An error occurred') {
+  protected callFailure(err: HttpErrorResponse, message = 'An error occurred') {
     if (err.error instanceof Error) {
       this.toast.setMessage(message, 'danger');
     } else {

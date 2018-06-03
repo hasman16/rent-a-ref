@@ -4,6 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { HttpModule } from '@angular/http';
 import { LazyLoadImageModule } from 'ng-lazyload-image'; //https://github.com/tjoskar/ng-lazyload-image
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 
 import { ToastComponent, ToastService } from './toast/index';
 import { LoaderComponent, LoaderService } from './loader/index';
@@ -22,6 +25,16 @@ import {
     CropImageModalComponent,
     CropImageModalService
 } from './crop-image-modal/index';
+import {
+    FormlyHorizontalWrapper,
+    FormlyHorizontalRadioWrapper,
+    FormlyHorizontalTextAreaWrapper,
+    RepeatTypeComponent
+} from './formly/index';
+import { BaseFormComponent } from './formly/base-form/base-form.component';
+import { OrganizationFormComponent } from './forms/organization-form/organization-form.component';
+import { EventsFormComponent } from './forms/events-form/events-form.component';
+import { MatchesFormComponent } from './forms/matches-form/matches-form.component';
 
 @NgModule({
     imports: [
@@ -31,7 +44,43 @@ import {
         ReactiveFormsModule,
         HttpModule,
         ImageCropperModule,
-        LazyLoadImageModule
+        LazyLoadImageModule,
+        //FormlyBootstrapModule,
+        FormlyMaterialModule,
+        FormlyModule.forRoot({
+            wrappers: [
+                {
+                    name: 'horizontalWrapper',
+                    component: FormlyHorizontalWrapper
+                },
+                {
+                    name: 'horizontalRadioWrapper',
+                    component: FormlyHorizontalRadioWrapper
+                },
+                {
+                    name: 'horizontalTextareaWrapper',
+                    component: FormlyHorizontalTextAreaWrapper
+                }
+            ],
+            types: [
+                {
+                    name: 'horizontalInput',
+                    extends: 'input',
+                    wrappers: ['fieldset', 'horizontalWrapper']
+                },
+                {
+                    name: 'horizontalRadio',
+                    extends: 'radio',
+                    wrappers: ['fieldset', 'horizontalRadioWrapper']
+                },
+                {
+                    name: 'horizontalTextarea',
+                    extends: 'textarea',
+                    wrappers: ['fieldset', 'horizontalTextareaWrapper']
+                },
+                { name: 'repeat', component: RepeatTypeComponent }
+            ]
+        })
     ],
     exports: [
         // Shared Modules
@@ -39,6 +88,8 @@ import {
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
+        FormlyMaterialModule,
+
         // Shared Components
         ModalComponent,
         ToastComponent,
@@ -48,7 +99,11 @@ import {
         UploaderComponent,
         CropImageModalComponent,
         RaRImageComponent,
-        StripeComponent
+        StripeComponent,
+        BaseFormComponent,
+        OrganizationFormComponent,
+        EventsFormComponent,
+        MatchesFormComponent
     ],
     declarations: [
         ToastComponent,
@@ -63,7 +118,11 @@ import {
         ModalComponent,
         CropImageModalComponent,
         RaRImageComponent,
-        StripeComponent
+        StripeComponent,
+        BaseFormComponent,
+        OrganizationFormComponent,
+        EventsFormComponent,
+        MatchesFormComponent
     ],
     providers: [
         CropImageModalService,
