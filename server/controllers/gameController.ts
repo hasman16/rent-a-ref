@@ -142,7 +142,26 @@ export default function GameController(models, ResponseService) {
     this.getOne(req, res);
   }
 
-  function updateGameAddress(req, res) {}
+  function updateGameAddress(req, res) {
+    const Address = models.Address;
+    const address: AddressModel = ResponseService.deleteItemDates(req);
+
+    Game.find({
+      where: {
+        id: req.params.game_id
+      }
+    })
+      .then(game => {
+        return Address.update(address, {
+          where: {
+            id: req.params.address_id
+          }
+        });
+      })
+      .then(results => ResponseService.success(res, results))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
   function deleteGameAddress(req, res) {}
 
   function getPrices(req, res) {

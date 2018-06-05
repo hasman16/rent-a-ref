@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit
+} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -9,7 +14,7 @@ import {
   PagingService,
   StatesService
 } from './../../services/index';
-
+import { EventsComponentService } from './../../organize/events/events-component.service';
 import {
   Address,
   BaseModel,
@@ -26,11 +31,16 @@ import {
 } from '../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
+enum TabState {
+  editEvent,
+  addMatch
+}
 
 @Component({
   selector: 'rar-manage-events',
   templateUrl: './manage-events.component.html',
-  styleUrls: ['./manage-events.component.scss']
+  styleUrls: ['./manage-events.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   protected isLoading: boolean = true;
@@ -47,15 +57,17 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   public games: Game[] = [];
   protected page: Page;
   public isEditing: boolean = false;
+  public model: any = {};
   protected selected: any[] = [];
-  protected selectedTab: string = 'editEvent';
+  protected selectedTab: TabState = TabState.editEvent;
 
   constructor(
+    private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     public toast: ToastComponent,
     private eventsService: EventsService,
     private pagingService: PagingService,
-    protected statesService: StatesService
+    protected eventsComponentService: EventsComponentService
   ) {
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
   }
@@ -65,16 +77,12 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
       PagedData,
       PagedData
     ] = this.route.snapshot.data.eventsData;
-    this.sports = _(sportsData.rows)
-      .map((sport: Sport): Option => {
-        return <Option>{
-          label: sport.name,
-          value: sport.id
-        };
-      })
-      .value();
+    this.sports = this.eventsComponentService.mapSportsAsOptions(
+      sportsData.rows
+    );
 
-    this.states = this.statesService.getStatesProvinces();
+    this.states = this.eventsComponentService.getStatesProvinces();
+    this.setSelectedTab(TabState.editEvent);
     this.processPagedData(gamesData);
     this.isLoading = false;
   }
@@ -85,18 +93,58 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  public isSelectedTab(tab: string): boolean {
-    return this.selectedTab === tab;
+  public switchToEditEvent($event): void {
+    $event.preventDefault();
+    this.setSelectedTab(TabState.editEvent);
   }
 
-  public switchToTab($event, tab: string): void {
+  public isTabEditEvent(): boolean {
+    return this.selectedTab === TabState.editEvent;
+  }
+
+  public switchToAddMatch($event): void {
     $event.preventDefault();
+    this.setSelectedTab(TabState.addMatch);
+  }
+
+  public isTabAddMatch(): boolean {
+    return this.selectedTab === TabState.addMatch;
+  }
+
+  public setSelectedTab(tab: TabState): void {
     this.selectedTab = tab;
   }
 
   public onSelect({ selected }): void {
     console.log('Select Event', selected, this.selected);
+    const game = _.cloneDeep(_.head(selected));
     this.isEditing = true;
+    this.editEvent(game);
+  }
+
+  public editEvent(game: Game): void {
+    if (!this.isLoading) {
+      this.isLoading = true;
+
+      this.eventsComponentService
+        .getEvent(game.id)
+        .take(1)
+        .subscribe(
+          (model: any) => {
+            console.log('got game:', model);
+            this.model = _.cloneDeep(model);
+            this.setSelectedTab(TabState.editEvent);
+          },
+          (err: HttpErrorResponse) => {
+            this.callFailure(err, 'Failed to retrieve Event.');
+            this.isEditing = false;
+          },
+          () => {
+            this.isLoading = false;
+            this.cd.markForCheck();
+          }
+        );
+    }
   }
 
   public onActivate(event): void {
@@ -114,10 +162,6 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     this.getEvents(this.page);
   }
 
-  public editEvent(game): void {
-    console.log('edit events:', game);
-  }
-
   public getEvents(params: any) {
     this.isLoading = true;
     this.eventsService
@@ -128,10 +172,23 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
       );
   }
 
-  public updateEvents() {}
+  public submitUpdateEvent(model: any): void {
+    console.log('model:', model);
+  }
 
   public deleteEvent(user) {
     console.log('delete:', user);
+  }
+
+  public submitEvent(model: Game): void {
+    const game: Game = this.eventsComponentService.convertModelToGame(model);
+
+    if (_.isNil(model.id) || !model.id) {
+      //this.submitNewEvent(game);
+    } else {
+      this.submitUpdateEvent(game);
+      // this.setEventsMode();
+    }
   }
 
   public processPagedData(data: PagedData): void {

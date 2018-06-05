@@ -73,6 +73,19 @@ export class EventsComponentService {
 		return this.eventsService.createGame(org_id, model);
 	}
 
+	public updateGameAddress(model: any): Observable<any> {
+		const address = model.address;
+
+		return this.eventsService
+			.updateGame(model)
+			.switchMap((game: Game): Observable<any> => {
+				if (address) {
+					return this.eventsService.updateAddress(model.id, address);
+				}
+				return Observable.of(true);
+			});
+	}
+
 	public getOrganizationGames(org_id: string): Observable<any> {
 		return this.eventsService.getOrganizationGames(org_id);
 	}
@@ -92,7 +105,11 @@ export class EventsComponentService {
 		delete tempModel.address;
 		delete tempModel.phone;
 		tempModel.event_date = eventDate;
-		return Object.assign({}, model.address, tempModel);
+		let obj = {
+			address_id: model.address.id
+		};
+		delete model.address.id;
+		return Object.assign(obj, model.address, tempModel);
 	}
 
 	public convertModelToGame(model): Game {
@@ -117,6 +134,7 @@ export class EventsComponentService {
 			sport_id: model.sport_id,
 
 			address: {
+				id: model.address_id,
 				line1: model.line1,
 				line2: model.line2,
 				city: model.city,

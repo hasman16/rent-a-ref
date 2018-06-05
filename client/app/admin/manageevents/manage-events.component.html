@@ -42,16 +42,16 @@
 
   <div class="card-block" *ngIf="isEditing">
     <ul class="nav nav-pills">
-      <li class="nav-item"><a class="nav-link" href="#" [class.active]="isSelectedTab('editEvent')"
-        (click)="switchToTab($event,'editEvent');">Event</a>
+      <li class="nav-item"><a class="nav-link" href="#" [class.active]="isTabEditEvent()"
+        (click)="switchToEditEvent($event);">Event</a>
       </li>
-      <li class="nav-item"><a class="nav-link" href="#" [class.active]="isSelectedTab('addMatch')"
-        (click)="switchToTab($event,'addMatch');">Games</a>
+      <li class="nav-item"><a class="nav-link" href="#" [class.active]="isTabAddMatch()"
+        (click)="switchToAddMatch($event);">Games</a>
       </li>
     </ul>
     <br />
 
-    <div *ngIf="isSelectedTab('editEvent')">
+    <div *ngIf="isTabEditEvent()">
       <div class="card form-size">
         <events-form (ngSubmit)="submitEvent($event)" (ngCancel)="setEventsMode($event)"
          [model]="model"
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div *ngIf="isSelectedTab('addMatch')" class="row">
+    <div *ngIf="isTabAddMatch()" class="row">
       <rar-matches></rar-matches>
     </div>
   </div>

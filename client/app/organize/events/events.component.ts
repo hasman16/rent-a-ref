@@ -243,7 +243,19 @@ export class EventsComponent implements OnInit {
       );
   }
 
-  public submitUpdateEvent(model: any): void {}
+  public submitUpdateEvent(model: any): void {
+    this.eventsComponentService.updateGameAddress(model).subscribe(
+      (game: Game) => {
+        this.toast.setMessage('Event updated.', 'info');
+      },
+      (err: HttpErrorResponse) =>
+        this.callFailure(err, 'Failed to update new event.'),
+      () => {
+        this.getEvents();
+        this.cd.markForCheck();
+      }
+    );
+  }
 
   public callFailure(err: HttpErrorResponse, message = 'An error occurred') {
     if (err.error instanceof Error) {
