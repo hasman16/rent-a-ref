@@ -10,6 +10,7 @@ import {
 import {
   AuthService,
   EventsService,
+  MatchService,
   OrganizeService,
   PagingService,
   ProfileService,
@@ -31,6 +32,7 @@ import {
     AuthService,
     CanDeactivateGuardService,
     EventsService,
+    MatchService,
     OrganizeService,
     PagingService,
     ProfileService,

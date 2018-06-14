@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-12">
+  <div class="col-12" *ngIf="isViewState('noMatches')">
   	<div class="card horizontal-and-vertical-centering ">
       <div class="form-size">
         <strong class="etched-text">You have no <i>Matches</i>.</strong>
@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div class="col-12 form-size">
+  <div class="col-12 form-size" *ngIf="isViewState('editMatch')">
   	<matches-form></matches-form>
   </div> 
 </div>

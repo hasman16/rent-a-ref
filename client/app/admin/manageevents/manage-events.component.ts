@@ -173,7 +173,17 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   }
 
   public submitUpdateEvent(model: any): void {
-    console.log('model:', model);
+    this.eventsComponentService.updateGameAddress(model).subscribe(
+      (game: Game) => {
+        this.toast.setMessage('Event updated.', 'info');
+      },
+      (err: HttpErrorResponse) =>
+        this.callFailure(err, 'Failed to update new event.'),
+      () => {
+        //this.getEvent();
+        this.cd.markForCheck();
+      }
+    );
   }
 
   public deleteEvent(user) {
