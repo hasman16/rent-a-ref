@@ -36,8 +36,24 @@ import * as moment from 'moment';
 export class EventsComponentService {
 	constructor(
 		private http: HttpClient,
+		protected statesService: StatesService,
 		protected eventsService: EventsService
 	) {}
+
+	public mapSportsAsOptions(sports: Sport[]): Option[] {
+		return _(sports)
+			.map((sport: Sport): Option => {
+				return <Option>{
+					label: sport.name,
+					value: sport.id
+				};
+			})
+			.value();
+	}
+
+	public getStatesProvinces() {
+		return this.statesService.getStatesProvinces();
+	}
 
 	public getEvent(id: string): Observable<any> {
 		const games = value => value && value > 0;
@@ -51,6 +67,27 @@ export class EventsComponentService {
 				model.adults = games(model.adult_games);
 				return model;
 			});
+	}
+
+	public createEvent(org_id: string, model: any): Observable<any> {
+		return this.eventsService.createGame(org_id, model);
+	}
+
+	public updateGameAddress(model: any): Observable<any> {
+		const address = model.address;
+
+		return this.eventsService
+			.updateGame(model)
+			.switchMap((game: Game): Observable<any> => {
+				if (address) {
+					return this.eventsService.updateAddress(model.id, address);
+				}
+				return Observable.of(true);
+			});
+	}
+
+	public getOrganizationGames(org_id: string): Observable<any> {
+		return this.eventsService.getOrganizationGames(org_id);
 	}
 
 	public payForEvent(gameId: string): Observable<[any, any]> {
@@ -68,7 +105,11 @@ export class EventsComponentService {
 		delete tempModel.address;
 		delete tempModel.phone;
 		tempModel.event_date = eventDate;
-		return Object.assign({}, model.address, tempModel);
+		let obj = {
+			address_id: model.address.id
+		};
+		delete model.address.id;
+		return Object.assign(obj, model.address, tempModel);
 	}
 
 	public convertModelToGame(model): Game {
@@ -93,6 +134,7 @@ export class EventsComponentService {
 			sport_id: model.sport_id,
 
 			address: {
+				id: model.address_id,
 				line1: model.line1,
 				line2: model.line2,
 				city: model.city,

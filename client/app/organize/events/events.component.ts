@@ -11,12 +11,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { EventsComponentService } from './events-component.service';
 import { ToastComponent } from './../../shared/toast/toast.component';
-import {
-  AuthService,
-  EventsService,
-  StatesService,
-  UserService
-} from './../../services/index';
+import { AuthService, UserService } from './../../services/index';
 import {
   Address,
   BaseModel,
@@ -81,8 +76,6 @@ export class EventsComponent implements OnInit {
     protected toast: ToastComponent,
     protected route: ActivatedRoute,
     protected router: Router,
-    protected statesService: StatesService,
-    protected eventsService: EventsService,
     protected eventsComponentService: EventsComponentService
   ) {
     this.route.params.subscribe(params => {
@@ -92,16 +85,11 @@ export class EventsComponent implements OnInit {
 
   public ngOnInit() {
     this.games = _.cloneDeep(this.route.snapshot.data.games);
-    this.sports = _(this.route.snapshot.data.sportsData.rows)
-      .map((sport: Sport): Option => {
-        return <Option>{
-          label: sport.name,
-          value: sport.id
-        };
-      })
-      .value();
+    this.sports = this.eventsComponentService.mapSportsAsOptions(
+      this.route.snapshot.data.sportsData.rows
+    );
 
-    this.states = this.statesService.getStatesProvinces();
+    this.states = this.eventsComponentService.getStatesProvinces();
 
     this.setEventsMode();
   }
@@ -211,7 +199,7 @@ export class EventsComponent implements OnInit {
   public getEvents(): void {
     this.isLoading = true;
 
-    this.eventsService
+    this.eventsComponentService
       .getOrganizationGames(this.organization_id)
       .take(1)
       .subscribe(
@@ -240,20 +228,34 @@ export class EventsComponent implements OnInit {
 
   public submitNewEvent(model: Game): void {
     this.isLoading = true;
-    this.eventsService.createGame(this.organization_id, model).subscribe(
+    this.eventsComponentService
+      .createEvent(this.organization_id, model)
+      .subscribe(
+        (game: Game) => {
+          this.toast.setMessage('Event created.', 'info');
+        },
+        (err: HttpErrorResponse) =>
+          this.callFailure(err, 'Failed to create new event.'),
+        () => {
+          this.getEvents();
+          this.cd.markForCheck();
+        }
+      );
+  }
+
+  public submitUpdateEvent(model: any): void {
+    this.eventsComponentService.updateGameAddress(model).subscribe(
       (game: Game) => {
-        this.toast.setMessage('Event created.', 'info');
+        this.toast.setMessage('Event updated.', 'info');
       },
       (err: HttpErrorResponse) =>
-        this.callFailure(err, 'Failed to create new event.'),
+        this.callFailure(err, 'Failed to update new event.'),
       () => {
         this.getEvents();
         this.cd.markForCheck();
       }
     );
   }
-
-  public submitUpdateEvent(model: any): void {}
 
   public callFailure(err: HttpErrorResponse, message = 'An error occurred') {
     if (err.error instanceof Error) {

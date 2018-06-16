@@ -124,7 +124,24 @@ function GameController(models, ResponseService) {
     function getGameAddress(req, res) {
         this.getOne(req, res);
     }
-    function updateGameAddress(req, res) { }
+    function updateGameAddress(req, res) {
+        var Address = models.Address;
+        var address = ResponseService.deleteItemDates(req);
+        Game.find({
+            where: {
+                id: req.params.game_id
+            }
+        })
+            .then(function (game) {
+            return Address.update(address, {
+                where: {
+                    id: req.params.address_id
+                }
+            });
+        })
+            .then(function (results) { return ResponseService.success(res, results); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
+    }
     function deleteGameAddress(req, res) { }
     function getPrices(req, res) {
         var sequelize = models.sequelize;
