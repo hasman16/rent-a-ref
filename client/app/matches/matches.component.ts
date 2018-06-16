@@ -54,6 +54,8 @@ export class MatchesComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   private matches: any[] = [];
   private viewState: ViewState = ViewState.noMatches;
+  public isLoading: boolean = false;
+  public model: any = {};
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -65,9 +67,11 @@ export class MatchesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.setMatchesMode();
     this.subscriptions.push(
       this.matchService.getMatches().subscribe(matches => {
         console.log('got Matches:', matches);
+        this.setMatchesMode();
       })
     );
   }
@@ -95,5 +99,19 @@ export class MatchesComponent implements OnInit {
     return result;
   }
 
-  public createNewMatch(): void {}
+  public createNewMatch(): void {
+    this.model = {};
+    this.viewState = ViewState.editMatch;
+  }
+
+  public submitEvent(model): void {}
+
+  public setMatchesMode(): void {
+    this.isLoading = false;
+    if (_.isArray(this.matches) && this.matches.length > 0) {
+      this.viewState = ViewState.listMatches;
+    } else {
+      this.viewState = ViewState.noMatches;
+    }
+  }
 }
