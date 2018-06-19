@@ -80,7 +80,6 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     this.sports = this.eventsComponentService.mapSportsAsOptions(
       sportsData.rows
     );
-
     this.states = this.eventsComponentService.getStatesProvinces();
     this.setSelectedTab(TabState.editEvent);
     this.processPagedData(gamesData);

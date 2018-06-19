@@ -27,7 +27,7 @@ export default function matchRoutes(setter, matchCtrl) {
 		.get(authentication, matchCtrl.getMatchAddress);
 	router
 		.route('/games/:game_id/matches')
-		.get(authentication, matchCtrl.getAllByGame);
+		.get(authentication, matchCtrl.getAllByMatch);
 	router
 		.route('/games/:game_id/matches')
 		.post(authentication, matchCtrl.createMatchAddressPhone);
@@ -47,16 +47,4 @@ export default function matchRoutes(setter, matchCtrl) {
 	router
 		.route('/matches/:match_id/address/address_id')
 		.delete(matchCtrl.deleteMatchAddress);
-
-	//router.route('/prices').get(authentication, matchCtrl.getPrices);
-
-	/*
-	router.route('/matches/:match_id/phone').get(authentication, matchCtrl.getmatchAddress);
-	router.route('/organization/:organization_id/match/phone').post(authentication, isOrgMember, matchCtrl.creatematchAddress);
-
-	router.use('/matches/:match_id/phone/phone_id', authentication, isOrgMember, isUserOrAdmin);
-	router.route('/matches/:match_id/phone/phone_id').put(matchCtrl.updatematchAddress);
-	router.route('/matches/:match_id/phone/phone_id').patch(matchCtrl.updatematchAddress);
-	router.route('/matches/:match_id/phone/phone_id').delete(matchCtrl.deletematchAddress);
-	*/
 }

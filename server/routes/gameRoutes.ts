@@ -49,14 +49,4 @@ export default function gameRoutes(setter, gameCtrl) {
 		.delete(gameCtrl.deleteGameAddress);
 
 	router.route('/prices').get(authentication, gameCtrl.getPrices);
-
-	/*
-	router.route('/games/:game_id/phone').get(authentication, gameCtrl.getGameAddress);
-	router.route('/organization/:organization_id/game/phone').post(authentication, isOrgMember, gameCtrl.createGameAddress);
-
-	router.use('/games/:game_id/phone/phone_id', authentication, isOrgMember, isUserOrAdmin);
-	router.route('/games/:game_id/phone/phone_id').put(gameCtrl.updateGameAddress);
-	router.route('/games/:game_id/phone/phone_id').patch(gameCtrl.updateGameAddress);
-	router.route('/games/:game_id/phone/phone_id').delete(gameCtrl.deleteGameAddress);
-	*/
 }

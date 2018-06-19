@@ -21,7 +21,7 @@ export default function MatchController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function getAllByGame(req, res) {
+  function getAllByMatch(req, res) {
     Match.findAll({
       where: {
         game_id: req.params.game_id
@@ -135,18 +135,10 @@ export default function MatchController(models, ResponseService) {
 
   function updateMatchAddress(req, res) {}
   function deleteMatchAddress(req, res) {}
-  /*
-  function getPrices(req, res) {
-    const sequelize = models.sequelize;
-    const Price = models.Price;
-    Price.findAll()
-      .then(results => ResponseService.success(res, results))
-      .catch(error => ResponseService.exception(res, error));
-  }
-*/
+
   return {
     getAll,
-    getAllByGame,
+    getAllByMatch,
     getOne,
     create,
     update,

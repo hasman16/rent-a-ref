@@ -5,7 +5,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  Input
+  Input,
+  Output
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -51,11 +52,21 @@ enum ViewState {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatchesComponent implements OnInit {
+  @Input('model')
+  set setModel(model) {
+    this.model = _.cloneDeep(model);
+  }
+  @Input('states')
+  set setStates(states) {
+    this.states = _.cloneDeep(states);
+    console.log('states==========:', this.states);
+  }
   private subscriptions: Subscription[] = [];
   private matches: any[] = [];
   private viewState: ViewState = ViewState.noMatches;
   public isLoading: boolean = false;
   public model: any = {};
+  public states: Option[] = [];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -70,7 +81,7 @@ export class MatchesComponent implements OnInit {
     this.setMatchesMode();
     this.subscriptions.push(
       this.matchService.getMatches().subscribe(matches => {
-        console.log('got Matches:', matches);
+        console.log('got Matchesx:', matches, this.states);
         this.setMatchesMode();
       })
     );
@@ -104,7 +115,9 @@ export class MatchesComponent implements OnInit {
     this.viewState = ViewState.editMatch;
   }
 
-  public submitEvent(model): void {}
+  public submitEvent(model): void {
+    console.log('submintEvent:', model);
+  }
 
   public setMatchesMode(): void {
     this.isLoading = false;

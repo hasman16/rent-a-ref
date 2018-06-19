@@ -15,7 +15,7 @@ function MatchController(models, ResponseService) {
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
-    function getAllByGame(req, res) {
+    function getAllByMatch(req, res) {
         Match.findAll({
             where: {
                 game_id: req.params.game_id
@@ -113,18 +113,9 @@ function MatchController(models, ResponseService) {
     }
     function updateMatchAddress(req, res) { }
     function deleteMatchAddress(req, res) { }
-    /*
-    function getPrices(req, res) {
-      const sequelize = models.sequelize;
-      const Price = models.Price;
-      Price.findAll()
-        .then(results => ResponseService.success(res, results))
-        .catch(error => ResponseService.exception(res, error));
-    }
-  */
     return {
         getAll: getAll,
-        getAllByGame: getAllByGame,
+        getAllByMatch: getAllByMatch,
         getOne: getOne,
         create: create,
         update: update,

@@ -27,6 +27,7 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
     this.submitText = this.getSubmitText(this.modelHasId(model));
     this.model = _.cloneDeep(model);
   }
+  @Input() states: Option[];
   @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
   @Output('ngCancel')
   cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -107,6 +108,69 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
               type: 'date',
               required: true
             }
+          },
+          {
+            fieldGroupClassName: 'row',
+            fieldGroup: [
+              {
+                className: 'col-sm-12',
+                type: 'input',
+                key: 'venue_name',
+                templateOptions: {
+                  label: 'Venue Name',
+                  required: true,
+                  minLength: 5,
+                  pattern: /\w+[a-zA-Z0-9]/
+                }
+              },
+              {
+                className: 'col-sm-3',
+                type: 'input',
+                key: 'line1',
+                templateOptions: {
+                  label: 'Street 1',
+                  required: true
+                }
+              },
+              {
+                type: 'input',
+                key: 'line2',
+                className: 'col-sm-3',
+                templateOptions: {
+                  type: 'text',
+                  label: 'Street 2'
+                }
+              },
+              {
+                type: 'input',
+                key: 'city',
+                className: 'col-sm-2',
+                templateOptions: {
+                  label: 'City',
+                  required: true
+                }
+              },
+              {
+                type: 'select',
+                key: 'state',
+                className: 'col-sm-2',
+                templateOptions: {
+                  label: 'State',
+                  options: _.cloneDeep(this.states),
+                  required: true
+                }
+              },
+              {
+                type: 'input',
+                key: 'zip',
+                className: 'col-sm-2',
+                templateOptions: {
+                  label: 'Zip',
+                  required: true,
+                  pattern: /\d{5}(\-\d{4})?/
+                }
+              }
+            ]
           }
         ]
       }

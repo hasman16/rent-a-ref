@@ -11,6 +11,10 @@
   </div>
 
   <div class="col-12 form-size" *ngIf="isViewState('editMatch')">
-  	<matches-form [model]="model" (ngSubmit)="submitEvent($event)" (ngCancel)="setMatchesMode($event)"></matches-form>
+  	<matches-form 
+    [model]="model"          
+    [states]="states"
+    (ngSubmit)="submitEvent($event)"
+     (ngCancel)="setMatchesMode($event)"></matches-form>
   </div> 
 </div>
