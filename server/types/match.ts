@@ -4,10 +4,13 @@ import { PhoneModel } from './phone';
 export interface MatchModel {
 	id?: string;
 	name: string;
-	duration: number;
-	type: string;
+	match_date?: string;
+	venue_name?: string;
+	status?: string;
 	age: string;
-	game_id: string;
-	address: AddressModel[];
+	game_id?: number;
+	address_id?: string;
+	phone_id?: string;
+	address?: AddressModel;
 	phone?: PhoneModel;
 }

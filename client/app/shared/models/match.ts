@@ -1,0 +1,18 @@
+import { Address } from './address';
+import { Phone } from './phone';
+
+export interface Match {
+	id?: string;
+	match_date?: number;
+	referees?: number;
+	venue_name?: string;
+	status?: string;
+	age?: string;
+	game_id?: number;
+	address_id?: string;
+	phone_id?: string;
+	address?: Address;
+	phone?: Phone;
+}
+
+

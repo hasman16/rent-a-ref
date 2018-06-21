@@ -100,6 +100,29 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
             }
           },
           {
+            type: 'select',
+            key: 'age',
+            className: 'col-sm-12',
+            templateOptions: {
+              label: 'Age Group',
+              options: [
+                {
+                  label: 'Kids',
+                  value: 'kids'
+                },
+                {
+                  label: 'Teens',
+                  value: 'teens'
+                },
+                {
+                  label: 'Adults',
+                  value: 'adults'
+                }
+              ],
+              required: true
+            }
+          },
+          {
             className: 'col-sm-12',
             type: 'input',
             key: 'date',

@@ -5,6 +5,7 @@ import {
   Address,
   BaseModel,
   Game,
+  Match,
   PagedData,
   Phone
 } from './../../shared/models/index';
@@ -26,48 +27,48 @@ export class MatchService {
     return this.http.get<any>(`/api/prices`);
   }
 
-  public getAllGames(queryParams: any = null): Observable<PagedData> {
-    return <Observable<PagedData>>this.http.get(`/api/games`, {
+  public getAllMatches(queryParams: any = null): Observable<PagedData> {
+    return <Observable<PagedData>>this.http.get(`/api/matches`, {
       params: queryParams
     });
   }
 
-  public getGame(game_id: string): Observable<Game> {
-    return this.http.get(`/api/games/${game_id}`);
+  public getMatch(match_id: string): Observable<any> {
+    return this.http.get(`/api/matches/${match_id}`);
   }
 
-  public getOrganizationGames(organization_id: string): Observable<Game[]> {
-    const url = `/api/organization/${organization_id}/games`;
-    return this.http.get<Game[]>(url);
+  public getGameMatches(game_id: string): Observable<Match[]> {
+    const url = `/api/games/${game_id}/matches`;
+    return this.http.get<Match[]>(url);
   }
 
-  public createGame(organization_id, game): Observable<Game> {
-    const url = `/api/organization/${organization_id}/games`;
-    return this.postData(url, game);
+  public createMatch(game_id, match): Observable<Match> {
+    const url = `/api/games/${game_id}/matches`;
+    return this.postData(url, match);
   }
 
-  public updateGame(game): Observable<Game> {
-    const url: string = `/api/games/${game.id}`;
-    return this.putData(url, game);
+  public updateMatch(match): Observable<Match> {
+    const url: string = `/api/matches/${match.id}`;
+    return this.putData(url, match);
   }
 
-  public createAddress(game_id: string, address: Address): Observable<Game> {
-    const url: string = `/api/games/${game_id}/addresses`;
+  public createAddress(match_id: string, address: Address): Observable<Match> {
+    const url: string = `/api/matches/${match_id}/addresses`;
     return this.postData(url, address);
   }
 
-  public updateAddress(game_id: string, address: Address): Observable<Game> {
-    const url: string = `/api/games/${game_id}/addresses/${address.id}`;
+  public updateAddress(match_id: string, address: Address): Observable<Match> {
+    const url: string = `/api/matches/${match_id}/addresses/${address.id}`;
     return this.putData(url, address);
   }
 
-  public createPhone(game_id: string, phone: Phone): Observable<Game> {
-    const url: string = `/api/games/${game_id}/phones`;
+  public createPhone(match_id: string, phone: Phone): Observable<Match> {
+    const url: string = `/api/matches/${match_id}/phones`;
     return this.postData(url, phone);
   }
 
-  public updatePhone(game_id: string, phone: Phone): Observable<Game> {
-    const url: string = `/api/games/${game_id}/phones/${phone.id}`;
+  public updatePhone(match_id: string, phone: Phone): Observable<Match> {
+    const url: string = `/api/matches/${match_id}/phones/${phone.id}`;
     return this.putData(url, phone);
   }
 

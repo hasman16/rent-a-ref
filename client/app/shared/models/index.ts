@@ -3,6 +3,7 @@ export * from './address';
 export * from './bio';
 export * from './game';
 export * from './login';
+export * from './match';
 export * from './organization';
 export * from './person';
 export * from './phone';

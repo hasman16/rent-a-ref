@@ -2,22 +2,32 @@ const Match = function(sequelize, DataTypes) {
   return sequelize.define(
     'match',
     {
-      name: {
+      venue_name: {
         type: DataTypes.STRING(64)
       },
-      duration: {
-        type: DataTypes.INTEGER,
-        allowNull: false
+      status: {
+        type: DataTypes.STRING(32),
+        allowNull: false,
+        defaultValue: 'none',
+        validate: {
+          isIn: [['none', 'pending', 'played', 'cancelled', 'active']]
+        }
       },
-      periods: {
-        type: DataTypes.INTEGER,
+      age: {
+        type: DataTypes.STRING(32),
+        allowNull: false,
+        validate: {
+          isIn: [['kids', 'teens', 'adults']]
+        }
+      },
+      match_date: {
+        type: DataTypes.DATE,
         allowNull: false
       },
       referees: {
         type: DataTypes.INTEGER,
         allowNull: false
-      },
-      date: DataTypes.DATE
+      }
     },
     {
       paranoid: true, // mark as deleted but do not delete
@@ -27,3 +37,5 @@ const Match = function(sequelize, DataTypes) {
 };
 
 export default Match;
+
+

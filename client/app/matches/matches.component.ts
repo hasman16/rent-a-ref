@@ -23,6 +23,8 @@ import {
   Address,
   BaseModel,
   Phone,
+  Game,
+  Match,
   Option,
   Organization,
   Page,
@@ -53,18 +55,18 @@ enum ViewState {
 })
 export class MatchesComponent implements OnInit {
   @Input('model')
-  set setModel(model) {
-    this.model = _.cloneDeep(model);
+  set setGame(game: Game) {
+    this.game = _.cloneDeep(game);
   }
   @Input('states')
   set setStates(states) {
     this.states = _.cloneDeep(states);
-    console.log('states==========:', this.states);
   }
   private subscriptions: Subscription[] = [];
   private matches: any[] = [];
   private viewState: ViewState = ViewState.noMatches;
   public isLoading: boolean = false;
+  private game: Game = <Game>{};
   public model: any = {};
   public states: Option[] = [];
 
@@ -81,7 +83,6 @@ export class MatchesComponent implements OnInit {
     this.setMatchesMode();
     this.subscriptions.push(
       this.matchService.getMatches().subscribe(matches => {
-        console.log('got Matchesx:', matches, this.states);
         this.setMatchesMode();
       })
     );
@@ -117,6 +118,40 @@ export class MatchesComponent implements OnInit {
 
   public submitEvent(model): void {
     console.log('submintEvent:', model);
+    this.matchService
+      .createMatch(this.game.id, this.convertModelToMatch(model))
+      .subscribe(
+        (match: Match) => {
+          this.toast.setMessage('Match created.', 'info');
+        },
+        (err: HttpErrorResponse) =>
+          this.callFailure(err, 'Failed to create new match.'),
+        () => {
+          //this.getEvents();
+          this.cd.markForCheck();
+        }
+      );
+  }
+
+  public convertModelToMatch(model: any): Match {
+    const dateString: string = String(model.match_date);
+    const matchDate: number = Number(new Date(dateString).getTime());
+
+    return <Match>{
+      id: model.id,
+      match_date: matchDate,
+      referees: model.referees,
+      venue_name: model.venue_name,
+      status: 'pending',
+      age: model.age,
+      address: {
+        line1: model.line1,
+        line2: model.line2,
+        city: model.city,
+        state: model.state,
+        zip: model.zip
+      }
+    };
   }
 
   public setMatchesMode(): void {
@@ -125,6 +160,14 @@ export class MatchesComponent implements OnInit {
       this.viewState = ViewState.listMatches;
     } else {
       this.viewState = ViewState.noMatches;
+    }
+  }
+
+  public callFailure(err: HttpErrorResponse, message = 'An error occurred') {
+    if (err.error instanceof Error) {
+      this.toast.setMessage(message, 'danger');
+    } else {
+      this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
     }
   }
 }
