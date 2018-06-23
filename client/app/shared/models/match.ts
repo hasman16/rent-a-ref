@@ -3,6 +3,7 @@ import { Phone } from './phone';
 
 export interface Match {
 	id?: string;
+	match_name?: string;
 	match_date?: number;
 	referees?: number;
 	venue_name?: string;

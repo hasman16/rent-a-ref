@@ -18,5 +18,36 @@
       (ngSubmit)="submitEvent($event)"
       (ngCancel)="setMatchesMode($event)"></matches-form>
     </div>
-  </div> 
+  </div>
+
+  <div class="card-block" *ngIf="isViewState('listMatches')">asdfasd
+    <ngx-datatable class="bootstrap"
+      [rows]="matches"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [externalSorting]="true"
+      [loadingIndicator]="isLoading"
+      (sort)="onSort($event)"
+      [externalPaging]="true"
+      [count]="page.total_elements"
+      [offset]="page.offset"
+      [limit]="page.limit"
+      (page)='setPage($event)'
+      [selected]="selected"
+      [selectionType]="'single'"
+      (activate)="onActivate($event)"
+      (select)='onSelect($event)'
+      >
+      <ngx-datatable-column name="Match Name" prop="match_name" editable="false"></ngx-datatable-column>
+      <ngx-datatable-column name="Match Date" prop="match_date" editable="false">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{ value | date :'MMM dd, yyyy' }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
+      <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
+    </ngx-datatable>
+  </div>   
 </div>

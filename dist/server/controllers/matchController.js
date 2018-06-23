@@ -87,8 +87,13 @@ function MatchController(models, ResponseService) {
             });
         };
         var match = ResponseService.getItemFromBody(req);
+        console.log('match:', match);
         var address = ResponseService.deleteItemDates(match.address);
-        //const phone: PhoneModel = ResponseService.deleteItemDates(match.phone);
+        console.log('address:', address);
+        var phone = ResponseService.deleteItemDates(match.phone);
+        console.log('phone:', phone);
+        delete match.address_id;
+        delete match.phone_id;
         delete match.address;
         delete match.phone;
         match.game_id = req.params.game_id;

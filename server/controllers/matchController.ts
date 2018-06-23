@@ -102,11 +102,16 @@ export default function MatchController(models, ResponseService) {
       });
     };
     let match: MatchModel = <MatchModel>ResponseService.getItemFromBody(req);
+    console.log('match:', match);
     const address: AddressModel = ResponseService.deleteItemDates(
       match.address
     );
+    console.log('address:', address);
     const phone: PhoneModel = ResponseService.deleteItemDates(match.phone);
+    console.log('phone:', phone);
 
+    delete match.address_id;
+    delete match.phone_id;
     delete match.address;
     delete match.phone;
 

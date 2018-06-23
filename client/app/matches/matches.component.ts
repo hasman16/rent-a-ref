@@ -17,7 +17,8 @@ import {
   MatchService,
   OrganizeService,
   StatesService,
-  UserService
+  UserService,
+  PagingService
 } from '../services/index';
 import {
   Address,
@@ -69,6 +70,7 @@ export class MatchesComponent implements OnInit {
   private game: Game = <Game>{};
   public model: any = {};
   public states: Option[] = [];
+  protected page: Page;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -76,14 +78,19 @@ export class MatchesComponent implements OnInit {
     private matchService: MatchService,
     public toast: ToastComponent,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private pagingService: PagingService
   ) {}
 
   ngOnInit() {
+    this.page = _.cloneDeep(this.pagingService.getDefaultPager());
     this.setMatchesMode();
     this.subscriptions.push(
-      this.matchService.getMatches().subscribe(matches => {
+      this.matchService.getAllMatches(this.page).subscribe(matches => {
+        console.log('matches:', matches.rows);
+        this.matches = _.cloneDeep(matches.rows);
         this.setMatchesMode();
+        this.cd.markForCheck();
       })
     );
   }
@@ -123,11 +130,17 @@ export class MatchesComponent implements OnInit {
       .subscribe(
         (match: Match) => {
           this.toast.setMessage('Match created.', 'info');
+          this.matchService.getAllMatches(this.page).subscribe(matches => {
+            this.matches = _.cloneDeep(matches.rows);
+            this.setMatchesMode();
+            this.cd.markForCheck();
+          });
         },
-        (err: HttpErrorResponse) =>
-          this.callFailure(err, 'Failed to create new match.'),
+        (err: HttpErrorResponse) => {
+          this.callFailure(err, 'Failed to create new match.');
+          this.setMatchesMode();
+        },
         () => {
-          //this.getEvents();
           this.cd.markForCheck();
         }
       );
@@ -156,7 +169,9 @@ export class MatchesComponent implements OnInit {
 
   public setMatchesMode(): void {
     this.isLoading = false;
+
     if (_.isArray(this.matches) && this.matches.length > 0) {
+      console.log('masdfasatches.length:', this.matches.length);
       this.viewState = ViewState.listMatches;
     } else {
       this.viewState = ViewState.noMatches;

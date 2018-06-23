@@ -45,13 +45,13 @@ enum TabState {
 export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
-
+  /*
   protected columns: any[] = [
     { name: 'Event Name', prop: 'event_name' },
     { name: 'Event Date', prop: 'event_date' },
     { name: 'Venue', prop: 'venue_name' },
     { name: 'Status', prop: 'status' }
-  ];
+  ];*/
   public sports: Option[];
   public states: Option[];
   public games: Game[] = [];

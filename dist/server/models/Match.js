@@ -2,8 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Match = function (sequelize, DataTypes) {
     return sequelize.define('match', {
+        match_name: {
+            type: DataTypes.STRING(64),
+            allowNull: true
+        },
         venue_name: {
-            type: DataTypes.STRING(64)
+            type: DataTypes.STRING(64),
+            allowNull: true
         },
         status: {
             type: DataTypes.STRING(32),
@@ -15,7 +20,7 @@ var Match = function (sequelize, DataTypes) {
         },
         age: {
             type: DataTypes.STRING(32),
-            allowNull: false,
+            allowNull: true,
             validate: {
                 isIn: [['kids', 'teens', 'adults']]
             }

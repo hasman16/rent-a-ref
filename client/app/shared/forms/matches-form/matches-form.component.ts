@@ -72,26 +72,6 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
           {
             className: 'col-sm-12',
             type: 'input',
-            key: 'duration',
-            templateOptions: {
-              label: 'Duration',
-              type: 'number',
-              required: true
-            }
-          },
-          {
-            className: 'col-sm-12',
-            type: 'input',
-            key: 'periods',
-            templateOptions: {
-              label: 'Number ofPeriods',
-              type: 'number',
-              required: true
-            }
-          },
-          {
-            className: 'col-sm-12',
-            type: 'input',
             key: 'referees',
             templateOptions: {
               label: 'Number of Referees',
@@ -125,7 +105,7 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
           {
             className: 'col-sm-12',
             type: 'input',
-            key: 'date',
+            key: 'match_date',
             templateOptions: {
               label: 'Match Date',
               type: 'date',
