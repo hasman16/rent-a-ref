@@ -30,6 +30,7 @@ import {
   User
 } from '../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/finally';
 import * as _ from 'lodash';
 enum TabState {
   editEvent,
@@ -128,6 +129,9 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
       this.eventsComponentService
         .getEvent(game.id)
         .take(1)
+        .finally(() => {
+          this.cd.markForCheck();
+        })
         .subscribe(
           (model: any) => {
             console.log('got game:', model);
@@ -137,10 +141,6 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
           (err: HttpErrorResponse) => {
             this.callFailure(err, 'Failed to retrieve Event.');
             this.isEditing = false;
-          },
-          () => {
-            this.isLoading = false;
-            this.cd.markForCheck();
           }
         );
     }
@@ -165,6 +165,9 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     this.isLoading = true;
     this.eventsService
       .getAllGames(params)
+      .finally(() => {
+        this.cd.markForCheck();
+      })
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
@@ -172,17 +175,18 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   }
 
   public submitUpdateEvent(model: any): void {
-    this.eventsComponentService.updateGameAddress(model).subscribe(
-      (game: Game) => {
-        this.toast.setMessage('Event updated.', 'info');
-      },
-      (err: HttpErrorResponse) =>
-        this.callFailure(err, 'Failed to update new event.'),
-      () => {
-        //this.getEvent();
+    this.eventsComponentService
+      .updateGameAddress(model)
+      .finally(() => {
         this.cd.markForCheck();
-      }
-    );
+      })
+      .subscribe(
+        (game: Game) => {
+          this.toast.setMessage('Event updated.', 'info');
+        },
+        (err: HttpErrorResponse) =>
+          this.callFailure(err, 'Failed to update new event.')
+      );
   }
 
   public deleteEvent(user) {

@@ -41,6 +41,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/finally';
 
 enum ViewState {
   noMatches,
@@ -58,6 +59,7 @@ export class MatchesComponent implements OnInit {
   @Input('model')
   set setGame(game: Game) {
     this.game = _.cloneDeep(game);
+    this.cd.markForCheck();
   }
   @Input('states')
   set setStates(states) {
@@ -86,19 +88,23 @@ export class MatchesComponent implements OnInit {
   ngOnInit() {
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
     this.setMatchesMode();
-    this.getAllMatches(this.page);
+    this.getAllMatchesByGame(this.game.id, this.page);
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
-  public getAllMatches(page: Page): void {
-    this.matchService.getAllMatches(page).subscribe(matches => {
-      this.processPagedData(matches);
-      this.setMatchesMode();
-      this.cd.markForCheck();
-    });
+  public getAllMatchesByGame(game_id: string, page: Page): void {
+    this.matchService
+      .getAllMatchesByGame(game_id, page)
+      .finally(() => {
+        this.cd.markForCheck();
+      })
+      .subscribe(matches => {
+        this.processPagedData(matches);
+        this.setMatchesMode();
+      });
   }
 
   public processPagedData(data: PagedData): void {
@@ -117,7 +123,7 @@ export class MatchesComponent implements OnInit {
 
   public setPage(paging): void {
     this.page.offset = paging.offset;
-    this.getAllMatches(this.page);
+    this.getAllMatchesByGame(this.game.id, this.page);
   }
 
   public isViewState(value: string): boolean {
@@ -140,7 +146,16 @@ export class MatchesComponent implements OnInit {
   }
 
   public createNewMatch(): void {
-    this.model = {};
+    const game: any = _.cloneDeep(this.game);
+    this.model = {
+      venue_name: game.venue_name,
+      match_date: game.event_date,
+      line1: game.line1,
+      line2: game.line2,
+      city: game.city,
+      state: game.state,
+      zip: game.zip
+    };
     this.viewState = ViewState.editMatch;
   }
 
@@ -148,15 +163,17 @@ export class MatchesComponent implements OnInit {
     console.log('submitMatch:', model);
     this.matchService
       .createMatch(this.game.id, this.convertModelToMatch(model))
+      .finally(() => {
+        this.cd.markForCheck();
+      })
       .subscribe(
         (match: Match) => {
           this.toast.setMessage('Match created.', 'info');
-          this.getAllMatches(this.page);
+          this.getAllMatchesByGame(this.game.id, this.page);
         },
         (err: HttpErrorResponse) => {
           this.callFailure(err, 'Failed to create new match.');
           this.setMatchesMode();
-          this.cd.markForCheck();
         }
       );
   }

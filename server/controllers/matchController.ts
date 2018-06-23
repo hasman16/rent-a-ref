@@ -21,12 +21,15 @@ export default function MatchController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function getAllByMatch(req, res) {
-    Match.findAll({
+  function getAllByGame(req, res) {
+    let clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
       where: {
         game_id: req.params.game_id
       }
-    })
+    });
+
+    Match.findAndCountAll(whereClause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
@@ -142,7 +145,7 @@ export default function MatchController(models, ResponseService) {
 
   return {
     getAll,
-    getAllByMatch,
+    getAllByGame,
     getOne,
     create,
     update,
