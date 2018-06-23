@@ -89,12 +89,10 @@ function MatchController(models, ResponseService) {
         var match = ResponseService.getItemFromBody(req);
         var address = ResponseService.deleteItemDates(match.address);
         var phone = ResponseService.deleteItemDates(match.phone);
-        //delete match.address_id;
-        //delete match.phone_id;
         delete match.address;
         delete match.phone;
         match.game_id = req.params.game_id;
-        //match.status = 'pending';
+        match.status = 'pending';
         sequelize
             .transaction(function (t) {
             return Address.create(address, { transaction: t }).then(function (newAddress) {

@@ -107,13 +107,11 @@ export default function MatchController(models, ResponseService) {
     );
     const phone: PhoneModel = ResponseService.deleteItemDates(match.phone);
 
-    //delete match.address_id;
-    //delete match.phone_id;
     delete match.address;
     delete match.phone;
 
     match.game_id = req.params.game_id;
-    //match.status = 'pending';
+    match.status = 'pending';
 
     sequelize
       .transaction(t => {
