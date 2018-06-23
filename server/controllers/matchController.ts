@@ -111,10 +111,8 @@ export default function MatchController(models, ResponseService) {
     delete match.phone;
 
     match.game_id = req.params.game_id;
-<<<<<<< HEAD
-=======
     match.status = 'pending';
->>>>>>> 47b0e3d8b2ec5e58d5e33126fc9067aca156dbfd
+    console.log(' in match controller');
 
     sequelize
       .transaction(t => {
