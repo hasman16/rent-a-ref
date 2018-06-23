@@ -71,6 +71,7 @@ export class MatchesComponent implements OnInit {
   public model: any = {};
   public states: Option[] = [];
   protected page: Page;
+  protected selected: any[] = [];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -85,18 +86,38 @@ export class MatchesComponent implements OnInit {
   ngOnInit() {
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
     this.setMatchesMode();
-    this.subscriptions.push(
-      this.matchService.getAllMatches(this.page).subscribe(matches => {
-        console.log('matches:', matches.rows);
-        this.matches = _.cloneDeep(matches.rows);
-        this.setMatchesMode();
-        this.cd.markForCheck();
-      })
-    );
+    this.getAllMatches(this.page);
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
+  }
+
+  public getAllMatches(page: Page): void {
+    this.matchService.getAllMatches(page).subscribe(matches => {
+      this.processPagedData(matches);
+      this.setMatchesMode();
+      this.cd.markForCheck();
+    });
+  }
+
+  public processPagedData(data: PagedData): void {
+    let [page, newData] = this.pagingService.processPagedData(this.page, data);
+    console.log('page:', newData);
+    this.page = page;
+    this.matches = newData;
+  }
+
+  public onSelect({ selected }): void {
+    console.log('Select Event', selected, this.selected);
+    const match = _.cloneDeep(_.head(selected));
+    //this.isEditing = true;
+    //this.editEvent(game);
+  }
+
+  public setPage(paging): void {
+    this.page.offset = paging.offset;
+    this.getAllMatches(this.page);
   }
 
   public isViewState(value: string): boolean {
@@ -123,24 +144,18 @@ export class MatchesComponent implements OnInit {
     this.viewState = ViewState.editMatch;
   }
 
-  public submitEvent(model): void {
-    console.log('submintEvent:', model);
+  public submitMatch(model): void {
+    console.log('submitMatch:', model);
     this.matchService
       .createMatch(this.game.id, this.convertModelToMatch(model))
       .subscribe(
         (match: Match) => {
           this.toast.setMessage('Match created.', 'info');
-          this.matchService.getAllMatches(this.page).subscribe(matches => {
-            this.matches = _.cloneDeep(matches.rows);
-            this.setMatchesMode();
-            this.cd.markForCheck();
-          });
+          this.getAllMatches(this.page);
         },
         (err: HttpErrorResponse) => {
           this.callFailure(err, 'Failed to create new match.');
           this.setMatchesMode();
-        },
-        () => {
           this.cd.markForCheck();
         }
       );

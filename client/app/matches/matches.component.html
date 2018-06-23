@@ -11,16 +11,16 @@
   </div>
 
   <div class="col-12" *ngIf="isViewState('editMatch')">
-    <div style="max-width: 70%">
+    <div style="max-width: 75%">
       <matches-form 
       [model]="model"          
       [states]="states"
-      (ngSubmit)="submitEvent($event)"
+      (ngSubmit)="submitMatch($event)"
       (ngCancel)="setMatchesMode($event)"></matches-form>
     </div>
   </div>
 
-  <div class="card-block" *ngIf="isViewState('listMatches')">asdfasd
+  <div class="col-12" *ngIf="isViewState('listMatches')">
     <ngx-datatable class="bootstrap"
       [rows]="matches"
       [columnMode]="'force'"
@@ -37,7 +37,6 @@
       (page)='setPage($event)'
       [selected]="selected"
       [selectionType]="'single'"
-      (activate)="onActivate($event)"
       (select)='onSelect($event)'
       >
       <ngx-datatable-column name="Match Name" prop="match_name" editable="false"></ngx-datatable-column>
@@ -49,5 +48,8 @@
       <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
     </ngx-datatable>
+
+    <br /><br />
+    <button class="btn btn-primary btn-sm"  title="Click to create a new match" (click)="createNewMatch()">New Match</button>
   </div>   
 </div>
