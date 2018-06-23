@@ -92,6 +92,10 @@ function MatchController(models, ResponseService) {
         delete match.address;
         delete match.phone;
         match.game_id = req.params.game_id;
+<<<<<<< HEAD
+=======
+        match.status = 'pending';
+>>>>>>> 47b0e3d8b2ec5e58d5e33126fc9067aca156dbfd
         sequelize
             .transaction(function (t) {
             return Address.create(address, { transaction: t }).then(function (newAddress) {
