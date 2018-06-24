@@ -112,12 +112,10 @@ export default function MatchController(models, ResponseService) {
 
     match.game_id = req.params.game_id;
     match.status = 'pending';
-    console.log(' in match controller');
 
     sequelize
       .transaction(t => {
         return Address.create(address, { transaction: t }).then(newAddress => {
-          //match.address_id = newAddress.id;
           return phone ? createPhone(t, phone, match) : createMatch(t, match);
         });
       })
