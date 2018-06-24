@@ -33,11 +33,14 @@ export default function GameController(models, ResponseService) {
   }
 
   function getAllByOrganization(req, res) {
-    Game.findAll({
+    let clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
       where: {
         organization_id: req.params.organization_id
       }
-    })
+    });
+
+    Game.findAndCountAll(whereClause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }

@@ -11,7 +11,11 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { EventsComponentService } from './events-component.service';
 import { ToastComponent } from './../../shared/toast/toast.component';
-import { AuthService, UserService } from './../../services/index';
+import {
+  AuthService,
+  PagingService,
+  UserService
+} from './../../services/index';
 import {
   Address,
   BaseModel,
@@ -65,6 +69,8 @@ export class EventsComponent implements OnInit {
   ];
   protected sports: Option[];
   public games: Game[] = [];
+  protected page: Page;
+  protected selected: any[] = [];
   protected isLoading: boolean = false;
 
   protected organization_id: string = '';
@@ -76,15 +82,19 @@ export class EventsComponent implements OnInit {
     protected toast: ToastComponent,
     protected route: ActivatedRoute,
     protected router: Router,
-    protected eventsComponentService: EventsComponentService
+    protected eventsComponentService: EventsComponentService,
+    private pagingService: PagingService
   ) {
+    this.page = _.cloneDeep(this.pagingService.getDefaultPager());
     this.route.params.subscribe(params => {
       this.organization_id = params['organization_id'];
     });
   }
 
   public ngOnInit() {
-    this.games = _.cloneDeep(this.route.snapshot.data.games);
+    const gameData: PagedData = _.cloneDeep(this.route.snapshot.data.games);
+    this.processPagedData(gameData);
+
     this.sports = this.eventsComponentService.mapSportsAsOptions(
       this.route.snapshot.data.sportsData.rows
     );
@@ -96,6 +106,25 @@ export class EventsComponent implements OnInit {
 
   public formatDate(dateString: string): string {
     return moment(dateString).format('LL');
+  }
+
+  public processPagedData(data: PagedData): void {
+    let [page, newData] = this.pagingService.processPagedData(this.page, data);
+    console.log('pagex:', newData);
+    this.page = page;
+    this.games = newData;
+  }
+
+  public onSelect(selected): void {
+    console.log('Select Game', selected, this.selected);
+    //const game = _.cloneDeep(_.head(selected));
+    //this.isEditing = true;
+    //this.editEvent(game);
+  }
+
+  public setPage(paging): void {
+    this.page.offset = paging.offset;
+    this.getEvents(this.page);
   }
 
   public setEventsMode(): void {
@@ -153,30 +182,35 @@ export class EventsComponent implements OnInit {
       this.eventsComponentService
         .payForEvent(game.id)
         .take(1)
+        .finally(() => {
+          this.isLoading = false;
+        })
         .subscribe(
           (model: any) => {
             this.model = _.cloneDeep(model);
             this.viewState = ViewState.payForEvent;
+            this.cd.markForCheck();
           },
           (err: HttpErrorResponse) => {
             this.callFailure(err, 'Failed to retrieve Event.');
             this.setEventsMode();
-          },
-          () => {
-            this.isLoading = false;
-            this.cd.markForCheck();
           }
         );
     }
   }
 
   public editEvents(game: Game): void {
+    console.log('editEvents:', game);
     if (!this.isLoading) {
       this.isLoading = true;
 
       this.eventsComponentService
         .getEvent(game.id)
         .take(1)
+        .finally(() => {
+          this.isLoading = false;
+          this.cd.markForCheck();
+        })
         .subscribe(
           (model: any) => {
             console.log('got game:', game);
@@ -187,31 +221,27 @@ export class EventsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this.callFailure(err, 'Failed to retrieve Event.');
             this.setEventsMode();
-          },
-          () => {
-            this.isLoading = false;
-            this.cd.markForCheck();
           }
         );
     }
   }
 
-  public getEvents(): void {
+  public getEvents(page?: Page): void {
     this.isLoading = true;
 
     this.eventsComponentService
       .getOrganizationGames(this.organization_id)
       .take(1)
+      .finally(() => {
+        this.isLoading = false;
+        this.setEventsMode();
+      })
       .subscribe(
         (games: Game[]) => {
           this.games = _.cloneDeep(games);
         },
         (err: HttpErrorResponse) =>
-          this.callFailure(err, 'Failed to retrieve Events.'),
-        () => {
-          this.setEventsMode();
-          this.cd.markForCheck();
-        }
+          this.callFailure(err, 'Failed to retrieve Events.')
       );
   }
 
@@ -230,31 +260,33 @@ export class EventsComponent implements OnInit {
     this.isLoading = true;
     this.eventsComponentService
       .createEvent(this.organization_id, model)
+      .finally(() => {
+        this.getEvents();
+      })
       .subscribe(
         (game: Game) => {
           this.toast.setMessage('Event created.', 'info');
         },
         (err: HttpErrorResponse) =>
-          this.callFailure(err, 'Failed to create new event.'),
-        () => {
-          this.getEvents();
-          this.cd.markForCheck();
-        }
+          this.callFailure(err, 'Failed to create new event.')
       );
   }
 
   public submitUpdateEvent(model: any): void {
-    this.eventsComponentService.updateGameAddress(model).subscribe(
-      (game: Game) => {
-        this.toast.setMessage('Event updated.', 'info');
-      },
-      (err: HttpErrorResponse) =>
-        this.callFailure(err, 'Failed to update new event.'),
-      () => {
+    this.eventsComponentService
+      .updateGameAddress(model)
+      .finally(() => {
+        this.isLoading = false;
         this.getEvents();
         this.cd.markForCheck();
-      }
-    );
+      })
+      .subscribe(
+        (game: Game) => {
+          this.toast.setMessage('Event updated.', 'info');
+        },
+        (err: HttpErrorResponse) =>
+          this.callFailure(err, 'Failed to update new event.')
+      );
   }
 
   public callFailure(err: HttpErrorResponse, message = 'An error occurred') {

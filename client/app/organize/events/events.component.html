@@ -23,7 +23,9 @@
     </div>
 
     <div class="card" *ngIf="isViewState('listEvents')">
+      
       <div class="form-size">
+        <!--
         <table class="table table-bordered table-hover">
           <thead class="thead-light">
             <tr>
@@ -63,6 +65,55 @@
             </tr>
           </tbody>
         </table>
+-->
+        <ngx-datatable class="bootstrap"
+          [rows]="games"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [externalSorting]="true"
+          [loadingIndicator]="isLoading"
+          (sort)="onSort($event)"
+          [externalPaging]="true"
+          [count]="page.total_elements"
+          [offset]="page.offset"
+          [limit]="page.limit"
+          (page)='setPage($event)'
+          [selected]="selected"
+          [selectionType]="'single'"
+          (select)='onSelect($event)'
+          >
+          <ngx-datatable-column name="Event Name" prop="event_name" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Date" prop="event_date" editable="false">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{ value | date :'MMM dd, yyyy' }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
+
+          <ngx-datatable-column prop="" editable="true">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-success btn-sm" (click)="payForEvent(game)" title="Click to pay for this event">Pay</button>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="" editable="true">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-primary btn-sm" (click)="editEvents(game)" title="Click to edit this event">Edit</button>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="" editable="true">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-danger btn-sm" (click)="deleteEvent(game)" title="Click to delete event">Delete</button>
+            </ng-template>
+          </ngx-datatable-column>                 
+        </ngx-datatable>
+
+
+
         <hr />
         <button class="btn btn-primary btn-sm new-org-button" (click)="createNewEvent()" title="Click to create new event">New Event</button>
       </div>
