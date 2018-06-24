@@ -17,7 +17,8 @@ import {
   MatchService,
   OrganizeService,
   StatesService,
-  UserService
+  UserService,
+  PagingService
 } from '../services/index';
 import {
   Address,
@@ -40,6 +41,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/finally';
 
 enum ViewState {
   noMatches,
@@ -57,6 +59,7 @@ export class MatchesComponent implements OnInit {
   @Input('model')
   set setGame(game: Game) {
     this.game = _.cloneDeep(game);
+    this.cd.markForCheck();
   }
   @Input('states')
   set setStates(states) {
@@ -69,6 +72,8 @@ export class MatchesComponent implements OnInit {
   private game: Game = <Game>{};
   public model: any = {};
   public states: Option[] = [];
+  protected page: Page;
+  protected selected: any[] = [];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -76,20 +81,49 @@ export class MatchesComponent implements OnInit {
     private matchService: MatchService,
     public toast: ToastComponent,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private pagingService: PagingService
   ) {}
 
   ngOnInit() {
+    this.page = _.cloneDeep(this.pagingService.getDefaultPager());
     this.setMatchesMode();
-    this.subscriptions.push(
-      this.matchService.getMatches().subscribe(matches => {
-        this.setMatchesMode();
-      })
-    );
+    this.getAllMatchesByGame(this.game.id, this.page);
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
+  }
+
+  public getAllMatchesByGame(game_id: string, page: Page): void {
+    this.matchService
+      .getAllMatchesByGame(game_id, page)
+      .finally(() => {
+        this.cd.markForCheck();
+      })
+      .subscribe(matches => {
+        this.processPagedData(matches);
+        this.setMatchesMode();
+      });
+  }
+
+  public processPagedData(data: PagedData): void {
+    let [page, newData] = this.pagingService.processPagedData(this.page, data);
+    console.log('page:', newData);
+    this.page = page;
+    this.matches = newData;
+  }
+
+  public onSelect({ selected }): void {
+    console.log('Select Event', selected, this.selected);
+    const match = _.cloneDeep(_.head(selected));
+    //this.isEditing = true;
+    //this.editEvent(game);
+  }
+
+  public setPage(paging): void {
+    this.page.offset = paging.offset;
+    this.getAllMatchesByGame(this.game.id, this.page);
   }
 
   public isViewState(value: string): boolean {
@@ -112,23 +146,34 @@ export class MatchesComponent implements OnInit {
   }
 
   public createNewMatch(): void {
-    this.model = {};
+    const game: any = _.cloneDeep(this.game);
+    this.model = {
+      venue_name: game.venue_name,
+      match_date: game.event_date,
+      line1: game.line1,
+      line2: game.line2,
+      city: game.city,
+      state: game.state,
+      zip: game.zip
+    };
     this.viewState = ViewState.editMatch;
   }
 
-  public submitEvent(model): void {
-    console.log('submintEvent:', model);
+  public submitMatch(model): void {
+    console.log('submitMatch:', model);
     this.matchService
       .createMatch(this.game.id, this.convertModelToMatch(model))
+      .finally(() => {
+        this.cd.markForCheck();
+      })
       .subscribe(
         (match: Match) => {
           this.toast.setMessage('Match created.', 'info');
+          this.getAllMatchesByGame(this.game.id, this.page);
         },
-        (err: HttpErrorResponse) =>
-          this.callFailure(err, 'Failed to create new match.'),
-        () => {
-          //this.getEvents();
-          this.cd.markForCheck();
+        (err: HttpErrorResponse) => {
+          this.callFailure(err, 'Failed to create new match.');
+          this.setMatchesMode();
         }
       );
   }
@@ -156,7 +201,9 @@ export class MatchesComponent implements OnInit {
 
   public setMatchesMode(): void {
     this.isLoading = false;
+
     if (_.isArray(this.matches) && this.matches.length > 0) {
+      console.log('masdfasatches.length:', this.matches.length);
       this.viewState = ViewState.listMatches;
     } else {
       this.viewState = ViewState.noMatches;

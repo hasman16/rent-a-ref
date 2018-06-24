@@ -70,67 +70,52 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
             }
           },
           {
-            className: 'col-sm-12',
-            type: 'input',
-            key: 'duration',
-            templateOptions: {
-              label: 'Duration',
-              type: 'number',
-              required: true
-            }
-          },
-          {
-            className: 'col-sm-12',
-            type: 'input',
-            key: 'periods',
-            templateOptions: {
-              label: 'Number ofPeriods',
-              type: 'number',
-              required: true
-            }
-          },
-          {
-            className: 'col-sm-12',
-            type: 'input',
-            key: 'referees',
-            templateOptions: {
-              label: 'Number of Referees',
-              type: 'number',
-              required: true
-            }
-          },
-          {
-            type: 'select',
-            key: 'age',
-            className: 'col-sm-12',
-            templateOptions: {
-              label: 'Age Group',
-              options: [
-                {
-                  label: 'Kids',
-                  value: 'kids'
-                },
-                {
-                  label: 'Teens',
-                  value: 'teens'
-                },
-                {
-                  label: 'Adults',
-                  value: 'adults'
+            fieldGroupClassName: 'row',
+            fieldGroup: [
+              {
+                className: 'col-sm-4',
+                type: 'input',
+                key: 'referees',
+                templateOptions: {
+                  label: 'Number of Referees',
+                  type: 'number',
+                  required: true
                 }
-              ],
-              required: true
-            }
-          },
-          {
-            className: 'col-sm-12',
-            type: 'input',
-            key: 'date',
-            templateOptions: {
-              label: 'Match Date',
-              type: 'date',
-              required: true
-            }
+              },
+              {
+                type: 'select',
+                key: 'age',
+                className: 'col-sm-4',
+                templateOptions: {
+                  label: 'Age Group',
+                  options: [
+                    {
+                      label: 'Kids',
+                      value: 'kids'
+                    },
+                    {
+                      label: 'Teens',
+                      value: 'teens'
+                    },
+                    {
+                      label: 'Adults',
+                      value: 'adults'
+                    }
+                  ],
+                  required: true
+                }
+              },
+              {
+                className: 'col-sm-4',
+                type: 'input',
+                key: 'match_date',
+                templateOptions: {
+                  label: 'Match Date',
+                  type: 'date',
+                  required: true
+                }
+              }
+            ]
           },
           {
             fieldGroupClassName: 'row',

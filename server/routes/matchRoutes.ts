@@ -27,7 +27,7 @@ export default function matchRoutes(setter, matchCtrl) {
 		.get(authentication, matchCtrl.getMatchAddress);
 	router
 		.route('/games/:game_id/matches')
-		.get(authentication, matchCtrl.getAllByMatch);
+		.get(authentication, matchCtrl.getAllByGame);
 	router
 		.route('/games/:game_id/matches')
 		.post(authentication, matchCtrl.createMatchAddressPhone);

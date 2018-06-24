@@ -23,12 +23,18 @@ export class MatchService {
 
   constructor(private http: HttpClient) {}
 
-  public getMatches(): Observable<any> {
-    return this.http.get<any>(`/api/prices`);
-  }
-
   public getAllMatches(queryParams: any = null): Observable<PagedData> {
     return <Observable<PagedData>>this.http.get(`/api/matches`, {
+      params: queryParams
+    });
+  }
+
+  public getAllMatchesByGame(
+    game_id: string,
+    queryParams: any = null
+  ): Observable<PagedData> {
+    const url = `/api/games/${game_id}/matches`;
+    return <Observable<PagedData>>this.http.get(url, {
       params: queryParams
     });
   }

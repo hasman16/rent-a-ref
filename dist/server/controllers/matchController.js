@@ -15,12 +15,14 @@ function MatchController(models, ResponseService) {
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
-    function getAllByMatch(req, res) {
-        Match.findAll({
+    function getAllByGame(req, res) {
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        var whereClause = Object.assign(clause, {
             where: {
                 game_id: req.params.game_id
             }
-        })
+        });
+        Match.findAndCountAll(whereClause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
@@ -87,8 +89,13 @@ function MatchController(models, ResponseService) {
             });
         };
         var match = ResponseService.getItemFromBody(req);
+        console.log('match:', match);
         var address = ResponseService.deleteItemDates(match.address);
-        //const phone: PhoneModel = ResponseService.deleteItemDates(match.phone);
+        console.log('address:', address);
+        var phone = ResponseService.deleteItemDates(match.phone);
+        console.log('phone:', phone);
+        delete match.address_id;
+        delete match.phone_id;
         delete match.address;
         delete match.phone;
         match.game_id = req.params.game_id;
@@ -114,7 +121,7 @@ function MatchController(models, ResponseService) {
     function deleteMatchAddress(req, res) { }
     return {
         getAll: getAll,
-        getAllByMatch: getAllByMatch,
+        getAllByGame: getAllByGame,
         getOne: getOne,
         create: create,
         update: update,

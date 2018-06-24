@@ -21,12 +21,15 @@ export default function MatchController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function getAllByMatch(req, res) {
-    Match.findAll({
+  function getAllByGame(req, res) {
+    let clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
       where: {
         game_id: req.params.game_id
       }
-    })
+    });
+
+    Match.findAndCountAll(whereClause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
@@ -102,11 +105,16 @@ export default function MatchController(models, ResponseService) {
       });
     };
     let match: MatchModel = <MatchModel>ResponseService.getItemFromBody(req);
+    console.log('match:', match);
     const address: AddressModel = ResponseService.deleteItemDates(
       match.address
     );
+    console.log('address:', address);
     const phone: PhoneModel = ResponseService.deleteItemDates(match.phone);
+    console.log('phone:', phone);
 
+    delete match.address_id;
+    delete match.phone_id;
     delete match.address;
     delete match.phone;
 
@@ -135,7 +143,7 @@ export default function MatchController(models, ResponseService) {
 
   return {
     getAll,
-    getAllByMatch,
+    getAllByGame,
     getOne,
     create,
     update,
