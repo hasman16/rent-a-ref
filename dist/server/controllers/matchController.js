@@ -100,11 +100,9 @@ function MatchController(models, ResponseService) {
         delete match.phone;
         match.game_id = req.params.game_id;
         match.status = 'pending';
-        console.log(' in match controller');
         sequelize
             .transaction(function (t) {
             return Address.create(address, { transaction: t }).then(function (newAddress) {
-                //match.address_id = newAddress.id;
                 return phone ? createPhone(t, phone, match) : createMatch(t, match);
             });
         })
