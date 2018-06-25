@@ -29,11 +29,13 @@ function GameController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getAllByOrganization(req, res) {
-        Game.findAll({
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        var whereClause = Object.assign(clause, {
             where: {
                 organization_id: req.params.organization_id
             }
-        })
+        });
+        Game.findAndCountAll(whereClause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }

@@ -12,24 +12,15 @@ export default function BlogController(models, ResponseService) {
   }
 
   function getPostsByUser(req, res) {
-    const clauses = ResponseService.limitOffset({}, req);
-    const mainClauses = {
+    const clauses = ResponseService.produceSearchAndSortClause(req);
+
+    const mainClauses = Object.assign(clauses, {
       where: {
         id: req.params.user_id
-      },
-      attributes: ['id', 'email', 'status'],
-      include: [
-        {
-          model: Post,
-          limit: clauses.limit,
-          offset: clauses.offset,
-          order: clauses.order
-        }
-      ]
-    };
-    console.log('getPostsByUser');
+      }
+    });
 
-    User.findOne(mainClauses)
+    Post.findAndCountAll(mainClauses)
       .then(result => ResponseService.success(res, result))
       .catch(error => ResponseService.exception(res, error));
   }

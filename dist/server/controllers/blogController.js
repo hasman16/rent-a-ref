@@ -11,23 +11,13 @@ function BlogController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getPostsByUser(req, res) {
-        var clauses = ResponseService.limitOffset({}, req);
-        var mainClauses = {
+        var clauses = ResponseService.produceSearchAndSortClause(req);
+        var mainClauses = Object.assign(clauses, {
             where: {
                 id: req.params.user_id
-            },
-            attributes: ['id', 'email', 'status'],
-            include: [
-                {
-                    model: Post,
-                    limit: clauses.limit,
-                    offset: clauses.offset,
-                    order: clauses.order
-                }
-            ]
-        };
-        console.log('getPostsByUser');
-        User.findOne(mainClauses)
+            }
+        });
+        Post.findAndCountAll(mainClauses)
             .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }

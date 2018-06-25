@@ -40,6 +40,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/finally';
 
 @Component({
   selector: 'rar-organize',
@@ -164,6 +165,9 @@ export class OrganizeComponent implements OnInit {
         .map(([addresses, phones]: [any, any]) => {
           return [addresses['addresses'], phones['phones']];
         })
+        .finally(() => {
+          this.cd.markForCheck();
+        })
         .subscribe(([addresses, phones]: [Array<Address>, Array<Phone>]) => {
           currentModel = _.cloneDeep(currentModel);
           currentModel = Object.assign({}, currentModel, {
@@ -171,7 +175,6 @@ export class OrganizeComponent implements OnInit {
             phones: phones
           });
           this.setEditMode(currentModel);
-          this.cd.markForCheck();
         });
     }
   }
@@ -185,20 +188,22 @@ export class OrganizeComponent implements OnInit {
 
     user_id = user_id || currentUser.id;
 
-    this.organizeService.getUserOrganization(user_id).subscribe(
-      (profile: Profile) => {
-        this.organizations = profile.organizations;
-      },
-      (err: HttpErrorResponse) => this.callFailure(err),
-      () => {
+    this.organizeService
+      .getUserOrganization(user_id)
+      .finally(() => {
+        this.cd.markForCheck();
         this.setOrganizeMode();
         this.isLoading = false;
         if (this.organizations.length === 0) {
           this.setOrganizeMode();
         }
-        this.cd.markForCheck();
-      }
-    );
+      })
+      .subscribe(
+        (profile: Profile) => {
+          this.organizations = profile.organizations;
+        },
+        (err: HttpErrorResponse) => this.callFailure(err)
+      );
   }
 
   submitOrganization(model): void {
@@ -223,6 +228,9 @@ export class OrganizeComponent implements OnInit {
           .combineLatest(
             this.organizeService.bulkCreatePhones(model.phones, org_id)
           );
+      })
+      .finally(() => {
+        this.cd.markForCheck();
       })
       .subscribe(
         ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
@@ -332,6 +340,9 @@ export class OrganizeComponent implements OnInit {
           .combineLatest(
             this.organizeService.bulkUpdatePhones(updatedPhones, org_id)
           );
+      })
+      .finally(() => {
+        this.cd.markForCheck();
       })
       .subscribe(
         ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
