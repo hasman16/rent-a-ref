@@ -93,21 +93,21 @@
           <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
           <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
 
-          <ngx-datatable-column prop="" editable="true">
+          <ngx-datatable-column name="" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-success btn-sm" (click)="payForEvent(game)" title="Click to pay for this event">Pay</button>
+              <button class="btn btn-success btn-sm" (click)="payForEvent(value)" title="Click to pay for this event">Pay</button>
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column prop="" editable="true">
+          <ngx-datatable-column name="" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-primary btn-sm" (click)="editEvents(game)" title="Click to edit this event">Edit</button>
+              <button class="btn btn-primary btn-sm" (click)="editEvents(value)" title="Click to edit this event">Edit</button>
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column prop="" editable="true">
+          <ngx-datatable-column name="" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-danger btn-sm" (click)="deleteEvent(game)" title="Click to delete event">Delete</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteEvent(value)" title="Click to delete event">Delete</button>
             </ng-template>
           </ngx-datatable-column>                 
         </ngx-datatable>
