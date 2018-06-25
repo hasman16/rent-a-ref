@@ -175,12 +175,12 @@ export class EventsComponent implements OnInit {
     this.viewState = ViewState.editEvent;
   }
 
-  protected payForEvent(game): void {
+  protected payForEvent(game_id: string): void {
     if (!this.isLoading) {
       this.isLoading = true;
 
       this.eventsComponentService
-        .payForEvent(game.id)
+        .payForEvent(game_id)
         .take(1)
         .finally(() => {
           this.isLoading = false;
@@ -199,13 +199,13 @@ export class EventsComponent implements OnInit {
     }
   }
 
-  public editEvents(game: Game): void {
-    console.log('editEvents:', game);
+  public editEvents(game_id: string): void {
+    console.log('editEvents:', game_id);
     if (!this.isLoading) {
       this.isLoading = true;
 
       this.eventsComponentService
-        .getEvent(game.id)
+        .getEvent(game_id)
         .take(1)
         .finally(() => {
           this.isLoading = false;
@@ -213,7 +213,7 @@ export class EventsComponent implements OnInit {
         })
         .subscribe(
           (model: any) => {
-            console.log('got game:', game);
+            console.log('got game:', game_id);
             this.model = _.cloneDeep(model);
             this.buttonText = 'Update';
             this.viewState = ViewState.editEvent;
@@ -224,6 +224,10 @@ export class EventsComponent implements OnInit {
           }
         );
     }
+  }
+
+  public deleteEvent(game_id: string): void {
+    console.log('deleteEvent');
   }
 
   public getEvents(page?: Page): void {
