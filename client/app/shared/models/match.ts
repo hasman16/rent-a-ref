@@ -10,6 +10,7 @@ export interface Match {
 	status?: string;
 	age?: string;
 	game_id?: number;
+	sport_id?: number;
 	address_id?: string;
 	phone_id?: string;
 	address?: Address;

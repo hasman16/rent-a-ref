@@ -64,121 +64,122 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
             key: 'match_name',
             templateOptions: {
               label: 'Match Name',
+              required: false,
+              minLength: 5,
+              pattern: /\w+[a-zA-Z0-9]/
+            }
+          },
+
+          {
+            className: 'col-sm-4',
+            type: 'input',
+            key: 'referees',
+            templateOptions: {
+              label: 'Number of Referees',
+              type: 'number',
+              min: 1,
+              max: 10,
+              required: true
+            }
+          },
+          {
+            type: 'select',
+            key: 'age',
+            className: 'col-sm-4',
+            templateOptions: {
+              label: 'Age Group',
+              options: [
+                {
+                  label: 'Kids',
+                  value: 'kids'
+                },
+                {
+                  label: 'Teens',
+                  value: 'teens'
+                },
+                {
+                  label: 'Adults',
+                  value: 'adults'
+                }
+              ],
+              required: true
+            }
+          },
+          {
+            className: 'col-sm-4',
+            type: 'input',
+            key: 'match_date',
+            templateOptions: {
+              label: 'Match Date',
+              type: 'date',
+              required: true
+            }
+          }
+        ]
+      },
+      {
+        template: '<div><strong>Address</strong></div>'
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
+            className: 'col-sm-12',
+            type: 'input',
+            key: 'venue_name',
+            templateOptions: {
+              label: 'Venue Name',
               required: true,
               minLength: 5,
               pattern: /\w+[a-zA-Z0-9]/
             }
           },
           {
-            fieldGroupClassName: 'row',
-            fieldGroup: [
-              {
-                className: 'col-sm-4',
-                type: 'input',
-                key: 'referees',
-                templateOptions: {
-                  label: 'Number of Referees',
-                  type: 'number',
-                  required: true
-                }
-              },
-              {
-                type: 'select',
-                key: 'age',
-                className: 'col-sm-4',
-                templateOptions: {
-                  label: 'Age Group',
-                  options: [
-                    {
-                      label: 'Kids',
-                      value: 'kids'
-                    },
-                    {
-                      label: 'Teens',
-                      value: 'teens'
-                    },
-                    {
-                      label: 'Adults',
-                      value: 'adults'
-                    }
-                  ],
-                  required: true
-                }
-              },
-              {
-                className: 'col-sm-4',
-                type: 'input',
-                key: 'match_date',
-                templateOptions: {
-                  label: 'Match Date',
-                  type: 'date',
-                  required: true
-                }
-              }
-            ]
+            className: 'col-sm-3',
+            type: 'input',
+            key: 'line1',
+            templateOptions: {
+              label: 'Street 1',
+              required: true
+            }
           },
           {
-            fieldGroupClassName: 'row',
-            fieldGroup: [
-              {
-                className: 'col-sm-12',
-                type: 'input',
-                key: 'venue_name',
-                templateOptions: {
-                  label: 'Venue Name',
-                  required: true,
-                  minLength: 5,
-                  pattern: /\w+[a-zA-Z0-9]/
-                }
-              },
-              {
-                className: 'col-sm-3',
-                type: 'input',
-                key: 'line1',
-                templateOptions: {
-                  label: 'Street 1',
-                  required: true
-                }
-              },
-              {
-                type: 'input',
-                key: 'line2',
-                className: 'col-sm-3',
-                templateOptions: {
-                  type: 'text',
-                  label: 'Street 2'
-                }
-              },
-              {
-                type: 'input',
-                key: 'city',
-                className: 'col-sm-2',
-                templateOptions: {
-                  label: 'City',
-                  required: true
-                }
-              },
-              {
-                type: 'select',
-                key: 'state',
-                className: 'col-sm-2',
-                templateOptions: {
-                  label: 'State',
-                  options: _.cloneDeep(this.states),
-                  required: true
-                }
-              },
-              {
-                type: 'input',
-                key: 'zip',
-                className: 'col-sm-2',
-                templateOptions: {
-                  label: 'Zip',
-                  required: true,
-                  pattern: /\d{5}(\-\d{4})?/
-                }
-              }
-            ]
+            type: 'input',
+            key: 'line2',
+            className: 'col-sm-3',
+            templateOptions: {
+              type: 'text',
+              label: 'Street 2'
+            }
+          },
+          {
+            type: 'input',
+            key: 'city',
+            className: 'col-sm-2',
+            templateOptions: {
+              label: 'City',
+              required: true
+            }
+          },
+          {
+            type: 'select',
+            key: 'state',
+            className: 'col-sm-2',
+            templateOptions: {
+              label: 'State',
+              options: _.cloneDeep(this.states),
+              required: true
+            }
+          },
+          {
+            type: 'input',
+            key: 'zip',
+            className: 'col-sm-2',
+            templateOptions: {
+              label: 'Zip',
+              required: true,
+              pattern: /\d{5}(\-\d{4})?/
+            }
           }
         ]
       }
