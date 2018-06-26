@@ -184,6 +184,7 @@ export class MatchesComponent implements OnInit {
 
     return <Match>{
       id: model.id,
+      match_name: model.match_name,
       match_date: matchDate,
       referees: model.referees,
       venue_name: model.venue_name,

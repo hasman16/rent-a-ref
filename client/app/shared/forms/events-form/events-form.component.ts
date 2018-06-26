@@ -69,16 +69,6 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
               minLength: 5,
               pattern: /\w+[a-zA-Z0-9]/
             }
-          },
-          {
-            className: 'col-sm-12',
-            type: 'input',
-            key: 'event_date',
-            templateOptions: {
-              label: 'Event Date',
-              type: 'date',
-              required: true
-            }
           }
         ]
       },
@@ -89,7 +79,17 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
-            className: 'col-sm-12',
+            className: 'col-sm-4',
+            type: 'input',
+            key: 'event_date',
+            templateOptions: {
+              label: 'Event Date',
+              type: 'date',
+              required: true
+            }
+          },
+          {
+            className: 'col-sm-4',
             type: 'select',
             key: 'sport_id',
             templateOptions: {
@@ -99,7 +99,7 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
             }
           },
           {
-            className: 'col-sm-12',
+            className: 'col-sm-4',
             type: 'radio',
             key: 'event_type',
             templateOptions: {
