@@ -99,11 +99,11 @@ export class MatchesComponent implements OnInit {
     this.matchService
       .getAllMatchesByGame(game_id, page)
       .finally(() => {
+        this.setMatchesMode();
         this.cd.markForCheck();
       })
       .subscribe(matches => {
         this.processPagedData(matches);
-        this.setMatchesMode();
       });
   }
 
@@ -157,23 +157,93 @@ export class MatchesComponent implements OnInit {
       zip: game.zip
     };
     this.viewState = ViewState.editMatch;
+    this.cd.markForCheck();
+  }
+
+  convertMatchToModel(match: Match): any {
+    const matchDate: string = _.trim(match.match_date).split('T')[0];
+
+    const address: Address = match.address;
+    return {
+      id: match.id,
+      match_name: match.match_name,
+      age: match.age,
+      status: match.status,
+      venue_name: match.venue_name,
+      match_date: matchDate,
+      referees: match.referees,
+      sport_id: match.sport_id,
+      address_id: match.address_id,
+      game_id: match.game_id,
+      line1: address.line1,
+      line2: address.line2,
+      city: address.city,
+      state: address.state,
+      zip: address.zip
+    };
+  }
+
+  public editMatch(match_id): void {
+    if (!this.isLoading) {
+      this.isLoading = true;
+      this.matchService
+        .getMatch(match_id)
+        .finally(() => (this.isLoading = false))
+        .subscribe(
+          (match: Match) => {
+            this.model = this.convertMatchToModel(match);
+            this.viewState = ViewState.editMatch;
+          },
+          () => {
+            this.toast.setMessage(
+              `Failed to load match ${match_id}.`,
+              'danger'
+            );
+          }
+        );
+    }
   }
 
   public submitMatch(model): void {
     console.log('submitMatch:', model);
+    if (_.isNil(model.id) || !model.id) {
+      this.submitNewMatch(model);
+    } else {
+      this.submitUpdateMatch(model);
+    }
+  }
+
+  protected submitUpdateMatch(model): void {
+    const match: Match = this.convertModelToMatch(model);
+    this.isLoading = true;
+    this.matchService
+      .updateMatch(match)
+      .finally(() => {
+        this.getAllMatchesByGame(this.game.id, this.page);
+      })
+      .subscribe(
+        (match: Match) => {
+          this.toast.setMessage('Match updated.', 'info');
+        },
+        (err: HttpErrorResponse) => {
+          this.callFailure(err, 'Failed to update match.');
+        }
+      );
+  }
+
+  protected submitNewMatch(model): void {
+    this.isLoading = true;
     this.matchService
       .createMatch(this.game.id, this.convertModelToMatch(model))
       .finally(() => {
-        this.cd.markForCheck();
+        this.getAllMatchesByGame(this.game.id, this.page);
       })
       .subscribe(
         (match: Match) => {
           this.toast.setMessage('Match created.', 'info');
-          this.getAllMatchesByGame(this.game.id, this.page);
         },
         (err: HttpErrorResponse) => {
           this.callFailure(err, 'Failed to create new match.');
-          this.setMatchesMode();
         }
       );
   }
@@ -188,9 +258,10 @@ export class MatchesComponent implements OnInit {
       match_date: matchDate,
       referees: model.referees,
       venue_name: model.venue_name,
-      status: 'pending',
+      status: model.status || 'pending',
       age: model.age,
       address: {
+        id: model.address_id,
         line1: model.line1,
         line2: model.line2,
         city: model.city,

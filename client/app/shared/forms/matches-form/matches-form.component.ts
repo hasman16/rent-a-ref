@@ -64,7 +64,7 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
             key: 'match_name',
             templateOptions: {
               label: 'Match Name',
-              required: true,
+              required: false,
               minLength: 5,
               pattern: /\w+[a-zA-Z0-9]/
             }
@@ -77,6 +77,8 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
             templateOptions: {
               label: 'Number of Referees',
               type: 'number',
+              min: 1,
+              max: 10,
               required: true
             }
           },

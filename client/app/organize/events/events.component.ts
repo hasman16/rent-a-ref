@@ -257,7 +257,6 @@ export class EventsComponent implements OnInit {
       this.submitNewEvent(game);
     } else {
       this.submitUpdateEvent(game);
-      this.setEventsMode();
     }
   }
 

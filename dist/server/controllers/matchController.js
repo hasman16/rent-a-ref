@@ -29,6 +29,7 @@ function MatchController(models, ResponseService) {
     function getOne(req, res) {
         var Address = models.Address;
         var Phone = models.Phone;
+        console.log('get one match:', req.match_id);
         Match.find({
             where: {
                 id: req.params.match_id
@@ -42,7 +43,9 @@ function MatchController(models, ResponseService) {
                 }
             ]
         })
-            .then(function (results) { return ResponseService.success(res, results); })
+            .then(function (results) {
+            ResponseService.success(res, results);
+        })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function create(req, res) {
@@ -89,11 +92,8 @@ function MatchController(models, ResponseService) {
             });
         };
         var match = ResponseService.getItemFromBody(req);
-        console.log('match:', match);
         var address = ResponseService.deleteItemDates(match.address);
-        console.log('address:', address);
         var phone = ResponseService.deleteItemDates(match.phone);
-        console.log('phone:', phone);
         delete match.address_id;
         delete match.phone_id;
         delete match.address;
@@ -103,6 +103,7 @@ function MatchController(models, ResponseService) {
         sequelize
             .transaction(function (t) {
             return Address.create(address, { transaction: t }).then(function (newAddress) {
+                match.address_id = newAddress.id;
                 return phone ? createPhone(t, phone, match) : createMatch(t, match);
             });
         })

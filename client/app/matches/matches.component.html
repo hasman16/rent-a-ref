@@ -47,6 +47,24 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
+
+      <ngx-datatable-column name="" prop="id" editable="true">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <button class="btn btn-success btn-sm" (click)="assignOfficials(value)" title="Click to Assign officials">Assign</button>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="" prop="id" editable="true">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <button class="btn btn-primary btn-sm" (click)="editMatch(value)" title="Click to edit this match">Edit</button>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="" prop="id" editable="true">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <button class="btn btn-danger btn-sm" (click)="deleteMatch(value)" title="Click to delete match">Delete</button>
+        </ng-template>
+      </ngx-datatable-column>   
     </ngx-datatable>
 
     <br /><br />

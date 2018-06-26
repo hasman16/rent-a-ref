@@ -37,7 +37,7 @@ export default function MatchController(models, ResponseService) {
   function getOne(req, res) {
     const Address = models.Address;
     const Phone = models.Phone;
-
+    console.log('get one match:', req.match_id);
     Match.find({
       where: {
         id: req.params.match_id
@@ -51,7 +51,9 @@ export default function MatchController(models, ResponseService) {
         }
       ]
     })
-      .then(results => ResponseService.success(res, results))
+      .then(results => {
+        ResponseService.success(res, results);
+      })
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -105,13 +107,10 @@ export default function MatchController(models, ResponseService) {
       });
     };
     let match: MatchModel = <MatchModel>ResponseService.getItemFromBody(req);
-    console.log('match:', match);
     const address: AddressModel = ResponseService.deleteItemDates(
       match.address
     );
-    console.log('address:', address);
     const phone: PhoneModel = ResponseService.deleteItemDates(match.phone);
-    console.log('phone:', phone);
 
     delete match.address_id;
     delete match.phone_id;
@@ -124,6 +123,7 @@ export default function MatchController(models, ResponseService) {
     sequelize
       .transaction(t => {
         return Address.create(address, { transaction: t }).then(newAddress => {
+          match.address_id = newAddress.id;
           return phone ? createPhone(t, phone, match) : createMatch(t, match);
         });
       })
