@@ -79,7 +79,7 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
-            className: 'col-sm-4',
+            className: 'col-sm-6',
             type: 'input',
             key: 'event_date',
             templateOptions: {
@@ -89,7 +89,7 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
             }
           },
           {
-            className: 'col-sm-4',
+            className: 'col-sm-6',
             type: 'select',
             key: 'sport_id',
             templateOptions: {
@@ -97,9 +97,14 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
               required: true,
               options: _.cloneDeep(this.sports)
             }
-          },
+          }
+        ]
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
           {
-            className: 'col-sm-4',
+            className: 'col-sm-12',
             type: 'radio',
             key: 'event_type',
             templateOptions: {

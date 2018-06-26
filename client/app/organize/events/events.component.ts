@@ -134,6 +134,7 @@ export class EventsComponent implements OnInit {
     } else {
       this.viewState = ViewState.noEvents;
     }
+    this.cd.markForCheck();
   }
 
   public isViewState(value: string): boolean {
@@ -241,8 +242,8 @@ export class EventsComponent implements OnInit {
         this.setEventsMode();
       })
       .subscribe(
-        (games: Game[]) => {
-          this.games = _.cloneDeep(games);
+        (data: PagedData) => {
+          this.processPagedData(data);
         },
         (err: HttpErrorResponse) =>
           this.callFailure(err, 'Failed to retrieve Events.')
