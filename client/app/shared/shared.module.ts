@@ -21,6 +21,7 @@ import { ModalComponent } from './modal/modal.component';
 import { RaRImageComponent } from './image/image.component';
 import { StripeComponent } from './stripe/index';
 import { MaterialModule } from '../material.module';
+import { AlertModalComponent, AlertModalService } from './alert-modal/index';
 import {
     CropImageModalComponent,
     CropImageModalService
@@ -95,6 +96,7 @@ import { MatchesFormComponent } from './forms/matches-form/matches-form.componen
         ToastComponent,
         LoaderComponent,
         LoadingComponent,
+        AlertModalComponent,
         UploadButtonComponent,
         UploaderComponent,
         CropImageModalComponent,
@@ -116,6 +118,7 @@ import { MatchesFormComponent } from './forms/matches-form/matches-form.componen
         UploadButtonComponent,
         UploaderComponent,
         ModalComponent,
+        AlertModalComponent,
         CropImageModalComponent,
         RaRImageComponent,
         StripeComponent,
@@ -125,6 +128,7 @@ import { MatchesFormComponent } from './forms/matches-form/matches-form.componen
         MatchesFormComponent
     ],
     providers: [
+        AlertModalService,
         CropImageModalService,
         LoaderService,
         ToastComponent,

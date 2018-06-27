@@ -1,0 +1,19 @@
+<rar-modal
+[name]="modalName"
+size="medium"
+[title]="title"
+[submitText]="submitText"
+[cancelText]="cancelText"
+[disableSubmit]="disableSubmit"
+(submit)="submitModal($event)"
+(cancel)="closeModal($event)"
+#alertModal
+>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<ng-content></ng-content>
+		</div>
+	</div>
+</div>
+</rar-modal>

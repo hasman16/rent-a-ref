@@ -20,6 +20,21 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ModalComponent implements OnInit {
   @Input('name') modalName: string = '';
+  @Input('size')
+  set setSize(value) {
+    switch (value) {
+      case 'small':
+        this.size = 'sm';
+        break;
+      case 'medium':
+        this.size = 'md';
+        break;
+      case 'large':
+      default:
+        this.size = 'lg';
+        break;
+    }
+  }
   @Input() closable = true;
   @Input() visible: boolean = false;
   @Input() backText: string = '';
@@ -32,6 +47,7 @@ export class ModalComponent implements OnInit {
   @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() submit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public size: string = 'lg';
   private subscription: Subscription[] = [];
 
   constructor() {}

@@ -111,7 +111,7 @@ function OrganizationController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function deleteOne(req, res) {
-        var organization_id = req.params.game_id;
+        var organization_id = req.params.organization_id;
         function doDelete(organization) {
             return Organization.destroy({
                 where: {

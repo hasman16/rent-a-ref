@@ -125,6 +125,7 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 			formData.append('photo', uploadImage);
 			this.cropImageModalService
 				.uploadImage(this.destination, formData)
+				.finally(() => this.cropImageModalService.hide())
 				.subscribe(
 					() => {
 						this.closeModal(null);
@@ -136,8 +137,7 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 						this.cropImageModalService.message(<CropImageState>{
 							uploadState: UploadState.Error
 						});
-					},
-					() => this.cropImageModalService.hide()
+					}
 				);
 		} else {
 			this.cropImageModalService.message(<CropImageState>{

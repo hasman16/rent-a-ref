@@ -35,7 +35,7 @@
             </div>  
             <div class="col-2">
               <div class="button-container">
-                <button class="btn btn-danger btn-sm" (click)="goNewOrganization()" title="Click to delete organization">Delete</button>
+                <button class="btn btn-danger btn-sm" (click)="goDeleteOrganization(organization.id)" title="Click to delete organization">Delete</button>
               </div>
             </div>
           </div>
@@ -46,6 +46,7 @@
       </div>
 
       <rar-cropper-image-modal [destination]="destination"></rar-cropper-image-modal>
+      <rar-alert-modal><p>Are you sure you want to delete Organization {{delete_id}}.</p></rar-alert-modal>
     </div>
 
 

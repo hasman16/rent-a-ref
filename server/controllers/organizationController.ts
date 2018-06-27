@@ -124,7 +124,7 @@ export default function OrganizationController(models, ResponseService) {
   }
 
   function deleteOne(req, res) {
-    const organization_id = req.params.game_id;
+    const organization_id = req.params.organization_id;
 
     function doDelete(organization) {
       return Organization.destroy({
