@@ -1,7 +1,14 @@
-<div class="modal fade bd-example-modal-lg bounceInDown bounceOutUp"
+<div class="modal fade bounceInDown bounceOutUp"
   [class.show]="visible" [class.display]="visible"
+  [class.bd-example-modal-lg]="size == 'lg'"
+  [class.bd-example-modal-md]="size == 'md'"
+  [class.bd-example-modal-sm]="size == 'sm'"
  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog" 
+  [class.modal-lg]="size == 'lg'"
+  [class.modal-md]="size == 'md'"
+  [class.modal-sm]="size == 'sm'"
+  role="document">{{size}} :: <<<
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{{title}}</h5>

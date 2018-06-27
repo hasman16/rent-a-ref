@@ -140,6 +140,10 @@ export class OrganizeService {
     );
   }
 
+  deleteOrganization(organization_id: string): Observable<any> {
+    return this.http.delete<any>(`/api/organizations/${organization_id}`);
+  }
+
   //----------------------------------------------------------------------------------------------------
   bulkCreate<T extends BaseModel>([url, model, indexName]: [
     string,

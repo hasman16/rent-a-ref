@@ -30,6 +30,11 @@ import {
   User
 } from '../shared/models/index';
 import {
+  AlertModalService,
+  AlertState,
+  AlertButtonState
+} from '../shared/alert-modal/index';
+import {
   CropImageModalService,
   CropImageState,
   UploadState
@@ -38,6 +43,7 @@ import * as _ from 'lodash';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/finally';
@@ -64,6 +70,7 @@ export class OrganizeComponent implements OnInit {
   public showDialog: boolean = false;
   public defaultImage: string = 'assets/images/ball.png';
   public destination: string;
+  public delete_id: string;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -73,6 +80,7 @@ export class OrganizeComponent implements OnInit {
     private router: Router,
     private statesService: StatesService,
     private organizeService: OrganizeService,
+    private alertModalService: AlertModalService,
     private cropImageModalService: CropImageModalService
   ) {}
 
@@ -108,7 +116,6 @@ export class OrganizeComponent implements OnInit {
   }
 
   closeModal($event): void {
-    console.log('close modal');
     this.cropImageModalService.hide();
   }
 
@@ -145,11 +152,36 @@ export class OrganizeComponent implements OnInit {
     }
   }
 
-  goNewOrganization(): void {
+  public goNewOrganization(): void {
     this.setEditMode({});
   }
 
-  editOrganization(orgId: number): void {
+  public goDeleteOrganization(org_id): void {
+    this.delete_id = org_id;
+    this.alertModalService.show();
+    this.alertModalService.alertSubject$
+      .take(1)
+      .switchMap((state: AlertState) => {
+        let observable$: Observable<any>;
+        if (state.alertButtonState === AlertButtonState.Ok) {
+          observable$ = this.organizeService.deleteOrganization(org_id);
+        } else {
+          let modalSubject: Subject<boolean> = new Subject<boolean>();
+          observable$ = modalSubject.asObservable();
+          modalSubject.next(true);
+        }
+        return observable$;
+      })
+      .finally(() => {
+        this.cd.markForCheck();
+        this.getOrganizations();
+      })
+      .subscribe((state: AlertState) => {
+        console.log('state is:', state);
+      });
+  }
+
+  public editOrganization(orgId: number): void {
     let currentModel: any = _.find(
       this.organizations,
       organization => organization.id == orgId
