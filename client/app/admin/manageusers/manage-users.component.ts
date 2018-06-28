@@ -1,6 +1,6 @@
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
@@ -11,6 +11,10 @@ import {
 } from '../../services/index';
 import { Page, PagedData, Sorts, User } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/finally';
 import * as _ from 'lodash';
 
 @Component({
@@ -18,7 +22,8 @@ import * as _ from 'lodash';
   templateUrl: './manage-users.component.html',
   styleUrls: ['./manage-users.component.scss']
 })
-export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
+export class ManageUsersComponent
+  implements OnInit, OnDestroy, CanComponentDeactivate {
   public users: User[] = [];
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
@@ -31,6 +36,9 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
     { name: 'Referee', prop: 'can_referee' },
     { name: 'Status', prop: 'status' }
   ];
+  protected searchSubject: Subject<Page>;
+  protected search$: Observable<Page>;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -39,12 +47,25 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
     private pagingService: PagingService
   ) {
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
+    this.searchSubject = new Subject();
+    this.search$ = this.searchSubject.asObservable().debounceTime(1000);
   }
 
   ngOnInit() {
     const pagedData: PagedData = this.route.snapshot.data.userData;
     this.processPagedData(pagedData);
     this.isLoading = false;
+    this.subscriptions.push(
+      this.search$
+        .do((page: Page) => {
+          this.getUsers(_.cloneDeep(page));
+        })
+        .subscribe()
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
@@ -53,7 +74,7 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  getUsers(params: any) {
+  public getUsers(params: any) {
     this.isLoading = true;
     this.userService
       .getUsers(params)
@@ -63,18 +84,28 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
       );
   }
 
-  onSort(sorting): void {
+  public updateFilter(event): void {
+    const val: string = event.target.value.toLowerCase();
+    const length: number = val.length;
+    if (!this.isLoading) {
+      const page: Page = this.pagingService.search(this.page, 'email|' + val);
+      this.page = _.cloneDeep(page);
+      this.searchSubject.next(this.page);
+    }
+  }
+
+  public onSort(sorting): void {
     const page: Page = this.pagingService.sortColumn(this.page, sorting);
     this.page = _.cloneDeep(page);
     this.getUsers(this.page);
   }
 
-  setPage(paging): void {
+  public setPage(paging): void {
     this.page.offset = paging.offset;
     this.getUsers(this.page);
   }
 
-  updateUser() {
+  public updateUser() {
     this.userService
       .getUsers(this.page)
       .subscribe(
@@ -83,7 +114,7 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
       );
   }
 
-  deleteUser(user) {
+  public deleteUser(user) {
     this.userService.deleteUser(user).subscribe(
       data => this.toast.setMessage('user deleted successfully.', 'success'),
       (err: HttpErrorResponse) => this.callFailure(err),
@@ -94,19 +125,19 @@ export class ManageUsersComponent implements OnInit, CanComponentDeactivate {
     );
   }
 
-  processPagedData(data: PagedData): void {
+  protected processPagedData(data: PagedData): void {
     let [page, newData] = this.pagingService.processPagedData(this.page, data);
     this.page = page;
     this.users = newData;
   }
 
-  callSuccess(data: PagedData) {
+  protected callSuccess(data: PagedData) {
     this.processPagedData(data);
     this.toast.setMessage('users data retrieved', 'success');
     this.isLoading = false;
   }
 
-  callFailure(err: HttpErrorResponse, message = 'An error occurred') {
+  protected callFailure(err: HttpErrorResponse, message = 'An error occurred') {
     if (err.error instanceof Error) {
       this.toast.setMessage(message, 'danger');
     } else {

@@ -35,13 +35,20 @@ import {
   User
 } from '../shared/models/index';
 
-import * as _ from 'lodash';
+import {
+  AlertModalService,
+  AlertState,
+  AlertButtonState
+} from '../shared/alert-modal/index';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/finally';
+
+import * as _ from 'lodash';
 
 enum ViewState {
   noMatches,
@@ -74,6 +81,7 @@ export class MatchesComponent implements OnInit {
   public states: Option[] = [];
   protected page: Page;
   protected selected: any[] = [];
+  public delete_id: string;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -82,6 +90,7 @@ export class MatchesComponent implements OnInit {
     public toast: ToastComponent,
     private route: ActivatedRoute,
     private router: Router,
+    private alertModalService: AlertModalService,
     private pagingService: PagingService
   ) {}
 
@@ -143,6 +152,31 @@ export class MatchesComponent implements OnInit {
         break;
     }
     return result;
+  }
+
+  public deleteMatch(match_id): void {
+    this.delete_id = match_id;
+    this.alertModalService.show();
+    this.alertModalService.alertSubject$
+      .take(1)
+      .switchMap((state: AlertState) => {
+        let observable$: Observable<any>;
+        if (state.alertButtonState === AlertButtonState.Ok) {
+          observable$ = this.matchService.deleteMatch(match_id);
+        } else {
+          let modalSubject: Subject<boolean> = new Subject<boolean>();
+          observable$ = modalSubject.asObservable();
+          modalSubject.next(true);
+        }
+        return observable$;
+      })
+      .finally(() => {
+        this.cd.markForCheck();
+        this.getAllMatchesByGame(this.game.id, this.page);
+      })
+      .subscribe((state: AlertState) => {
+        console.log('state is:', state);
+      });
   }
 
   public createNewMatch(): void {

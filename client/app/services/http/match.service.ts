@@ -48,6 +48,10 @@ export class MatchService {
     return this.http.get<Match[]>(url);
   }
 
+  public deleteMatch(match_id: string): Observable<any> {
+    return this.http.delete<any>(`/api/matches/${match_id}`);
+  }
+
   public createMatch(game_id, match): Observable<Match> {
     const url = `/api/games/${game_id}/matches`;
     return this.postData(url, match);

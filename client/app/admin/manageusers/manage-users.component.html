@@ -1,6 +1,11 @@
 <div class="card" style="min-height: 750px;">
   <h1 class="etched-text">Manage Users</h1>
-  
+  <input
+  type='text'
+  style='padding:8px;margin:15px auto;width:30%;'
+  placeholder='Type to filter by email ...'
+  (keyup)='updateFilter($event)'
+  />
   <div class="card-block horizontal-and-vertical-centering " *ngIf="(!users || users.length === 0)">
     <div class="form-size">
       <p>There are no registered users.</p>
@@ -8,6 +13,7 @@
   </div>
 
   <div class="card-block" *ngIf="users && users.length > 0">
+
     <ngx-datatable class="bootstrap"
       [rows]="users"
       [columns]="columns"
