@@ -7,7 +7,7 @@ export class PagingService {
 	private LIMIT: number = 10;
 	constructor() {}
 
-	getDefaultPager(): Page {
+	public getDefaultPager(): Page {
 		return <Page>{
 			offset: 0,
 			limit: this.LIMIT,
@@ -19,7 +19,14 @@ export class PagingService {
 		};
 	}
 
-	sortColumn(page: Page, sorting): Page {
+	public search(page: Page, search): Page {
+		let pager: Page = _.cloneDeep(page);
+		pager.search = search;
+		pager.offset = 0;
+		return pager;
+	}
+
+	public sortColumn(page: Page, sorting): Page {
 		const sort: Sorts = <Sorts>sorting.sorts[0];
 		let pager: Page = _.cloneDeep(page);
 		pager.order = sort.dir;
@@ -28,7 +35,7 @@ export class PagingService {
 		return pager;
 	}
 
-	processPagedData(page: Page, data: PagedData): [Page, Array<any>] {
+	public processPagedData(page: Page, data: PagedData): [Page, Array<any>] {
 		const newData: any = _.isArray(data.rows) ? _.cloneDeep(data.rows) : [];
 		let pager: Page = _.cloneDeep(page);
 		pager.limit = Math.min(Math.max(pager.limit, 0), this.LIMIT);
