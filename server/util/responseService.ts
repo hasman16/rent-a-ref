@@ -35,7 +35,7 @@ export default class ResponseService {
         let value = (entries[1] || '') + '%';
         let key = entries[0] || 'badkey';
         let obj = {};
-        console.log('key, value', key, value);
+        //console.log('key, value', key, value);
         obj[key] = {
           [Op.like]: value
         };

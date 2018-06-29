@@ -34,9 +34,15 @@ export class EventsService {
     return this.http.get(`/api/games/${game_id}`);
   }
 
-  public getOrganizationGames(organization_id: string): Observable<Game[]> {
+  public getOrganizationGames(
+    organization_id: string,
+    queryParams: any = null
+  ): Observable<PagedData> {
     const url = `/api/organization/${organization_id}/games`;
-    return this.http.get<Game[]>(url);
+    console.log('url is;', url, queryParams);
+    return this.http.get<PagedData>(url, {
+      params: queryParams
+    });
   }
 
   public createGame(organization_id, game): Observable<Game> {

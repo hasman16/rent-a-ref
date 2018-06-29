@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import { AbstractComponent } from '../../abstract/abstract.component';
+
 import { ToastComponent } from '../../shared/toast/toast.component';
 import {
   CanComponentDeactivate,
@@ -22,50 +24,31 @@ import * as _ from 'lodash';
   templateUrl: './manage-users.component.html',
   styleUrls: ['./manage-users.component.scss']
 })
-export class ManageUsersComponent
+export class ManageUsersComponent extends AbstractComponent
   implements OnInit, OnDestroy, CanComponentDeactivate {
   public users: User[] = [];
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
   protected currentUser: User = <User>{};
-  protected page: Page;
-  protected selected: any[] = [];
-  protected columns: any[] = [
-    { name: 'Email', prop: 'email' },
-    { name: 'Organizer', prop: 'can_organize' },
-    { name: 'Referee', prop: 'can_referee' },
-    { name: 'Status', prop: 'status' }
-  ];
-  protected searchSubject: Subject<Page>;
-  protected search$: Observable<Page>;
-  private subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
     public toast: ToastComponent,
     private userService: UserService,
-    private pagingService: PagingService
+    protected pagingService: PagingService
   ) {
-    this.page = _.cloneDeep(this.pagingService.getDefaultPager());
-    this.searchSubject = new Subject();
-    this.search$ = this.searchSubject.asObservable().debounceTime(1000);
+    super(pagingService);
   }
 
   ngOnInit() {
+    this.initialize();
+    this.searchAttribute = 'email|';
     const pagedData: PagedData = this.route.snapshot.data.userData;
     this.processPagedData(pagedData);
-    this.isLoading = false;
-    this.subscriptions.push(
-      this.search$
-        .do((page: Page) => {
-          this.getUsers(_.cloneDeep(page));
-        })
-        .subscribe()
-    );
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
+    this.tearDown();
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
@@ -84,25 +67,8 @@ export class ManageUsersComponent
       );
   }
 
-  public updateFilter(event): void {
-    const val: string = event.target.value.toLowerCase();
-    const length: number = val.length;
-    if (!this.isLoading) {
-      const page: Page = this.pagingService.search(this.page, 'email|' + val);
-      this.page = _.cloneDeep(page);
-      this.searchSubject.next(this.page);
-    }
-  }
-
-  public onSort(sorting): void {
-    const page: Page = this.pagingService.sortColumn(this.page, sorting);
-    this.page = _.cloneDeep(page);
-    this.getUsers(this.page);
-  }
-
-  public setPage(paging): void {
-    this.page.offset = paging.offset;
-    this.getUsers(this.page);
+  protected getData(data: Page): void {
+    this.getUsers(data);
   }
 
   public updateUser() {
@@ -126,9 +92,7 @@ export class ManageUsersComponent
   }
 
   protected processPagedData(data: PagedData): void {
-    let [page, newData] = this.pagingService.processPagedData(this.page, data);
-    this.page = page;
-    this.users = newData;
+    this.users = this.extraPagedData(data);
   }
 
   protected callSuccess(data: PagedData) {
@@ -144,13 +108,5 @@ export class ManageUsersComponent
       this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
     }
     this.isLoading = false;
-  }
-
-  public onSelect({ selected }): void {
-    console.log('Select Event', selected, this.selected);
-  }
-
-  public onActivate(event): void {
-    console.log('Activate Event', event);
   }
 }

@@ -86,8 +86,11 @@ export class EventsComponentService {
 			});
 	}
 
-	public getOrganizationGames(org_id: string): Observable<any> {
-		return this.eventsService.getOrganizationGames(org_id);
+	public getOrganizationGames(
+		org_id: string,
+		page: Page = null
+	): Observable<any> {
+		return this.eventsService.getOrganizationGames(org_id, page);
 	}
 
 	public payForEvent(gameId: string): Observable<[any, any]> {
