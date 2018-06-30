@@ -37,7 +37,6 @@ export default function MatchController(models, ResponseService) {
   function getOne(req, res) {
     const Address = models.Address;
     const Phone = models.Phone;
-    console.log('get one match:', req.match_id);
     Match.find({
       where: {
         id: req.params.match_id
