@@ -93,7 +93,7 @@ export class EventsComponentService {
 		return this.eventsService.getOrganizationGames(org_id, page);
 	}
 
-	public payForEvent(gameId: string): Observable<[any, any]> {
+	public getPreparedEventForPayment(gameId: string): Observable<[any, any]> {
 		return this.getEvent(gameId)
 			.combineLatest(this.eventsService.getPrices())
 			.map(([model, prices]: [any, any]) => {

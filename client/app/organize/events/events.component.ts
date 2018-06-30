@@ -35,6 +35,7 @@ import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/finally';
 
 enum ViewState {
   noEvents,
@@ -72,7 +73,7 @@ export class EventsComponent extends AbstractComponent
   protected sports: Option[];
   public games: Game[] = [];
 
-  protected organization_id: string = '';
+  public organization_id: string = '';
   public buttonText: string = 'Create';
   public viewState: ViewState = ViewState.noEvents;
 
@@ -166,12 +167,12 @@ export class EventsComponent extends AbstractComponent
     this.viewState = ViewState.editEvent;
   }
 
-  protected payForEvent(game_id: string): void {
+  public goPayForEvent(game_id: string): void {
     if (!this.isLoading) {
       this.isLoading = true;
 
       this.eventsComponentService
-        .payForEvent(game_id)
+        .getPreparedEventForPayment(game_id)
         .take(1)
         .finally(() => {
           this.isLoading = false;

@@ -59,7 +59,7 @@
 
           <ngx-datatable-column name="" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-success btn-sm" (click)="payForEvent(value)" title="Click to pay for this event">Pay</button>
+              <button class="btn btn-success btn-sm" (click)="goPayForEvent(value)" title="Click to pay for this event">Pay</button>
             </ng-template>
           </ngx-datatable-column>
 
@@ -95,7 +95,7 @@
           </div>
 
           <div class="col-6">
-             <rar-stripe [amount]="model.total"></rar-stripe>
+             <rar-stripe [amount]="model.total" [reference_id]="organization_id"></rar-stripe>
           </div>
 
         </div>

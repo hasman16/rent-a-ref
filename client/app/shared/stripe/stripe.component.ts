@@ -14,6 +14,11 @@ import {
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OrganizeService } from '../../services/index';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/combineLatest';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/finally';
+
 import * as _ from 'lodash';
 
 @Component({
@@ -25,11 +30,13 @@ import * as _ from 'lodash';
 export class StripeComponent implements AfterViewInit, OnDestroy {
   @ViewChild('cardInfo') cardInfo: ElementRef;
   @Input() amount: number = 0;
+  @Input() reference_id: string;
   @Output() finished: EventEmitter<boolean>;
 
   public card: any;
   public cardHandler = this.onChange.bind(this);
   public error: string;
+  public model: any = {};
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -71,7 +78,9 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  async onSubmit(form: NgForm) {
+  public onSubmit(form: NgForm): void {
+    console.log('onSubmit', form, this.model, this.card);
+    /*
     stripe
       .createToken(this.card, {
         country: 'US',
@@ -91,22 +100,24 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
       })
       .finally(() => {
         this.cd.markForCheck();
-      });
+      });*/
   }
 
   private makeStripePayment(token) {
-    return this.organizeService.makeStripePayment(1, token).subscribe(
-      success => {
-        console.log('success:', success);
-      },
-      (err: HttpErrorResponse) => {
-        console.log('error processing card2:', err);
-        this.errorOut(err);
-      },
-      () => {
+    return this.organizeService
+      .makeStripePayment(this.reference_id, token)
+      .finally(() => {
         this.cd.markForCheck();
-      }
-    );
+      })
+      .subscribe(
+        success => {
+          console.log('success:', success);
+        },
+        (err: HttpErrorResponse) => {
+          console.log('error processing card2:', err);
+          this.errorOut(err);
+        }
+      );
   }
 
   private errorOut(err: HttpErrorResponse) {
