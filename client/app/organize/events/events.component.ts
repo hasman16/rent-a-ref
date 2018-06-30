@@ -3,12 +3,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
+  OnDestroy,
   ViewChild,
   Input
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
+import { AbstractComponent } from '../../abstract/abstract.component';
 import { EventsComponentService } from './events-component.service';
 import { ToastComponent } from './../../shared/toast/toast.component';
 import {
@@ -48,7 +49,8 @@ enum ViewState {
   styleUrls: ['./events.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EventsComponent implements OnInit {
+export class EventsComponent extends AbstractComponent
+  implements OnInit, OnDestroy {
   @Input()
   set country(aCountry: string) {
     this.countryName = aCountry || 'usa';
@@ -69,9 +71,6 @@ export class EventsComponent implements OnInit {
   ];
   protected sports: Option[];
   public games: Game[] = [];
-  protected page: Page;
-  protected selected: any[] = [];
-  protected isLoading: boolean = false;
 
   protected organization_id: string = '';
   public buttonText: string = 'Create';
@@ -83,15 +82,17 @@ export class EventsComponent implements OnInit {
     protected route: ActivatedRoute,
     protected router: Router,
     protected eventsComponentService: EventsComponentService,
-    private pagingService: PagingService
+    protected pagingService: PagingService
   ) {
-    this.page = _.cloneDeep(this.pagingService.getDefaultPager());
+    super(pagingService);
     this.route.params.subscribe(params => {
       this.organization_id = params['organization_id'];
     });
   }
 
   public ngOnInit() {
+    this.initialize();
+    this.searchAttribute = 'event_name|';
     const gameData: PagedData = _.cloneDeep(this.route.snapshot.data.games);
     this.processPagedData(gameData);
 
@@ -104,27 +105,16 @@ export class EventsComponent implements OnInit {
     this.setEventsMode();
   }
 
-  public formatDate(dateString: string): string {
-    return moment(dateString).format('LL');
+  ngOnDestroy() {
+    this.tearDown();
   }
 
-  public processPagedData(data: PagedData): void {
-    let [page, newData] = this.pagingService.processPagedData(this.page, data);
-    console.log('pagex:', newData);
-    this.page = page;
-    this.games = newData;
+  protected processPagedData(data: PagedData): void {
+    this.games = this.extraPagedData(data);
   }
 
-  public onSelect(selected): void {
-    console.log('Select Game', selected, this.selected);
-    //const game = _.cloneDeep(_.head(selected));
-    //this.isEditing = true;
-    //this.editEvent(game);
-  }
-
-  public setPage(paging): void {
-    this.page.offset = paging.offset;
-    this.getEvents(this.page);
+  protected getData(page: Page): void {
+    this.getEvents(page);
   }
 
   public setEventsMode(): void {
@@ -231,11 +221,11 @@ export class EventsComponent implements OnInit {
     console.log('deleteEvent');
   }
 
-  public getEvents(page?: Page): void {
+  public getEvents(page: Page = null): void {
     this.isLoading = true;
 
     this.eventsComponentService
-      .getOrganizationGames(this.organization_id)
+      .getOrganizationGames(this.organization_id, page)
       .take(1)
       .finally(() => {
         this.isLoading = false;

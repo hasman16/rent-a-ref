@@ -30,12 +30,11 @@ function GameController(models, ResponseService) {
     }
     function getAllByOrganization(req, res) {
         var clause = ResponseService.produceSearchAndSortClause(req);
-        var whereClause = Object.assign(clause, {
-            where: {
-                organization_id: req.params.organization_id
-            }
+        var whereClause = Object.assign(clause.where, {
+            organization_id: req.params.organization_id
         });
-        Game.findAndCountAll(whereClause)
+        clause.where = whereClause;
+        Game.findAndCountAll(clause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
