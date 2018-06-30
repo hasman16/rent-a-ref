@@ -105,41 +105,41 @@ export class OrganizeComponent implements OnInit {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
-  getImageAddress(organization: Organization): string {
+  public getImageAddress(organization: Organization): string {
     let url = _.get(organization, 'images[0].location', '');
     return url;
   }
 
-  openModal(organization: Organization): void {
+  public openModal(organization: Organization): void {
     this.destination = `/api/upload_logo/${organization.id}`;
     this.cropImageModalService.show();
   }
 
-  closeModal($event): void {
+  public closeModal($event): void {
     this.cropImageModalService.hide();
   }
 
-  setOrganizeMode(): void {
+  public setOrganizeMode(): void {
     this.currentModel = {};
     this.isEditing = false;
     this.setHeadingTitle();
   }
 
-  setEditMode(model): void {
+  public setEditMode(model): void {
     this.currentModel = _.cloneDeep(model);
     this.isEditing = true;
     this.setHeadingTitle();
   }
 
-  modelHasId(model: any): boolean {
+  public modelHasId(model: any): boolean {
     return _.has(model, 'id') && Number(model.id) > 0;
   }
 
-  getSubmitText(hasId) {
+  public getSubmitText(hasId) {
     return hasId ? 'Update Organization' : 'Create Organization';
   }
 
-  setHeadingTitle(): void {
+  public setHeadingTitle(): void {
     if (this.isEditing) {
       const hasId = this.modelHasId(this.currentModel);
       this.heading = this.getSubmitText(hasId);
@@ -211,11 +211,11 @@ export class OrganizeComponent implements OnInit {
     }
   }
 
-  editEvents(organization_id: number): void {
+  public editEvents(organization_id: number): void {
     this.router.navigate([`/organization/${organization_id}/events/`]);
   }
 
-  getOrganizations(user_id?: any) {
+  public getOrganizations(user_id?: any) {
     const currentUser: User = this.auth.getCurrentUser();
 
     user_id = user_id || currentUser.id;
@@ -238,7 +238,7 @@ export class OrganizeComponent implements OnInit {
       );
   }
 
-  submitOrganization(model): void {
+  public submitOrganization(model): void {
     if (_.isNil(model.id) || !model.id) {
       this.submitNewOrganization(model);
     } else {
@@ -247,7 +247,7 @@ export class OrganizeComponent implements OnInit {
     }
   }
 
-  submitNewOrganization(model): void {
+  public submitNewOrganization(model): void {
     this.isLoading = true;
     this.organizeService
       .createOrganization({
@@ -321,7 +321,7 @@ export class OrganizeComponent implements OnInit {
       .value();
   }
 
-  submitUpdateOrganization(model): void {
+  public submitUpdateOrganization(model): void {
     let newPhones: Phone[] = _.filter(model.phones, (phone: Phone) =>
       _.isNil(phone.id)
     );
@@ -387,7 +387,7 @@ export class OrganizeComponent implements OnInit {
       );
   }
 
-  callFailure(err: HttpErrorResponse, message = 'An error occurred') {
+  public callFailure(err: HttpErrorResponse, message = 'An error occurred') {
     if (err.error instanceof Error) {
       this.toast.setMessage(message, 'danger');
     } else {

@@ -191,7 +191,6 @@ export class EventsComponent extends AbstractComponent
   }
 
   public editEvents(game_id: string): void {
-    console.log('editEvents:', game_id);
     if (!this.isLoading) {
       this.isLoading = true;
 
@@ -204,7 +203,6 @@ export class EventsComponent extends AbstractComponent
         })
         .subscribe(
           (model: any) => {
-            console.log('got game:', game_id);
             this.model = _.cloneDeep(model);
             this.buttonText = 'Update';
             this.viewState = ViewState.editEvent;
