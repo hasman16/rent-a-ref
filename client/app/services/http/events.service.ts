@@ -8,17 +8,20 @@ import {
   PagedData,
   Phone
 } from './../../shared/models/index';
+import { AbstractService } from './abstract.service';
 
 import { Observable } from 'rxjs/Observable';
 
 import * as _ from 'lodash';
 
 @Injectable()
-export class EventsService {
+export class EventsService extends AbstractService {
   private address: Address;
   private phones: Phone;
 
-  constructor(private http: HttpClient) {}
+  constructor(protected http: HttpClient) {
+    super(http);
+  }
 
   public getPrices(): Observable<any> {
     return this.http.get<any>(`/api/prices`);
@@ -73,13 +76,5 @@ export class EventsService {
   public updatePhone(game_id: string, phone: Phone): Observable<Game> {
     const url: string = `/api/games/${game_id}/phones/${phone.id}`;
     return this.putData(url, phone);
-  }
-
-  public postData<T extends BaseModel>(url: string, data: any): Observable<T> {
-    return this.http.post<T>(url, JSON.stringify(data));
-  }
-
-  public putData<T extends BaseModel>(url: string, data: any): Observable<T> {
-    return this.http.put<T>(url, JSON.stringify(data));
   }
 }

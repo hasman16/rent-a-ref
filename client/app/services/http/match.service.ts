@@ -9,6 +9,7 @@ import {
   PagedData,
   Phone
 } from './../../shared/models/index';
+import { AbstractService } from './abstract.service';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -16,12 +17,14 @@ import { Subject } from 'rxjs/Subject';
 import * as _ from 'lodash';
 
 @Injectable()
-export class MatchService {
+export class MatchService extends AbstractService {
   private address: Address;
   private phones: Phone;
   public matches$: Subject<any> = new Subject<any>();
 
-  constructor(private http: HttpClient) {}
+  constructor(protected http: HttpClient) {
+    super(http);
+  }
 
   public getAllMatches(queryParams: any = null): Observable<PagedData> {
     return <Observable<PagedData>>this.http.get(`/api/matches`, {
@@ -80,13 +83,5 @@ export class MatchService {
   public updatePhone(match_id: string, phone: Phone): Observable<Match> {
     const url: string = `/api/matches/${match_id}/phones/${phone.id}`;
     return this.putData(url, phone);
-  }
-
-  public postData<T extends BaseModel>(url: string, data: any): Observable<T> {
-    return this.http.post<T>(url, JSON.stringify(data));
-  }
-
-  public putData<T extends BaseModel>(url: string, data: any): Observable<T> {
-    return this.http.put<T>(url, JSON.stringify(data));
   }
 }
