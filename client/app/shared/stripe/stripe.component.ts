@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   AfterViewInit,
+  OnInit,
   OnDestroy,
   ViewChild,
   ElementRef,
@@ -28,10 +29,12 @@ import * as _ from 'lodash';
   styleUrls: ['./stripe.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StripeComponent implements AfterViewInit, OnDestroy {
+export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('cardInfo') cardInfo: ElementRef;
   @Input() amount: number = 0;
   @Input() reference_id: string;
+
+  @Input() productPlan: any[] = [];
   @Output() finished: EventEmitter<boolean>;
 
   public card: any;
@@ -66,6 +69,20 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
     this.card.mount(this.cardInfo.nativeElement);
 
     this.card.addEventListener('change', this.cardHandler);
+    console.log('productPlan::::', this.productPlan);
+  }
+
+  ngOnInit() {
+    /*
+    this.stripeService
+      .getProducts()
+      .switchMap(products => {
+        console.log('products:', products);
+        return this.stripeService.getPlans();
+      })
+      .subscribe(plans => {
+        console.log('plans:', plans);
+      });*/
   }
 
   public ngOnDestroy() {
@@ -106,31 +123,45 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
     };
     this.error = null;
     this.success = null;
-    console.log('onSubmit', form, this.model, this.card);
-    this.stripeService.createStripeOrder(order);
 
-    /*
     stripe
-      .createToken(this.card, {
-        country: 'US',
-        currency: 'usd'
+      .createSource(this.card, {
+        name: this.model.name
       })
-      .then(result => {
-        if (!_.has(result, 'error')) {
-          console.log('result:', result);
-          this.makeStripePayment(result.token);
+      .then(source => {
+        if (!_.has(source, 'error')) {
+          console.log('result:', source);
+          this.createAndPayOrder(order, source);
         } else {
           console.log('failed payment');
         }
       })
-      .catch((err: HttpErrorResponse) => {
+      .catch(err => {
         this.disableSubmit = false;
         console.log('error processing card 1:', err);
         this.errorOut(err);
-      })
+      });
+  }
+
+  private createAndPayOrder(order, source) {
+    this.error = null;
+    this.success = null;
+    this.disableSubmit = true;
+    return this.stripeService
+      .createAndPayOrder(this.reference_id, { order, source })
       .finally(() => {
+        this.disableSubmit = false;
         this.cd.markForCheck();
-      });*/
+      })
+      .subscribe(
+        success => {
+          console.log('success:', success);
+        },
+        (err: HttpErrorResponse) => {
+          console.log('error processing card2:', err);
+          this.errorOut(err);
+        }
+      );
   }
 
   private makeStripePayment(token) {

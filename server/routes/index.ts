@@ -26,6 +26,7 @@ import passwordController from './../controllers/passwordController';
 import personController from './../controllers/personController';
 import phoneController from './../controllers/phoneController';
 import sportController from './../controllers/sportController';
+import stripeController from './../controllers/stripeController';
 import userController from './../controllers/userController';
 
 import loginController from './../controllers/loginController';
@@ -41,6 +42,7 @@ import organizationRoutes from './organizationRoutes';
 import personRoutes from './personRoutes';
 import phoneRoutes from './phoneRoutes';
 import sportRoutes from './sportRoutes';
+import stripeRoutes from './stripeRoutes';
 import userRoutes from './userRoutes';
 
 /*
@@ -117,6 +119,7 @@ export default function setRoutes(app, models) {
   const personCtrl = personController(models, responseService);
   const phoneCtrl = phoneController(models, responseService);
   const sportCtrl = sportController(models, responseService);
+  const stripeCtrl = stripeController(models, responseService);
 
   const userCtrl = userController(models, responseService, SendGridService);
   const loginCtrl = loginController(
@@ -157,6 +160,7 @@ export default function setRoutes(app, models) {
   organizationRoutes(external, organizationCtrl);
   phoneRoutes(external, phoneCtrl);
   sportRoutes(external, sportCtrl);
+  stripeRoutes(external, stripeCtrl);
   userRoutes(external, ctrl);
 
   // Apply the routes to our application with the prefix /api

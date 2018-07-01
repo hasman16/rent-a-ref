@@ -44,9 +44,6 @@
           [offset]="page.offset"
           [limit]="page.limit"
           (page)='setPage($event)'
-          [selected]="selected"
-          [selectionType]="'single'"
-          (select)='onSelect($event)'
           >
           <ngx-datatable-column name="Event Name" prop="event_name" editable="false"></ngx-datatable-column>
           <ngx-datatable-column name="Date" prop="event_date" editable="false">
@@ -95,7 +92,7 @@
           </div>
 
           <div class="col-6">
-             <rar-stripe [amount]="model.total" [reference_id]="organization_id"></rar-stripe>
+             <rar-stripe [amount]="model.total" [productPlan]="eventsComponentService.productPlan" [reference_id]="organization_id"></rar-stripe>
           </div>
 
         </div>

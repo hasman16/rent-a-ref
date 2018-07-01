@@ -27,9 +27,6 @@ function organizationRoutes(setter, organizationCtrl) {
         .route('/organizations/:organization_id')
         .delete(authentication, isOrgOwner, organizationCtrl.deleteOne);
     router
-        .route('/make_payment/:organization_id')
-        .post(authentication, organizationCtrl.makeStripePayment);
-    router
         .route('/upload_logo/:organization_id')
         .post(authentication, imageUploader.single('photo'), organizationCtrl.uploadLogo);
 }

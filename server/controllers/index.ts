@@ -9,6 +9,7 @@ export * from './personController';
 export * from './phoneController';
 export * from './registerController';
 export * from './sportController';
+export * from './stripeController';
 export * from './userController';
 
 

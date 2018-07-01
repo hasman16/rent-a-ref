@@ -17,6 +17,7 @@ import {
 	AuthService,
 	EventsService,
 	StatesService,
+	StripeService,
 	UserService
 } from './../../services/index';
 import { Subject } from 'rxjs/Subject';
@@ -34,8 +35,12 @@ import * as moment from 'moment';
 
 @Injectable()
 export class EventsComponentService {
+	public products: any[] = [];
+	public plans: any[] = [];
+	public productPlan: any[] = [];
 	constructor(
 		private http: HttpClient,
+		private stripeService: StripeService,
 		protected statesService: StatesService,
 		protected eventsService: EventsService
 	) {}
@@ -93,11 +98,16 @@ export class EventsComponentService {
 		return this.eventsService.getOrganizationGames(org_id, page);
 	}
 
-	public getPreparedEventForPayment(gameId: string): Observable<[any, any]> {
+	public getPreparedEventForPayment(gameId: string): Observable<any> {
 		return this.getEvent(gameId)
-			.combineLatest(this.eventsService.getPrices())
-			.map(([model, prices]: [any, any]) => {
-				return this.prepareForPayment(model, prices);
+			.combineLatest(
+				this.stripeService.getProducts(),
+				this.stripeService.getPlans()
+			)
+			.map(([model, products, plans]: [any, any, any]) => {
+				this.products = _.cloneDeep(products.data);
+				this.plans = _.cloneDeep(plans.data);
+				return this.prepareForPayment(model, this.products, this.plans);
 			})
 			.take(1);
 	}
@@ -148,17 +158,30 @@ export class EventsComponentService {
 		};
 	}
 
-	public prepareForPayment(model: any, prices: any): any {
-		prices.forEach(price => {
-			switch (price.description) {
+	public prepareForPayment(model: any, products: any, plans: any): any {
+		console.log('prepareForPayment:', model, products, plans);
+		this.productPlan = plans.map(plan => {
+			let product = _.find(products, product => {
+				return product.id === plan.product;
+			});
+			return {
+				product,
+				plan
+			};
+		});
+		this.productPlan.forEach(productPlan => {
+			const product = productPlan.product;
+			const plan = productPlan.plan;
+
+			switch (product.unit_label) {
 				case 'kids':
-					model.kids_game_price = price.price;
+					model.kids_game_price = plan.amount || 0;
 					break;
 				case 'teens':
-					model.teen_game_price = price.price;
+					model.teen_game_price = plan.amount || 0;
 					break;
 				case 'adults':
-					model.adult_game_price = price.price;
+					model.adult_game_price = plan.amount || 0;
 					break;
 			}
 		});

@@ -14,5 +14,6 @@ __export(require("./personController"));
 __export(require("./phoneController"));
 __export(require("./registerController"));
 __export(require("./sportController"));
+__export(require("./stripeController"));
 __export(require("./userController"));
 //# sourceMappingURL=index.js.map

@@ -29,10 +29,6 @@ export default function organizationRoutes(setter, organizationCtrl) {
     .delete(authentication, isOrgOwner, organizationCtrl.deleteOne);
 
   router
-    .route('/make_payment/:organization_id')
-    .post(authentication, organizationCtrl.makeStripePayment);
-
-  router
     .route('/upload_logo/:organization_id')
     .post(
       authentication,

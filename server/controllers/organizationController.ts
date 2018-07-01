@@ -4,11 +4,9 @@ import { OrderModel } from './../types/index';
 export default function OrganizationController(models, ResponseService) {
   const Organization = models.Organization;
   const attributes = ['id', 'name', 'user_id'];
-  const stripe = new Stripe(process.env.STRIPE_KEY);
 
   function getAll(req, res) {
     const clause = ResponseService.produceSearchAndSortClause(req);
-    console.log('clause:::', clause);
     Organization.findAndCountAll(clause)
       .then(results => ResponseService.successCollection(res, results))
       .catch(error => ResponseService.exception(res, error));
@@ -144,68 +142,6 @@ export default function OrganizationController(models, ResponseService) {
     );
   }
 
-  function createOrder(req, res) {
-    const order: OrderModel = ResponseService.getItemFromBody(req);
-    // Charge the user's card:
-    console.log('order is:', order);
-    stripe.order
-      .create({
-        currency: order.currency,
-        items: order.items,
-        email: order.email,
-        shipping: order.shipping,
-        metadata: {
-          status: 'created'
-        }
-      })
-      .then(newOrder => {
-        ResponseService.success(res, newOrder);
-      })
-      .catch(err => {
-        ResponseService.exception(res, err);
-      });
-  }
-
-  function makeStripePayment(req, res) {
-    const token = ResponseService.getItemFromBody(req);
-    const source = ResponseService.getItemFromBody(req);
-
-    stripe.orders
-      .retrive(req.params.order_id)
-      .then((order: OrderModel) => {
-        const status: string = order.metadata.status;
-        if (status === 'pending' || status === 'paid') {
-          ResponseService.exception(res, status);
-        } else {
-          return stripe.charges.create({
-            source: source.id,
-            amount: order.amount,
-            currency: order.currency,
-            receipt_email: order.email
-          });
-        }
-      })
-      .then(charge => {
-        ResponseService.success(res, charge);
-      })
-      .catch(err => {
-        ResponseService.exception(res, err);
-      });
-    /*
-    stripe.charges
-      .create({
-        amount: 777,
-        currency: 'usd',
-        description: 'Example charge',
-        source: token.id
-      })
-      .then(charge => {
-        ResponseService.success(res, charge);
-      })
-      .catch(err => {
-        ResponseService.exception(res, err);
-      });*/
-  }
   /*
   { 
     fieldname: 'photo',
@@ -291,7 +227,6 @@ export default function OrganizationController(models, ResponseService) {
     create,
     update,
     deleteOne,
-    makeStripePayment,
     uploadLogo
   };
 }

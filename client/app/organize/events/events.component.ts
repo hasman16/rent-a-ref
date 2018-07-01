@@ -62,20 +62,14 @@ export class EventsComponent extends AbstractComponent
   protected model: any = {};
   protected prices: any[] = [];
 
-  protected titles: string[] = [
-    'Event Name',
-    'Event Date',
-    'Venue',
-    'Status',
-    '',
-    ''
-  ];
   protected sports: Option[];
   public games: Game[] = [];
 
   public organization_id: string = '';
   public buttonText: string = 'Create';
   public viewState: ViewState = ViewState.noEvents;
+  public products: any[] = [];
+  public plans: any[] = [];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -168,9 +162,10 @@ export class EventsComponent extends AbstractComponent
   }
 
   public goPayForEvent(game_id: string): void {
+    console.log('goPayForEvents');
     if (!this.isLoading) {
       this.isLoading = true;
-
+      console.log('get pa;lsdkf;asdfasd');
       this.eventsComponentService
         .getPreparedEventForPayment(game_id)
         .take(1)
@@ -181,6 +176,7 @@ export class EventsComponent extends AbstractComponent
           (model: any) => {
             this.model = _.cloneDeep(model);
             this.viewState = ViewState.payForEvent;
+            console.log('switch view');
             this.cd.markForCheck();
           },
           (err: HttpErrorResponse) => {
@@ -192,6 +188,7 @@ export class EventsComponent extends AbstractComponent
   }
 
   public editEvents(game_id: string): void {
+    console.log('editEvents');
     if (!this.isLoading) {
       this.isLoading = true;
 

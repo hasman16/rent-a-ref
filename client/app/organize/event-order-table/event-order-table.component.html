@@ -9,10 +9,10 @@
           {{model.kids_games}} x 
         </td>
         <td class="text-right item-width">
-          {{model.kids_game_price | currency:'USD'}}
+          {{model.kids_game_price / 100 | currency:'USD'}}
         </td>
         <td class="text-right item-width">
-        {{model.kids_games_total | currency:'USD' }}
+        {{model.kids_games_total / 100 | currency:'USD' }}
         </td>
       </tr>
       <tr class="org-table-item ">
@@ -23,10 +23,10 @@
           {{model.teen_games}} x 
         </td>
         <td class="text-right item-width">
-          {{model.teen_game_price | currency:'USD'}}
+          {{model.teen_game_price / 100 | currency:'USD'}}
         </td>
         <td class="text-right item-width">
-          {{model.teen_games_total | currency:'USD'}}
+          {{model.teen_games_total / 100 | currency:'USD'}}
         </td>
       </tr>
       <tr class="org-table-item ">
@@ -37,10 +37,10 @@
           {{model.adult_games}} x 
         </td>
         <td class="text-right item-width">
-          {{model.adult_game_price | currency:'USD'}}
+          {{model.adult_game_price / 100 | currency:'USD'}}
         </td>
         <td class="text-right item-width">
-          {{model.adult_games_total | currency:'USD'}}
+          {{model.adult_games_total / 100 | currency:'USD'}}
         </td>
       </tr>
       <tr>
@@ -51,7 +51,7 @@
           TOTAL
         </td>
         <td class="text-right">
-          {{model.total | currency:'USD'}}
+          {{model.total / 100 | currency:'USD'}}
         </td>
       </tr>
     </tbody>

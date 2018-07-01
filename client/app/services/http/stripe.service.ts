@@ -15,12 +15,27 @@ export class StripeService extends AbstractService {
   }
 
   public createStripeOrder(order: Order): Observable<any> {
-    return this.http.post(`/api/create_order`, JSON.stringify(order));
+    return this.http.post(`/api/stripe/create_order`, JSON.stringify(order));
+  }
+
+  public createAndPayOrder(org_id, order): Observable<any> {
+    return this.http.post(
+      `/api/stripe/create_pay_order/${org_id}`,
+      JSON.stringify(order)
+    );
+  }
+
+  public getProducts(): Observable<any> {
+    return this.http.get(`/api/stripe/products`);
+  }
+
+  public getPlans(): Observable<any> {
+    return this.http.get(`/api/stripe/plans`);
   }
 
   public makeStripePayment(org_id, payload): Observable<any> {
     return this.http.post(
-      `/api/make_payment/${org_id}`,
+      `/api/stripe/make_payment/${org_id}`,
       JSON.stringify(payload)
     );
   }

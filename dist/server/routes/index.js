@@ -23,6 +23,7 @@ var passwordController_1 = require("./../controllers/passwordController");
 var personController_1 = require("./../controllers/personController");
 var phoneController_1 = require("./../controllers/phoneController");
 var sportController_1 = require("./../controllers/sportController");
+var stripeController_1 = require("./../controllers/stripeController");
 var userController_1 = require("./../controllers/userController");
 var loginController_1 = require("./../controllers/loginController");
 var registerController_1 = require("./../controllers/registerController");
@@ -36,6 +37,7 @@ var organizationRoutes_1 = require("./organizationRoutes");
 var personRoutes_1 = require("./personRoutes");
 var phoneRoutes_1 = require("./phoneRoutes");
 var sportRoutes_1 = require("./sportRoutes");
+var stripeRoutes_1 = require("./stripeRoutes");
 var userRoutes_1 = require("./userRoutes");
 /*
 let client;
@@ -106,6 +108,7 @@ function setRoutes(app, models) {
     var personCtrl = personController_1.default(models, responseService);
     var phoneCtrl = phoneController_1.default(models, responseService);
     var sportCtrl = sportController_1.default(models, responseService);
+    var stripeCtrl = stripeController_1.default(models, responseService);
     var userCtrl = userController_1.default(models, responseService, sendGridService_1.default);
     var loginCtrl = loginController_1.default(bcrypt, jwt, models, responseService, sendGridService_1.default);
     var passwordCtrl = passwordController_1.default(bcrypt, jwt, models, responseService, sendGridService_1.default);
@@ -125,6 +128,7 @@ function setRoutes(app, models) {
     organizationRoutes_1.default(external, organizationCtrl);
     phoneRoutes_1.default(external, phoneCtrl);
     sportRoutes_1.default(external, sportCtrl);
+    stripeRoutes_1.default(external, stripeCtrl);
     userRoutes_1.default(external, ctrl);
     // Apply the routes to our application with the prefix /api
     //  app.use('/api', bruteforce.prevent, router);

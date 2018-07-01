@@ -1,13 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Stripe = require("stripe");
 function OrganizationController(models, ResponseService) {
     var Organization = models.Organization;
     var attributes = ['id', 'name', 'user_id'];
-    var stripe = new Stripe(process.env.STRIPE_KEY);
     function getAll(req, res) {
         var clause = ResponseService.produceSearchAndSortClause(req);
-        console.log('clause:::', clause);
         Organization.findAndCountAll(clause)
             .then(function (results) { return ResponseService.successCollection(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
@@ -121,45 +118,6 @@ function OrganizationController(models, ResponseService) {
         }
         ResponseService.findObject(organization_id, 'Organization', res, doDelete, 204);
     }
-    function createOrder(req, res) {
-        var order = ResponseService.getItemFromBody(req);
-        // Charge the user's card:
-        console.log('order is:', order);
-        stripe.order
-            .create({
-            currency: order.currency,
-            items: order.items,
-            email: order.email,
-            shipping: order.shipping,
-            metadata: {
-                status: 'created'
-            }
-        })
-            .then(function (charge) {
-            ResponseService.success(res, charge);
-        })
-            .catch(function (err) {
-            ResponseService.exception(res, err);
-        });
-    }
-    function makeStripePayment(req, res) {
-        var token = ResponseService.getItemFromBody(req);
-        // Charge the user's card:
-        console.log('token is:', token.id);
-        stripe.charges
-            .create({
-            amount: 777,
-            currency: 'usd',
-            description: 'Example charge',
-            source: token.id
-        })
-            .then(function (charge) {
-            ResponseService.success(res, charge);
-        })
-            .catch(function (err) {
-            ResponseService.exception(res, err);
-        });
-    }
     /*
     {
       fieldname: 'photo',
@@ -238,7 +196,6 @@ function OrganizationController(models, ResponseService) {
         create: create,
         update: update,
         deleteOne: deleteOne,
-        makeStripePayment: makeStripePayment,
         uploadLogo: uploadLogo
     };
 }
