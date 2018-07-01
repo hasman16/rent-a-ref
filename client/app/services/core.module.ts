@@ -15,6 +15,7 @@ import {
   PagingService,
   ProfileService,
   StatesService,
+  StripeService,
   UserService
 } from './http/index';
 import { TokenInterceptor, TokenService } from './interceptors/index';
@@ -37,6 +38,7 @@ import {
     PagingService,
     ProfileService,
     StatesService,
+    StripeService,
     TokenService,
     UserService,
     AdminEventsResolver,

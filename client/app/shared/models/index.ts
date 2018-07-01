@@ -5,6 +5,7 @@ export * from './comment';
 export * from './game';
 export * from './login';
 export * from './match';
+export * from './order';
 export * from './organization';
 export * from './person';
 export * from './post';

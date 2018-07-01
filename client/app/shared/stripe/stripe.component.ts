@@ -13,7 +13,8 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { OrganizeService } from '../../services/index';
+import { Order } from './../models/index';
+import { OrganizeService, StripeService } from '../../services/index';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
@@ -37,10 +38,13 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
   public cardHandler = this.onChange.bind(this);
   public error: string;
   public model: any = {};
+  public success: any = null;
+  public disableSubmit: boolean = false;
 
   constructor(
     private cd: ChangeDetectorRef,
-    private organizeService: OrganizeService
+    private organizeService: OrganizeService,
+    private stripeService: StripeService
   ) {}
 
   public ngAfterViewInit() {
@@ -72,14 +76,39 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
   public onChange({ error }) {
     if (error) {
       this.error = error.message;
+      this.disableSubmit = true;
     } else {
       this.error = null;
+      this.disableSubmit = false;
     }
+    console.log('error:', this.error);
     this.cd.detectChanges();
   }
 
   public onSubmit(form: NgForm): void {
+    let order: Order = <Order>{
+      currency: 'usd',
+      items: [],
+      email: this.model.email,
+      shipping: {
+        name: this.model.name,
+        address: {
+          line1: this.model.line1,
+          city: this.model.city,
+          state: this.model.state,
+          postal_code: this.model.zip,
+          country: 'US'
+        }
+      },
+      metadata: {
+        status: 'created'
+      }
+    };
+    this.error = null;
+    this.success = null;
     console.log('onSubmit', form, this.model, this.card);
+    this.stripeService.createStripeOrder(order);
+
     /*
     stripe
       .createToken(this.card, {
@@ -95,6 +124,7 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
         }
       })
       .catch((err: HttpErrorResponse) => {
+        this.disableSubmit = false;
         console.log('error processing card 1:', err);
         this.errorOut(err);
       })
@@ -104,9 +134,13 @@ export class StripeComponent implements AfterViewInit, OnDestroy {
   }
 
   private makeStripePayment(token) {
-    return this.organizeService
+    this.error = null;
+    this.success = null;
+    this.disableSubmit = true;
+    return this.stripeService
       .makeStripePayment(this.reference_id, token)
       .finally(() => {
+        this.disableSubmit = false;
         this.cd.markForCheck();
       })
       .subscribe(

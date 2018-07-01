@@ -121,6 +121,27 @@ function OrganizationController(models, ResponseService) {
         }
         ResponseService.findObject(organization_id, 'Organization', res, doDelete, 204);
     }
+    function createOrder(req, res) {
+        var order = ResponseService.getItemFromBody(req);
+        // Charge the user's card:
+        console.log('order is:', order);
+        stripe.order
+            .create({
+            currency: order.currency,
+            items: order.items,
+            email: order.email,
+            shipping: order.shipping,
+            metadata: {
+                status: 'created'
+            }
+        })
+            .then(function (charge) {
+            ResponseService.success(res, charge);
+        })
+            .catch(function (err) {
+            ResponseService.exception(res, err);
+        });
+    }
     function makeStripePayment(req, res) {
         var token = ResponseService.getItemFromBody(req);
         // Charge the user's card:

@@ -183,11 +183,4 @@ export class OrganizeService extends AbstractService {
   public bulkUpdatePhones(phones: Phone[], org_id): Observable<Phone[]> {
     return this.bulkUpdate<Phone>(this.bulkPhone(phones, org_id));
   }
-
-  public makeStripePayment(org_id, payload): Observable<any> {
-    return this.http.post(
-      `/api/make_payment/${org_id}`,
-      JSON.stringify(payload)
-    );
-  }
 }
