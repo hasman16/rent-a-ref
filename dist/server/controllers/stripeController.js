@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require("lodash");
 var Stripe = require("stripe");
 function StripeController(models, ResponseService) {
     var stripe = new Stripe(process.env.STRIPE_KEY);
@@ -15,10 +16,36 @@ function StripeController(models, ResponseService) {
             .then(function (plans) { return ResponseService.success(res, plans); })
             .catch(function (err) { return ResponseService.exception(res, err); });
     }
+    function matchProductsAndPlans(products, plans) {
+        return _.map(plans, function (plan) {
+            var product = _.find(products, function (product) {
+                return product.id === plan.product;
+            });
+            return {
+                product: product,
+                plan: plan
+            };
+        });
+    }
+    function listProductsAndPlans(req, res) {
+        var products = [];
+        stripe.products
+            .list({ limit: 10 })
+            .then(function (newProducts) {
+            products = newProducts.data;
+            return stripe.plans.list({ limit: 10 });
+        })
+            .then(function (newPlans) {
+            var plans = newPlans.data;
+            var productPlan = matchProductsAndPlans(products, plans);
+            ResponseService.success(res, productPlan);
+        })
+            .catch(function (err) { return ResponseService.exception(res, err); });
+    }
     function createOrder(req, res) {
         var order = ResponseService.getItemFromBody(req);
         // Charge the user's card:
-        stripe.order
+        stripe.orders
             .create({
             currency: order.currency,
             items: order.items,
@@ -60,12 +87,15 @@ function StripeController(models, ResponseService) {
             ResponseService.exception(res, err);
         });
     }
-    function createAndPayOrder(res, req) {
+    function createAndPayOrder(req, res) {
         var obj = ResponseService.getItemFromBody(req);
         var order = obj.order;
         var source = obj.source;
+        if (source.type === 'card' && !source.livemode) {
+            source.id = 'tok_visa';
+        }
         // Charge the user's card:
-        stripe.order
+        stripe.orders
             .create({
             currency: order.currency,
             items: order.items,
@@ -101,6 +131,7 @@ function StripeController(models, ResponseService) {
         createAndPayOrder: createAndPayOrder,
         listPlans: listPlans,
         listProducts: listProducts,
+        listProductsAndPlans: listProductsAndPlans,
         makeStripePayment: makeStripePayment
     };
 }

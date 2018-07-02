@@ -92,7 +92,7 @@
           </div>
 
           <div class="col-6">
-             <rar-stripe [amount]="model.total" [productPlan]="eventsComponentService.productPlan" [reference_id]="organization_id"></rar-stripe>
+             <rar-stripe [amount]="model.total" [lineItems]="eventsComponentService.lineItems" [reference_id]="organization_id"></rar-stripe>
           </div>
 
         </div>

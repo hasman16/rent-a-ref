@@ -38,6 +38,7 @@ export class EventsComponentService {
 	public products: any[] = [];
 	public plans: any[] = [];
 	public productPlan: any[] = [];
+	public lineItems: any[] = [];
 	constructor(
 		private http: HttpClient,
 		private stripeService: StripeService,
@@ -99,15 +100,14 @@ export class EventsComponentService {
 	}
 
 	public getPreparedEventForPayment(gameId: string): Observable<any> {
+		this.lineItems = [];
 		return this.getEvent(gameId)
-			.combineLatest(
-				this.stripeService.getProducts(),
-				this.stripeService.getPlans()
-			)
-			.map(([model, products, plans]: [any, any, any]) => {
-				this.products = _.cloneDeep(products.data);
-				this.plans = _.cloneDeep(plans.data);
-				return this.prepareForPayment(model, this.products, this.plans);
+			.combineLatest(this.stripeService.getProducts())
+			.map(([model, products]: [any, any]) => {
+				this.products = _.filter(products.data, product => {
+					return product.type === 'good';
+				});
+				return this.prepareForPayment(model, this.products);
 			})
 			.take(1);
 	}
@@ -158,33 +158,42 @@ export class EventsComponentService {
 		};
 	}
 
-	public prepareForPayment(model: any, products: any, plans: any): any {
-		console.log('prepareForPayment:', model, products, plans);
-		this.productPlan = plans.map(plan => {
-			let product = _.find(products, product => {
-				return product.id === plan.product;
-			});
-			return {
-				product,
-				plan
-			};
-		});
-		this.productPlan.forEach(productPlan => {
-			const product = productPlan.product;
-			const plan = productPlan.plan;
+	public prepareForPayment(model: any, products: any[]): any {
+		console.log('prepareForPayment:', model, products);
+		const addSku = (amount, sku) => {
+			if (amount > 0) {
+				lineItems.push({
+					type: 'sku',
+					parent: sku.id,
+					quantity: amount
+				});
+			}
+		};
+		let lineItems: any[] = [];
 
-			switch (product.unit_label) {
+		_.forEach(products, product => {
+			const skus = product.skus;
+			const data = _.head(skus.data);
+			let value: string = product.name.split(/\s/)[0];
+
+			console.log('skus:', value.toLowerCase(), data);
+
+			switch (value.toLowerCase()) {
 				case 'kids':
-					model.kids_game_price = plan.amount || 0;
+					model.kids_game_price = data.price || 0;
+					addSku(model.kids_games, data);
 					break;
 				case 'teens':
-					model.teen_game_price = plan.amount || 0;
+					model.teen_game_price = data.price || 0;
+					addSku(model.teen_games, data);
 					break;
 				case 'adults':
-					model.adult_game_price = plan.amount || 0;
+					model.adult_game_price = data.price || 0;
+					addSku(model.adult_games, data);
 					break;
 			}
 		});
+
 		model = Object.assign(
 			{},
 			{
@@ -198,7 +207,8 @@ export class EventsComponentService {
 		model.kids_games_total = model.kids_game_price * model.kids_games;
 		model.teen_games_total = model.teen_game_price * model.teen_games;
 		model.adult_games_total = model.adult_game_price * model.adult_games;
-
+		console.log('lineItems:', lineItems);
+		this.lineItems = _.cloneDeep(lineItems);
 		model['total'] =
 			model.kids_games_total +
 			model.teen_games_total +

@@ -12,6 +12,9 @@ function stripeRoutes(setter, stripeCtrl) {
     router.route('/stripe/products').get(authentication, stripeCtrl.listProducts);
     router.route('/stripe/plans').get(authentication, stripeCtrl.listPlans);
     router
+        .route('/stripe/products_and_plans')
+        .get(authentication, stripeCtrl.listProductsAndPlans);
+    router
         .route('/stripe/create_order')
         .post(authentication, stripeCtrl.createOrder);
     router

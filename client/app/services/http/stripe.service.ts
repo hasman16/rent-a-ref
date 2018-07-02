@@ -33,6 +33,10 @@ export class StripeService extends AbstractService {
     return this.http.get(`/api/stripe/plans`);
   }
 
+  public getProductsAndPlans(): Observable<any> {
+    return this.http.get(`/api/stripe/products_and_plans`);
+  }
+
   public makeStripePayment(org_id, payload): Observable<any> {
     return this.http.post(
       `/api/stripe/make_payment/${org_id}`,

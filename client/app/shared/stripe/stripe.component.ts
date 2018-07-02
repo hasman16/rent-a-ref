@@ -34,7 +34,7 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
   @Input() amount: number = 0;
   @Input() reference_id: string;
 
-  @Input() productPlan: any[] = [];
+  @Input() lineItems: any[] = [];
   @Output() finished: EventEmitter<boolean>;
 
   public card: any;
@@ -105,10 +105,10 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
   public onSubmit(form: NgForm): void {
     let order: Order = <Order>{
       currency: 'usd',
-      items: [],
+      items: this.lineItems,
       email: this.model.email,
       shipping: {
-        name: this.model.name,
+        name: this.model.fullname,
         address: {
           line1: this.model.line1,
           city: this.model.city,
@@ -185,9 +185,11 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
       );
   }
 
-  private errorOut(err: HttpErrorResponse) {
-    if (_.has(err, 'error.message.message')) {
-      this.error = err.error.message.message;
+  private errorOut(err: any) {
+    if (err && err.message && err.message.message) {
+      this.error = err.message.message;
+    } else if (err.message) {
+      this.error = err.message;
     }
   }
 }

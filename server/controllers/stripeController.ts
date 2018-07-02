@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import * as Stripe from 'stripe';
 import { OrderModel } from './../types/index';
 
@@ -18,10 +19,38 @@ export default function StripeController(models, ResponseService) {
       .catch(err => ResponseService.exception(res, err));
   }
 
+  function matchProductsAndPlans(products, plans) {
+    return _.map(plans, plan => {
+      let product = _.find(products, product => {
+        return product.id === plan.product;
+      });
+      return {
+        product,
+        plan
+      };
+    });
+  }
+
+  function listProductsAndPlans(req, res) {
+    let products = [];
+    stripe.products
+      .list({ limit: 10 })
+      .then(newProducts => {
+        products = newProducts.data;
+        return stripe.plans.list({ limit: 10 });
+      })
+      .then(newPlans => {
+        const plans = newPlans.data;
+        const productPlan = matchProductsAndPlans(products, plans);
+        ResponseService.success(res, productPlan);
+      })
+      .catch(err => ResponseService.exception(res, err));
+  }
+
   function createOrder(req, res) {
     const order: OrderModel = ResponseService.getItemFromBody(req);
     // Charge the user's card:
-    stripe.order
+    stripe.orders
       .create({
         currency: order.currency,
         items: order.items,
@@ -65,13 +94,16 @@ export default function StripeController(models, ResponseService) {
       });
   }
 
-  function createAndPayOrder(res, req) {
+  function createAndPayOrder(req, res) {
     const obj = ResponseService.getItemFromBody(req);
     const order: OrderModel = obj.order;
-    const source = obj.source;
+    let source = obj.source;
 
+    if (source.type === 'card' && !source.livemode) {
+      source.id = 'tok_visa';
+    }
     // Charge the user's card:
-    stripe.order
+    stripe.orders
       .create({
         currency: order.currency,
         items: order.items,
@@ -107,6 +139,7 @@ export default function StripeController(models, ResponseService) {
     createAndPayOrder,
     listPlans,
     listProducts,
+    listProductsAndPlans,
     makeStripePayment
   };
 }
