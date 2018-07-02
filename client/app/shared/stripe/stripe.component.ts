@@ -69,21 +69,9 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
     this.card.mount(this.cardInfo.nativeElement);
 
     this.card.addEventListener('change', this.cardHandler);
-    console.log('productPlan::::', this.productPlan);
   }
 
-  ngOnInit() {
-    /*
-    this.stripeService
-      .getProducts()
-      .switchMap(products => {
-        console.log('products:', products);
-        return this.stripeService.getPlans();
-      })
-      .subscribe(plans => {
-        console.log('plans:', plans);
-      });*/
-  }
+  ngOnInit() {}
 
   public ngOnDestroy() {
     this.card.removeEventListener('change', this.cardHandler);

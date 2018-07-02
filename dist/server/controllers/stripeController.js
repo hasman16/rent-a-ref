@@ -91,9 +91,6 @@ function StripeController(models, ResponseService) {
         var obj = ResponseService.getItemFromBody(req);
         var order = obj.order;
         var source = obj.source;
-        if (source.type === 'card' && !source.livemode) {
-            source.id = 'tok_visa';
-        }
         // Charge the user's card:
         stripe.orders
             .create({

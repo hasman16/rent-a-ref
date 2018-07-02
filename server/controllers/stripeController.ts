@@ -99,9 +99,6 @@ export default function StripeController(models, ResponseService) {
     const order: OrderModel = obj.order;
     let source = obj.source;
 
-    if (source.type === 'card' && !source.livemode) {
-      source.id = 'tok_visa';
-    }
     // Charge the user's card:
     stripe.orders
       .create({
