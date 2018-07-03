@@ -40,6 +40,8 @@ const Game = function(sequelize, DataTypes) {
 				type: DataTypes.INTEGER,
 				defaultValue: 0
 			},
+			charge_id: DataTypes.STRING(128),
+			order_id: DataTypes.STRING(128),
 			status: {
 				type: DataTypes.STRING(32),
 				allowNull: false,

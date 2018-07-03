@@ -165,7 +165,6 @@ export class EventsComponent extends AbstractComponent
     console.log('goPayForEvents');
     if (!this.isLoading) {
       this.isLoading = true;
-      console.log('get pa;lsdkf;asdfasd');
       this.eventsComponentService
         .getPreparedEventForPayment(game_id)
         .take(1)

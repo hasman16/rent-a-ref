@@ -106,7 +106,9 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
         }
       },
       metadata: {
-        status: 'created'
+        status: 'created',
+        reference_id: this.reference_id,
+        reference_id_type: 'event_id'
       }
     };
     this.error = null;
@@ -116,10 +118,10 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
       .createSource(this.card, {
         name: this.model.name
       })
-      .then(source => {
-        if (!_.has(source, 'error')) {
-          console.log('result:', source);
-          this.createAndPayOrder(order, source);
+      .then(result => {
+        if (_.has(result, 'source')) {
+          console.log('result:', result.source);
+          this.createAndPayOrder(order, result.source);
         } else {
           console.log('failed payment');
         }
@@ -136,7 +138,7 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
     this.success = null;
     this.disableSubmit = true;
     return this.stripeService
-      .createAndPayOrder(this.reference_id, { order, source })
+      .createAndPayOrder(this.reference_id, { order: order, source: source.id })
       .finally(() => {
         this.disableSubmit = false;
         this.cd.markForCheck();
