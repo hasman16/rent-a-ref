@@ -72,6 +72,7 @@ import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
 import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
 import { MatchesComponent } from './matches/matches.component';
+import { AssignUsersComponent } from './assign-users/assign-users.component';
 
 /* Misc. */
 import { DropdownDirective } from './shared/dropdown.directive';
@@ -126,6 +127,7 @@ import {
         ManageUsersComponent,
         ManageEventsComponent,
         MatchesComponent,
+        AssignUsersComponent,
         RegisterComponent,
         ResetComponent,
         ResetPasswordComponent,

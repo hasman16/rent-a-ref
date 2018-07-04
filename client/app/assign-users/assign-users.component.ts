@@ -1,17 +1,17 @@
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, Output, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { AbstractComponent } from '../../abstract/abstract.component';
+import { AbstractComponent } from '../abstract/abstract.component';
 
-import { ToastComponent } from '../../shared/toast/toast.component';
+import { ToastComponent } from '../shared/toast/toast.component';
 import {
   CanComponentDeactivate,
   PagingService,
   UserService
-} from '../../services/index';
-import { Page, PagedData, Sorts, User } from './../../shared/models/index';
+} from '../services/index';
+import { Page, PagedData, Sorts, User } from '../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -20,18 +20,23 @@ import 'rxjs/add/operator/finally';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'rar-manage-users',
-  templateUrl: './manage-users.component.html',
-  styleUrls: ['./manage-users.component.scss']
+  selector: 'rar-assign-users',
+  templateUrl: './assign-users.component.html',
+  styleUrls: ['./assign-users.component.scss']
 })
-export class ManageUsersComponent extends AbstractComponent
-  implements OnInit, OnDestroy, CanComponentDeactivate {
+export class AssignUsersComponent extends AbstractComponent
+  implements OnInit, OnDestroy {
+  @Input()
+  set setMatchId(id) {
+    this.match_id = id;
+    this.getUsers(this.page);
+  }
   public users: User[] = [];
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
   protected currentUser: User = <User>{};
+  protected match_id: string;
   public placeholder: string = 'Type to filter by email ...';
-
   constructor(
     private route: ActivatedRoute,
     public toast: ToastComponent,
@@ -44,24 +49,20 @@ export class ManageUsersComponent extends AbstractComponent
   ngOnInit() {
     this.initialize();
     this.searchAttribute = 'email|';
-    const pagedData: PagedData = this.route.snapshot.data.userData;
-    this.processPagedData(pagedData);
+    this.getUsers(this.page);
   }
 
   ngOnDestroy() {
     this.tearDown();
   }
 
-  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.allowEdit) {
-      return true;
-    }
-  }
+  public getUsers(params: Page) {
+    let page: Page = _.cloneDeep(params);
+    page.search = 'can_referee|active,' + page.search;
 
-  public getUsers(params: any) {
     this.isLoading = true;
     this.userService
-      .getUsers(params)
+      .getUsers(page)
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
@@ -72,7 +73,7 @@ export class ManageUsersComponent extends AbstractComponent
     this.getUsers(data);
   }
 
-  public updateUser() {
+  public officiateMatch(user_id) {
     this.userService
       .getUsers(this.page)
       .subscribe(
@@ -81,15 +82,13 @@ export class ManageUsersComponent extends AbstractComponent
       );
   }
 
-  public deleteUser(user) {
-    this.userService.deleteUser(user).subscribe(
-      data => this.toast.setMessage('user deleted successfully.', 'success'),
-      (err: HttpErrorResponse) => this.callFailure(err),
-      () => {
-        this.page = this.pagingService.getDefaultPager();
-        this.getUsers(this.page);
-      }
-    );
+  public viewSchedule(user_id) {
+    this.userService
+      .getUsers(this.page)
+      .subscribe(
+        res => this.callSuccess(res),
+        (err: HttpErrorResponse) => this.callFailure(err)
+      );
   }
 
   protected processPagedData(data: PagedData): void {

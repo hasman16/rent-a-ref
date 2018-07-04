@@ -118,7 +118,6 @@ export class MatchesComponent implements OnInit {
 
   public processPagedData(data: PagedData): void {
     let [page, newData] = this.pagingService.processPagedData(this.page, data);
-    console.log('page:', newData);
     this.page = page;
     this.matches = newData;
   }
@@ -239,7 +238,6 @@ export class MatchesComponent implements OnInit {
   }
 
   public submitMatch(model): void {
-    console.log('submitMatch:', model);
     if (_.isNil(model.id) || !model.id) {
       this.submitNewMatch(model);
     } else {
@@ -309,7 +307,6 @@ export class MatchesComponent implements OnInit {
     this.isLoading = false;
 
     if (_.isArray(this.matches) && this.matches.length > 0) {
-      console.log('masdfasatches.length:', this.matches.length);
       this.viewState = ViewState.listMatches;
     } else {
       this.viewState = ViewState.noMatches;

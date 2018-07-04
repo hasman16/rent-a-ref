@@ -114,7 +114,7 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
     };
     this.error = null;
     this.success = null;
-    console.log('onSubmit:', order);
+
     stripe
       .createSource(this.card, {
         name: this.model.name
@@ -129,7 +129,6 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
       })
       .catch(err => {
         this.disableSubmit = false;
-        console.log('error processing card 1:', err);
         this.errorOut(err);
       });
   }
@@ -138,7 +137,6 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
     this.error = null;
     this.success = null;
     this.disableSubmit = true;
-    console.log('createAndPayOrder');
     return this.stripeService
       .createAndPayOrder({ order: order, source: source.id })
       .finally(() => {
@@ -147,13 +145,11 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
       })
       .subscribe(
         success => {
-          console.log('success:', success);
           this.paymentState.emit(<Payment>{
             paymentState: PaymentState.PaymentSuccess
           });
         },
         (err: HttpErrorResponse) => {
-          console.log('error processing card2:', err);
           this.errorOut(err);
           this.paymentState.emit(<Payment>{
             paymentState: PaymentState.PaymentError
@@ -180,7 +176,6 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
           });
         },
         (err: HttpErrorResponse) => {
-          console.log('error processing card2:', err);
           this.errorOut(err);
           this.paymentState.emit(<Payment>{
             paymentState: PaymentState.PaymentError

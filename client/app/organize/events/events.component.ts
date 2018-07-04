@@ -71,6 +71,7 @@ export class EventsComponent extends AbstractComponent
   public viewState: ViewState = ViewState.noEvents;
   public products: any[] = [];
   public plans: any[] = [];
+  public placeholder: string = 'Type to filter by "Event Name" ...';
 
   constructor(
     private cd: ChangeDetectorRef,
