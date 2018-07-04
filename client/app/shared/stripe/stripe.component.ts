@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PaymentState, Payment } from './stripe-state';
 import { Order } from './../models/index';
 import { OrganizeService, StripeService } from '../../services/index';
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +36,7 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
   @Input() reference_id: string;
 
   @Input() lineItems: any[] = [];
-  @Output() finished: EventEmitter<boolean>;
+  @Output() paymentState: EventEmitter<Payment> = new EventEmitter<Payment>();
 
   public card: any;
   public cardHandler = this.onChange.bind(this);
@@ -113,7 +114,7 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
     };
     this.error = null;
     this.success = null;
-
+    console.log('onSubmit:', order);
     stripe
       .createSource(this.card, {
         name: this.model.name
@@ -137,8 +138,9 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
     this.error = null;
     this.success = null;
     this.disableSubmit = true;
+    console.log('createAndPayOrder');
     return this.stripeService
-      .createAndPayOrder(this.reference_id, { order: order, source: source.id })
+      .createAndPayOrder({ order: order, source: source.id })
       .finally(() => {
         this.disableSubmit = false;
         this.cd.markForCheck();
@@ -146,10 +148,16 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
       .subscribe(
         success => {
           console.log('success:', success);
+          this.paymentState.emit(<Payment>{
+            paymentState: PaymentState.PaymentSuccess
+          });
         },
         (err: HttpErrorResponse) => {
           console.log('error processing card2:', err);
           this.errorOut(err);
+          this.paymentState.emit(<Payment>{
+            paymentState: PaymentState.PaymentError
+          });
         }
       );
   }
@@ -167,10 +175,16 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
       .subscribe(
         success => {
           console.log('success:', success);
+          this.paymentState.emit(<Payment>{
+            paymentState: PaymentState.PaymentSuccess
+          });
         },
         (err: HttpErrorResponse) => {
           console.log('error processing card2:', err);
           this.errorOut(err);
+          this.paymentState.emit(<Payment>{
+            paymentState: PaymentState.PaymentError
+          });
         }
       );
   }

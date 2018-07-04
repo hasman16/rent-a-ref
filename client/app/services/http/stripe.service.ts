@@ -18,7 +18,7 @@ export class StripeService extends AbstractService {
     return this.http.post(`/api/stripe/create_order`, JSON.stringify(order));
   }
 
-  public createAndPayOrder(org_id, order): Observable<any> {
+  public createAndPayOrder(order): Observable<any> {
     return this.http.post(
       `/api/stripe/create_pay_order`,
       JSON.stringify(order)

@@ -94,7 +94,9 @@ export default function StripeController(models, ResponseService) {
     const metadata = ResponseService.getItemFromBody(req);
 
     stripe.orders
-      .update(req.params.order_id, metadata)
+      .update(req.params.order_id, {
+        metadata
+      })
       .then(newOrder => {
         ResponseService.success(res, newOrder);
       })
@@ -124,7 +126,7 @@ export default function StripeController(models, ResponseService) {
       });
   }
 
-  function createCharge(req, res, newOrder, source) {
+  async function createCharge(req, res, newOrder, source) {
     const Game = models.Game;
     const status: string = newOrder.metadata.status;
 
@@ -154,14 +156,19 @@ export default function StripeController(models, ResponseService) {
           },
           metadata
         );
-
-        return this.stripe
-          .updataOrder(newOrder.id, metadata)
-          .then(() => {
-            return Game.update(newOrder.metadata.reference_id, metadata);
+        return stripe.orders
+          .update(newOrder.id, {
+            metadata
           })
-          .then(() => {
-            ResponseService.success(res, newOrder);
+          .then(result1 => {
+            return Game.update(metadata, {
+              where: {
+                id: newOrder.metadata.reference_id
+              }
+            });
+          })
+          .then(result2 => {
+            ResponseService.success(res, result2);
           });
       });
   }

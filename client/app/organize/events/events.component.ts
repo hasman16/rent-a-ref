@@ -29,7 +29,7 @@ import {
   State,
   Sport
 } from './../../shared/models/index';
-
+import { PaymentState, Payment } from './../../shared/stripe/stripe-state';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
@@ -66,6 +66,7 @@ export class EventsComponent extends AbstractComponent
   public games: Game[] = [];
 
   public organization_id: string = '';
+  public game_id: string = '';
   public buttonText: string = 'Create';
   public viewState: ViewState = ViewState.noEvents;
   public products: any[] = [];
@@ -161,8 +162,20 @@ export class EventsComponent extends AbstractComponent
     this.viewState = ViewState.editEvent;
   }
 
+  public hasPaid(id: string): boolean {
+    let game = _.find(this.games, game => {
+      return game.id == id;
+    });
+    return game && game.status == 'pending' ? false : true;
+  }
+
+  public paymentState(payment: Payment): void {
+    if (payment.paymentState == PaymentState.PaymentSuccess) {
+      this.getEvents(this.page);
+    }
+  }
+
   public goPayForEvent(game_id: string): void {
-    console.log('goPayForEvents');
     if (!this.isLoading) {
       this.isLoading = true;
       this.eventsComponentService
@@ -174,8 +187,8 @@ export class EventsComponent extends AbstractComponent
         .subscribe(
           (model: any) => {
             this.model = _.cloneDeep(model);
+            this.game_id = game_id;
             this.viewState = ViewState.payForEvent;
-            console.log('switch view');
             this.cd.markForCheck();
           },
           (err: HttpErrorResponse) => {
@@ -187,7 +200,6 @@ export class EventsComponent extends AbstractComponent
   }
 
   public editEvents(game_id: string): void {
-    console.log('editEvents');
     if (!this.isLoading) {
       this.isLoading = true;
 
