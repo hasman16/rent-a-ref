@@ -56,13 +56,13 @@
 
           <ngx-datatable-column name="" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-success btn-sm" (click)="goPayForEvent(value)" title="Click to pay for this event">Pay</button>
+              <button class="btn btn-success btn-sm" (click)="goPayForEvent(value)" title="Click to pay for this event" [disabled]="hasPaid(value)">Pay</button>
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-primary btn-sm" (click)="editEvents(value)" title="Click to edit this event">Edit</button>
+              <button class="btn btn-primary btn-sm" (click)="editEvents(value)" title="Click to edit this event"  [disabled]="hasPaid(value)">Edit</button>
             </ng-template>
           </ngx-datatable-column>
 
@@ -92,7 +92,7 @@
           </div>
 
           <div class="col-6">
-             <rar-stripe [amount]="model.total" [lineItems]="eventsComponentService.lineItems" [reference_id]="organization_id"></rar-stripe>
+             <rar-stripe [amount]="model.total" [lineItems]="eventsComponentService.lineItems" [reference_id]="game_id" (paymentState)="paymentState($event)"></rar-stripe>
           </div>
 
         </div>
