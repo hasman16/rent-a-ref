@@ -1,5 +1,4 @@
-<div style="min-height: 750px;min-width: 100%">
-  <h1 class="etched-text">Assign Officials</h1>
+<div>
 
   <rar-search-box 
   [placeholder]="placeholder"
@@ -50,7 +49,9 @@
         </ng-template>
       </ngx-datatable-column>
     </ngx-datatable>
- 
   </div>
+  <br />
+  <br />
+  <button class="btn btn-primary btn-sm" (click)="backToList($event)" title="Click to go back to match list.">Back to List</button>
 
 </div>

@@ -1,6 +1,13 @@
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Component, Input, Output, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { AbstractComponent } from '../abstract/abstract.component';
@@ -33,6 +40,7 @@ export class AssignUsersComponent extends AbstractComponent
       this.getUsers(this.page);
     }
   }
+  @Output() back: EventEmitter<boolean> = new EventEmitter();
   public users: User[] = [];
   public placeholder: string = 'Type to filter by email ...';
   protected isLoading: boolean = true;
@@ -76,7 +84,12 @@ export class AssignUsersComponent extends AbstractComponent
     this.getUsers(data);
   }
 
+  public backToList($event): void {
+    this.back.emit(true);
+  }
+
   public officiateMatch(user_id) {
+    console.log('user:', user_id, this.match_id);
     this.userService
       .getUsers(this.page)
       .subscribe(

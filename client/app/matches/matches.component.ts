@@ -98,7 +98,6 @@ export class MatchesComponent implements OnInit {
 
   ngOnInit() {
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
-    this.setMatchesMode();
     this.getAllMatchesByGame(this.game.id, this.page);
   }
 
@@ -129,6 +128,12 @@ export class MatchesComponent implements OnInit {
     const match = _.cloneDeep(_.head(selected));
     //this.isEditing = true;
     //this.editEvent(game);
+  }
+
+  public backToList($event): void {
+    this.viewState = ViewState.listMatches;
+    this.cd.markForCheck();
+    this.getAllMatchesByGame(this.game.id, this.page);
   }
 
   public setPage(paging): void {
