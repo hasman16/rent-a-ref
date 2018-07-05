@@ -163,7 +163,6 @@ export default function OrganizationController(models, ResponseService) {
 */
   function uploadLogo(req, res) {
     const file = req.file;
-    //console.log('uploadLogon:', file);
     if (file) {
       const sequelize = models.sequelize;
       const OrganizationImage = models.OrganizationImage;

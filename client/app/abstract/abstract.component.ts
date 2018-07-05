@@ -63,13 +63,9 @@ export abstract class AbstractComponent {
     this.getData(this.page);
   }
 
-  public onSelect({ selected }): void {
-    console.log('Select Event', selected, this.selected);
-  }
+  public onSelect({ selected }): void {}
 
-  public onActivate(event): void {
-    console.log('Activate Event', event);
-  }
+  public onActivate(event): void {}
 
   public setPage(paging): void {
     this.page.offset = paging.offset;

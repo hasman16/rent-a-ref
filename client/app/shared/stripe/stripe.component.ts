@@ -87,7 +87,6 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
       this.error = null;
       this.disableSubmit = false;
     }
-    console.log('error:', this.error);
     this.cd.detectChanges();
   }
 
@@ -170,7 +169,6 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
       })
       .subscribe(
         success => {
-          console.log('success:', success);
           this.paymentState.emit(<Payment>{
             paymentState: PaymentState.PaymentSuccess
           });

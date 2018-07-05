@@ -53,7 +53,8 @@ import * as _ from 'lodash';
 enum ViewState {
   noMatches,
   listMatches,
-  editMatch
+  editMatch,
+  assignOfficials
 }
 
 @Component({
@@ -82,6 +83,7 @@ export class MatchesComponent implements OnInit {
   protected page: Page;
   protected selected: any[] = [];
   public delete_id: string;
+  public match_id: string = '0';
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -146,11 +148,20 @@ export class MatchesComponent implements OnInit {
       case 'editMatch':
         result = this.viewState == ViewState.editMatch;
         break;
+      case 'assignOfficials':
+        result = this.viewState == ViewState.assignOfficials;
+        break;
       default:
         result = false;
         break;
     }
     return result;
+  }
+
+  public assignOfficials(match_id: string): void {
+    this.viewState = ViewState.assignOfficials;
+    this.cd.markForCheck();
+    this.match_id = match_id;
   }
 
   public deleteMatch(match_id): void {

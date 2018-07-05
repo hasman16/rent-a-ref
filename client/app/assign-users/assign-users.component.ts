@@ -26,17 +26,20 @@ import * as _ from 'lodash';
 })
 export class AssignUsersComponent extends AbstractComponent
   implements OnInit, OnDestroy {
-  @Input()
+  @Input('match_id')
   set setMatchId(id) {
     this.match_id = id;
-    this.getUsers(this.page);
+    if (this.page) {
+      this.getUsers(this.page);
+    }
   }
   public users: User[] = [];
+  public placeholder: string = 'Type to filter by email ...';
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
   protected currentUser: User = <User>{};
   protected match_id: string;
-  public placeholder: string = 'Type to filter by email ...';
+
   constructor(
     private route: ActivatedRoute,
     public toast: ToastComponent,
