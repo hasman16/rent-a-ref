@@ -14,12 +14,11 @@
     </div>
 
     <div class="card" [class.horizontal-and-vertical-centering]="isViewState('noEvents')" *ngIf="isViewState('listEvents') || isViewState('noEvents') ">
-        <input
-        type='text'
-        style='padding:8px;margin:15px auto;width:30%;'
-        placeholder='Type to filter by "Event Name" ...'
-        (keyup)='updateFilter($event)'
-        />
+
+      <rar-search-box 
+      [placeholder]="placeholder"
+      (searchEvent)='updateFilter($event)'
+      ></rar-search-box>
 
       <div class="form-size" *ngIf="isViewState('noEvents') ">
         <strong class="etched-text">You have no <i>Events</i>.</strong>

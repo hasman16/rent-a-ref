@@ -142,12 +142,134 @@ export default function UserController(
     }
   }
 
+  function findUser(user_id, t) {
+    return User.findById(user_id, {
+      transaction: t
+    });
+  }
+
+  function findMatch(user_id, t) {
+    const Match = models.Match;
+    return Match.findById(user_id, {
+      transaction: t
+    });
+  }
+
+  function findOfficiate(user_id, game_id, t) {
+    const Officiate = models.Officiates;
+    return Officiate.findOne(
+      {
+        where: {
+          user_id,
+          game_id
+        }
+      },
+      {
+        transaction: t
+      }
+    );
+  }
+
+  function createOfficiate(user_id, game_id, t) {
+    const Officiate = models.Officiates;
+    return Officiate.create(
+      {
+        user_id,
+        game_id
+      },
+      {
+        transaction: t
+      }
+    );
+  }
+
+  function unassignOfficial(officiate_id, t) {
+    const Officiate = models.Officiates;
+    return Officiate.destroy(
+      {
+        where: {
+          id: officiate_id
+        }
+      },
+      {
+        transaction: t
+      }
+    );
+  }
+
+  function addOfficialToMatch(req, res) {
+    const sequelize = models.sequelize;
+    const body = ResponseService.getItemFromBody(req);
+    const match_id = body.match_id;
+    const user_id = body.user_id;
+
+    sequelize
+      .transaction(function(t) {
+        return findMatch(match_id, t)
+          .then(match => {
+            if (match) {
+              return findUser(user_id, t);
+            } else {
+              ResponseService.exception(res, 'Match not found.');
+            }
+          })
+          .then(user => {
+            if (user) {
+              if (user.can_referee == 'active') {
+                return findOfficiate(user_id, match_id, t).then(officiate => {
+                  if (officiate) {
+                    ResponseService.exception(
+                      res,
+                      'User already officiating this match.'
+                    );
+                  } else {
+                    return createOfficiate(user_id, match_id, t);
+                  }
+                });
+              } else {
+                ResponseService.exception(res, 'User is not a referee.');
+              }
+            } else {
+              ResponseService.exception(res, 'User not found.');
+            }
+          })
+          .then(officiate => {
+            ResponseService.success(res, officiate);
+          });
+      })
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function removeOfficialFromMatch(req, res) {
+    const sequelize = models.sequelize;
+    const body = ResponseService.getItemFromBody(req);
+    const match_id = body.match_id;
+    const user_id = body.user_id;
+
+    sequelize
+      .transaction(function(t) {
+        return findOfficiate(user_id, match_id, t).then(officiate => {
+          if (officiate) {
+            return unassignOfficial(officiate.id, t);
+          } else {
+            ResponseService.exception(res, 'User not assigned to this match.');
+          }
+        });
+      })
+      .then(officiate => {
+        ResponseService.success(res, 'User has been unassigned from match.');
+      })
+      .catch(error => ResponseService.exception(res, error));
+  }
+
   return {
     logout,
     getAll,
     getOne,
     update,
     deleteOne,
+    addOfficialToMatch,
+    removeOfficialFromMatch,
     uploadImage
   };
 }

@@ -1,6 +1,6 @@
-<div class="card" style="min-height: 750px;">
-  <h1 class="etched-text">Manage Users</h1>
-  
+<div style="min-height: 750px;min-width: 100%">
+  <h1 class="etched-text">Assign Officials</h1>
+
   <rar-search-box 
   [placeholder]="placeholder"
   (searchEvent)='updateFilter($event)'
@@ -16,7 +16,6 @@
 
     <ngx-datatable class="bootstrap"
       [rows]="users"
-      [columns]="columns"
       [columnMode]="'force'"
       [headerHeight]="50"
       [footerHeight]="50"
@@ -38,6 +37,18 @@
       <ngx-datatable-column name="Organizer" prop="can_organize" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Referee" prop="can_referee" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
+
+      <ngx-datatable-column name="" prop="id" editable="true">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <button class="btn btn-primary btn-sm" (click)="officiateMatch(value)" title="Click to assign this Referee to this match">Assign</button>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="" prop="id" editable="true">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <button class="btn btn-primary btn-sm" (click)="viewSchedule(value)" title="Click to view this Referees schedule">View Schedule</button>
+        </ng-template>
+      </ngx-datatable-column>
     </ngx-datatable>
  
   </div>

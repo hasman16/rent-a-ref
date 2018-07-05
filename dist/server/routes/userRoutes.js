@@ -34,6 +34,12 @@ function userRoutes(setter, ctrls) {
     router.route('/users/:user_id').patch(userCtrl.update);
     router.route('/users/:user_id').delete(userCtrl.deleteOne);
     router
+        .route('/officiate_match')
+        .post(authentication, isAdmin, userCtrl.addOfficialToMatch);
+    router
+        .route('/remove_official')
+        .delete(authentication, isAdmin, userCtrl.removeOfficialFromMatch);
+    router
         .route('/upload_image/:user_id')
         .post(authentication, imageUploader.single('photo'), userCtrl.uploadImage);
 }

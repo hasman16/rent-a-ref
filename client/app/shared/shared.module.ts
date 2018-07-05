@@ -36,6 +36,7 @@ import { BaseFormComponent } from './formly/base-form/base-form.component';
 import { OrganizationFormComponent } from './forms/organization-form/organization-form.component';
 import { EventsFormComponent } from './forms/events-form/events-form.component';
 import { MatchesFormComponent } from './forms/matches-form/matches-form.component';
+import { SearchBoxComponent } from './search-box/index';
 
 @NgModule({
     imports: [
@@ -105,7 +106,8 @@ import { MatchesFormComponent } from './forms/matches-form/matches-form.componen
         BaseFormComponent,
         OrganizationFormComponent,
         EventsFormComponent,
-        MatchesFormComponent
+        MatchesFormComponent,
+        SearchBoxComponent
     ],
     declarations: [
         ToastComponent,
@@ -125,7 +127,8 @@ import { MatchesFormComponent } from './forms/matches-form/matches-form.componen
         BaseFormComponent,
         OrganizationFormComponent,
         EventsFormComponent,
-        MatchesFormComponent
+        MatchesFormComponent,
+        SearchBoxComponent
     ],
     providers: [
         AlertModalService,
