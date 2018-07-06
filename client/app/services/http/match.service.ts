@@ -84,4 +84,9 @@ export class MatchService extends AbstractService {
     const url: string = `/api/matches/${match_id}/phones/${phone.id}`;
     return this.putData(url, phone);
   }
+  /*
+  public assignMatch(game_id, match): Observable<Match> {
+    const url = `/api/games/${game_id}/matches`;
+    return this.postData(url, match);
+  }*/
 }

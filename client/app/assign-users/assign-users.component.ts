@@ -1,6 +1,8 @@
 import { Router, ActivatedRoute } from '@angular/router';
 
 import {
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -15,6 +17,7 @@ import { AbstractComponent } from '../abstract/abstract.component';
 import { ToastComponent } from '../shared/toast/toast.component';
 import {
   CanComponentDeactivate,
+  MatchService,
   PagingService,
   UserService
 } from '../services/index';
@@ -29,7 +32,8 @@ import * as _ from 'lodash';
 @Component({
   selector: 'rar-assign-users',
   templateUrl: './assign-users.component.html',
-  styleUrls: ['./assign-users.component.scss']
+  styleUrls: ['./assign-users.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AssignUsersComponent extends AbstractComponent
   implements OnInit, OnDestroy {
@@ -49,15 +53,18 @@ export class AssignUsersComponent extends AbstractComponent
   protected match_id: string;
 
   constructor(
+    private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
-    public toast: ToastComponent,
+    private toast: ToastComponent,
     private userService: UserService,
+    private matchService: MatchService,
     protected pagingService: PagingService
   ) {
     super(pagingService);
   }
 
   ngOnInit() {
+    console.log('onInit');
     this.initialize();
     this.searchAttribute = 'email|';
     this.getUsers(this.page);
@@ -70,7 +77,6 @@ export class AssignUsersComponent extends AbstractComponent
   public getUsers(params: Page) {
     let page: Page = _.cloneDeep(params);
     page.search = 'can_referee|active,' + page.search;
-
     this.isLoading = true;
     this.userService
       .getUsers(page)
@@ -89,7 +95,6 @@ export class AssignUsersComponent extends AbstractComponent
   }
 
   public officiateMatch(user_id) {
-    console.log('user:', user_id, this.match_id);
     this.userService
       .getUsers(this.page)
       .subscribe(
@@ -115,6 +120,7 @@ export class AssignUsersComponent extends AbstractComponent
     this.processPagedData(data);
     this.toast.setMessage('users data retrieved', 'success');
     this.isLoading = false;
+    this.cd.markForCheck();
   }
 
   protected callFailure(err: HttpErrorResponse, message = 'An error occurred') {
@@ -124,5 +130,6 @@ export class AssignUsersComponent extends AbstractComponent
       this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
     }
     this.isLoading = false;
+    this.cd.markForCheck();
   }
 }
