@@ -95,21 +95,29 @@ export class AssignUsersComponent extends AbstractComponent
   }
 
   public officiateMatch(user_id) {
-    this.userService
-      .getUsers(this.page)
+    this.matchService
+      .officiateMatch({
+        user_id,
+        match_id: this.match_id
+      })
       .subscribe(
-        res => this.callSuccess(res),
+        res => {
+          this.toast.setMessage('Referee assigned to match.', 'success');
+          this.isLoading = false;
+          this.cd.markForCheck();
+        },
         (err: HttpErrorResponse) => this.callFailure(err)
       );
   }
 
   public viewSchedule(user_id) {
-    this.userService
-      .getUsers(this.page)
+    /*
+    this.matchService
+      .getSchedule(this.page)
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
-      );
+      );*/
   }
 
   protected processPagedData(data: PagedData): void {

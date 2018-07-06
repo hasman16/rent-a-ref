@@ -75,7 +75,6 @@ function UserController(models, ResponseService, SendGridService) {
     }
     function uploadImage(req, res) {
         var file = req.file;
-        //console.log('uploadLogon:', file);
         if (file) {
             var sequelize = models.sequelize;
             var UserImage_1 = models.UserImage;
@@ -135,29 +134,51 @@ function UserController(models, ResponseService, SendGridService) {
             transaction: t
         });
     }
-    function findOfficiate(user_id, game_id, t) {
-        var Officiate = models.Officiates;
-        return Officiate.findOne({
+    function findOfficiate(user_id, match_id, t) {
+        var Officiating = models.Officiating;
+        return Officiating.findOne({
             where: {
                 user_id: user_id,
-                game_id: game_id
+                match_id: match_id
             }
         }, {
             transaction: t
         });
     }
-    function createOfficiate(user_id, game_id, t) {
-        var Officiate = models.Officiates;
-        return Officiate.create({
+    function matchScheduleByUser(req, res) {
+        var Officiating = models.Officiating;
+        var Match = models.Match;
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        var whereClause = Object.assign(clause, {
+            where: {
+                user_id: req.params.user_id
+            },
+            include: [
+                {
+                    model: Match,
+                    through: {
+                        attributes: []
+                    }
+                }
+            ]
+        });
+        console.log('findScheduleByUser:::', whereClause);
+        Officiating.findAndCountAll(whereClause)
+            .then(function (result) { return ResponseService.success(res, result); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
+    }
+    function createOfficiate(user_id, match_id, t) {
+        var Officiating = models.Officiating;
+        return Officiating.create({
             user_id: user_id,
-            game_id: game_id
+            match_id: match_id
         }, {
             transaction: t
         });
     }
     function unassignOfficial(officiate_id, t) {
-        var Officiate = models.Officiates;
-        return Officiate.destroy({
+        var Officiating = models.Officiating;
+        return Officiating.destroy({
             where: {
                 id: officiate_id
             }
@@ -182,6 +203,7 @@ function UserController(models, ResponseService, SendGridService) {
                 }
             })
                 .then(function (user) {
+                console.log('got user');
                 if (user) {
                     if (user.can_referee == 'active') {
                         return findOfficiate(user_id, match_id, t).then(function (officiate) {
@@ -234,6 +256,7 @@ function UserController(models, ResponseService, SendGridService) {
         getOne: getOne,
         update: update,
         deleteOne: deleteOne,
+        matchScheduleByUser: matchScheduleByUser,
         addOfficialToMatch: addOfficialToMatch,
         removeOfficialFromMatch: removeOfficialFromMatch,
         uploadImage: uploadImage

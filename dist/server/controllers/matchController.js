@@ -22,6 +22,7 @@ function MatchController(models, ResponseService) {
                 game_id: req.params.game_id
             }
         });
+        console.log('whereClause:', whereClause);
         Match.findAndCountAll(whereClause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });

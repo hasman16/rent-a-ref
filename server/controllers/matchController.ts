@@ -29,6 +29,8 @@ export default function MatchController(models, ResponseService) {
       }
     });
 
+    console.log('whereClause:', whereClause);
+
     Match.findAndCountAll(whereClause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));

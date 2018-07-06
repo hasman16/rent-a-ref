@@ -84,9 +84,24 @@ export class MatchService extends AbstractService {
     const url: string = `/api/matches/${match_id}/phones/${phone.id}`;
     return this.putData(url, phone);
   }
-  /*
-  public assignMatch(game_id, match): Observable<Match> {
-    const url = `/api/games/${game_id}/matches`;
-    return this.postData(url, match);
-  }*/
+
+  public scheduleByReferee(
+    user_id,
+    queryParams: any = null
+  ): Observable<PagedData> {
+    const url = `/api/schedule_by_referee/${user_id}`;
+    return <Observable<PagedData>>this.http.get(url, {
+      params: queryParams
+    });
+  }
+
+  public officiateMatch(assignment): Observable<any> {
+    const url = `/api/officiate_match`;
+    return this.postData(url, assignment);
+  }
+
+  public removeOfficial(assignment): Observable<any> {
+    const url = `/api/remove_official`;
+    return this.http.delete(url, assignment);
+  }
 }

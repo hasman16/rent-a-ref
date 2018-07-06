@@ -86,7 +86,7 @@ export default function UserController(
 
   function uploadImage(req, res) {
     const file = req.file;
-    //console.log('uploadLogon:', file);
+
     if (file) {
       const sequelize = models.sequelize;
       const UserImage = models.UserImage;
@@ -155,13 +155,13 @@ export default function UserController(
     });
   }
 
-  function findOfficiate(user_id, game_id, t) {
-    const Officiate = models.Officiates;
-    return Officiate.findOne(
+  function findOfficiate(user_id, match_id, t) {
+    const Officiating = models.Officiating;
+    return Officiating.findOne(
       {
         where: {
           user_id,
-          game_id
+          match_id
         }
       },
       {
@@ -170,12 +170,37 @@ export default function UserController(
     );
   }
 
-  function createOfficiate(user_id, game_id, t) {
-    const Officiate = models.Officiates;
-    return Officiate.create(
+  function matchScheduleByUser(req, res) {
+    const Officiating = models.Officiating;
+    const Match = models.Match;
+    let clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
+      where: {
+        user_id: req.params.user_id
+      },
+      include: [
+        {
+          model: Match,
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
+
+    console.log('findScheduleByUser:::', whereClause);
+    Officiating.findAndCountAll(whereClause)
+      .then(result => ResponseService.success(res, result))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function createOfficiate(user_id, match_id, t) {
+    const Officiating = models.Officiating;
+
+    return Officiating.create(
       {
         user_id,
-        game_id
+        match_id
       },
       {
         transaction: t
@@ -184,8 +209,9 @@ export default function UserController(
   }
 
   function unassignOfficial(officiate_id, t) {
-    const Officiate = models.Officiates;
-    return Officiate.destroy(
+    const Officiating = models.Officiating;
+
+    return Officiating.destroy(
       {
         where: {
           id: officiate_id
@@ -214,6 +240,7 @@ export default function UserController(
             }
           })
           .then(user => {
+            console.log('got user');
             if (user) {
               if (user.can_referee == 'active') {
                 return findOfficiate(user_id, match_id, t).then(officiate => {
@@ -268,6 +295,7 @@ export default function UserController(
     getOne,
     update,
     deleteOne,
+    matchScheduleByUser,
     addOfficialToMatch,
     removeOfficialFromMatch,
     uploadImage

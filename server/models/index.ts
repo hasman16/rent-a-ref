@@ -90,7 +90,6 @@ models.forEach(function(model) {
     through: 'user_phone'
   });
 
-  //m.Game.belongsTo(sequelize.models.organizer);
   m.Game.belongsTo(m.Organization);
   m.Game.belongsTo(m.Address);
   m.Game.belongsTo(m.Phone);
@@ -134,6 +133,7 @@ models.forEach(function(model) {
 
   module.exports.Referee = sequelize.models.referee;
   module.exports.Match = sequelize.models.match;
+  module.exports.Officiating = sequelize.models.officiating;
   module.exports.Organizer = sequelize.models.organizer;
   module.exports.OrganizationAddress = sequelize.models.organization_address;
   module.exports.OrganizationImage = sequelize.models.organization_image;

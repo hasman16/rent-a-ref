@@ -165,8 +165,8 @@ export class MatchesComponent implements OnInit {
 
   public assignOfficials(match_id: string): void {
     this.viewState = ViewState.assignOfficials;
-    this.cd.markForCheck();
     this.match_id = match_id;
+    this.cd.markForCheck();
   }
 
   public deleteMatch(match_id): void {
@@ -237,7 +237,10 @@ export class MatchesComponent implements OnInit {
       this.isLoading = true;
       this.matchService
         .getMatch(match_id)
-        .finally(() => (this.isLoading = false))
+        .finally(() => {
+          this.isLoading = false;
+          this.cd.markForCheck();
+        })
         .subscribe(
           (match: Match) => {
             this.model = this.convertMatchToModel(match);

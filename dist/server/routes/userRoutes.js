@@ -34,6 +34,9 @@ function userRoutes(setter, ctrls) {
     router.route('/users/:user_id').patch(userCtrl.update);
     router.route('/users/:user_id').delete(userCtrl.deleteOne);
     router
+        .route('/schedule_by_referee/:user_id')
+        .get(authentication, isUserOrAdmin, userCtrl.matchScheduleByUser);
+    router
         .route('/officiate_match')
         .post(authentication, isAdmin, userCtrl.addOfficialToMatch);
     router
