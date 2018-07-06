@@ -71,7 +71,7 @@
     <button class="btn btn-primary btn-sm"  title="Click to create a new match" (click)="createNewMatch()">New Match</button>
   </div>
 
-  <div class="col-xs-12 col-md-12 col-sm-12" *ngIf="isViewState('assignOfficials')">
+  <div class="col-12" *ngIf="isViewState('assignOfficials')">
     <rar-assign-users [match_id]="match_id" (back)="backToList($event)"></rar-assign-users>
   </div>
 
