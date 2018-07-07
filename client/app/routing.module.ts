@@ -10,6 +10,7 @@ import {
   AdminEventsResolver,
   EventsResolver,
   OrganizationsResolver,
+  ScheduleResolver,
   SportsResolver,
   UserResolver
 } from './services/index';
@@ -73,7 +74,10 @@ const routes: Routes = [
   {
     path: 'account/:id/schedule',
     component: ScheduleComponent,
-    canActivate: [AuthGuardLogin]
+    canActivate: [AuthGuardLogin],
+    resolve: {
+      scheduleData: ScheduleResolver
+    }
   },
   {
     path: 'organization',

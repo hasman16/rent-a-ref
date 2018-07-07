@@ -100,6 +100,9 @@ export class AssignUsersComponent extends AbstractComponent
         user_id,
         match_id: this.match_id
       })
+      .switchMap(() => {
+        return this.matchService.scheduleByReferee(user_id, this.match_id);
+      })
       .subscribe(
         res => {
           this.toast.setMessage('Referee assigned to match.', 'success');

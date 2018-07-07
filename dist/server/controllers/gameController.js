@@ -29,11 +29,28 @@ function GameController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getAllByOrganization(req, res) {
+        console.log('asdkf;as;dfa;sdf===============');
         var clause = ResponseService.produceSearchAndSortClause(req);
         var whereClause = Object.assign(clause.where, {
             organization_id: req.params.organization_id
         });
         clause.where = whereClause;
+        console.log('getAllByOrganization:', clause);
+        /*
+            let clause = ResponseService.produceSearchAndSortClause(req);
+        const whereClause = Object.assign(clause, {
+          where: {
+            organization_id: req.params.organization_id
+          },
+          include: [
+            {
+              model: Match,
+              through: {
+                attributes: []
+              }
+            }
+          ]
+        });*/
         Game.findAndCountAll(clause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
@@ -92,6 +109,7 @@ function GameController(models, ResponseService) {
         var Address = models.Address;
         var Phone = models.Phone;
         var createGame = function (t, game) {
+            console.log('create game:', game);
             return Game.create(game, { transaction: t });
         };
         var createPhone = function (t, phone, game) {

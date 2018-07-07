@@ -24,6 +24,7 @@ import {
   EventsResolver,
   OrganizationsResolver,
   SportsResolver,
+  ScheduleResolver,
   UserResolver
 } from './resolvers/index';
 @NgModule({
@@ -44,6 +45,7 @@ import {
     AdminEventsResolver,
     EventsResolver,
     OrganizationsResolver,
+    ScheduleResolver,
     SportsResolver,
     UserResolver,
     {

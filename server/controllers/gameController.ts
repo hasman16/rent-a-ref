@@ -33,12 +33,28 @@ export default function GameController(models, ResponseService) {
   }
 
   function getAllByOrganization(req, res) {
+    console.log('asdkf;as;dfa;sdf===============');
     let clause = ResponseService.produceSearchAndSortClause(req);
     const whereClause = Object.assign(clause.where, {
       organization_id: req.params.organization_id
     });
     clause.where = whereClause;
-
+    console.log('getAllByOrganization:', clause);
+    /*
+        let clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
+      where: {
+        organization_id: req.params.organization_id
+      },
+      include: [
+        {
+          model: Match,
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });*/
     Game.findAndCountAll(clause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
@@ -106,6 +122,7 @@ export default function GameController(models, ResponseService) {
     const Address = models.Address;
     const Phone = models.Phone;
     const createGame = (t, game) => {
+      console.log('create game:', game);
       return Game.create(game, { transaction: t });
     };
     const createPhone = (t, phone, game) => {

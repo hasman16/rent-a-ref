@@ -175,21 +175,46 @@ export default function UserController(
     const Match = models.Match;
     let clause = ResponseService.produceSearchAndSortClause(req);
     const whereClause = Object.assign(clause, {
-      where: {
-        user_id: req.params.user_id
-      },
+      where: {},
       include: [
         {
-          model: Match,
+          model: User,
+          where: {
+            id: req.params.user_id
+          },
           through: {
-            attributes: []
+            attributes: ['id', 'email', 'can_referee', 'status']
           }
         }
       ]
     });
 
-    console.log('findScheduleByUser:::', whereClause);
-    Officiating.findAndCountAll(whereClause)
+    Match.findAndCountAll(whereClause)
+      .then(result => ResponseService.success(res, result))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function officialsByMatch(req, res) {
+    const Officiating = models.Officiating;
+    const Match = models.Match;
+    let clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
+      where: {},
+      attributes: ['id', 'email', 'can_referee', 'status'],
+      include: [
+        {
+          model: Match,
+          where: {
+            id: req.params.match_id
+          },
+          through: {
+            attributes: ['id']
+          }
+        }
+      ]
+    });
+
+    User.findAndCountAll(whereClause)
       .then(result => ResponseService.success(res, result))
       .catch(error => ResponseService.exception(res, error));
   }

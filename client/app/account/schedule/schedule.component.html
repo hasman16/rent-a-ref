@@ -1,12 +1,56 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <h4 class="elegantshd bigFont">Schedule</h4>
-      <div class="card-block">
-        <blockquote>
-          <p>Sorry, we currently have no schedule at the moment.</p>
-        </blockquote>
+
+      <rar-search-box 
+      [placeholder]="placeholder"
+      (searchEvent)='updateFilter($event)'
+      ></rar-search-box>
+
+      <div class="card-block horizontal-and-vertical-centering " *ngIf="(!schedule || schedule.length === 0)">
+        <div class="form-size">
+          <p>You have no matches in your schedule.</p>
+        </div>
       </div>
+
+      <div class="card-block" *ngIf="schedule && schedule.length > 0">
+
+        <ngx-datatable class="bootstrap"
+          [rows]="schedule"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [externalSorting]="true"
+          [loadingIndicator]="isLoading"
+          (sort)="onSort($event)"
+          [externalPaging]="true"
+          [count]="page.total_elements"
+          [offset]="page.offset"
+          [limit]="page.limit"
+          (page)='setPage($event)'
+          [selected]="selected"
+          [selectionType]="'single'"
+          (activate)="onActivate($event)"
+          (select)='onSelect($event)'
+          >
+          <ngx-datatable-column name="Match Name" prop="match_name" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Date" prop="match_date" editable="false">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{ value | date :'MMM dd, yyyy' }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Age" prop="age" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
+
+          <ngx-datatable-column name="" prop="id" editable="true">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-primary btn-sm" (click)="officiateMatch(value)" title="Click to accept match">Accept</button>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+
     </div>
   </div>
 </div>
