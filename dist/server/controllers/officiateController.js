@@ -177,15 +177,13 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         return [4 /*yield*/, Officiating.create(relation, { transaction: transaction })];
                     case 6:
                         isOfficiating = _a.sent();
-                        if (isOfficiating) {
-                            ResponseService.success(res, isOfficiating);
-                        }
-                        else {
-                            throw new Error('User is not an active referee.');
+                        if (!isOfficiating) {
+                            throw new Error('Referee was not assigned to match.');
                         }
                         return [4 /*yield*/, transaction.commit()];
                     case 7:
                         _a.sent();
+                        ResponseService.success(res, isOfficiating);
                         return [3 /*break*/, 9];
                     case 8:
                         err_1 = _a.sent();
@@ -245,15 +243,13 @@ function OfficiateController(models, ResponseService, SendGridService) {
                             }, { transaction: transaction })];
                     case 5:
                         isOfficiating = _a.sent();
-                        if (isOfficiating) {
-                            ResponseService.success(res, 'Referee has been removed from match:' + match_id);
-                        }
-                        else {
-                            throw new Error('User is not an active referee.');
+                        if (!isOfficiating) {
+                            throw new Error('Referee was not removed from match.');
                         }
                         return [4 /*yield*/, transaction.commit()];
                     case 6:
                         _a.sent();
+                        ResponseService.success(res, 'Referee has been removed from match:' + match_id);
                         return [3 /*break*/, 8];
                     case 7:
                         err_2 = _a.sent();

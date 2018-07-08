@@ -157,12 +157,12 @@ export default function OfficiateController(
       }
       let isOfficiating = await Officiating.create(relation, { transaction });
 
-      if (isOfficiating) {
-        ResponseService.success(res, isOfficiating);
-      } else {
-        throw new Error('User is not an active referee.');
+      if (!isOfficiating) {
+        throw new Error('Referee was not assigned to match.');
       }
       await transaction.commit();
+      ResponseService.success(res, isOfficiating);
+
     } catch (err) {
       transaction.rollback(transaction);
       ResponseService.exception(res, 'Referee was not assigned to match.');
@@ -212,15 +212,14 @@ export default function OfficiateController(
         { transaction }
       );
 
-      if (isOfficiating) {
-        ResponseService.success(
-          res,
-          'Referee has been removed from match:' + match_id
-        );
-      } else {
-        throw new Error('User is not an active referee.');
+      if (!isOfficiating) {
+        throw new Error('Referee was not removed from match.');
       }
       await transaction.commit();
+      ResponseService.success(
+        res,
+        'Referee has been removed from match:' + match_id
+      );
     } catch (err) {
       transaction.rollback(transaction);
       ResponseService.exception(res, message);
