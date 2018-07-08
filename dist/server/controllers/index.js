@@ -8,6 +8,7 @@ __export(require("./areaController"));
 __export(require("./blogController"));
 __export(require("./gameController"));
 __export(require("./loginController"));
+__export(require("./officiateController"));
 __export(require("./organizationController"));
 __export(require("./passwordController"));
 __export(require("./personController"));

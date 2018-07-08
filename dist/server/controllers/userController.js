@@ -150,20 +150,43 @@ function UserController(models, ResponseService, SendGridService) {
         var Match = models.Match;
         var clause = ResponseService.produceSearchAndSortClause(req);
         var whereClause = Object.assign(clause, {
-            where: {
-                user_id: req.params.user_id
-            },
+            where: {},
             include: [
                 {
-                    model: Match,
+                    model: User,
+                    where: {
+                        id: req.params.user_id
+                    },
                     through: {
-                        attributes: []
+                        attributes: ['id', 'email', 'can_referee', 'status']
                     }
                 }
             ]
         });
-        console.log('findScheduleByUser:::', whereClause);
-        Officiating.findAndCountAll(whereClause)
+        Match.findAndCountAll(whereClause)
+            .then(function (result) { return ResponseService.success(res, result); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
+    }
+    function officialsByMatch(req, res) {
+        var Officiating = models.Officiating;
+        var Match = models.Match;
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        var whereClause = Object.assign(clause, {
+            where: {},
+            attributes: ['id', 'email', 'can_referee', 'status'],
+            include: [
+                {
+                    model: Match,
+                    where: {
+                        id: req.params.match_id
+                    },
+                    through: {
+                        attributes: ['id']
+                    }
+                }
+            ]
+        });
+        User.findAndCountAll(whereClause)
             .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
@@ -256,9 +279,6 @@ function UserController(models, ResponseService, SendGridService) {
         getOne: getOne,
         update: update,
         deleteOne: deleteOne,
-        matchScheduleByUser: matchScheduleByUser,
-        addOfficialToMatch: addOfficialToMatch,
-        removeOfficialFromMatch: removeOfficialFromMatch,
         uploadImage: uploadImage
     };
 }
