@@ -320,9 +320,6 @@ export default function UserController(
     getOne,
     update,
     deleteOne,
-    matchScheduleByUser,
-    addOfficialToMatch,
-    removeOfficialFromMatch,
     uploadImage
   };
 }

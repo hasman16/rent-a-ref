@@ -33,15 +33,17 @@ function userRoutes(setter, ctrls) {
     router.route('/users/:user_id').put(userCtrl.update);
     router.route('/users/:user_id').patch(userCtrl.update);
     router.route('/users/:user_id').delete(userCtrl.deleteOne);
+    /*
     router
-        .route('/schedule_by_referee/:user_id')
-        .get(authentication, isUserOrAdmin, userCtrl.matchScheduleByUser);
+      .route('/schedule_by_referee/:user_id')
+      .get(authentication, isUserOrAdmin, userCtrl.matchScheduleByUser);
     router
-        .route('/officiate_match')
-        .post(authentication, isAdmin, userCtrl.addOfficialToMatch);
+      .route('/officiate_match')
+      .post(authentication, isAdmin, userCtrl.addOfficialToMatch);
     router
-        .route('/remove_official')
-        .delete(authentication, isAdmin, userCtrl.removeOfficialFromMatch);
+      .route('/remove_official')
+      .delete(authentication, isAdmin, userCtrl.removeOfficialFromMatch);
+  */
     router
         .route('/upload_image/:user_id')
         .post(authentication, imageUploader.single('photo'), userCtrl.uploadImage);

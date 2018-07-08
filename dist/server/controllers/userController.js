@@ -279,9 +279,6 @@ function UserController(models, ResponseService, SendGridService) {
         getOne: getOne,
         update: update,
         deleteOne: deleteOne,
-        matchScheduleByUser: matchScheduleByUser,
-        addOfficialToMatch: addOfficialToMatch,
-        removeOfficialFromMatch: removeOfficialFromMatch,
         uploadImage: uploadImage
     };
 }

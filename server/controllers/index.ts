@@ -3,6 +3,7 @@ export * from './areaController';
 export * from './blogController';
 export * from './gameController';
 export * from './loginController';
+export * from './officiateController';
 export * from './organizationController';
 export * from './passwordController';
 export * from './personController';

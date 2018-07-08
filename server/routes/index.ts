@@ -21,6 +21,7 @@ import areaController from './../controllers/areaController';
 import blogController from './../controllers/blogController';
 import gameController from './../controllers/gameController';
 import matchController from './../controllers/matchController';
+import officiateController from './../controllers/officiateController';
 import organizationController from './../controllers/organizationController';
 import passwordController from './../controllers/passwordController';
 import personController from './../controllers/personController';
@@ -38,6 +39,7 @@ import areaRoutes from './areaRoutes';
 import blogRoutes from './blogRoutes';
 import gameRoutes from './gameRoutes';
 import matchRoutes from './matchRoutes';
+import officiateRoutes from './officiateRoutes';
 import organizationRoutes from './organizationRoutes';
 import personRoutes from './personRoutes';
 import phoneRoutes from './phoneRoutes';
@@ -115,6 +117,11 @@ export default function setRoutes(app, models) {
   const gameCtrl = gameController(models, responseService);
   const matchCtrl = matchController(models, responseService);
   const areaCtrl = areaController(models, responseService);
+  const officiateCtrl = officiateController(
+    models,
+    responseService,
+    SendGridService
+  );
   const organizationCtrl = organizationController(models, responseService);
   const personCtrl = personController(models, responseService);
   const phoneCtrl = phoneController(models, responseService);
@@ -157,6 +164,7 @@ export default function setRoutes(app, models) {
   matchRoutes(external, matchCtrl);
   areaRoutes(external, areaCtrl);
   personRoutes(external, personCtrl);
+  officiateRoutes(external, officiateCtrl);
   organizationRoutes(external, organizationCtrl);
   phoneRoutes(external, phoneCtrl);
   sportRoutes(external, sportCtrl);
