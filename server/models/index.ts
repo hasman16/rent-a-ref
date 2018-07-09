@@ -94,7 +94,16 @@ models.forEach(function(model) {
   m.Game.belongsTo(m.Address);
   m.Game.belongsTo(m.Phone);
   m.Game.belongsTo(m.Sport);
-
+  let Officiating = sequelize.define('officiating', {
+    status: {
+      type: Sequelize.STRING(32),
+      allowNull: false,
+      defaultValue: 'pending',
+      validate: {
+        isIn: [['pending', 'accepted', 'declined', 'cancelled']]
+      }
+    }
+  });
   m.User.belongsToMany(m.Match, {
     through: 'officiating'
   });

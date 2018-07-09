@@ -48,31 +48,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
         'can_referee',
         'status'
     ];
-    function findUser(user_id, t) {
-        return User.findById(user_id, {
-            transaction: t
-        });
-    }
-    function findMatch(match_id, t) {
-        var Match = models.Match;
-        return Match.findById(match_id, {
-            transaction: t
-        });
-    }
-    function findOfficiate(user_id, match_id, t) {
-        var Officiating = models.Officiating;
-        return Officiating.findOne({
-            where: {
-                user_id: user_id,
-                match_id: match_id
-            }
-        }, {
-            transaction: t
-        });
-    }
     function matchScheduleByUser(req, res) {
-        var Officiating = models.Officiating;
-        var Match = models.Match;
         var clause = ResponseService.produceSearchAndSortClause(req);
         var whereClause = Object.assign(clause, {
             where: {},
@@ -93,8 +69,6 @@ function OfficiateController(models, ResponseService, SendGridService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function officialsByMatch(req, res) {
-        var Officiating = models.Officiating;
-        var Match = models.Match;
         var clause = ResponseService.produceSearchAndSortClause(req);
         var whereClause = Object.assign(clause, {
             where: {},
@@ -115,54 +89,64 @@ function OfficiateController(models, ResponseService, SendGridService) {
             .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
-    function createOfficiate(user_id, match_id, t) {
-        return Officiating.create({
-            user_id: user_id,
-            match_id: match_id
-        }, {
-            transaction: t
-        });
-    }
-    function unassignOfficial(officiate_id, user_id, match_id, t) {
-        findMatch(match_id, t);
-        return Officiating.destroy({
-            where: {
-                id: officiate_id
-            }
-        }, {
-            transaction: t
-        });
-    }
-    function cancelAssignments(match_id, transaction) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, Officiating.destroy({
-                        where: {
-                            match_id: match_id
-                        }
-                    }, {
-                        transaction: transaction
-                    })];
-            });
-        });
-    }
     function canAssignOrRemove(value) {
         return value === 'pending' || value === 'none' || value === 'active';
     }
+    function getDummyPromise() {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve('x');
+            }, 0);
+        });
+    }
     function addOfficialToMatch(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, body, match_id, user_id, relation, transaction, match, user, officiate, isOfficiating, error_1;
+            var _this = this;
+            var executeMethod;
+            return __generator(this, function (_a) {
+                executeMethod = function (user, match, officiate, transaction) { return __awaiter(_this, void 0, void 0, function () {
+                    var isOfficiating;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                if (officiate) {
+                                    throw new Error('Referee is already officiating this match. ');
+                                }
+                                return [4 /*yield*/, Officiating.create({
+                                        user_id: user.id,
+                                        match_id: match.id,
+                                        status: 'pending'
+                                    }, { transaction: transaction })];
+                            case 1:
+                                isOfficiating = _a.sent();
+                                if (!isOfficiating) {
+                                    throw new Error('Referee was not assigned to match.');
+                                }
+                                SendGridService.sendEmail({
+                                    to: user.email,
+                                    from: 'admin@rentaref.com',
+                                    subject: 'You have been assign a match.',
+                                    content: 'You have been assigned a new match. Go to your schedule accept or decline.'
+                                });
+                                return [2 /*return*/, getDummyPromise()];
+                        }
+                    });
+                }); };
+                operateOnMatch(req, res, executeMethod);
+                return [2 /*return*/];
+            });
+        });
+    }
+    function removeOfficialFromMatch(req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var body, match_id, user_id, message, transaction, match, user, officiate, isOfficiating, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        sequelize = models.sequelize;
                         body = ResponseService.getItemFromBody(req);
                         match_id = body.match_id;
                         user_id = body.user_id;
-                        relation = {
-                            user_id: user_id,
-                            match_id: match_id
-                        };
+                        message = 'Referee was not removed from match : ' + match_id;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 8, , 9]);
@@ -176,75 +160,12 @@ function OfficiateController(models, ResponseService, SendGridService) {
                     case 4:
                         user = _a.sent();
                         return [4 /*yield*/, Officiating.findOne({
-                                where: relation
-                            }, { transaction: transaction })];
-                    case 5:
-                        officiate = _a.sent();
-                        if (officiate) {
-                            throw new Error('Referee is already officiating this match.');
-                        }
-                        if (!match) {
-                            throw new Error('Match does not exist.');
-                        }
-                        if (!canAssignOrRemove(match.status)) {
-                            throw new Error('Match is locked.');
-                        }
-                        if (!user || user.can_referee != 'active') {
-                            throw new Error('User is not an active referee.');
-                        }
-                        return [4 /*yield*/, Officiating.create(relation, { transaction: transaction })];
-                    case 6:
-                        isOfficiating = _a.sent();
-                        if (!isOfficiating) {
-                            throw new Error('Referee was not assigned to match.');
-                        }
-                        return [4 /*yield*/, transaction.commit()];
-                    case 7:
-                        _a.sent();
-                        ResponseService.success(res, isOfficiating);
-                        return [3 /*break*/, 9];
-                    case 8:
-                        error_1 = _a.sent();
-                        transaction.rollback(transaction);
-                        //ResponseService.exception(res, error);
-                        ResponseService.exception(res, 'Referee was not assigned to match.', 400);
-                        return [3 /*break*/, 9];
-                    case 9: return [2 /*return*/];
-                }
-            });
-        });
-    }
-    function removeOfficialFromMatch(req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var sequelize, Match, body, match_id, user_id, canRemove, message, transaction, match, officiate, isOfficiating, err_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        sequelize = models.sequelize;
-                        Match = sequelize.Match;
-                        body = ResponseService.getItemFromBody(req);
-                        match_id = body.match_id;
-                        user_id = body.user_id;
-                        canRemove = function (value) {
-                            return value === 'pending' || value === 'none' || value === 'active';
-                        };
-                        message = 'Referee was not removed from match : ' + match_id;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 7, , 8]);
-                        return [4 /*yield*/, sequelize.transaction()];
-                    case 2:
-                        transaction = _a.sent();
-                        return [4 /*yield*/, Match.findById(match_id, { transaction: transaction })];
-                    case 3:
-                        match = _a.sent();
-                        return [4 /*yield*/, Officiating.findOne({
                                 where: {
                                     user_id: user_id,
                                     match_id: match_id
                                 }
                             }, { transaction: transaction })];
-                    case 4:
+                    case 5:
                         officiate = _a.sent();
                         if (officiate) {
                             throw new Error('Referee is not officiating this match.');
@@ -252,30 +173,205 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         if (!match) {
                             throw new Error('Match does not exist.');
                         }
-                        if (!canRemove(match.status)) {
-                            throw new Error('You can not remove referee from this match.');
-                        }
                         return [4 /*yield*/, Officiating.destroy({
                                 where: {
                                     id: officiate.id
                                 }
                             }, { transaction: transaction })];
-                    case 5:
+                    case 6:
                         isOfficiating = _a.sent();
                         if (!isOfficiating) {
                             throw new Error('Referee was not removed from match.');
                         }
                         return [4 /*yield*/, transaction.commit()];
-                    case 6:
+                    case 7:
                         _a.sent();
                         ResponseService.success(res, 'Referee has been removed from match:' + match_id);
-                        return [3 /*break*/, 8];
-                    case 7:
+                        return [3 /*break*/, 9];
+                    case 8:
                         err_1 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, message);
-                        return [3 /*break*/, 8];
-                    case 8: return [2 /*return*/];
+                        return [3 /*break*/, 9];
+                    case 9: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    function cancelMatch(req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var body, match_id, user_id, message, transaction, areCancelled, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        body = ResponseService.getItemFromBody(req);
+                        match_id = body.match_id;
+                        user_id = body.user_id;
+                        message = 'Referee was not removed from match : ' + match_id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 5, , 6]);
+                        return [4 /*yield*/, sequelize.transaction()];
+                    case 2:
+                        transaction = _a.sent();
+                        return [4 /*yield*/, Officiating.update({
+                                status: 'cancelled'
+                            }, {
+                                where: {
+                                    match_id: match_id
+                                }
+                            }, { transaction: transaction })];
+                    case 3:
+                        areCancelled = _a.sent();
+                        if (!areCancelled) {
+                            throw new Error('Failed to cancel referees.');
+                        }
+                        return [4 /*yield*/, transaction.commit()];
+                    case 4:
+                        _a.sent();
+                        ResponseService.success(res, 'Referees have been removed from match:' + match_id);
+                        return [3 /*break*/, 6];
+                    case 5:
+                        err_2 = _a.sent();
+                        transaction.rollback(transaction);
+                        ResponseService.exception(res, message);
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    function declineMatch(req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var executeMethod;
+            return __generator(this, function (_a) {
+                executeMethod = function (user, match, officiate, transaction) { return __awaiter(_this, void 0, void 0, function () {
+                    var isDeclined;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                if (!officiate) {
+                                    throw new Error('Referee is not officiating this match. ');
+                                }
+                                return [4 /*yield*/, Officiating.update({
+                                        status: 'declined'
+                                    }, {
+                                        where: {
+                                            user_id: user.id,
+                                            match_id: match.id
+                                        }
+                                    }, { transaction: transaction })];
+                            case 1:
+                                isDeclined = _a.sent();
+                                if (!isDeclined) {
+                                    throw new Error('Referee was not unassigned from match.');
+                                }
+                                SendGridService.sendEmail({
+                                    to: user.email,
+                                    from: 'admin@rentaref.com',
+                                    subject: 'Match Declined.',
+                                    content: 'You chose to decline match: ' + match.id
+                                });
+                                return [2 /*return*/, getDummyPromise()];
+                        }
+                    });
+                }); };
+                operateOnMatch(req, res, executeMethod);
+                return [2 /*return*/];
+            });
+        });
+    }
+    function acceptMatch(req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var executeMethod;
+            return __generator(this, function (_a) {
+                executeMethod = function (user, match, officiate, transaction) { return __awaiter(_this, void 0, void 0, function () {
+                    var isAccepted;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                if (!officiate) {
+                                    throw new Error('Referee is not officiating this match. ');
+                                }
+                                return [4 /*yield*/, Officiating.update({
+                                        status: 'accepted'
+                                    }, {
+                                        where: {
+                                            user_id: user.id,
+                                            match_id: match.id
+                                        }
+                                    }, { transaction: transaction })];
+                            case 1:
+                                isAccepted = _a.sent();
+                                if (!isAccepted) {
+                                    throw new Error('Match was not accepted.');
+                                }
+                                SendGridService.sendEmail({
+                                    to: user.email,
+                                    from: 'admin@rentaref.com',
+                                    subject: 'Match Accepted.',
+                                    content: 'You chose to accept match: ' + match.id
+                                });
+                                return [2 /*return*/, getDummyPromise()];
+                        }
+                    });
+                }); };
+                operateOnMatch(req, res, executeMethod);
+                return [2 /*return*/];
+            });
+        });
+    }
+    function operateOnMatch(req, res, executeMethod) {
+        return __awaiter(this, void 0, void 0, function () {
+            var body, match_id, user_id, transaction, match, user, officiate, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        body = ResponseService.getItemFromBody(req);
+                        match_id = body.match_id;
+                        user_id = body.user_id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 8, , 9]);
+                        return [4 /*yield*/, sequelize.transaction()];
+                    case 2:
+                        transaction = _a.sent();
+                        return [4 /*yield*/, Match.findById(match_id, { transaction: transaction })];
+                    case 3:
+                        match = _a.sent();
+                        return [4 /*yield*/, User.findById(user_id, { transaction: transaction })];
+                    case 4:
+                        user = _a.sent();
+                        return [4 /*yield*/, Officiating.findOne({
+                                where: {
+                                    user_id: user_id,
+                                    match_id: match_id
+                                }
+                            }, { transaction: transaction })];
+                    case 5:
+                        officiate = _a.sent();
+                        if (!match) {
+                            throw new Error('Match does not exist.');
+                        }
+                        if (!canAssignOrRemove(match.status)) {
+                            throw new Error('You can not be removed from this match.');
+                        }
+                        return [4 /*yield*/, executeMethod(user, match, officiate, transaction)];
+                    case 6:
+                        _a.sent();
+                        return [4 /*yield*/, transaction.commit()];
+                    case 7:
+                        _a.sent();
+                        ResponseService.success(res, 'Operation on match ' + match_id + ' was successful.');
+                        return [3 /*break*/, 9];
+                    case 8:
+                        error_1 = _a.sent();
+                        transaction.rollback(transaction);
+                        ResponseService.exception(res, 'Operation failed!', 400);
+                        return [3 /*break*/, 9];
+                    case 9: return [2 /*return*/];
                 }
             });
         });
@@ -283,7 +379,10 @@ function OfficiateController(models, ResponseService, SendGridService) {
     return {
         matchScheduleByUser: matchScheduleByUser,
         addOfficialToMatch: addOfficialToMatch,
-        removeOfficialFromMatch: removeOfficialFromMatch
+        removeOfficialFromMatch: removeOfficialFromMatch,
+        acceptMatch: acceptMatch,
+        declineMatch: declineMatch,
+        cancelMatch: cancelMatch
     };
 }
 exports.default = OfficiateController;
