@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 function OfficiateController(models, ResponseService, SendGridService) {
+    var sequelize = models.sequelize;
     var Match = models.Match;
     var Officiating = models.Officiating;
     var User = models.User;
@@ -115,7 +116,6 @@ function OfficiateController(models, ResponseService, SendGridService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function createOfficiate(user_id, match_id, t) {
-        var Officiating = models.Officiating;
         return Officiating.create({
             user_id: user_id,
             match_id: match_id
@@ -124,7 +124,6 @@ function OfficiateController(models, ResponseService, SendGridService) {
         });
     }
     function unassignOfficial(officiate_id, user_id, match_id, t) {
-        var Officiating = models.Officiating;
         findMatch(match_id, t);
         return Officiating.destroy({
             where: {
@@ -134,9 +133,25 @@ function OfficiateController(models, ResponseService, SendGridService) {
             transaction: t
         });
     }
+    function cancelAssignments(match_id, transaction) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, Officiating.destroy({
+                        where: {
+                            match_id: match_id
+                        }
+                    }, {
+                        transaction: transaction
+                    })];
+            });
+        });
+    }
+    function canAssignOrRemove(value) {
+        return value === 'pending' || value === 'none' || value === 'active';
+    }
     function addOfficialToMatch(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, body, match_id, user_id, relation, transaction, match, user, officiate, isOfficiating, err_1;
+            var sequelize, body, match_id, user_id, relation, transaction, match, user, officiate, isOfficiating, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -171,6 +186,9 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         if (!match) {
                             throw new Error('Match does not exist.');
                         }
+                        if (!canAssignOrRemove(match.status)) {
+                            throw new Error('Match is locked.');
+                        }
                         if (!user || user.can_referee != 'active') {
                             throw new Error('User is not an active referee.');
                         }
@@ -186,9 +204,10 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         ResponseService.success(res, isOfficiating);
                         return [3 /*break*/, 9];
                     case 8:
-                        err_1 = _a.sent();
+                        error_1 = _a.sent();
                         transaction.rollback(transaction);
-                        ResponseService.exception(res, 'Referee was not assigned to match.');
+                        //ResponseService.exception(res, error);
+                        ResponseService.exception(res, 'Referee was not assigned to match.', 400);
                         return [3 /*break*/, 9];
                     case 9: return [2 /*return*/];
                 }
@@ -197,7 +216,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
     }
     function removeOfficialFromMatch(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, Match, body, match_id, user_id, canRemove, message, transaction, match, officiate, isOfficiating, err_2;
+            var sequelize, Match, body, match_id, user_id, canRemove, message, transaction, match, officiate, isOfficiating, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -252,7 +271,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         ResponseService.success(res, 'Referee has been removed from match:' + match_id);
                         return [3 /*break*/, 8];
                     case 7:
-                        err_2 = _a.sent();
+                        err_1 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, message);
                         return [3 /*break*/, 8];

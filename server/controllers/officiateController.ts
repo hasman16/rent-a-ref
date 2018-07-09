@@ -3,6 +3,7 @@ export default function OfficiateController(
   ResponseService,
   SendGridService
 ) {
+  const sequelize = models.sequelize;
   const Match = models.Match;
   const Officiating = models.Officiating;
   const User = models.User;
@@ -93,8 +94,6 @@ export default function OfficiateController(
   }
 
   function createOfficiate(user_id, match_id, t) {
-    const Officiating = models.Officiating;
-
     return Officiating.create(
       {
         user_id,
@@ -107,8 +106,6 @@ export default function OfficiateController(
   }
 
   function unassignOfficial(officiate_id, user_id, match_id, t) {
-    const Officiating = models.Officiating;
-
     findMatch(match_id, t);
 
     return Officiating.destroy(
@@ -121,6 +118,23 @@ export default function OfficiateController(
         transaction: t
       }
     );
+  }
+
+  async function cancelAssignments(match_id, transaction) {
+    return Officiating.destroy(
+      {
+        where: {
+          match_id
+        }
+      },
+      {
+        transaction
+      }
+    );
+  }
+
+  function canAssignOrRemove(value): boolean {
+    return value === 'pending' || value === 'none' || value === 'active';
   }
 
   async function addOfficialToMatch(req, res) {
@@ -152,6 +166,9 @@ export default function OfficiateController(
       if (!match) {
         throw new Error('Match does not exist.');
       }
+      if (!canAssignOrRemove(match.status)) {
+        throw new Error('Match is locked.');
+      }
       if (!user || user.can_referee != 'active') {
         throw new Error('User is not an active referee.');
       }
@@ -162,10 +179,10 @@ export default function OfficiateController(
       }
       await transaction.commit();
       ResponseService.success(res, isOfficiating);
-
-    } catch (err) {
+    } catch (error) {
       transaction.rollback(transaction);
-      ResponseService.exception(res, 'Referee was not assigned to match.');
+      //ResponseService.exception(res, error);
+      ResponseService.exception(res, 'Referee was not assigned to match.', 400);
     }
   }
 
