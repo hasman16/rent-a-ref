@@ -18,7 +18,7 @@ export default new class SendGridService {
       if (!Array.isArray(setter.to)) {
         to = [setter.to];
       }
-      const emailAddresses = to.map((emailAddress) => {
+      const emailAddresses = to.map(emailAddress => {
         return {
           email: emailAddress
         };
@@ -42,14 +42,16 @@ export default new class SendGridService {
               type: 'text/plain',
               value: setter.content
             }
-          ],
-        },
+          ]
+        }
       });
-
-      value = this.sg.API(request)
-        .then(result => console.log('email sent:', result))
-        .catch(error => console.log('error:', error));
+      if (process.env.DATABASE_URL) {
+        value = this.sg
+          .API(request)
+          .then(result => console.log('email sent:', result))
+          .catch(error => console.log('error:', error));
+      }
     }
     return value;
   }
-};
+}();

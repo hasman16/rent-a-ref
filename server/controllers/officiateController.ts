@@ -230,6 +230,16 @@ export default function OfficiateController(
       if (!officiate) {
         throw new Error('Referee is not officiating this match. ');
       }
+      let invitesAccepted = await Officiating.count({
+        where: {
+          match_id: match.id,
+          status: 'accepted'
+        }
+      });
+
+      if (invitesAccepted >= match.referees) {
+        throw new Error('This match has a full set of referees');
+      }
       let isAccepted = await Officiating.update(
         {
           status: 'accepted'
@@ -242,7 +252,6 @@ export default function OfficiateController(
         },
         { transaction }
       );
-
       if (!isAccepted) {
         throw new Error('Match was not accepted.');
       }

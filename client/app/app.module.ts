@@ -143,8 +143,8 @@ import {
     imports: [
         BrowserModule,
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
-        }),
+            apiKey: 'AIzaSyBjIl1u0Sk8z2-UhiZNRATgU6E8ssDU-10'
+        }), //'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
         NgxDatatableModule,
 
         RoutingModule,

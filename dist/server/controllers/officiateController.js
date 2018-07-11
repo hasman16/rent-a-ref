@@ -288,12 +288,23 @@ function OfficiateController(models, ResponseService, SendGridService) {
             var executeMethod;
             return __generator(this, function (_a) {
                 executeMethod = function (user, match, officiate, transaction) { return __awaiter(_this, void 0, void 0, function () {
-                    var isAccepted;
+                    var invitesAccepted, isAccepted;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
                                 if (!officiate) {
                                     throw new Error('Referee is not officiating this match. ');
+                                }
+                                return [4 /*yield*/, Officiating.count({
+                                        where: {
+                                            match_id: match.id,
+                                            status: 'accepted'
+                                        }
+                                    })];
+                            case 1:
+                                invitesAccepted = _a.sent();
+                                if (invitesAccepted >= match.referees) {
+                                    throw new Error('This match has a full set of referees');
                                 }
                                 return [4 /*yield*/, Officiating.update({
                                         status: 'accepted'
@@ -303,7 +314,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                             match_id: match.id
                                         }
                                     }, { transaction: transaction })];
-                            case 1:
+                            case 2:
                                 isAccepted = _a.sent();
                                 if (!isAccepted) {
                                     throw new Error('Match was not accepted.');

@@ -1,4 +1,11 @@
+import * as GoogleMapsClient from '@google/maps';
+import { AddressModel } from './../types/index';
 import * as _ from 'lodash';
+
+const googleMapsClient = GoogleMapsClient.createClient({
+  key: 'AIzaSyBjIl1u0Sk8z2-UhiZNRATgU6E8ssDU-10',
+  Promise: Promise
+});
 
 export default class ResponseService {
   models;
@@ -302,5 +309,36 @@ export default class ResponseService {
     } else {
       this.permissionViolation(res);
     }
+  }
+
+  async getAddress(address: AddressModel) {
+    let addressString = address.state + ' ' + address.zip;
+    //addressString = '1600 Amphitheatre Parkway, Mountain View, CA';
+    console.log('addressString:', addressString);
+    return new Promise(function(resolve, reject) {
+      googleMapsClient
+        .geocode({ address: addressString })
+        .asPromise()
+        .then(response => {
+          resolve(response.json);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
+  async getTimezone() {
+    return new Promise(function(resolve, reject) {
+      googleMapsClient
+        .geocode({ address: '1600 Amphitheatre Parkway, Mountain View, CA' })
+        .asPromise()
+        .then(response => {
+          resolve(response.json);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
   }
 }

@@ -3148,12 +3148,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cda83647-2958-4107-9214-3adbf0e3fb67",
+								"id": "01bee861-454b-4874-86bf-40d3263e5d2b",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 201;",
 									"tests['Returns an id'] = responseBody.has('id');",
+									"postman.setGlobalVariable(\"gameId\", item.id);",
 									"",
 									"",
 									""
@@ -3227,7 +3228,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"event_name\": \"Junior Special\",\n  \"event_date\": 1284102000000,\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"crap\",\n    \"line2\": \"xxxxxpp\",\n    \"city\": \"Orange\",\n    \"state\":\"CA\",\n    \"zip\": \"92888\"\n   }\n }"
+							"raw": "{\n  \"event_name\": \"Junior Special\",\n  \"event_date\": 1284102000000,\n  \"event_type\": \"oneoff\",\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"crap\",\n    \"line2\": \"xxxxxpp\",\n    \"city\": \"Orange\",\n    \"state\":\"CA\",\n    \"zip\": \"92888\"\n   }\n }"
 						},
 						"url": {
 							"raw": "localhost:3000/api/organization/{{organizationId}}/games",
@@ -3240,6 +3241,412 @@
 								"organization",
 								"{{organizationId}}",
 								"games"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/organization/:id/games",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d8dbbfa8-6b61-40e5-ba48-c2e7f179fc0b",
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"tests['Returns a event_name'] = responseBody.has('event_name');",
+									"tests['Returns a venue_name'] = responseBody.has('venue_name');",
+									"",
+									"tests['Expect game id to be a number'] = /\\d+/.test(item.id);",
+									"",
+									"postman.setGlobalVariable(\"gameId\", item.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"event_name\": \"Junior Special\",\n  \"event_date\": 1284102000000,\n  \"event_type\": \"oneoff\",\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"crap\",\n    \"line2\": \"xxxxxpp\",\n    \"city\": \"Orange\",\n    \"state\":\"CA\",\n    \"zip\": \"92888\"\n   },\n   \"phone\": {\n   \t\"number\":\"9497778888\",\n   \t\"description\":\"mobile\"\n   }\n }"
+						},
+						"url": {
+							"raw": "localhost:3000/api/organization/{{organizationId}}/games",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organization",
+								"{{organizationId}}",
+								"games"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/games/:game_id/matches",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "abe2df04-c63c-490c-8a02-4082171d5cac",
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"postman.setGlobalVariable(\"matchId\", item.id);",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"match_name\":\"asdfasdfasdf\",\n\t\"match_date\":1532476800000,\n\t\"referees\":\"5\",\n\t\"venue_name\":\"sadfasdfasd\",\n\t\"status\":\"pending\",\"age\":\"adults\",\n\t\"address\":{\n\t\t\"line1\":\"fasdfasdf\",\n\t\t\"line2\":null,\n\t\t\"city\":\"asdfasd\",\n\t\t\"state\":\"AL\",\n\t\t\"zip\":\"92866\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/api/games/{{gameId}}/matches",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}",
+								"matches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/officiate_match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98002f52-a623-4677-94eb-63fb2e42a91f",
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "{{userId}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "match_id",
+									"value": "{{matchId}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/officiate_match",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"officiate_match"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/decline_match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98002f52-a623-4677-94eb-63fb2e42a91f",
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "{{userId}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "match_id",
+									"value": "{{matchId}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/decline_match",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"decline_match"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/games/:game_id/matches",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "abe2df04-c63c-490c-8a02-4082171d5cac",
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"postman.setGlobalVariable(\"matchId\", item.id);",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"match_name\":\"asdfasdfasdf\",\n\t\"match_date\":1532476800000,\n\t\"referees\":\"5\",\n\t\"venue_name\":\"sadfasdfasd\",\n\t\"status\":\"pending\",\"age\":\"adults\",\n\t\"address\":{\n\t\t\"line1\":\"fasdfasdf\",\n\t\t\"line2\":null,\n\t\t\"city\":\"asdfasd\",\n\t\t\"state\":\"AL\",\n\t\t\"zip\":\"92866\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/api/games/{{gameId}}/matches",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}",
+								"matches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/officiate_match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98002f52-a623-4677-94eb-63fb2e42a91f",
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "{{userId}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "match_id",
+									"value": "{{matchId}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/officiate_match",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"officiate_match"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/accept_match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98002f52-a623-4677-94eb-63fb2e42a91f",
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "{{userId}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "match_id",
+									"value": "{{matchId}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/accept_match",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"accept_match"
 							]
 						}
 					},
@@ -3287,7 +3694,7 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/games?search=event_name|J&order=DESC&offset=1&sortby=id,event_name",
+							"raw": "localhost:3000/api/games?search=event_name|&order=DESC&offset=0&sortby=id,event_name",
 							"host": [
 								"localhost"
 							],
@@ -3299,7 +3706,7 @@
 							"query": [
 								{
 									"key": "search",
-									"value": "event_name|J"
+									"value": "event_name|"
 								},
 								{
 									"key": "order",
@@ -3307,7 +3714,7 @@
 								},
 								{
 									"key": "offset",
-									"value": "1"
+									"value": "0"
 								},
 								{
 									"key": "sortby",
@@ -3369,6 +3776,202 @@
 								"api",
 								"games",
 								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/games/:game_id/matches?offset=0&limit=10&total_elements=1&total_pages=1&sortby=&order=&search=",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/games/{{gameId}}/matches?offset=0&limit=10&total_elements=1&total_pages=1&sortby=&order=&search=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}",
+								"matches"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "total_elements",
+									"value": "1"
+								},
+								{
+									"key": "total_pages",
+									"value": "1"
+								},
+								{
+									"key": "sortby",
+									"value": ""
+								},
+								{
+									"key": "order",
+									"value": ""
+								},
+								{
+									"key": "search",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/organization/:id/games",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1f6176ac-d34a-4615-b978-34a7954584ee",
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 201;",
+									"tests['Returns an id'] = responseBody.has('id');",
+									"tests['Returns a event_name'] = responseBody.has('event_name');",
+									"tests['Returns a venue_name'] = responseBody.has('venue_name');",
+									"",
+									"tests['Expect game id to be a number'] = /\\d+/.test(item.id);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"event_name\": \"Junior Special\",\n  \"event_date\": 1284102000000,\n  \"event_type\": \"oneoff\",\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"crap\",\n    \"line2\": \"xxxxxpp\",\n    \"city\": \"Orange\",\n    \"state\":\"CA\",\n    \"zip\": \"92888\"\n   }\n }"
+						},
+						"url": {
+							"raw": "localhost:3000/api/organization/{{organizationId}}/games",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organization",
+								"{{organizationId}}",
+								"games"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/schedule_by_referee/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/schedule_by_referee/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"schedule_by_referee",
+								"{{userId}}"
 							]
 						}
 					},
@@ -6847,6 +7450,445 @@
 								"api",
 								"profile",
 								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/users/:id/location_preference",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 201;",
+									"tests['Returns a user_id'] = responseBody.has('user_id');",
+									"tests['Returns a address id'] = responseBody.has('id');",
+									"",
+									"",
+									"tests['Expect user id to be a number'] = /\\d+/.test(item.user_id);",
+									"tests['Expect user id not to be zero'] = item.user_id > 0;",
+									"tests['Expect user ids match'] = item.user_id == postman.getGlobalVariable(\"userId\");",
+									"",
+									"tests['Expect address id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect address id not to zero'] = item.id > 0;",
+									"postman.setGlobalVariable(\"areaId\", item.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "radius",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Metroville",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "CA",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "zip",
+									"value": "92866",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/location_preference",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"location_preference"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/profile/:user_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 200;",
+									"tests['Returns id'] = responseBody.has('id');",
+									"tests['Returns id'] = responseBody.has('email');",
+									"tests['Returns person'] = responseBody.has('person');",
+									"tests['Returns addresses'] = responseBody.has('addresses');",
+									"tests['Returns phones'] = responseBody.has('phones');",
+									"",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(data.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(data.can_organize);",
+									"",
+									"",
+									"var person = data.person;",
+									"",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(person.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(person.lastname);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password1",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/profile/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"profile",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/users/user_id/location_preference/:area_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24a0f502-d69e-4834-85d5-d1eafaf44b8c",
+								"type": "text/javascript",
+								"exec": [
+									"var item = JSON.parse(responseBody);",
+									"//tests['Status code is 200'] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "radius",
+									"value": "55",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Metroville North",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "CA",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "zip",
+									"value": "92866",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/location_preference/{{areaId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"location_preference",
+								"{{areaId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stripe",
+			"description": "",
+			"item": [
+				{
+					"name": "login as admin1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7b9bcf33-d190-4ec5-b9ea-e4aba54809c2",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 201;",
+									"tests['Returns success'] = responseBody.has('success');",
+									"tests['Returns success as true'] = data.success === true;",
+									"tests['Returns message'] = responseBody.has('message');",
+									"tests['Returns message as \"Authorization success\"'] = data.message === \"Authorization success\";",
+									"tests['Returns token'] = responseBody.has('token');",
+									"tests['Expect token to be defined'] = /[a-z0-9\\-_]+\\.[a-z0-9\\-_]+\\.[a-z0-9\\-_]+/i.test(data.token);",
+									"tests['Returns basic user info'] = responseBody.has('user');",
+									"var user = data.user;",
+									"tests['Expect user id to be a number'] = /\\d+/.test(user.id);",
+									"tests['Expect authorization is admin1'] = user.authorization === 1;",
+									"tests['Doe not return password'] = user.password === undefined;",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(user.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(user.lastname);",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(user.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(user.can_organize);",
+									"tests['Expect status to be a string'] = /\\w+/.test(user.status);",
+									"",
+									"postman.setGlobalVariable(\"authoriztionToken\", 'Bearer ' + data.token);",
+									"postman.setGlobalVariable(\"userId\", data.user.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"description": "",
+									"key": "email",
+									"type": "text",
+									"value": "admin1@rentaref.com"
+								},
+								{
+									"description": "",
+									"key": "password",
+									"type": "text",
+									"value": "admin1"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/stripe/products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 200;",
+									"tests['Returns id'] = responseBody.has('id');",
+									"tests['Returns id'] = responseBody.has('email');",
+									"tests['Returns person'] = responseBody.has('person');",
+									"tests['Returns addresses'] = responseBody.has('addresses');",
+									"tests['Returns phones'] = responseBody.has('phones');",
+									"",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(data.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(data.can_organize);",
+									"",
+									"",
+									"var person = data.person;",
+									"",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(person.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(person.lastname);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password1",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/stripe/products",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"stripe",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/stripe/plans",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 201'] = responseCode.code === 200;",
+									"tests['Returns id'] = responseBody.has('id');",
+									"tests['Returns id'] = responseBody.has('email');",
+									"tests['Returns person'] = responseBody.has('person');",
+									"tests['Returns addresses'] = responseBody.has('addresses');",
+									"tests['Returns phones'] = responseBody.has('phones');",
+									"",
+									"tests['Expect can_referee to be a string'] = /\\w+/.test(data.can_referee);",
+									"tests['Expect can_organize to be a string'] = /\\w+/.test(data.can_organize);",
+									"",
+									"",
+									"var person = data.person;",
+									"",
+									"tests['Expect firstname to be a string'] = /\\w+/.test(person.firsthame);",
+									"tests['Expect lastname to be a string'] = /\\w+/.test(person.lastname);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password1",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "reefer",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/stripe/plans",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"stripe",
+								"plans"
 							]
 						}
 					},
