@@ -302,7 +302,7 @@ export class MatchesComponent implements OnInit {
   public convertModelToMatch(model: any): Match {
     const dateString: string = String(model.match_date);
     const matchDate: number = Number(new Date(dateString).getTime());
-
+    console.log(dateString + '===' + matchDate);
     return <Match>{
       id: model.id,
       match_name: model.match_name,

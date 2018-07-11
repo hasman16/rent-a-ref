@@ -14,6 +14,16 @@ export default function officiateRoutes(setter, officiateCtrl) {
   router
     .route('/officiate_match')
     .post(authentication, isAdmin, officiateCtrl.addOfficialToMatch);
+
+  router
+    .route('/accept_match')
+    .post(authentication, isUserOrAdmin, officiateCtrl.acceptMatch);
+  router
+    .route('/decline_match')
+    .post(authentication, isUserOrAdmin, officiateCtrl.declineMatch);
+  router
+    .route('/cancel_match')
+    .post(authentication, isAdmin, officiateCtrl.cancelMatch);
   router
     .route('/remove_official')
     .delete(authentication, isAdmin, officiateCtrl.removeOfficialFromMatch);

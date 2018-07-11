@@ -38,15 +38,18 @@ exports.default = new /** @class */ (function () {
                             type: 'text/plain',
                             value: setter.content
                         }
-                    ],
-                },
+                    ]
+                }
             });
-            value = this.sg.API(request)
-                .then(function (result) { return console.log('email sent:', result); })
-                .catch(function (error) { return console.log('error:', error); });
+            if (process.env.DATABASE_URL) {
+                value = this.sg
+                    .API(request)
+                    .then(function (result) { return console.log('email sent:', result); })
+                    .catch(function (error) { return console.log('error:', error); });
+            }
         }
         return value;
     };
     return SendGridService;
-}());
+}())();
 //# sourceMappingURL=sendGridService.js.map

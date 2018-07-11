@@ -33,7 +33,6 @@ export default function GameController(models, ResponseService) {
   }
 
   function getAllByOrganization(req, res) {
-    console.log('asdkf;as;dfa;sdf===============');
     let clause = ResponseService.produceSearchAndSortClause(req);
     const whereClause = Object.assign(clause.where, {
       organization_id: req.params.organization_id
@@ -117,20 +116,10 @@ export default function GameController(models, ResponseService) {
     ResponseService.findObject(game_id, 'Game', res, doDelete, 204);
   }
 
-  function createGameAddressPhone(req, res) {
+  async function createGameAddressPhone(req, res) {
     const sequelize = models.sequelize;
     const Address = models.Address;
     const Phone = models.Phone;
-    const createGame = (t, game) => {
-      console.log('create game:', game);
-      return Game.create(game, { transaction: t });
-    };
-    const createPhone = (t, phone, game) => {
-      return Phone.create(phone, { transaction: t }).then(newPhone => {
-        game.phone_id = newPhone.id;
-        return createGame(t, game);
-      });
-    };
     let game: GameModel = <GameModel>ResponseService.getItemFromBody(req);
     const address: AddressModel = ResponseService.deleteItemDates(game.address);
     const phone: PhoneModel = ResponseService.deleteItemDates(game.phone);
@@ -143,18 +132,29 @@ export default function GameController(models, ResponseService) {
     game.organization_id = req.params.organization_id;
     game.status = 'pending';
 
-    sequelize
-      .transaction(t => {
-        return Address.create(address, { transaction: t }).then(newAddress => {
-          game.address_id = newAddress.id;
-          return phone ? createPhone(t, phone, game) : createGame(t, game);
-        });
-      })
-      .then(result => {
-        const aGame = ResponseService.deleteItemDates(result);
-        ResponseService.success(res, aGame, 201);
-      })
-      .catch(error => this.exception(res, error));
+    let transaction, newGame, newAddress, newPhone;
+    try {
+      transaction = await sequelize.transaction();
+      const testAddress = await ResponseService.getAddress(address);
+      const geometry = _.get(testAddress, 'results[0].geometry', null);
+      if (!geometry) {
+        throw new Error('Error searching for address.');
+      }
+      console.log('testAddress:', geometry.location);
+      newAddress = Address.create(address, { transaction });
+      game.address_id = newAddress.id;
+      if (phone) {
+        newPhone = await Phone.create(phone, { transaction });
+        game.phone_id = newPhone.id;
+      }
+      newGame = await Game.create(game, { transaction });
+      transaction.commit();
+      ResponseService.success(res, newGame, 201);
+    } catch (error) {
+      console.log('error:', error);
+      transaction.rollback(transaction);
+      ResponseService.exception(res, error);
+    }
   }
 
   function getGameAddress(req, res) {
