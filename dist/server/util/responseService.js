@@ -323,12 +323,14 @@ var ResponseService = /** @class */ (function () {
             });
         });
     };
-    ResponseService.prototype.getTimezone = function () {
+    ResponseService.prototype.getTimezone = function (location, timestamp) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         googleMapsClient
-                            .geocode({ address: '1600 Amphitheatre Parkway, Mountain View, CA' })
+                            .timezone({
+                            location: location
+                        })
                             .asPromise()
                             .then(function (response) {
                             resolve(response.json);

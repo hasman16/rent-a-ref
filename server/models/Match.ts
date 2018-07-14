@@ -29,6 +29,15 @@ const Match = function(sequelize, DataTypes) {
         type: DataTypes.DATE,
         allowNull: false
       },
+      timezone: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
+      timezone_name: {
+        type: DataTypes.STRING(128),
+        allowNull: false,
+        defaultValue: ''
+      },
       referees: {
         type: DataTypes.INTEGER,
         allowNull: false
@@ -42,5 +51,3 @@ const Match = function(sequelize, DataTypes) {
 };
 
 export default Match;
-
-

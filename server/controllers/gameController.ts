@@ -1,5 +1,6 @@
 import { AddressModel, GameModel, PhoneModel } from './../types/index';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 export default function GameController(models, ResponseService) {
   const Game = models.Game;
@@ -38,22 +39,7 @@ export default function GameController(models, ResponseService) {
       organization_id: req.params.organization_id
     });
     clause.where = whereClause;
-    console.log('getAllByOrganization:', clause);
-    /*
-        let clause = ResponseService.produceSearchAndSortClause(req);
-    const whereClause = Object.assign(clause, {
-      where: {
-        organization_id: req.params.organization_id
-      },
-      include: [
-        {
-          model: Match,
-          through: {
-            attributes: []
-          }
-        }
-      ]
-    });*/
+
     Game.findAndCountAll(clause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
@@ -140,7 +126,21 @@ export default function GameController(models, ResponseService) {
       if (!geometry) {
         throw new Error('Error searching for address.');
       }
-      console.log('testAddress:', geometry.location);
+      const location = geometry.location;
+      const testTimeZone = await ResponseService.getTimezone([
+        location.lat,
+        location.lng
+      ]);
+      if (!testTimeZone) {
+        throw new Error('Error searching for timezone.');
+      }
+
+      game.timezone_name = testTimeZone.timeZoneName;
+      game.timezone = 1000 * (testTimeZone.rawOffset + testTimeZone.dstOffset);
+      game.event_date = game.event_date - game.timezone;
+
+      //game.event_date = moment(game.event_date, game.timezone_name).date();
+
       newAddress = Address.create(address, { transaction });
       game.address_id = newAddress.id;
       if (phone) {

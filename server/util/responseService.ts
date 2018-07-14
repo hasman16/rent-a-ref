@@ -328,10 +328,12 @@ export default class ResponseService {
     });
   }
 
-  async getTimezone() {
+  async getTimezone(location, timestamp) {
     return new Promise(function(resolve, reject) {
       googleMapsClient
-        .geocode({ address: '1600 Amphitheatre Parkway, Mountain View, CA' })
+        .timezone({
+          location
+        })
         .asPromise()
         .then(response => {
           resolve(response.json);

@@ -7,6 +7,15 @@ var Game = function (sequelize, DataTypes) {
             type: DataTypes.DATE,
             allowNull: false
         },
+        timezone: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        timezone_name: {
+            type: DataTypes.STRING(128),
+            allowNull: false,
+            defaultValue: ''
+        },
         event_type: {
             type: DataTypes.STRING(32),
             allowNull: false,

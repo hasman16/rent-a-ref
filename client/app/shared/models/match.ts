@@ -5,6 +5,8 @@ export interface Match {
 	id?: string;
 	match_name?: string;
 	match_date?: number;
+	timezone?: number;
+	timezone_name?: string;
 	referees?: number;
 	venue_name?: string;
 	status?: string;
@@ -16,5 +18,3 @@ export interface Match {
 	address?: Address;
 	phone?: Phone;
 }
-
-

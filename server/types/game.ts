@@ -4,7 +4,9 @@ import { PhoneModel } from './phone';
 export interface GameModel {
 	id?: string;
 	event_name?: string;
-	event_date?: string;
+	event_date?: number;
+	timezone?: number;
+	timezone_name?: string;
 	venue_name?: string;
 	status?: string;
 	kids_referees?: number;

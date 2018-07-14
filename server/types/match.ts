@@ -5,6 +5,8 @@ export interface MatchModel {
 	id?: string;
 	match_name?: string;
 	match_date?: string;
+	timezone?: number;
+	timezone_name?: string;
 	venue_name?: string;
 	status?: string;
 	age?: string;
