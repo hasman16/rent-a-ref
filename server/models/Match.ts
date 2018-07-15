@@ -33,6 +33,15 @@ const Match = function(sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         defaultValue: 0
       },
+      timezone_offset: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
+      timezone_id: {
+        type: DataTypes.STRING(128),
+        allowNull: false,
+        defaultValue: ''
+      },
       timezone_name: {
         type: DataTypes.STRING(128),
         allowNull: false,
