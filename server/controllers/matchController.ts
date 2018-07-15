@@ -5,6 +5,7 @@ export default function MatchController(models, ResponseService) {
   const sequelize = models.sequelize;
 
   const Match = models.Match;
+  const Address = models.Address;
   const attributes = ['id'];
 
   function returnMatch(res, match, status = 200) {
@@ -89,9 +90,18 @@ export default function MatchController(models, ResponseService) {
 
     try {
       transaction = await sequelize.transaction();
-      oldMatch = await Match.findById(match_id, {
+      oldMatch = await Match.findOne({
+        where: { 
+          id: match_id
+        },      
+      include: [
+        {
+          model: Address
+        }
+      ]}, {
         transaction
       });
+      
       if (oldMatch && canAssignOrRemove(oldMatch.status)) {
         await Match.update(match, {
           transaction

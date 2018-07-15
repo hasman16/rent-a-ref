@@ -254,6 +254,9 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                 if (!officiate) {
                                     throw new Error('Referee is not officiating this match. ');
                                 }
+                                return [4 /*yield*/, ResponseService.isTimeLocked(match)];
+                            case 1:
+                                _a.sent();
                                 return [4 /*yield*/, Officiating.update({
                                         status: 'declined'
                                     }, {
@@ -262,7 +265,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                             match_id: match.id
                                         }
                                     }, { transaction: transaction })];
-                            case 1:
+                            case 2:
                                 isDeclined = _a.sent();
                                 if (!isDeclined) {
                                     throw new Error('Referee was not unassigned from match.');
@@ -295,13 +298,16 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                 if (!officiate) {
                                     throw new Error('Referee is not officiating this match. ');
                                 }
+                                return [4 /*yield*/, ResponseService.isTimeLocked(match)];
+                            case 1:
+                                _a.sent();
                                 return [4 /*yield*/, Officiating.count({
                                         where: {
                                             match_id: match.id,
                                             status: 'accepted'
                                         }
                                     })];
-                            case 1:
+                            case 2:
                                 invitesAccepted = _a.sent();
                                 if (invitesAccepted >= match.referees) {
                                     throw new Error('This match has a full set of referees');
@@ -314,7 +320,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                             match_id: match.id
                                         }
                                     }, { transaction: transaction })];
-                            case 2:
+                            case 3:
                                 isAccepted = _a.sent();
                                 if (!isAccepted) {
                                     throw new Error('Match was not accepted.');
@@ -336,10 +342,11 @@ function OfficiateController(models, ResponseService, SendGridService) {
     }
     function operateOnMatch(req, res, executeMethod) {
         return __awaiter(this, void 0, void 0, function () {
-            var body, match_id, user_id, transaction, match, user, officiate, error_1;
+            var Address, body, match_id, user_id, transaction, match, user, officiate, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        Address = models.Address;
                         body = ResponseService.getItemFromBody(req);
                         match_id = body.match_id;
                         user_id = body.user_id;
@@ -349,7 +356,16 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        return [4 /*yield*/, Match.findById(match_id, { transaction: transaction })];
+                        return [4 /*yield*/, Match.findOne({
+                                where: {
+                                    id: match_id
+                                },
+                                include: [
+                                    {
+                                        model: Address
+                                    }
+                                ]
+                            }, { transaction: transaction })];
                     case 3:
                         match = _a.sent();
                         return [4 /*yield*/, User.findById(user_id, { transaction: transaction })];

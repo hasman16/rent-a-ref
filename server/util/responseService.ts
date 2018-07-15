@@ -374,4 +374,25 @@ export default class ResponseService {
         });
     });
   }
+
+  async isTimeLocked(eventObj, lock=1, grain='minutes') {
+    return new Promise(function(resolve, reject) {
+      const now = moment().utc();
+      const matchTime = moment.tz(eventObj.date, eventObj.timezone_id);
+      const lockTime = matchTime.utc().subtract(lock,'hour');
+
+      const result = now.isSameOrBefore(lockTime, grain);
+      if (result) {
+        resolve({
+          success: true,
+          message: 'Event is before lock time'
+        });
+      } else {
+        reject({
+          success: false,
+          message: 'Event is now locked'
+        });
+      }
+    });
+  }
 }

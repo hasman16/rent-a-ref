@@ -38,6 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function MatchController(models, ResponseService) {
     var sequelize = models.sequelize;
     var Match = models.Match;
+    var Address = models.Address;
     var attributes = ['id'];
     function returnMatch(res, match, status) {
         if (status === void 0) { status = 200; }
@@ -116,7 +117,16 @@ function MatchController(models, ResponseService) {
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        return [4 /*yield*/, Match.findById(match_id, {
+                        return [4 /*yield*/, Match.findOne({
+                                where: {
+                                    id: match_id
+                                },
+                                include: [
+                                    {
+                                        model: Address
+                                    }
+                                ]
+                            }, {
                                 transaction: transaction
                             })];
                     case 3:

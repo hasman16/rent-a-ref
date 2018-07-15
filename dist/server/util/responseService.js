@@ -376,6 +376,32 @@ var ResponseService = /** @class */ (function () {
             });
         });
     };
+    ResponseService.prototype.isTimeLocked = function (eventObj, lock, grain) {
+        if (lock === void 0) { lock = 1; }
+        if (grain === void 0) { grain = 'minutes'; }
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        var now = moment().utc();
+                        var matchTime = moment.tz(eventObj.date, eventObj.timezone_id);
+                        var lockTime = matchTime.utc().subtract(lock, 'hour');
+                        var result = now.isSameOrBefore(lockTime, grain);
+                        if (result) {
+                            resolve({
+                                success: true,
+                                message: 'Event is before lock time'
+                            });
+                        }
+                        else {
+                            reject({
+                                success: false,
+                                message: 'Event is now locked'
+                            });
+                        }
+                    })];
+            });
+        });
+    };
     return ResponseService;
 }());
 exports.default = ResponseService;

@@ -1,3 +1,6 @@
+import * as _ from 'lodash';
+import * as moment from 'moment-timezone';
+
 export default function OfficiateController(
   models,
   ResponseService,
@@ -196,6 +199,9 @@ export default function OfficiateController(
       if (!officiate) {
         throw new Error('Referee is not officiating this match. ');
       }
+
+      await ResponseService.isTimeLocked(match);
+
       let isDeclined = await Officiating.update(
         {
           status: 'declined'
@@ -230,6 +236,9 @@ export default function OfficiateController(
       if (!officiate) {
         throw new Error('Referee is not officiating this match. ');
       }
+
+      await ResponseService.isTimeLocked(match);
+
       let invitesAccepted = await Officiating.count({
         where: {
           match_id: match.id,
@@ -240,6 +249,7 @@ export default function OfficiateController(
       if (invitesAccepted >= match.referees) {
         throw new Error('This match has a full set of referees');
       }
+
       let isAccepted = await Officiating.update(
         {
           status: 'accepted'
@@ -252,6 +262,7 @@ export default function OfficiateController(
         },
         { transaction }
       );
+      
       if (!isAccepted) {
         throw new Error('Match was not accepted.');
       }
@@ -269,6 +280,7 @@ export default function OfficiateController(
   }
 
   async function operateOnMatch(req, res, executeMethod) {
+    const Address = models.Address;
     const body = ResponseService.getItemFromBody(req);
     const match_id = body.match_id;
     const user_id = body.user_id;
@@ -277,7 +289,16 @@ export default function OfficiateController(
 
     try {
       transaction = await sequelize.transaction();
-      let match = await Match.findById(match_id, { transaction });
+      let match = await Match.findOne({
+        where: {
+          id: match_id
+        },
+        include: [
+        {
+          model: Address
+        }
+      ]
+      }, { transaction });
       let user = await User.findById(user_id, { transaction });
       let officiate = await Officiating.findOne(
         {
