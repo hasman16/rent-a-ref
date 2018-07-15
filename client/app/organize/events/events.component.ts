@@ -5,7 +5,8 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
-  Input
+  Input,
+  VERSION
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -30,12 +31,13 @@ import {
   Sport
 } from './../../shared/models/index';
 import { PaymentState, Payment } from './../../shared/stripe/stripe-state';
-import * as _ from 'lodash';
-import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/finally';
+
+import * as _ from 'lodash';
+import * as moment from 'moment-timezone';
 
 enum ViewState {
   noEvents,
@@ -85,6 +87,7 @@ export class EventsComponent extends AbstractComponent
     this.route.params.subscribe(params => {
       this.organization_id = params['organization_id'];
     });
+    console.log('VERSION:::::::::::::::', VERSION.full);
   }
 
   public ngOnInit() {
@@ -112,6 +115,14 @@ export class EventsComponent extends AbstractComponent
 
   protected getData(page: Page): void {
     this.getEvents(page);
+  }
+
+  public formatDate(id): string {
+    const item: Game = _.find(this.games, (item) => {
+      return id == item.id
+    });
+    let value: string = moment.tz(item.date, item.timezone_id).format('MMMM DD YYYY');
+    return value;
   }
 
   public setEventsMode(): void {

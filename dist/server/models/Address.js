@@ -7,7 +7,7 @@ function default_1(sequelize, DataTypes) {
             allowNull: false
         },
         line2: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING
         },
         city: {
             type: DataTypes.STRING(128),
@@ -21,7 +21,7 @@ function default_1(sequelize, DataTypes) {
             type: DataTypes.STRING(16),
             allowNull: false,
             validate: {
-                is: /^\d{5}(-\d{4})?$/
+                is: /(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$)/
             }
         },
         notes: {

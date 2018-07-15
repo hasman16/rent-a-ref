@@ -35,13 +35,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var _ = require("lodash");
 function GameController(models, ResponseService) {
     var Game = models.Game;
     var attributes = [
         'id',
         'event_name',
-        'event_date',
+        'date',
         'event_type',
         'venue_name',
         'status',
@@ -124,7 +123,7 @@ function GameController(models, ResponseService) {
     }
     function createGameAddressPhone(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, Address, Phone, game, address, phone, transaction, newGame, newAddress, newPhone, testAddress, geometry, location_1, testTimeZone, error_1;
+            var sequelize, Address, Phone, game, address, phone, transaction, newGame, newAddress, newPhone, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -146,28 +145,12 @@ function GameController(models, ResponseService) {
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        return [4 /*yield*/, ResponseService.getAddress(address)];
+                        return [4 /*yield*/, ResponseService.workoutTimeZone(game, address)];
                     case 3:
-                        testAddress = _a.sent();
-                        geometry = _.get(testAddress, 'results[0].geometry', null);
-                        if (!geometry) {
-                            throw new Error('Error searching for address.');
-                        }
-                        location_1 = geometry.location;
-                        return [4 /*yield*/, ResponseService.getTimezone([
-                                location_1.lat,
-                                location_1.lng
-                            ])];
+                        _a.sent();
+                        return [4 /*yield*/, Address.create(address, { transaction: transaction })];
                     case 4:
-                        testTimeZone = _a.sent();
-                        if (!testTimeZone) {
-                            throw new Error('Error searching for timezone.');
-                        }
-                        game.timezone_name = testTimeZone.timeZoneName;
-                        game.timezone = 1000 * (testTimeZone.rawOffset + testTimeZone.dstOffset);
-                        game.event_date = game.event_date - game.timezone;
-                        //game.event_date = moment(game.event_date, game.timezone_name).date();
-                        newAddress = Address.create(address, { transaction: transaction });
+                        newAddress = _a.sent();
                         game.address_id = newAddress.id;
                         if (!phone) return [3 /*break*/, 6];
                         return [4 /*yield*/, Phone.create(phone, { transaction: transaction })];

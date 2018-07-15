@@ -49,6 +49,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/finally';
 
 import * as _ from 'lodash';
+import * as moment from 'moment-timezone';
 
 enum ViewState {
   noMatches,
@@ -141,6 +142,14 @@ export class MatchesComponent implements OnInit {
     this.getAllMatchesByGame(this.game.id, this.page);
   }
 
+  public formatDate(id): string {
+    const item: Match = _.find(this.matches, (item) => {
+      return id == item.id
+    });
+    let value: string = moment.tz(item.date, item.timezone_id).format('MMMM DD YYYY');
+    return value;
+  }
+
   public isViewState(value: string): boolean {
     let result: boolean = false;
     switch (value) {
@@ -196,9 +205,15 @@ export class MatchesComponent implements OnInit {
 
   public createNewMatch(): void {
     const game: any = _.cloneDeep(this.game);
+    const timeZoneDate = moment.tz(game.date, game.timezone_id);
+    const matchDate: string = timeZoneDate.format('YYYY-MM-DD');
+    const matchTime: string = timeZoneDate.format('HH:mm:ss');
+    console.log('matchTime:', matchTime);
+
     this.model = {
       venue_name: game.venue_name,
-      match_date: game.event_date,
+      date: matchDate,
+      time: matchTime,
       line1: game.line1,
       line2: game.line2,
       city: game.city,
@@ -210,7 +225,10 @@ export class MatchesComponent implements OnInit {
   }
 
   convertMatchToModel(match: Match): any {
-    const matchDate: string = _.trim(match.match_date).split('T')[0];
+    const timeZoneDate = moment.tz(match.date, match.timezone_id);
+    const matchDate: string = timeZoneDate.format('YYYY-MM-DD');
+    const matchTime: string = timeZoneDate.format('HH:mm:ss');
+    console.log('matchTime:', matchTime);
 
     const address: Address = match.address;
     return {
@@ -219,7 +237,8 @@ export class MatchesComponent implements OnInit {
       age: match.age,
       status: match.status,
       venue_name: match.venue_name,
-      match_date: matchDate,
+      date: matchDate,
+      time: matchTime,
       referees: match.referees,
       sport_id: match.sport_id,
       address_id: match.address_id,
@@ -300,13 +319,14 @@ export class MatchesComponent implements OnInit {
   }
 
   public convertModelToMatch(model: any): Match {
-    const dateString: string = String(model.match_date);
-    const matchDate: number = Number(new Date(dateString).getTime());
-    console.log(dateString + '===' + matchDate);
+    const dateString: string = String(model.date);
+    const timeString: string = String(model.time);
+
     return <Match>{
       id: model.id,
       match_name: model.match_name,
-      match_date: matchDate,
+      date: dateString,
+      time: timeString,
       referees: model.referees,
       venue_name: model.venue_name,
       status: model.status || 'pending',

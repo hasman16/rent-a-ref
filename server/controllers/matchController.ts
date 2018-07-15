@@ -178,6 +178,9 @@ export default function MatchController(models, ResponseService) {
 
     try {
       transaction = await sequelize.transaction();
+      let dateTime:string = match.date + 'T' + match.time;
+      match.date = dateTime.replace(/z/i,'');
+      await ResponseService.workoutTimeZone(match, address);
 
       if (address) {
         newAddress = await Address.create(address, { transaction });

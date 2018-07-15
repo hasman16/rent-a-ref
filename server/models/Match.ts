@@ -25,7 +25,7 @@ const Match = function(sequelize, DataTypes) {
           isIn: [['kids', 'teens', 'adults']]
         }
       },
-      match_date: {
+      date: {
         type: DataTypes.DATE,
         allowNull: false
       },

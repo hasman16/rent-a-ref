@@ -37,8 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var GoogleMapsClient = require("@google/maps");
 var _ = require("lodash");
+var moment = require("moment-timezone");
 var googleMapsClient = GoogleMapsClient.createClient({
-    key: 'AIzaSyBjIl1u0Sk8z2-UhiZNRATgU6E8ssDU-10',
+    key: process.env.GOOGLEMAPS_KEY,
     Promise: Promise
 });
 var ResponseService = /** @class */ (function () {
@@ -302,13 +303,45 @@ var ResponseService = /** @class */ (function () {
             this.permissionViolation(res);
         }
     };
+    ResponseService.prototype.workoutTimeZone = function (model, address) {
+        return __awaiter(this, void 0, void 0, function () {
+            var googleAddress, geometry, location, googleTimeZone, event_date;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getAddress(address)];
+                    case 1:
+                        googleAddress = _a.sent();
+                        geometry = _.get(googleAddress, 'results[0].geometry', null);
+                        if (!geometry) {
+                            throw new Error('Error searching for address.');
+                        }
+                        location = geometry.location;
+                        return [4 /*yield*/, this.getTimezone([
+                                location.lat,
+                                location.lng
+                            ])];
+                    case 2:
+                        googleTimeZone = _a.sent();
+                        if (!googleTimeZone) {
+                            throw new Error('Error searching for timezone.');
+                        }
+                        model.timezone_id = googleTimeZone.timeZoneId;
+                        model.timezone_name = googleTimeZone.timeZoneName;
+                        model.timezone = googleTimeZone.rawOffset;
+                        model.timezone_offset = googleTimeZone.dstOffset;
+                        event_date = moment.tz(model.date, model.timezone_id);
+                        model.date = event_date.utc().valueOf();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     ResponseService.prototype.getAddress = function (address) {
         return __awaiter(this, void 0, void 0, function () {
             var addressString;
             return __generator(this, function (_a) {
                 addressString = address.state + ' ' + address.zip;
                 //addressString = '1600 Amphitheatre Parkway, Mountain View, CA';
-                console.log('addressString:', addressString);
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         googleMapsClient
                             .geocode({ address: addressString })
@@ -324,6 +357,7 @@ var ResponseService = /** @class */ (function () {
         });
     };
     ResponseService.prototype.getTimezone = function (location, timestamp) {
+        if (timestamp === void 0) { timestamp = null; }
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {

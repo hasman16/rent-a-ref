@@ -71,7 +71,7 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
           },
 
           {
-            className: 'col-sm-4',
+            className: 'col-sm-6',
             type: 'input',
             key: 'referees',
             templateOptions: {
@@ -85,7 +85,7 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
           {
             type: 'select',
             key: 'age',
-            className: 'col-sm-4',
+            className: 'col-sm-6',
             templateOptions: {
               label: 'Age Group',
               options: [
@@ -106,12 +106,22 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
             }
           },
           {
-            className: 'col-sm-4',
+            className: 'col-sm-6',
             type: 'input',
-            key: 'match_date',
+            key: 'date',
             templateOptions: {
               label: 'Match Date',
               type: 'date',
+              required: true
+            }
+          },
+          {
+            className: 'col-sm-6',
+            type: 'input',
+            key: 'time',
+            templateOptions: {
+              label: 'Time',
+              type: 'time',
               required: true
             }
           }
@@ -135,7 +145,7 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
             }
           },
           {
-            className: 'col-sm-3',
+            className: 'col-sm-12',
             type: 'input',
             key: 'line1',
             templateOptions: {
@@ -146,7 +156,7 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
           {
             type: 'input',
             key: 'line2',
-            className: 'col-sm-3',
+            className: 'col-sm-12',
             templateOptions: {
               type: 'text',
               label: 'Street 2'
@@ -155,7 +165,7 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
           {
             type: 'input',
             key: 'city',
-            className: 'col-sm-2',
+            className: 'col-sm-4',
             templateOptions: {
               label: 'City',
               required: true
@@ -164,7 +174,7 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
           {
             type: 'select',
             key: 'state',
-            className: 'col-sm-2',
+            className: 'col-sm-4',
             templateOptions: {
               label: 'State',
               options: _.cloneDeep(this.states),
@@ -174,7 +184,7 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
           {
             type: 'input',
             key: 'zip',
-            className: 'col-sm-2',
+            className: 'col-sm-4',
             templateOptions: {
               label: 'Zip',
               required: true,

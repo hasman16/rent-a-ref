@@ -1,13 +1,13 @@
 import { AddressModel, GameModel, PhoneModel } from './../types/index';
 import * as _ from 'lodash';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 
 export default function GameController(models, ResponseService) {
   const Game = models.Game;
   const attributes = [
     'id',
     'event_name',
-    'event_date',
+    'date',
     'event_type',
     'venue_name',
     'status',
@@ -121,27 +121,9 @@ export default function GameController(models, ResponseService) {
     let transaction, newGame, newAddress, newPhone;
     try {
       transaction = await sequelize.transaction();
-      const testAddress = await ResponseService.getAddress(address);
-      const geometry = _.get(testAddress, 'results[0].geometry', null);
-      if (!geometry) {
-        throw new Error('Error searching for address.');
-      }
-      const location = geometry.location;
-      const testTimeZone = await ResponseService.getTimezone([
-        location.lat,
-        location.lng
-      ]);
-      if (!testTimeZone) {
-        throw new Error('Error searching for timezone.');
-      }
+      await ResponseService.workoutTimeZone(game, address);
 
-      game.timezone_name = testTimeZone.timeZoneName;
-      game.timezone = 1000 * (testTimeZone.rawOffset + testTimeZone.dstOffset);
-      game.event_date = game.event_date - game.timezone;
-
-      //game.event_date = moment(game.event_date, game.timezone_name).date();
-
-      newAddress = Address.create(address, { transaction });
+      newAddress = await Address.create(address, { transaction });
       game.address_id = newAddress.id;
       if (phone) {
         newPhone = await Phone.create(phone, { transaction });

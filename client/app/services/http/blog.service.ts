@@ -53,6 +53,7 @@ export class BlogService extends AbstractService {
   public deletePost(post_id: string): Observable<any> {
     return this.http.delete<any>(`/api/posts/${post_id}`);
   }
+  
   public createComment(post_id: string, comment: Comment): Observable<Comment> {
     const url: string = `/api/posts/${post_id}/comment`;
     return this.postData(url, comment);

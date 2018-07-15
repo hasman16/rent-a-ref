@@ -1,12 +1,20 @@
 import * as GoogleMapsClient from '@google/maps';
 import { AddressModel } from './../types/index';
 import * as _ from 'lodash';
+import * as moment from 'moment-timezone';
 
 const googleMapsClient = GoogleMapsClient.createClient({
-  key: 'AIzaSyBjIl1u0Sk8z2-UhiZNRATgU6E8ssDU-10',
+  key: process.env.GOOGLEMAPS_KEY,
   Promise: Promise
 });
 
+interface GoogleMapsTimezone {
+  dstOffset?: number;
+  rawOffset?: number;
+  status?: string;
+  timeZoneId?: string;
+  timeZoneName?: string;
+}
 export default class ResponseService {
   models;
   baseTable;
@@ -311,10 +319,33 @@ export default class ResponseService {
     }
   }
 
+  async workoutTimeZone(model, address) {
+    const googleAddress = await this.getAddress(address);
+    const geometry = _.get(googleAddress, 'results[0].geometry', null);
+    if (!geometry) {
+      throw new Error('Error searching for address.');
+    }
+    const location = geometry.location;
+    const googleTimeZone: GoogleMapsTimezone = await this.getTimezone([
+      location.lat,
+      location.lng
+    ]);
+    if (!googleTimeZone) {
+      throw new Error('Error searching for timezone.');
+    }
+
+    model.timezone_id = googleTimeZone.timeZoneId;
+    model.timezone_name = googleTimeZone.timeZoneName;
+    model.timezone = googleTimeZone.rawOffset;
+    model.timezone_offset = googleTimeZone.dstOffset;
+    const event_date = moment.tz(model.date, model.timezone_id);
+    model.date = event_date.utc().valueOf();
+  }
+
   async getAddress(address: AddressModel) {
     let addressString = address.state + ' ' + address.zip;
     //addressString = '1600 Amphitheatre Parkway, Mountain View, CA';
-    console.log('addressString:', addressString);
+
     return new Promise(function(resolve, reject) {
       googleMapsClient
         .geocode({ address: addressString })
@@ -328,7 +359,7 @@ export default class ResponseService {
     });
   }
 
-  async getTimezone(location, timestamp) {
+  async getTimezone(location, timestamp = null) {
     return new Promise(function(resolve, reject) {
       googleMapsClient
         .timezone({

@@ -4,8 +4,9 @@ import { Phone } from './phone';
 export interface Game {
 	id?: string;
 	event_name?: string;
-	event_date?: number;
+	date?: string;
 	timezone?: number;
+	timezone_id?: string;
 	timezone_name?: string;
 	venue_name?: string;
 	status?: string;
