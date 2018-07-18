@@ -133,7 +133,6 @@ export default function GameController(models, ResponseService) {
       transaction.commit();
       ResponseService.success(res, newGame, 201);
     } catch (error) {
-      console.log('error:', error);
       transaction.rollback(transaction);
       ResponseService.exception(res, error);
     }

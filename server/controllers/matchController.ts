@@ -26,13 +26,18 @@ export default function MatchController(models, ResponseService) {
 
   function getAllByGame(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
+    const User = models.User;
     const whereClause = Object.assign(clause, {
       where: {
         game_id: req.params.game_id
-      }
+      },
+      include:[{
+        model: User,
+        attributes: ['id', 'email'],
+        through: {
+        }
+      }]
     });
-
-    console.log('whereClause:', whereClause);
 
     Match.findAndCountAll(whereClause)
       .then(results => ResponseService.success(res, results))

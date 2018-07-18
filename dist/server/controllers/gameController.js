@@ -166,7 +166,6 @@ function GameController(models, ResponseService) {
                         return [3 /*break*/, 9];
                     case 8:
                         error_1 = _a.sent();
-                        console.log('error:', error_1);
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_1);
                         return [3 /*break*/, 9];

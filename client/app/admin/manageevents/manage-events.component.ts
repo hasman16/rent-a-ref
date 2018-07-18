@@ -32,7 +32,6 @@ import {
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/finally';
 import * as _ from 'lodash';
-import * as moment from 'moment-timezone';
 
 enum TabState {
   editEvent,
@@ -141,11 +140,7 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   }
 
   public formatDate(id): string {
-    const item: Game = _.find(this.games, (item) => {
-      return id == item.id
-    });
-    let value: string = moment.tz(item.date, item.timezone_id).format('MMMM DD YYYY');
-    return value;
+      return this.pagingService.formatDate(id, this.games);
   }
 
   public onActivate(event): void {

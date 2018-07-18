@@ -19,8 +19,9 @@ export default function OfficiateController(
     'status'
   ];
 
-  function matchScheduleByUser(req, res) {
+  async function matchScheduleByUser(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
+    const Op = models.sequelize.Op;
     const whereClause = Object.assign(clause, {
       where: {},
       include: [
@@ -30,15 +31,46 @@ export default function OfficiateController(
             id: req.params.user_id
           },
           through: {
-            attributes: ['id', 'email', 'can_referee', 'status']
+            where: {
+              status:{
+                [Op.notLike]: '%decline%'
+              }
+            }
           }
         }
       ]
     });
 
-    Match.findAndCountAll(whereClause)
-      .then(result => ResponseService.success(res, result))
-      .catch(error => ResponseService.exception(res, error));
+    let transaction;
+
+    try {
+      transaction = await sequelize.transaction();
+      const result = await Match.findAll(whereClause, {transaction});
+      const whereOfficiate = Object.assign( clause,{
+        where:{
+          id: {
+            [Op.in]: _.map(result, item => item.id)
+          }
+        },
+        include:[{
+          model: User,
+          attributes: ['id', 'email'],
+          through: {
+            where: {
+              status:{
+                [Op.notLike]: '%decline%'
+              }
+            } 
+          }
+        }]
+      });
+      const matchOfficiate = await Match.findAndCountAll(whereOfficiate, { transaction });
+
+      ResponseService.success(res, matchOfficiate);
+    } catch (error) {
+      transaction.rollback(transaction);
+      ResponseService.exception(res, error, 400);
+    }
   }
 
   function officialsByMatch(req, res) {
@@ -324,7 +356,8 @@ export default function OfficiateController(
       );
     } catch (error) {
       transaction.rollback(transaction);
-      ResponseService.exception(res, 'Operation failed!', 400);
+      //ResponseService.exception(res, 'Operation failed!', 400);
+      ResponseService.exception(res, error, 400);
     }
   }
 
