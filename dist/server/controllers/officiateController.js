@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require("lodash");
 function OfficiateController(models, ResponseService, SendGridService) {
     var sequelize = models.sequelize;
     var Match = models.Match;
@@ -49,24 +50,72 @@ function OfficiateController(models, ResponseService, SendGridService) {
         'status'
     ];
     function matchScheduleByUser(req, res) {
-        var clause = ResponseService.produceSearchAndSortClause(req);
-        var whereClause = Object.assign(clause, {
-            where: {},
-            include: [
-                {
-                    model: User,
-                    where: {
-                        id: req.params.user_id
-                    },
-                    through: {
-                        attributes: ['id', 'email', 'can_referee', 'status']
-                    }
+        return __awaiter(this, void 0, void 0, function () {
+            var clause, Op, whereClause, transaction, result, whereOfficiate, matchOfficiate, error_1, _a, _b, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        clause = ResponseService.produceSearchAndSortClause(req);
+                        Op = models.sequelize.Op;
+                        whereClause = Object.assign(clause, {
+                            where: {},
+                            include: [
+                                {
+                                    model: User,
+                                    where: {
+                                        id: req.params.user_id
+                                    },
+                                    through: {
+                                        where: {
+                                            status: (_a = {},
+                                                _a[Op.notLike] = '%decline%',
+                                                _a)
+                                        }
+                                    }
+                                }
+                            ]
+                        });
+                        _d.label = 1;
+                    case 1:
+                        _d.trys.push([1, 5, , 6]);
+                        return [4 /*yield*/, sequelize.transaction()];
+                    case 2:
+                        transaction = _d.sent();
+                        return [4 /*yield*/, Match.findAll(whereClause, { transaction: transaction })];
+                    case 3:
+                        result = _d.sent();
+                        whereOfficiate = Object.assign(clause, {
+                            where: {
+                                id: (_b = {},
+                                    _b[Op.in] = _.map(result, function (item) { return item.id; }),
+                                    _b)
+                            },
+                            include: [{
+                                    model: User,
+                                    attributes: ['id', 'email'],
+                                    through: {
+                                        where: {
+                                            status: (_c = {},
+                                                _c[Op.notLike] = '%decline%',
+                                                _c)
+                                        }
+                                    }
+                                }]
+                        });
+                        return [4 /*yield*/, Match.findAndCountAll(whereOfficiate, { transaction: transaction })];
+                    case 4:
+                        matchOfficiate = _d.sent();
+                        ResponseService.success(res, matchOfficiate);
+                        return [3 /*break*/, 6];
+                    case 5:
+                        error_1 = _d.sent();
+                        transaction.rollback(transaction);
+                        ResponseService.exception(res, error_1, 400);
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
-            ]
+            });
         });
-        Match.findAndCountAll(whereClause)
-            .then(function (result) { return ResponseService.success(res, result); })
-            .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function officialsByMatch(req, res) {
         var clause = ResponseService.produceSearchAndSortClause(req);
@@ -342,7 +391,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
     }
     function operateOnMatch(req, res, executeMethod) {
         return __awaiter(this, void 0, void 0, function () {
-            var Address, body, match_id, user_id, transaction, match, user, officiate, error_1;
+            var Address, body, match_id, user_id, transaction, match, user, officiate, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -394,9 +443,10 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         ResponseService.success(res, 'Operation on match ' + match_id + ' was successful.');
                         return [3 /*break*/, 9];
                     case 8:
-                        error_1 = _a.sent();
+                        error_2 = _a.sent();
                         transaction.rollback(transaction);
-                        ResponseService.exception(res, 'Operation failed!', 400);
+                        //ResponseService.exception(res, 'Operation failed!', 400);
+                        ResponseService.exception(res, error_2, 400);
                         return [3 /*break*/, 9];
                     case 9: return [2 /*return*/];
                 }

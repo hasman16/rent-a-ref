@@ -143,11 +143,7 @@ export class MatchesComponent implements OnInit {
   }
 
   public formatDate(id): string {
-    const item: Match = _.find(this.matches, (item) => {
-      return id == item.id
-    });
-    let value: string = moment.tz(item.date, item.timezone_id).format('MMMM DD YYYY');
-    return value;
+    return this.pagingService.formatDate(id, this.matches);
   }
 
   public isViewState(value: string): boolean {

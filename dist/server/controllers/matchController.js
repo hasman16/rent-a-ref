@@ -54,12 +54,17 @@ function MatchController(models, ResponseService) {
     }
     function getAllByGame(req, res) {
         var clause = ResponseService.produceSearchAndSortClause(req);
+        var User = models.User;
         var whereClause = Object.assign(clause, {
             where: {
                 game_id: req.params.game_id
-            }
+            },
+            include: [{
+                    model: User,
+                    attributes: ['id', 'email'],
+                    through: {}
+                }]
         });
-        console.log('whereClause:', whereClause);
         Match.findAndCountAll(whereClause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
