@@ -32,7 +32,7 @@ export default function OfficiateController(
           },
           through: {
             where: {
-              status:{
+              status: {
                 [Op.notLike]: '%decline%'
               }
             }
@@ -45,29 +45,40 @@ export default function OfficiateController(
 
     try {
       transaction = await sequelize.transaction();
-      const result = await Match.findAll(whereClause, {transaction});
-      const whereOfficiate = Object.assign( clause,{
-        where:{
+      const result = await Match.findAndCountAll(whereClause, {
+        transaction
+      });
+
+      const whereOfficiate = Object.assign(clause, {
+        where: {
           id: {
-            [Op.in]: _.map(result, item => item.id)
+            [Op.in]: _.map(result.rows, item => item.id)
           }
         },
-        include:[{
-          model: User,
-          attributes: ['id', 'email'],
-          through: {
-            where: {
-              status:{
-                [Op.notLike]: '%decline%'
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'email'],
+            through: {
+              where: {
+                status: {
+                  [Op.notLike]: '%decline%'
+                }
               }
-            } 
+            }
           }
-        }]
+        ]
       });
-      const matchOfficiate = await Match.findAndCountAll(whereOfficiate, { transaction });
+
+      const matchOfficiate = await Match.findAndCountAll(whereOfficiate, {
+        transaction
+      });
+
+      await transaction.commit();
 
       ResponseService.success(res, matchOfficiate);
     } catch (error) {
+      console.log('error:', error);
       transaction.rollback(transaction);
       ResponseService.exception(res, error, 400);
     }
@@ -294,7 +305,7 @@ export default function OfficiateController(
         },
         { transaction }
       );
-      
+
       if (!isAccepted) {
         throw new Error('Match was not accepted.');
       }
@@ -321,16 +332,19 @@ export default function OfficiateController(
 
     try {
       transaction = await sequelize.transaction();
-      let match = await Match.findOne({
-        where: {
-          id: match_id
-        },
-        include: [
+      let match = await Match.findOne(
         {
-          model: Address
-        }
-      ]
-      }, { transaction });
+          where: {
+            id: match_id
+          },
+          include: [
+            {
+              model: Address
+            }
+          ]
+        },
+        { transaction }
+      );
       let user = await User.findById(user_id, { transaction });
       let officiate = await Officiating.findOne(
         {

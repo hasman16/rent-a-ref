@@ -77,20 +77,23 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         });
                         _d.label = 1;
                     case 1:
-                        _d.trys.push([1, 5, , 6]);
+                        _d.trys.push([1, 6, , 7]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _d.sent();
-                        return [4 /*yield*/, Match.findAll(whereClause, { transaction: transaction })];
+                        return [4 /*yield*/, Match.findAndCountAll(whereClause, {
+                                transaction: transaction
+                            })];
                     case 3:
                         result = _d.sent();
                         whereOfficiate = Object.assign(clause, {
                             where: {
                                 id: (_b = {},
-                                    _b[Op.in] = _.map(result, function (item) { return item.id; }),
+                                    _b[Op.in] = _.map(result.rows, function (item) { return item.id; }),
                                     _b)
                             },
-                            include: [{
+                            include: [
+                                {
                                     model: User,
                                     attributes: ['id', 'email'],
                                     through: {
@@ -100,19 +103,26 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                                 _c)
                                         }
                                     }
-                                }]
+                                }
+                            ]
                         });
-                        return [4 /*yield*/, Match.findAndCountAll(whereOfficiate, { transaction: transaction })];
+                        return [4 /*yield*/, Match.findAndCountAll(whereOfficiate, {
+                                transaction: transaction
+                            })];
                     case 4:
                         matchOfficiate = _d.sent();
-                        ResponseService.success(res, matchOfficiate);
-                        return [3 /*break*/, 6];
+                        return [4 /*yield*/, transaction.commit()];
                     case 5:
+                        _d.sent();
+                        ResponseService.success(res, matchOfficiate);
+                        return [3 /*break*/, 7];
+                    case 6:
                         error_1 = _d.sent();
+                        console.log('error:', error_1);
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_1, 400);
-                        return [3 /*break*/, 6];
-                    case 6: return [2 /*return*/];
+                        return [3 /*break*/, 7];
+                    case 7: return [2 /*return*/];
                 }
             });
         });

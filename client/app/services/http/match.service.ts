@@ -90,9 +90,20 @@ export class MatchService extends AbstractService {
     queryParams: any = null
   ): Observable<PagedData> {
     const url = `/api/schedule_by_referee/${user_id}`;
-    return <Observable<PagedData>>this.http.get(url, {
-      params: queryParams
-    });
+    return <Observable<PagedData>>this.http
+      .get(url, {
+        params: queryParams
+      })
+      .map((data: PagedData) => {
+        data.rows = _.map(data.rows, match => {
+          match.users = _.map(match.users, user => {
+            return user.officiating;
+          });
+          return match;
+        });
+
+        return data;
+      });
   }
 
   public officiateMatch(assignment): Observable<any> {

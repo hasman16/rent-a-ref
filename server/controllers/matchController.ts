@@ -31,12 +31,13 @@ export default function MatchController(models, ResponseService) {
       where: {
         game_id: req.params.game_id
       },
-      include:[{
-        model: User,
-        attributes: ['id', 'email'],
-        through: {
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'email'],
+          through: {}
         }
-      }]
+      ]
     });
 
     Match.findAndCountAll(whereClause)
@@ -95,18 +96,22 @@ export default function MatchController(models, ResponseService) {
 
     try {
       transaction = await sequelize.transaction();
-      oldMatch = await Match.findOne({
-        where: { 
-          id: match_id
-        },      
-      include: [
+      oldMatch = await Match.findOne(
         {
-          model: Address
+          where: {
+            id: match_id
+          },
+          include: [
+            {
+              model: Address
+            }
+          ]
+        },
+        {
+          transaction
         }
-      ]}, {
-        transaction
-      });
-      
+      );
+
       if (oldMatch && canAssignOrRemove(oldMatch.status)) {
         await Match.update(match, {
           transaction
@@ -168,7 +173,8 @@ export default function MatchController(models, ResponseService) {
       );
     } catch (error) {
       transaction.rollback(transaction);
-      ResponseService.exception(res, 'Match was not deleted.', 404);
+      //ResponseService.exception(res, 'Match was not deleted.', 404);
+      ResponseService.exception(res, error, 404);
     }
   }
 
@@ -193,8 +199,8 @@ export default function MatchController(models, ResponseService) {
 
     try {
       transaction = await sequelize.transaction();
-      let dateTime:string = match.date + 'T' + match.time;
-      match.date = dateTime.replace(/z/i,'');
+      let dateTime: string = match.date + 'T' + match.time;
+      match.date = dateTime.replace(/z/i, '');
       await ResponseService.workoutTimeZone(match, address);
 
       if (address) {

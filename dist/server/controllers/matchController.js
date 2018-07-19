@@ -59,11 +59,13 @@ function MatchController(models, ResponseService) {
             where: {
                 game_id: req.params.game_id
             },
-            include: [{
+            include: [
+                {
                     model: User,
                     attributes: ['id', 'email'],
                     through: {}
-                }]
+                }
+            ]
         });
         Match.findAndCountAll(whereClause)
             .then(function (results) { return ResponseService.success(res, results); })
@@ -212,7 +214,8 @@ function MatchController(models, ResponseService) {
                     case 8:
                         error_2 = _a.sent();
                         transaction.rollback(transaction);
-                        ResponseService.exception(res, 'Match was not deleted.', 404);
+                        //ResponseService.exception(res, 'Match was not deleted.', 404);
+                        ResponseService.exception(res, error_2, 404);
                         return [3 /*break*/, 9];
                     case 9: return [2 /*return*/];
                 }

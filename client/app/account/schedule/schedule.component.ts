@@ -37,7 +37,7 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 	public isLoading: boolean = false;
 	public placeholder: string = 'search venue name';
 	private user: User;
-	
+
 	constructor(
 		private cd: ChangeDetectorRef,
 		private auth: AuthService,
@@ -52,6 +52,7 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 
 	ngOnInit() {
 		this.initialize();
+		this.user = this.auth.getCurrentUser();
 		this.searchAttribute = 'match_name|';
 		const pagedData: PagedData = this.route.snapshot.data.scheduleData;
 		this.processPagedData(pagedData);
@@ -67,28 +68,19 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 	}
 
 	public formatDate(id): string {
-    	return this.pagingService.formatDate(id, this.schedule);
-	}
-
-	private getOfficials(match: Match):any[] {
-		return _.map(match['users'], user => {
-			let officiate = user.officiate;
-			return Object.assign(officiate, {
-				user_id: user.id
-			});
-		})
+		return this.pagingService.formatDate(id, this.schedule);
 	}
 
 	private getOfficial(id, officials): any {
-	    return _.find(officials, (item) => {
-	      return id == item.id;
-	    });
+		return _.find(officials, item => {
+			return id == item.user_id;
+		});
 	}
 
 	private getItem(id): Match {
-	    return <Match>_.find(this.schedule, (item) => {
-	      return id == item.id;
-	    });
+		return <Match>_.find(this.schedule, item => {
+			return id == item.id;
+		});
 	}
 
 	private matchIsPending(item: Match): boolean {
@@ -96,30 +88,43 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 		return status === 'pending' || status === 'active';
 	}
 
-	private isTimeLocked(item: Match): boolean{
-		return this.pagingService.isTimeLocked(item);
+	private isNotTimeLocked(item: Match): boolean {
+		const timeLock: boolean = this.pagingService.isNotTimeLocked(item);
+		return timeLock;
 	}
 
-	private isNotCancelled(officials): boolean{
-		return _.every(officials, official=> {
-				const status: string = official.status;
-				return status != 'cancelled' && status!='played';
-			});
+	private isNotCancelled(officials): boolean {
+		return _.every(officials, official => {
+			const status: string = official.status;
+			return status != 'cancelled' && status != 'played';
+		});
 	}
 
-	public canDecline(id): boolean {
+	public officiateState(id, state: string): boolean {
 		let result: boolean = false;
 		const item: Match = this.getItem(id);
-		if (this.matchIsPending(item) && !this.isTimeLocked(item)) {
-			const officials: any[] = this.getOfficials(item);
+		if (item && this.matchIsPending(item) && this.isNotTimeLocked(item)) {
+			const officials: any[] = item['users'];
 			if (this.isNotCancelled(officials)) {
 				const official = this.getOfficial(this.user.id, officials);
-				if (official.status === 'pending') {
+				if (official.status === state) {
 					result = true;
 				}
 			}
 		}
-	    return result;
+		return result;
+	}
+
+	public canAccept(id): boolean {
+		return this.officiateState(id, 'pending');
+	}
+
+	public canDecline(id): boolean {
+		return this.officiateState(id, 'pending');
+	}
+
+	public canTurnBack(id): boolean {
+		return this.officiateState(id, 'accepted');
 	}
 
 	public getSchedule(params: Page) {

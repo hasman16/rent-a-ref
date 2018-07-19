@@ -47,18 +47,20 @@ export class PagingService {
 	}
 
 	public formatDate(id, collection): string {
-	    const item = _.find(collection, (item) => {
-	      return id == item.id
-	    });
-	    let value: string = moment.tz(item.date, item.timezone_id).format('MMMM DD YYYY');
-	    return value;
-  	}
+		const item = _.find(collection, item => {
+			return id == item.id;
+		});
+		let value: string = moment
+			.tz(item.date, item.timezone_id)
+			.format('MMMM DD YYYY');
+		return value;
+	}
 
-  	public isTimeLocked(eventObj, lock=1, grain='minutes'): boolean {
-      const now = moment().utc();
-      const matchTime = moment.tz(eventObj.date, eventObj.timezone_id);
-      const lockTime = matchTime.utc().subtract(lock,'hour');
+	public isNotTimeLocked(eventObj, lock = 1, grain = 'minutes'): boolean {
+		const now = moment().utc();
+		const matchTime = moment.tz(eventObj.date, eventObj.timezone_id);
+		const lockTime = matchTime.utc().subtract(lock, 'hour');
 
-      return now.isSameOrBefore(lockTime, grain);
-  	}
+		return now.isSameOrBefore(lockTime, grain);
+	}
 }
