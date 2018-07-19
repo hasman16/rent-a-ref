@@ -30,10 +30,10 @@ export class BlogService extends AbstractService {
   }
 
   public getUserPost(
-    post_id: string,
+    user_id: string,
     queryParams: any = null
   ): Observable<PagedData> {
-    const url = `/api/users/${post_id}/posts`;
+    const url = `/api/users/${user_id}/posts`;
     console.log('url is;', url, queryParams);
     return this.http.get<PagedData>(url, {
       params: queryParams

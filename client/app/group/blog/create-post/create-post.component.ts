@@ -1,5 +1,8 @@
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 
+import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { CookieService } from 'ngx-cookie-service';
 import {
 	Component,
 	OnInit,
@@ -8,9 +11,9 @@ import {
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { AbstractComponent } from '../../abstract/abstract.component';
-import { ToastComponent } from '../../shared/toast/toast.component';
-import { Page, PagedData, Sorts, User } from '../../shared/models/index';
+import { AbstractComponent } from '../../../abstract/abstract.component';
+import { ToastComponent } from '../../../shared/toast/toast.component';
+import { Page, PagedData, Sorts, User } from '../../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -24,24 +27,27 @@ import {
 	BlogService,
 	PagingService,
 	UserService
-} from '../../services/index';
+} from '../../../services/index';
 
 @Component({
-	selector: 'app-blog',
-	templateUrl: './blog.component.html',
-	styleUrls: ['./blog.component.scss'],
+	selector: 'app-createblog',
+	templateUrl: './create-post.component.html',
+	styleUrls: ['./create-post.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BlogComponent extends AbstractComponent implements OnInit {
+export class CreatePostComponent extends AbstractComponent implements OnInit {
+	public form: FormGroup = new FormGroup({});
+	public model: any = {};
+	public options: FormlyFormOptions = {};
+	public fields: FormlyFieldConfig[];
 	public post: any[];
-	//public blogging: any[];
 	public isLoading: boolean = false;
 	public placeholder: string = 'search Post';
 	constructor(
 		private cd: ChangeDetectorRef,
 		private auth: AuthService,
 		private route: ActivatedRoute,
-		private toast: ToastComponent,
+		public toast: ToastComponent,
 		private userService: UserService,
 		private blogService: BlogService,
 		protected pagingService: PagingService
@@ -51,10 +57,53 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 
 	ngOnInit() {
 		this.initialize();
-		console.log('data: ' + this.route.snapshot.data);
-		this.searchAttribute = 'blog_name|';
+		this.fields = [
+			{
+			  key: 'fullname',
+			  type: 'input',
+			  templateOptions: {
+			    placeholder: 'Fullname',
+			    label: 'Fullname',
+			    required: true,
+			    minLength: 5
+			  }
+			},
+			{
+			  key: 'email',
+			  type: 'input',
+			  templateOptions: {
+			    type: 'email',
+			    placeholder: 'Email Address',
+			    label: 'Email',
+			    required: true,
+			    minLength: 5
+			  }
+			},
+			{
+			  key: 'subject',
+			  type: 'input',
+			  templateOptions: {
+			    placeholder: 'Subject',
+			    label: 'Subject',
+			    required: true,
+			    minLength: 5
+			  }
+			},
+			{
+			  key: 'comment',
+			  type: 'textarea',
+			  templateOptions: {
+			    type: 'textarea',
+			    placeholder: 'Comment',
+			    label: 'Comment',
+			    required: true,
+			    minLength: 5
+			  }
+			}
+		            ];
+		/*this.searchAttribute = 'blog_name|';
 		const pagedData: PagedData = this.route.snapshot.data.blogData;
-		this.processPagedData(pagedData);
+		this.processPagedData(pagedData);*/
 	}
 
 	public onSelect({ selected }): void {
@@ -109,4 +158,6 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 	protected getData(data: Page): void {
 		this.getBlog(data);
 	}
+
+	onSubmit(model) {}
 }

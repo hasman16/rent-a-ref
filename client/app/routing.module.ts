@@ -11,6 +11,7 @@ import {
   EventsResolver,
   OrganizationsResolver,
   ScheduleResolver,
+  BlogResolver,
   SportsResolver,
   UserResolver
 } from './services/index';
@@ -21,10 +22,12 @@ import { AboutComponent } from './about/about.component';
 import { AccountComponent } from './account/account.component';
 import { AdminComponent } from './admin/admin.component';
 import { BlogComponent } from './group/blog/blog.component';
+import { EditPostComponent } from './group/blog/edit-post/edit-post.component';
 import { CareersComponent } from './group/careers/careers.component';
 import { ContactUsComponent } from './group/contactus/contactus.component';
 import { DeactivatedComponent } from './account/profile/deactivated/deactivated.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
+import { CreatePostComponent } from './group/blog/create-post/create-post.component';
 import { EventsComponent } from './organize/events/events.component';
 import { FaqComponent } from './group/faq/faq.component';
 import { HomeComponent } from './home/home.component';
@@ -79,6 +82,30 @@ const routes: Routes = [
       scheduleData: ScheduleResolver
     }
   },
+  /*{
+    path: 'users/:id',
+    component: BlogComponent,
+    canActivate: [AuthGuardLogin],
+        resolve: {
+      blogData: BlogResolver
+    },
+    children: [
+      { path: '', redirectTo: 'posts', pathMatch: 'full' },
+      {
+        path: 'edit-post',
+        component: EditPostComponent,
+        resolve: {
+          blogData: BlogResolver
+        }
+      },
+      {
+        path: 'create-post',
+        component: CreatePostComponent
+        
+      }
+    ]
+
+  },*/
   {
     path: 'organization',
     component: OrganizeComponent,

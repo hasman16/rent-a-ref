@@ -15,8 +15,8 @@ import * as _ from 'lodash';
 
 export abstract class AbstractComponent {
   protected isLoading: boolean = true;
-  protected page: Page;
-  protected selected: any[] = [];
+  public page: Page;
+  public selected: any[] = [];
   protected searchSubject: Subject<Page>;
   protected search$: Observable<Page>;
   protected searchAttribute: string;

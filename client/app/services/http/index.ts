@@ -7,3 +7,4 @@ export * from './profile.service';
 export * from './states.service';
 export * from './stripe.service';
 export * from './user.service';
+export * from './blog.service';

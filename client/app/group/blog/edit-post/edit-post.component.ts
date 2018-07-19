@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { AbstractComponent } from '../../abstract/abstract.component';
-import { ToastComponent } from '../../shared/toast/toast.component';
-import { Page, PagedData, Sorts, User } from '../../shared/models/index';
+import { AbstractComponent } from '../../../abstract/abstract.component';
+import { ToastComponent } from '../../../shared/toast/toast.component';
+import { Page, PagedData, Sorts, User } from '../../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -21,57 +21,56 @@ import * as _ from 'lodash';
 import {
 	AuthService,
 	CanComponentDeactivate,
-	MatchService,
+	BlogService,
 	PagingService,
 	UserService
-} from '../../services/index';
+} from '../../../services/index';
 
 @Component({
-	selector: 'app-schedule',
-	templateUrl: './schedule.component.html',
-	styleUrls: ['./schedule.component.scss'],
+	selector: 'app-editblog',
+	templateUrl: './edit-post.component.html',
+	styleUrls: ['./edit-post.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ScheduleComponent extends AbstractComponent implements OnInit {
-	public schedule: any[];
+export class EditPostComponent extends AbstractComponent implements OnInit {
+	public post: any[];
 	public isLoading: boolean = false;
-	public placeholder: string = 'search venue name';
+	public placeholder: string = 'search Post';
 	constructor(
 		private cd: ChangeDetectorRef,
 		private auth: AuthService,
 		private route: ActivatedRoute,
 		private toast: ToastComponent,
 		private userService: UserService,
-		private matchService: MatchService,
+		private blogService: BlogService,
 		protected pagingService: PagingService
 	) {
 		super(pagingService);
 	}
 
 	ngOnInit() {
-	 	this.initialize();
-		this.searchAttribute = 'match_name|';
-		console.log('data schedule: ' + this.route.snapshot);
-		const pagedData: PagedData = this.route.snapshot.data.scheduleData;
+		this.initialize();
+		this.searchAttribute = 'blog_name|';
+		const pagedData: PagedData = this.route.snapshot.data.blogData;
 		this.processPagedData(pagedData);
 	}
 
 	public onSelect({ selected }): void {
-		const match = _.cloneDeep(_.head(selected));
+		const postBlog = _.cloneDeep(_.head(selected));
 	}
 
 	public setPage(paging): void {
 		this.page.offset = paging.offset;
-		this.getSchedule(this.page);
+		this.getBlog(this.page);
 	}
 
-	public getSchedule(params: Page) {
+	public getBlog(params: Page) {
 		const currentUser: User = this.auth.getCurrentUser();
 		const user_id = currentUser.id;
 		let page: Page = _.cloneDeep(params);
 		this.isLoading = true;
-		this.matchService
-			.scheduleByReferee(user_id, page)
+		this.blogService
+			.getUserPost(user_id, page)
 			.subscribe(
 				res => this.callSuccess(res),
 				(err: HttpErrorResponse) => this.callFailure(err)
@@ -80,14 +79,14 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 
 	protected callSuccess(data: PagedData) {
 		this.processPagedData(data);
-		this.toast.setMessage('schedule data retrieved', 'success');
+		this.toast.setMessage('Blog data retrieved', 'success');
 		this.isLoading = false;
 		this.cd.markForCheck();
 	}
 
 	protected callFailure(
 		err: HttpErrorResponse,
-		message = 'An error occurred'
+		message = 'An error occurred when fetching the blog data'
 	) {
 		if (err.error instanceof Error) {
 			this.toast.setMessage(message, 'danger');
@@ -102,10 +101,10 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 	}
 
 	protected processPagedData(data: PagedData): void {
-		this.schedule = this.extraPagedData(data);
+		this.post = this.extraPagedData(data);
 	}
 
 	protected getData(data: Page): void {
-		this.getSchedule(data);
+		this.getBlog(data);
 	}
 }
