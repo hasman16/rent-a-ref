@@ -93,23 +93,14 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 		return timeLock;
 	}
 
-	private isNotCancelled(officials): boolean {
-		return _.every(officials, official => {
-			const status: string = official.status;
-			return status != 'cancelled' && status != 'played';
-		});
-	}
-
 	public officiateState(id, state: string): boolean {
 		let result: boolean = false;
 		const item: Match = this.getItem(id);
 		if (item && this.matchIsPending(item) && this.isNotTimeLocked(item)) {
-			const officials: any[] = item['users'];
-			if (this.isNotCancelled(officials)) {
-				const official = this.getOfficial(this.user.id, officials);
-				if (official.status === state) {
-					result = true;
-				}
+			const invitedOfficials: any[] = item['users'];
+			const official = this.getOfficial(this.user.id, invitedOfficials);
+			if (official.status === state) {
+				result = true;
 			}
 		}
 		return result;
