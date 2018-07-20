@@ -106,16 +106,52 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 		return result;
 	}
 
-	public canAccept(id): boolean {
-		return this.officiateState(id, 'pending');
+	public disableAccept(id): boolean {
+		return !this.officiateState(id, 'pending');
 	}
 
-	public canDecline(id): boolean {
-		return this.officiateState(id, 'pending');
+	public disableDecline(id): boolean {
+		return !this.officiateState(id, 'pending');
 	}
 
 	public canTurnBack(id): boolean {
 		return this.officiateState(id, 'accepted');
+	}
+
+	private generateOfficiateRelation(id, operation, success, error) {
+		const item: Match = this.getItem(id);
+		const officiate = {
+			user_id: this.user.id,
+			match_id: item.id
+		};
+		this.isLoading = true;
+		console.log('officiate:', officiate);
+		this.matchService.acceptDecline(operation, officiate)
+			.finally(()=> {
+				this.isLoading = false;
+				this.cd.markForCheck();
+				this.getData(this.page);
+			})
+			.subscribe(()=> {
+				this.toast.setMessage(success, 'success');
+			},
+			(error) => {
+				this.toast.setMessage(error, 'success');
+			});
+	}
+
+	public acceptMatch(id): void {
+		console.log('acceptMatch');
+		const error: string = 'Error: Game was NOT accepted.';
+		const success: string = 'Game Accepted.';
+		this.generateOfficiateRelation(id, 'accept', success, error);
+	}
+
+	public declineMatch(id): void {
+		console.log('declineMatch');
+		const error: string = 'Error: Game was NOT declined.';
+		const success: string = 'Game Declined.';
+		this.generateOfficiateRelation(id, 'decline', success, error);
 	}
 
 	public getSchedule(params: Page) {

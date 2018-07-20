@@ -13,6 +13,7 @@ import { AbstractService } from './abstract.service';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/observable/empty';
 
 import * as _ from 'lodash';
 
@@ -128,5 +129,27 @@ export class MatchService extends AbstractService {
   public removeOfficial(assignment): Observable<any> {
     const url = `/api/remove_official`;
     return this.http.delete(url, assignment);
+  }
+
+  public acceptMatch(assignment): Observable<any> {
+    const url = `/api/accept_match`;
+    console.log('acceptMatch:', assignment);
+    return this.postData(url, assignment);
+  }
+
+  public declineMatch(assignment): Observable<any> {
+    const url = `/api/decline_match`;
+    console.log('declineMatch:', assignment);
+    return this.postData(url, assignment);
+  }
+
+  public acceptDecline(method, assignment): Observable<any>{
+    if (method === 'accept') {
+      return this.acceptMatch(assignment)
+    } else if(method === 'decline') {
+      return this.declineMatch(assignment);
+    } else {
+      return Observable.empty();
+    }
   }
 }
