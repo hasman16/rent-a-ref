@@ -39,7 +39,13 @@
 
       <ngx-datatable-column name="" prop="id" editable="true">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <button class="btn btn-primary btn-sm" (click)="officiateMatch(value)" title="Click to assign this Referee to this match">Assign</button>
+          <button class="btn btn-primary btn-sm" *ngIf="canAssign(value)" (click)="officiateMatch(value)" title="Click to assign this Referee to this match">Assign Referee</button>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="" prop="id" editable="true">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <button class="btn btn-danger btn-sm" *ngIf="canUnassign(value)" (click)="removeOofficial(value)" title="Click to remove this Referee from this match">Remove Referee</button>
         </ng-template>
       </ngx-datatable-column>
 

@@ -9,22 +9,32 @@ export default function officiateRoutes(setter, officiateCtrl) {
   const isUser = authorization.isUser;
 
   router
-    .route('/schedule_by_referee/:user_id')
-    .get(authentication, isUserOrAdmin, officiateCtrl.matchScheduleByUser);
+    .route('/referee/:user_id/schedule')
+    .get(authentication, isUserOrAdmin, officiateCtrl.refereeSchedule);
   router
-    .route('/officiate_match')
+    .route('/match/:match_id/officials')
+    .get(authentication, isUserOrAdmin, officiateCtrl.matchOfficials);
+
+  router
+    .route('/officials/match/:match_id')
+    .get(authentication, isAdmin, officiateCtrl.officialsByMatch);
+
+  router
+    .route('/officiate/match')
     .post(authentication, isAdmin, officiateCtrl.addOfficialToMatch);
 
   router
-    .route('/accept_match')
+    .route('/accept/match')
     .post(authentication, isUserOrAdmin, officiateCtrl.acceptMatch);
+
   router
-    .route('/decline_match')
+    .route('/decline/match')
     .post(authentication, isUserOrAdmin, officiateCtrl.declineMatch);
+
   router
-    .route('/cancel_match')
+    .route('/cancel/match')
     .post(authentication, isAdmin, officiateCtrl.cancelMatch);
   router
-    .route('/remove_official')
+    .route('/remove/official/:user_id/match/:match_id')
     .delete(authentication, isAdmin, officiateCtrl.removeOfficialFromMatch);
 }

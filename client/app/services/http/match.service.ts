@@ -13,7 +13,6 @@ import { AbstractService } from './abstract.service';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/observable/empty';
 
 import * as _ from 'lodash';
 
@@ -90,7 +89,7 @@ export class MatchService extends AbstractService {
     user_id,
     queryParams: any = null
   ): Observable<PagedData> {
-    const url = `/api/schedule_by_referee/${user_id}`;
+    const url = `/api/referee/${user_id}/schedule`;
     return <Observable<PagedData>>this.http
       .get(url, {
         params: queryParams
@@ -121,35 +120,43 @@ export class MatchService extends AbstractService {
       });
   }
 
+  public getOfficialsByMatch(
+    match_id: string,
+    queryParams: any = null
+  ): Observable<any> {
+    const url: string = `/api/officials/match/${match_id}`;
+    return <Observable<PagedData>>this.http.get(url, {
+      params: queryParams
+    });
+  }
+
+  public getMatchOfficials(
+    match_id: string,
+    queryParams: any = null
+  ): Observable<any> {
+    const url: string = `/api/match/${match_id}/officials`;
+    return <Observable<PagedData>>this.http.get(url, {
+      params: queryParams
+    });
+  }
+
   public officiateMatch(assignment): Observable<any> {
-    const url = `/api/officiate_match`;
+    const url = `/api/officiate/match`;
     return this.postData(url, assignment);
   }
 
-  public removeOfficial(assignment): Observable<any> {
-    const url = `/api/remove_official`;
-    return this.http.delete(url, assignment);
+  public removeOfficial(user_id, match_id): Observable<any> {
+    const url = `/api/remove/official/${user_id}/match/${match_id}`;
+    return this.http.delete(url);
   }
 
   public acceptMatch(assignment): Observable<any> {
-    const url = `/api/accept_match`;
-    console.log('acceptMatch:', assignment);
+    const url = `/api/accept/match`;
     return this.postData(url, assignment);
   }
 
   public declineMatch(assignment): Observable<any> {
-    const url = `/api/decline_match`;
-    console.log('declineMatch:', assignment);
+    const url = `/api/decline/match`;
     return this.postData(url, assignment);
-  }
-
-  public acceptDecline(method, assignment): Observable<any>{
-    if (method === 'accept') {
-      return this.acceptMatch(assignment)
-    } else if(method === 'decline') {
-      return this.declineMatch(assignment);
-    } else {
-      return Observable.empty();
-    }
   }
 }

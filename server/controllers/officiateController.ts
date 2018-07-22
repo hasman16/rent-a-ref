@@ -19,7 +19,7 @@ export default function OfficiateController(
     'status'
   ];
 
-  async function matchScheduleByUser(req, res) {
+  async function refereeSchedule(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
     const Op = models.sequelize.Op;
     const whereClause = Object.assign(clause, {
@@ -92,11 +92,39 @@ export default function OfficiateController(
       include: [
         {
           model: Match,
+          attributes: ['id', 'status'],
+          where: {
+            id: req.params.match_id
+          },
+          required: false
+        }
+      ]
+    });
+
+    User.findAndCountAll(whereClause)
+      .then(result => ResponseService.success(res, result))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function matchOfficials(req, res) {
+    const Op = models.sequelize.Op;
+    let clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
+      where: {},
+      attributes: ['id', 'email'],
+      include: [
+        {
+          model: Match,
+          attributes: ['id', 'status'],
           where: {
             id: req.params.match_id
           },
           through: {
-            attributes: ['id']
+            where: {
+              status: {
+                [Op.like]: '%accept%'
+              }
+            }
           }
         }
       ]
@@ -151,12 +179,11 @@ export default function OfficiateController(
   }
 
   async function removeOfficialFromMatch(req, res) {
-    const body = ResponseService.getItemFromBody(req);
-    const match_id = body.match_id;
-    const user_id = body.user_id;
+    const match_id = req.params.match_id;
+    const user_id = req.params.user_id;
     const message = 'Referee was not removed from match : ' + match_id;
     let transaction;
-
+    console.log('removeOfficialFromMatch:', user_id, match_id);
     try {
       transaction = await sequelize.transaction();
       let match = await Match.findById(match_id, { transaction });
@@ -171,7 +198,7 @@ export default function OfficiateController(
         { transaction }
       );
 
-      if (officiate) {
+      if (!officiate) {
         throw new Error('Referee is not officiating this match.');
       }
       if (!match) {
@@ -181,7 +208,8 @@ export default function OfficiateController(
       let isOfficiating = await Officiating.destroy(
         {
           where: {
-            id: officiate.id
+            user_id,
+            match_id
           }
         },
         { transaction }
@@ -376,7 +404,9 @@ export default function OfficiateController(
   }
 
   return {
-    matchScheduleByUser,
+    refereeSchedule,
+    matchOfficials,
+    officialsByMatch,
     addOfficialToMatch,
     removeOfficialFromMatch,
     acceptMatch,
