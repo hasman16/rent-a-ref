@@ -145,9 +145,9 @@ export class MatchService extends AbstractService {
     return this.postData(url, assignment);
   }
 
-  public removeOfficial(assignment): Observable<any> {
-    const url = `/api/remove/official`;
-    return this.http.delete(url, assignment);
+  public removeOfficial(user_id, match_id): Observable<any> {
+    const url = `/api/remove/official/${user_id}/match/${match_id}`;
+    return this.http.delete(url);
   }
 
   public acceptMatch(assignment): Observable<any> {

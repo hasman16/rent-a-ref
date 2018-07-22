@@ -179,12 +179,11 @@ export default function OfficiateController(
   }
 
   async function removeOfficialFromMatch(req, res) {
-    const body = ResponseService.getItemFromBody(req);
-    const match_id = body.match_id;
-    const user_id = body.user_id;
+    const match_id = req.params.match_id;
+    const user_id = req.params.user_id;
     const message = 'Referee was not removed from match : ' + match_id;
     let transaction;
-
+    console.log('removeOfficialFromMatch:', user_id, match_id);
     try {
       transaction = await sequelize.transaction();
       let match = await Match.findById(match_id, { transaction });
@@ -199,7 +198,7 @@ export default function OfficiateController(
         { transaction }
       );
 
-      if (officiate) {
+      if (!officiate) {
         throw new Error('Referee is not officiating this match.');
       }
       if (!match) {
@@ -209,7 +208,8 @@ export default function OfficiateController(
       let isOfficiating = await Officiating.destroy(
         {
           where: {
-            id: officiate.id
+            user_id,
+            match_id
           }
         },
         { transaction }

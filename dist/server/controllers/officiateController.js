@@ -225,14 +225,14 @@ function OfficiateController(models, ResponseService, SendGridService) {
     }
     function removeOfficialFromMatch(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var body, match_id, user_id, message, transaction, match, user, officiate, isOfficiating, err_1;
+            var match_id, user_id, message, transaction, match, user, officiate, isOfficiating, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        body = ResponseService.getItemFromBody(req);
-                        match_id = body.match_id;
-                        user_id = body.user_id;
+                        match_id = req.params.match_id;
+                        user_id = req.params.user_id;
                         message = 'Referee was not removed from match : ' + match_id;
+                        console.log('removeOfficialFromMatch:', user_id, match_id);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 8, , 9]);
@@ -253,7 +253,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                             }, { transaction: transaction })];
                     case 5:
                         officiate = _a.sent();
-                        if (officiate) {
+                        if (!officiate) {
                             throw new Error('Referee is not officiating this match.');
                         }
                         if (!match) {
@@ -261,7 +261,8 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         }
                         return [4 /*yield*/, Officiating.destroy({
                                 where: {
-                                    id: officiate.id
+                                    user_id: user_id,
+                                    match_id: match_id
                                 }
                             }, { transaction: transaction })];
                     case 6:

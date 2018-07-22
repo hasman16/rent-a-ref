@@ -42,7 +42,6 @@ export class AssignUsersComponent extends AbstractComponent
     if (match) {
       this.match = _.cloneDeep(match);
       this.match_id = this.match.id;
-      this.isTimeLocked = match['isTimeLocked'];
       if (this.page) {
         this.getUsers(this.page);
       }
@@ -50,13 +49,10 @@ export class AssignUsersComponent extends AbstractComponent
   }
   @Output() back: EventEmitter<boolean> = new EventEmitter();
   public users: User[] = [];
-  public placeholder: string = 'Type to filter by email ...';
+  public placeholder: string = 'Type to filter Referees by email ...';
   protected isLoading: boolean = true;
-  protected allowEdit: boolean = false;
-  protected currentUser: User = <User>{};
   protected match_id: string;
   protected match: Match;
-  protected isTimeLocked: boolean = true;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -86,8 +82,6 @@ export class AssignUsersComponent extends AbstractComponent
     this.matchService
       .getOfficialsByMatch(this.match_id, page)
       .finally(() => {
-        this.isTimeLocked = !this.pagingService.isNotTimeLocked(this.match);
-        this.match['isTimeLocked'] = this.isTimeLocked;
         this.isLoading = false;
         this.cd.markForCheck();
       })
@@ -106,22 +100,44 @@ export class AssignUsersComponent extends AbstractComponent
   }
 
   public officiateMatch(user_id) {
-    if (!this.isTimeLocked) {
+    if (!this.isLoading) {
       this.matchService
         .officiateMatch({
           user_id,
           match_id: this.match_id
         })
         .finally(() => {
-          this.isTimeLocked = !this.pagingService.isNotTimeLocked(this.match);
-          this.match['isTimeLocked'] = this.isTimeLocked;
           this.isLoading = false;
           this.cd.markForCheck();
           this.getUsers(this.page);
         })
         .subscribe(
           res => {
-            this.toast.setMessage('Referee assigned to match.', 'success');
+            this.toast.setMessage(
+              'Referee Assigned to Match: ' + this.match_id,
+              'success'
+            );
+          },
+          (err: HttpErrorResponse) => this.callFailure(err)
+        );
+    }
+  }
+
+  public removeOofficial(user_id) {
+    if (!this.isLoading) {
+      this.matchService
+        .removeOfficial(user_id, this.match_id)
+        .finally(() => {
+          this.isLoading = false;
+          this.cd.markForCheck();
+          this.getUsers(this.page);
+        })
+        .subscribe(
+          res => {
+            this.toast.setMessage(
+              'Referee was Unassigned from Match: ' + this.match_id,
+              'success'
+            );
           },
           (err: HttpErrorResponse) => this.callFailure(err)
         );
@@ -129,14 +145,29 @@ export class AssignUsersComponent extends AbstractComponent
   }
 
   public canAssign(id): boolean {
-    let result: boolean = true;
+    let result: boolean = false;
     const user = _.find(this.users, user => {
       return user.id == id;
     });
+    const officiating = _.get(user, 'matches[0].officiating', null);
 
-    if (user && user.matches) {
-      const match = _.head(user.matches);
-      if (match.length > 0) {
+    if (!officiating || (officiating && officiating.status == 'declined')) {
+      result = true;
+    }
+
+    return result;
+  }
+
+  public canUnassign(id): boolean {
+    let result: boolean = false;
+    const user = _.find(this.users, user => {
+      return user.id == id;
+    });
+    const officiating = _.get(user, 'matches[0].officiating', null);
+
+    if (officiating) {
+      const status: string = officiating.status;
+      if (status == 'accepted' || status == 'pending') {
         result = true;
       }
     }
@@ -144,15 +175,7 @@ export class AssignUsersComponent extends AbstractComponent
     return result;
   }
 
-  public viewSchedule(user_id) {
-    /*
-    this.matchService
-      .getSchedule(this.page)
-      .subscribe(
-        res => this.callSuccess(res),
-        (err: HttpErrorResponse) => this.callFailure(err)
-      );*/
-  }
+  public viewSchedule(user_id) {}
 
   protected processPagedData(data: PagedData): void {
     this.users = this.extraPagedData(data);
