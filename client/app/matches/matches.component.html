@@ -72,7 +72,7 @@
   </div>
 
   <div class="col-12" *ngIf="isViewState('assignOfficials')">
-    <rar-assign-users [match_id]="match_id" (back)="backToList($event)"></rar-assign-users>
+    <rar-assign-users [match]="currentMatch" (back)="backToList($event)"></rar-assign-users>
   </div>
 
   <rar-alert-modal><p>Are you sure you want to delete match: {{delete_id}}.</p></rar-alert-modal>   

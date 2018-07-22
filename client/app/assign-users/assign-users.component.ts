@@ -21,7 +21,7 @@ import {
   PagingService,
   UserService
 } from '../services/index';
-import { Page, PagedData, Sorts, User } from '../shared/models/index';
+import { Match, Page, PagedData, Sorts, User } from '../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -37,11 +37,15 @@ import * as _ from 'lodash';
 })
 export class AssignUsersComponent extends AbstractComponent
   implements OnInit, OnDestroy {
-  @Input('match_id')
-  set setMatchId(id) {
-    this.match_id = id;
-    if (this.page) {
-      this.getUsers(this.page);
+  @Input('match')
+  set setMatch(match: Match) {
+    if (match) {
+      this.match = _.cloneDeep(match);
+      this.match_id = this.match.id;
+      this.isTimeLocked = match['isTimeLocked'];
+      if (this.page) {
+        this.getUsers(this.page);
+      }
     }
   }
   @Output() back: EventEmitter<boolean> = new EventEmitter();
@@ -51,6 +55,8 @@ export class AssignUsersComponent extends AbstractComponent
   protected allowEdit: boolean = false;
   protected currentUser: User = <User>{};
   protected match_id: string;
+  protected match: Match;
+  protected isTimeLocked: boolean = true;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -77,8 +83,14 @@ export class AssignUsersComponent extends AbstractComponent
     let page: Page = _.cloneDeep(params);
     page.search = 'can_referee|active,' + page.search;
     this.isLoading = true;
-    this.userService
-      .getUsers(page)
+    this.matchService
+      .getOfficialsByMatch(this.match_id, page)
+      .finally(() => {
+        this.isTimeLocked = !this.pagingService.isNotTimeLocked(this.match);
+        this.match['isTimeLocked'] = this.isTimeLocked;
+        this.isLoading = false;
+        this.cd.markForCheck();
+      })
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
@@ -94,22 +106,42 @@ export class AssignUsersComponent extends AbstractComponent
   }
 
   public officiateMatch(user_id) {
-    this.matchService
-      .officiateMatch({
-        user_id,
-        match_id: this.match_id
-      })
-      .switchMap(() => {
-        return this.matchService.scheduleByReferee(user_id, this.match_id);
-      })
-      .subscribe(
-        res => {
-          this.toast.setMessage('Referee assigned to match.', 'success');
+    if (!this.isTimeLocked) {
+      this.matchService
+        .officiateMatch({
+          user_id,
+          match_id: this.match_id
+        })
+        .finally(() => {
+          this.isTimeLocked = !this.pagingService.isNotTimeLocked(this.match);
+          this.match['isTimeLocked'] = this.isTimeLocked;
           this.isLoading = false;
           this.cd.markForCheck();
-        },
-        (err: HttpErrorResponse) => this.callFailure(err)
-      );
+          this.getUsers(this.page);
+        })
+        .subscribe(
+          res => {
+            this.toast.setMessage('Referee assigned to match.', 'success');
+          },
+          (err: HttpErrorResponse) => this.callFailure(err)
+        );
+    }
+  }
+
+  public canAssign(id): boolean {
+    let result: boolean = true;
+    const user = _.find(this.users, user => {
+      return user.id == id;
+    });
+
+    if (user && user.matches) {
+      const match = _.head(user.matches);
+      if (match.length > 0) {
+        result = true;
+      }
+    }
+
+    return result;
   }
 
   public viewSchedule(user_id) {
@@ -129,8 +161,6 @@ export class AssignUsersComponent extends AbstractComponent
   protected callSuccess(data: PagedData) {
     this.processPagedData(data);
     this.toast.setMessage('users data retrieved', 'success');
-    this.isLoading = false;
-    this.cd.markForCheck();
   }
 
   protected callFailure(err: HttpErrorResponse, message = 'An error occurred') {
@@ -139,7 +169,5 @@ export class AssignUsersComponent extends AbstractComponent
     } else {
       this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
     }
-    this.isLoading = false;
-    this.cd.markForCheck();
   }
 }

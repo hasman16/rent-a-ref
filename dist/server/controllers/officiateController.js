@@ -49,7 +49,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
         'can_referee',
         'status'
     ];
-    function matchScheduleByUser(req, res) {
+    function refereeSchedule(req, res) {
         return __awaiter(this, void 0, void 0, function () {
             var clause, Op, whereClause, transaction, result, whereOfficiate, matchOfficiate, error_1, _a, _b, _c;
             return __generator(this, function (_d) {
@@ -135,11 +135,37 @@ function OfficiateController(models, ResponseService, SendGridService) {
             include: [
                 {
                     model: Match,
+                    attributes: ['id', 'status'],
+                    where: {
+                        id: req.params.match_id
+                    },
+                    required: false
+                }
+            ]
+        });
+        User.findAndCountAll(whereClause)
+            .then(function (result) { return ResponseService.success(res, result); })
+            .catch(function (error) { return ResponseService.exception(res, error); });
+    }
+    function matchOfficials(req, res) {
+        var Op = models.sequelize.Op;
+        var clause = ResponseService.produceSearchAndSortClause(req);
+        var whereClause = Object.assign(clause, {
+            where: {},
+            attributes: ['id', 'email'],
+            include: [
+                {
+                    model: Match,
+                    attributes: ['id', 'status'],
                     where: {
                         id: req.params.match_id
                     },
                     through: {
-                        attributes: ['id']
+                        where: {
+                            status: (_a = {},
+                                _a[Op.like] = '%accept%',
+                                _a)
+                        }
                     }
                 }
             ]
@@ -147,6 +173,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
         User.findAndCountAll(whereClause)
             .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });
+        var _a;
     }
     function canAssignOrRemove(value) {
         return value === 'pending' || value === 'none' || value === 'active';
@@ -464,7 +491,9 @@ function OfficiateController(models, ResponseService, SendGridService) {
         });
     }
     return {
-        matchScheduleByUser: matchScheduleByUser,
+        refereeSchedule: refereeSchedule,
+        matchOfficials: matchOfficials,
+        officialsByMatch: officialsByMatch,
         addOfficialToMatch: addOfficialToMatch,
         removeOfficialFromMatch: removeOfficialFromMatch,
         acceptMatch: acceptMatch,

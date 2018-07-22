@@ -19,7 +19,7 @@ export default function OfficiateController(
     'status'
   ];
 
-  async function matchScheduleByUser(req, res) {
+  async function refereeSchedule(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
     const Op = models.sequelize.Op;
     const whereClause = Object.assign(clause, {
@@ -92,11 +92,39 @@ export default function OfficiateController(
       include: [
         {
           model: Match,
+          attributes: ['id', 'status'],
+          where: {
+            id: req.params.match_id
+          },
+          required: false
+        }
+      ]
+    });
+
+    User.findAndCountAll(whereClause)
+      .then(result => ResponseService.success(res, result))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function matchOfficials(req, res) {
+    const Op = models.sequelize.Op;
+    let clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
+      where: {},
+      attributes: ['id', 'email'],
+      include: [
+        {
+          model: Match,
+          attributes: ['id', 'status'],
           where: {
             id: req.params.match_id
           },
           through: {
-            attributes: ['id']
+            where: {
+              status: {
+                [Op.like]: '%accept%'
+              }
+            }
           }
         }
       ]
@@ -376,7 +404,9 @@ export default function OfficiateController(
   }
 
   return {
-    matchScheduleByUser,
+    refereeSchedule,
+    matchOfficials,
+    officialsByMatch,
     addOfficialToMatch,
     removeOfficialFromMatch,
     acceptMatch,
