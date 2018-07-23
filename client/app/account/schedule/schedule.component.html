@@ -43,15 +43,17 @@
           <ngx-datatable-column name="Age" prop="age" editable="false"></ngx-datatable-column>
           <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
 
-          <ngx-datatable-column name="" prop="id" editable="true">
+          <ngx-datatable-column name="Accept Match" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-                <button class="btn btn-primary btn-sm" (click)="acceptMatch(value)" title="Click to accept match" [disabled]="disableAccept(value)">Accept</button>
+                <button class="btn btn-primary btn-sm" (click)="acceptMatch(value)" title="Click to accept a match" *ngIf="canAccept(value)">Accept</button>
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column name="" prop="id" editable="true">
+          <ngx-datatable-column name="Decline Match" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-danger btn-sm" (click)="declineMatch(value)" title="Click to accept match" [disabled]="disableDecline(value)">Decline</button>
+              <button class="btn btn-danger btn-sm" (click)="declineMatch(value)" title="Click to decline a match" *ngIf="canDecline(value)">Decline</button>
+
+              <button class="btn btn-danger btn-sm" (click)="declineMatch(value)" title="Click to the match back to the Admin." *ngIf="canTurnBack(value)">Turn Back</button>
             </ng-template>
           </ngx-datatable-column>
         </ngx-datatable>

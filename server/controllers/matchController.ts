@@ -173,7 +173,6 @@ export default function MatchController(models, ResponseService) {
       );
     } catch (error) {
       transaction.rollback(transaction);
-      //ResponseService.exception(res, 'Match was not deleted.', 404);
       ResponseService.exception(res, error, 404);
     }
   }
