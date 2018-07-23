@@ -108,12 +108,12 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 		return result;
 	}
 
-	public disableAccept(id): boolean {
-		return !this.officiateState(id, 'pending');
+	public canAccept(id): boolean {
+		return this.officiateState(id, 'pending');
 	}
 
-	public disableDecline(id): boolean {
-		return !this.officiateState(id, 'pending');
+	public canDecline(id): boolean {
+		return this.officiateState(id, 'pending');
 	}
 
 	public canTurnBack(id): boolean {
@@ -129,26 +129,28 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 		let observable: Observable<any>;
 
 		this.isLoading = true;
-	    if (operation === 'accept') {
-	      observable = this.matchService.acceptMatch(officiate)
-	    } else if(operation === 'decline') {
-	      observable = this.matchService.declineMatch(officiate);
-	    } else {
-	      observable = Observable.empty();
-	    }
+		if (operation === 'accept') {
+			observable = this.matchService.acceptMatch(officiate);
+		} else if (operation === 'decline') {
+			observable = this.matchService.declineMatch(officiate);
+		} else {
+			observable = Observable.empty();
+		}
 
 		observable
-			.finally(()=> {
+			.finally(() => {
 				this.isLoading = false;
 				this.cd.markForCheck();
 				this.getData(this.page);
 			})
-			.subscribe(()=> {
-				this.toast.setMessage(success, 'success');
-			},
-			(error) => {
-				this.toast.setMessage(error, 'success');
-			});
+			.subscribe(
+				() => {
+					this.toast.setMessage(success, 'success');
+				},
+				error => {
+					this.toast.setMessage(error, 'success');
+				}
+			);
 	}
 
 	public acceptMatch(id): void {

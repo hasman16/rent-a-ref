@@ -214,7 +214,6 @@ function MatchController(models, ResponseService) {
                     case 8:
                         error_2 = _a.sent();
                         transaction.rollback(transaction);
-                        //ResponseService.exception(res, 'Match was not deleted.', 404);
                         ResponseService.exception(res, error_2, 404);
                         return [3 /*break*/, 9];
                     case 9: return [2 /*return*/];
