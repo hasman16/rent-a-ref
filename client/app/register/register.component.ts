@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { UserService } from '../services/index';
+import { AuthService, UserService } from '../services/index';
+
 import { ToastComponent } from '../shared/toast/toast.component';
 import * as _ from 'lodash';
 
@@ -19,13 +20,17 @@ export class RegisterComponent {
   public model: any = {};
   public options: FormlyFormOptions = <FormlyFormOptions>{};
   public fields: FormlyFieldConfig[];
+  public recapture = null;
   protected captchaResponse: string;
 
   constructor(
+    private auth: AuthService,
     private router: Router,
     public toast: ToastComponent,
     private userService: UserService
-  ) {}
+  ) {
+    this.recapture = this.auth.SITE_KEY;
+  }
 
   ngOnInit() {
     this.fields = [
@@ -149,11 +154,12 @@ export class RegisterComponent {
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
           this.toast.setMessage('This email address already exists', 'danger');
         } else {
-          // The backend returned an unsuccessful response code.
-          // The response body may contain clues as to what went wrong,
+          this.toast.setMessage(
+            'An error occurred while registering user.',
+            'danger'
+          );
         }
       }
     );

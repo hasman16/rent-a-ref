@@ -106,11 +106,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate([path]);
         },
         (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            this.toast.setMessage('invalid email or password! ', 'danger');
-          } else {
-            this.toast.setMessage('invalid email or password! ', 'danger');
-          }
+          this.toast.setMessage('Invalid email or password! ', 'danger');
         }
       );
   }

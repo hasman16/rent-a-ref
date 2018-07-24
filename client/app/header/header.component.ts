@@ -14,11 +14,9 @@ import { AuthService } from '../services/index';
 })
 export class HeaderComponent implements OnInit {
   @Output() featureSelected = new EventEmitter<string>();
-  // This featureSelected would be use in the app.component.html
   constructor(public auth: AuthService) {}
 
   ngOnInit() {
-    // Check if session valid
     if (!this.auth.loggedIn) {
       this.auth.logout();
     }

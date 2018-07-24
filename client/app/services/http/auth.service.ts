@@ -11,6 +11,7 @@ export class AuthService {
   public loggedIn: boolean = false;
   public isAdmin: boolean = false;
   public isActive: boolean = false;
+  public SITE_KEY: string;
 
   private currentUser: User = <User>{};
 
