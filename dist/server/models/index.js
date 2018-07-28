@@ -22,14 +22,14 @@ var models = [
     'User'
 ];
 function herokuSetup() {
-    console.log('=========== Server is: heroku');
+    console.log('Server is: HEROKU');
     return new sequelize_1.default(process.env.DATABASE_URL);
 }
 function localhostSetup() {
     var serverName = process.env.serverName || 'test';
     var configuration = index_1.default[serverName];
     var database = configuration.database;
-    console.log('=========== Server is:', serverName);
+    console.log('Server is:', serverName);
     // connect to database using sequelize
     return new sequelize_1.default(database.name, database.user, database.password, database.settings);
 }

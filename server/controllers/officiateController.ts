@@ -19,7 +19,7 @@ export default function OfficiateController(
     'status'
   ];
 
-  async function matchScheduleByUser(req, res) {
+  async function refereeSchedule(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
     const Op = models.sequelize.Op;
     const whereClause = Object.assign(clause, {
@@ -78,7 +78,6 @@ export default function OfficiateController(
 
       ResponseService.success(res, matchOfficiate);
     } catch (error) {
-      console.log('error:', error);
       transaction.rollback(transaction);
       ResponseService.exception(res, error, 400);
     }
@@ -92,11 +91,39 @@ export default function OfficiateController(
       include: [
         {
           model: Match,
+          attributes: ['id', 'status'],
+          where: {
+            id: req.params.match_id
+          },
+          required: false
+        }
+      ]
+    });
+
+    User.findAndCountAll(whereClause)
+      .then(result => ResponseService.success(res, result))
+      .catch(error => ResponseService.exception(res, error));
+  }
+
+  function matchOfficials(req, res) {
+    const Op = models.sequelize.Op;
+    let clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
+      where: {},
+      attributes: ['id', 'email'],
+      include: [
+        {
+          model: Match,
+          attributes: ['id', 'status'],
           where: {
             id: req.params.match_id
           },
           through: {
-            attributes: ['id']
+            where: {
+              status: {
+                [Op.like]: '%accept%'
+              }
+            }
           }
         }
       ]
@@ -111,27 +138,39 @@ export default function OfficiateController(
     return value === 'pending' || value === 'none' || value === 'active';
   }
 
-  function getDummyPromise() {
-    return new Promise(function(resolve, reject) {
-      setTimeout(function() {
-        resolve('x');
-      }, 0);
-    });
-  }
-
   async function addOfficialToMatch(req, res) {
     let executeMethod = async (user, match, officiate, transaction) => {
+      let isOfficiating;
       if (officiate) {
-        throw new Error('Referee is already officiating this match. ');
+        const status = _.lowerCase(officiate.status);
+        if (status === 'accepted') {
+          throw new Error('Referee is already officiating this match.');
+        } else if (status === 'declined') {
+          isOfficiating = await Officiating.update(
+            {
+              status: 'pending'
+            },
+            {
+              where: {
+                user_id: user.id,
+                match_id: match.id
+              }
+            },
+            { transaction }
+          );
+        } else {
+          throw new Error('Unable to assign referee to this match.');
+        }
+      } else {
+        isOfficiating = await Officiating.create(
+          {
+            user_id: user.id,
+            match_id: match.id,
+            status: 'pending'
+          },
+          { transaction }
+        );
       }
-      let isOfficiating = await Officiating.create(
-        {
-          user_id: user.id,
-          match_id: match.id,
-          status: 'pending'
-        },
-        { transaction }
-      );
 
       if (!isOfficiating) {
         throw new Error('Referee was not assigned to match.');
@@ -140,20 +179,19 @@ export default function OfficiateController(
       SendGridService.sendEmail({
         to: user.email,
         from: 'admin@rentaref.com',
-        subject: 'You have been assign a match.',
+        subject: 'You have been assigned a match.',
         content:
-          'You have been assigned a new match. Go to your schedule accept or decline.'
+          'You have been assigned a new match. Go to your schedule to Accept or Decline.'
       });
-      return getDummyPromise();
+      return Promise.resolve('Referee was assigned to match');
     };
 
     operateOnMatch(req, res, executeMethod);
   }
 
   async function removeOfficialFromMatch(req, res) {
-    const body = ResponseService.getItemFromBody(req);
-    const match_id = body.match_id;
-    const user_id = body.user_id;
+    const match_id = req.params.match_id;
+    const user_id = req.params.user_id;
     const message = 'Referee was not removed from match : ' + match_id;
     let transaction;
 
@@ -171,7 +209,7 @@ export default function OfficiateController(
         { transaction }
       );
 
-      if (officiate) {
+      if (!officiate) {
         throw new Error('Referee is not officiating this match.');
       }
       if (!match) {
@@ -181,7 +219,8 @@ export default function OfficiateController(
       let isOfficiating = await Officiating.destroy(
         {
           where: {
-            id: officiate.id
+            user_id,
+            match_id
           }
         },
         { transaction }
@@ -190,6 +229,7 @@ export default function OfficiateController(
       if (!isOfficiating) {
         throw new Error('Referee was not removed from match.');
       }
+
       await transaction.commit();
       ResponseService.success(
         res,
@@ -268,7 +308,7 @@ export default function OfficiateController(
         subject: 'Match Declined.',
         content: 'You chose to decline match: ' + match.id
       });
-      return getDummyPromise();
+      return Promise.resolve('Referee declined to officiate match');
     };
 
     operateOnMatch(req, res, executeMethod);
@@ -316,7 +356,7 @@ export default function OfficiateController(
         subject: 'Match Accepted.',
         content: 'You chose to accept match: ' + match.id
       });
-      return getDummyPromise();
+      return Promise.resolve('Referee accepted match');
     };
 
     operateOnMatch(req, res, executeMethod);
@@ -355,9 +395,11 @@ export default function OfficiateController(
         },
         { transaction }
       );
+
       if (!match) {
         throw new Error('Match does not exist.');
       }
+
       if (!canAssignOrRemove(match.status)) {
         throw new Error('You can not be removed from this match.');
       }
@@ -370,13 +412,14 @@ export default function OfficiateController(
       );
     } catch (error) {
       transaction.rollback(transaction);
-      //ResponseService.exception(res, 'Operation failed!', 400);
       ResponseService.exception(res, error, 400);
     }
   }
 
   return {
-    matchScheduleByUser,
+    refereeSchedule,
+    matchOfficials,
+    officialsByMatch,
     addOfficialToMatch,
     removeOfficialFromMatch,
     acceptMatch,

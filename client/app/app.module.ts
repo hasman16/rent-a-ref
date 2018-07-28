@@ -1,3 +1,4 @@
+import { environment } from '../environments/environment';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -147,7 +148,7 @@ import {
     imports: [
         BrowserModule,
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyBjIl1u0Sk8z2-UhiZNRATgU6E8ssDU-10'
+            apiKey: environment.GOOGLEMAPS_KEY //'AIzaSyBjIl1u0Sk8z2-UhiZNRATgU6E8ssDU-10'
         }), //'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
         NgxDatatableModule,
 

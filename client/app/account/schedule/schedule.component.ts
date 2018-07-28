@@ -16,6 +16,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/finally';
+import 'rxjs/add/observable/empty';
+
 import * as _ from 'lodash';
 
 import {
@@ -118,6 +120,51 @@ export class ScheduleComponent extends AbstractComponent implements OnInit {
 
 	public canTurnBack(id): boolean {
 		return this.officiateState(id, 'accepted');
+	}
+
+	private generateOfficiateRelation(id, operation, success, error) {
+		const item: Match = this.getItem(id);
+		const officiate = {
+			user_id: this.user.id,
+			match_id: item.id
+		};
+		let observable: Observable<any>;
+
+		this.isLoading = true;
+		if (operation === 'accept') {
+			observable = this.matchService.acceptMatch(officiate);
+		} else if (operation === 'decline') {
+			observable = this.matchService.declineMatch(officiate);
+		} else {
+			observable = Observable.empty();
+		}
+
+		observable
+			.finally(() => {
+				this.isLoading = false;
+				this.cd.markForCheck();
+				this.getData(this.page);
+			})
+			.subscribe(
+				() => {
+					this.toast.setMessage(success, 'success');
+				},
+				error => {
+					this.toast.setMessage(error, 'success');
+				}
+			);
+	}
+
+	public acceptMatch(id): void {
+		const error: string = 'Error: Game was NOT accepted.';
+		const success: string = 'Game Accepted.';
+		this.generateOfficiateRelation(id, 'accept', success, error);
+	}
+
+	public declineMatch(id): void {
+		const error: string = 'Error: Game was NOT declined.';
+		const success: string = 'Game Declined.';
+		this.generateOfficiateRelation(id, 'decline', success, error);
 	}
 
 	public getSchedule(params: Page) {

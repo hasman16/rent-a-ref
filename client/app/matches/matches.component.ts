@@ -85,6 +85,7 @@ export class MatchesComponent implements OnInit {
   protected selected: any[] = [];
   public delete_id: string;
   public match_id: string = '0';
+  public currentMatch: Match = <Match>{};
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -109,6 +110,14 @@ export class MatchesComponent implements OnInit {
   public getAllMatchesByGame(game_id: string, page: Page): void {
     this.matchService
       .getAllMatchesByGame(game_id, page)
+      .map((data: PagedData) => {
+        data.rows = _.map(data.rows, match => {
+          match.isTimeLocked = !this.pagingService.isNotTimeLocked(match);
+          return match;
+        });
+
+        return data;
+      })
       .finally(() => {
         this.setMatchesMode();
         this.cd.markForCheck();
@@ -169,9 +178,14 @@ export class MatchesComponent implements OnInit {
   }
 
   public assignOfficials(match_id: string): void {
-    this.viewState = ViewState.assignOfficials;
-    this.match_id = match_id;
-    this.cd.markForCheck();
+    const match = _.find(this.matches, match => match.id == match_id);
+    if (match) {
+      match.isTimeLocked = !this.pagingService.isNotTimeLocked(match);
+      this.viewState = ViewState.assignOfficials;
+      this.match_id = match_id;
+      this.currentMatch = match;
+      this.cd.markForCheck();
+    }
   }
 
   public deleteMatch(match_id): void {

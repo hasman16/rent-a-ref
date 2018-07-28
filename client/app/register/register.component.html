@@ -11,7 +11,8 @@
             <re-captcha
               (resolved)="resolvedRecaptcha($event)"
               type="image"
-              siteKey="6Ldk6k0UAAAAAOGEPK-6NLb8Vc_kjsTIvb3lm_eb"
+              siteKey="{{recapture}}"
+              *ngIf="recapture"
             ></re-captcha>
           </formly-form>
 

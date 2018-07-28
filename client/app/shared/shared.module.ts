@@ -30,7 +30,8 @@ import {
     FormlyHorizontalWrapper,
     FormlyHorizontalRadioWrapper,
     FormlyHorizontalTextAreaWrapper,
-    RepeatTypeComponent
+    RepeatTypeComponent,
+    DatepickerTypeComponent
 } from './formly/index';
 import { BaseFormComponent } from './formly/base-form/base-form.component';
 import { OrganizationFormComponent } from './forms/organization-form/organization-form.component';
@@ -81,7 +82,18 @@ import { SearchBoxComponent } from './search-box/index';
                     extends: 'textarea',
                     wrappers: ['fieldset', 'horizontalTextareaWrapper']
                 },
-                { name: 'repeat', component: RepeatTypeComponent }
+                { name: 'repeat', component: RepeatTypeComponent },
+                {
+                    name: 'datepicker',
+                    component: DatepickerTypeComponent,
+                    wrappers: ['form-field'],
+                    defaultOptions: {
+                      defaultValue: new Date(),
+                      templateOptions: {
+                        datepickerOptions: {},
+                      },
+                    },
+                }
             ]
         })
     ],
@@ -109,7 +121,8 @@ import { SearchBoxComponent } from './search-box/index';
         BlogFormComponent,
         EventsFormComponent,
         MatchesFormComponent,
-        SearchBoxComponent
+        SearchBoxComponent,
+        DatepickerTypeComponent
     ],
     declarations: [
         ToastComponent,
@@ -131,7 +144,8 @@ import { SearchBoxComponent } from './search-box/index';
         BlogFormComponent,
         EventsFormComponent,
         MatchesFormComponent,
-        SearchBoxComponent
+        SearchBoxComponent,
+        DatepickerTypeComponent
     ],
     providers: [
         AlertModalService,

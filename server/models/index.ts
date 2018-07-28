@@ -23,7 +23,7 @@ const models = [
 ];
 
 function herokuSetup() {
-  console.log('=========== Server is: heroku');
+  console.log('Server is: HEROKU');
   return new Sequelize(process.env.DATABASE_URL);
 }
 
@@ -31,7 +31,7 @@ function localhostSetup() {
   const serverName = process.env.serverName || 'test';
   const configuration = config[serverName];
   const database = configuration.database;
-  console.log('=========== Server is:', serverName);
+  console.log('Server is:', serverName);
   // connect to database using sequelize
   return new Sequelize(
     database.name,
