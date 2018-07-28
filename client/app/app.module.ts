@@ -1,4 +1,4 @@
-import { environment } from '../environments/environment';
+import { environment } from './environments/environment';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
