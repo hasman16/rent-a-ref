@@ -35,13 +35,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var _ = require("lodash");
 function GameController(models, ResponseService) {
     var Game = models.Game;
     var attributes = [
         'id',
         'event_name',
-        'event_date',
+        'date',
         'event_type',
         'venue_name',
         'status',
@@ -70,22 +69,6 @@ function GameController(models, ResponseService) {
             organization_id: req.params.organization_id
         });
         clause.where = whereClause;
-        console.log('getAllByOrganization:', clause);
-        /*
-            let clause = ResponseService.produceSearchAndSortClause(req);
-        const whereClause = Object.assign(clause, {
-          where: {
-            organization_id: req.params.organization_id
-          },
-          include: [
-            {
-              model: Match,
-              through: {
-                attributes: []
-              }
-            }
-          ]
-        });*/
         Game.findAndCountAll(clause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
@@ -140,7 +123,7 @@ function GameController(models, ResponseService) {
     }
     function createGameAddressPhone(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, Address, Phone, game, address, phone, transaction, newGame, newAddress, newPhone, testAddress, geometry, error_1;
+            var sequelize, Address, Phone, game, address, phone, transaction, newGame, newAddress, newPhone, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -158,39 +141,35 @@ function GameController(models, ResponseService) {
                         game.status = 'pending';
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 7, , 8]);
+                        _a.trys.push([1, 8, , 9]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        return [4 /*yield*/, ResponseService.getAddress(address)];
+                        return [4 /*yield*/, ResponseService.workoutTimeZone(game, address)];
                     case 3:
-                        testAddress = _a.sent();
-                        geometry = _.get(testAddress, 'results[0].geometry', null);
-                        if (!geometry) {
-                            throw new Error('Error searching for address.');
-                        }
-                        console.log('testAddress:', geometry.location);
-                        newAddress = Address.create(address, { transaction: transaction });
-                        game.address_id = newAddress.id;
-                        if (!phone) return [3 /*break*/, 5];
-                        return [4 /*yield*/, Phone.create(phone, { transaction: transaction })];
+                        _a.sent();
+                        return [4 /*yield*/, Address.create(address, { transaction: transaction })];
                     case 4:
+                        newAddress = _a.sent();
+                        game.address_id = newAddress.id;
+                        if (!phone) return [3 /*break*/, 6];
+                        return [4 /*yield*/, Phone.create(phone, { transaction: transaction })];
+                    case 5:
                         newPhone = _a.sent();
                         game.phone_id = newPhone.id;
-                        _a.label = 5;
-                    case 5: return [4 /*yield*/, Game.create(game, { transaction: transaction })];
-                    case 6:
+                        _a.label = 6;
+                    case 6: return [4 /*yield*/, Game.create(game, { transaction: transaction })];
+                    case 7:
                         newGame = _a.sent();
                         transaction.commit();
                         ResponseService.success(res, newGame, 201);
-                        return [3 /*break*/, 8];
-                    case 7:
+                        return [3 /*break*/, 9];
+                    case 8:
                         error_1 = _a.sent();
-                        console.log('error:', error_1);
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_1);
-                        return [3 /*break*/, 8];
-                    case 8: return [2 /*return*/];
+                        return [3 /*break*/, 9];
+                    case 9: return [2 /*return*/];
                 }
             });
         });

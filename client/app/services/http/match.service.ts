@@ -90,9 +90,34 @@ export class MatchService extends AbstractService {
     queryParams: any = null
   ): Observable<PagedData> {
     const url = `/api/schedule_by_referee/${user_id}`;
-    return <Observable<PagedData>>this.http.get(url, {
-      params: queryParams
-    });
+    return <Observable<PagedData>>this.http
+      .get(url, {
+        params: queryParams
+      })
+      .map((data: PagedData) => {
+        data.rows = _.map(data.rows, match => {
+          const officials: any[] = _.map(match.users, user => {
+            return user.officiating;
+          });
+
+          const statuses: string[] = _.map(
+            officials,
+            official => official.status
+          );
+
+          if (_.some(statuses, status => status == 'cancelled')) {
+            match.status = 'cancelled';
+          } else if (_.some(statuses, status => status == 'played')) {
+            match.status == 'played';
+          }
+
+          match.users = _.cloneDeep(officials);
+
+          return match;
+        });
+
+        return data;
+      });
   }
 
   public officiateMatch(assignment): Observable<any> {

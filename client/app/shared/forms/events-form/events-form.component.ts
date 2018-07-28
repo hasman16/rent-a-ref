@@ -81,7 +81,7 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
           {
             className: 'col-sm-6',
             type: 'input',
-            key: 'event_date',
+            key: 'date',
             templateOptions: {
               label: 'Event Date',
               type: 'date',

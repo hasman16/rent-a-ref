@@ -1,16 +1,16 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup } from '@angular/forms';
-
-import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { CookieService } from 'ngx-cookie-service';
 import {
 	Component,
 	OnInit,
 	ChangeDetectorRef,
-	ChangeDetectionStrategy
+	ChangeDetectionStrategy,
+	EventEmitter, Input, Output
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormGroup } from '@angular/forms';
 
+import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { AbstractComponent } from '../../../abstract/abstract.component';
 import { ToastComponent } from '../../../shared/toast/toast.component';
 import { Page, PagedData, Sorts, User } from '../../../shared/models/index';
@@ -36,6 +36,7 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreatePostComponent extends AbstractComponent implements OnInit {
+	@Output() loadPage = new EventEmitter<string>();
 	public form: FormGroup = new FormGroup({});
 	public model: any = {};
 	public options: FormlyFormOptions = {};
@@ -47,6 +48,7 @@ export class CreatePostComponent extends AbstractComponent implements OnInit {
 		private cd: ChangeDetectorRef,
 		private auth: AuthService,
 		private route: ActivatedRoute,
+		private router: Router,
 		public toast: ToastComponent,
 		private userService: UserService,
 		private blogService: BlogService,
@@ -56,6 +58,8 @@ export class CreatePostComponent extends AbstractComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.loadPage.emit('createBlog');
+		console.log('loadPage: ' + this.loadPage);
 		this.initialize();
 		this.fields = [
 			{
@@ -160,4 +164,10 @@ export class CreatePostComponent extends AbstractComponent implements OnInit {
 	}
 
 	onSubmit(model) {}
+
+	onCancel(){
+	  this.loadPage.emit('loadBlog');
+	  console.log('loadPage 1: ' + this.loadPage);
+	  this.router.navigate(['blog']);
+	}
 }

@@ -1,10 +1,12 @@
-import { Router, ActivatedRoute } from '@angular/router';
+//import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router, Data } from '@angular/router';
 
 import {
 	Component,
 	OnInit,
 	ChangeDetectorRef,
-	ChangeDetectionStrategy
+	ChangeDetectionStrategy,
+	EventEmitter, Input, Output
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -33,6 +35,9 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogComponent extends AbstractComponent implements OnInit {
+	//@Output() customElement = new EventEmitter<string>();
+	parent = false;
+	newLoadPage = 'loadBlog';
 	public post: any[];
 	//public blogging: any[];
 	public isLoading: boolean = false;
@@ -41,6 +46,7 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 		private cd: ChangeDetectorRef,
 		private auth: AuthService,
 		private route: ActivatedRoute,
+		private router: Router,
 		private toast: ToastComponent,
 		private userService: UserService,
 		private blogService: BlogService,
@@ -51,6 +57,7 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 
 	ngOnInit() {
 		this.initialize();
+		//this.customElement.emit('loadPost');
 		console.log('data: ' + this.route.snapshot.data);
 		this.searchAttribute = 'blog_name|';
 		const pagedData: PagedData = this.route.snapshot.data.blogData;
@@ -66,7 +73,8 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 		this.getBlog(this.page);
 	}
 
-	public getBlog(params: Page) {
+	public getBlog(params: Page) { console.log('Initial load');
+	this.parent = false;
 		const currentUser: User = this.auth.getCurrentUser();
 		const user_id = currentUser.id;
 		let page: Page = _.cloneDeep(params);
@@ -108,5 +116,23 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 
 	protected getData(data: Page): void {
 		this.getBlog(data);
+	}
+
+	public goNewBlog() {		
+		const currentUser: User = this.auth.getCurrentUser();
+		const user_id = currentUser.id;
+		console.log('ID 1: ' + user_id);
+		//this.customElement.emit('createPost');
+		this.parent = true;
+		this.router.navigate(['blog/create-post']);
+	            }
+	public onLoadPage(receivedEvent){
+		if(receivedEvent == 'createBlog'){
+		  this.parent = true;
+		} else{
+		  this.parent = false;	
+		}
+		this.newLoadPage = receivedEvent;
+		console.log('this.newLoadPage: ' + this.newLoadPage);
 	}
 }

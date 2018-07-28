@@ -64,7 +64,6 @@ export class AssignUsersComponent extends AbstractComponent
   }
 
   ngOnInit() {
-    console.log('onInit');
     this.initialize();
     this.searchAttribute = 'email|';
     this.getUsers(this.page);

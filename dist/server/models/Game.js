@@ -3,9 +3,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Game = function (sequelize, DataTypes) {
     return sequelize.define('game', {
         event_name: DataTypes.STRING(64),
-        event_date: {
+        date: {
             type: DataTypes.DATE,
             allowNull: false
+        },
+        timezone: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        timezone_offset: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        timezone_id: {
+            type: DataTypes.STRING(128),
+            allowNull: false,
+            defaultValue: ''
+        },
+        timezone_name: {
+            type: DataTypes.STRING(128),
+            allowNull: false,
+            defaultValue: ''
         },
         event_type: {
             type: DataTypes.STRING(32),

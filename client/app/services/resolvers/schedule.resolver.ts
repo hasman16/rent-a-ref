@@ -37,9 +37,6 @@ export class ScheduleResolver implements Resolve<Observable<PagedData>> {
 			.scheduleByReferee(user_id, pagingInfo)
 			.catch(() => {
 				return Observable.empty();
-			})
-			.map((data: PagedData) => {
-				return data;
 			});
 	}
 }

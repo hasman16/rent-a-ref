@@ -25,9 +25,27 @@ var Match = function (sequelize, DataTypes) {
                 isIn: [['kids', 'teens', 'adults']]
             }
         },
-        match_date: {
+        date: {
             type: DataTypes.DATE,
             allowNull: false
+        },
+        timezone: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        timezone_offset: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        timezone_id: {
+            type: DataTypes.STRING(128),
+            allowNull: false,
+            defaultValue: ''
+        },
+        timezone_name: {
+            type: DataTypes.STRING(128),
+            allowNull: false,
+            defaultValue: ''
         },
         referees: {
             type: DataTypes.INTEGER,

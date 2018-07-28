@@ -38,6 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function MatchController(models, ResponseService) {
     var sequelize = models.sequelize;
     var Match = models.Match;
+    var Address = models.Address;
     var attributes = ['id'];
     function returnMatch(res, match, status) {
         if (status === void 0) { status = 200; }
@@ -53,12 +54,19 @@ function MatchController(models, ResponseService) {
     }
     function getAllByGame(req, res) {
         var clause = ResponseService.produceSearchAndSortClause(req);
+        var User = models.User;
         var whereClause = Object.assign(clause, {
             where: {
                 game_id: req.params.game_id
-            }
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'email'],
+                    through: {}
+                }
+            ]
         });
-        console.log('whereClause:', whereClause);
         Match.findAndCountAll(whereClause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
@@ -116,7 +124,16 @@ function MatchController(models, ResponseService) {
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        return [4 /*yield*/, Match.findById(match_id, {
+                        return [4 /*yield*/, Match.findOne({
+                                where: {
+                                    id: match_id
+                                },
+                                include: [
+                                    {
+                                        model: Address
+                                    }
+                                ]
+                            }, {
                                 transaction: transaction
                             })];
                     case 3:
@@ -197,7 +214,8 @@ function MatchController(models, ResponseService) {
                     case 8:
                         error_2 = _a.sent();
                         transaction.rollback(transaction);
-                        ResponseService.exception(res, 'Match was not deleted.', 404);
+                        //ResponseService.exception(res, 'Match was not deleted.', 404);
+                        ResponseService.exception(res, error_2, 404);
                         return [3 /*break*/, 9];
                     case 9: return [2 /*return*/];
                 }
@@ -206,7 +224,7 @@ function MatchController(models, ResponseService) {
     }
     function createMatchAddressPhone(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, Address, Phone, match, address, phone, transaction, newMatch, newAddress, newPhone, aMatch, error_3;
+            var sequelize, Address, Phone, match, address, phone, transaction, newMatch, newAddress, newPhone, dateTime, aMatch, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -224,36 +242,41 @@ function MatchController(models, ResponseService) {
                         match.status = 'pending';
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 8, , 9]);
+                        _a.trys.push([1, 9, , 10]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        if (!address) return [3 /*break*/, 4];
-                        return [4 /*yield*/, Address.create(address, { transaction: transaction })];
+                        dateTime = match.date + 'T' + match.time;
+                        match.date = dateTime.replace(/z/i, '');
+                        return [4 /*yield*/, ResponseService.workoutTimeZone(match, address)];
                     case 3:
+                        _a.sent();
+                        if (!address) return [3 /*break*/, 5];
+                        return [4 /*yield*/, Address.create(address, { transaction: transaction })];
+                    case 4:
                         newAddress = _a.sent();
                         match.address_id = newAddress.id;
-                        _a.label = 4;
-                    case 4:
-                        if (!phone) return [3 /*break*/, 6];
-                        return [4 /*yield*/, Phone.create(phone, { transaction: transaction })];
+                        _a.label = 5;
                     case 5:
+                        if (!phone) return [3 /*break*/, 7];
+                        return [4 /*yield*/, Phone.create(phone, { transaction: transaction })];
+                    case 6:
                         newPhone = _a.sent();
                         match.phone_id = newPhone.id;
-                        _a.label = 6;
-                    case 6: return [4 /*yield*/, Match.create(match, { transaction: transaction })];
-                    case 7:
+                        _a.label = 7;
+                    case 7: return [4 /*yield*/, Match.create(match, { transaction: transaction })];
+                    case 8:
                         newMatch = _a.sent();
                         transaction.commit();
                         aMatch = ResponseService.deleteItemDates(newMatch);
                         ResponseService.success(res, aMatch, 201);
-                        return [3 /*break*/, 9];
-                    case 8:
+                        return [3 /*break*/, 10];
+                    case 9:
                         error_3 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_3);
-                        return [3 /*break*/, 9];
-                    case 9: return [2 /*return*/];
+                        return [3 /*break*/, 10];
+                    case 10: return [2 /*return*/];
                 }
             });
         });

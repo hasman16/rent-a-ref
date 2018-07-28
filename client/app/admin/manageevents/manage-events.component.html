@@ -29,9 +29,9 @@
       (select)='onSelect($event)'
       >
       <ngx-datatable-column name="Event Name" prop="event_name" editable="false"></ngx-datatable-column>
-      <ngx-datatable-column name="Event Date" prop="event_date" editable="false">
+      <ngx-datatable-column name="Event Date" prop="id" editable="false">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          {{ value | date :'MMM dd, yyyy' }}
+              {{ formatDate(value) }}
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>

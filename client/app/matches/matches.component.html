@@ -40,9 +40,9 @@
       (select)='onSelect($event)'
       >
       <ngx-datatable-column name="Match Name" prop="match_name" editable="false"></ngx-datatable-column>
-      <ngx-datatable-column name="Match Date" prop="match_date" editable="false">
+      <ngx-datatable-column name="Match Date" prop="id" editable="false">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          {{ value | date :'MMM dd, yyyy' }}
+          {{ formatDate(value) }}
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
@@ -50,7 +50,7 @@
 
       <ngx-datatable-column name="" prop="id" editable="true">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <button class="btn btn-success btn-sm" (click)="assignOfficials(value)" title="Click to Assign officials">Assign</button>
+          <button class="btn btn-success btn-sm" (click)="assignOfficials(value)" title="Click to Assign officials">Officials</button>
         </ng-template>
       </ngx-datatable-column>
 

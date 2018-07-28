@@ -31,7 +31,7 @@ import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 
 import * as _ from 'lodash';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 
 @Injectable()
 export class EventsComponentService {
@@ -113,11 +113,12 @@ export class EventsComponentService {
 	}
 
 	public convertGameToModel(model: Game): any {
-		const eventDate: string = _.trim(model.event_date).split('T')[0];
+		const timeZoneDate = moment.tz(model.date, model.timezone_id);
+		const eventDate: string = timeZoneDate.format('YYYY-MM-DD');
 		let tempModel = _.cloneDeep(model);
 		delete tempModel.address;
 		delete tempModel.phone;
-		tempModel.event_date = eventDate;
+		tempModel.date = eventDate;
 		let obj = {
 			address_id: model.address.id
 		};
@@ -126,8 +127,7 @@ export class EventsComponentService {
 	}
 
 	public convertModelToGame(model): Game {
-		const dateString: string = String(model.event_date);
-		const eventDate: number = Number(new Date(dateString).getTime());
+		const dateString: string = String(model.date);
 
 		return <Game>{
 			id: model.id,
@@ -141,7 +141,7 @@ export class EventsComponentService {
 
 			event_name: model.event_name,
 			event_type: model.event_type,
-			event_date: eventDate,
+			date: dateString,
 			venue_name: model.venue_name,
 			status: model.status,
 			sport_id: model.sport_id,
@@ -159,7 +159,6 @@ export class EventsComponentService {
 	}
 
 	public prepareForPayment(model: any, products: any[]): any {
-		console.log('prepareForPayment:', model, products);
 		const addSku = (amount, sku) => {
 			if (amount > 0) {
 				lineItems.push({
@@ -207,7 +206,7 @@ export class EventsComponentService {
 		model.kids_games_total = model.kids_game_price * model.kids_games;
 		model.teen_games_total = model.teen_game_price * model.teen_games;
 		model.adult_games_total = model.adult_game_price * model.adult_games;
-		console.log('lineItems:', lineItems);
+		
 		this.lineItems = _.cloneDeep(lineItems);
 		model['total'] =
 			model.kids_games_total +
@@ -246,7 +245,7 @@ export class EventsComponentService {
 					{
 						className: 'col-sm-4',
 						type: 'input',
-						key: 'event_date',
+						key: 'date',
 						templateOptions: {
 							label: 'Event Date',
 							type: 'date',

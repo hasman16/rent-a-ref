@@ -32,6 +32,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/finally';
 import * as _ from 'lodash';
+
 enum TabState {
   editEvent,
   addMatch
@@ -127,7 +128,6 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
         })
         .subscribe(
           (model: any) => {
-            console.log('got game:', model);
             this.model = _.cloneDeep(model);
             this.setSelectedTab(TabState.editEvent);
           },
@@ -137,6 +137,10 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
           }
         );
     }
+  }
+
+  public formatDate(id): string {
+      return this.pagingService.formatDate(id, this.games);
   }
 
   public onActivate(event): void {

@@ -5,6 +5,7 @@ export default function MatchController(models, ResponseService) {
   const sequelize = models.sequelize;
 
   const Match = models.Match;
+  const Address = models.Address;
   const attributes = ['id'];
 
   function returnMatch(res, match, status = 200) {
@@ -25,13 +26,19 @@ export default function MatchController(models, ResponseService) {
 
   function getAllByGame(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
+    const User = models.User;
     const whereClause = Object.assign(clause, {
       where: {
         game_id: req.params.game_id
-      }
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'email'],
+          through: {}
+        }
+      ]
     });
-
-    console.log('whereClause:', whereClause);
 
     Match.findAndCountAll(whereClause)
       .then(results => ResponseService.success(res, results))
@@ -89,9 +96,22 @@ export default function MatchController(models, ResponseService) {
 
     try {
       transaction = await sequelize.transaction();
-      oldMatch = await Match.findById(match_id, {
-        transaction
-      });
+      oldMatch = await Match.findOne(
+        {
+          where: {
+            id: match_id
+          },
+          include: [
+            {
+              model: Address
+            }
+          ]
+        },
+        {
+          transaction
+        }
+      );
+
       if (oldMatch && canAssignOrRemove(oldMatch.status)) {
         await Match.update(match, {
           transaction
@@ -153,7 +173,8 @@ export default function MatchController(models, ResponseService) {
       );
     } catch (error) {
       transaction.rollback(transaction);
-      ResponseService.exception(res, 'Match was not deleted.', 404);
+      //ResponseService.exception(res, 'Match was not deleted.', 404);
+      ResponseService.exception(res, error, 404);
     }
   }
 
@@ -178,6 +199,9 @@ export default function MatchController(models, ResponseService) {
 
     try {
       transaction = await sequelize.transaction();
+      let dateTime: string = match.date + 'T' + match.time;
+      match.date = dateTime.replace(/z/i, '');
+      await ResponseService.workoutTimeZone(match, address);
 
       if (address) {
         newAddress = await Address.create(address, { transaction });

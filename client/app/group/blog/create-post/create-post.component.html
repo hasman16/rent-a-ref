@@ -10,7 +10,8 @@
       <div class="card form-size">
         <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
           <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form">
-            <button type="submit" class="btn btn-primary btn-sm"  [disabled]="form.invalid"><i class="fa fa-paper-plane-o"></i>&nbsp;Send</button>
+            <button type="submit" class="btn btn-primary btn-sm"  [disabled]="form.invalid"><i class="fa fa-paper-plane-o"></i>&nbsp;Send</button>&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-primary btn-sm" (click)="onCancel()" title="Click Cancel">Cancel</button>
           </formly-form> 
         </form>
       </div>

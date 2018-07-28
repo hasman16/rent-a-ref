@@ -1,17 +1,25 @@
-<div class="row">
+<div *ngIf="parent">
+    <app-createblog [parent]="newLoadPage" (loadPage)="onLoadPage($event)"><p>Test: {{parent}}</p>
+      <p>Test 1:{{newLoadPage}}</p></app-createblog>
+    </div>
+
+<div class="row" *ngIf="!parent">
   <div class="col-12">
     <div class="card">
-
+<p>{{parent}}</p>
+<p>{{newLoadPage}}</p>
       <rar-search-box 
       [placeholder]="placeholder"
       (searchEvent)='updateFilter($event)'
       ></rar-search-box>
 
-      <div class="card-block horizontal-and-vertical-centering " *ngIf="(!post || post.length === 0)">
-        <div class="form-size">
-          <p>No Post available at the moment. Please check again later.</p>
+      <div class="card horizontal-and-vertical-centering " *ngIf="(!post || post.length === 0)">
+          <div class="form-size">
+            <p>No Post available at the moment. Please check again later.
+              <br />You can start a new blog by clicking the Start New Blog button below</p>
+            <button class="btn btn-primary btn-sm new-org-button" (click)="goNewBlog({})" title="Click to start new blog">Start New Blog</button>
+          </div>
         </div>
-      </div>
 
       <!--<div class="card-block" *ngIf="(post && post.length > 0)">-->
           <div class="card-block">

@@ -1,12 +1,13 @@
 import { AddressModel, GameModel, PhoneModel } from './../types/index';
 import * as _ from 'lodash';
+import * as moment from 'moment-timezone';
 
 export default function GameController(models, ResponseService) {
   const Game = models.Game;
   const attributes = [
     'id',
     'event_name',
-    'event_date',
+    'date',
     'event_type',
     'venue_name',
     'status',
@@ -38,22 +39,7 @@ export default function GameController(models, ResponseService) {
       organization_id: req.params.organization_id
     });
     clause.where = whereClause;
-    console.log('getAllByOrganization:', clause);
-    /*
-        let clause = ResponseService.produceSearchAndSortClause(req);
-    const whereClause = Object.assign(clause, {
-      where: {
-        organization_id: req.params.organization_id
-      },
-      include: [
-        {
-          model: Match,
-          through: {
-            attributes: []
-          }
-        }
-      ]
-    });*/
+
     Game.findAndCountAll(clause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
@@ -135,13 +121,9 @@ export default function GameController(models, ResponseService) {
     let transaction, newGame, newAddress, newPhone;
     try {
       transaction = await sequelize.transaction();
-      const testAddress = await ResponseService.getAddress(address);
-      const geometry = _.get(testAddress, 'results[0].geometry', null);
-      if (!geometry) {
-        throw new Error('Error searching for address.');
-      }
-      console.log('testAddress:', geometry.location);
-      newAddress = Address.create(address, { transaction });
+      await ResponseService.workoutTimeZone(game, address);
+
+      newAddress = await Address.create(address, { transaction });
       game.address_id = newAddress.id;
       if (phone) {
         newPhone = await Phone.create(phone, { transaction });
@@ -151,7 +133,6 @@ export default function GameController(models, ResponseService) {
       transaction.commit();
       ResponseService.success(res, newGame, 201);
     } catch (error) {
-      console.log('error:', error);
       transaction.rollback(transaction);
       ResponseService.exception(res, error);
     }

@@ -56,7 +56,7 @@ const routes: Routes = [
   { path: 'admin/manageusers', component: ManageUsersComponent },
   { path: 'career', component: CareersComponent },
   { path: 'faq', component: FaqComponent },
-  { path: 'blog', component: BlogComponent },
+ // { path: 'blog', component: BlogComponent },
   { path: 'contact', component: ContactUsComponent },
   { path: 'pricing', component: PricingComponent },
   { path: 'partners', component: PartnersComponent },
@@ -81,6 +81,29 @@ const routes: Routes = [
     resolve: {
       scheduleData: ScheduleResolver
     }
+  },
+  {
+    path: 'blog',
+    component: BlogComponent,
+    canActivate: [AuthGuardLogin],
+    resolve: {
+      blogData: BlogResolver
+    },
+    children: [
+      { path: '', redirectTo: 'posts', pathMatch: 'full' },
+      {
+        path: 'edit-post',
+        component: EditPostComponent,
+        resolve: {
+          blogData: BlogResolver
+        }
+      },
+      {
+        path: 'create-post',
+        component: CreatePostComponent
+        
+      }
+    ]
   },
   /*{
     path: 'users/:id',

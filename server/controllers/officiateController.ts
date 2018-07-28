@@ -1,3 +1,6 @@
+import * as _ from 'lodash';
+import * as moment from 'moment-timezone';
+
 export default function OfficiateController(
   models,
   ResponseService,
@@ -16,8 +19,9 @@ export default function OfficiateController(
     'status'
   ];
 
-  function matchScheduleByUser(req, res) {
+  async function matchScheduleByUser(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
+    const Op = models.sequelize.Op;
     const whereClause = Object.assign(clause, {
       where: {},
       include: [
@@ -27,15 +31,57 @@ export default function OfficiateController(
             id: req.params.user_id
           },
           through: {
-            attributes: ['id', 'email', 'can_referee', 'status']
+            where: {
+              status: {
+                [Op.notLike]: '%decline%'
+              }
+            }
           }
         }
       ]
     });
 
-    Match.findAndCountAll(whereClause)
-      .then(result => ResponseService.success(res, result))
-      .catch(error => ResponseService.exception(res, error));
+    let transaction;
+
+    try {
+      transaction = await sequelize.transaction();
+      const result = await Match.findAndCountAll(whereClause, {
+        transaction
+      });
+
+      const whereOfficiate = Object.assign(clause, {
+        where: {
+          id: {
+            [Op.in]: _.map(result.rows, item => item.id)
+          }
+        },
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'email'],
+            through: {
+              where: {
+                status: {
+                  [Op.notLike]: '%decline%'
+                }
+              }
+            }
+          }
+        ]
+      });
+
+      const matchOfficiate = await Match.findAndCountAll(whereOfficiate, {
+        transaction
+      });
+
+      await transaction.commit();
+
+      ResponseService.success(res, matchOfficiate);
+    } catch (error) {
+      console.log('error:', error);
+      transaction.rollback(transaction);
+      ResponseService.exception(res, error, 400);
+    }
   }
 
   function officialsByMatch(req, res) {
@@ -196,6 +242,9 @@ export default function OfficiateController(
       if (!officiate) {
         throw new Error('Referee is not officiating this match. ');
       }
+
+      await ResponseService.isTimeLocked(match);
+
       let isDeclined = await Officiating.update(
         {
           status: 'declined'
@@ -230,6 +279,9 @@ export default function OfficiateController(
       if (!officiate) {
         throw new Error('Referee is not officiating this match. ');
       }
+
+      await ResponseService.isTimeLocked(match);
+
       let invitesAccepted = await Officiating.count({
         where: {
           match_id: match.id,
@@ -240,6 +292,7 @@ export default function OfficiateController(
       if (invitesAccepted >= match.referees) {
         throw new Error('This match has a full set of referees');
       }
+
       let isAccepted = await Officiating.update(
         {
           status: 'accepted'
@@ -252,6 +305,7 @@ export default function OfficiateController(
         },
         { transaction }
       );
+
       if (!isAccepted) {
         throw new Error('Match was not accepted.');
       }
@@ -269,6 +323,7 @@ export default function OfficiateController(
   }
 
   async function operateOnMatch(req, res, executeMethod) {
+    const Address = models.Address;
     const body = ResponseService.getItemFromBody(req);
     const match_id = body.match_id;
     const user_id = body.user_id;
@@ -277,7 +332,19 @@ export default function OfficiateController(
 
     try {
       transaction = await sequelize.transaction();
-      let match = await Match.findById(match_id, { transaction });
+      let match = await Match.findOne(
+        {
+          where: {
+            id: match_id
+          },
+          include: [
+            {
+              model: Address
+            }
+          ]
+        },
+        { transaction }
+      );
       let user = await User.findById(user_id, { transaction });
       let officiate = await Officiating.findOne(
         {
@@ -303,7 +370,8 @@ export default function OfficiateController(
       );
     } catch (error) {
       transaction.rollback(transaction);
-      ResponseService.exception(res, 'Operation failed!', 400);
+      //ResponseService.exception(res, 'Operation failed!', 400);
+      ResponseService.exception(res, error, 400);
     }
   }
 
