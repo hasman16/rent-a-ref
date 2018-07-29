@@ -71,10 +71,7 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 		return status === 'pending' || status === 'active';
 	}
 
-	protected isNotTimeLocked(item: Match): boolean {
-		const timeLock: boolean = this.pagingService.isNotTimeLocked(item);
-		return timeLock;
-	}
+	protected abstract isNotTimeLocked(item: Match): boolean;
 
 	public officiateState(id, state: string): boolean {
 		let result: boolean = false;

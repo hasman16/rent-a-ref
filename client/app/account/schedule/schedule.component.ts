@@ -55,4 +55,9 @@ export class ScheduleComponent extends AbstractScheduleComponent
 		const pagedData: PagedData = this.route.snapshot.data.scheduleData;
 		this.processPagedData(pagedData);
 	}
+
+	protected isNotTimeLocked(item: Match): boolean {
+		const timeLock: boolean = this.pagingService.isNotTimeLocked(item);
+		return timeLock;
+	}
 }

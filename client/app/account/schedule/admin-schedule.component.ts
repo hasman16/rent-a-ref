@@ -43,7 +43,6 @@ export class AdminScheduleComponent extends AbstractScheduleComponent
 	set setUser(user: User) {
 		if (user) {
 			this.user = user;
-			console.log('user::::', user);
 			const page: Page = this.pagingService.getDefaultPager();
 			this.getData(page);
 		}
@@ -65,6 +64,11 @@ export class AdminScheduleComponent extends AbstractScheduleComponent
 	ngOnInit() {
 		this.initialize();
 		this.searchAttribute = 'match_name|';
+	}
+
+	//Admin cannot be time locked.
+	protected isNotTimeLocked(item: Match): boolean {
+		return true;
 	}
 
 	public backToList($event): void {
