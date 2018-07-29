@@ -177,6 +177,21 @@ function OfficiateController(models, ResponseService, SendGridService) {
     function canAssignOrRemove(value) {
         return value === 'pending' || value === 'none' || value === 'active';
     }
+    function adminTimeLockByPass(req, match) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!!ResponseService.isAdmin(req)) return [3 /*break*/, 2];
+                        return [4 /*yield*/, ResponseService.isTimeLocked(match)];
+                    case 1:
+                        _a.sent();
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
+                }
+            });
+        });
+    }
     function addOfficialToMatch(req, res) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -350,7 +365,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                 if (!officiate) {
                                     throw new Error('Referee is not officiating this match. ');
                                 }
-                                return [4 /*yield*/, ResponseService.isTimeLocked(match)];
+                                return [4 /*yield*/, adminTimeLockByPass(req, match)];
                             case 1:
                                 _a.sent();
                                 return [4 /*yield*/, Officiating.update({
@@ -394,7 +409,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                 if (!officiate) {
                                     throw new Error('Referee is not officiating this match. ');
                                 }
-                                return [4 /*yield*/, ResponseService.isTimeLocked(match)];
+                                return [4 /*yield*/, adminTimeLockByPass(req, match)];
                             case 1:
                                 _a.sent();
                                 return [4 /*yield*/, Officiating.count({

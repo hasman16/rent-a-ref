@@ -28,8 +28,8 @@ export class UploaderComponent implements AfterViewInit, OnInit, OnDestroy {
 	@Output() selectedFiles: EventEmitter<FileList> = new EventEmitter();
 	@Output() selectedFilesEvent: EventEmitter<any> = new EventEmitter();
 
-	private toastSubscription: Subscription;
 	public uploadLabel: string = 'Upload Image';
+	private toastSubscription: Subscription;
 	private files: FileList = null;
 
 	constructor(
@@ -46,22 +46,22 @@ export class UploaderComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.setUp();
 	}
 
-	uploadedImages(images: FileList): void {
+	public uploadedImages(images: FileList): void {
 		console.log('uploadedImages:', images);
 		this.files = images;
 		this.selectedFiles.emit(images);
 	}
 
-	uploadedImagesEvent($event: any): void {
+	public uploadedImagesEvent($event: any): void {
 		this.selectedFilesEvent.emit($event);
 	}
 
-	dragEnter($event) {
+	public dragEnter($event) {
 		const nativeElement = this.uploadElement.nativeElement.parentNode;
 		this.renderer.addClass(nativeElement, 'highlightDropZone');
 	}
 
-	dragDrop($event) {
+	public dragDrop($event) {
 		$event.stopPropagation();
 		$event.preventDefault();
 		const dt = $event.dataTransfer;
@@ -71,18 +71,18 @@ export class UploaderComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.selectedFilesEvent.emit($event);
 	}
 
-	dragOver($event) {
+	public dragOver($event) {
 		$event.preventDefault();
 		const nativeElement = this.uploadElement.nativeElement.parentNode;
 		this.renderer.addClass(nativeElement, 'highlightDropZone');
 	}
 
-	dragLeave($event) {
+	public dragLeave($event) {
 		const nativeElement = this.uploadElement.nativeElement.parentNode;
 		this.renderer.removeClass(nativeElement, 'highlightDropZone');
 	}
 
-	cleanUp($event) {
+	public cleanUp($event) {
 		const nativeElement = this.uploadElement.nativeElement;
 		nativeElement.removeEventListener(this.dragEnter);
 		nativeElement.removeEventListener(this.dragOver);
@@ -90,7 +90,7 @@ export class UploaderComponent implements AfterViewInit, OnInit, OnDestroy {
 		nativeElement.removeEventListener(this.dragLeave);
 	}
 
-	setUp() {
+	public setUp() {
 		const nativeElement = this.uploadElement.nativeElement;
 		nativeElement.addEventListener('dragenter', this.dragEnter.bind(this));
 		nativeElement.addEventListener('drop', this.dragDrop.bind(this));

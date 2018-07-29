@@ -4,7 +4,10 @@ import {
 	Component,
 	OnInit,
 	ChangeDetectorRef,
-	ChangeDetectionStrategy
+	ChangeDetectionStrategy,
+	EventEmitter,
+	Input,
+	Output
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -29,13 +32,24 @@ import {
 } from '../../services/index';
 
 @Component({
-	selector: 'app-schedule',
-	templateUrl: './schedule.component.html',
+	selector: 'rar-admin-schedule',
+	templateUrl: './admin-schedule.component.html',
 	styleUrls: ['./schedule.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ScheduleComponent extends AbstractScheduleComponent
+export class AdminScheduleComponent extends AbstractScheduleComponent
 	implements OnInit {
+	@Input('user')
+	set setUser(user: User) {
+		if (user) {
+			this.user = user;
+			console.log('user::::', user);
+			const page: Page = this.pagingService.getDefaultPager();
+			this.getData(page);
+		}
+	}
+	@Output('back')
+	submitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 	constructor(
 		protected cd: ChangeDetectorRef,
 		protected auth: AuthService,
@@ -50,9 +64,10 @@ export class ScheduleComponent extends AbstractScheduleComponent
 
 	ngOnInit() {
 		this.initialize();
-		this.user = this.auth.getCurrentUser();
 		this.searchAttribute = 'match_name|';
-		const pagedData: PagedData = this.route.snapshot.data.scheduleData;
-		this.processPagedData(pagedData);
+	}
+
+	public backToList($event): void {
+		this.submitter.emit(true);
 	}
 }

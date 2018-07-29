@@ -138,6 +138,12 @@ export default function OfficiateController(
     return value === 'pending' || value === 'none' || value === 'active';
   }
 
+  async function adminTimeLockByPass(req, match) {
+    if (!ResponseService.isAdmin(req)) {
+      await ResponseService.isTimeLocked(match);
+    }
+  }
+
   async function addOfficialToMatch(req, res) {
     let executeMethod = async (user, match, officiate, transaction) => {
       let isOfficiating;
@@ -283,7 +289,7 @@ export default function OfficiateController(
         throw new Error('Referee is not officiating this match. ');
       }
 
-      await ResponseService.isTimeLocked(match);
+      await adminTimeLockByPass(req, match);
 
       let isDeclined = await Officiating.update(
         {
@@ -320,7 +326,7 @@ export default function OfficiateController(
         throw new Error('Referee is not officiating this match. ');
       }
 
-      await ResponseService.isTimeLocked(match);
+      await adminTimeLockByPass(req, match);
 
       let invitesAccepted = await Officiating.count({
         where: {

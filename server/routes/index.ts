@@ -86,7 +86,6 @@ const imageUploader = multer({
     key: function(req, file, cb) {
       const makeName = type => Date.now().toString() + '.' + type;
       const filename = _.replace(file.mimetype, allowedMimeTypes, makeName);
-      console.log('filename:', filename);
       cb(null, filename);
     }
   }),

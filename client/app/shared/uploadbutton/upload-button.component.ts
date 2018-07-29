@@ -47,7 +47,7 @@ export class UploadButtonComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.addUploadElement();
 	}
 
-	addUploadElement() {
+	public addUploadElement() {
 		const parent = this.boldElement.nativeElement.parentNode;
 		const boldElement = this.boldElement.nativeElement;
 
@@ -67,9 +67,8 @@ export class UploadButtonComponent implements AfterViewInit, OnInit, OnDestroy {
 		);
 	}
 
-	uploadImages($event) {
+	public uploadImages($event) {
 		const files: FileList = <FileList>$event.target.files;
-		console.log('!!!selected:', $event, files);
 		this.selectedFiles.emit(files);
 		this.selectedFilesEvent.emit($event);
 		this.addUploadElement();

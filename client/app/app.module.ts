@@ -68,6 +68,7 @@ import { ManageUsersComponent } from './admin/manageusers/manage-users.component
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
+import { AdminScheduleComponent } from './account/schedule/admin-schedule.component';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
@@ -132,6 +133,7 @@ import {
         RegisterComponent,
         ResetComponent,
         ResetPasswordComponent,
+        AdminScheduleComponent,
         ScheduleComponent,
         TermsAndConditionsComponent,
         ZoneFormComponent,
