@@ -146,7 +146,7 @@ export default function MatchController(models, ResponseService) {
       });
 
       if (!match) {
-        throw new Error('');
+        throw new Error('Match not found.');
       }
       await Match.destroy(relation, {
         transaction

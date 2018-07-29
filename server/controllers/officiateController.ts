@@ -256,6 +256,28 @@ export default function OfficiateController(
 
     try {
       transaction = await sequelize.transaction();
+      let match = await Match.findOne(
+        {
+          where: {
+            id: match_id
+          },
+          include: [
+            {
+              model: User
+            }
+          ]
+        },
+        { transaction }
+      );
+
+      if (!match) {
+        throw new Error('Match not found.');
+      }
+      if (!canAssignOrRemove(match.status)) {
+        throw new Error(
+          'A match can only be cancelled if it is pending or active.'
+        );
+      }
 
       let areCancelled = await Officiating.update(
         {
@@ -270,12 +292,23 @@ export default function OfficiateController(
       );
 
       if (!areCancelled) {
-        throw new Error('Failed to cancel referees.');
+        throw new Error('Failed to cancel match.');
       }
+
       await transaction.commit();
+
+      match.user.forEach(user => {
+        SendGridService.sendEmail({
+          to: user.email,
+          from: 'admin@rentaref.com',
+          subject: 'Match Cancelled' + match_id,
+          content:
+            'The Administrator of Rent-A-Ref cancelled match: ' + match.id
+        });
+      });
       ResponseService.success(
         res,
-        'Referees have been removed from match:' + match_id
+        'Match cancelled and Referees have been removed from match:' + match_id
       );
     } catch (err) {
       transaction.rollback(transaction);

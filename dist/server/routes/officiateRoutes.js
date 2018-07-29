@@ -28,7 +28,10 @@ function officiateRoutes(setter, officiateCtrl) {
         .post(authentication, isUserOrAdmin, officiateCtrl.declineMatch);
     router
         .route('/cancel/match')
-        .post(authentication, isAdmin, officiateCtrl.cancelMatch);
+        .put(authentication, isAdmin, officiateCtrl.cancelMatch);
+    router
+        .route('/cancel/match')
+        .patch(authentication, isAdmin, officiateCtrl.cancelMatch);
     router
         .route('/remove/official/:user_id/match/:match_id')
         .delete(authentication, isAdmin, officiateCtrl.removeOfficialFromMatch);
