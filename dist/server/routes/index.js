@@ -77,7 +77,6 @@ var imageUploader = multer({
         key: function (req, file, cb) {
             var makeName = function (type) { return Date.now().toString() + '.' + type; };
             var filename = _.replace(file.mimetype, allowedMimeTypes, makeName);
-            console.log('filename:', filename);
             cb(null, filename);
         }
     }),

@@ -33,15 +33,13 @@ export class TokenInterceptor implements HttpInterceptor {
     });
     this.loaderService.show();
 
-    return next.handle(newRequest)
-      .do((event: HttpEvent<any>) => {
+    return next
+      .handle(newRequest)
+      .map((event: HttpEvent<any>) => {
         this.loaderService.hide();
-
-        if (event instanceof HttpResponse) {
-          // do stuff with response if you want
-        }
+        return event;
       })
-      .catch((err: any):Observable<any> => {
+      .catch((err: any): Observable<any> => {
         this.loaderService.hide();
         if (err instanceof HttpErrorResponse) {
           if (

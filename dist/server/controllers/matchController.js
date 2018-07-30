@@ -186,7 +186,7 @@ function MatchController(models, ResponseService) {
                     case 3:
                         match = _a.sent();
                         if (!match) {
-                            throw new Error('');
+                            throw new Error('Match not found.');
                         }
                         return [4 /*yield*/, Match.destroy(relation, {
                                 transaction: transaction

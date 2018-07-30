@@ -29,6 +29,10 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/finally';
 import * as _ from 'lodash';
 
+enum ViewState {
+  listReferees,
+  viewSchedule
+}
 @Component({
   selector: 'rar-assign-users',
   templateUrl: './assign-users.component.html',
@@ -49,10 +53,12 @@ export class AssignUsersComponent extends AbstractComponent
   }
   @Output() back: EventEmitter<boolean> = new EventEmitter();
   public users: User[] = [];
+  public currentUser: User;
   public placeholder: string = 'Type to filter Referees by email ...';
   protected isLoading: boolean = true;
   protected match_id: string;
   protected match: Match;
+  public viewState: ViewState = ViewState.listReferees;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -73,6 +79,22 @@ export class AssignUsersComponent extends AbstractComponent
 
   ngOnDestroy() {
     this.tearDown();
+  }
+
+  public isViewState(value: string): boolean {
+    let result: boolean = false;
+    switch (value) {
+      case 'schedule':
+        result = this.viewState === ViewState.viewSchedule;
+        break;
+      case 'referees':
+        result = this.viewState === ViewState.listReferees;
+        break;
+      default:
+        result = false;
+        break;
+    }
+    return result;
   }
 
   public getUsers(params: Page) {
@@ -175,7 +197,21 @@ export class AssignUsersComponent extends AbstractComponent
     return result;
   }
 
-  public viewSchedule(user_id) {}
+  public viewSchedule(user_id) {
+    const user = _.find(this.users, user => {
+      return user.id == user_id;
+    });
+    if (user) {
+      this.currentUser = _.cloneDeep(user);
+    }
+    this.viewState = ViewState.viewSchedule;
+    this.cd.markForCheck();
+  }
+
+  public viewReferees($event): void {
+    this.viewState = ViewState.listReferees;
+    this.getData(this.page);
+  }
 
   protected processPagedData(data: PagedData): void {
     this.users = this.extraPagedData(data);

@@ -159,4 +159,9 @@ export class MatchService extends AbstractService {
     const url = `/api/decline/match`;
     return this.postData(url, assignment);
   }
+
+  public cancelMatch(assignment): Observable<any> {
+    const url = `/api/cancel/match`;
+    return this.putData(url, assignment);
+  }
 }

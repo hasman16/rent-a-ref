@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="isViewState('referees')">
 
   <rar-search-box 
   [placeholder]="placeholder"
@@ -60,4 +60,7 @@
   <br />
   <button class="btn btn-primary btn-sm" (click)="backToList($event)" title="Click to go back to match list.">Back to List</button>
 
+</div>
+<div>
+  <rar-admin-schedule *ngIf="isViewState('schedule')" [user]="currentUser" (back)="viewReferees(event)"></rar-admin-schedule>
 </div>

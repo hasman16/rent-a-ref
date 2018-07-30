@@ -106,7 +106,6 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
     this.toast.setMessage(res.message, 'success');
     this.users = res;
     this.isLoading = false;
-    console.log('this.users: ', this.users);
   }
 
   callFailure(err: HttpErrorResponse, message = 'An error occurred') {

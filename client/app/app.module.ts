@@ -1,3 +1,4 @@
+import { environment } from '../environments/environment';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -67,6 +68,7 @@ import { ManageUsersComponent } from './admin/manageusers/manage-users.component
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
+import { AdminScheduleComponent } from './account/schedule/admin-schedule.component';
 import { ScheduleComponent } from './account/schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
@@ -131,6 +133,7 @@ import {
         RegisterComponent,
         ResetComponent,
         ResetPasswordComponent,
+        AdminScheduleComponent,
         ScheduleComponent,
         TermsAndConditionsComponent,
         ZoneFormComponent,
@@ -143,7 +146,7 @@ import {
     imports: [
         BrowserModule,
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyBjIl1u0Sk8z2-UhiZNRATgU6E8ssDU-10'
+            apiKey: environment.GOOGLEMAPS_KEY //'AIzaSyBjIl1u0Sk8z2-UhiZNRATgU6E8ssDU-10'
         }), //'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
         NgxDatatableModule,
 
