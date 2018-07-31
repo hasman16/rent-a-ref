@@ -72,7 +72,7 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
     dateFormat: 'yyyy-mm-dd'
   };
 
-  fillForm() {
+  public fillForm() {
     if (this.aPerson) {
       this.bioForm.setValue({
         firstname: this.aPerson.firstname,
@@ -133,7 +133,7 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
     return value;
   }
 
-  onSubmit() {
+  public onSubmit() {
     let bio = this.bioForm.value;
     bio.dob = this.getEpoc(bio.dob);
 

@@ -143,6 +143,11 @@ export default function GameController(models, ResponseService) {
   }
 
   function updateGameAddress(req, res) {
+    console.log(
+      'updateGameAddress===========',
+      req.params.game_id,
+      req.params.address_id
+    );
     const Address = models.Address;
     const address: AddressModel = ResponseService.deleteItemDates(req);
 
