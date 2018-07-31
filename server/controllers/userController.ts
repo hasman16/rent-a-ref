@@ -14,7 +14,22 @@ export default function UserController(
   ];
 
   function getAll(req, res) {
+    const Person = models.Person;
+    const Image = models.Image;
     const clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
+      include: [
+        {
+          model: Person
+        },
+        {
+          model: Image,
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
 
     User.findAndCountAll(clause)
       .then(results => {
@@ -24,6 +39,7 @@ export default function UserController(
   }
 
   function getOne(req, res) {
+    const Image = models.Image;
     User.findOne({
       where: {
         id: req.params.user_id

@@ -178,6 +178,7 @@ function GameController(models, ResponseService) {
         this.getOne(req, res);
     }
     function updateGameAddress(req, res) {
+        console.log('updateGameAddress===========', req.params.game_id, req.params.address_id);
         var Address = models.Address;
         var address = ResponseService.deleteItemDates(req);
         Game.find({

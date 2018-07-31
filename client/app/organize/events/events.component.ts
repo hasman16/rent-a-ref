@@ -118,10 +118,12 @@ export class EventsComponent extends AbstractComponent
   }
 
   public formatDate(id): string {
-    const item: Game = _.find(this.games, (item) => {
-      return id == item.id
+    const item: Game = _.find(this.games, item => {
+      return id === item.id;
     });
-    let value: string = moment.tz(item.date, item.timezone_id).format('MMMM DD YYYY');
+    let value: string = moment
+      .tz(item.date, item.timezone_id)
+      .format('MMMM DD YYYY');
     return value;
   }
 
@@ -139,16 +141,16 @@ export class EventsComponent extends AbstractComponent
     let result: boolean = false;
     switch (value) {
       case 'noEvents':
-        result = this.viewState == ViewState.noEvents;
+        result = this.viewState === ViewState.noEvents;
         break;
       case 'listEvents':
-        result = this.viewState == ViewState.listEvents;
+        result = this.viewState === ViewState.listEvents;
         break;
       case 'editEvent':
-        result = this.viewState == ViewState.editEvent;
+        result = this.viewState === ViewState.editEvent;
         break;
       case 'payingForEvent':
-        result = this.viewState == ViewState.payForEvent;
+        result = this.viewState === ViewState.payForEvent;
         break;
       default:
         result = false;
@@ -176,13 +178,13 @@ export class EventsComponent extends AbstractComponent
 
   public hasPaid(id: string): boolean {
     let game = _.find(this.games, game => {
-      return game.id == id;
+      return game.id === id;
     });
-    return game && game.status == 'pending' ? false : true;
+    return game && game.status === 'pending' ? false : true;
   }
 
   public paymentState(payment: Payment): void {
-    if (payment.paymentState == PaymentState.PaymentSuccess) {
+    if (payment.paymentState === PaymentState.PaymentSuccess) {
       this.getEvents(this.page);
     }
   }

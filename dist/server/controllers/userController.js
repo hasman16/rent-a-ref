@@ -11,7 +11,22 @@ function UserController(models, ResponseService, SendGridService) {
         'status'
     ];
     function getAll(req, res) {
+        var Person = models.Person;
+        var Image = models.Image;
         var clause = ResponseService.produceSearchAndSortClause(req);
+        var whereClause = Object.assign(clause, {
+            include: [
+                {
+                    model: Person
+                },
+                {
+                    model: Image,
+                    through: {
+                        attributes: []
+                    }
+                }
+            ]
+        });
         User.findAndCountAll(clause)
             .then(function (results) {
             ResponseService.successCollection(res, results);
@@ -19,6 +34,7 @@ function UserController(models, ResponseService, SendGridService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getOne(req, res) {
+        var Image = models.Image;
         User.findOne({
             where: {
                 id: req.params.user_id
