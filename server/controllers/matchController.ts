@@ -123,7 +123,7 @@ export default function MatchController(models, ResponseService) {
       ResponseService.success(res, 'Match updated', 200);
     } catch (error) {
       transaction.rollback(transaction);
-      ResponseService.exception(res, error);
+      ResponseService.exception(res, error, 404);
     }
   }
 
