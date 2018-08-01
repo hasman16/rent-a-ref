@@ -110,7 +110,7 @@ export class AddressFormComponent extends AbstractFormComponent
     this.setUpValidators(this.addressForm, ['line1', 'city', 'zip']);
   }
 
-  fillForm() {
+  public fillForm() {
     this.states = this.statesService.getStatesProvinces(this.countryName);
 
     this.addressForm.setValue({
@@ -126,9 +126,9 @@ export class AddressFormComponent extends AbstractFormComponent
     this.fillForm();
   }
 
-  onAddressSubmit() {
+  public onAddressSubmit() {
     if (this.addressService) {
-      const newAddress: Address = this.addressForm.value as Address;
+      const newAddress: Address = <Address>this.addressForm.value;
       let observable: Observable<Address>;
       newAddress.id = this.anAddress.id;
 

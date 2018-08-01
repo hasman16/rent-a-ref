@@ -34,10 +34,39 @@
       (activate)="onActivate($event)"
       (select)='onSelect($event)'
       >
-      <ngx-datatable-column name="Email" prop="email" editable="false"></ngx-datatable-column>
-      <ngx-datatable-column name="Organizer" prop="can_organize" editable="false"></ngx-datatable-column>
-      <ngx-datatable-column name="Referee" prop="can_referee" editable="false"></ngx-datatable-column>
-      <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
+      <ngx-datatable-column name="" prop="id" editable="false">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <rar-image [errorImage]="defaultImage" [image]="getImageAddress(value)" [width]="50"></rar-image>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Email" prop="email" editable="false">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <div class="cell-item">
+            {{value}}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Organizer" prop="can_organize" editable="false">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <div class="cell-item">
+            {{value}}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Referee" prop="can_referee" editable="false">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <div class="cell-item">
+            {{value}}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Status" prop="status" editable="false">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <div class="cell-item">
+            {{value}}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
     </ngx-datatable>
  
   </div>

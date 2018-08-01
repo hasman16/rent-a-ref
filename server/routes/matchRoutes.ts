@@ -14,13 +14,13 @@ export default function matchRoutes(setter, matchCtrl) {
 	router.route('/matches/:match_id').get(authentication, matchCtrl.getOne);
 	router
 		.route('/matches/:match_id')
-		.put(authentication, isOrgMember, matchCtrl.update);
+		.put(authentication, isAdmin, matchCtrl.update);
 	router
 		.route('/matches/:match_id')
-		.patch(authentication, isOrgMember, matchCtrl.update);
+		.patch(authentication, isAdmin, matchCtrl.update);
 	router
 		.route('/matches/:match_id')
-		.delete(authentication, isOrgMember, matchCtrl.deleteOne);
+		.delete(authentication, isAdmin, matchCtrl.deleteOne);
 
 	router
 		.route('/matches/:match_id/address')
@@ -33,18 +33,18 @@ export default function matchRoutes(setter, matchCtrl) {
 		.post(authentication, matchCtrl.createMatchAddressPhone);
 
 	router.use(
-		'/matches/:match_id/address/address_id',
+		'/matches/:match_id/address/:address_id',
 		authentication,
 		isOrgMember,
 		isUserOrAdmin
 	);
 	router
-		.route('/matches/:match_id/address/address_id')
+		.route('/matches/:match_id/address/:address_id')
 		.put(matchCtrl.updateMatchAddress);
 	router
-		.route('/matches/:match_id/address/address_id')
+		.route('/matches/:match_id/address/:address_id')
 		.patch(matchCtrl.updateMatchAddress);
 	router
-		.route('/matches/:match_id/address/address_id')
+		.route('/matches/:match_id/address/:address_id')
 		.delete(matchCtrl.deleteMatchAddress);
 }

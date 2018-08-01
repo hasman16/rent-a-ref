@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 export default function UserController(
   models,
   ResponseService,
@@ -14,7 +16,23 @@ export default function UserController(
   ];
 
   function getAll(req, res) {
+    const sequelize = models.sequelize;
+    const Person = models.Person;
+    const Image = models.Image;
     const clause = ResponseService.produceSearchAndSortClause(req);
+    const whereClause = Object.assign(clause, {
+      include: [
+        {
+          model: Person
+        },
+        {
+          model: Image,
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
 
     User.findAndCountAll(clause)
       .then(results => {
@@ -23,7 +41,50 @@ export default function UserController(
       .catch(error => ResponseService.exception(res, error));
   }
 
+  function getSortColumn(value: string) {
+    let sortColumn: string = '';
+    switch (value) {
+      case 'firstname':
+      case 'lastname':
+      case 'gender':
+      case 'dob':
+      case 'user_id':
+        sortColumn = 'people.';
+        break;
+      default:
+        sortColumn = 'users.';
+        break;
+    }
+    return sortColumn + value;
+  }
+
+  async function getAllFlat(req, res) {
+    const sequelize = models.sequelize;
+    const sortClause = ResponseService.produceLimitOffsetAndSort(req);
+    const order: Array<any> = _.head(sortClause.order);
+    const sortColumn: string = getSortColumn(order[0]);
+    const limit = ` OFFSET ${sortClause.offset} LIMIT ${sortClause.limit} `;
+    const sort = ` ORDER BY ${sortColumn} ${order[1]}`;
+    const columns = 'SELECT * ';
+    let query = `FROM users,people WHERE users.id = people.user_id AND users.email like '%ad%' `;
+    query = columns + query + sort + limit + ';';
+
+    try {
+      const rows: Array<any> = await sequelize.query(query, {
+        type: sequelize.QueryTypes.SELECT
+      });
+      let results = {
+        count: rows.length,
+        rows: rows
+      };
+      ResponseService.successCollection(res, results);
+    } catch (error) {
+      ResponseService.exception(res, error, 403);
+    }
+  }
+
   function getOne(req, res) {
+    const Image = models.Image;
     User.findOne({
       where: {
         id: req.params.user_id
@@ -145,6 +206,7 @@ export default function UserController(
   return {
     logout,
     getAll,
+    getAllFlat,
     getOne,
     update,
     deleteOne,

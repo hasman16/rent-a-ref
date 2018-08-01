@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-12">
+    <strong class="etched-text">Viewing schedule for referee <i>{{user.email}}</i>.</strong>
+    <div class="card">
+
+      <rar-search-box 
+      [placeholder]="placeholder"
+      (searchEvent)='updateFilter($event)'
+      ></rar-search-box>
+
+      <div class="card-block horizontal-and-vertical-centering " *ngIf="(!schedule || schedule.length === 0)">
+        <div class="form-size">
+          <p>This referee has no matches schedule.</p>
+        </div>
+      </div>
+
+      <div class="card-block" *ngIf="schedule && schedule.length > 0">
+
+        <ngx-datatable class="bootstrap"
+          [rows]="schedule"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [externalSorting]="true"
+          [loadingIndicator]="isLoading"
+          (sort)="onSort($event)"
+          [externalPaging]="true"
+          [count]="page.total_elements"
+          [offset]="page.offset"
+          [limit]="page.limit"
+          (page)='setPage($event)'
+          [selected]="selected"
+          [selectionType]="'single'"
+          (activate)="onActivate($event)"
+          (select)='onSelect($event)'
+          >
+          <ngx-datatable-column name="Match Name" prop="match_name" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Date" prop="id" editable="false">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+            {{ formatDate(value) }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Age" prop="age" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
+
+          <ngx-datatable-column name="Accept Match" prop="id" editable="true">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                <button class="btn btn-primary btn-sm" (click)="acceptMatch(value)" title="Click to accept a match" *ngIf="canAccept(value)">Accept</button>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Decline Match" prop="id" editable="true">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-danger btn-sm" (click)="declineMatch(value)" title="Click to decline a match" *ngIf="canDecline(value)">Decline</button>
+
+              <button class="btn btn-danger btn-sm" (click)="declineMatch(value)" title="Click to the match back to the Admin." *ngIf="canTurnBack(value)">Turn Back</button>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+
+    </div>
+
+    <br />
+    <br />
+    <button class="btn btn-primary btn-sm" (click)="backToList($event)" title="Click to go back to the list of referees.">Back to Referees</button>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="isViewState('referees')">
 
   <rar-search-box 
   [placeholder]="placeholder"
@@ -33,7 +33,6 @@
       (select)='onSelect($event)'
       >
       <ngx-datatable-column name="Email" prop="email" editable="false"></ngx-datatable-column>
-      <ngx-datatable-column name="Organizer" prop="can_organize" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Referee" prop="can_referee" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
 
@@ -60,4 +59,7 @@
   <br />
   <button class="btn btn-primary btn-sm" (click)="backToList($event)" title="Click to go back to match list.">Back to List</button>
 
+</div>
+<div>
+  <rar-admin-schedule *ngIf="isViewState('schedule')" [user]="currentUser" (back)="viewReferees(event)"></rar-admin-schedule>
 </div>

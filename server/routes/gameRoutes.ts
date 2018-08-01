@@ -23,7 +23,7 @@ export default function gameRoutes(setter, gameCtrl) {
 		.delete(authentication, isOrgMember, gameCtrl.deleteOne);
 
 	router
-		.route('/games/:game_id/addressess')
+		.route('/games/:game_id/addresses')
 		.get(authentication, gameCtrl.getGameAddress);
 	router
 		.route('/organization/:organization_id/games')
@@ -33,19 +33,19 @@ export default function gameRoutes(setter, gameCtrl) {
 		.post(authentication, isOrgMember, gameCtrl.createGameAddressPhone);
 
 	router.use(
-		'/games/:game_id/addressess/address_id',
+		'/games/:game_id/addresses/:address_id',
 		authentication,
 		isOrgMember,
 		isUserOrAdmin
 	);
 	router
-		.route('/games/:game_id/addressess/address_id')
+		.route('/games/:game_id/addresses/:address_id')
 		.put(gameCtrl.updateGameAddress);
 	router
-		.route('/games/:game_id/addressess/address_id')
+		.route('/games/:game_id/addresses/:address_id')
 		.patch(gameCtrl.updateGameAddress);
 	router
-		.route('/games/:game_id/addressess/address_id')
+		.route('/games/:game_id/addresses/:address_id')
 		.delete(gameCtrl.deleteGameAddress);
 
 	router.route('/prices').get(authentication, gameCtrl.getPrices);

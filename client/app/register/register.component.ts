@@ -132,7 +132,7 @@ export class RegisterComponent {
     this.captchaResponse = captchaResponse;
   }
 
-  register(user) {
+  public register(user) {
     if (_.isNil(this.captchaResponse) || this.captchaResponse.length === 0) {
       this.toast.setMessage('Recaptcha is required.', 'danger');
       return;

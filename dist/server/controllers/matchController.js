@@ -153,7 +153,7 @@ function MatchController(models, ResponseService) {
                     case 7:
                         error_1 = _a.sent();
                         transaction.rollback(transaction);
-                        ResponseService.exception(res, error_1);
+                        ResponseService.exception(res, error_1, 404);
                         return [3 /*break*/, 8];
                     case 8: return [2 /*return*/];
                 }
@@ -186,7 +186,7 @@ function MatchController(models, ResponseService) {
                     case 3:
                         match = _a.sent();
                         if (!match) {
-                            throw new Error('');
+                            throw new Error('Match not found.');
                         }
                         return [4 /*yield*/, Match.destroy(relation, {
                                 transaction: transaction

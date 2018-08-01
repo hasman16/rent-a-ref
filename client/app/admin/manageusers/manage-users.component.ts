@@ -31,6 +31,7 @@ export class ManageUsersComponent extends AbstractComponent
   protected allowEdit: boolean = false;
   protected currentUser: User = <User>{};
   public placeholder: string = 'Type to filter by email ...';
+  public defaultImage: string = 'assets/images/avatar2.png';
 
   constructor(
     private route: ActivatedRoute,
@@ -52,10 +53,16 @@ export class ManageUsersComponent extends AbstractComponent
     this.tearDown();
   }
 
-  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+  public canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (!this.allowEdit) {
       return true;
     }
+  }
+
+  public getImageAddress(id): string {
+    const user = _.find(this.users, user => user.id == id);
+    const url = _.get(user, 'images[0].location', '');
+    return url;
   }
 
   public getUsers(params: any) {

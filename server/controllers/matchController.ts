@@ -123,7 +123,7 @@ export default function MatchController(models, ResponseService) {
       ResponseService.success(res, 'Match updated', 200);
     } catch (error) {
       transaction.rollback(transaction);
-      ResponseService.exception(res, error);
+      ResponseService.exception(res, error, 404);
     }
   }
 
@@ -146,7 +146,7 @@ export default function MatchController(models, ResponseService) {
       });
 
       if (!match) {
-        throw new Error('');
+        throw new Error('Match not found.');
       }
       await Match.destroy(relation, {
         transaction

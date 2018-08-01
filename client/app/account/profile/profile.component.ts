@@ -63,7 +63,6 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   protected middlenameFlag: boolean = false;
 
   protected abort: boolean = false;
-  //protected divPassword: boolean = false;
   public editBio: boolean = false;
   public editPassword: boolean = false;
 
@@ -133,11 +132,11 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   getProfile() {
     const currentUser: User = this.auth.getCurrentUser();
 
-    this.isLoading = true;
+    //this.isLoading = true;
     this.profileService.getProfile(currentUser.id).subscribe(
       (profile: Profile) => {
         this.data = profile;
-        this.user = {
+        this.user = <User>{
           id: String(profile.id),
           email: profile.email,
           authorization: String(profile.authorization),
@@ -148,7 +147,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
           can_referee: profile.can_referee,
           can_organize: profile.can_organize,
           status: profile.status
-        } as User;
+        };
         this.person = profile.person;
         this.addresses = _.sortBy(profile.addresses, 'id');
         this.phones = _.sortBy(profile.phones, 'id');
@@ -160,18 +159,6 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
         this.cd.markForCheck();
       },
       (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log(
-            'A client-side or network error occurred for the Profile',
-            this.auth.loggedIn
-          );
-        } else {
-          console.log(
-            'The backend returned an unsuccessful response code for the profile',
-            this.auth.loggedIn
-          );
-        }
         this.isLoading = false;
         if (!this.auth.loggedIn) {
           this.abort = true;
