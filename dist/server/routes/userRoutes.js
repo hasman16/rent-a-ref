@@ -15,6 +15,9 @@ function userRoutes(setter, ctrls) {
     router.route('/login').post(loginCtrl.login);
     router.route('/logout').post(userCtrl.logout);
     router.route('/users').get(authentication, isAdmin, userCtrl.getAll);
+    router
+        .route('/users/people')
+        .get(authentication, isAdmin, userCtrl.getAllFlat);
     router.route('/users').post(registerCtrl.registerUser);
     router.route('/register').post(registerCtrl.registerUser);
     router.use('/profile/:user_id', authentication, isUser);
