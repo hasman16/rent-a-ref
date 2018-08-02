@@ -86,9 +86,24 @@ function UserController(models, ResponseService, SendGridService) {
         }
         return sortColumn + value;
     }
+    function produceLikeClause(req) {
+        var attributepairs = String(req.query.search).split(',');
+        var keyvalues = attributepairs
+            .map(function (keyvalue) {
+            return keyvalue.split('|');
+        })
+            .filter(function (entries) { return _.isArray(entries) && entries.length === 2; })
+            .map(function (entries) {
+            var value = (entries[1] || '') + '%';
+            var key = entries[0] || 'badkey';
+            key = getSortColumn(key);
+            return " AND " + key + " ilike '" + value + "' ";
+        });
+        return keyvalues.join(' ');
+    }
     function getAllFlat(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, sortClause, order, sortColumn, limit, sort, columns, query, rows, results, error_1;
+            var sequelize, sortClause, order, sortColumn, limit, sort, columns, like, query, countQuery, count, rows, results, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -99,27 +114,36 @@ function UserController(models, ResponseService, SendGridService) {
                         limit = " OFFSET " + sortClause.offset + " LIMIT " + sortClause.limit + " ";
                         sort = " ORDER BY " + sortColumn + " " + order[1];
                         columns = 'SELECT * ';
-                        query = "FROM users,people WHERE users.id = people.user_id AND users.email like '%ad%' ";
-                        query = columns + query + sort + limit + ';';
+                        like = produceLikeClause(req);
+                        query = "FROM users,people WHERE users.id = people.user_id ";
+                        countQuery = 'SELECT COUNT(*) ' + query + like + sort + ';';
+                        query = columns + query + like + sort + limit + ';';
+                        console.log('query is:', query, countQuery);
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, sequelize.query(query, {
+                        _a.trys.push([1, 4, , 5]);
+                        return [4 /*yield*/, sequelize.query(countQuery, {
                                 type: sequelize.QueryTypes.SELECT
                             })];
                     case 2:
+                        count = _a.sent();
+                        return [4 /*yield*/, sequelize.query(query, {
+                                type: sequelize.QueryTypes.SELECT
+                            })];
+                    case 3:
                         rows = _a.sent();
+                        console.log('count was:', count);
                         results = {
                             count: rows.length,
                             rows: rows
                         };
                         ResponseService.successCollection(res, results);
-                        return [3 /*break*/, 4];
-                    case 3:
+                        return [3 /*break*/, 5];
+                    case 4:
                         error_1 = _a.sent();
                         ResponseService.exception(res, error_1, 403);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
                 }
             });
         });

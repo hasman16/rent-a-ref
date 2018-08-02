@@ -68,7 +68,7 @@ export class ManageUsersComponent extends AbstractComponent
   public getUsers(params: any) {
     this.isLoading = true;
     this.userService
-      .getUsers(params)
+      .getUsersPeople(params)
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
@@ -81,7 +81,7 @@ export class ManageUsersComponent extends AbstractComponent
 
   public updateUser() {
     this.userService
-      .getUsers(this.page)
+      .getUsersPeople(this.page)
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)

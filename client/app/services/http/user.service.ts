@@ -30,6 +30,12 @@ export class UserService {
     });
   }
 
+  getUsersPeople(queryParams: any = null): Observable<PagedData> {
+    return <Observable<PagedData>>this.http.get(`/api/users/people`, {
+      params: queryParams
+    });
+  }
+
   getUser(user_id: any): Observable<User> {
     return <Observable<User>>this.http.get(`/api/users/${user_id}`);
   }

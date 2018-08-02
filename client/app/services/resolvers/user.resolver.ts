@@ -13,6 +13,6 @@ export class UserResolver implements Resolve<Observable<PagedData>> {
 
 	resolve(): Observable<PagedData> {
 		const pagingInfo: Page = this.pagingService.getDefaultPager();
-		return this.userService.getUsers(pagingInfo);
+		return this.userService.getUsersPeople(pagingInfo);
 	}
 }

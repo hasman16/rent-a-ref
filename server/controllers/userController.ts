@@ -58,6 +58,25 @@ export default function UserController(
     return sortColumn + value;
   }
 
+  function produceLikeClause(req) {
+    let attributepairs = String(req.query.search).split(',');
+
+    let keyvalues = attributepairs
+      .map(keyvalue => {
+        return keyvalue.split('|');
+      })
+      .filter(entries => _.isArray(entries) && entries.length === 2)
+      .map(entries => {
+        let value = (entries[1] || '') + '%';
+        let key = entries[0] || 'badkey';
+        key = getSortColumn(key);
+
+        return ` AND ${key} ilike '${value}' `;
+      });
+
+    return keyvalues.join(' ');
+  }
+
   async function getAllFlat(req, res) {
     const sequelize = models.sequelize;
     const sortClause = ResponseService.produceLimitOffsetAndSort(req);
@@ -66,13 +85,20 @@ export default function UserController(
     const limit = ` OFFSET ${sortClause.offset} LIMIT ${sortClause.limit} `;
     const sort = ` ORDER BY ${sortColumn} ${order[1]}`;
     const columns = 'SELECT * ';
-    let query = `FROM users,people WHERE users.id = people.user_id AND users.email like '%ad%' `;
-    query = columns + query + sort + limit + ';';
+    const like = produceLikeClause(req);
+    let query = `FROM users,people WHERE users.id = people.user_id `;
+    let countQuery = 'SELECT COUNT(*) ' + query + like + sort + ';';
+    query = columns + query + like + sort + limit + ';';
 
+    console.log('query is:', query, countQuery);
     try {
+      const count: Array<any> = await sequelize.query(countQuery, {
+        type: sequelize.QueryTypes.SELECT
+      });
       const rows: Array<any> = await sequelize.query(query, {
         type: sequelize.QueryTypes.SELECT
       });
+      console.log('count was:', count);
       let results = {
         count: rows.length,
         rows: rows
