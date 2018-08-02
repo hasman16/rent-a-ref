@@ -6,6 +6,9 @@
 <div class="row" *ngIf="!parent">
   <div class="col-12">
     <div class="card">
+        <nav class="navbar navbar-dark bg-primary d-flex justify-content-end">
+            <button class="btn btn-danger btn-sm new-org-button" (click)="goNewBlog({})" title="Click to start new blog">Start New Blog</button>
+            </nav>
 <p>{{parent}}</p>
 <p>{{newLoadPage}}</p>
       <rar-search-box 
@@ -43,26 +46,18 @@
           (activate)="onActivate($event)"
           (select)='onSelect($event)'
           >
-          <ngx-datatable-column name="Match Name" prop="match_name" editable="false"></ngx-datatable-column>
-          <ngx-datatable-column name="Date" prop="match_date" editable="false">
+          <ngx-datatable-column name="Post ID" prop="id" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Blog" prop="content" editable="false">
             <!--<ng-template let-value="value" ngx-datatable-cell-template>
               {{ value | date :'MMM dd, yyyy' }}
             </ng-template>-->
           </ngx-datatable-column>
-          <ngx-datatable-column name="Age" prop="age" editable="false"></ngx-datatable-column>
-          <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
-
-          <ngx-datatable-column name="" prop="id" editable="true">
-            <ng-template let-value="value" ngx-datatable-cell-template>
-              <!--<button class="btn btn-primary btn-sm" (click)="acceptMatch(value)" title="Click to accept match">Accept</button>-->
-            </ng-template>
+          <ngx-datatable-column name="Published" prop="published" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Date Created" prop="created_at" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Last Update" prop="updated_at" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="User ID" prop="user_id" editable="true">        
           </ngx-datatable-column>
-
-          <ngx-datatable-column name="" prop="id" editable="true">
-            <ng-template let-value="value" ngx-datatable-cell-template>
-              <!--<button class="btn btn-primary btn-sm" (click)="declineMatch(value)" title="Click to accept match">Decline</button>-->
-            </ng-template>
-          </ngx-datatable-column>
+          
         </ngx-datatable>
       </div>
 
