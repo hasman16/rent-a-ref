@@ -103,11 +103,13 @@ function UserController(models, ResponseService, SendGridService) {
     }
     function getAllFlat(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, sortClause, order, sortColumn, limit, sort, columns, like, query, countQuery, count, rows, results, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var sequelize, Op, Image, sortClause, order, sortColumn, limit, sort, columns, like, query, countQuery, result, count, rows, ids, users_1, results, error_1, _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         sequelize = models.sequelize;
+                        Op = sequelize.Op;
+                        Image = models.Image;
                         sortClause = ResponseService.produceLimitOffsetAndSort(req);
                         order = _.head(sortClause.order);
                         sortColumn = getSortColumn(order[0]);
@@ -116,34 +118,56 @@ function UserController(models, ResponseService, SendGridService) {
                         columns = 'SELECT * ';
                         like = produceLikeClause(req);
                         query = "FROM users,people WHERE users.id = people.user_id ";
-                        countQuery = 'SELECT COUNT(*) ' + query + like + sort + ';';
+                        countQuery = 'SELECT COUNT(*) AS total ' + query + like + ' ;';
                         query = columns + query + like + sort + limit + ';';
-                        console.log('query is:', query, countQuery);
-                        _a.label = 1;
+                        _b.label = 1;
                     case 1:
-                        _a.trys.push([1, 4, , 5]);
+                        _b.trys.push([1, 5, , 6]);
                         return [4 /*yield*/, sequelize.query(countQuery, {
                                 type: sequelize.QueryTypes.SELECT
                             })];
                     case 2:
-                        count = _a.sent();
+                        result = _b.sent();
+                        count = Number(_.head(result).total);
                         return [4 /*yield*/, sequelize.query(query, {
                                 type: sequelize.QueryTypes.SELECT
                             })];
                     case 3:
-                        rows = _a.sent();
+                        rows = _b.sent();
                         console.log('count was:', count);
+                        ids = rows.map(function (row) { return row.user_id; });
+                        return [4 /*yield*/, User.findAll({
+                                where: {
+                                    id: (_a = {},
+                                        _a[Op.in] = rows.map(function (item) { return item.user_id; }),
+                                        _a)
+                                },
+                                include: [
+                                    {
+                                        model: Image
+                                    }
+                                ]
+                            })];
+                    case 4:
+                        users_1 = _b.sent();
                         results = {
-                            count: rows.length,
-                            rows: rows
+                            count: count || 0,
+                            rows: rows.map(function (row) {
+                                var user = _.find(users_1, function (user) { return user.id == row.id; });
+                                row['images'] = [];
+                                if (user) {
+                                    row['images'] = user.images;
+                                }
+                                return row;
+                            })
                         };
                         ResponseService.successCollection(res, results);
-                        return [3 /*break*/, 5];
-                    case 4:
-                        error_1 = _a.sent();
+                        return [3 /*break*/, 6];
+                    case 5:
+                        error_1 = _b.sent();
                         ResponseService.exception(res, error_1, 403);
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });

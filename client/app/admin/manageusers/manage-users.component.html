@@ -46,6 +46,31 @@
           </div>
         </ng-template>
       </ngx-datatable-column>
+
+      <ngx-datatable-column name="Firstname" prop="firstname" editable="false">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <div class="cell-item">
+            {{value}}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Lastname" prop="lastname" editable="false">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <div class="cell-item">
+            {{value}}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Gender" prop="gender" editable="false">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <div class="cell-item">
+            {{value}}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
       <ngx-datatable-column name="Organizer" prop="can_organize" editable="false">
         <ng-template let-value="value" ngx-datatable-cell-template>
           <div class="cell-item">

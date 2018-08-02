@@ -79,6 +79,9 @@ export default function UserController(
 
   async function getAllFlat(req, res) {
     const sequelize = models.sequelize;
+    const Op = sequelize.Op;
+    const Image = models.Image;
+
     const sortClause = ResponseService.produceLimitOffsetAndSort(req);
     const order: Array<any> = _.head(sortClause.order);
     const sortColumn: string = getSortColumn(order[0]);
@@ -87,21 +90,41 @@ export default function UserController(
     const columns = 'SELECT * ';
     const like = produceLikeClause(req);
     let query = `FROM users,people WHERE users.id = people.user_id `;
-    let countQuery = 'SELECT COUNT(*) ' + query + like + sort + ';';
+    let countQuery = 'SELECT COUNT(*) AS total ' + query + like + ' ;';
     query = columns + query + like + sort + limit + ';';
 
-    console.log('query is:', query, countQuery);
     try {
-      const count: Array<any> = await sequelize.query(countQuery, {
+      const result: any = await sequelize.query(countQuery, {
         type: sequelize.QueryTypes.SELECT
       });
+      const count: number = Number(_.head(result).total);
       const rows: Array<any> = await sequelize.query(query, {
         type: sequelize.QueryTypes.SELECT
       });
       console.log('count was:', count);
+      const ids = rows.map(row => row.user_id);
+      const users: Array<any> = await User.findAll({
+        where: {
+          id: {
+            [Op.in]: rows.map(item => item.user_id)
+          }
+        },
+        include: [
+          {
+            model: Image
+          }
+        ]
+      });
       let results = {
-        count: rows.length,
-        rows: rows
+        count: count || 0,
+        rows: rows.map(row => {
+          let user = _.find(users, user => user.id == row.id);
+          row['images'] = [];
+          if (user) {
+            row['images'] = user.images;
+          }
+          return row;
+        })
       };
       ResponseService.successCollection(res, results);
     } catch (error) {
