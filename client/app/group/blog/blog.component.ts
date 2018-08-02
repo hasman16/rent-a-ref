@@ -6,7 +6,9 @@ import {
 	OnInit,
 	ChangeDetectorRef,
 	ChangeDetectionStrategy,
-	EventEmitter, Input, Output
+	EventEmitter,
+	Input,
+	Output
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -73,8 +75,9 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 		this.getBlog(this.page);
 	}
 
-	public getBlog(params: Page) { console.log('Initial load');
-	this.parent = false;
+	public getBlog(params: Page) {
+		console.log('Initial load');
+		this.parent = false;
 		const currentUser: User = this.auth.getCurrentUser();
 		const user_id = currentUser.id;
 		let page: Page = _.cloneDeep(params);
@@ -118,19 +121,20 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 		this.getBlog(data);
 	}
 
-	public goNewBlog() {		
+	public goNewBlog() {
 		const currentUser: User = this.auth.getCurrentUser();
 		const user_id = currentUser.id;
 		console.log('ID 1: ' + user_id);
 		//this.customElement.emit('createPost');
 		this.parent = true;
 		this.router.navigate(['blog/create-post']);
-	            }
-	public onLoadPage(receivedEvent){
-		if(receivedEvent == 'createBlog'){
-		  this.parent = true;
-		} else{
-		  this.parent = false;	
+	}
+
+	public onLoadPage(receivedEvent) {
+		if (receivedEvent == 'createBlog') {
+			this.parent = true;
+		} else {
+			this.parent = false;
 		}
 		this.newLoadPage = receivedEvent;
 		console.log('this.newLoadPage: ' + this.newLoadPage);

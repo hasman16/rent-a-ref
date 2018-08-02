@@ -3,7 +3,9 @@ import {
 	OnInit,
 	ChangeDetectorRef,
 	ChangeDetectionStrategy,
-	EventEmitter, Input, Output
+	EventEmitter,
+	Input,
+	Output
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
@@ -13,7 +15,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AbstractComponent } from '../../../abstract/abstract.component';
 import { ToastComponent } from '../../../shared/toast/toast.component';
-import { Page, PagedData, Sorts, User, Post } from '../../../shared/models/index';
+import {
+	Page,
+	PagedData,
+	Sorts,
+	User,
+	Post
+} from '../../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -54,94 +62,90 @@ export class CreatePostComponent implements OnInit {
 		private userService: UserService,
 		private blogService: BlogService,
 		protected pagingService: PagingService
-	) {
-		
-	}
+	) {}
 
 	ngOnInit() {
 		this.loadPage.emit('createBlog');
 		console.log('loadPage: ' + this.loadPage);
-		
+
 		this.fields = [
 			{
-			  key: 'blog-title',
-			  type: 'input',
-			  templateOptions: {
-			    placeholder: 'Title',
-			    label: 'Blog Title',
-			    required: true,
-			    minLength: 5
-			  }
+				key: 'blog-title',
+				type: 'input',
+				templateOptions: {
+					placeholder: 'Title',
+					label: 'Blog Title',
+					required: true,
+					minLength: 5
+				}
 			},
 			{
-			  key: 'blog-category',
-			  type: 'input',
-			  templateOptions: {
-			    type: 'input',
-			    placeholder: 'Blog Category',
-			    label: 'Category',
-			    required: true,
-			    minLength: 3
-			  }
+				key: 'blog-category',
+				type: 'input',
+				templateOptions: {
+					type: 'input',
+					placeholder: 'Blog Category',
+					label: 'Category',
+					required: true,
+					minLength: 3
+				}
 			},
 			{
-			  key: 'reference',
-			  type: 'input',
-			  templateOptions: {
-			    placeholder: 'Reference',
-			    label: 'Reference',
-			    required: true,
-			    minLength: 5
-			  }
+				key: 'reference',
+				type: 'input',
+				templateOptions: {
+					placeholder: 'Reference',
+					label: 'Reference',
+					required: true,
+					minLength: 5
+				}
 			},
 			{
-			  key: 'content',
-			  type: 'textarea',
-			  templateOptions: {
-			    type: 'textarea',
-			    placeholder: 'Blog Text',
-			    label: 'Blog Text',
-			    required: true,
-			    minLength: 5
-			  }
+				key: 'content',
+				type: 'textarea',
+				templateOptions: {
+					type: 'textarea',
+					placeholder: 'Blog Text',
+					label: 'Blog Text',
+					required: true,
+					minLength: 5
+				}
 			}
-		            ];
-	
+		];
 	}
-
 
 	public createBlog(post: Post) {
 		const currentUser: User = this.auth.getCurrentUser();
-		const user_id = currentUser.id;		
+		const user_id = currentUser.id;
 		this.isLoading = true;
-		this.blogService
-			.createPost(post)
-			.subscribe(
-				res => {
-					this.toast.setMessage('Post Successfully Created', 'success');
-					this.parent = true;
-					this.router.navigate(['blog']);
-					//this.router.navigate(['/login']);
-				},
-				(err: HttpErrorResponse) => {
-					if (err.error instanceof Error) {
-						this.toast.setMessage('Oops! Something is wrong: Post not created', 'danger');
-					} else {
-						this.toast.setMessage(
-							'An error occurred while creating the post.',
-							'danger'
-						);
-					}
+		this.blogService.createPost(post).subscribe(
+			res => {
+				this.toast.setMessage('Post Successfully Created', 'success');
+				this.parent = true;
+				this.router.navigate(['blog']);
+				//this.router.navigate(['/login']);
+			},
+			(err: HttpErrorResponse) => {
+				if (err.error instanceof Error) {
+					this.toast.setMessage(
+						'Oops! Something is wrong: Post not created',
+						'danger'
+					);
+				} else {
+					this.toast.setMessage(
+						'An error occurred while creating the post.',
+						'danger'
+					);
 				}
-			);
+			}
+		);
 	}
-
 
 	onSubmit(model) {}
 
-	onCancel(){
-	  this.loadPage.emit('loadBlog');
-	  console.log('loadPage 1: ' + this.loadPage);
-	  this.router.navigate(['blog']);
+	onCancel() {
+		this.loadPage.emit('loadBlog');
+		console.log('loadPage 1: ' + this.loadPage);
+		this.router.navigate(['blog']);
 	}
 }
