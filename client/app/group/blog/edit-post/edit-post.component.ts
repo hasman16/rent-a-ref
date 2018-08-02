@@ -1,18 +1,16 @@
-//import { Router, ActivatedRoute } from '@angular/router';
-import { ActivatedRoute, Params, Router, Data } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import {
 	Component,
 	OnInit,
 	ChangeDetectorRef,
-	ChangeDetectionStrategy,
-	EventEmitter, Input, Output
+	ChangeDetectionStrategy
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { AbstractComponent } from '../../abstract/abstract.component';
-import { ToastComponent } from '../../shared/toast/toast.component';
-import { Page, PagedData, Sorts, User } from '../../shared/models/index';
+import { AbstractComponent } from '../../../abstract/abstract.component';
+import { ToastComponent } from '../../../shared/toast/toast.component';
+import { Page, PagedData, Sorts, User } from '../../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -26,27 +24,22 @@ import {
 	BlogService,
 	PagingService,
 	UserService
-} from '../../services/index';
+} from '../../../services/index';
 
 @Component({
-	selector: 'app-blog',
-	templateUrl: './blog.component.html',
-	styleUrls: ['./blog.component.scss'],
+	selector: 'app-editblog',
+	templateUrl: './edit-post.component.html',
+	styleUrls: ['./edit-post.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BlogComponent extends AbstractComponent implements OnInit {
-	//@Output() customElement = new EventEmitter<string>();
-	parent = false;
-	newLoadPage = 'loadBlog';
+export class EditPostComponent extends AbstractComponent implements OnInit {
 	public post: any[];
-	//public blogging: any[];
 	public isLoading: boolean = false;
 	public placeholder: string = 'search Post';
 	constructor(
 		private cd: ChangeDetectorRef,
 		private auth: AuthService,
 		private route: ActivatedRoute,
-		private router: Router,
 		private toast: ToastComponent,
 		private userService: UserService,
 		private blogService: BlogService,
@@ -57,8 +50,6 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 
 	ngOnInit() {
 		this.initialize();
-		//this.customElement.emit('loadPost');
-		console.log('data: ' + this.route.snapshot.data);
 		this.searchAttribute = 'blog_name|';
 		const pagedData: PagedData = this.route.snapshot.data.blogData;
 		this.processPagedData(pagedData);
@@ -73,8 +64,7 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 		this.getBlog(this.page);
 	}
 
-	public getBlog(params: Page) { console.log('Initial load');
-	this.parent = false;
+	public getBlog(params: Page) {
 		const currentUser: User = this.auth.getCurrentUser();
 		const user_id = currentUser.id;
 		let page: Page = _.cloneDeep(params);
@@ -116,23 +106,5 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 
 	protected getData(data: Page): void {
 		this.getBlog(data);
-	}
-
-	public goNewBlog() {		
-		const currentUser: User = this.auth.getCurrentUser();
-		const user_id = currentUser.id;
-		console.log('ID 1: ' + user_id);
-		//this.customElement.emit('createPost');
-		this.parent = true;
-		this.router.navigate(['blog/create-post']);
-	            }
-	public onLoadPage(receivedEvent){
-		if(receivedEvent == 'createBlog'){
-		  this.parent = true;
-		} else{
-		  this.parent = false;	
-		}
-		this.newLoadPage = receivedEvent;
-		console.log('this.newLoadPage: ' + this.newLoadPage);
 	}
 }

@@ -1,4 +1,4 @@
-import { environment } from '../environments/environment';
+import { environment } from './environments/environment';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -35,6 +35,8 @@ import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
 import { BioFormComponent } from './shared/forms/bio-form/bio-form.component';
 import { BlogComponent } from './group/blog/blog.component';
+import { EditPostComponent } from './group/blog/edit-post/edit-post.component';
+import { CreatePostComponent } from './group/blog/create-post/create-post.component';
 import { CareersComponent } from './group/careers/careers.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.component';
@@ -100,6 +102,8 @@ import {
         AdminComponent,
         BioFormComponent,
         BlogComponent,
+        EditPostComponent,
+        CreatePostComponent,
         CareersComponent,
         CarouselComponent,
         CarouselItemComponent,

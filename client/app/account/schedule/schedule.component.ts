@@ -49,9 +49,11 @@ export class ScheduleComponent extends AbstractScheduleComponent
 	}
 
 	ngOnInit() {
+
 		this.initialize();
 		this.user = this.auth.getCurrentUser();
 		this.searchAttribute = 'match_name|';
+		console.log('data schedule: ' + this.route.snapshot);
 		const pagedData: PagedData = this.route.snapshot.data.scheduleData;
 		this.processPagedData(pagedData);
 	}

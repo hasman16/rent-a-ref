@@ -1,3 +1,71 @@
+<div *ngIf="parent">
+    <app-createblog [parent]="newLoadPage" (loadPage)="onLoadPage($event)"><p>Test: {{parent}}</p>
+      <p>Test 1:{{newLoadPage}}</p></app-createblog>
+    </div>
+
+<div class="row" *ngIf="!parent">
+  <div class="col-12">
+    <div class="card">
+        <nav class="navbar navbar-dark bg-primary d-flex justify-content-end">
+            <button class="btn btn-danger btn-sm new-org-button" (click)="goNewBlog({})" title="Click to start new blog">Start New Blog</button>
+            </nav>
+<p>{{parent}}</p>
+<p>{{newLoadPage}}</p>
+      <rar-search-box 
+      [placeholder]="placeholder"
+      (searchEvent)='updateFilter($event)'
+      ></rar-search-box>
+
+      <div class="card horizontal-and-vertical-centering " *ngIf="(!post || post.length === 0)">
+          <div class="form-size">
+            <p>No Post available at the moment. Please check again later.
+              <br />You can start a new blog by clicking the Start New Blog button below</p>
+            <button class="btn btn-primary btn-sm new-org-button" (click)="goNewBlog({})" title="Click to start new blog">Start New Blog</button>
+          </div>
+        </div>
+
+      <!--<div class="card-block" *ngIf="(post && post.length > 0)">-->
+          <div class="card-block">
+
+        <ngx-datatable class="bootstrap"
+          [rows]="post"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [externalSorting]="true"
+          [loadingIndicator]="isLoading"
+          (sort)="onSort($event)"
+          [externalPaging]="true"
+          [count]="page.total_elements"
+          [offset]="page.offset"
+          [limit]="page.limit"
+          (page)='setPage($event)'
+          [selected]="selected"
+          [selectionType]="'single'"
+          (activate)="onActivate($event)"
+          (select)='onSelect($event)'
+          >
+          <ngx-datatable-column name="Post ID" prop="id" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Blog" prop="content" editable="false">
+            <!--<ng-template let-value="value" ngx-datatable-cell-template>
+              {{ value | date :'MMM dd, yyyy' }}
+            </ng-template>-->
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Published" prop="published" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Date Created" prop="created_at" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="Last Update" prop="updated_at" editable="false"></ngx-datatable-column>
+          <ngx-datatable-column name="User ID" prop="user_id" editable="true">        
+          </ngx-datatable-column>
+          
+        </ngx-datatable>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--
 <div class="card col-sm-12">
   <div class="card">
     <h4 class="elegantshd bigFont">Blog</h4>
@@ -8,3 +76,4 @@
     </div>
   </div>
 </div>
+-->

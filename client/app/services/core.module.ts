@@ -16,7 +16,8 @@ import {
   ProfileService,
   StatesService,
   StripeService,
-  UserService
+  UserService,
+  BlogService
 } from './http/index';
 import { TokenInterceptor, TokenService } from './interceptors/index';
 import {
@@ -25,6 +26,7 @@ import {
   OrganizationsResolver,
   SportsResolver,
   ScheduleResolver,
+  BlogResolver,
   UserResolver
 } from './resolvers/index';
 @NgModule({
@@ -46,6 +48,8 @@ import {
     EventsResolver,
     OrganizationsResolver,
     ScheduleResolver,
+    BlogResolver,
+    BlogService,
     SportsResolver,
     UserResolver,
     {

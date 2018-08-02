@@ -1,4 +1,4 @@
-import { environment } from '../environments/environment';
+import { environment } from './environments/environment';
 import { Component } from '@angular/core';
 import { AuthService, UserService } from './services/index';
 

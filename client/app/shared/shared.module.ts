@@ -35,6 +35,7 @@ import {
 } from './formly/index';
 import { BaseFormComponent } from './formly/base-form/base-form.component';
 import { OrganizationFormComponent } from './forms/organization-form/organization-form.component';
+import { BlogFormComponent } from './forms/blog-form/blog-form.component';
 import { EventsFormComponent } from './forms/events-form/events-form.component';
 import { MatchesFormComponent } from './forms/matches-form/matches-form.component';
 import { SearchBoxComponent } from './search-box/index';
@@ -117,6 +118,7 @@ import { SearchBoxComponent } from './search-box/index';
         StripeComponent,
         BaseFormComponent,
         OrganizationFormComponent,
+        BlogFormComponent,
         EventsFormComponent,
         MatchesFormComponent,
         SearchBoxComponent,
@@ -139,6 +141,7 @@ import { SearchBoxComponent } from './search-box/index';
         StripeComponent,
         BaseFormComponent,
         OrganizationFormComponent,
+        BlogFormComponent,
         EventsFormComponent,
         MatchesFormComponent,
         SearchBoxComponent,
