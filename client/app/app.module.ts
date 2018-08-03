@@ -65,7 +65,10 @@ import { PartnersComponent } from './group/partners/partners.component';
 import { PasswordFormComponent } from './shared/forms/password-form/password-form.component';
 import { PhoneFormComponent } from './shared/forms/phone-form/phone-form.component';
 import { PricingComponent } from './home/pricing/pricing.component';
-import { ProfileComponent } from './account/profile/profile.component';
+import {
+    AdminProfileComponent,
+    ProfileComponent
+} from './account/profile/index';
 import { ManageUsersComponent } from './admin/manageusers/manage-users.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
@@ -129,6 +132,7 @@ import {
         PasswordFormComponent,
         PhoneFormComponent,
         PricingComponent,
+        AdminProfileComponent,
         ProfileComponent,
         ManageUsersComponent,
         ManageEventsComponent,

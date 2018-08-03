@@ -87,7 +87,10 @@ export default function UserController(
     const sortColumn: string = getSortColumn(order[0]);
     const limit = ` OFFSET ${sortClause.offset} LIMIT ${sortClause.limit} `;
     const sort = ` ORDER BY ${sortColumn} ${order[1]}`;
-    const columns = 'SELECT * ';
+    const columns =
+      'SELECT users.id AS id, users.email AS email, users.can_organize AS can_organize, users.can_referee AS can_referee,' +
+      ' users.status AS status, users.authorization AS authorization, people.id AS person_id, people.gender AS gender, ' +
+      ' people.firstname AS firstname, people.lastname AS lastname, people.user_id AS user_id, people.dob AS dob ';
     const like = produceLikeClause(req);
     let query = `FROM users,people WHERE users.id = people.user_id `;
     let countQuery = 'SELECT COUNT(*) AS total ' + query + like + ' ;';
@@ -101,7 +104,6 @@ export default function UserController(
       const rows: Array<any> = await sequelize.query(query, {
         type: sequelize.QueryTypes.SELECT
       });
-      console.log('count was:', count);
       const ids = rows.map(row => row.user_id);
       const users: Array<any> = await User.findAll({
         where: {

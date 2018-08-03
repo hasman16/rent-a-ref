@@ -115,7 +115,9 @@ function UserController(models, ResponseService, SendGridService) {
                         sortColumn = getSortColumn(order[0]);
                         limit = " OFFSET " + sortClause.offset + " LIMIT " + sortClause.limit + " ";
                         sort = " ORDER BY " + sortColumn + " " + order[1];
-                        columns = 'SELECT * ';
+                        columns = 'SELECT users.id AS id, users.email AS email, users.can_organize AS can_organize, users.can_referee AS can_referee,' +
+                            ' users.status AS status, users.authorization AS authorization, people.id AS person_id, people.gender AS gender, ' +
+                            ' people.firstname AS firstname, people.lastname AS lastname, people.user_id AS user_id, people.dob AS dob ';
                         like = produceLikeClause(req);
                         query = "FROM users,people WHERE users.id = people.user_id ";
                         countQuery = 'SELECT COUNT(*) AS total ' + query + like + ' ;';
@@ -134,7 +136,6 @@ function UserController(models, ResponseService, SendGridService) {
                             })];
                     case 3:
                         rows = _b.sent();
-                        console.log('count was:', count);
                         ids = rows.map(function (row) { return row.user_id; });
                         return [4 /*yield*/, User.findAll({
                                 where: {

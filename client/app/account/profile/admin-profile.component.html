@@ -1,0 +1,156 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <h4 class="etched-text">User's Profile</h4>
+
+      <div class="card-block card-outline-primary">
+
+        <div class="list-group" style="margin-top: 2em;">
+          <span class="list-group-item">
+            <span class="btn btn-sm btn-success disabled">Can Organize:&nbsp;&nbsp;{{user.can_organize}}</span>
+            <span class="btn btn-sm btn-warning disabled">Can Referee:&nbsp;&nbsp;{{user.can_referee}}</span>
+            <span class="btn btn-sm btn-danger disabled">Status:&nbsp;&nbsp;{{user.status}}</span>
+          </span>
+        </div>
+
+        <div class="col-8 profiles">
+          <div class="card">
+            <div class="col-3 rar-logo">
+              <rar-image [errorImage]="defaultImage" [image]="getImageAddress()" [width]="120"></rar-image>
+            </div>
+          </div>
+          <div class="card">
+            <div class="fadeInForm">
+              <div>
+                <strong>Personal details</strong>
+              </div>
+
+              <div>
+                <label class="profileLabel">Firstname:</label>
+                <span class="profileItem">{{person.firstname}}</span>
+              </div>
+              <ng-container>
+                <div>
+                  <label class="profileLabel">Middlename: </label>
+                  <span class="profileItem">{{person.middlenames}}</span>
+                </div>
+              </ng-container>
+
+              <div>
+                <label class="profileLabel">Lastname:</label>
+                <span class="profileItem">{{person.lastname}}</span>
+              </div>
+
+              <div>
+                <label class="profileLabel">Gender:</label>
+                <span class="profileItem">{{person.gender}}</span>
+              </div>
+
+              <div>
+                <label class="profileLabel">D.O.B:</label>
+                <span class="profileItem">{{birthday}}</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div>
+                <strong>Credentials</strong>
+              </div>
+              <div>
+                <label class="profileLabel">Email: </label>
+                <span class="profileItem">{{user.email}}</span>
+              </div>
+              <div>
+                <label class="profileLabel">Password: </label>
+                <span class="profileItem">***********</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <strong>Phone</strong>
+            </div>
+
+            <ng-container *ngIf="!editPhone && phones.length === 0">
+              <div class="list-group" *ngIf="addresses.length === 0">
+                <span class="list-group-item">
+                    <strong>There are no phones set up for this person.</strong>
+                  </span>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="phones.length > 0">
+              <div class="list-group" *ngFor="let phone of phones">
+                <div *ngIf="!editPhone">
+                  <button class="btn btn-primary btn-sm buttonSize" title="Edit phone." (click)="setEditPhone(phone.id,true)">EDIT</button>
+                  <span class="list-group-item">
+                      <label class="profileLabel">{{phone.description}} Phone:</label>
+                      <span class="profileItem">{{phone.number}}</span>
+                  </span>
+                </div>
+                <phone-form *ngIf="editPhone && currentPhone === phone.id" [phoneService]="profileService" [phone]="phone" (savePhone)="onPhoneSubmit($event)" (cancelForm)="onFormCancel($event)"></phone-form>
+              </div>
+            </ng-container>
+
+            <button *ngIf="!editPhone && phones.length < 3" class="btn btn-primary btn-sm buttonSize" title="Add new phone." (click)="setEditPhone(0,true)">ADD</button>
+
+          </div>
+
+          <div class="card">
+            <div>
+              <strong>Address</strong>
+            </div>
+
+            <ng-container *ngIf="!editAddress && addresses.length === 0">
+              <div class="list-group" *ngIf="!editAddress">
+                <span class="list-group-item">
+                    <strong> There are no addresses set up for this person.</strong>
+                  </span>
+              </div>
+            </ng-container>
+            <address-form *ngIf="editAddress && currentAddress === 0" [addressService]="profileService" [address]="dummyAddress" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
+
+            <ng-container *ngIf="addresses.length > 0">
+              <div class="list-group" *ngFor="let address of addresses">
+                <div *ngIf="!editAddress">
+                  <button class="btn btn-primary btn-sm buttonSize" title="Edit address." (click)="setEditAddress(address.id,true)">EDIT</button>
+                  <div>
+                    <label class="profileLabel">Address Line 1:</label>
+                    <span class="profileItem">{{address.line1}}</span>
+                  </div>
+                  <div>
+                    <label class="profileLabel">Address Line 2:</label>
+                    <span class="profileItem">{{address.line2}}</span>
+                  </div>
+                  <div>
+                    <label class="profileLabel">City:</label>
+                    <span class="profileItem">{{address.city}}</span>
+                  </div>
+                  <div>
+                    <label class="profileLabel">State: </label>
+                    <span class="profileItem">{{address.state}}</span>
+                  </div>
+                  <div>
+                    <label class="profileLabel">ZIP code:</label>
+                    <span class="profileItem">{{address.zip}}</span>
+                  </div>
+                </div>
+                <address-form [addressService]="profileService" [address]="address" *ngIf="editAddress && currentAddress === address.id" [country]="usa" (saveAddress)="onAddressSubmit($event)" (cancelForm)="onFormCancel($event)"></address-form>
+              </div>
+            </ng-container>
+
+            <button *ngIf="!editAddress && addresses.length < 4" class="btn btn-primary btn-sm buttonSize" title="Add new address." (click)="setEditAddress(0,true)">ADD</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>

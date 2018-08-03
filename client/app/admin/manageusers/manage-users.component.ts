@@ -32,6 +32,7 @@ export class ManageUsersComponent extends AbstractComponent
   protected currentUser: User = <User>{};
   public placeholder: string = 'Type to filter by email ...';
   public defaultImage: string = 'assets/images/avatar2.png';
+  public selectedUser: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -63,6 +64,11 @@ export class ManageUsersComponent extends AbstractComponent
     const user = _.find(this.users, user => user.id == id);
     const url = _.get(user, 'images[0].location', '');
     return url;
+  }
+
+  public onSelect({ selected }): void {
+    this.selectedUser = _.head(selected);
+    console.log('selected:', this.selectedUser);
   }
 
   public getUsers(params: any) {
