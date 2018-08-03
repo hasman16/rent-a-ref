@@ -14,7 +14,7 @@ function BlogController(models, ResponseService) {
         var clauses = ResponseService.produceSearchAndSortClause(req);
         var mainClauses = Object.assign(clauses, {
             where: {
-                id: req.params.user_id
+                user_id: req.params.user_id
             }
         });
         Post.findAndCountAll(mainClauses)

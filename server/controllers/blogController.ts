@@ -16,7 +16,7 @@ export default function BlogController(models, ResponseService) {
 
     const mainClauses = Object.assign(clauses, {
       where: {
-        id: req.params.user_id
+        user_id: req.params.user_id
       }
     });
 
