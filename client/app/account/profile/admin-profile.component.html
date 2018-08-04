@@ -14,11 +14,26 @@
         </div>
 
         <div class="col-8 profiles">
-          <div class="card">
+          <div class="card" style="display: flex; flex-direction: row; justify-content: flex-start;">
             <div class="col-3 rar-logo">
               <rar-image [errorImage]="defaultImage" [image]="getImageAddress()" [width]="120"></rar-image>
             </div>
+            <div style="width: 100%;">
+              <div style="display: flex; flex-direction: row;">
+                <label class="profileLabel">Organize: </label>
+                <span class="profileItem">{{user.can_organize}}</span>
+              </div>
+              <div style="display: flex; flex-direction: row;">
+                <label class="profileLabel">Referee: </label>
+                <span class="profileItem">{{user.can_referee}}</span>
+              </div>
+              <div style="display: flex; flex-direction: row;">
+                <label class="profileLabel">Status: </label>
+                <span class="profileItem">{{user.status}}</span>
+              </div>
+            </div>
           </div>
+
           <div class="card">
             <div class="fadeInForm">
               <div>

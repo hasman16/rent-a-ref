@@ -154,8 +154,8 @@ import {
     imports: [
         BrowserModule,
         AgmCoreModule.forRoot({
-            apiKey: environment.GOOGLEMAPS_KEY //'AIzaSyBjIl1u0Sk8z2-UhiZNRATgU6E8ssDU-10'
-        }), //'AIzaSyCIYjs8M-co1PL-iDZVP8rIiHIxAN-RYaI'
+            apiKey: environment.GOOGLEMAPS_KEY 
+        }), 
         NgxDatatableModule,
 
         RoutingModule,

@@ -11,6 +11,5 @@ import { AuthService, UserService } from './services/index';
 export class AppComponent {
 	constructor(private auth: AuthService) {
 		this.auth.SITE_KEY = environment.SITE_KEY;
-		console.log('environment;', environment);
 	}
 }
