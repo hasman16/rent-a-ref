@@ -33,6 +33,7 @@ export class ManageUsersComponent extends AbstractComponent
   public placeholder: string = 'Type to filter by email ...';
   public defaultImage: string = 'assets/images/avatar2.png';
   public selectedUser: any;
+  public viewProfile: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +45,7 @@ export class ManageUsersComponent extends AbstractComponent
   }
 
   ngOnInit() {
+    this.viewProfile = false;
     this.initialize();
     this.searchAttribute = 'email|';
     const pagedData: PagedData = this.route.snapshot.data.userData;
@@ -68,7 +70,11 @@ export class ManageUsersComponent extends AbstractComponent
 
   public onSelect({ selected }): void {
     this.selectedUser = _.head(selected);
-    console.log('selected:', this.selectedUser);
+    this.viewProfile = true;
+  }
+
+  public backToList(): void {
+    this.viewProfile = false;
   }
 
   public getUsers(params: any) {

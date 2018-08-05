@@ -1,4 +1,4 @@
-<div class="card" style="min-height: 750px;">
+<div class="card" style="min-height: 750px;" *ngIf="!viewProfile">
   <h1 class="etched-text">Manage Users</h1>
   
   <rar-search-box 
@@ -95,9 +95,14 @@
     </ngx-datatable>
  
   </div>
+</div>
 
-  <div>
-    <rar-admin-profile [user]="selectedUser"></rar-admin-profile>
-  </div>
-
+<div class="card" style="min-height: 750px;" *ngIf="viewProfile">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a (click)="backToList()">Users</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Profile</li>
+    </ol>
+  </nav>
+  <rar-admin-profile [user]="selectedUser"></rar-admin-profile>
 </div>

@@ -47,20 +47,11 @@ export class AdminProfileComponent implements OnInit {
   public person: Person = <Person>{};
 
   public addresses: Address[];
-  public dummyAddress: Address = <Address>{};
   public phones: Phone[];
-  public dummyPhone: Phone = <Phone>{};
   public middlenameFlag: boolean = false;
-
-  public editPhone: boolean = false;
-  public currentPhone: number = 0;
-
-  public editAddress: boolean = false;
-  public currentAddress: number = 0;
 
   public birthday: string = '';
   public defaultImage: string = 'assets/images/avatar2.png';
-  public destination: string;
 
   public isLoading: boolean = true;
 
@@ -117,48 +108,5 @@ export class AdminProfileComponent implements OnInit {
         },
         (err: HttpErrorResponse) => {}
       );
-  }
-
-  clearEdits() {
-    this.editAddress = false;
-    this.editPhone = false;
-  }
-
-  setEditAddress(id: number = 0, value: boolean = false) {
-    this.clearEdits();
-    this.currentAddress = id;
-    this.editAddress = value;
-  }
-
-  setEditPhone(id: number = 0, value: boolean = false) {
-    this.clearEdits();
-    this.currentPhone = id;
-    this.editPhone = value;
-  }
-
-  onAddressSubmit(res) {
-    this.onFormSave(res);
-  }
-
-  onPhoneSubmit(res) {
-    this.onFormSave(res);
-  }
-
-  onFormSave(res: any) {
-    if (res.action === 'show_overlay') {
-      this.isLoading = true;
-    } else if (res.action === 'save_success') {
-      this.onFormCancel(false);
-      this.getProfile();
-    } else if (res.action === 'save_failure') {
-      this.isLoading = false;
-    } else {
-      this.onFormCancel(false);
-    }
-    this.cd.markForCheck();
-  }
-
-  onFormCancel(value) {
-    this.clearEdits();
   }
 }
