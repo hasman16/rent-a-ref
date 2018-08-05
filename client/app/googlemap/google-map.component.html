@@ -1,3 +1,8 @@
-<agm-map [latitude]="DALLAS.lat" [longitude]="DALLAS.lng">
-  <agm-marker [latitude]="DALLAS.lat" [longitude]="DALLAS.lng"></agm-marker>
+<agm-map [latitude]="location.lat" [longitude]="location.lng">
+  <agm-marker [latitude]="location.marker.lat" [longitude]="location.marker.lng"></agm-marker>
+  <agm-circle [latitude]="location.marker.lat" [longitude]="location.marker.lng"
+  [(radius)]="circleRadius"
+  [fillColor]="'blue'"
+  [circleDraggable]="true"
+  [editable]="true"></agm-circle>
 </agm-map>

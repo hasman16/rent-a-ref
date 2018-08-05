@@ -9,8 +9,8 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { AbstractScheduleComponent } from './abstract-schedule.component';
-import { ToastComponent } from '../../shared/toast/toast.component';
-import { Match, Page, PagedData, Sorts, User } from '../../shared/models/index';
+import { ToastComponent } from '../shared/toast/toast.component';
+import { Match, Page, PagedData, Sorts, User } from '../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -26,7 +26,7 @@ import {
 	MatchService,
 	PagingService,
 	UserService
-} from '../../services/index';
+} from '../services/index';
 
 @Component({
 	selector: 'app-schedule',

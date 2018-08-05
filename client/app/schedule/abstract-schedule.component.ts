@@ -3,9 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { AbstractComponent } from '../../abstract/abstract.component';
-import { ToastComponent } from '../../shared/toast/toast.component';
-import { Match, Page, PagedData, Sorts, User } from '../../shared/models/index';
+import { AbstractComponent } from '../abstract/abstract.component';
+import { ToastComponent } from '../shared/toast/toast.component';
+import { Match, Page, PagedData, Sorts, User } from '../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -21,13 +21,14 @@ import {
 	MatchService,
 	PagingService,
 	UserService
-} from '../../services/index';
+} from '../services/index';
 
 export abstract class AbstractScheduleComponent extends AbstractComponent {
 	public schedule: any[];
 	public isLoading: boolean = false;
 	public placeholder: string = 'search venue name';
 	public user: User;
+	public selectedMatch: any;
 
 	constructor(
 		protected cd: ChangeDetectorRef,

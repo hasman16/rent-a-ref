@@ -66,4 +66,16 @@
     <br />
     <button class="btn btn-primary btn-sm" (click)="backToList($event)" title="Click to go back to the list of referees.">Back to Referees</button>
   </div>
+
+
+  <div class="col-12">
+    <strong class="etched-text">Viewing schedule for referee <i>{{user.email}}</i>.</strong>
+    <div class="card">
+      <rar-match-detail [match]="selectedMatch"></rar-match-detail>
+    </div>
+
+    <br />
+    <br />
+    <button class="btn btn-primary btn-sm" (click)="backToList($event)" title="Click to go back to the list of referees.">Back to Referees</button>
+  </div>  
 </div>

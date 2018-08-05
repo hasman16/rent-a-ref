@@ -46,7 +46,7 @@ import { StandbyComponent } from './account/profile/standby/standby.component';
 import { SuspendedComponent } from './account/profile/suspended/suspended.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
-import { ScheduleComponent } from './account/schedule/schedule.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 import { OrganizeComponent } from './organize/organize.component';
 import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
 
@@ -56,7 +56,7 @@ const routes: Routes = [
   { path: 'admin/manageusers', component: ManageUsersComponent },
   { path: 'career', component: CareersComponent },
   { path: 'faq', component: FaqComponent },
- // { path: 'blog', component: BlogComponent },
+  // { path: 'blog', component: BlogComponent },
   { path: 'contact', component: ContactUsComponent },
   { path: 'pricing', component: PricingComponent },
   { path: 'partners', component: PartnersComponent },
@@ -101,7 +101,6 @@ const routes: Routes = [
       {
         path: 'create-post',
         component: CreatePostComponent
-        
       }
     ]
   },

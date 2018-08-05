@@ -22,7 +22,7 @@ import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { GoogleMapComponent } from './googlemap/google-map.component';
 
 /* Components */
@@ -73,12 +73,12 @@ import { ManageUsersComponent } from './admin/manageusers/manage-users.component
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
-import { AdminScheduleComponent } from './account/schedule/admin-schedule.component';
-import { ScheduleComponent } from './account/schedule/schedule.component';
+import { AdminScheduleComponent } from './schedule/admin-schedule.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
 import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
-import { MatchesComponent } from './matches/matches.component';
+import { MatchesComponent, MatchDetailComponent } from './matches/index';
 import { AssignUsersComponent } from './assign-users/assign-users.component';
 
 /* Misc. */
@@ -137,6 +137,7 @@ import {
         ManageUsersComponent,
         ManageEventsComponent,
         MatchesComponent,
+        MatchDetailComponent,
         AssignUsersComponent,
         RegisterComponent,
         ResetComponent,
@@ -154,8 +155,8 @@ import {
     imports: [
         BrowserModule,
         AgmCoreModule.forRoot({
-            apiKey: environment.GOOGLEMAPS_KEY 
-        }), 
+            apiKey: environment.GOOGLEMAPS_KEY
+        }),
         NgxDatatableModule,
 
         RoutingModule,
@@ -210,7 +211,7 @@ import {
         CoreModule,
         CommonModule
     ],
-    providers: [EventsComponentService],
+    providers: [EventsComponentService, GoogleMapsAPIWrapper],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     // Add bootstrap
     bootstrap: [AppComponent]
