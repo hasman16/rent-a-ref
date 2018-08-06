@@ -70,6 +70,28 @@ export class AdminProfileComponent implements OnInit {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
+  private setClassValue(value): any {
+    let cssClasses = {
+      'btn-success': false,
+      'btn-warning': false,
+      'btn-danger': true
+    };
+
+    return cssClasses;
+  }
+
+  public setCanOrganizeClass(): any {
+    return this.setClassValue(this.currentUser.can_organize);
+  }
+
+  public setCanRefereeClass(): any {
+    return this.setClassValue(this.currentUser.can_referee);
+  }
+
+  public setStatusClass(): any {
+    return this.setClassValue(this.currentUser.status);
+  }
+
   getImageAddress(): string {
     let url = _.get(this.data, 'images[0].location', '');
     return url;

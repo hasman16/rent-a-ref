@@ -73,7 +73,8 @@ export class ManageUsersComponent extends AbstractComponent
     this.viewProfile = true;
   }
 
-  public backToList(): void {
+  public backToList($event): void {
+    $event.preventDefault();
     this.viewProfile = false;
   }
 

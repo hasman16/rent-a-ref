@@ -140,7 +140,7 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   }
 
   public formatDate(id): string {
-      return this.pagingService.formatDate(id, this.games);
+    return this.pagingService.formatDate(id, this.games);
   }
 
   public onActivate(event): void {

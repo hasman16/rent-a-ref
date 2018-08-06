@@ -1,4 +1,8 @@
 :host {
+  .min-height {
+    min-height: 750px;
+  }
+  /*
   .elegantshd {
     color: #131313;
     background-color: #e7e5e4;
@@ -51,6 +55,7 @@
       background-color: #eee;
     }
   }
+  */
   /*
   /deep/ .datatable-body-cell {
     position: relative;
