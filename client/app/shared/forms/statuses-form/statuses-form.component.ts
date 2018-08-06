@@ -119,10 +119,12 @@ export class StatusesFormComponent implements AfterViewInit, OnInit {
   }
 
   onSubmit(model: any): void {
+    console.log('onSubmit');
     this.submitter.emit(model);
   }
 
   onCancel(event: MouseEvent): void {
+    console.log('onCancel');
     this.cancelSubmitter.emit(true);
   }
 }

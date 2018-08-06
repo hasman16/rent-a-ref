@@ -23,7 +23,7 @@
               </label>
             </div>
             <div *ngIf="showStatuses">
-              <statuses-form [model]="user" [cancel]="cancelStatusView()">
+              <statuses-form [model]="user" (ngSubmit)="updateStatuses($event)" (ngCancel)="cancelStatusView($event)">
               </statuses-form>
             </div>
           </div>

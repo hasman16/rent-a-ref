@@ -208,17 +208,64 @@ function UserController(models, ResponseService, SendGridService) {
         ResponseService.success(res, newUser, status);
     }
     function update(req, res) {
-        var user = ResponseService.makeObject(req.body);
-        if (!ResponseService.isAdmin(req)) {
-            delete user.authorization;
-        }
-        User.update(user, {
-            where: {
-                id: req.params.user_id
-            }
-        })
-            .then(function (updatedUser) { return returnUser(res, updatedUser, 200); })
-            .catch(function (error) { return ResponseService.exception(res, error); });
+        return __awaiter(this, void 0, void 0, function () {
+            var sequelize, user_id, user, transaction, aUser, updatedUser, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        sequelize = models.sequelize;
+                        user_id = req.params.user_id;
+                        user = ResponseService.getItemFromBody(req);
+                        console.log('asdfasdfa 1');
+                        if (!ResponseService.isAdmin(req)) {
+                            console.log('2asld;fa;sdf;asd');
+                            delete user.authorization;
+                            delete user.can_organize;
+                            delete user.can_referee;
+                            delete user.status;
+                        }
+                        delete user.id;
+                        console.log('3aasdfasdfads');
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 6, , 7]);
+                        return [4 /*yield*/, sequelize.transaction()];
+                    case 2:
+                        transaction = _a.sent();
+                        return [4 /*yield*/, User.findById(user_id, { transaction: transaction })];
+                    case 3:
+                        aUser = _a.sent();
+                        if (!aUser) {
+                            throw new Error('Error updating user 1.');
+                        }
+                        if (aUser.authorization >= req.decoded.authorization) {
+                            throw new Error('Error updating user 2.');
+                        }
+                        console.log('do update');
+                        return [4 /*yield*/, User.update(user, {
+                                where: {
+                                    id: user_id
+                                }
+                            }, {
+                                transaction: transaction
+                            })];
+                    case 4:
+                        updatedUser = _a.sent();
+                        console.log('commitlaksdjfkl;asdka');
+                        return [4 /*yield*/, transaction.commit()];
+                    case 5:
+                        _a.sent();
+                        ResponseService.success(res, updatedUser);
+                        return [3 /*break*/, 7];
+                    case 6:
+                        error_2 = _a.sent();
+                        transaction.rollback(transaction);
+                        ResponseService.exception(res, error_2, 400);
+                        return [3 /*break*/, 7];
+                    case 7: return [2 /*return*/];
+                }
+            });
+        });
     }
     function deleteOne(req, res) {
         var user = makeUser(req.body);

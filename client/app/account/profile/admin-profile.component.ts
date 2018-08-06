@@ -21,6 +21,8 @@ import {
 } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/finally';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -58,6 +60,7 @@ export class AdminProfileComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private auth: AuthService,
+    private toast: ToastComponent,
     private profileService: ProfileService,
     private userService: UserService
   ) {
@@ -104,7 +107,7 @@ export class AdminProfileComponent implements OnInit {
     return this.setClassValue(this.currentUser.status);
   }
 
-  public switchView(): void {
+  public switchView($event): void {
     const adminUser = this.auth.getCurrentUser();
     if (adminUser.authorization < this.currentUser.authorization) {
       this.showStatuses = !this.showStatuses;
@@ -115,6 +118,25 @@ export class AdminProfileComponent implements OnInit {
 
   public cancelStatusView(): void {
     this.showStatuses = false;
+  }
+
+  public updateStatuses(model: User): void {
+    const user = {
+      id: this.currentUser.id,
+      can_organize: model.can_organize,
+      can_referee: model.can_referee,
+      status: model.status
+    };
+
+    this.userService.editUser(user).subscribe(
+      () => {
+        this.toast.setMessage(`Success user ${model.id}.`, 'info');
+        this.getProfile();
+      },
+      error => {
+        this.toast.setMessage(`Failed to update user ${model.id}.`, 'danger');
+      }
+    );
   }
 
   getImageAddress(): string {
@@ -128,6 +150,7 @@ export class AdminProfileComponent implements OnInit {
     this.profileService
       .getProfile(currentUser.id)
       .finally(() => {
+        this.cancelStatusView();
         this.cd.markForCheck();
       })
       .subscribe(

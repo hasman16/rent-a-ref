@@ -170,18 +170,52 @@ export default function UserController(
     ResponseService.success(res, newUser, status);
   }
 
-  function update(req, res) {
-    const user = ResponseService.makeObject(req.body);
+  async function update(req, res) {
+    const sequelize = models.sequelize;
+    const user_id = req.params.user_id;
+    let user = ResponseService.getItemFromBody(req);
+    console.log('asdfasdfa 1');
     if (!ResponseService.isAdmin(req)) {
+      console.log('2asld;fa;sdf;asd');
       delete user.authorization;
+      delete user.can_organize;
+      delete user.can_referee;
+      delete user.status;
     }
-    User.update(user, {
-      where: {
-        id: req.params.user_id
+    delete user.id;
+
+    let transaction;
+    console.log('3aasdfasdfads');
+    try {
+      transaction = await sequelize.transaction();
+      let aUser = await User.findById(user_id, { transaction });
+      if (!aUser) {
+        throw new Error('Error updating user 1.');
       }
-    })
-      .then(updatedUser => returnUser(res, updatedUser, 200))
-      .catch(error => ResponseService.exception(res, error));
+
+      if (aUser.authorization >= req.decoded.authorization) {
+        throw new Error('Error updating user 2.');
+      }
+      console.log('do update');
+      const updatedUser = await User.update(
+        user,
+        {
+          where: {
+            id: user_id
+          }
+        },
+        {
+          transaction
+        }
+      );
+      console.log('commitlaksdjfkl;asdka');
+      await transaction.commit();
+
+      ResponseService.success(res, updatedUser);
+    } catch (error) {
+      transaction.rollback(transaction);
+      ResponseService.exception(res, error, 400);
+    }
   }
 
   function deleteOne(req, res) {
