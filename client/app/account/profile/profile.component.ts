@@ -106,30 +106,57 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   ngOnDestroy() {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
+  private setClassValue(value): any {
+    let cssClasses = {
+      'btn-success': false,
+      'btn-warning': false,
+      'btn-danger': false
+    };
+    if (value === 'active') {
+      cssClasses['btn-success'] = true;
+    } else if (value === 'pending') {
+      cssClasses['btn-warning'] = true;
+    } else {
+      cssClasses['btn-danger'] = true;
+    }
+    return cssClasses;
+  }
 
-  openModal(): void {
+  public setCanOrganizeClass(): any {
+    return this.setClassValue(this.user.can_organize);
+  }
+
+  public setCanRefereeClass(): any {
+    return this.setClassValue(this.user.can_referee);
+  }
+
+  public setStatusClass(): any {
+    return this.setClassValue(this.user.status);
+  }
+
+  public openModal(): void {
     const user = this.user;
     this.destination = `/api/upload_image/${user.id}`;
     this.cropImageModalService.show();
   }
 
-  closeModal($event): void {
+  public closeModal($event): void {
     console.log('close modal');
     this.cropImageModalService.hide();
   }
 
-  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+  public canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (!this.allowEdit) {
       return true;
     }
   }
 
-  getImageAddress(): string {
+  public getImageAddress(): string {
     let url = _.get(this.data, 'images[0].location', '');
     return url;
   }
 
-  getProfile() {
+  public getProfile() {
     const currentUser: User = this.auth.getCurrentUser();
 
     //this.isLoading = true;
@@ -169,7 +196,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     );
   }
 
-  clearEdits() {
+  public clearEdits() {
     this.editBio = false;
     this.editPassword = false;
     this.editAddress = false;
@@ -177,45 +204,45 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     this.isLoading = false;
   }
 
-  setEditAddress(id: number = 0, value: boolean = false) {
+  public setEditAddress(id: number = 0, value: boolean = false) {
     this.clearEdits();
     this.currentAddress = id;
     this.editAddress = value;
   }
 
-  setEditBio(value: boolean = false) {
+  public setEditBio(value: boolean = false) {
     this.clearEdits();
     this.editBio = value;
   }
 
-  setEditPassword(value: boolean = false) {
+  public setEditPassword(value: boolean = false) {
     this.clearEdits();
     this.editPassword = value;
   }
 
-  setEditPhone(id: number = 0, value: boolean = false) {
+  public setEditPhone(id: number = 0, value: boolean = false) {
     this.clearEdits();
     this.currentPhone = id;
     this.editPhone = value;
   }
 
-  onAddressSubmit(res) {
+  public onAddressSubmit(res) {
     this.onFormSave(res);
   }
 
-  onBioSubmit(res) {
+  public onBioSubmit(res) {
     this.onFormSave(res);
   }
 
-  onPasswordSubmit(res) {
+  public onPasswordSubmit(res) {
     this.onFormSave(res);
   }
 
-  onPhoneSubmit(res) {
+  public onPhoneSubmit(res) {
     this.onFormSave(res);
   }
 
-  onFormSave(res: any) {
+  public onFormSave(res: any) {
     if (res.action === 'show_overlay') {
       this.isLoading = true;
     } else if (res.action === 'save_success') {
@@ -229,7 +256,7 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
     this.cd.markForCheck();
   }
 
-  onFormCancel(value) {
+  public onFormCancel(value) {
     this.clearEdits();
   }
 }

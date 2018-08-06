@@ -58,3 +58,14 @@ div.card {
 		border: 1px solid #000;
 	}
 }
+
+.statuses {
+	display: flex;
+	justify-content: space-between;
+}
+:host /deep/ .card {
+	.mat-radio-button {
+		padding-right: 10px;
+	}
+}
+

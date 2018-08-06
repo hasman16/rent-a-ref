@@ -4,8 +4,6 @@
 
       <div class="card-block card-outline-primary">
 
-
-
         <div class="col-8 profiles">
           <div class="card">
             <div class="col-3 rar-logo">
@@ -13,16 +11,20 @@
             </div>
           </div>
           <div class="card">
-            <div>
-              <label>Can Organize:
-                <button class="btn btn-sm disabled" [ngClass]="setCanOrganizeClass()">{{user.can_organize}}</button>
+            <div class="statuses" *ngIf="!showStatuses">
+              <label>Can Organize: 
+                <button class="btn btn-sm" (click)="switchView($event)" [ngClass]="setCanOrganizeClass()">{{user.can_organize}}</button>
               </label>
               <label>Can Referee:
-                <button class="btn btn-sm disabled" >{{user.can_referee}}</button>
+                <button class="btn btn-sm"  (click)="switchView($event)" [ngClass]="setCanRefereeClass()">{{user.can_referee}}</button>
               </label>
               <label>Status:
-                <button class="btn btn-sm disabled" >{{user.status}}</button>
+                <button class="btn btn-sm "  (click)="switchView($event)" [ngClass]="setStatusClass()">{{user.status}}</button>
               </label>
+            </div>
+            <div *ngIf="showStatuses">
+              <statuses-form [model]="user" [cancel]="cancelStatusView()">
+              </statuses-form>
             </div>
           </div>
           <div class="card">
