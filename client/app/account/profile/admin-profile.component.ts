@@ -2,7 +2,9 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
+  Output,
   OnInit
 } from '@angular/core';
 
@@ -37,11 +39,12 @@ export class AdminProfileComponent implements OnInit {
   @Input('user')
   set setCurrentUser(user) {
     if (user) {
-      this.currentUser = user;
+      this.user = _.cloneDeep(user);
       this.getProfile();
     }
   }
-  private currentUser: any;
+  @Output('userUpdated')
+  submitter: EventEmitter<boolean> = new EventEmitter<boolean>();
   private subscriptions: Subscription[] = [];
   protected data: Profile = <Profile>{};
   public user: User = <User>{};
@@ -89,27 +92,27 @@ export class AdminProfileComponent implements OnInit {
     } else {
       cssClasses['btn-danger'] = true;
     }
-    if (adminUser.authorization >= this.currentUser.authorization) {
+    if (adminUser.authorization >= this.user.authorization) {
       cssClasses['disabled'] = true;
     }
     return cssClasses;
   }
 
   public setCanOrganizeClass(): any {
-    return this.setClassValue(this.currentUser.can_organize);
+    return this.setClassValue(this.user.can_organize);
   }
 
   public setCanRefereeClass(): any {
-    return this.setClassValue(this.currentUser.can_referee);
+    return this.setClassValue(this.user.can_referee);
   }
 
   public setStatusClass(): any {
-    return this.setClassValue(this.currentUser.status);
+    return this.setClassValue(this.user.status);
   }
 
   public switchView($event): void {
     const adminUser = this.auth.getCurrentUser();
-    if (adminUser.authorization < this.currentUser.authorization) {
+    if (adminUser.authorization < this.user.authorization) {
       this.showStatuses = !this.showStatuses;
     } else {
       this.showStatuses = false;
@@ -122,12 +125,12 @@ export class AdminProfileComponent implements OnInit {
 
   public updateStatuses(model: User): void {
     const user = {
-      id: this.currentUser.id,
+      id: this.user.id,
       can_organize: model.can_organize,
       can_referee: model.can_referee,
       status: model.status
     };
-
+    this.submitter.emit(true);
     this.userService.editUser(user).subscribe(
       () => {
         this.toast.setMessage(`Success user ${model.id}.`, 'info');
@@ -145,7 +148,7 @@ export class AdminProfileComponent implements OnInit {
   }
 
   getProfile() {
-    const currentUser: User = this.currentUser;
+    const currentUser: User = this.user;
 
     this.profileService
       .getProfile(currentUser.id)

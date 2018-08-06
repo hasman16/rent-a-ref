@@ -50,7 +50,6 @@ export class TokenInterceptor implements HttpInterceptor {
           ) {
             // redirect to the login route
             // or show a modal
-            console.log('redirecting to logout');
             this.router.navigateByUrl('/logout');
           }
         }

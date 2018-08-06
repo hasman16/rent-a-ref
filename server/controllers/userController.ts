@@ -174,9 +174,7 @@ export default function UserController(
     const sequelize = models.sequelize;
     const user_id = req.params.user_id;
     let user = ResponseService.getItemFromBody(req);
-    console.log('asdfasdfa 1');
     if (!ResponseService.isAdmin(req)) {
-      console.log('2asld;fa;sdf;asd');
       delete user.authorization;
       delete user.can_organize;
       delete user.can_referee;
@@ -185,18 +183,16 @@ export default function UserController(
     delete user.id;
 
     let transaction;
-    console.log('3aasdfasdfads');
     try {
       transaction = await sequelize.transaction();
       let aUser = await User.findById(user_id, { transaction });
       if (!aUser) {
-        throw new Error('Error updating user 1.');
+        throw new Error('Error: Updating user.');
       }
 
-      if (aUser.authorization >= req.decoded.authorization) {
-        throw new Error('Error updating user 2.');
+      if (req.decoded.authorization >= aUser.authorization) {
+        throw new Error('Error: Authorization Fault.');
       }
-      console.log('do update');
       const updatedUser = await User.update(
         user,
         {
@@ -208,13 +204,13 @@ export default function UserController(
           transaction
         }
       );
-      console.log('commitlaksdjfkl;asdka');
       await transaction.commit();
 
       ResponseService.success(res, updatedUser);
     } catch (error) {
       transaction.rollback(transaction);
-      ResponseService.exception(res, error, 400);
+      console.log('errored::::', error);
+      ResponseService.exception(res, error.message, 400);
     }
   }
 

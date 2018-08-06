@@ -216,16 +216,13 @@ function UserController(models, ResponseService, SendGridService) {
                         sequelize = models.sequelize;
                         user_id = req.params.user_id;
                         user = ResponseService.getItemFromBody(req);
-                        console.log('asdfasdfa 1');
                         if (!ResponseService.isAdmin(req)) {
-                            console.log('2asld;fa;sdf;asd');
                             delete user.authorization;
                             delete user.can_organize;
                             delete user.can_referee;
                             delete user.status;
                         }
                         delete user.id;
-                        console.log('3aasdfasdfads');
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 6, , 7]);
@@ -236,12 +233,11 @@ function UserController(models, ResponseService, SendGridService) {
                     case 3:
                         aUser = _a.sent();
                         if (!aUser) {
-                            throw new Error('Error updating user 1.');
+                            throw new Error('Error: Updating user.');
                         }
-                        if (aUser.authorization >= req.decoded.authorization) {
-                            throw new Error('Error updating user 2.');
+                        if (req.decoded.authorization >= aUser.authorization) {
+                            throw new Error('Error: Authorization Fault.');
                         }
-                        console.log('do update');
                         return [4 /*yield*/, User.update(user, {
                                 where: {
                                     id: user_id
@@ -251,7 +247,6 @@ function UserController(models, ResponseService, SendGridService) {
                             })];
                     case 4:
                         updatedUser = _a.sent();
-                        console.log('commitlaksdjfkl;asdka');
                         return [4 /*yield*/, transaction.commit()];
                     case 5:
                         _a.sent();
@@ -260,7 +255,8 @@ function UserController(models, ResponseService, SendGridService) {
                     case 6:
                         error_2 = _a.sent();
                         transaction.rollback(transaction);
-                        ResponseService.exception(res, error_2, 400);
+                        console.log('errored::::', error_2);
+                        ResponseService.exception(res, error_2.message, 400);
                         return [3 /*break*/, 7];
                     case 7: return [2 /*return*/];
                 }

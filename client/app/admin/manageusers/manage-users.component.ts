@@ -34,6 +34,7 @@ export class ManageUsersComponent extends AbstractComponent
   public defaultImage: string = 'assets/images/avatar2.png';
   public selectedUser: any;
   public viewProfile: boolean = true;
+  protected userWasUpdated: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -76,6 +77,14 @@ export class ManageUsersComponent extends AbstractComponent
   public backToList($event): void {
     $event.preventDefault();
     this.viewProfile = false;
+    if (this.userWasUpdated) {
+      this.userWasUpdated = false;
+      this.getData(this.page);
+    }
+  }
+
+  public userUpdated(): void {
+    this.userWasUpdated = true;
   }
 
   public getUsers(params: any) {

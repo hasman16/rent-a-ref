@@ -104,5 +104,5 @@
       <li class="breadcrumb-item active" aria-current="page">Profile</li>
     </ol>
   </nav>
-  <rar-admin-profile [user]="selectedUser"></rar-admin-profile>
+  <rar-admin-profile [user]="selectedUser" (userUpdated)="userUpdated()"></rar-admin-profile>
 </div>
