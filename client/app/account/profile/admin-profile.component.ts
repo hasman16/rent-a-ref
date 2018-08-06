@@ -8,7 +8,7 @@ import {
 
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { ProfileService, UserService } from '../../services/index';
+import { AuthService, ProfileService, UserService } from '../../services/index';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
 //Models
@@ -36,7 +36,6 @@ export class AdminProfileComponent implements OnInit {
   set setCurrentUser(user) {
     if (user) {
       this.currentUser = user;
-      console.log('currentUser:', this.currentUser);
       this.getProfile();
     }
   }
@@ -54,9 +53,11 @@ export class AdminProfileComponent implements OnInit {
   public defaultImage: string = 'assets/images/avatar2.png';
 
   public isLoading: boolean = true;
+  public showStatuses: boolean = false;
 
   constructor(
     private cd: ChangeDetectorRef,
+    private auth: AuthService,
     private profileService: ProfileService,
     private userService: UserService
   ) {
@@ -71,12 +72,23 @@ export class AdminProfileComponent implements OnInit {
   }
 
   private setClassValue(value): any {
+    const adminUser = this.auth.getCurrentUser();
+
     let cssClasses = {
       'btn-success': false,
       'btn-warning': false,
-      'btn-danger': true
+      'btn-danger': false
     };
-
+    if (value === 'active') {
+      cssClasses['btn-success'] = true;
+    } else if (value === 'pending') {
+      cssClasses['btn-warning'] = true;
+    } else {
+      cssClasses['btn-danger'] = true;
+    }
+    if (adminUser.authorization >= this.currentUser.authorization) {
+      cssClasses['disabled'] = true;
+    }
     return cssClasses;
   }
 
@@ -90,6 +102,19 @@ export class AdminProfileComponent implements OnInit {
 
   public setStatusClass(): any {
     return this.setClassValue(this.currentUser.status);
+  }
+
+  public switchView(): void {
+    const adminUser = this.auth.getCurrentUser();
+    if (adminUser.authorization < this.currentUser.authorization) {
+      this.showStatuses = !this.showStatuses;
+    } else {
+      this.showStatuses = false;
+    }
+  }
+
+  public cancelStatusView(): void {
+    this.showStatuses = false;
   }
 
   getImageAddress(): string {

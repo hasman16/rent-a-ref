@@ -38,6 +38,7 @@ import { OrganizationFormComponent } from './forms/organization-form/organizatio
 import { BlogFormComponent } from './forms/blog-form/blog-form.component';
 import { EventsFormComponent } from './forms/events-form/events-form.component';
 import { MatchesFormComponent } from './forms/matches-form/matches-form.component';
+import { StatusesFormComponent } from './forms/statuses-form/statuses-form.component';
 import { SearchBoxComponent } from './search-box/index';
 
 @NgModule({
@@ -88,11 +89,11 @@ import { SearchBoxComponent } from './search-box/index';
                     component: DatepickerTypeComponent,
                     wrappers: ['form-field'],
                     defaultOptions: {
-                      defaultValue: new Date(),
-                      templateOptions: {
-                        datepickerOptions: {},
-                      },
-                    },
+                        defaultValue: new Date(),
+                        templateOptions: {
+                            datepickerOptions: {}
+                        }
+                    }
                 }
             ]
         })
@@ -121,6 +122,7 @@ import { SearchBoxComponent } from './search-box/index';
         BlogFormComponent,
         EventsFormComponent,
         MatchesFormComponent,
+        StatusesFormComponent,
         SearchBoxComponent,
         DatepickerTypeComponent
     ],
@@ -144,6 +146,7 @@ import { SearchBoxComponent } from './search-box/index';
         BlogFormComponent,
         EventsFormComponent,
         MatchesFormComponent,
+        StatusesFormComponent,
         SearchBoxComponent,
         DatepickerTypeComponent
     ],
