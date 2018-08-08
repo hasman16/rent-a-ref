@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastComponent } from '../shared/toast/toast.component';
 import { PagingService } from '../services/index';
-import { Page, PagedData, Sorts } from './../shared/models/index';
+import { Option, Page, PagedData, Sorts } from './../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -22,6 +22,7 @@ export abstract class AbstractComponent {
   protected searchAttribute: string;
   protected delay: number = 1000;
   protected subscriptions: Subscription[] = [];
+  public searchAttributes: Array<Option>;
 
   constructor(protected pagingService: PagingService) {}
 
@@ -56,6 +57,8 @@ export abstract class AbstractComponent {
       this.searchSubject.next(this.page);
     }
   }
+
+  public updateAttribute(event): void {}
 
   public onSort(sorting): void {
     const page: Page = this.pagingService.sortColumn(this.page, sorting);

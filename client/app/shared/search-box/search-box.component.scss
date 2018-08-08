@@ -1,8 +1,18 @@
-.label {
-	width: 100%;
-}
-.search-box {
-	padding: 8px;
-	margin: 15px auto;
-	width: 30%;
+:host {
+	.label {
+		width: 100%;
+	}
+	.search-box {
+		padding: 0.5em;
+		margin: 1em auto;
+		width: 30%;
+	}
+	.search-attribute {
+		display: inline-block;
+	}
+	/deep/ .search-attribute {
+		.mat-radio-button {
+			padding-left: 0.3125em;
+		}
+	}
 }

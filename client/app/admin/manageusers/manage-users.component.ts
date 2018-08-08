@@ -11,7 +11,13 @@ import {
   PagingService,
   UserService
 } from '../../services/index';
-import { Page, PagedData, Sorts, User } from './../../shared/models/index';
+import {
+  Option,
+  Page,
+  PagedData,
+  Sorts,
+  User
+} from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -43,6 +49,16 @@ export class ManageUsersComponent extends AbstractComponent
     protected pagingService: PagingService
   ) {
     super(pagingService);
+    this.searchAttributes = [
+      {
+        label: 'Email',
+        value: 'email'
+      },
+      {
+        label: 'Lastname',
+        value: 'lastname'
+      }
+    ];
   }
 
   ngOnInit() {
@@ -55,6 +71,11 @@ export class ManageUsersComponent extends AbstractComponent
 
   ngOnDestroy() {
     this.tearDown();
+  }
+
+  public updateAttribute(event): void {
+    super.updateAttribute(event);
+    this.searchAttribute = event + '|';
   }
 
   public canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
