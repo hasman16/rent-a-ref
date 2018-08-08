@@ -68,7 +68,7 @@ var ResponseService = /** @class */ (function () {
             var value = (entries[1] || '') + '%';
             var key = entries[0] || 'badkey';
             var obj = {};
-            //console.log('key, value', key, value);
+            console.log('key, value', key, value);
             obj[key] = (_a = {},
                 _a[Op.like] = value,
                 _a);

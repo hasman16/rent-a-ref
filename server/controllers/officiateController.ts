@@ -49,26 +49,29 @@ export default function OfficiateController(
         transaction
       });
 
-      const whereOfficiate = Object.assign(clause, {
-        where: {
-          id: {
-            [Op.in]: _.map(result.rows, item => item.id)
-          }
-        },
-        include: [
-          {
-            model: User,
-            attributes: ['id', 'email'],
-            through: {
-              where: {
-                status: {
-                  [Op.notLike]: '%decline%'
+      const whereOfficiate = Object.assign(
+        {
+          where: {
+            id: {
+              [Op.in]: _.map(result.rows, item => item.id)
+            }
+          },
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'email'],
+              through: {
+                where: {
+                  status: {
+                    [Op.notLike]: '%decline%'
+                  }
                 }
               }
             }
-          }
-        ]
-      });
+          ]
+        },
+        clause
+      );
 
       const matchOfficiate = await Match.findAndCountAll(whereOfficiate, {
         transaction
@@ -85,20 +88,23 @@ export default function OfficiateController(
 
   function officialsByMatch(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
-    const whereClause = Object.assign(clause, {
-      where: {},
-      attributes: ['id', 'email', 'can_referee', 'status'],
-      include: [
-        {
-          model: Match,
-          attributes: ['id', 'status'],
-          where: {
-            id: req.params.match_id
-          },
-          required: false
-        }
-      ]
-    });
+    const whereClause = Object.assign(
+      {
+        where: {},
+        attributes: ['id', 'email', 'can_referee', 'status'],
+        include: [
+          {
+            model: Match,
+            attributes: ['id', 'status'],
+            where: {
+              id: req.params.match_id
+            },
+            required: false
+          }
+        ]
+      },
+      clause
+    );
 
     User.findAndCountAll(whereClause)
       .then(result => ResponseService.success(res, result))
@@ -108,26 +114,29 @@ export default function OfficiateController(
   function matchOfficials(req, res) {
     const Op = models.sequelize.Op;
     let clause = ResponseService.produceSearchAndSortClause(req);
-    const whereClause = Object.assign(clause, {
-      where: {},
-      attributes: ['id', 'email'],
-      include: [
-        {
-          model: Match,
-          attributes: ['id', 'status'],
-          where: {
-            id: req.params.match_id
-          },
-          through: {
+    const whereClause = Object.assign(
+      {
+        where: {},
+        attributes: ['id', 'email'],
+        include: [
+          {
+            model: Match,
+            attributes: ['id', 'status'],
             where: {
-              status: {
-                [Op.like]: '%accept%'
+              id: req.params.match_id
+            },
+            through: {
+              where: {
+                status: {
+                  [Op.like]: '%accept%'
+                }
               }
             }
           }
-        }
-      ]
-    });
+        ]
+      },
+      clause
+    );
 
     User.findAndCountAll(whereClause)
       .then(result => ResponseService.success(res, result))

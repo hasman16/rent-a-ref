@@ -50,7 +50,7 @@ export default class ResponseService {
         let value = (entries[1] || '') + '%';
         let key = entries[0] || 'badkey';
         let obj = {};
-        //console.log('key, value', key, value);
+        console.log('key, value', key, value);
         obj[key] = {
           [Op.like]: value
         };
@@ -375,11 +375,11 @@ export default class ResponseService {
     });
   }
 
-  async isTimeLocked(eventObj, lock=1, grain='minutes') {
+  async isTimeLocked(eventObj, lock = 1, grain = 'minutes') {
     return new Promise(function(resolve, reject) {
       const now = moment().utc();
       const matchTime = moment.tz(eventObj.date, eventObj.timezone_id);
-      const lockTime = matchTime.utc().subtract(lock,'hour');
+      const lockTime = matchTime.utc().subtract(lock, 'hour');
 
       const result = now.isSameOrBefore(lockTime, grain);
       if (result) {

@@ -55,7 +55,7 @@ function MatchController(models, ResponseService) {
     function getAllByGame(req, res) {
         var clause = ResponseService.produceSearchAndSortClause(req);
         var User = models.User;
-        var whereClause = Object.assign(clause, {
+        var whereClause = Object.assign({
             where: {
                 game_id: req.params.game_id
             },
@@ -66,7 +66,7 @@ function MatchController(models, ResponseService) {
                     through: {}
                 }
             ]
-        });
+        }, clause);
         Match.findAndCountAll(whereClause)
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });

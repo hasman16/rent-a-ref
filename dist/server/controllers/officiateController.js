@@ -86,7 +86,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                             })];
                     case 3:
                         result = _d.sent();
-                        whereOfficiate = Object.assign(clause, {
+                        whereOfficiate = Object.assign({
                             where: {
                                 id: (_b = {},
                                     _b[Op.in] = _.map(result.rows, function (item) { return item.id; }),
@@ -105,7 +105,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                     }
                                 }
                             ]
-                        });
+                        }, clause);
                         return [4 /*yield*/, Match.findAndCountAll(whereOfficiate, {
                                 transaction: transaction
                             })];
@@ -128,7 +128,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
     }
     function officialsByMatch(req, res) {
         var clause = ResponseService.produceSearchAndSortClause(req);
-        var whereClause = Object.assign(clause, {
+        var whereClause = Object.assign({
             where: {},
             attributes: ['id', 'email', 'can_referee', 'status'],
             include: [
@@ -141,7 +141,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                     required: false
                 }
             ]
-        });
+        }, clause);
         User.findAndCountAll(whereClause)
             .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });
@@ -149,7 +149,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
     function matchOfficials(req, res) {
         var Op = models.sequelize.Op;
         var clause = ResponseService.produceSearchAndSortClause(req);
-        var whereClause = Object.assign(clause, {
+        var whereClause = Object.assign({
             where: {},
             attributes: ['id', 'email'],
             include: [
@@ -168,7 +168,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                     }
                 }
             ]
-        });
+        }, clause);
         User.findAndCountAll(whereClause)
             .then(function (result) { return ResponseService.success(res, result); })
             .catch(function (error) { return ResponseService.exception(res, error); });
