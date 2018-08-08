@@ -3,7 +3,9 @@
   
   <rar-search-box 
   [placeholder]="placeholder"
+  [search-attributes]="searchAttributes"
   (searchEvent)='updateFilter($event)'
+  (searchAttribute)="updateAttribute($event)"
   ></rar-search-box>
 
   <div class="card-block horizontal-and-vertical-centering " *ngIf="(!users || users.length === 0)">

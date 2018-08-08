@@ -1,9 +1,16 @@
 <label class="label">
         {{searchLabel}}:
-        <input
-        type='text'
-        class='search-box'
-        placeholder='{{placeholder}}'
-        (keyup)='updateSearchText($event)'
-        />
+    <input
+    type='text'
+    class='search-box'
+    placeholder='{{placeholder}}'
+    (keyup)='updateSearchText($event)'
+    />
+     <span class="search-attribute" *ngIf="searchAttributes">
+      <mat-radio-group (change)="updateAttribute($event)">
+  		<mat-radio-button *ngFor="let attribute of searchAttributes; index as i" value="{{attribute.value}}" [checked]="attribute.selected">
+      	{{attribute.label}}
+    	</mat-radio-button>
+      </mat-radio-group>
+    </span> 
 </label>
