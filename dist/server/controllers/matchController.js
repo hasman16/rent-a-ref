@@ -105,7 +105,7 @@ function MatchController(models, ResponseService) {
     }
     function update(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var match, sequelize, Officiating, match_id, relation, transaction, oldMatch, error_1;
+            var match, sequelize, Officiating, match_id, Address, Phone, address, phone, relation, transaction, oldMatch, newMatch, newAddress, newPhone, dateTime, newMatch_1, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -113,49 +113,78 @@ function MatchController(models, ResponseService) {
                         sequelize = models.sequelize;
                         Officiating = models.Officiating;
                         match_id = req.params.match_id;
+                        Address = models.Address;
+                        Phone = models.Phone;
+                        address = ResponseService.deleteItemDates(match.address);
+                        phone = ResponseService.deleteItemDates(match.phone);
                         relation = {
                             where: {
                                 id: match_id
                             }
                         };
+                        match = ResponseService.deleteItemDates(match);
+                        delete match.id;
+                        delete match.address_id;
+                        delete match.phone_id;
+                        delete match.address;
+                        delete match.phone;
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 7, , 8]);
+                        _a.trys.push([1, 13, , 14]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        return [4 /*yield*/, Match.findOne({
-                                where: {
-                                    id: match_id
-                                },
-                                include: [
-                                    {
-                                        model: Address
-                                    }
-                                ]
-                            }, {
+                        return [4 /*yield*/, Match.findById(match_id, {
                                 transaction: transaction
                             })];
                     case 3:
                         oldMatch = _a.sent();
-                        if (!(oldMatch && canAssignOrRemove(oldMatch.status))) return [3 /*break*/, 5];
-                        return [4 /*yield*/, Match.update(match, {
-                                transaction: transaction
-                            })];
+                        if (!(oldMatch && canAssignOrRemove(oldMatch.status))) return [3 /*break*/, 10];
+                        if (!phone) return [3 /*break*/, 5];
+                        return [4 /*yield*/, Phone.update(phone, {
+                                where: { id: phone.id }
+                            }, { transaction: transaction })];
                     case 4:
-                        _a.sent();
-                        return [3 /*break*/, 6];
-                    case 5: throw new Error('Cannot update match.');
+                        newPhone = _a.sent();
+                        match.phone_id = newPhone.id;
+                        _a.label = 5;
+                    case 5:
+                        if (!address) return [3 /*break*/, 8];
+                        return [4 /*yield*/, Address.update(address, {
+                                where: { id: address.id }
+                            }, { transaction: transaction })];
                     case 6:
+                        newAddress = _a.sent();
+                        match.address_id = newAddress.id;
+                        dateTime = match.date + 'T' + match.time;
+                        match.date = dateTime.replace(/z/i, '');
+                        return [4 /*yield*/, ResponseService.workoutTimeZone(match, address)];
+                    case 7:
+                        _a.sent();
+                        return [3 /*break*/, 9];
+                    case 8:
+                        match.date = oldMatch.date;
+                        delete match.timezone_id;
+                        delete match.timezone_name;
+                        delete match.timezone;
+                        delete match.timezone_offset;
+                        _a.label = 9;
+                    case 9: return [3 /*break*/, 11];
+                    case 10: throw new Error('Cannot update match.');
+                    case 11: return [4 /*yield*/, Match.update(match, relation, {
+                            transaction: transaction
+                        })];
+                    case 12:
+                        newMatch_1 = _a.sent();
                         transaction.commit();
                         ResponseService.success(res, 'Match updated', 200);
-                        return [3 /*break*/, 8];
-                    case 7:
+                        return [3 /*break*/, 14];
+                    case 13:
                         error_1 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_1, 404);
-                        return [3 /*break*/, 8];
-                    case 8: return [2 /*return*/];
+                        return [3 /*break*/, 14];
+                    case 14: return [2 /*return*/];
                 }
             });
         });
