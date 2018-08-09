@@ -325,6 +325,8 @@ var ResponseService = /** @class */ (function () {
                         if (!googleTimeZone) {
                             throw new Error('Error searching for timezone.');
                         }
+                        address.lat = location.lat;
+                        address.lng = location.lng;
                         model.timezone_id = googleTimeZone.timeZoneId;
                         model.timezone_name = googleTimeZone.timeZoneName;
                         model.timezone = googleTimeZone.rawOffset;

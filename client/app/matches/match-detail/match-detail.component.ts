@@ -2,7 +2,9 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
+  Output,
   OnInit
 } from '@angular/core';
 
@@ -14,6 +16,7 @@ import { ToastComponent } from '../../shared/toast/toast.component';
 //Models
 import {
   Address,
+  Match,
   Person,
   Phone,
   Profile,
@@ -33,10 +36,15 @@ import * as moment from 'moment';
 })
 export class MatchDetailComponent implements OnInit {
   @Input('match')
-  set setCurrentMatch(match) {}
-  private currentMatch: any;
+  set setCurrentMatch(match: Match) {
+    if (match) {
+      this.currentMatch = _.cloneDeep(match);
+    }
+    this.cd.markForCheck();
+  }
+  @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
+  private currentMatch: Match;
   private subscriptions: Subscription[] = [];
-  public isLoading: boolean = true;
 
   constructor(private cd: ChangeDetectorRef) {}
 
@@ -47,4 +55,8 @@ export class MatchDetailComponent implements OnInit {
   }
 
   getProfile() {}
+
+  public backToSchedule(event): void {
+    this.back.emit(true);
+  }
 }

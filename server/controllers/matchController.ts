@@ -91,9 +91,7 @@ export default function MatchController(models, ResponseService) {
     const match_id = req.params.match_id;
     const Address = models.Address;
     const Phone = models.Phone;
-    const address: AddressModel = ResponseService.deleteItemDates(
-      match.address
-    );
+    let address: AddressModel = ResponseService.deleteItemDates(match.address);
     const phone: PhoneModel = ResponseService.deleteItemDates(match.phone);
     const relation = {
       where: {
@@ -137,6 +135,22 @@ export default function MatchController(models, ResponseService) {
           let dateTime: string = match.date + 'T' + match.time;
           match.date = dateTime.replace(/z/i, '');
           await ResponseService.workoutTimeZone(match, address);
+          if (newAddress) {
+            await Address.update(
+              {
+                lat: address.lat,
+                lng: address.lng
+              },
+              {
+                where: {
+                  id: newAddress.id
+                }
+              },
+              {
+                transaction
+              }
+            );
+          }
         } else {
           match.date = oldMatch.date;
           delete match.timezone_id;
@@ -213,9 +227,7 @@ export default function MatchController(models, ResponseService) {
     const Address = models.Address;
     const Phone = models.Phone;
     let match: MatchModel = <MatchModel>ResponseService.getItemFromBody(req);
-    const address: AddressModel = ResponseService.deleteItemDates(
-      match.address
-    );
+    let address: AddressModel = ResponseService.deleteItemDates(match.address);
     const phone: PhoneModel = ResponseService.deleteItemDates(match.phone);
 
     delete match.address_id;
@@ -236,12 +248,29 @@ export default function MatchController(models, ResponseService) {
       if (address) {
         newAddress = await Address.create(address, { transaction });
         match.address_id = newAddress.id;
+        if (newAddress) {
+          await Address.update(
+            {
+              lat: address.lat,
+              lng: address.lng
+            },
+            {
+              where: {
+                id: newAddress.id
+              }
+            },
+            {
+              transaction
+            }
+          );
+        }
       }
       if (phone) {
         newPhone = await Phone.create(phone, { transaction });
         match.phone_id = newPhone.id;
       }
       newMatch = await Match.create(match, { transaction });
+
       transaction.commit();
 
       const aMatch = ResponseService.deleteItemDates(newMatch);

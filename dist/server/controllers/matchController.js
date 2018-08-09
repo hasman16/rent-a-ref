@@ -130,7 +130,7 @@ function MatchController(models, ResponseService) {
                         delete match.phone;
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 13, , 14]);
+                        _a.trys.push([1, 15, , 16]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
@@ -139,7 +139,7 @@ function MatchController(models, ResponseService) {
                             })];
                     case 3:
                         oldMatch = _a.sent();
-                        if (!(oldMatch && canAssignOrRemove(oldMatch.status))) return [3 /*break*/, 10];
+                        if (!(oldMatch && canAssignOrRemove(oldMatch.status))) return [3 /*break*/, 12];
                         if (!phone) return [3 /*break*/, 5];
                         return [4 /*yield*/, Phone.update(phone, {
                                 where: { id: phone.id }
@@ -149,7 +149,7 @@ function MatchController(models, ResponseService) {
                         match.phone_id = newPhone.id;
                         _a.label = 5;
                     case 5:
-                        if (!address) return [3 /*break*/, 8];
+                        if (!address) return [3 /*break*/, 10];
                         return [4 /*yield*/, Address.update(address, {
                                 where: { id: address.id }
                             }, { transaction: transaction })];
@@ -161,30 +161,44 @@ function MatchController(models, ResponseService) {
                         return [4 /*yield*/, ResponseService.workoutTimeZone(match, address)];
                     case 7:
                         _a.sent();
-                        return [3 /*break*/, 9];
+                        if (!newAddress) return [3 /*break*/, 9];
+                        return [4 /*yield*/, Address.update({
+                                lat: address.lat,
+                                lng: address.lng
+                            }, {
+                                where: {
+                                    id: newAddress.id
+                                }
+                            }, {
+                                transaction: transaction
+                            })];
                     case 8:
+                        _a.sent();
+                        _a.label = 9;
+                    case 9: return [3 /*break*/, 11];
+                    case 10:
                         match.date = oldMatch.date;
                         delete match.timezone_id;
                         delete match.timezone_name;
                         delete match.timezone;
                         delete match.timezone_offset;
-                        _a.label = 9;
-                    case 9: return [3 /*break*/, 11];
-                    case 10: throw new Error('Cannot update match.');
-                    case 11: return [4 /*yield*/, Match.update(match, relation, {
+                        _a.label = 11;
+                    case 11: return [3 /*break*/, 13];
+                    case 12: throw new Error('Cannot update match.');
+                    case 13: return [4 /*yield*/, Match.update(match, relation, {
                             transaction: transaction
                         })];
-                    case 12:
+                    case 14:
                         newMatch_1 = _a.sent();
                         transaction.commit();
                         ResponseService.success(res, 'Match updated', 200);
-                        return [3 /*break*/, 14];
-                    case 13:
+                        return [3 /*break*/, 16];
+                    case 15:
                         error_1 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_1, 404);
-                        return [3 /*break*/, 14];
-                    case 14: return [2 /*return*/];
+                        return [3 /*break*/, 16];
+                    case 16: return [2 /*return*/];
                 }
             });
         });
@@ -270,7 +284,7 @@ function MatchController(models, ResponseService) {
                         match.status = 'pending';
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 9, , 10]);
+                        _a.trys.push([1, 10, , 11]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
@@ -279,32 +293,45 @@ function MatchController(models, ResponseService) {
                         return [4 /*yield*/, ResponseService.workoutTimeZone(match, address)];
                     case 3:
                         _a.sent();
-                        if (!address) return [3 /*break*/, 5];
+                        if (!address) return [3 /*break*/, 6];
                         return [4 /*yield*/, Address.create(address, { transaction: transaction })];
                     case 4:
                         newAddress = _a.sent();
                         match.address_id = newAddress.id;
-                        _a.label = 5;
+                        if (!newAddress) return [3 /*break*/, 6];
+                        return [4 /*yield*/, Address.update({
+                                lat: address.lat,
+                                lng: address.lng
+                            }, {
+                                where: {
+                                    id: newAddress.id
+                                }
+                            }, {
+                                transaction: transaction
+                            })];
                     case 5:
-                        if (!phone) return [3 /*break*/, 7];
-                        return [4 /*yield*/, Phone.create(phone, { transaction: transaction })];
+                        _a.sent();
+                        _a.label = 6;
                     case 6:
+                        if (!phone) return [3 /*break*/, 8];
+                        return [4 /*yield*/, Phone.create(phone, { transaction: transaction })];
+                    case 7:
                         newPhone = _a.sent();
                         match.phone_id = newPhone.id;
-                        _a.label = 7;
-                    case 7: return [4 /*yield*/, Match.create(match, { transaction: transaction })];
-                    case 8:
+                        _a.label = 8;
+                    case 8: return [4 /*yield*/, Match.create(match, { transaction: transaction })];
+                    case 9:
                         newMatch = _a.sent();
                         transaction.commit();
                         aMatch = ResponseService.deleteItemDates(newMatch);
                         ResponseService.success(res, aMatch, 201);
-                        return [3 /*break*/, 10];
-                    case 9:
+                        return [3 /*break*/, 11];
+                    case 10:
                         error_3 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_3);
-                        return [3 /*break*/, 10];
-                    case 10: return [2 /*return*/];
+                        return [3 /*break*/, 11];
+                    case 11: return [2 /*return*/];
                 }
             });
         });
