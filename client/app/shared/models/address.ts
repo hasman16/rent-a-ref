@@ -8,4 +8,6 @@ export interface Address extends BaseModel {
 	zip: string;
 	radius?: string;
 	country?: string;
+	lat?: string;
+	lng?: string;
 }

@@ -27,18 +27,21 @@ export default function MatchController(models, ResponseService) {
   function getAllByGame(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
     const User = models.User;
-    const whereClause = Object.assign(clause, {
-      where: {
-        game_id: req.params.game_id
+    const whereClause = Object.assign(
+      {
+        where: {
+          game_id: req.params.game_id
+        },
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'email'],
+            through: {}
+          }
+        ]
       },
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'email'],
-          through: {}
-        }
-      ]
-    });
+      clause
+    );
 
     Match.findAndCountAll(whereClause)
       .then(results => ResponseService.success(res, results))
@@ -82,43 +85,85 @@ export default function MatchController(models, ResponseService) {
   }
 
   async function update(req, res) {
-    const match: MatchModel = <MatchModel>ResponseService.getItemFromBody(req);
+    let match: MatchModel = <MatchModel>ResponseService.getItemFromBody(req);
     const sequelize = models.sequelize;
     const Officiating = models.Officiating;
     const match_id = req.params.match_id;
+    const Address = models.Address;
+    const Phone = models.Phone;
+    let address: AddressModel = ResponseService.deleteItemDates(match.address);
+    const phone: PhoneModel = ResponseService.deleteItemDates(match.phone);
     const relation = {
       where: {
         id: match_id
       }
     };
+    match = ResponseService.deleteItemDates(match);
+    delete match.id;
+    delete match.address_id;
+    delete match.phone_id;
+    delete match.address;
+    delete match.phone;
 
-    let transaction, oldMatch;
+    let transaction, oldMatch, newMatch, newAddress, newPhone;
 
     try {
       transaction = await sequelize.transaction();
-      oldMatch = await Match.findOne(
-        {
-          where: {
-            id: match_id
-          },
-          include: [
-            {
-              model: Address
-            }
-          ]
-        },
-        {
-          transaction
-        }
-      );
-
+      oldMatch = await Match.findById(match_id, {
+        transaction
+      });
       if (oldMatch && canAssignOrRemove(oldMatch.status)) {
-        await Match.update(match, {
-          transaction
-        });
+        if (phone) {
+          newPhone = await Phone.update(
+            phone,
+            {
+              where: { id: phone.id }
+            },
+            { transaction }
+          );
+          match.phone_id = newPhone.id;
+        }
+        if (address) {
+          newAddress = await Address.update(
+            address,
+            {
+              where: { id: address.id }
+            },
+            { transaction }
+          );
+          match.address_id = newAddress.id;
+          let dateTime: string = match.date + 'T' + match.time;
+          match.date = dateTime.replace(/z/i, '');
+          await ResponseService.workoutTimeZone(match, address);
+          if (newAddress) {
+            await Address.update(
+              {
+                lat: address.lat,
+                lng: address.lng
+              },
+              {
+                where: {
+                  id: newAddress.id
+                }
+              },
+              {
+                transaction
+              }
+            );
+          }
+        } else {
+          match.date = oldMatch.date;
+          delete match.timezone_id;
+          delete match.timezone_name;
+          delete match.timezone;
+          delete match.timezone_offset;
+        }
       } else {
         throw new Error('Cannot update match.');
       }
+      const newMatch = await Match.update(match, relation, {
+        transaction
+      });
       transaction.commit();
       ResponseService.success(res, 'Match updated', 200);
     } catch (error) {
@@ -182,9 +227,7 @@ export default function MatchController(models, ResponseService) {
     const Address = models.Address;
     const Phone = models.Phone;
     let match: MatchModel = <MatchModel>ResponseService.getItemFromBody(req);
-    const address: AddressModel = ResponseService.deleteItemDates(
-      match.address
-    );
+    let address: AddressModel = ResponseService.deleteItemDates(match.address);
     const phone: PhoneModel = ResponseService.deleteItemDates(match.phone);
 
     delete match.address_id;
@@ -205,12 +248,29 @@ export default function MatchController(models, ResponseService) {
       if (address) {
         newAddress = await Address.create(address, { transaction });
         match.address_id = newAddress.id;
+        if (newAddress) {
+          await Address.update(
+            {
+              lat: address.lat,
+              lng: address.lng
+            },
+            {
+              where: {
+                id: newAddress.id
+              }
+            },
+            {
+              transaction
+            }
+          );
+        }
       }
       if (phone) {
         newPhone = await Phone.create(phone, { transaction });
         match.phone_id = newPhone.id;
       }
       newMatch = await Match.create(match, { transaction });
+
       transaction.commit();
 
       const aMatch = ResponseService.deleteItemDates(newMatch);

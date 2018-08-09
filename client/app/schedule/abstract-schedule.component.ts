@@ -22,6 +22,10 @@ import {
 	PagingService,
 	UserService
 } from '../services/index';
+export enum ViewState {
+	scheduleView,
+	matchView
+}
 
 export abstract class AbstractScheduleComponent extends AbstractComponent {
 	public schedule: any[];
@@ -29,6 +33,7 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	public placeholder: string = 'search venue name';
 	public user: User;
 	public selectedMatch: any;
+	public viewState: ViewState = ViewState.scheduleView;
 
 	constructor(
 		protected cd: ChangeDetectorRef,
@@ -186,5 +191,26 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 
 	protected getData(data: Page): void {
 		this.getSchedule(data);
+	}
+
+	public switchToSchedule(event): void {
+		this.viewState = ViewState.scheduleView;
+	}
+
+	public switchToMatch(event): void {
+		this.viewState = ViewState.matchView;
+	}
+
+	public isScheduleView(): boolean {
+		console.log(
+			'isScheduleView:',
+			this.viewState === ViewState.scheduleView
+		);
+		return this.viewState === ViewState.scheduleView;
+	}
+
+	public isMatchView(): boolean {
+		console.log('isMatchView:', this.viewState === ViewState.matchView);
+		return this.viewState === ViewState.matchView;
 	}
 }

@@ -24,6 +24,18 @@ function default_1(sequelize, DataTypes) {
                 is: /(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$)/
             }
         },
+        country: {
+            type: DataTypes.STRING(128),
+            allowNull: true
+        },
+        lat: {
+            type: DataTypes.STRING(128),
+            allowNull: true
+        },
+        lng: {
+            type: DataTypes.STRING(128),
+            allowNull: true
+        },
         notes: {
             type: DataTypes.STRING(128)
         }

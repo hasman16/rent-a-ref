@@ -72,6 +72,7 @@ export class AdminScheduleComponent extends AbstractScheduleComponent
 	}
 
 	public backToList($event): void {
+		this.switchToSchedule({});
 		this.submitter.emit(true);
 	}
 }
