@@ -12,8 +12,7 @@ import {
 import { Address } from './../../models/address';
 
 import { AddressFormComponent } from './address-form.component';
-import { ProfileService } from './../../../services/profile.service';
-import { StatesService } from './../../../services/states.service';
+import { ProfileService, StatesService } from './../../../services/index';
 
 let profileServiceStub = {
   createAddress: function() {},

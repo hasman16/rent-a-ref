@@ -1,9 +1,11 @@
-.card {
-	padding: 0;
-}
-.menu-style {
-	position: relative;
-	height: 100%;
-	background: #4f4f6b;
-	border-right: 1px solid #eee;
+:host {
+	.card {
+		padding: 0;
+	}
+	.menu-style {
+		position: relative;
+		height: 100%;
+		background: #4f4f6b;
+		border-right: 1px solid #eee;
+	}
 }
