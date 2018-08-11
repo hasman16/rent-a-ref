@@ -110,7 +110,6 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   }
 
   public onSelect({ selected }): void {
-    console.log('Select Event', selected, this.selected);
     const game = _.cloneDeep(_.head(selected));
     this.isEditing = true;
     this.editEvent(game);
@@ -203,7 +202,6 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
 
   protected processPagedData(data: PagedData): void {
     let [page, newData] = this.pagingService.processPagedData(this.page, data);
-    console.log('page:', newData);
     this.page = page;
     this.games = newData;
   }

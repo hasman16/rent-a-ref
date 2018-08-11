@@ -83,26 +83,28 @@ export class BlogFormComponent implements AfterViewInit, OnInit {
               }
             },
             {
-              template: '<hr class="space-hr" /><div><strong>Blog Title</strong></div>'
+              template:
+                '<hr class="space-hr" /><div><strong>Blog Title</strong></div>'
             },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12',
-            type: 'input',
-            key: 'name',
-            templateOptions: {
-              label: 'Blog Title',
-              required: true,
-              minLength: 5,
-              pattern: /\w+[a-zA-Z0-9]/
-            }
-          }
-        ]
-      },     
-         {
-              template: '<hr class="space-hr" /><div><strong>Body</strong></div>'
+            {
+              fieldGroupClassName: 'row',
+              fieldGroup: [
+                {
+                  className: 'col-sm-12',
+                  type: 'input',
+                  key: 'name',
+                  templateOptions: {
+                    label: 'Blog Title',
+                    required: true,
+                    minLength: 5,
+                    pattern: /\w+[a-zA-Z0-9]/
+                  }
+                }
+              ]
+            },
+            {
+              template:
+                '<hr class="space-hr" /><div><strong>Body</strong></div>'
             },
             {
               key: 'body',
@@ -125,11 +127,11 @@ export class BlogFormComponent implements AfterViewInit, OnInit {
     this.disable = false;
   }
 
-  onSubmit(model: any): void {
+  public onSubmit(model: any): void {
     this.submitter.emit(model);
   }
 
-  onCancel(event: MouseEvent): void {
+  public onCancel(event: MouseEvent): void {
     this.cancelSubmitter.emit(true);
   }
 }

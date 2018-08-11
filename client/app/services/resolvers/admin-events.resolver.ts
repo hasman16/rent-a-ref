@@ -5,6 +5,7 @@ import { Page, PagedData } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/combineLatest';
 
 @Injectable()
 export class AdminEventsResolver
@@ -17,11 +18,11 @@ export class AdminEventsResolver
 
 	resolve(): Observable<{} | [PagedData, PagedData]> {
 		const pagingInfo: Page = this.pagingService.getDefaultPager();
-		return this.eventsService
-			.getAllGames(pagingInfo)
-			.combineLatest(this.organizeService.getSports(pagingInfo))
-			.catch(() => {
-				return Observable.empty();
-			});
+		return Observable.combineLatest(
+			this.eventsService.getAllGames(pagingInfo),
+			this.organizeService.getSports(pagingInfo)
+		).catch(() => {
+			return Observable.empty();
+		});
 	}
 }

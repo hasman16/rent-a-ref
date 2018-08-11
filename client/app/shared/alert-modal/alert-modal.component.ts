@@ -34,7 +34,6 @@ export class AlertModalComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.subscription.push(
 			this.alertModalService.modalState$.subscribe((value: boolean) => {
-				console.log('alert-modal');
 				if (value) {
 					this.alertModal.showModal(null);
 				} else {

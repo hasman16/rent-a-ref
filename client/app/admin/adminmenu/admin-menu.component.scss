@@ -1,31 +1,33 @@
-.sidebar {
-  position: relative;
-  top: 0px;
-  bottom: 0px;
-  left: 0;
-  z-index: 1000;
-  padding: 2rem 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: 100%;
-}
-
-.sidebar .nav {
-  margin-bottom: 20px;
-  :hover {
-    color: #aaa;
+:host {
+  .sidebar {
+    position: relative;
+    top: 0px;
+    bottom: 0px;
+    left: 0;
+    z-index: 1000;
+    padding: 2rem 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
   }
-}
 
-.sidebar .nav-item {
-  width: 100%;
-}
+  .sidebar .nav {
+    margin-bottom: 20px;
+    :hover {
+      color: #aaa;
+    }
+  }
 
-.sidebar .nav-item + .nav-item {
-  margin-left: 0;
-}
+  .sidebar .nav-item {
+    width: 100%;
+  }
 
-.sidebar .nav-link {
-  border-radius: 0;
-  color: whitesmoke;
+  .sidebar .nav-item + .nav-item {
+    margin-left: 0;
+  }
+
+  .sidebar .nav-link {
+    border-radius: 0;
+    color: whitesmoke;
+  }
 }

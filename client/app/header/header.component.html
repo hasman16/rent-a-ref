@@ -20,51 +20,51 @@
               How It Works
             </a>   
           </li>
-          <li class="nav-item">
-            <a [routerLink]="['/organization']" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
-            [routerLinkActiveOptions]="{exact: true}">
-              <span *ngIf="auth.currentUser.can_organize == 'active'">Organization</span>
-            </a>    
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/account', auth.currentUser.id, 'schedule' ]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
-              [routerLinkActiveOptions]="{exact: true}">
-                <span *ngIf="auth.currentUser.can_referee == 'active'">Schedule</span>
+          <ng-template [ngIf]="auth.loggedIn" [ngIfElse]="loggedout">
+            <li class="nav-item">
+              <a [routerLink]="['/organization']" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <span *ngIf="auth.currentUser.can_organize == 'active'">Organization</span>
+              </a>    
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/account', auth.currentUser.id, 'schedule' ]" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                  <span *ngIf="auth.currentUser.can_referee == 'active'">Schedule</span>
+                </a> 
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/account', auth.currentUser.id,'profile']" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                  Profile
+                </a>  
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/account', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                  Account 
+                </a> 
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/admin']" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.isAdmin"
+                [routerLinkActiveOptions]="{exact: true}">
+                Admin
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/logout" class="nav-item nav-link" routerLinkActive="active">
+                Logout
+              </a>
+            </li>   
+          </ng-template>
+          <ng-template #loggedout>
+            <li class="nav-item">
+              <a routerLink="/login" class="nav-item nav-link" routerLinkActive="active">
+                Login
+              </a>
+            </li> 
+            <li class="nav-item">
+              <a routerLink="/register" class="nav-item nav-link" routerLinkActive="active">
+                Register
               </a> 
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/account', auth.currentUser.id,'profile']" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
-              [routerLinkActiveOptions]="{exact: true}">
-                Profile
-              </a>  
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/account', auth.currentUser.id]" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn"
-              [routerLinkActiveOptions]="{exact: true}">
-                Account 
-              </a> 
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/admin']" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin"
-              [routerLinkActiveOptions]="{exact: true}">
-              Admin
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/logout" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
-              Logout
-            </a>
-          </li>   
-          <li class="nav-item">
-            <a routerLink="/login" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
-              Login
-            </a>
-          </li> 
-          <li class="nav-item">
-            <a routerLink="/register" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
-              Register
-            </a> 
-          </li>  
+            </li> 
+          </ng-template>
         </ul>
       </div>
     </nav>    
