@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-12">
+  <div class="col-12" *ngIf="isScheduleView()">
     <strong class="etched-text">Viewing schedule for referee <i>{{user.email}}</i>.</strong>
     <div class="card">
 
@@ -68,7 +68,7 @@
   </div>
 
 
-  <div class="col-12">
+  <div class="col-12" *ngIf="isMatchView()">
     <strong class="etched-text">Viewing schedule for referee <i>{{user.email}}</i>.</strong>
     <div class="card">
       <rar-match-detail [match]="selectedMatch"></rar-match-detail>
