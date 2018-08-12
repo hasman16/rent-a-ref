@@ -23,7 +23,10 @@ import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
-import { GoogleMapComponent } from './googlemap/google-map.component';
+import {
+    GoogleMapComponent,
+    GoogleDirectionsMapDirective
+} from './googlemap/index';
 
 /* Components */
 import { AboutComponent } from './about/about.component';
@@ -121,6 +124,7 @@ import {
         PrivacyModalComponent,
         TermsModalComponent,
         GoogleMapComponent,
+        GoogleDirectionsMapDirective,
         HeaderComponent,
         HomeComponent,
         HowItWorksComponent,
@@ -155,7 +159,8 @@ import {
     imports: [
         BrowserModule,
         AgmCoreModule.forRoot({
-            apiKey: environment.GOOGLEMAPS_KEY
+            apiKey: environment.GOOGLEMAPS_KEY,
+            libraries: ['places']
         }),
         NgxDatatableModule,
 
