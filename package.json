@@ -43,6 +43,7 @@
     "@ngx-formly/core": "^2.0.0",
     "@ngx-formly/material": "^2.0.0",
     "@swimlane/ngx-datatable": "^11.2.0",
+    "agm-direction": "^0.6.0",
     "angular2-jwt": "^0.2.3",
     "aws-sdk": "^2.226.1",
     "bcryptjs": "^2.4.3",

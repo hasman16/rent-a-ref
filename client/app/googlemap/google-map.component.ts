@@ -3,7 +3,6 @@
 import { Component, Input, ViewChild, NgZone, OnInit } from '@angular/core';
 import { MapsAPILoader, AgmMap } from '@agm/core';
 import { GoogleMapsAPIWrapper } from '@agm/core/services';
-import { GoogleDirectionsMapDirective } from './google-directions-map-directive';
 
 declare const google: any;
 
@@ -47,13 +46,14 @@ export class GoogleMapComponent implements OnInit {
   public circleRadius: number = 64373;
   public geocoder: any;
   public origin: any = {
-    latitude: 34.05,
-    longitude: -118.25
+    lat: 34.05,
+    lng: -118.25
   };
   public destination: any = {
-    latitude: 33.803056,
-    longitude: -117.8325
+    lat: 33.803056,
+    lng: -117.8325
   };
+  public show: boolean = true;
   @ViewChild(AgmMap) map: AgmMap;
 
   constructor(
@@ -64,20 +64,21 @@ export class GoogleMapComponent implements OnInit {
     this.mapsApiLoader = mapsApiLoader;
     this.zone = zone;
     this.wrapper = wrapper;
-    this.mapsApiLoader.load().then(() => {
-      this.geocoder = new google.maps.Geocoder();
-    });
   }
 
   ngOnInit() {
     this.location.marker.draggable = false;
   }
 
-  protected test(): void {
-    this.wrapper.getNativeMap;
+  public onDirectionChange(event): void {
+    console.log('onDirectionChange:', event);
   }
+
   protected findLocation(address): void {
-    if (!this.geocoder) this.geocoder = new google.maps.Geocoder();
+    if (!this.geocoder) {
+      this.geocoder = new google.maps.Geocoder();
+    }
+
     this.geocoder.geocode(
       {
         address: address

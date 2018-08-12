@@ -2,7 +2,7 @@
 
   <rar-search-box 
   [placeholder]="placeholder"
-  (searchEvent)='updateFilter($event)'
+  (searchEvent)='updateSearchTextFilter($event)'
   ></rar-search-box>
 
   <div class="card-block horizontal-and-vertical-centering " *ngIf="(!users || users.length === 0)">
@@ -21,7 +21,7 @@
       [rowHeight]="'auto'"
       [externalSorting]="true"
       [loadingIndicator]="isLoading"
-      (sort)="onSort($event)"
+      (sort)="onSortTableColumn($event)"
       [externalPaging]="true"
       [count]="page.total_elements"
       [offset]="page.offset"
@@ -30,7 +30,7 @@
       [selected]="selected"
       [selectionType]="'single'"
       (activate)="onActivate($event)"
-      (select)='onSelect($event)'
+      (select)='onSelectTableRow($event)'
       >
       <ngx-datatable-column name="Email" prop="email" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Referee" prop="can_referee" editable="false"></ngx-datatable-column>

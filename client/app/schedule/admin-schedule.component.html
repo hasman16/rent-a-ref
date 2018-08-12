@@ -5,7 +5,7 @@
 
       <rar-search-box 
       [placeholder]="placeholder"
-      (searchEvent)='updateFilter($event)'
+      (searchEvent)='updateSearchTextFilter($event)'
       ></rar-search-box>
 
       <div class="card-block horizontal-and-vertical-centering " *ngIf="(!schedule || schedule.length === 0)">
@@ -45,16 +45,18 @@
           <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
 
           <ngx-datatable-column name="Accept Match" prop="id" editable="true">
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                <button class="btn btn-primary btn-sm" (click)="acceptMatch(value)" title="Click to accept a match" *ngIf="canAccept(value)">Accept</button>
+           <ng-template let-value="value" ngx-datatable-cell-template>
+                <button class="btn btn-primary btn-sm" (click)="acceptMatch($event)" title="Click to accept a match" *ngIf="canAccept(value)">Accept</button>
+                <input type="hidden" name="{{value}}" value="{{value}}">
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="Decline Match" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-danger btn-sm" (click)="declineMatch(value)" title="Click to decline a match" *ngIf="canDecline(value)">Decline</button>
+              <button class="btn btn-danger btn-sm" (click)="declineMatch($event)" title="Click to decline a match" *ngIf="canDecline(value)">Decline</button>
 
-              <button class="btn btn-danger btn-sm" (click)="declineMatch(value)" title="Click to the match back to the Admin." *ngIf="canTurnBack(value)">Turn Back</button>
+              <button class="btn btn-danger btn-sm" (click)="declineMatch($event)" title="Click to the match back to the Admin." *ngIf="canTurnBack(value)">Turn Back</button>
+              <input type="hidden" name="{{value}}" value="{{value}}">
             </ng-template>
           </ngx-datatable-column>
         </ngx-datatable>
@@ -71,7 +73,7 @@
   <div class="col-12" *ngIf="isMatchView()">
     <strong class="etched-text">Viewing schedule for referee <i>{{user.email}}</i>.</strong>
     <div class="card">
-      <rar-match-detail [match]="selectedMatch"></rar-match-detail>
+      <rar-match-detail [match]="selectedMatch" (back)="backToSchedule($event)"></rar-match-detail>
     </div>
 
     <br />

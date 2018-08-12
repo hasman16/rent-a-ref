@@ -49,6 +49,12 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 
 	public onSelectTableRow({ selected }): void {
 		const match = _.cloneDeep(_.head(selected));
+		this.viewState = ViewState.matchView;
+		console.log('selected is:', match);
+	}
+
+	public backToSchedule(event): void {
+		this.viewState = ViewState.scheduleView;
 	}
 
 	public formatDate(id): string {
@@ -132,16 +138,22 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 			);
 	}
 
-	public acceptMatch(id): void {
-		const error: string = 'Error: Game was NOT accepted.';
-		const success: string = 'Game Accepted.';
-		this.generateOfficiateRelation(id, 'accept', success, error);
+	public acceptMatch(event): void {
+		this.processButtonClick(event, 'accept');
 	}
 
-	public declineMatch(id): void {
-		const error: string = 'Error: Game was NOT declined.';
-		const success: string = 'Game Declined.';
-		this.generateOfficiateRelation(id, 'decline', success, error);
+	public declineMatch(event): void {
+		this.processButtonClick(event, 'decline');
+	}
+
+	private processButtonClick(event, action: string): void {
+		event.stopImmediatePropagation();
+		const actionLabel: string =
+			action === 'accept' ? 'accepted' : 'declined';
+		const error: string = 'Error: Game was NOT ${actionLabel}.';
+		const success: string = 'Game ${actionLabel}.';
+		const id: number = parseInt(event.target.nextElementSibling.value);
+		this.generateOfficiateRelation(id, action, success, error);
 	}
 
 	public getSchedule(params: Page) {
@@ -197,15 +209,10 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	}
 
 	public isScheduleView(): boolean {
-		console.log(
-			'isScheduleView:',
-			this.viewState === ViewState.scheduleView
-		);
 		return this.viewState === ViewState.scheduleView;
 	}
 
 	public isMatchView(): boolean {
-		console.log('isMatchView:', this.viewState === ViewState.matchView);
 		return this.viewState === ViewState.matchView;
 	}
 }

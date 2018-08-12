@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { AbstractComponent } from '../abstract/abstract.component';
 
 import { ToastComponent } from '../shared/toast/toast.component';
 import {
@@ -64,7 +65,7 @@ enum ViewState {
   styleUrls: ['./matches.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MatchesComponent implements OnInit {
+export class MatchesComponent extends AbstractComponent implements OnInit {
   @Input('model')
   set setGame(game: Game) {
     this.game = _.cloneDeep(game);
@@ -74,15 +75,15 @@ export class MatchesComponent implements OnInit {
   set setStates(states) {
     this.states = _.cloneDeep(states);
   }
-  private subscriptions: Subscription[] = [];
+  //private subscriptions: Subscription[] = [];
   private matches: any[] = [];
   private viewState: ViewState = ViewState.noMatches;
   public isLoading: boolean = false;
   private game: Game = <Game>{};
   public model: any = {};
   public states: Option[] = [];
-  protected page: Page;
-  protected selected: any[] = [];
+  //protected page: Page;
+  //protected selected: any[] = [];
   public delete_id: string;
   public match_id: string = '0';
   public currentMatch: Match = <Match>{};
@@ -91,20 +92,23 @@ export class MatchesComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private auth: AuthService,
     private matchService: MatchService,
-    public toast: ToastComponent,
+    private toast: ToastComponent,
     private route: ActivatedRoute,
     private router: Router,
     private alertModalService: AlertModalService,
-    private pagingService: PagingService
-  ) {}
+    protected pagingService: PagingService
+  ) {
+    super(pagingService);
+  }
 
   ngOnInit() {
-    this.page = _.cloneDeep(this.pagingService.getDefaultPager());
+    this.initialize();
+    this.searchAttribute = 'match_name|';
     this.getAllMatchesByGame(this.game.id, this.page);
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
+    this.cleanUp();
   }
 
   public getAllMatchesByGame(game_id: string, page: Page): void {
@@ -128,9 +132,7 @@ export class MatchesComponent implements OnInit {
   }
 
   public processPagedData(data: PagedData): void {
-    let [page, newData] = this.pagingService.processPagedData(this.page, data);
-    this.page = page;
-    this.matches = newData;
+    this.matches = this.extractDataAndPagedData(data);
   }
 
   public onSelectTableRow({ selected }): void {
@@ -149,6 +151,10 @@ export class MatchesComponent implements OnInit {
   public setPage(paging): void {
     this.page.offset = paging.offset;
     this.getAllMatchesByGame(this.game.id, this.page);
+  }
+
+  protected getData(data: Page): void {
+    this.getAllMatchesByGame(this.game.id, data);
   }
 
   public formatDate(id): string {
