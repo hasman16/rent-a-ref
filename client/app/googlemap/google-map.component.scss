@@ -1,5 +1,60 @@
 :host {
+	.map-wrapper {
+		background: white;
+	}
+	.map-container {
+		//display: inline-block;
+		//min-width: 60%;
+		//padding: 2px;
+	}
+	.directions {
+		//display: inline-block;
+		//max-width: 38%;
+		//padding: 2px;
+		overflow-x: none;
+		overflow-y: auto;
+	}
 	agm-map {
-		height: 500px;
+		height: 200px;
+	}
+	@media only screen and (max-width: 599px) {
+		agm-map {
+			height: 200px;
+		}
+		.directions {
+			max-height: 200px;
+		}
+	}
+	@media only screen and (min-width: 600px) {
+		agm-map {
+			height: 300px;
+		}
+		.directions {
+			max-height: 300px;
+		}
+	}
+	@media only screen and (min-width: 768px) {
+		agm-map {
+			height: 400px;
+		}
+		.directions {
+			max-height: 400px;
+		}
+	}
+	@media only screen and (min-width: 992) {
+		agm-map {
+			height: 500px;
+		}
+		.directions {
+			max-height: 500px;
+		}
+	}
+	@media only screen and (min-width: 1200) {
+		agm-map {
+			height: 600px;
+		}
+		.directions {
+			max-height: 600px;
+		}
 	}
 }
