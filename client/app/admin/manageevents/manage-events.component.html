@@ -17,7 +17,7 @@
       [rowHeight]="'auto'"
       [externalSorting]="true"
       [loadingIndicator]="isLoading"
-      (sort)="onSort($event)"
+      (sort)="onSortTableColumn($event)"
       [externalPaging]="true"
       [count]="page.total_elements"
       [offset]="page.offset"
@@ -26,7 +26,7 @@
       [selected]="selected"
       [selectionType]="'single'"
       (activate)="onActivate($event)"
-      (select)='onSelect($event)'
+      (select)='onSelectTableRow($event)'
       >
       <ngx-datatable-column name="Event Name" prop="event_name" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Event Date" prop="id" editable="false">

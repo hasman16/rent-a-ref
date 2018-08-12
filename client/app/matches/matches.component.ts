@@ -133,7 +133,7 @@ export class MatchesComponent implements OnInit {
     this.matches = newData;
   }
 
-  public onSelect({ selected }): void {
+  public onSelectTableRow({ selected }): void {
     console.log('Select Event', selected, this.selected);
     const match = _.cloneDeep(_.head(selected));
     //this.isEditing = true;

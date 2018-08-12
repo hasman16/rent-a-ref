@@ -29,7 +29,7 @@
       [rowHeight]="'auto'"
       [externalSorting]="true"
       [loadingIndicator]="isLoading"
-      (sort)="onSort($event)"
+      (sort)="onSortTableColumn($event)"
       [externalPaging]="true"
       [count]="page.total_elements"
       [offset]="page.offset"
@@ -37,7 +37,7 @@
       (page)='setPage($event)'
       [selected]="selected"
       [selectionType]="'single'"
-      (select)='onSelect($event)'
+      (select)='onSelectTableRow($event)'
       >
       <ngx-datatable-column name="Match Name" prop="match_name" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Match Date" prop="id" editable="false">

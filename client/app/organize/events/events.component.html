@@ -17,7 +17,7 @@
 
       <rar-search-box 
       [placeholder]="placeholder"
-      (searchEvent)='updateFilter($event)'
+      (searchEvent)='updateSearchTextFilter($event)'
       ></rar-search-box>
 
       <div class="form-size" *ngIf="isViewState('noEvents') ">
@@ -37,7 +37,7 @@
           [rowHeight]="'auto'"
           [externalSorting]="true"
           [loadingIndicator]="isLoading"
-          (sort)="onSort($event)"
+          (sort)="onSortTableColumn($event)"
           [externalPaging]="true"
           [count]="page.total_elements"
           [offset]="page.offset"

@@ -106,11 +106,11 @@ export class EventsComponent extends AbstractComponent
   }
 
   ngOnDestroy() {
-    this.tearDown();
+    this.cleanUp();
   }
 
   protected processPagedData(data: PagedData): void {
-    this.games = this.extraPagedData(data);
+    this.games = this.extractDataAndPagedData(data);
   }
 
   protected getData(page: Page): void {

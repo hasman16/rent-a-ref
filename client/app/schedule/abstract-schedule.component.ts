@@ -47,13 +47,8 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 		super(pagingService);
 	}
 
-	public onSelect({ selected }): void {
+	public onSelectTableRow({ selected }): void {
 		const match = _.cloneDeep(_.head(selected));
-	}
-
-	public setPage(paging): void {
-		this.page.offset = paging.offset;
-		this.getSchedule(this.page);
 	}
 
 	public formatDate(id): string {
@@ -186,7 +181,7 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	}
 
 	protected processPagedData(data: PagedData): void {
-		this.schedule = this.extraPagedData(data);
+		this.schedule = this.extractDataAndPagedData(data);
 	}
 
 	protected getData(data: Page): void {

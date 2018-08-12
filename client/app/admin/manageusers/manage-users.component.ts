@@ -70,11 +70,10 @@ export class ManageUsersComponent extends AbstractComponent
   }
 
   ngOnDestroy() {
-    this.tearDown();
+    this.cleanUp();
   }
 
-  public updateAttribute(event): void {
-    super.updateAttribute(event);
+  public updateSearchAttribute(event): void {
     this.searchAttribute = event + '|';
   }
 
@@ -90,7 +89,7 @@ export class ManageUsersComponent extends AbstractComponent
     return url;
   }
 
-  public onSelect({ selected }): void {
+  public onSelectTableRow({ selected }): void {
     this.selectedUser = _.head(selected);
     this.viewProfile = true;
   }
@@ -143,7 +142,7 @@ export class ManageUsersComponent extends AbstractComponent
   }
 
   protected processPagedData(data: PagedData): void {
-    this.users = this.extraPagedData(data);
+    this.users = this.extractDataAndPagedData(data);
   }
 
   protected callSuccess(data: PagedData) {

@@ -55,13 +55,8 @@ export class EditPostComponent extends AbstractComponent implements OnInit {
 		this.processPagedData(pagedData);
 	}
 
-	public onSelect({ selected }): void {
+	public onSelectTableRow({ selected }): void {
 		const postBlog = _.cloneDeep(_.head(selected));
-	}
-
-	public setPage(paging): void {
-		this.page.offset = paging.offset;
-		this.getBlog(this.page);
 	}
 
 	public getBlog(params: Page) {
@@ -101,7 +96,7 @@ export class EditPostComponent extends AbstractComponent implements OnInit {
 	}
 
 	protected processPagedData(data: PagedData): void {
-		this.post = this.extraPagedData(data);
+		this.post = this.extractDataAndPagedData(data);
 	}
 
 	protected getData(data: Page): void {

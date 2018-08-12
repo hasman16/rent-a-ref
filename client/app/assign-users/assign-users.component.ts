@@ -78,7 +78,7 @@ export class AssignUsersComponent extends AbstractComponent
   }
 
   ngOnDestroy() {
-    this.tearDown();
+    this.cleanUp();
   }
 
   public isViewState(value: string): boolean {
@@ -214,7 +214,7 @@ export class AssignUsersComponent extends AbstractComponent
   }
 
   protected processPagedData(data: PagedData): void {
-    this.users = this.extraPagedData(data);
+    this.users = this.extractDataAndPagedData(data);
   }
 
   protected callSuccess(data: PagedData) {

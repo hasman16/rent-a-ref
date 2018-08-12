@@ -27,6 +27,7 @@ export abstract class AbstractComponent {
   constructor(protected pagingService: PagingService) {}
 
   protected initialize(): void {
+    this.cleanUp();
     this.subscriptions = [];
     this.isLoading = false;
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
@@ -41,11 +42,11 @@ export abstract class AbstractComponent {
     );
   }
 
-  tearDown() {
+  protected cleanUp() {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
-  public updateFilter(event): void {
+  public updateSearchTextFilter(event): void {
     const value: string = event.target.value.toLowerCase();
     const length: number = value.length;
     if (!this.isLoading) {
@@ -58,15 +59,15 @@ export abstract class AbstractComponent {
     }
   }
 
-  public updateAttribute(event): void {}
+  public updateSearchAttribute(event): void {}
 
-  public onSort(sorting): void {
+  public onSortTableColumn(sorting): void {
     const page: Page = this.pagingService.sortColumn(this.page, sorting);
     this.page = _.cloneDeep(page);
     this.getData(this.page);
   }
 
-  public onSelect({ selected }): void {}
+  public onSelectTableRow({ selected }): void {}
 
   public onActivate(event): void {}
 
@@ -75,7 +76,7 @@ export abstract class AbstractComponent {
     this.getData(this.page);
   }
 
-  protected extraPagedData(data: PagedData): any[] {
+  protected extractDataAndPagedData(data: PagedData): any[] {
     let [page, newData] = this.pagingService.processPagedData(this.page, data);
     this.page = page;
     return newData;

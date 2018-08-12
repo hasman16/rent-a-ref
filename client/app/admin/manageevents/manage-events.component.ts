@@ -109,7 +109,7 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     this.selectedTab = tab;
   }
 
-  public onSelect({ selected }): void {
+  public onSelectTableRow({ selected }): void {
     const game = _.cloneDeep(_.head(selected));
     this.isEditing = true;
     this.editEvent(game);
@@ -146,7 +146,7 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     console.log('Activate Event', event);
   }
 
-  public onSort(sorting): void {
+  public onSortTableColumn(sorting): void {
     const page: Page = this.pagingService.sortColumn(this.page, sorting);
     this.page = _.cloneDeep(page);
     this.getEvents(this.page);

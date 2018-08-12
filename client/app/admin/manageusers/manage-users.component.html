@@ -4,8 +4,8 @@
   <rar-search-box 
   [placeholder]="placeholder"
   [search-attributes]="searchAttributes"
-  (searchEvent)='updateFilter($event)'
-  (searchAttribute)="updateAttribute($event)"
+  (searchEvent)='updateSearchTextFilter($event)'
+  (searchAttribute)="updateSearchAttribute($event)"
   ></rar-search-box>
 
   <div class="card-block horizontal-and-vertical-centering " *ngIf="(!users || users.length === 0)">
@@ -25,7 +25,7 @@
       [rowHeight]="'auto'"
       [externalSorting]="true"
       [loadingIndicator]="isLoading"
-      (sort)="onSort($event)"
+      (sort)="onSortTableColumn($event)"
       [externalPaging]="true"
       [count]="page.total_elements"
       [offset]="page.offset"
@@ -34,7 +34,7 @@
       [selected]="selected"
       [selectionType]="'single'"
       (activate)="onActivate($event)"
-      (select)='onSelect($event)'
+      (select)='onSelectTableRow($event)'
       >
       <ngx-datatable-column name="" prop="id" editable="false">
         <ng-template let-value="value" ngx-datatable-cell-template>
