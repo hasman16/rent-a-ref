@@ -111,14 +111,28 @@ export default function OfficiateController(
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function matchOfficials(req, res) {
+  async function matchOfficials(req, res) {
     const Op = models.sequelize.Op;
+    const Phone = models.Phone;
+    const Person = models.Person;
+    const Image = models.Image;
+
     let clause = ResponseService.produceSearchAndSortClause(req);
     const whereClause = Object.assign(
       {
         where: {},
         attributes: ['id', 'email'],
         include: [
+          {
+            model: Person,
+            attributes: ['firstname', 'middlenames', 'lastname']
+          },
+          {
+            model: Phone
+          },
+          {
+            model: Image
+          },
           {
             model: Match,
             attributes: ['id', 'status'],
@@ -137,7 +151,6 @@ export default function OfficiateController(
       },
       clause
     );
-
     User.findAndCountAll(whereClause)
       .then(result => ResponseService.success(res, result))
       .catch(error => ResponseService.exception(res, error));

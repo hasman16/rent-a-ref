@@ -10,13 +10,15 @@ import {
 
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { ProfileService, UserService } from '../../services/index';
+import { PagingService, MatchService, UserService } from '../../services/index';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
 //Models
 import {
   Address,
   Match,
+  Page,
+  PagedData,
   Person,
   Phone,
   Profile,
@@ -39,14 +41,21 @@ export class MatchDetailComponent implements OnInit {
   set setCurrentMatch(match: Match) {
     if (match) {
       this.currentMatch = _.cloneDeep(match);
+      this.getData(this.currentMatch.id);
     }
     this.cd.markForCheck();
   }
   @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
   private currentMatch: Match;
   private subscriptions: Subscription[] = [];
+  public referees: Array<any> = [];
+  public defaultImage: string = 'assets/images/avatar2.png';
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private matchService: MatchService,
+    private pagingService: PagingService
+  ) {}
 
   ngOnInit() {}
 
@@ -54,7 +63,18 @@ export class MatchDetailComponent implements OnInit {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
-  getProfile() {}
+  public getImageAddress(referee): string {
+    const url = _.get(referee, 'images[0].location', '');
+    return url;
+  }
+
+  private getData(id: string) {
+    const page: Page = this.pagingService.getDefaultPager();
+    this.matchService.getMatchOfficials(id, page).subscribe(data => {
+      console.log('data was:', data);
+      this.referees = data.rows;
+    });
+  }
 
   public backToSchedule(event): void {
     this.back.emit(true);

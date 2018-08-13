@@ -147,32 +147,50 @@ function OfficiateController(models, ResponseService, SendGridService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function matchOfficials(req, res) {
-        var Op = models.sequelize.Op;
-        var clause = ResponseService.produceSearchAndSortClause(req);
-        var whereClause = Object.assign({
-            where: {},
-            attributes: ['id', 'email'],
-            include: [
-                {
-                    model: Match,
-                    attributes: ['id', 'status'],
-                    where: {
-                        id: req.params.match_id
-                    },
-                    through: {
-                        where: {
-                            status: (_a = {},
-                                _a[Op.like] = '%accept%',
-                                _a)
+        return __awaiter(this, void 0, void 0, function () {
+            var Op, Phone, Person, Image, clause, whereClause, _a;
+            return __generator(this, function (_b) {
+                Op = models.sequelize.Op;
+                Phone = models.Phone;
+                Person = models.Person;
+                Image = models.Image;
+                clause = ResponseService.produceSearchAndSortClause(req);
+                whereClause = Object.assign({
+                    where: {},
+                    attributes: ['id', 'email'],
+                    include: [
+                        {
+                            model: Person,
+                            attributes: ['firstname', 'middlenames', 'lastname']
+                        },
+                        {
+                            model: Phone
+                        },
+                        {
+                            model: Image
+                        },
+                        {
+                            model: Match,
+                            attributes: ['id', 'status'],
+                            where: {
+                                id: req.params.match_id
+                            },
+                            through: {
+                                where: {
+                                    status: (_a = {},
+                                        _a[Op.like] = '%accept%',
+                                        _a)
+                                }
+                            }
                         }
-                    }
-                }
-            ]
-        }, clause);
-        User.findAndCountAll(whereClause)
-            .then(function (result) { return ResponseService.success(res, result); })
-            .catch(function (error) { return ResponseService.exception(res, error); });
-        var _a;
+                    ]
+                }, clause);
+                User.findAndCountAll(whereClause)
+                    .then(function (result) { return ResponseService.success(res, result); })
+                    .catch(function (error) { return ResponseService.exception(res, error); });
+                return [2 /*return*/];
+            });
+        });
     }
     function canAssignOrRemove(value) {
         return value === 'pending' || value === 'none' || value === 'active';
