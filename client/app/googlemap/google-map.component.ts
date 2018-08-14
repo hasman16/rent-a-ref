@@ -32,6 +32,7 @@ interface Location {
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
+  @Input('show-directions') showDirections: boolean = false;
   public location: Location = {
     lat: 34.05,
     lng: -118.25,
@@ -53,7 +54,6 @@ export class GoogleMapComponent implements OnInit {
     lat: 33.803056,
     lng: -117.8325
   };
-  public show: boolean = true;
   @ViewChild(AgmMap) map: AgmMap;
 
   constructor(

@@ -75,15 +75,12 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
   set setStates(states) {
     this.states = _.cloneDeep(states);
   }
-  //private subscriptions: Subscription[] = [];
   private matches: any[] = [];
   private viewState: ViewState = ViewState.noMatches;
   public isLoading: boolean = false;
   private game: Game = <Game>{};
   public model: any = {};
   public states: Option[] = [];
-  //protected page: Page;
-  //protected selected: any[] = [];
   public delete_id: string;
   public match_id: string = '0';
   public currentMatch: Match = <Match>{};

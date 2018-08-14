@@ -50,6 +50,7 @@ export class MatchDetailComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   public referees: Array<any> = [];
   public defaultImage: string = 'assets/images/avatar2.png';
+  public showDirections: boolean = true;
 
   constructor(
     private cd: ChangeDetectorRef,

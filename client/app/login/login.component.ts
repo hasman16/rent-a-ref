@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   public model: any = {};
   public options: FormlyFormOptions = <FormlyFormOptions>{};
   public fields: FormlyFieldConfig[];
-
+  public showDirections: boolean = false;
   constructor(
     private auth: AuthService,
     private router: Router,

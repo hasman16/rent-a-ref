@@ -1,15 +1,27 @@
 :host {
-	.map-wrapper {
+	.wrapper {
 		background: white;
 	}
+	.map-wrapper {
+		padding: 5px;
+		border: 1px solid #eee;
+	}
+
 	.directions {
-		background: white;
+		padding: 5px;
 		overflow-x: none;
 		overflow-y: auto;
+		div {
+			margin: 2px;
+			border: 1px solid #eee;
+		}
 	}
+
 	agm-map {
+		margin: 2px;
 		height: 200px;
 	}
+
 	@media only screen and (max-width: 599px) {
 		agm-map {
 			height: 200px;

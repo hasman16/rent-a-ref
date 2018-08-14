@@ -1,4 +1,5 @@
-	<div class="col-xs-12 col-sm-6 col-lg-6">
+<div class="wrapper">
+	<div class="map-wrapper">
 		<agm-map [latitude]="location.lat" [longitude]="location.lng">
 		  <agm-marker [latitude]="location.marker.lat" [longitude]="location.marker.lng"></agm-marker>
 		  <!--
@@ -7,9 +8,16 @@
 		  [fillColor]="'blue'"
 		  [circleDraggable]="true"
 		  [editable]="true"></agm-circle> -->
-		  <agm-direction [origin]="origin" [destination]="destination" (onChange)="onDirectionChange($event)" [visible]="show"  [panel]="myPanel"></agm-direction>
+		  <agm-direction
+		  	*ngIf="showDirections"
+		  	 [origin]="origin"
+		  	 [destination]="destination"
+		  	 [visible]="showDirections"
+		  	 [panel]="myPanel"
+		  	 (onChange)="onDirectionChange($event)"></agm-direction>
 		</agm-map>
 	</div>
-	<div class="col-xs-12 col-sm-6 col-lg-6">
-		<div #myPanel class="directions"></div>
+	<div class="directions" *ngIf="showDirections">
+		<div #myPanel></div>
 	</div>
+</div>
