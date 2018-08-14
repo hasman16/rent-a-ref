@@ -43,7 +43,6 @@ export class MatchDetailComponent implements OnInit {
       this.currentMatch = _.cloneDeep(match);
       this.getData(this.currentMatch.id);
     }
-    this.cd.markForCheck();
   }
   @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
   private currentMatch: Match;
@@ -58,22 +57,35 @@ export class MatchDetailComponent implements OnInit {
     private pagingService: PagingService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.currentMatch) {
+      this.getData(this.currentMatch.id);
+    }
+  }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
+  public nameOfOfficial(referee): string {
+    const firstname = referee.person.firstname;
+    const middlename = _.defaultTo(referee.person.middleName, '');
+    const lastname = ' ' + referee.person.lastname;
+    console.log('::::', referee, firstname);
+    return (
+      firstname + (middlename.length > 0 ? ' ' + middlename : '') + lastname
+    );
+  }
   public getImageAddress(referee): string {
-    const url = _.get(referee, 'images[0].location', '');
+    const url = _.get(referee, 'images[0].location', this.defaultImage);
     return url;
   }
 
   private getData(id: string) {
     const page: Page = this.pagingService.getDefaultPager();
     this.matchService.getMatchOfficials(id, page).subscribe(data => {
-      console.log('data was:', data);
       this.referees = data.rows;
+      this.cd.markForCheck();
     });
   }
 

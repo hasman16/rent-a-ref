@@ -1,23 +1,27 @@
 <div class="row">
+
+    <div class="col-12">
+        <div class="card">
+            <h3>Game Referees</h3>
+        	<div class="container">
+        		<span *ngFor="let referee of referees" class="item">
+                    <div>
+                        <rar-image [errorImage]="defaultImage" [image]="getImageAddress(referee)" [width]="120"></rar-image>
+                    </div>
+                    <div>
+                        {{nameOfOfficial(referee)}}
+                    </div>
+                </span>
+        	</div>
+            <span>
+                <button class="btn btn-primary btn-sm" (click)="backToSchedule($event)"
+                 title="Click to go back to schedule.">Back to Schedule</button>
+            </span>
+        </div>
+    </div>
+
     <div class="col-12">
         <rar-google-map [show-directions]="showDirections"></rar-google-map>
     </div>
-      <div class="col-12">
-        <div class="card">
-        	<div>
-        		<div *ngFor="let referee of referees" class="horizontal-and-vertical-centering">
-                    <rar-image [errorImage]="defaultImage" [image]="getImageAddress(referee)" [width]="50"></rar-image>
-                    <div>
-                        {{referee.email}}
-                    </div>
-                    <div>
-                        <label>
-                            
-                        </label>
-                    </div>
-                </div>
-        	</div>
-    	<button class="btn btn-primary btn-sm" (click)="backToSchedule($event)" title="Click to go back to schedule.">Back to Schedule</button>
-        </div>
-      </div>
+
 </div>
