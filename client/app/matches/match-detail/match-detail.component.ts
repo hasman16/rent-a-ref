@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PagingService, MatchService, UserService } from '../../services/index';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
+import { Location } from '../../googlemap/google-map.component';
 //Models
 import {
   Address,
@@ -49,7 +50,10 @@ export class MatchDetailComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   public referees: Array<any> = [];
   public defaultImage: string = 'assets/images/avatar2.png';
-  public showDirections: boolean = true;
+  public showDirections: boolean = false;
+  public origin: Location;
+  public destination: Location;
+  private matchAddress: Address;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -58,6 +62,7 @@ export class MatchDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.showDirections = false;
     if (this.currentMatch) {
       this.getData(this.currentMatch.id);
     }
@@ -67,15 +72,6 @@ export class MatchDetailComponent implements OnInit {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
-  public nameOfOfficial(referee): string {
-    const firstname = referee.person.firstname;
-    const middlename = _.defaultTo(referee.person.middleName, '');
-    const lastname = ' ' + referee.person.lastname;
-    console.log('::::', referee, firstname);
-    return (
-      firstname + (middlename.length > 0 ? ' ' + middlename : '') + lastname
-    );
-  }
   public getImageAddress(referee): string {
     const url = _.get(referee, 'images[0].location', this.defaultImage);
     return url;
@@ -83,10 +79,42 @@ export class MatchDetailComponent implements OnInit {
 
   private getData(id: string) {
     const page: Page = this.pagingService.getDefaultPager();
-    this.matchService.getMatchOfficials(id, page).subscribe(data => {
-      this.referees = data.rows;
-      this.cd.markForCheck();
-    });
+    Observable.combineLatest(
+      this.matchService.getMatchOfficials(id, page),
+      this.matchService.getMatch(id)
+    )
+      .finally(() => this.cd.markForCheck())
+      .subscribe(([referees, match]: [any, any]) => {
+        this.referees = referees.rows;
+        this.matchAddress = _.cloneDeep(match.address);
+        this.destination = {};
+        this.origin = {};
+        this.destination.address_level_1 = this.matchAddress.line1;
+        this.destination.address_level_2 = this.matchAddress.city;
+        this.destination.address_state = this.matchAddress.state;
+        this.destination.address_zip = this.matchAddress.zip;
+        this.destination.lng = Number(this.matchAddress.lng);
+        this.destination.lat = Number(this.matchAddress.lat);
+
+        this.origin.address_level_1 = '';
+        this.origin.address_level_2 = '';
+        this.origin.address_state = this.matchAddress.state;
+        this.origin.address_zip = this.matchAddress.zip;
+        this.showDirections = false;
+      });
+  }
+
+  public findRoute(event): void {
+    console.log('route to ==>:', event);
+    this.origin.address_level_1 = '';
+    this.origin.address_level_2 = '';
+    this.origin.address_state = this.matchAddress.state;
+    this.origin.address_zip = this.matchAddress.zip;
+
+    this.origin.address_level_1 = this.matchAddress.line1;
+    this.origin.address_level_2 = this.matchAddress.city;
+    this.origin.address_state = this.matchAddress.state;
+    this.origin.address_zip = this.matchAddress.zip;
   }
 
   public backToSchedule(event): void {
