@@ -39,6 +39,7 @@ import { BlogFormComponent } from './forms/blog-form/blog-form.component';
 import { EventsFormComponent } from './forms/events-form/events-form.component';
 import { MatchesFormComponent } from './forms/matches-form/matches-form.component';
 import { StatusesFormComponent } from './forms/statuses-form/statuses-form.component';
+import { ScheduleAddressFormComponent } from './forms/schedule-address-form/schedule-address-form.component';
 import { SearchBoxComponent } from './search-box/index';
 
 @NgModule({
@@ -123,6 +124,7 @@ import { SearchBoxComponent } from './search-box/index';
         EventsFormComponent,
         MatchesFormComponent,
         StatusesFormComponent,
+        ScheduleAddressFormComponent,
         SearchBoxComponent,
         DatepickerTypeComponent
     ],
@@ -147,6 +149,7 @@ import { SearchBoxComponent } from './search-box/index';
         EventsFormComponent,
         MatchesFormComponent,
         StatusesFormComponent,
+        ScheduleAddressFormComponent,
         SearchBoxComponent,
         DatepickerTypeComponent
     ],

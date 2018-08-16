@@ -1,0 +1,4 @@
+<base-form [fields]="fields" [model]="model" (ngSubmit)="onSubmit($event)">
+	<hr class="space-hr"/>
+  <button type="submit" class="btn btn-primary btn-sm" [disabled]="disable || !baseForm.form.valid">Find</button>
+</base-form>

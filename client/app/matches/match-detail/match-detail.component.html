@@ -4,14 +4,24 @@
         <div class="card">
             <h3>Game Referees</h3>
         	<div class="container">
-        		<span *ngFor="let referee of referees" class="item">
+        		<div *ngFor="let referee of referees" class="item">
+     
+                    <rar-image [errorImage]="defaultImage" [image]="getImageAddress(referee)" [width]="130"></rar-image>
+           
                     <div>
-                        <rar-image [errorImage]="defaultImage" [image]="getImageAddress(referee)" [width]="120"></rar-image>
+                        <h6>name</h6>
+                        {{referee.person.firstname}}<br />
+                        <ng-template *ngIf="referee.person.middlename">
+                            <p>{{referee.person.middlename}}</p>
+                        </ng-template>
+                        {{referee.person.lastname}}
                     </div>
-                    <div>
-                        {{nameOfOfficial(referee)}}
+                    <hr />
+                    <div *ngFor="let phone of referee.phones">
+                        <label>{{phone.type}}</label>
+                        {{phone.number}}
                     </div>
-                </span>
+                </div>
         	</div>
             <span>
                 <button class="btn btn-primary btn-sm" (click)="backToSchedule($event)"
@@ -21,7 +31,18 @@
     </div>
 
     <div class="col-12">
-        <rar-google-map [show-directions]="showDirections"></rar-google-map>
+        <div class="addresses">
+            <div>
+                <h6>Addresses</h6>
+                <div>asdfasdfadsfasdfasdfasdfasdf</div>
+                <hr />
+                <schedule-address-form (ngSubmit)="findRoute($event)"></schedule-address-form>
+            </div>
+            <rar-google-map
+             [show-directions]="showDirections"
+             [origin]="origin"
+             [destination]="destination"></rar-google-map>
+        </div>
     </div>
 
 </div>

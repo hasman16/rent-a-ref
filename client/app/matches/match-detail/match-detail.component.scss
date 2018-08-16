@@ -1,15 +1,40 @@
 :host {
 	.container {
+		padding: 10px;
+		margin: 0;
 		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-		padding: 5px;
 	}
 	.item {
-		display: flex;
-		flex-direction: column;
-		max-width: 30%;
-		border: 1px solid #eee;
+		margin: 10px;
+		min-width: 160px;
+		max-width: 160px;
+		min-height: 280px;
+		max-height: 280px;
+		border: 1px solid #bbb;
 		padding: 5px;
+	}
+	.addresses {
+		display: flex;
+		background: white;
+		justify-content: space-around;
+		> div {
+			width: 33%;
+			margin: 1%;
+		}
+		> rar-google-map {
+			width: 63%;
+			margin: 1%;
+		}
+	}
+
+	@media only screen and (max-width: 599px) {
+	}
+	@media only screen and (min-width: 600px) {
+	}
+	@media only screen and (min-width: 768px) {
+	}
+	@media only screen and (min-width: 992) {
+	}
+	@media only screen and (min-width: 1200) {
 	}
 }
