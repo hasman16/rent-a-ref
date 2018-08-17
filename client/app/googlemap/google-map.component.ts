@@ -33,21 +33,39 @@ export interface Location {
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
-  @Input('show-directions') showDirections: boolean = false;
-  @Input('destination')
+  @Input('destination') public showDirections: boolean = false;
+
   set setDestination(address: Location) {
-    const location: Location = this.findLocation(address);
-    if (location) {
-      this.destination = _.cloneDeep(location);
-      this.map.triggerResize();
+    if (address) {
+      this.findLocation(address)
+        .then((location: Location) => {
+          if (location) {
+            this.destination = {
+              lat: location.lat,
+              lng: location.lng
+            };
+            //  this.map.triggerResize();
+          }
+        })
+        .catch(() => {});
     }
   }
+
   @Input('origin')
   set setOrigin(address: Location) {
-    const location: Location = this.findLocation(address);
-    if (location) {
-      this.origin = _.cloneDeep(location);
-      this.map.triggerResize();
+    if (address) {
+      this.findLocation(address)
+        .then((location: Location) => {
+          if (location) {
+            this.origin = {
+              lat: location.lat,
+              lng: location.lng
+            };
+            this.showDirections = true;
+            //   this.map.triggerResize();
+          }
+        })
+        .catch(() => {});
     }
   }
 
@@ -72,7 +90,7 @@ export class GoogleMapComponent implements OnInit {
     lat: 33.803056,
     lng: -117.8325
   };
-  private loading: boolean = false;
+
   @ViewChild(AgmMap) map: AgmMap;
 
   constructor(
@@ -83,6 +101,9 @@ export class GoogleMapComponent implements OnInit {
     this.mapsApiLoader = mapsApiLoader;
     this.zone = zone;
     this.wrapper = wrapper;
+    this.mapsApiLoader.load().then(() => {
+      this.geocoder = new google.maps.Geocoder();
+    });
   }
 
   ngOnInit() {
@@ -93,18 +114,21 @@ export class GoogleMapComponent implements OnInit {
     console.log('onDirectionChange:', event);
   }
 
-  protected findLocation(address: Location): Location {
-    if (address) {
+  async findLocation(address: Location) {
+    if (address && this.showDirections) {
       if (address.lat && address.lng) {
-        return <Location>_.cloneDeep(address);
+        address.zoom = 1;
+        address.marker = {
+          lat: address.lat,
+          lng: address.lng,
+          draggable: false
+        };
+        return Promise.resolve(<Location>_.cloneDeep(address));
       } else {
-        try {
-          let location: Location | any = this.getAddress(address);
-          return location;
-        } catch (e) {
-          return null;
-        }
+        return this.getAddress(address);
       }
+    } else {
+      return Promise.resolve(null);
     }
   }
 
@@ -125,46 +149,49 @@ export class GoogleMapComponent implements OnInit {
     return new Promise(function(resolve, reject) {
       geocoder.geocode(
         {
-          address: address
+          address: addressString
         },
         (results, status) => {
-          console.log(results);
           if (status == google.maps.GeocoderStatus.OK) {
             let location: Location = {
               lat: 0,
               lng: 0,
+              marker: {
+                lat: 0,
+                lng: 0,
+                draggable: false
+              },
               zoom: 1
             };
+            const result = _.head(results);
+            const length = result.address_components.length;
+            for (let i = 0; i < length; i++) {
+              const address_components = result.address_components[i];
+              const types = address_components.types;
 
-            for (var i = 0; i < results[0].address_components.length; i++) {
-              let types = results[0].address_components[i].types;
-              console.log(types);
-              if (types.indexOf('locality') != -1) {
-                location.address_level_2 =
-                  results[0].address_components[i].long_name;
+              if (_.includes(types, 'locality')) {
+                location.address_level_2 = address_components.long_name;
               }
-              if (types.indexOf('country') != -1) {
-                location.address_country =
-                  results[0].address_components[i].long_name;
+              if (_.includes(types, 'country')) {
+                location.address_country = address_components.long_name;
               }
-              if (types.indexOf('postal_code') != -1) {
-                location.address_zip =
-                  results[0].address_components[i].long_name;
+              if (_.includes(types, 'postal_code')) {
+                location.address_zip = address_components.long_name;
               }
-              if (types.indexOf('administrative_area_level_1') != -1) {
-                location.address_state =
-                  results[0].address_components[i].long_name;
+              if (_.includes(types, 'administrative_area_level_1')) {
+                location.address_state = address_components.long_name;
               }
             }
-            if (results[0].geometry.location) {
-              location.lat = results[0].geometry.location.lat();
-              location.lng = results[0].geometry.location.lng();
-              location.marker.lat = results[0].geometry.location.lat();
-              location.marker.lng = results[0].geometry.location.lng();
+
+            if (results && result.geometry && result.geometry.location) {
+              const geometry = result.geometry;
+              location.lat = geometry.location.lat();
+              location.lng = geometry.location.lng();
+              location.marker.lat = location.lat;
+              location.marker.lng = location.lng;
               location.marker.draggable = true;
-              location.viewport = results[0].geometry.viewport;
+              location.viewport = geometry.viewport;
             }
-
             resolve(location);
           } else {
             reject('Sorry, this search produced no results.');

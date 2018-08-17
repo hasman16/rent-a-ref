@@ -1,7 +1,8 @@
 <div class="wrapper">
 	<div class="map-wrapper">
 		<agm-map [latitude]="location.lat" [longitude]="location.lng">
-		  <agm-marker [latitude]="location.marker.lat" [longitude]="location.marker.lng"></agm-marker>
+		  <agm-marker [latitude]="location.marker.lat" [longitude]="location.marker.lng"
+		  *ngIf="!showDirections"></agm-marker>
 		  <!--
 		  <agm-circle [latitude]="location.marker.lat" [longitude]="location.marker.lng"
 		  [(radius)]="circleRadius"

@@ -50,7 +50,6 @@ export class MatchDetailComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   public referees: Array<any> = [];
   public defaultImage: string = 'assets/images/avatar2.png';
-  public showDirections: boolean = false;
   public origin: Location;
   public destination: Location;
   private matchAddress: Address;
@@ -62,7 +61,6 @@ export class MatchDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.showDirections = false;
     if (this.currentMatch) {
       this.getData(this.currentMatch.id);
     }
@@ -87,34 +85,32 @@ export class MatchDetailComponent implements OnInit {
       .subscribe(([referees, match]: [any, any]) => {
         this.referees = referees.rows;
         this.matchAddress = _.cloneDeep(match.address);
-        this.destination = {};
-        this.origin = {};
-        this.destination.address_level_1 = this.matchAddress.line1;
-        this.destination.address_level_2 = this.matchAddress.city;
-        this.destination.address_state = this.matchAddress.state;
-        this.destination.address_zip = this.matchAddress.zip;
-        this.destination.lng = Number(this.matchAddress.lng);
-        this.destination.lat = Number(this.matchAddress.lat);
-
-        this.origin.address_level_1 = '';
-        this.origin.address_level_2 = '';
-        this.origin.address_state = this.matchAddress.state;
-        this.origin.address_zip = this.matchAddress.zip;
-        this.showDirections = false;
+        this.origin = null;
+        this.destination = {
+          address_level_1: this.matchAddress.line1,
+          address_level_2: this.matchAddress.city,
+          address_state: this.matchAddress.state,
+          address_zip: this.matchAddress.zip,
+          lng: Number(this.matchAddress.lng),
+          lat: Number(this.matchAddress.lat)
+        };
+        this.destination.marker = {
+          lat: this.destination.lat,
+          lng: this.destination.lng,
+          draggable: false
+        };
       });
   }
 
   public findRoute(event): void {
-    console.log('route to ==>:', event);
-    this.origin.address_level_1 = '';
-    this.origin.address_level_2 = '';
-    this.origin.address_state = this.matchAddress.state;
-    this.origin.address_zip = this.matchAddress.zip;
+    this.origin = {
+      address_level_1: event.line1,
+      address_level_2: event.city,
+      address_state: event.state,
+      address_zip: event.zip
+    };
 
-    this.origin.address_level_1 = this.matchAddress.line1;
-    this.origin.address_level_2 = this.matchAddress.city;
-    this.origin.address_state = this.matchAddress.state;
-    this.origin.address_zip = this.matchAddress.zip;
+    this.cd.markForCheck();
   }
 
   public backToSchedule(event): void {
