@@ -50,7 +50,6 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	public onSelectTableRow({ selected }): void {
 		this.selectedMatch = _.cloneDeep(_.head(selected));
 		this.viewState = ViewState.matchView;
-		console.log('selected is:', this.selectedMatch);
 	}
 
 	public backToSchedule(event): void {

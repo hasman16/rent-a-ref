@@ -73,7 +73,7 @@
   <div class="col-12" *ngIf="isMatchView()">
     <strong class="etched-text">Viewing schedule for referee <i>{{user.email}}</i>.</strong>
     <div class="card">
-      <rar-match-detail [match]="selectedMatch" (back)="backToSchedule($event)"></rar-match-detail>
+      <rar-match-detail [user]="user" [match]="selectedMatch" (back)="backToSchedule($event)"></rar-match-detail>
     </div>
 
     <br />

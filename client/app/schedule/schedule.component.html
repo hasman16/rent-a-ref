@@ -64,7 +64,7 @@
     </div>
 
     <div *ngIf="isMatchView()">
-      <rar-match-detail [match]="selectedMatch" (back)="backToSchedule($event)"></rar-match-detail>
+      <rar-match-detail [user]="user" [match]="selectedMatch" (back)="backToSchedule($event)"></rar-match-detail>
     </div>
   </div>
 </div>

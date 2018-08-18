@@ -33,10 +33,32 @@
     <div class="col-12">
         <div class="addresses">
             <div>
-                <h6>Addresses</h6>
-                <div>asdfasdfadsfasdfasdfasdfasdf</div>
-                <hr />
                 <schedule-address-form (ngSubmit)="findRoute($event)"></schedule-address-form>
+
+                <div *ngIf="addresses && addresses.length > 0; else noAddresses">
+                    <h6>Addresses</h6>
+                    <ul class="list-unstyled">
+                        <li *ngFor="let address of addresses; let i=index">
+
+                            <div>{{address.line1}}</div>
+ 
+                            <div>{{address.line2}}</div>
+
+                            <div>{{address.city}}</div>
+
+                            <div>{{address.state}}</div>
+
+                            <div>{{address.zip}}</div>
+
+                        </li>
+                    </ul>
+                </div>
+
+                <ng-template #noAddresses>
+                    <div >
+                        <div>No Addresses Saved.</div>
+                    </div>
+                </ng-template>
             </div>
             <rar-google-map
              [origin]="origin"

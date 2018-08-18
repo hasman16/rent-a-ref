@@ -221,7 +221,6 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
     const timeZoneDate = moment.tz(game.date, game.timezone_id);
     const matchDate: string = timeZoneDate.format('YYYY-MM-DD');
     const matchTime: string = timeZoneDate.format('HH:mm:ss');
-    console.log('matchTime:', matchTime);
 
     this.model = {
       venue_name: game.venue_name,
@@ -241,7 +240,6 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
     const timeZoneDate = moment.tz(match.date, match.timezone_id);
     const matchDate: string = timeZoneDate.format('YYYY-MM-DD');
     const matchTime: string = timeZoneDate.format('HH:mm:ss');
-    console.log('matchTime:', matchTime);
 
     const address: Address = match.address;
     return {

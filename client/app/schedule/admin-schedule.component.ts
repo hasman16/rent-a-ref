@@ -42,7 +42,7 @@ export class AdminScheduleComponent extends AbstractScheduleComponent
 	@Input('user')
 	set setUser(user: User) {
 		if (user) {
-			this.user = user;
+			this.user = _.cloneDeep(user);
 			const page: Page = this.pagingService.getDefaultPager();
 			this.getData(page);
 		}

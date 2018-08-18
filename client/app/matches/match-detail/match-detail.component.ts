@@ -45,25 +45,37 @@ export class MatchDetailComponent implements OnInit {
       this.getData(this.currentMatch.id);
     }
   }
+  @Input('user')
+  set setUser(user: User) {
+    if (user) {
+      this.user = _.cloneDeep(user);
+    }
+  }
   @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
   private currentMatch: Match;
   private subscriptions: Subscription[] = [];
+  public addresses: Address[];
   public referees: Array<any> = [];
   public defaultImage: string = 'assets/images/avatar2.png';
   public origin: Location;
   public destination: Location;
+  public user: User;
   public showDirections: boolean = false;
 
   constructor(
     private cd: ChangeDetectorRef,
     private matchService: MatchService,
-    private pagingService: PagingService
+    private pagingService: PagingService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
     this.showDirections = false;
     if (this.currentMatch) {
       this.getData(this.currentMatch.id);
+    }
+    if (this.user) {
+      this.getAddresses(this.user);
     }
   }
 
@@ -75,6 +87,15 @@ export class MatchDetailComponent implements OnInit {
   public getImageAddress(referee): string {
     const url = _.get(referee, 'images[0].location', this.defaultImage);
     return url;
+  }
+
+  private getAddresses(user: User): void {
+    this.userService
+      .getUserAddresses(this.user.id)
+      .finally(() => this.cd.markForCheck())
+      .subscribe(addresses => {
+        this.addresses = _.cloneDeep(addresses.addresses);
+      });
   }
 
   private getData(id: string) {
