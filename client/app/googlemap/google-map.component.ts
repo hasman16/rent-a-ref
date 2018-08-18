@@ -1,6 +1,14 @@
 //https://sergeome.com/blog/2017/07/02/angular4-and-google-maps-native-javascript-api/
 //https://blog.ng-book.com/angular-and-google-maps-a-tutorial/
-import { Component, Input, ViewChild, NgZone, OnInit } from '@angular/core';
+import {
+  Component,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  Input,
+  ViewChild,
+  NgZone,
+  OnInit
+} from '@angular/core';
 import { MapsAPILoader, AgmMap } from '@agm/core';
 import { GoogleMapsAPIWrapper } from '@agm/core/services';
 import * as _ from 'lodash';
@@ -30,7 +38,8 @@ export interface Location {
 @Component({
   selector: 'rar-google-map',
   templateUrl: './google-map.component.html',
-  styleUrls: ['./google-map.component.scss']
+  styleUrls: ['./google-map.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoogleMapComponent implements OnInit {
   @Input('destination') public showDirections: boolean = false;
@@ -45,6 +54,7 @@ export class GoogleMapComponent implements OnInit {
               lng: location.lng
             };
             //  this.map.triggerResize();
+            this.cd.markForCheck();
           }
         })
         .catch(() => {});
@@ -63,6 +73,7 @@ export class GoogleMapComponent implements OnInit {
             };
             this.showDirections = true;
             //   this.map.triggerResize();
+            this.cd.markForCheck();
           }
         })
         .catch(() => {});
@@ -94,7 +105,8 @@ export class GoogleMapComponent implements OnInit {
   @ViewChild(AgmMap) map: AgmMap;
 
   constructor(
-    public mapsApiLoader: MapsAPILoader,
+    private cd: ChangeDetectorRef,
+    private mapsApiLoader: MapsAPILoader,
     private zone: NgZone,
     private wrapper: GoogleMapsAPIWrapper
   ) {
