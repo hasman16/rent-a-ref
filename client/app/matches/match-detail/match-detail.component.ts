@@ -52,7 +52,7 @@ export class MatchDetailComponent implements OnInit {
   public defaultImage: string = 'assets/images/avatar2.png';
   public origin: Location;
   public destination: Location;
-  private matchAddress: Address;
+  public showDirections: boolean = false;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -61,12 +61,14 @@ export class MatchDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.showDirections = false;
     if (this.currentMatch) {
       this.getData(this.currentMatch.id);
     }
   }
 
   ngOnDestroy() {
+    this.showDirections = false;
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
   }
 
@@ -83,16 +85,20 @@ export class MatchDetailComponent implements OnInit {
     )
       .finally(() => this.cd.markForCheck())
       .subscribe(([referees, match]: [any, any]) => {
+        const matchAddress: Address = _.cloneDeep(match.address);
+
         this.referees = referees.rows;
-        this.matchAddress = _.cloneDeep(match.address);
         this.origin = null;
         this.destination = {
-          address_level_1: this.matchAddress.line1,
-          address_level_2: this.matchAddress.city,
-          address_state: this.matchAddress.state,
-          address_zip: this.matchAddress.zip,
-          lng: Number(this.matchAddress.lng),
-          lat: Number(this.matchAddress.lat)
+          address_level_1:
+            _.defaultTo(matchAddress.line1, '') +
+            ' ' +
+            _.defaultTo(matchAddress.line2, ''),
+          address_level_2: _.defaultTo(matchAddress.city, ''),
+          address_state: _.defaultTo(matchAddress.state, ''),
+          address_zip: _.defaultTo(matchAddress.zip, ''),
+          lng: Number(matchAddress.lng),
+          lat: Number(matchAddress.lat)
         };
         this.destination.marker = {
           lat: this.destination.lat,
@@ -103,11 +109,13 @@ export class MatchDetailComponent implements OnInit {
   }
 
   public findRoute(event): void {
+    this.showDirections = true;
     this.origin = {
-      address_level_1: event.line1,
-      address_level_2: event.city,
-      address_state: event.state,
-      address_zip: event.zip
+      address_level_1:
+        _.defaultTo(event.line1, '') + ' ' + _.defaultTo(event.line2, ''),
+      address_level_2: _.defaultTo(event.city, ''),
+      address_state: _.defaultTo(event.state, ''),
+      address_zip: _.defaultTo(event.zip, '')
     };
 
     this.cd.markForCheck();

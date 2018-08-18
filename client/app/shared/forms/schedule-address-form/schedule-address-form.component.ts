@@ -56,7 +56,7 @@ export class ScheduleAddressFormComponent implements AfterViewInit, OnInit {
             key: 'line1',
             templateOptions: {
               label: 'Street 1',
-              required: true
+              required: false
             }
           },
           {
@@ -93,7 +93,7 @@ export class ScheduleAddressFormComponent implements AfterViewInit, OnInit {
             className: 'col-sm-12',
             templateOptions: {
               label: 'Zip',
-              required: true,
+              required: false,
               pattern: /\d{5}(\-\d{4})?/
             }
           }

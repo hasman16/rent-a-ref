@@ -42,65 +42,27 @@ export interface Location {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoogleMapComponent implements OnInit {
-  @Input('destination') public showDirections: boolean = false;
-
+  @Input('show-directions') public showDirections: boolean = false;
+  @Input('destination')
   set setDestination(address: Location) {
-    if (address) {
-      this.findLocation(address)
-        .then((location: Location) => {
-          if (location) {
-            this.destination = {
-              lat: location.lat,
-              lng: location.lng
-            };
-            //  this.map.triggerResize();
-            this.cd.markForCheck();
-          }
-        })
-        .catch(() => {});
-    }
+    this.setAddress(address, (newAddress: Location) => {
+      this.destination = _.cloneDeep(newAddress);
+      this.location = _.cloneDeep(newAddress);
+    });
   }
 
   @Input('origin')
   set setOrigin(address: Location) {
-    if (address) {
-      this.findLocation(address)
-        .then((location: Location) => {
-          if (location) {
-            this.origin = {
-              lat: location.lat,
-              lng: location.lng
-            };
-            this.showDirections = true;
-            //   this.map.triggerResize();
-            this.cd.markForCheck();
-          }
-        })
-        .catch(() => {});
-    }
+    this.setAddress(address, (newAddress: Location) => {
+      this.origin = _.cloneDeep(newAddress);
+      this.showDirections = true;
+    });
   }
-
-  public location: Location = {
-    lat: 34.05,
-    lng: -118.25,
-    marker: {
-      lat: 34.05,
-      lng: -118.25,
-      draggable: false
-    },
-    zoom: 5
-  };
-
   public circleRadius: number = 64373;
+  public location: Location;
+  public origin: Marker;
+  public destination: Marker;
   public geocoder: any;
-  public origin: any = {
-    lat: 34.05,
-    lng: -118.25
-  };
-  public destination: any = {
-    lat: 33.803056,
-    lng: -117.8325
-  };
 
   @ViewChild(AgmMap) map: AgmMap;
 
@@ -110,6 +72,24 @@ export class GoogleMapComponent implements OnInit {
     private zone: NgZone,
     private wrapper: GoogleMapsAPIWrapper
   ) {
+    this.location = <Location>{
+      lat: 34.05,
+      lng: -118.25,
+      marker: {
+        lat: 34.05,
+        lng: -118.25,
+        draggable: false
+      },
+      zoom: 5
+    };
+    this.origin = <Marker>{
+      lat: 34.05,
+      lng: -118.25
+    };
+    this.destination = <Marker>{
+      lat: 33.803056,
+      lng: -117.8325
+    };
     this.mapsApiLoader = mapsApiLoader;
     this.zone = zone;
     this.wrapper = wrapper;
@@ -126,15 +106,28 @@ export class GoogleMapComponent implements OnInit {
     console.log('onDirectionChange:', event);
   }
 
-  async findLocation(address: Location) {
-    if (address && this.showDirections) {
+  protected setAddress(address: Location, callback): void {
+    if (address) {
+      this.findLocation(address)
+        .then((location: Location) => {
+          if (location) {
+            location.zoom = 1;
+            location.marker = {
+              lat: location.lat,
+              lng: location.lng,
+              draggable: false
+            };
+            callback(location);
+            this.cd.markForCheck();
+          }
+        })
+        .catch(error => {});
+    }
+  }
+
+  protected async findLocation(address: Location) {
+    if (address) {
       if (address.lat && address.lng) {
-        address.zoom = 1;
-        address.marker = {
-          lat: address.lat,
-          lng: address.lng,
-          draggable: false
-        };
         return Promise.resolve(<Location>_.cloneDeep(address));
       } else {
         return this.getAddress(address);
@@ -145,18 +138,11 @@ export class GoogleMapComponent implements OnInit {
   }
 
   protected async getAddress(address: Location) {
-    let addressArray: any[] = [
-      address.address_level_1,
-      address.address_level_2,
-      address.address_state,
-      address.address_zip
-    ];
-    let addressString = addressArray.join(' ');
-
     if (!this.geocoder) {
       this.geocoder = new google.maps.Geocoder();
     }
     const geocoder: any = this.geocoder;
+    const addressString: string = this.convertLocationoString(address);
 
     return new Promise(function(resolve, reject) {
       geocoder.geocode(
@@ -211,6 +197,16 @@ export class GoogleMapComponent implements OnInit {
         }
       );
     });
+  }
+
+  protected convertLocationoString(address: Location): string {
+    let addressArray: any[] = [
+      address.address_level_1,
+      address.address_level_2,
+      address.address_state,
+      address.address_zip
+    ];
+    return addressArray.join(' ');
   }
 
   protected milesToRadius(value): void {

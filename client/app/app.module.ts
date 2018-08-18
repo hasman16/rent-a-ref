@@ -24,7 +24,7 @@ import { CommonModule } from '@angular/common';
 
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction'; // agm-direction
-import { GoogleMapComponent, GoogleMapService } from './googlemap/index';
+import { GoogleMapComponent } from './googlemap/index';
 
 /* Components */
 import { AboutComponent } from './about/about.component';
@@ -214,7 +214,7 @@ import {
         CoreModule,
         CommonModule
     ],
-    providers: [EventsComponentService, GoogleMapsAPIWrapper, GoogleMapService],
+    providers: [EventsComponentService, GoogleMapsAPIWrapper],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     // Add bootstrap
     bootstrap: [AppComponent]
