@@ -105,7 +105,7 @@ function MatchController(models, ResponseService) {
     }
     function update(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var match, sequelize, Officiating, match_id, Address, Phone, address, phone, relation, transaction, oldMatch, newMatch, newAddress, newPhone, dateTime, newMatch_1, error_1;
+            var match, sequelize, Officiating, match_id, Address, Phone, address, phone, relation, transaction, oldMatch, newMatch, oldAddress, oldPhone, dateTime, newMatch_1, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -130,7 +130,7 @@ function MatchController(models, ResponseService) {
                         delete match.phone;
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 15, , 16]);
+                        _a.trys.push([1, 16, , 17]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
@@ -139,66 +139,69 @@ function MatchController(models, ResponseService) {
                             })];
                     case 3:
                         oldMatch = _a.sent();
-                        if (!(oldMatch && canAssignOrRemove(oldMatch.status))) return [3 /*break*/, 12];
-                        if (!phone) return [3 /*break*/, 5];
-                        return [4 /*yield*/, Phone.update(phone, {
-                                where: { id: phone.id }
-                            }, { transaction: transaction })];
+                        if (!(oldMatch && canAssignOrRemove(oldMatch.status))) return [3 /*break*/, 13];
+                        if (!phone) return [3 /*break*/, 6];
+                        return [4 /*yield*/, Phone.findById(oldMatch.phone_id, {
+                                transaction: transaction
+                            })];
                     case 4:
-                        newPhone = _a.sent();
-                        match.phone_id = newPhone.id;
-                        _a.label = 5;
-                    case 5:
-                        if (!address) return [3 /*break*/, 10];
-                        return [4 /*yield*/, Address.update(address, {
-                                where: { id: address.id }
+                        oldPhone = _a.sent();
+                        match.phone_id = oldPhone.id;
+                        if (!oldPhone) return [3 /*break*/, 6];
+                        return [4 /*yield*/, Phone.update(phone, {
+                                where: { id: oldPhone.id }
                             }, { transaction: transaction })];
+                    case 5:
+                        _a.sent();
+                        _a.label = 6;
                     case 6:
-                        newAddress = _a.sent();
-                        match.address_id = newAddress.id;
+                        if (!address) return [3 /*break*/, 11];
                         dateTime = match.date + 'T' + match.time;
                         match.date = dateTime.replace(/z/i, '');
                         return [4 /*yield*/, ResponseService.workoutTimeZone(match, address)];
                     case 7:
                         _a.sent();
-                        if (!newAddress) return [3 /*break*/, 9];
-                        return [4 /*yield*/, Address.update({
-                                lat: address.lat,
-                                lng: address.lng
-                            }, {
+                        return [4 /*yield*/, Address.findById(oldMatch.address_id, {
+                                transaction: transaction
+                            })];
+                    case 8:
+                        oldAddress = _a.sent();
+                        if (!oldAddress) return [3 /*break*/, 10];
+                        match.address_id = oldAddress.id;
+                        return [4 /*yield*/, Address.update(address, {
                                 where: {
-                                    id: newAddress.id
+                                    id: oldAddress.id
                                 }
                             }, {
                                 transaction: transaction
                             })];
-                    case 8:
+                    case 9:
                         _a.sent();
-                        _a.label = 9;
-                    case 9: return [3 /*break*/, 11];
-                    case 10:
+                        _a.label = 10;
+                    case 10: return [3 /*break*/, 12];
+                    case 11:
                         match.date = oldMatch.date;
                         delete match.timezone_id;
                         delete match.timezone_name;
                         delete match.timezone;
                         delete match.timezone_offset;
-                        _a.label = 11;
-                    case 11: return [3 /*break*/, 13];
-                    case 12: throw new Error('Cannot update match.');
-                    case 13: return [4 /*yield*/, Match.update(match, relation, {
+                        _a.label = 12;
+                    case 12: return [3 /*break*/, 14];
+                    case 13: throw new Error('Cannot update match.');
+                    case 14: return [4 /*yield*/, Match.update(match, relation, {
                             transaction: transaction
                         })];
-                    case 14:
+                    case 15:
                         newMatch_1 = _a.sent();
                         transaction.commit();
                         ResponseService.success(res, 'Match updated', 200);
-                        return [3 /*break*/, 16];
-                    case 15:
+                        return [3 /*break*/, 17];
+                    case 16:
                         error_1 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_1, 404);
-                        return [3 /*break*/, 16];
-                    case 16: return [2 /*return*/];
+                        return [3 /*break*/, 17];
+                    case 17: return [2 /*return*/];
                 }
             });
         });

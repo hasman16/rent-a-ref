@@ -290,7 +290,6 @@ export default class ResponseService {
   }
 
   exception(res, error = 'An Internal Error Occurred', status = 500) {
-    //console.log('errored:', error);
     this.failure(res, error, status);
   }
 
@@ -344,12 +343,16 @@ export default class ResponseService {
   }
 
   async getAddress(address: AddressModel) {
-    let addressString = address.state + ' ' + address.zip;
+    let addressString: string = _.defaultTo(address.line1, '');
+    addressString += ' ' + _.defaultTo(address.line2, '');
+    addressString += ' ' + _.defaultTo(address.state, '');
+    addressString += ' ' + _.defaultTo(address.zip, '');
+    addressString += ' ' + _.defaultTo(address.country, '');
     //addressString = '1600 Amphitheatre Parkway, Mountain View, CA';
 
     return new Promise(function(resolve, reject) {
       googleMapsClient
-        .geocode({ address: addressString })
+        .geocode({ address: _.trim(addressString) })
         .asPromise()
         .then(response => {
           resolve(response.json);

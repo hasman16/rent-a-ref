@@ -279,7 +279,6 @@ var ResponseService = /** @class */ (function () {
     ResponseService.prototype.exception = function (res, error, status) {
         if (error === void 0) { error = 'An Internal Error Occurred'; }
         if (status === void 0) { status = 500; }
-        //console.log('errored:', error);
         this.failure(res, error, status);
     };
     ResponseService.prototype.isAdmin = function (req) {
@@ -342,11 +341,15 @@ var ResponseService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var addressString;
             return __generator(this, function (_a) {
-                addressString = address.state + ' ' + address.zip;
+                addressString = _.defaultTo(address.line1, '');
+                addressString += ' ' + _.defaultTo(address.line2, '');
+                addressString += ' ' + _.defaultTo(address.state, '');
+                addressString += ' ' + _.defaultTo(address.zip, '');
+                addressString += ' ' + _.defaultTo(address.country, '');
                 //addressString = '1600 Amphitheatre Parkway, Mountain View, CA';
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         googleMapsClient
-                            .geocode({ address: addressString })
+                            .geocode({ address: _.trim(addressString) })
                             .asPromise()
                             .then(function (response) {
                             resolve(response.json);

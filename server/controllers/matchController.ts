@@ -105,7 +105,7 @@ export default function MatchController(models, ResponseService) {
     delete match.address;
     delete match.phone;
 
-    let transaction, oldMatch, newMatch, newAddress, newPhone;
+    let transaction, oldMatch, newMatch, oldAddress, oldPhone;
 
     try {
       transaction = await sequelize.transaction();
@@ -114,36 +114,35 @@ export default function MatchController(models, ResponseService) {
       });
       if (oldMatch && canAssignOrRemove(oldMatch.status)) {
         if (phone) {
-          newPhone = await Phone.update(
-            phone,
-            {
-              where: { id: phone.id }
-            },
-            { transaction }
-          );
-          match.phone_id = newPhone.id;
+          oldPhone = await Phone.findById(oldMatch.phone_id, {
+            transaction
+          });
+          match.phone_id = oldPhone.id;
+          if (oldPhone) {
+            await Phone.update(
+              phone,
+              {
+                where: { id: oldPhone.id }
+              },
+              { transaction }
+            );
+          }
         }
         if (address) {
-          newAddress = await Address.update(
-            address,
-            {
-              where: { id: address.id }
-            },
-            { transaction }
-          );
-          match.address_id = newAddress.id;
           let dateTime: string = match.date + 'T' + match.time;
           match.date = dateTime.replace(/z/i, '');
           await ResponseService.workoutTimeZone(match, address);
-          if (newAddress) {
+          oldAddress = await Address.findById(oldMatch.address_id, {
+            transaction
+          });
+          if (oldAddress) {
+            match.address_id = oldAddress.id;
+
             await Address.update(
-              {
-                lat: address.lat,
-                lng: address.lng
-              },
+              address,
               {
                 where: {
-                  id: newAddress.id
+                  id: oldAddress.id
                 }
               },
               {
