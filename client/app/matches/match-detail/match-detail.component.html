@@ -9,10 +9,10 @@
     </div>
 
     <div class="col-12">
-        <div class="card">
+        <div class="card" style="min-height: 250px">
             <h3>Game Referees</h3>
         	<div class="container">
-                <div class="card shadow item" *ngFor="let referee of referees">
+                <div class="card shadow item" *ngFor="let referee of referees; let i=index">
                     <rar-image [errorImage]="defaultImage" [image]="getImageAddress(referee)" [width]="130"></rar-image>
            
                   <div class="card-body">
@@ -21,7 +21,7 @@
                             {{referee.person.middlename}}
                         </ng-template>
                         {{referee.person.lastname}}</h5>
-                    <p class="card-text" [innerHTML]="mainPhone(referee)" ></p>
+                    <p class="card-text" innHtml="mainPhone(referee)" ></p>
                   </div>
                 </div>
         	</div>

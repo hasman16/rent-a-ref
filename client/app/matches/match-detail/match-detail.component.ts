@@ -62,6 +62,7 @@ export class MatchDetailComponent implements OnInit {
   public user: User;
   public model: any = {};
   public showDirections: boolean = false;
+  public whichPanel: number = 1;
 
   constructor(
     private cd: ChangeDetectorRef,
