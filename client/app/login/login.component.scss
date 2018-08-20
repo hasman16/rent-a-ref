@@ -1,0 +1,24 @@
+@media only screen and (max-width: 599px) {
+  .form-size {
+    max-width: 90%;
+    min-width: 90%;
+    margin: auto;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .form-size {
+    max-width: 70%;
+    min-width: 70%;
+    margin: auto;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .form-size {
+    max-width: 40%;
+    min-width: 40%;
+    margin: auto;
+  }
+}
+

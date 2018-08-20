@@ -60,6 +60,7 @@ export class MatchDetailComponent implements OnInit {
   public origin: Location;
   public destination: Location;
   public user: User;
+  public model: any = {};
   public showDirections: boolean = false;
 
   constructor(
@@ -87,6 +88,25 @@ export class MatchDetailComponent implements OnInit {
   public getImageAddress(referee): string {
     const url = _.get(referee, 'images[0].location', this.defaultImage);
     return url;
+  }
+
+  private orderPhones(referee): Phone[] {
+    const refereePhones = referee.phones;
+    const types: string[] = ['mobile', 'home', 'work', 'other'];
+    return <Phone[]>types.reduce((phones: Phone[], type: string): Phone[] => {
+      let phone: Phone = refereePhones.find(
+        (aPhone: Phone): Phone => (aPhone.description === type ? aPhone : null)
+      );
+      if (phone) {
+        phones.push(phone);
+      }
+      return phones;
+    }, []);
+  }
+
+  public mainPhone(referee): string {
+    const phone: Phone = _.head(this.orderPhones(referee));
+    return phone ? phone.description + '<br />' + phone.number : '';
   }
 
   private getAddresses(user: User): void {
@@ -140,6 +160,11 @@ export class MatchDetailComponent implements OnInit {
     };
 
     this.cd.markForCheck();
+  }
+
+  public setAddress(address): void {
+    this.model = address;
+    this.findRoute(address);
   }
 
   public backToSchedule(event): void {
