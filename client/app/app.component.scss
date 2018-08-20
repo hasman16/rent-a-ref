@@ -65,8 +65,8 @@ td {
 	margin: 0 auto;
 	max-width: 1200px;
 	height: 100%;
-	padding-left: 1.25em;
-	padding-right: 1.25em;
+	padding-left: 1.25rem;
+	padding-right: 1.25rem;
 	position: relative;
 }
 
@@ -84,7 +84,7 @@ td {
 	list-style-type: none;
 	margin-bottom: 5px;
 	position: relative;
-	width: 13.625em;
+	width: 13.625rem;
 
 	ul.news-navigator li a:link,
 	ul.news-navigator li a:visited {
@@ -127,13 +127,13 @@ td {
 		a:link,
 		a:visited,
 		a.open {
-			padding: 0.3125em 1.25em;
+			padding: 0.3125rem 1.25rem;
 		}
 
 		ul {
 			display: none;
 			overflow: hidden;
-			padding: 0 0 0.625em 1.25em;
+			padding: 0 0 0.625rem 1.25rem;
 			li {
 				font-size: 12px;
 				text-transform: none;
@@ -153,7 +153,7 @@ td {
 .productnavigator.navigatorwidget {
 	ul {
 		overflow: hidden;
-		padding: 0 0 0.625em 1.25em;
+		padding: 0 0 0.625rem 1.25rem;
 	}
 
 	li {
@@ -163,7 +163,7 @@ td {
 			border-bottom: 0 none;
 			color: black;
 			font-weight: normal;
-			padding: 0.1875em 0.75em;
+			padding: 0.1875rem 0.75rem;
 			text-decoration: underline;
 		}
 
@@ -1862,7 +1862,15 @@ ul.jcarousel-control li {
 	#tabletFooter {
 		display: block;
 	}
+
+	.container {
+		height: 100%;
+		padding-left: 0;
+		padding-right: 0;
+		position: relative;
+	}
 }
+
 @media only screen and (min-width: 600px) {
 	#master-wrapper {
 		background: url('/assets/images/refereebg.jpg') repeat fixed center
@@ -1873,5 +1881,39 @@ ul.jcarousel-control li {
 	#regularFooter {
 		display: block;
 	}
+
+	.container {
+		height: 100%;
+		padding-left: 0;
+		padding-right: 0;
+		position: relative;
+	}
 }
 
+@media only screen and (min-width: 768px) {
+	.container {
+		height: 100%;
+		padding-left: 0;
+		padding-right: 0;
+		position: relative;
+	}
+}
+@media only screen and (min-width: 992) {
+	.container {
+		margin: 0 auto;
+		height: 100%;
+		padding-left: 10px;
+		padding-right: 10px;
+		position: relative;
+	}
+}
+@media only screen and (min-width: 1200) {
+	.container {
+		margin: 0 auto;
+		max-width: 1200px;
+		height: 100%;
+		padding-left: 1.25rem;
+		padding-right: 1.25rem;
+		position: relative;
+	}
+}

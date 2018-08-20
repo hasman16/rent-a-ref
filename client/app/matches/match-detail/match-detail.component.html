@@ -1,28 +1,6 @@
 <div class="row">
-
     <div class="col-12">
         <div class="card">
-            <h3>Game Referees</h3>
-        	<div class="container">
-        		<div *ngFor="let referee of referees" class="item">
-     
-                    <rar-image [errorImage]="defaultImage" [image]="getImageAddress(referee)" [width]="130"></rar-image>
-           
-                    <div>
-                        <h6>name</h6>
-                        {{referee.person.firstname}}<br />
-                        <ng-template *ngIf="referee.person.middlename">
-                            <p>{{referee.person.middlename}}</p>
-                        </ng-template>
-                        {{referee.person.lastname}}
-                    </div>
-                    <hr />
-                    <div *ngFor="let phone of referee.phones">
-                        <label>{{phone.type}}</label>
-                        {{phone.number}}
-                    </div>
-                </div>
-        	</div>
             <span>
                 <button class="btn btn-primary btn-sm" (click)="backToSchedule($event)"
                  title="Click to go back to schedule.">Back to Schedule</button>
@@ -31,34 +9,40 @@
     </div>
 
     <div class="col-12">
+        <div class="card" style="min-height: 250px">
+            <h3>Game Referees</h3>
+        	<div class="container">
+                <div class="card shadow item" *ngFor="let referee of referees; let i=index">
+                    <rar-image [errorImage]="defaultImage" [image]="getImageAddress(referee)" [width]="130"></rar-image>
+           
+                  <div class="card-body">
+                    <h5 class="card-title">{{referee.person.firstname}}
+                        <ng-template *ngIf="referee.person.middlename">
+                            {{referee.person.middlename}}
+                        </ng-template>
+                        {{referee.person.lastname}}</h5>
+                    <p class="card-text" innHtml="mainPhone(referee)" ></p>
+                  </div>
+                </div>
+        	</div>
+        </div>
+    </div>
+
+    <div class="col-12">
         <div class="addresses">
             <div>
-                <schedule-address-form (ngSubmit)="findRoute($event)"></schedule-address-form>
+                <schedule-address-form [model]="model" (ngSubmit)="findRoute($event)"></schedule-address-form>
 
-                <div *ngIf="addresses && addresses.length > 0; else noAddresses">
-                    <h6>Addresses</h6>
-                    <ul class="list-unstyled">
-                        <li *ngFor="let address of addresses; let i=index">
-
-                            <div>{{address.line1}}</div>
- 
-                            <div>{{address.line2}}</div>
-
-                            <div>{{address.city}}</div>
-
-                            <div>{{address.state}}</div>
-
-                            <div>{{address.zip}}</div>
-
-                        </li>
-                    </ul>
-                </div>
-
-                <ng-template #noAddresses>
-                    <div >
-                        <div>No Addresses Saved.</div>
+                <div *ngIf="addresses && addresses.length > 0" class="address-list">
+                    <div class="list-group" *ngFor="let address of addresses; let i=index">
+                      <a class="list-group-item" (click)="setAddress(address)">
+                        <h4 class="list-group-item-heading">{{address.line1}}</h4>
+                        <p class="list-group-item-text">{{address.line2}}</p>
+                        <p class="list-group-item-text">{{address.city}}</p>
+                        <p class="list-group-item-text">{{address.state}}&nbsp;&nbsp;{{address.zip}}</p>
+                      </a>
                     </div>
-                </ng-template>
+                </div>
             </div>
             <rar-google-map
              [origin]="origin"

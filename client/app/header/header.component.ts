@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-  OnInit,
-  Directive
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/index';
 
 @Component({
@@ -13,16 +7,11 @@ import { AuthService } from '../services/index';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Output() featureSelected = new EventEmitter<string>();
   constructor(public auth: AuthService) {}
 
   ngOnInit() {
     if (!this.auth.loggedIn) {
       this.auth.logout();
     }
-  }
-
-  onSelect(feature: string) {
-    this.featureSelected.emit(feature);
   }
 }
