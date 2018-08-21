@@ -8,6 +8,10 @@
     height: 100%;
   }
 
+  /deep/ .datatable-row-group {
+    cursor: pointer;
+  }
+
   .cell-item {
     display: flex;
     width: 100%;

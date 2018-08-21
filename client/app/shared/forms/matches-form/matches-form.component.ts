@@ -90,12 +90,52 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
               label: 'Age Group',
               options: [
                 {
-                  label: 'Kids',
-                  value: 'kids'
+                  label: 'U8',
+                  value: 'U8'
                 },
                 {
-                  label: 'Teens',
-                  value: 'teens'
+                  label: 'U10',
+                  value: 'U10'
+                },
+                {
+                  label: 'U11',
+                  value: 'U11'
+                },
+                {
+                  label: 'U12',
+                  value: 'U12'
+                },
+                {
+                  label: 'U13',
+                  value: 'U13'
+                },
+                {
+                  label: 'U14',
+                  value: 'U14'
+                },
+                {
+                  label: 'U15',
+                  value: 'U15'
+                },
+                {
+                  label: 'U16',
+                  value: 'U16'
+                },
+                {
+                  label: 'U17',
+                  value: 'U17'
+                },
+                {
+                  label: 'U18',
+                  value: 'U18'
+                },
+                {
+                  label: 'U19',
+                  value: 'U19'
+                },
+                {
+                  label: 'U23',
+                  value: 'U23'
                 },
                 {
                   label: 'Adults',

@@ -22,7 +22,23 @@ var Match = function (sequelize, DataTypes) {
             type: DataTypes.STRING(32),
             allowNull: true,
             validate: {
-                isIn: [['kids', 'teens', 'adults']]
+                isIn: [
+                    [
+                        'U8',
+                        'U10',
+                        'U11',
+                        'U12',
+                        'U13',
+                        'U14',
+                        'U15',
+                        'U16',
+                        'U17',
+                        'U18',
+                        'U19',
+                        'U23',
+                        'Adults'
+                    ]
+                ]
             }
         },
         date: {
