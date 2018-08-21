@@ -9,4 +9,8 @@
 	.nav-item {
 		border-radius: 0;
 	}
+
+	/deep/ .datatable-row-group {
+		cursor: pointer;
+	}
 }
