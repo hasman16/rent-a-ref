@@ -34,6 +34,7 @@ export class ModalComponent implements OnInit {
         this.size = 'lg';
         break;
     }
+    console.log('this size:', this.size);
   }
   @Input() closable = true;
   @Input() visible: boolean = false;

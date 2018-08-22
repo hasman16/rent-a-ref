@@ -79,7 +79,11 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
 import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
-import { MatchesComponent, MatchDetailComponent } from './matches/index';
+import {
+    MatchesComponent,
+    MatchDetailComponent,
+    RefereeDetailsModalComponent
+} from './matches/index';
 import { AssignUsersComponent } from './assign-users/assign-users.component';
 
 /* Misc. */
@@ -140,6 +144,7 @@ import {
         MatchesComponent,
         MatchDetailComponent,
         AssignUsersComponent,
+        RefereeDetailsModalComponent,
         RegisterComponent,
         ResetComponent,
         ResetPasswordComponent,

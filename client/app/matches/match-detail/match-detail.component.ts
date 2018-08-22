@@ -62,7 +62,9 @@ export class MatchDetailComponent implements OnInit {
   public user: User;
   public model: any = {};
   public showDirections: boolean = false;
+  public showModal: boolean = false;
   public whichPanel: number = 1;
+  public currentReferee: any;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -84,6 +86,21 @@ export class MatchDetailComponent implements OnInit {
   ngOnDestroy() {
     this.showDirections = false;
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
+  }
+
+  public showRefereeDetails(referee): void {
+    let currentReferee = _.cloneDeep(referee);
+    currentReferee.url = this.getImageAddress(referee);
+    currentReferee.orderedPhones = this.orderPhones(referee);
+    currentReferee.addresses = referee.addresses;
+    this.currentReferee = _.cloneDeep(currentReferee);
+    console.log('showRefereeDetails:', this.currentReferee);
+
+    this.showModal = true;
+  }
+
+  public hideRefereeDetails($event): void {
+    this.showModal = false;
   }
 
   public getImageAddress(referee): string {

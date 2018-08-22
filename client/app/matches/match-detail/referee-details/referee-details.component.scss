@@ -1,0 +1,17 @@
+:host {
+	.modal-container {
+		padding: 10px;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.item {
+		margin: 10px;
+		min-width: 200px;
+		max-width: 200px;
+		min-height: 340px;
+		max-height: 340px;
+		cursor: pointer;
+	}
+}

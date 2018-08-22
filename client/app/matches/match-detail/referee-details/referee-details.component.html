@@ -1,0 +1,21 @@
+<rar-modal
+[name]="refereeDetails"
+[title]="title"
+[size]="size"
+[submitText]="submitText"
+[cancelText]="cancelText"
+(submit)="submitModal($event)"
+(cancel)="closeModal($event)"
+#refereeDetails
+>
+	<div class="modal-container">
+		<rar-image [errorImage]="defaultImage" [image]="referee?.url" [width]="130"></rar-image>
+	</div>
+	<hr />
+	<div class="modal-container">
+		<div *ngFor="let phone of referee?.orderedPhones; let i=index">
+			<label>{{phone.description}}</label>
+			<p>{{phone.number}}</p>
+		</div>
+	</div>	
+</rar-modal>

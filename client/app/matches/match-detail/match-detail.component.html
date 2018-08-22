@@ -12,7 +12,9 @@
         <div class="card" style="min-height: 250px">
             <h3>Game Referees</h3>
         	<div class="container">
-                <div class="card shadow item" *ngFor="let referee of referees; let i=index">
+                <div class="card shadow item" 
+                *ngFor="let referee of referees; let i=index"
+                (click)="showRefereeDetails(referee)">
                     <rar-image [errorImage]="defaultImage" [image]="getImageAddress(referee)" [width]="130"></rar-image>
            
                   <div class="card-body">
@@ -52,3 +54,4 @@
     </div>
 
 </div>
+<referee-details-modal [show]="showModal" (hide)="hideRefereeDetails($event)" [referee]="currentReferee"></referee-details-modal>
