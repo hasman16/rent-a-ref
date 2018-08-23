@@ -7,6 +7,7 @@ import {
 	ViewChild
 } from '@angular/core';
 import { ModalComponent } from './../../../shared/modal/modal.component';
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'referee-details-modal',
@@ -17,7 +18,6 @@ export class RefereeDetailsModalComponent implements OnInit {
 	@ViewChild('refereeDetails') refereeDetailsModal: ModalComponent;
 	@Input('show')
 	set show(value) {
-		console.log('value:', value);
 		if (value) {
 			this.refereeDetailsModal.showModal(null);
 		} else {
@@ -49,5 +49,19 @@ export class RefereeDetailsModalComponent implements OnInit {
 
 	public submitModal($event): void {
 		this.hide(null);
+	}
+
+	private hasProperty(referee, property): boolean {
+		let result = _.has(referee, property);
+		let arr = _.get(referee, property);
+		return result && _.isArray(arr) && arr.length > 0;
+	}
+
+	public hasPhones(referee): boolean {
+		return this.hasProperty(referee, 'orderedPhones');
+	}
+
+	public hasAddresses(referee): boolean {
+		return this.hasProperty(referee, 'addresses');
 	}
 }
