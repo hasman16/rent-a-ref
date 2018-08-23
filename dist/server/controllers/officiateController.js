@@ -148,9 +148,10 @@ function OfficiateController(models, ResponseService, SendGridService) {
     }
     function matchOfficials(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var Op, Phone, Person, Image, clause, whereClause, _a;
+            var Op, Address, Phone, Person, Image, clause, whereClause, _a;
             return __generator(this, function (_b) {
                 Op = models.sequelize.Op;
+                Address = models.Address;
                 Phone = models.Phone;
                 Person = models.Person;
                 Image = models.Image;
@@ -162,6 +163,9 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         {
                             model: Person,
                             attributes: ['firstname', 'middlenames', 'lastname']
+                        },
+                        {
+                            model: Address
                         },
                         {
                             model: Phone
