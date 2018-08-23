@@ -27,6 +27,10 @@ import {
 } from './../../shared/models/index';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/merge';
+
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -42,7 +46,6 @@ export class MatchDetailComponent implements OnInit {
   set setCurrentMatch(match: Match) {
     if (match) {
       this.currentMatch = _.cloneDeep(match);
-      this.getData(this.currentMatch.id);
     }
   }
   @Input('user')
@@ -62,7 +65,9 @@ export class MatchDetailComponent implements OnInit {
   public user: User;
   public model: any = {};
   public showDirections: boolean = false;
+  public showModal: boolean = false;
   public whichPanel: number = 1;
+  public currentReferee: any;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -76,14 +81,26 @@ export class MatchDetailComponent implements OnInit {
     if (this.currentMatch) {
       this.getData(this.currentMatch.id);
     }
-    if (this.user) {
-      this.getAddresses(this.user);
-    }
   }
 
   ngOnDestroy() {
     this.showDirections = false;
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
+  }
+
+  public showRefereeDetails(referee): void {
+    let currentReferee = _.cloneDeep(referee);
+    currentReferee.url = this.getImageAddress(referee);
+    currentReferee.orderedPhones = this.orderPhones(referee);
+    currentReferee.addresses = referee.addresses;
+    this.currentReferee = _.cloneDeep(currentReferee);
+    console.log('showRefereeDetails:', this.currentReferee);
+
+    this.showModal = true;
+  }
+
+  public hideRefereeDetails($event): void {
+    this.showModal = false;
   }
 
   public getImageAddress(referee): string {
@@ -110,26 +127,37 @@ export class MatchDetailComponent implements OnInit {
     return phone ? phone.description + '<br />' + phone.number : '';
   }
 
-  private getAddresses(user: User): void {
-    this.userService
-      .getUserAddresses(this.user.id)
-      .finally(() => this.cd.markForCheck())
-      .subscribe(addresses => {
-        this.addresses = _.cloneDeep(addresses.addresses);
-      });
-  }
-
   private getData(id: string) {
     const page: Page = this.pagingService.getDefaultPager();
-    Observable.combineLatest(
-      this.matchService.getMatchOfficials(id, page),
-      this.matchService.getMatch(id)
-    )
+    let control$ = Observable.of(!!this.user);
+
+    let getOfficialsAndMatch$ = this.matchService
+      .getMatchOfficials(id, page)
+      .do(referees => {
+        this.referees = referees.rows;
+      })
+      .switchMap(() => {
+        return this.matchService.getMatch(id);
+      });
+
+    let getUser$ = control$
+      .filter(value => value === true)
+      .switchMap(() => this.userService.getUserAddresses(this.user.id))
+      .do(addresses => {
+        this.addresses = _.cloneDeep(addresses.addresses);
+      })
+      .switchMap(() => getOfficialsAndMatch$);
+
+    getUser$
+      .merge(
+        control$
+          .filter(value => value === false)
+          .switchMap(() => getOfficialsAndMatch$)
+      )
       .finally(() => this.cd.markForCheck())
-      .subscribe(([referees, match]: [any, any]) => {
+      .subscribe(match => {
         const matchAddress: Address = _.cloneDeep(match.address);
 
-        this.referees = referees.rows;
         this.origin = null;
         this.destination = {
           address_level_1:

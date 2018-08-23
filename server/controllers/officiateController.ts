@@ -113,6 +113,7 @@ export default function OfficiateController(
 
   async function matchOfficials(req, res) {
     const Op = models.sequelize.Op;
+    const Address = models.Address;
     const Phone = models.Phone;
     const Person = models.Person;
     const Image = models.Image;
@@ -126,6 +127,9 @@ export default function OfficiateController(
           {
             model: Person,
             attributes: ['firstname', 'middlenames', 'lastname']
+          },
+          {
+            model: Address
           },
           {
             model: Phone

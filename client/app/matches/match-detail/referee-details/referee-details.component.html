@@ -1,0 +1,39 @@
+<rar-modal
+[name]="refereeDetails"
+[title]="title"
+[size]="size"
+[submitText]="submitText"
+[cancelText]="cancelText"
+(submit)="submitModal($event)"
+(cancel)="closeModal($event)"
+#refereeDetails
+>
+	<div class="modal-container">
+		<rar-image [errorImage]="defaultImage" [image]="referee?.url" [width]="130"></rar-image>
+	</div>
+
+	<ng-container *ngIf="hasPhones(referee)">
+		<hr />
+		<div class="modal-container">
+			<div *ngFor="let phone of referee.orderedPhones; let i=index" class="item">
+				<label>{{phone.description}}</label>
+				<p>{{phone.number}}</p>
+			</div>
+		</div>	
+	</ng-container>
+
+	<ng-container *ngIf="hasAddresses(referee)">
+		<hr />
+		<div class="modal-container">
+			<div *ngFor="let address of referee.addresses; let i=index" class="item">
+                <address>
+                	{{address.line1}}<br />
+                	{{address.line2}}<br />
+                	{{address.city}}<br />
+                	{{address.state}}&nbsp;&nbsp;{{address.zip}}
+            	</address>
+			</div>
+		</div>
+	</ng-container>
+	
+</rar-modal>
