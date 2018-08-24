@@ -84,7 +84,7 @@ export class ManageUsersComponent extends AbstractComponent
   }
 
   public getImageAddress(id): string {
-    const user = _.find(this.users, user => user.id == id);
+    const user = _.find(this.users, user => user.id === id);
     const url = _.get(user, 'images[0].location', '');
     return url;
   }

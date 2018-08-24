@@ -77,7 +77,10 @@ export abstract class AbstractComponent {
   }
 
   protected extractDataAndPagedData(data: PagedData): any[] {
-    let [page, newData] = this.pagingService.processPagedData(this.page, data);
+    const [page, newData] = this.pagingService.processPagedData(
+      this.page,
+      data
+    );
     this.page = page;
     return newData;
   }

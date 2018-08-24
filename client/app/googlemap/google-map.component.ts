@@ -150,7 +150,7 @@ export class GoogleMapComponent implements OnInit {
           address: addressString
         },
         (results, status) => {
-          if (status == google.maps.GeocoderStatus.OK) {
+          if (status === google.maps.GeocoderStatus.OK) {
             let location: Location = {
               lat: 0,
               lng: 0,

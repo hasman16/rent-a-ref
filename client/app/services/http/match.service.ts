@@ -105,10 +105,10 @@ export class MatchService extends AbstractService {
             official => official.status
           );
 
-          if (_.some(statuses, status => status == 'cancelled')) {
+          if (_.some(statuses, status => status === 'cancelled')) {
             match.status = 'cancelled';
-          } else if (_.some(statuses, status => status == 'played')) {
-            match.status == 'played';
+          } else if (_.some(statuses, status => status === 'played')) {
+            match.status = 'played';
           }
 
           match.users = _.cloneDeep(officials);

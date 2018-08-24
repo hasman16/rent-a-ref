@@ -21,9 +21,9 @@ export class AuthGuardLogin implements CanActivate {
 
 			if (this.auth.isActive) {
 				result = true;
-			} else if (status == 'suspended') {
+			} else if (status === 'suspended') {
 				this.router.navigate(['/suspended']);
-			} else if (status == 'pending') {
+			} else if (status === 'pending') {
 				this.router.navigate(['/pending']);
 			}
 		} else {

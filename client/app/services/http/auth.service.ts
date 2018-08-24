@@ -83,7 +83,7 @@ export class AuthService {
       }
 
       this.isAdmin = authorization === 1 || authorization === 2;
-      this.isActive = newUser.status == 'active';
+      this.isActive = newUser.status === 'active';
       this.tokenService.setOptions(setter.token);
       localStorage.setItem('user', JSON.stringify(setter));
     }

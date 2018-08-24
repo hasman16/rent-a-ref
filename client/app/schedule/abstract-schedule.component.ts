@@ -62,13 +62,13 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 
 	protected getOfficial(id, officials): any {
 		return _.find(officials, item => {
-			return id == item.user_id;
+			return id === item.user_id;
 		});
 	}
 
 	protected getItem(id): Match {
 		return <Match>_.find(this.schedule, item => {
-			return id == item.id;
+			return id === item.id;
 		});
 	}
 

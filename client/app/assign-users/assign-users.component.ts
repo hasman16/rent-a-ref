@@ -166,41 +166,31 @@ export class AssignUsersComponent extends AbstractComponent
     }
   }
 
-  public canAssign(id): boolean {
-    let result: boolean = false;
-    const user = _.find(this.users, user => {
-      return user.id == id;
+  private findUser(user: User[], id): User {
+    return <User>_.find(this.users, user => {
+      return user.id === id;
     });
-    const officiating = _.get(user, 'matches[0].officiating', null);
+  }
 
-    if (!officiating || (officiating && officiating.status == 'declined')) {
-      result = true;
-    }
+  private getOfficiatingFromMatch(id): any {
+    const user = this.findUser(this.users, id);
+    return _.get(user, 'matches[0].officiating', null);
+  }
 
-    return result;
+  public canAssign(id): boolean {
+    const officiating = this.getOfficiatingFromMatch(id);
+    return !officiating || (officiating && officiating.status === 'declined');
   }
 
   public canUnassign(id): boolean {
-    let result: boolean = false;
-    const user = _.find(this.users, user => {
-      return user.id == id;
-    });
-    const officiating = _.get(user, 'matches[0].officiating', null);
-
-    if (officiating) {
-      const status: string = officiating.status;
-      if (status == 'accepted' || status == 'pending') {
-        result = true;
-      }
-    }
-
-    return result;
+    const officiating = this.getOfficiatingFromMatch(id);
+    const status = officiating ? officiating.status : undefined;
+    return status && (status === 'accepted' || status === 'pending');
   }
 
   public viewSchedule(user_id) {
-    const user = _.find(this.users, user => {
-      return user.id == user_id;
-    });
+    const user = this.findUser(this.users, user_id);
+
     if (user) {
       this.currentUser = _.cloneDeep(user);
     }

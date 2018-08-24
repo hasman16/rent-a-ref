@@ -23,11 +23,11 @@ export class SearchBoxComponent {
 			this.searchAttributes = <Array<Option>>_.cloneDeep(
 				searchAttributes
 			);
-			let item: Option = <Option>_.head(this.searchAttributes);
+			let selectedItem: Option = <Option>_.head(this.searchAttributes);
 			_.forEach(this.searchAttributes, (item: Option) => {
 				item.selected = false;
 			});
-			item.selected = true;
+			selectedItem.selected = true;
 		}
 	}
 	@Output() searchEvent: EventEmitter<any> = new EventEmitter();

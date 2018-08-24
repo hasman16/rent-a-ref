@@ -15,6 +15,6 @@ export class AuthGuardLocked implements CanActivate {
 	canActivate() {
 		const currentUser: User = this.auth.getCurrentUser();
 
-		return this.auth.loggedIn && currentUser.status == 'locked';
+		return this.auth.loggedIn && currentUser.status === 'locked';
 	}
 }

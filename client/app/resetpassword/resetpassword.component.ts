@@ -47,7 +47,7 @@ export class ResetPasswordComponent implements OnInit {
       passcodeParam = params['passcode'];
     });
 
-    hasPasscode = passcodeParam != undefined;
+    hasPasscode = passcodeParam !== undefined;
 
     if (hasPasscode) {
       this.passcode = new FormControl(String(passcodeParam));

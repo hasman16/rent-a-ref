@@ -47,13 +47,12 @@ export class PagingService {
 	}
 
 	public formatDate(id, collection): string {
-		const item = _.find(collection, item => {
-			return id == item.id;
+		const selectedItem = _.find(collection, item => {
+			return id === item.id;
 		});
-		let value: string = moment
-			.tz(item.date, item.timezone_id)
+		return <string>moment
+			.tz(selectedItem.date, selectedItem.timezone_id)
 			.format('MMMM DD YYYY');
-		return value;
 	}
 
 	public isNotTimeLocked(eventObj, lock = 1, grain = 'minutes'): boolean {

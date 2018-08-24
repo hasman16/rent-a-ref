@@ -162,16 +162,16 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
     let result: boolean = false;
     switch (value) {
       case 'noMatches':
-        result = this.viewState == ViewState.noMatches;
+        result = this.viewState === ViewState.noMatches;
         break;
       case 'listMatches':
-        result = this.viewState == ViewState.listMatches;
+        result = this.viewState === ViewState.listMatches;
         break;
       case 'editMatch':
-        result = this.viewState == ViewState.editMatch;
+        result = this.viewState === ViewState.editMatch;
         break;
       case 'assignOfficials':
-        result = this.viewState == ViewState.assignOfficials;
+        result = this.viewState === ViewState.assignOfficials;
         break;
       default:
         result = false;
@@ -181,7 +181,7 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
   }
 
   public assignOfficials(match_id: string): void {
-    const match = _.find(this.matches, match => match.id == match_id);
+    const match = _.find(this.matches, match => match.id === match_id);
     if (match) {
       match.isTimeLocked = !this.pagingService.isNotTimeLocked(match);
       this.viewState = ViewState.assignOfficials;
