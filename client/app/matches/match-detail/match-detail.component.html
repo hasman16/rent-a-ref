@@ -18,11 +18,23 @@
                     <rar-image [errorImage]="defaultImage" [image]="getImageAddress(referee)" [width]="130"></rar-image>
            
                   <div class="card-body">
-                    <h5 class="card-title">{{referee.person.firstname}}
-                        <ng-template *ngIf="referee.person.middlename">
-                            {{referee.person.middlename}}
-                        </ng-template>
-                        {{referee.person.lastname}}</h5>
+                    <h5 class="card-title">
+                        <ng-container *ngIf="referee.person.firstname">
+                            <span class="officialsName">
+                                <label>{{referee.person.firstname}}</label>
+                            </span> 
+                        </ng-container>
+                        <ng-container *ngIf="referee.person.middlename">
+                            <span class="officialsName">
+                                <label>{{referee.person.middlename}}</label>
+                            </span> 
+                        </ng-container>
+                        <ng-container *ngIf="referee.person.lastname">
+                            <span class="officialsName">
+                                <label>{{referee.person.lastname}}</label>
+                            </span> 
+                        </ng-container>
+                    </h5>
                     <p class="card-text" innHtml="mainPhone(referee)" ></p>
                   </div>
                 </div>
