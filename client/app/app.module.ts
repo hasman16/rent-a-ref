@@ -1,6 +1,8 @@
 import { environment } from './environments/environment';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { TourMatMenuModule } from 'ngx-tour-md-menu';
 
 import { RecaptchaModule } from 'ng-recaptcha';
 /* Modules */
@@ -215,7 +217,9 @@ import {
         HttpClientModule,
         MyDatePickerModule,
         ImageCropperModule,
+        TourMatMenuModule.forRoot(),
         NgbModule.forRoot(),
+        NgIdleKeepaliveModule.forRoot(),
         CoreModule,
         CommonModule
     ],

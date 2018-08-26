@@ -46,7 +46,6 @@ import phoneRoutes from './phoneRoutes';
 import sportRoutes from './sportRoutes';
 import stripeRoutes from './stripeRoutes';
 import userRoutes from './userRoutes';
-
 /*
 let client;
 if (process.env.REDIS_URL) {

@@ -155,7 +155,7 @@ export default function LoginController(
           };
           //console.log('create token:', user, process.env.SECRET_TOKEN);
           const token = jwt.sign(user, process.env.SECRET_TOKEN, {
-            expiresIn: 1440 * 60
+            expiresIn: 60 * 60
           });
           //console.log('go updateLock');
           return updateLock(user.id, function() {
