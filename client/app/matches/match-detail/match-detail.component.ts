@@ -25,11 +25,8 @@ import {
   Profile,
   User
 } from './../../shared/models/index';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/finally';
-import 'rxjs/add/operator/merge';
+import { Observable, of, Subscription } from 'rxjs';
+import { filter, finalize, merge, switchMap, tap } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -133,28 +130,34 @@ export class MatchDetailComponent implements OnInit {
 
     let getOfficialsAndMatch$ = this.matchService
       .getMatchOfficials(id, page)
-      .do(referees => {
-        this.referees = referees.rows;
-      })
-      .switchMap(() => {
-        return this.matchService.getMatch(id);
-      });
+      .pipe(
+        tap(referees => {
+          this.referees = referees.rows;
+        }),
+        switchMap(() => {
+          return this.matchService.getMatch(id);
+        })
+      );
 
-    let getUser$ = control$
-      .filter(value => value === true)
-      .switchMap(() => this.userService.getUserAddresses(this.user.id))
-      .do(addresses => {
+    let getUser$ = control$.pipe(
+      filter(value => value === true),
+      switchMap(() => this.userService.getUserAddresses(this.user.id)),
+      tap(addresses => {
         this.addresses = _.cloneDeep(addresses.addresses);
-      })
-      .switchMap(() => getOfficialsAndMatch$);
+      }),
+      switchMap(() => getOfficialsAndMatch$)
+    );
 
     getUser$
-      .merge(
-        control$
-          .filter(value => value === false)
-          .switchMap(() => getOfficialsAndMatch$)
+      .pipe(
+        merge(
+          control$.pipe(
+            filter(value => value === false),
+            switchMap(() => getOfficialsAndMatch$)
+          )
+        ),
+        finalize(() => this.cd.markForCheck())
       )
-      .finally(() => this.cd.markForCheck())
       .subscribe(match => {
         const matchAddress: Address = _.cloneDeep(match.address);
 

@@ -41,12 +41,15 @@ import {
 } from '../shared/crop-image-modal/index';
 import * as _ from 'lodash';
 
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/combineLatest';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/finally';
+import { Observable, Subscription, Subject } from 'rxjs';
+import {
+  combineLatest,
+  filter,
+  finalize,
+  map,
+  switchMap,
+  take
+} from 'rxjs/operators';
 
 @Component({
   selector: 'rar-organize',
@@ -160,22 +163,24 @@ export class OrganizeComponent implements OnInit {
     this.delete_id = org_id;
     this.alertModalService.show();
     this.alertModalService.alertSubject$
-      .take(1)
-      .switchMap((state: AlertState) => {
-        let observable$: Observable<any>;
-        if (state.alertButtonState === AlertButtonState.Ok) {
-          observable$ = this.organizeService.deleteOrganization(org_id);
-        } else {
-          let modalSubject: Subject<boolean> = new Subject<boolean>();
-          observable$ = modalSubject.asObservable();
-          modalSubject.next(true);
-        }
-        return observable$;
-      })
-      .finally(() => {
-        this.cd.markForCheck();
-        this.getOrganizations();
-      })
+      .pipe(
+        take(1),
+        switchMap((state: AlertState) => {
+          let observable$: Observable<any>;
+          if (state.alertButtonState === AlertButtonState.Ok) {
+            observable$ = this.organizeService.deleteOrganization(org_id);
+          } else {
+            let modalSubject: Subject<boolean> = new Subject<boolean>();
+            observable$ = modalSubject.asObservable();
+            modalSubject.next(true);
+          }
+          return observable$;
+        }),
+        finalize(() => {
+          this.cd.markForCheck();
+          this.getOrganizations();
+        })
+      )
       .subscribe((state: AlertState) => {
         console.log('state is:', state);
       });
@@ -189,17 +194,19 @@ export class OrganizeComponent implements OnInit {
     if (currentModel) {
       this.organizeService
         .getOrgAddresses(orgId)
-        .combineLatest(this.organizeService.getOrgPhones(orgId))
-        .take(1)
-        .map(([addresses, phones]: [Array<any>, Array<any>]) => {
-          return [_.head(addresses), _.head(phones)];
-        })
-        .map(([addresses, phones]: [any, any]) => {
-          return [addresses['addresses'], phones['phones']];
-        })
-        .finally(() => {
-          this.cd.markForCheck();
-        })
+        .pipe(
+          combineLatest(this.organizeService.getOrgPhones(orgId)),
+          take(1),
+          map(([addresses, phones]: [Array<any>, Array<any>]) => {
+            return [_.head(addresses), _.head(phones)];
+          }),
+          map(([addresses, phones]: [any, any]) => {
+            return [addresses['addresses'], phones['phones']];
+          }),
+          finalize(() => {
+            this.cd.markForCheck();
+          })
+        )
         .subscribe(([addresses, phones]: [Array<Address>, Array<Phone>]) => {
           currentModel = _.cloneDeep(currentModel);
           currentModel = Object.assign({}, currentModel, {
@@ -222,14 +229,16 @@ export class OrganizeComponent implements OnInit {
 
     this.organizeService
       .getUserOrganization(user_id)
-      .finally(() => {
-        this.cd.markForCheck();
-        this.setOrganizeMode();
-        this.isLoading = false;
-        if (this.organizations.length === 0) {
+      .pipe(
+        finalize(() => {
+          this.cd.markForCheck();
           this.setOrganizeMode();
-        }
-      })
+          this.isLoading = false;
+          if (this.organizations.length === 0) {
+            this.setOrganizeMode();
+          }
+        })
+      )
       .subscribe(
         (profile: Profile) => {
           this.organizations = profile.organizations;
@@ -253,17 +262,21 @@ export class OrganizeComponent implements OnInit {
       .createOrganization({
         name: model.name
       })
-      .switchMap(organization => {
-        const org_id: any = organization.id;
-        return this.organizeService
-          .bulkCreateAddresses(model.addresses, org_id)
-          .combineLatest(
-            this.organizeService.bulkCreatePhones(model.phones, org_id)
-          );
-      })
-      .finally(() => {
-        this.cd.markForCheck();
-      })
+      .pipe(
+        switchMap(organization => {
+          const org_id: any = organization.id;
+          return this.organizeService
+            .bulkCreateAddresses(model.addresses, org_id)
+            .pipe(
+              combineLatest(
+                this.organizeService.bulkCreatePhones(model.phones, org_id)
+              )
+            );
+        }),
+        finalize(() => {
+          this.cd.markForCheck();
+        })
+      )
       .subscribe(
         ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
           console.log('it worked');
@@ -359,23 +372,29 @@ export class OrganizeComponent implements OnInit {
         },
         org_id
       )
-      .switchMap(organization => {
-        return this.organizeService
-          .bulkCreateAddresses(newAddresses, org_id)
-          .combineLatest(
-            this.organizeService.bulkCreatePhones(newPhones, org_id)
-          );
-      })
-      .switchMap(([addresses, phones]: [Array<Address>, Array<Phone>]) => {
-        return this.organizeService
-          .bulkUpdateAddresses(updatedAddresses, org_id)
-          .combineLatest(
-            this.organizeService.bulkUpdatePhones(updatedPhones, org_id)
-          );
-      })
-      .finally(() => {
-        this.cd.markForCheck();
-      })
+      .pipe(
+        switchMap(organization => {
+          return this.organizeService
+            .bulkCreateAddresses(newAddresses, org_id)
+            .pipe(
+              combineLatest(
+                this.organizeService.bulkCreatePhones(newPhones, org_id)
+              )
+            );
+        }),
+        switchMap(([addresses, phones]: [Array<Address>, Array<Phone>]) => {
+          return this.organizeService
+            .bulkUpdateAddresses(updatedAddresses, org_id)
+            .pipe(
+              combineLatest(
+                this.organizeService.bulkUpdatePhones(updatedPhones, org_id)
+              )
+            );
+        }),
+        finalize(() => {
+          this.cd.markForCheck();
+        })
+      )
       .subscribe(
         ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
           console.log('submitUpdateOrganization worked');
