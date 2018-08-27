@@ -13,6 +13,7 @@ function userRoutes(setter, ctrls) {
     var passwordCtrl = ctrls.passwordCtrl;
     var registerCtrl = ctrls.registerCtrl;
     router.route('/login').post(loginCtrl.login);
+    router.route('/pulse').post(authentication, loginCtrl.pulse);
     router.route('/logout').post(userCtrl.logout);
     router.route('/users').get(authentication, isAdmin, userCtrl.getAll);
     router

@@ -64,47 +64,16 @@ export class LoginComponent implements OnInit {
     ];
   }
 
-  forgot() {
+  public forgot() {
     this.router.navigate(['passwordreset']);
   }
 
-  redirectUser(userStatus: string, userId: string) {
-    let path: string = '';
-    switch (userStatus) {
-      case 'active':
-        path = `account/${userId}/profile`;
-        break;
-      case 'pending':
-        path = `account/${userId}/standby`;
-        break;
-      case 'locked':
-        path = `account/${userId}/suspended`;
-        break;
-      case 'banned':
-        path = `account/${userId}/deactivated`;
-        this.auth.resetState();
-        break;
-      default:
-        path = '/';
-        this.auth.resetState();
-        break;
-    }
-    return path;
-  }
-
-  onSubmit(data: any) {
+  public onSubmit(data: any): void {
     this.auth
       .login(data)
       .take(1)
       .subscribe(
-        (login: Login) => {
-          const user: User = login.user;
-          const userId = user.id;
-          const userStatus = user.status;
-          const path: string = this.redirectUser(userStatus, userId);
-
-          this.router.navigate([path]);
-        },
+        (login: Login) => {},
         (err: HttpErrorResponse) => {
           this.toast.setMessage('Invalid email or password! ', 'danger');
         }

@@ -4,10 +4,24 @@ import { Router } from '@angular/router';
 import { TokenService } from '../interceptors/index';
 import { UserService } from './user.service';
 import { Login, User } from './../../shared/models/index';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { map, take, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 @Injectable()
 export class AuthService {
+  private loginStatusSubject$: Subject<boolean> = new Subject<boolean>();
+  public loginStatus$: Observable<
+    boolean
+  > = this.loginStatusSubject$.asObservable();
+  private adminStatusSubject$: Subject<boolean> = new Subject<boolean>();
+  public adminStatus$: Observable<
+    boolean
+  > = this.adminStatusSubject$.asObservable();
+  private activeStatusSubject$: Subject<boolean> = new Subject<boolean>();
+  public activeStatus$: Observable<
+    boolean
+  > = this.activeStatusSubject$.asObservable();
   public loggedIn: boolean = false;
   public isAdmin: boolean = false;
   public isActive: boolean = false;
@@ -21,6 +35,7 @@ export class AuthService {
     private router: Router
   ) {
     const user = localStorage.getItem('user');
+    this.logout();
     if (user) {
       this.setCurrentUser(JSON.parse(user));
     }
@@ -32,38 +47,105 @@ export class AuthService {
     this.isAdmin = false;
     this.isActive = false;
     this.currentUser = <User>{};
+    this.authObservables();
+  }
+
+  public authObservables(): void {
+    this.loginStatusSubject$.next(this.loggedIn);
+    this.adminStatusSubject$.next(this.isAdmin);
+    this.activeStatusSubject$.next(this.isActive);
+  }
+
+  private redirectUser(userStatus: string, userId: string) {
+    let path: string = '';
+    switch (userStatus) {
+      case 'active':
+        path = `account/${userId}/profile`;
+        break;
+      case 'pending':
+        path = `account/${userId}/standby`;
+        break;
+      case 'locked':
+        path = `account/${userId}/suspended`;
+        break;
+      case 'banned':
+        path = `account/${userId}/deactivated`;
+        this.resetState();
+        break;
+      default:
+        path = '/';
+        this.resetState();
+        break;
+    }
+    return path;
   }
 
   public getCurrentUser(): User {
     return _.cloneDeep(this.currentUser);
   }
 
-  login(emailAndPassword) {
-    return this.userService.login(emailAndPassword).do((login: Login) => {
-      this.setCurrentUser({
-        user: login.user,
-        token: login.token
-      });
-    });
+  public login(emailAndPassword) {
+    this.logout();
+    return this.userService.login(emailAndPassword).pipe(
+      tap(
+        (login: Login) => {
+          const user: User = login.user;
+          const userId = user.id;
+          const userStatus = user.status;
+          const path: string = this.redirectUser(userStatus, userId);
+
+          if (path) {
+            this.setCurrentUser({
+              user: login.user,
+              token: login.token
+            });
+          }
+
+          this.router.navigate([path]);
+        },
+        () => {
+          this.logout();
+        }
+      )
+    );
   }
 
-  logout() {
+  public pulse() {
+    this.userService.pulse().subscribe(
+      (login: Login) => {
+        const user: User = login.user;
+        const userId = user.id;
+        const userStatus = user.status;
+        const path: string = this.redirectUser(userStatus, userId);
+
+        if (path) {
+          this.setCurrentUser({
+            user: login.user,
+            token: login.token
+          });
+        }
+
+        this.router.navigate([path]);
+      },
+      () => {
+        this.logout();
+      }
+    );
+  }
+
+  public logout() {
     this.resetState();
-    this.setCurrentUser(null);
+    this.tokenService.setOptions(null);
     this.router.navigate(['/']);
   }
 
-  resetpassword(payload) {
+  public resetpassword(payload) {
     return this.userService
       .resetpassword(payload)
-      .take(1)
-      .map(res => res.json());
+      .pipe(take(1), map(res => res.json()));
   }
 
-  setCurrentUser(setter) {
-    this.resetState();
-    this.tokenService.setOptions(null);
-
+  private setCurrentUser(setter) {
     if (setter) {
       const newUser = setter.user;
       const authorization = newUser.authorization;
@@ -86,6 +168,7 @@ export class AuthService {
       this.isActive = newUser.status === 'active';
       this.tokenService.setOptions(setter.token);
       localStorage.setItem('user', JSON.stringify(setter));
+      this.authObservables();
     }
   }
 }

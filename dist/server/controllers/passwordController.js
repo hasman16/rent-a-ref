@@ -8,6 +8,7 @@ function passwordController(bcrypt, jwt, models, ResponseService, SendGridServic
         var sequelize = models.sequelize;
         var Op = sequelize.Op;
         return sequelize.transaction(function (t) {
+            var _a;
             return User.update({
                 status: 'active'
             }, {
@@ -35,7 +36,6 @@ function passwordController(bcrypt, jwt, models, ResponseService, SendGridServic
                     }
                 }, { transation: t });
             });
-            var _a;
         });
     }
     function resetSuccess(res) {

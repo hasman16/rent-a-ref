@@ -140,23 +140,7 @@ export default function LoginController(
       .compare(user.password, lock.password)
       .then(result => {
         if (result) {
-          //console.log('got result');
-          const person = newUser.person;
-          const user = <UserModel>{
-            id: newUser.id,
-            email: newUser.email,
-            authorization: newUser.authorization,
-            person_id: person.id,
-            firstname: person.firstname,
-            lastname: person.lastname,
-            can_referee: newUser.can_referee,
-            can_organize: newUser.can_organize,
-            status: newUser.status
-          };
-          //console.log('create token:', user, process.env.SECRET_TOKEN);
-          const token = jwt.sign(user, process.env.SECRET_TOKEN, {
-            expiresIn: 60 * 60
-          });
+          const [user, token] = generateToken(newUser, 5);
           //console.log('go updateLock');
           return updateLock(user.id, function() {
             return {
@@ -171,6 +155,28 @@ export default function LoginController(
         }
       })
       .catch(error => failedLogin(res, newUser));
+  }
+
+  function generateToken(newUser, minutes) {
+    const person = newUser.person;
+    const user = <UserModel>{
+      id: newUser.id,
+      email: newUser.email,
+      authorization: newUser.authorization,
+      person_id: person.id,
+      firstname: person.firstname,
+      lastname: person.lastname,
+      can_referee: newUser.can_referee,
+      can_organize: newUser.can_organize,
+      status: newUser.status
+    };
+    //console.log('create token:', user, process.env.SECRET_TOKEN);
+    return [
+      user,
+      jwt.sign(user, process.env.SECRET_TOKEN, {
+        expiresIn: minutes * 60
+      })
+    ];
   }
 
   function userStatus(res, newUser) {
@@ -224,7 +230,51 @@ export default function LoginController(
       .catch(error => ResponseService.exception(res, error));
   }
 
+  async function pulse(req, res) {
+    const sequelize = models.sequelize;
+    let transaction, aUser;
+
+    try {
+      transaction = await sequelize.transaction();
+      console.log('got transaction');
+      aUser = await User.findOne(
+        {
+          where: {
+            id: req.decoded.id
+          },
+          include: [
+            {
+              model: Person
+            }
+          ]
+        },
+        { transaction }
+      );
+
+      if (!aUser) {
+        console.log('no user');
+        throw new Error('Unable to retrieve user.');
+      }
+      if (aUser.status !== 'active') {
+        console.log('user not active');
+        throw new Error('User is not active.');
+      }
+
+      const [user, token] = generateToken(aUser, 5);
+
+      console.log('commit transaction');
+      await transaction.commit();
+      console.log('set response');
+      loginSuccess(res, token, user);
+    } catch (error) {
+      console.log('error is:', error);
+      transaction.rollback(transaction);
+      ResponseService.exception(res, error, 403);
+    }
+  }
+
   return {
-    login
+    login,
+    pulse
   };
 }

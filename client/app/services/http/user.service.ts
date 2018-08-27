@@ -24,6 +24,10 @@ export class UserService {
     );
   }
 
+  pulse(): Observable<Login> {
+    return <Observable<Login>>this.http.post('/api/pulse', {});
+  }
+
   getUsers(queryParams: any = null): Observable<PagedData> {
     return <Observable<PagedData>>this.http.get(`/api/users`, {
       params: queryParams
