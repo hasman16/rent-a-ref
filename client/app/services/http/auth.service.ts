@@ -4,24 +4,36 @@ import { Router } from '@angular/router';
 import { TokenService } from '../interceptors/index';
 import { UserService } from './user.service';
 import { Login, User } from './../../shared/models/index';
-import { Observable, Subscription, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 @Injectable()
 export class AuthService {
-  private loginStatusSubject$: Subject<boolean> = new Subject<boolean>();
+  private loginStatusSubject$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
   public loginStatus$: Observable<
     boolean
   > = this.loginStatusSubject$.asObservable();
-  private adminStatusSubject$: Subject<boolean> = new Subject<boolean>();
+  private adminStatusSubject$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
   public adminStatus$: Observable<
     boolean
   > = this.adminStatusSubject$.asObservable();
-  private activeStatusSubject$: Subject<boolean> = new Subject<boolean>();
+  private activeStatusSubject$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
   public activeStatus$: Observable<
     boolean
   > = this.activeStatusSubject$.asObservable();
+
+  private idleTextSubject$: BehaviorSubject<string> = new BehaviorSubject<
+    string
+  >('');
+  public idleText$: Observable<string> = this.idleTextSubject$.asObservable();
+
   public loggedIn: boolean = false;
   public isAdmin: boolean = false;
   public isActive: boolean = false;
@@ -54,6 +66,10 @@ export class AuthService {
     this.loginStatusSubject$.next(this.loggedIn);
     this.adminStatusSubject$.next(this.isAdmin);
     this.activeStatusSubject$.next(this.isActive);
+  }
+
+  public setIdleText(text: string): void {
+    this.idleTextSubject$.next(text);
   }
 
   private redirectUser(userStatus: string, userId: string) {

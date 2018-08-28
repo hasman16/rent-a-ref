@@ -8,9 +8,14 @@ import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { PulseComponent } from './pulse/pulse.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Keepalive } from '@ng-idle/keepalive';
-import { Observable, Subscription, Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
+
+const THIRTY_SECONDS: number = 30;
+const ONE_MINUTE: number = 2 * THIRTY_SECONDS;
+const TEN_MINUTES: number = 10 * ONE_MINUTE;
+const FIFTEEN_MINUTES: number = 15 * ONE_MINUTE;
 
 @Component({
 	moduleId: module.id,
@@ -20,11 +25,9 @@ import * as _ from 'lodash';
 })
 export class AppComponent implements OnInit, OnDestroy {
 	private subscriptions: Subscription[] = [];
-
-	public idleState = 'Not started.';
 	public timedOut = false;
 	public lastPing: Date = null;
-	private pulseDialog;
+	private pulseDialog: MatDialogRef<PulseComponent>;
 
 	constructor(
 		private auth: AuthService,
@@ -37,21 +40,23 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.cleanUp();
-		// sets an idle timeout of 5 seconds, for testing purposes.
-		this.idle.setIdle(5);
+		// sets an idle timeout of 10 minutes, for testing purposes.
+		this.idle.setIdle(TEN_MINUTES);
 
-		// sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
-		this.idle.setTimeout(5);
+		// sets a timeout period of 30 seconds. after 10 minutes of inactivity, the user will be considered timed out.
+		this.idle.setTimeout(THIRTY_SECONDS);
 
 		// sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
 		this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
+		this.setIdleText('Not started.');
+
 		this.subscriptions.push(
 			this.auth.loginStatus$.subscribe(state => {
 				if (state) {
-					this.reset();
+					this.resetIdleAndKeepalive();
 				} else {
-					this.idle.stop();
+					this.stopIdleAndKeepalive();
 				}
 				this.closeDialog();
 			})
@@ -59,35 +64,39 @@ export class AppComponent implements OnInit, OnDestroy {
 
 		this.subscriptions.push(
 			this.idle.onIdleEnd.subscribe(() => {
-				this.idleState = 'No longer idle.';
+				this.auth.setIdleText('No longer idle.');
+				this.closeDialog();
 			})
 		);
 
 		this.subscriptions.push(
 			this.idle.onTimeout.subscribe(() => {
-				this.idleState = 'Timed out!';
+				const idleState: string = 'Timed out!';
 				this.timedOut = true;
-				let dialog = this.dialog.open(PulseComponent);
-				this.closeDialog();
 				this.auth.logout();
+				this.setIdleText(idleState);
+				this.closeDialog();
 			})
 		);
 
 		this.subscriptions.push(
 			this.idle.onIdleStart.subscribe(() => {
-				this.idleState = "You've gone idle!";
+				const idleState: string = "You've gone idle!";
+				this.setIdleText(idleState);
+				this.openDialog();
 			})
 		);
 
 		this.subscriptions.push(
 			this.idle.onTimeoutWarning.subscribe(countdown => {
-				this.idleState =
+				const idleState =
 					'You will time out in ' + countdown + ' seconds!';
+				this.setIdleText(idleState);
 			})
 		);
 
-		// sets the ping interval to 15 seconds
-		this.keepalive.interval(15);
+		// sets the ping interval to 15 minutes
+		this.keepalive.interval(FIFTEEN_MINUTES);
 
 		this.subscriptions.push(
 			this.keepalive.onPing
@@ -99,6 +108,9 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	private openDialog() {
+		if (this.pulseDialog) {
+			this.pulseDialog.close();
+		}
 		this.pulseDialog = this.dialog.open(PulseComponent);
 	}
 
@@ -117,9 +129,20 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.subscriptions = [];
 	}
 
-	private reset() {
+	private setIdleText(text: string): void {
+		this.auth.setIdleText(text);
+	}
+
+	private stopIdleAndKeepalive(): void {
+		this.idle.stop();
+		this.keepalive.stop();
+	}
+
+	private resetIdleAndKeepalive() {
+		this.stopIdleAndKeepalive();
 		this.idle.watch();
-		this.idleState = 'Started.';
+		this.keepalive.start();
 		this.timedOut = false;
+		this.setIdleText('Started.');
 	}
 }

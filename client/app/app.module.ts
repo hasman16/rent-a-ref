@@ -87,6 +87,7 @@ import {
     RefereeDetailsModalComponent
 } from './matches/index';
 import { AssignUsersComponent } from './assign-users/assign-users.component';
+import { PulseComponent } from './pulse/pulse.component';
 
 /* Misc. */
 import { DropdownDirective } from './shared/dropdown.directive';
@@ -139,6 +140,7 @@ import {
         PasswordFormComponent,
         PhoneFormComponent,
         PricingComponent,
+        PulseComponent,
         AdminProfileComponent,
         ProfileComponent,
         ManageUsersComponent,
@@ -226,6 +228,7 @@ import {
     providers: [EventsComponentService, GoogleMapsAPIWrapper],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     // Add bootstrap
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [PulseComponent]
 })
 export class AppModule {}

@@ -6,6 +6,7 @@ import {
   MatInputModule,
   MatListModule,
   MatCheckboxModule,
+  MatDialogModule,
   MatMenuModule,
   MatRadioModule,
   MatTabsModule,
@@ -18,40 +19,27 @@ import {
   MatNativeDateModule
 } from '@angular/material';
 
+const MATERIALS = [
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatInputModule,
+  MatListModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatMenuModule,
+  MatRadioModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatProgressBarModule,
+  MatDatepickerModule,
+  MatNativeDateModule
+];
+
 @NgModule({
-  imports: [
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCheckboxModule,
-    MatListModule,
-    MatInputModule,
-    MatMenuModule,
-    MatRadioModule,
-    MatToolbarModule,
-    MatTabsModule,
-    MatIconModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatProgressBarModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
-  exports: [
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCheckboxModule,
-    MatListModule,
-    MatInputModule,
-    MatMenuModule,
-    MatRadioModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatProgressBarModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ]
+  imports: [...MATERIALS],
+  exports: [...MATERIALS]
 })
 export class MaterialModule {}
