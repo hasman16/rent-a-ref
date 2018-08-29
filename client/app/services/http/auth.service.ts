@@ -5,34 +5,22 @@ import { TokenService } from '../interceptors/index';
 import { UserService } from './user.service';
 import { Login, User } from './../../shared/models/index';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, take, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 @Injectable()
 export class AuthService {
-  private loginStatusSubject$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
-  public loginStatus$: Observable<
-    boolean
-  > = this.loginStatusSubject$.asObservable();
-  private adminStatusSubject$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
-  public adminStatus$: Observable<
-    boolean
-  > = this.adminStatusSubject$.asObservable();
-  private activeStatusSubject$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
-  public activeStatus$: Observable<
-    boolean
-  > = this.activeStatusSubject$.asObservable();
+  private loginStatusSubject$: BehaviorSubject<boolean>;
 
-  private idleTextSubject$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
-  public idleText$: Observable<string> = this.idleTextSubject$.asObservable();
+  private adminStatusSubject$: BehaviorSubject<boolean>;
+  private activeStatusSubject$: BehaviorSubject<boolean>;
+  private idleTextSubject$: BehaviorSubject<string>;
+
+  public loginStatus$: Observable<boolean>;
+  public adminStatus$: Observable<boolean>;
+  public activeStatus$: Observable<boolean>;
+
+  public idleText$: Observable<string>;
 
   public loggedIn: boolean = false;
   public isAdmin: boolean = false;
@@ -47,6 +35,27 @@ export class AuthService {
     private router: Router
   ) {
     const user = localStorage.getItem('user');
+    this.loginStatusSubject$ = new BehaviorSubject(false);
+    this.adminStatusSubject$ = new BehaviorSubject(false);
+    this.activeStatusSubject$ = new BehaviorSubject(false);
+    this.idleTextSubject$ = new BehaviorSubject('');
+
+    this.loginStatus$ = this.loginStatusSubject$
+      .asObservable()
+      .pipe(distinctUntilChanged());
+
+    this.adminStatus$ = this.adminStatusSubject$
+      .asObservable()
+      .pipe(distinctUntilChanged());
+
+    this.activeStatus$ = this.activeStatusSubject$
+      .asObservable()
+      .pipe(distinctUntilChanged());
+
+    this.idleText$ = this.idleTextSubject$
+      .asObservable()
+      .pipe(distinctUntilChanged());
+
     this.logout();
     if (user) {
       this.setCurrentUser(JSON.parse(user));
@@ -72,7 +81,7 @@ export class AuthService {
     this.idleTextSubject$.next(text);
   }
 
-  private redirectUser(userStatus: string, userId: string) {
+  private redirectLoginPath(userStatus: string, userId: string) {
     let path: string = '';
     switch (userStatus) {
       case 'active':
@@ -86,11 +95,9 @@ export class AuthService {
         break;
       case 'banned':
         path = `account/${userId}/deactivated`;
-        this.resetState();
         break;
       default:
         path = '/';
-        this.resetState();
         break;
     }
     return path;
@@ -100,24 +107,32 @@ export class AuthService {
     return _.cloneDeep(this.currentUser);
   }
 
+  private processLoginOrPulse(login: Login, isPulse: boolean): void {
+    const user: User = login.user;
+    const userId = user.id;
+    const userStatus = user.status;
+    const path: string = this.redirectLoginPath(userStatus, userId);
+
+    if (userStatus === 'banned' || path === '/') {
+      this.resetState();
+      this.router.navigate([path]);
+    } else {
+      this.setCurrentUser({
+        user: login.user,
+        token: login.token
+      });
+      if (!isPulse) {
+        this.router.navigate([path]);
+      }
+    }
+  }
+
   public login(emailAndPassword) {
     this.logout();
     return this.userService.login(emailAndPassword).pipe(
       tap(
         (login: Login) => {
-          const user: User = login.user;
-          const userId = user.id;
-          const userStatus = user.status;
-          const path: string = this.redirectUser(userStatus, userId);
-
-          if (path) {
-            this.setCurrentUser({
-              user: login.user,
-              token: login.token
-            });
-          }
-
-          this.router.navigate([path]);
+          this.processLoginOrPulse(login, false);
         },
         () => {
           this.logout();
@@ -129,19 +144,7 @@ export class AuthService {
   public pulse() {
     this.userService.pulse().subscribe(
       (login: Login) => {
-        const user: User = login.user;
-        const userId = user.id;
-        const userStatus = user.status;
-        const path: string = this.redirectUser(userStatus, userId);
-
-        if (path) {
-          this.setCurrentUser({
-            user: login.user,
-            token: login.token
-          });
-        }
-
-        this.router.navigate([path]);
+        this.processLoginOrPulse(login, true);
       },
       () => {
         this.logout();
