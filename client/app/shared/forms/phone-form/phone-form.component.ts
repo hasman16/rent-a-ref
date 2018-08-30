@@ -11,7 +11,7 @@ import { Phone } from '../../models/phone';
 import { ProfileService } from '../../../services/index';
 
 import { AbstractFormComponent } from '../abstract-form';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
 export interface IPhoneService {

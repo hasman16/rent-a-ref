@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { PagingService, UserService } from './../http/index';
 import { Page, PagedData } from './../../shared/models/index';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UserResolver implements Resolve<Observable<PagedData>> {

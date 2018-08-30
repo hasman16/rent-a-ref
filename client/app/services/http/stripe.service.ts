@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { BaseModel, Order, PagedData } from './../../shared/models/index';
 
 import { AbstractService } from './abstract.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import * as _ from 'lodash';
 

@@ -1,7 +1,8 @@
 import { EventEmitter, Output } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 export abstract class AbstractFormComponent {
   @Output() cancelForm = new EventEmitter();
@@ -22,7 +23,7 @@ export abstract class AbstractFormComponent {
   }
 
   protected validator(item: AbstractControl, name: string) {
-    item.valueChanges.debounceTime(1000).subscribe(value => {
+    item.valueChanges.pipe(debounceTime(1000)).subscribe(value => {
       let result = false;
       if (item.touched && item.invalid) {
         result = true;

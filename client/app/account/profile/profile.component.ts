@@ -35,8 +35,7 @@ import {
   CropImageState,
   UploadState
 } from './../../shared/crop-image-modal/index';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable ,  Subscription } from 'rxjs';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 

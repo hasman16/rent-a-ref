@@ -12,8 +12,6 @@ import { ToastComponent } from '../../shared/toast/toast.component';
 import { AuthService, UserService } from '../../services/index';
 import { Login, User } from './../../shared/models/index';
 
-import 'rxjs/add/operator/take';
-
 @Component({
   selector: 'app-contactus',
   templateUrl: './contactus.component.html',

@@ -91,8 +91,6 @@ export class MatchDetailComponent implements OnInit {
     currentReferee.orderedPhones = this.orderPhones(referee);
     currentReferee.addresses = referee.addresses;
     this.currentReferee = _.cloneDeep(currentReferee);
-    console.log('showRefereeDetails:', this.currentReferee);
-
     this.showModal = true;
   }
 
@@ -126,7 +124,7 @@ export class MatchDetailComponent implements OnInit {
 
   private getData(id: string) {
     const page: Page = this.pagingService.getDefaultPager();
-    let control$ = Observable.of(!!this.user);
+    let control$ = of(!!this.user);
 
     let getOfficialsAndMatch$ = this.matchService
       .getMatchOfficials(id, page)

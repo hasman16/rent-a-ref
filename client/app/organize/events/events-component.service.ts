@@ -20,15 +20,8 @@ import {
 	StripeService,
 	UserService
 } from './../../services/index';
-import { Subject } from 'rxjs/Subject';
-
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/combineLatest';
-import 'rxjs/add/operator/switchMap';
+import { Subject, Observable, of, BehaviorSubject } from 'rxjs';
+import { combineLatest, map, switchMap, take } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
@@ -63,16 +56,16 @@ export class EventsComponentService {
 
 	public getEvent(id: string): Observable<any> {
 		const games = value => value && value > 0;
-		return this.eventsService
-			.getGame(id)
-			.take(1)
-			.map((aGame: Game) => {
+		return this.eventsService.getGame(id).pipe(
+			take(1),
+			map((aGame: Game) => {
 				const model = this.convertGameToModel(aGame);
 				model.kids = games(model.kids_games);
 				model.teens = games(model.teen_games);
 				model.adults = games(model.adult_games);
 				return model;
-			});
+			})
+		);
 	}
 
 	public createEvent(org_id: string, model: any): Observable<any> {
@@ -82,14 +75,14 @@ export class EventsComponentService {
 	public updateGameAddress(model: any): Observable<any> {
 		const address = model.address;
 
-		return this.eventsService
-			.updateGame(model)
-			.switchMap((game: Game): Observable<any> => {
+		return this.eventsService.updateGame(model).pipe(
+			switchMap((game: Game): Observable<any> => {
 				if (address) {
 					return this.eventsService.updateAddress(model.id, address);
 				}
-				return Observable.of(true);
-			});
+				return of(true);
+			})
+		);
 	}
 
 	public getOrganizationGames(
@@ -101,15 +94,16 @@ export class EventsComponentService {
 
 	public getPreparedEventForPayment(gameId: string): Observable<any> {
 		this.lineItems = [];
-		return this.getEvent(gameId)
-			.combineLatest(this.stripeService.getProducts())
-			.map(([model, products]: [any, any]) => {
+		return this.getEvent(gameId).pipe(
+			combineLatest(this.stripeService.getProducts()),
+			map(([model, products]: [any, any]) => {
 				this.products = _.filter(products.data, product => {
 					return product.type === 'good';
 				});
 				return this.prepareForPayment(model, this.products);
-			})
-			.take(1);
+			}),
+			take(1)
+		);
 	}
 
 	public convertGameToModel(model: Game): any {
@@ -206,7 +200,7 @@ export class EventsComponentService {
 		model.kids_games_total = model.kids_game_price * model.kids_games;
 		model.teen_games_total = model.teen_game_price * model.teen_games;
 		model.adult_games_total = model.adult_game_price * model.adult_games;
-		
+
 		this.lineItems = _.cloneDeep(lineItems);
 		model['total'] =
 			model.kids_games_total +

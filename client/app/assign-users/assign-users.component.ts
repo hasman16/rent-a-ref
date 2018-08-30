@@ -22,11 +22,9 @@ import {
   UserService
 } from '../services/index';
 import { Match, Page, PagedData, Sorts, User } from '../shared/models/index';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/finally';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
 import * as _ from 'lodash';
 
 enum ViewState {
@@ -103,10 +101,12 @@ export class AssignUsersComponent extends AbstractComponent
     this.isLoading = true;
     this.matchService
       .getOfficialsByMatch(this.match_id, page)
-      .finally(() => {
-        this.isLoading = false;
-        this.cd.markForCheck();
-      })
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.cd.markForCheck();
+        })
+      )
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
@@ -128,11 +128,13 @@ export class AssignUsersComponent extends AbstractComponent
           user_id,
           match_id: this.match_id
         })
-        .finally(() => {
-          this.isLoading = false;
-          this.cd.markForCheck();
-          this.getUsers(this.page);
-        })
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+            this.cd.markForCheck();
+            this.getUsers(this.page);
+          })
+        )
         .subscribe(
           res => {
             this.toast.setMessage(
@@ -149,11 +151,13 @@ export class AssignUsersComponent extends AbstractComponent
     if (!this.isLoading) {
       this.matchService
         .removeOfficial(user_id, this.match_id)
-        .finally(() => {
-          this.isLoading = false;
-          this.cd.markForCheck();
-          this.getUsers(this.page);
-        })
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+            this.cd.markForCheck();
+            this.getUsers(this.page);
+          })
+        )
         .subscribe(
           res => {
             this.toast.setMessage(

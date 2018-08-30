@@ -12,8 +12,8 @@ import { Bio } from '../../models/bio';
 import { AbstractFormComponent } from '../abstract-form';
 import { UserService } from '../../../services/index';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
+import { Observable } from 'rxjs';
+
 
 import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
 

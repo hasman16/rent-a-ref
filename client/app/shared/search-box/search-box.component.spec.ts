@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 
 import { SearchBoxComponent } from './search-box.component';
 
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 describe('SearchBoxComponent', () => {
   let component: SearchBoxComponent;

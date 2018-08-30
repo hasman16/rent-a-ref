@@ -11,11 +11,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractComponent } from '../../../abstract/abstract.component';
 import { ToastComponent } from '../../../shared/toast/toast.component';
 import { Page, PagedData, Sorts, User } from '../../../shared/models/index';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/finally';
+import { Observable ,  Subscription ,  Subject } from 'rxjs';
+
+
 import * as _ from 'lodash';
 
 import {

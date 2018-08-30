@@ -6,13 +6,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractComponent } from '../abstract/abstract.component';
 import { ToastComponent } from '../shared/toast/toast.component';
 import { Match, Page, PagedData, Sorts, User } from '../shared/models/index';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/finally';
-import 'rxjs/add/observable/empty';
-
+import { empty, Observable, Subscription, Subject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import {
@@ -118,15 +113,17 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 		} else if (operation === 'decline') {
 			observable = this.matchService.declineMatch(officiate);
 		} else {
-			observable = Observable.empty();
+			observable = empty();
 		}
 
 		observable
-			.finally(() => {
-				this.isLoading = false;
-				this.cd.markForCheck();
-				this.getData(this.page);
-			})
+			.pipe(
+				finalize(() => {
+					this.isLoading = false;
+					this.cd.markForCheck();
+					this.getData(this.page);
+				})
+			)
 			.subscribe(
 				() => {
 					this.toast.setMessage(success, 'success');

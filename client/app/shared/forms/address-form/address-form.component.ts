@@ -12,8 +12,8 @@ import { Address, Option } from '../../models/index';
 import { StatesService } from '../../../services/index';
 import { AbstractFormComponent } from '../abstract-form';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
+import { Observable } from 'rxjs';
+
 import * as _ from 'lodash';
 
 export interface IAddressService {

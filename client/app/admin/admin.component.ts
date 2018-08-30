@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CanComponentDeactivate } from '../services/index';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'rar-admin',

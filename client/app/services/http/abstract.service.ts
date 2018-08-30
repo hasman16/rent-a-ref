@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { BaseModel } from './../../shared/models/index';
 
 export abstract class AbstractService {
@@ -26,9 +26,11 @@ export abstract class AbstractService {
     any,
     string
   ]): Observable<T[]> {
-    return this.http.post(url, JSON.stringify(model)).map((res: any) => {
-      return <T[]>res[indexName];
-    });
+    return this.http.post(url, JSON.stringify(model)).pipe(
+      map((res: any) => {
+        return <T[]>res[indexName];
+      })
+    );
   }
 
   protected bulkUpdate<T extends BaseModel>([url, model, indexName]: [
@@ -36,8 +38,10 @@ export abstract class AbstractService {
     any,
     string
   ]): Observable<T[]> {
-    return this.http.put(url, JSON.stringify(model)).map((res: any) => {
-      return <T[]>res[indexName];
-    });
+    return this.http.put(url, JSON.stringify(model)).pipe(
+      map((res: any) => {
+        return <T[]>res[indexName];
+      })
+    );
   }
 }

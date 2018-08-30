@@ -8,7 +8,7 @@ import { TokenService } from './token.service';
 import { LoaderService } from './../../shared/loader/index';
 import { TokenInterceptor } from './token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 describe('TokenInterceptor', () => {
 	let service: UserService;

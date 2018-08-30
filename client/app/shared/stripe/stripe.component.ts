@@ -17,11 +17,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PaymentState, Payment } from './stripe-state';
 import { Order } from './../models/index';
 import { OrganizeService, StripeService } from '../../services/index';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/combineLatest';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/finally';
-
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 @Component({
@@ -138,10 +135,12 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
     this.disableSubmit = true;
     return this.stripeService
       .createAndPayOrder({ order: order, source: source.id })
-      .finally(() => {
-        this.disableSubmit = false;
-        this.cd.markForCheck();
-      })
+      .pipe(
+        finalize(() => {
+          this.disableSubmit = false;
+          this.cd.markForCheck();
+        })
+      )
       .subscribe(
         success => {
           this.paymentState.emit(<Payment>{
@@ -163,10 +162,12 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
     this.disableSubmit = true;
     return this.stripeService
       .makeStripePayment(this.reference_id, token)
-      .finally(() => {
-        this.disableSubmit = false;
-        this.cd.markForCheck();
-      })
+      .pipe(
+        finalize(() => {
+          this.disableSubmit = false;
+          this.cd.markForCheck();
+        })
+      )
       .subscribe(
         success => {
           this.paymentState.emit(<Payment>{

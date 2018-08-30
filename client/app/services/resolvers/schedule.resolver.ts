@@ -15,10 +15,8 @@ import {
 	User
 } from './../../shared/models/index';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
+import { Observable, empty } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class ScheduleResolver implements Resolve<Observable<PagedData>> {
@@ -33,10 +31,10 @@ export class ScheduleResolver implements Resolve<Observable<PagedData>> {
 		const user_id = currentUser.id;
 		const pagingInfo: Page = this.pagingService.getDefaultPager();
 
-		return this.matchService
-			.scheduleByReferee(user_id, pagingInfo)
-			.catch(() => {
-				return Observable.empty();
-			});
+		return this.matchService.scheduleByReferee(user_id, pagingInfo).pipe(
+			catchError(() => {
+				return empty();
+			})
+		);
 	}
 }

@@ -11,8 +11,6 @@ import { ToastComponent } from '../shared/toast/toast.component';
 import { AuthService, UserService } from '../services/index';
 import { Login, User } from './../shared/models/index';
 
-import 'rxjs/add/operator/take';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -69,14 +67,11 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(data: any): void {
-    this.auth
-      .login(data)
-      .take(1)
-      .subscribe(
-        (login: Login) => {},
-        (err: HttpErrorResponse) => {
-          this.toast.setMessage('Invalid email or password! ', 'danger');
-        }
-      );
+    this.auth.login(data).subscribe(
+      (login: Login) => {},
+      (err: HttpErrorResponse) => {
+        this.toast.setMessage('Invalid email or password! ', 'danger');
+      }
+    );
   }
 }

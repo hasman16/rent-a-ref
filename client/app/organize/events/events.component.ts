@@ -31,10 +31,8 @@ import {
   Sport
 } from './../../shared/models/index';
 import { PaymentState, Payment } from './../../shared/stripe/stripe-state';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/combineLatest';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/finally';
+import { Observable } from 'rxjs';
+import { finalize, take } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
@@ -194,10 +192,11 @@ export class EventsComponent extends AbstractComponent
       this.isLoading = true;
       this.eventsComponentService
         .getPreparedEventForPayment(game_id)
-        .take(1)
-        .finally(() => {
+        .pipe(
+        take(1),
+        finalize(() => {
           this.isLoading = false;
-        })
+        }))
         .subscribe(
           (model: any) => {
             this.model = _.cloneDeep(model);
@@ -219,11 +218,12 @@ export class EventsComponent extends AbstractComponent
 
       this.eventsComponentService
         .getEvent(game_id)
-        .take(1)
-        .finally(() => {
+        .pipe(
+        take(1),
+        finalize(() => {
           this.isLoading = false;
           this.cd.markForCheck();
-        })
+        }))
         .subscribe(
           (model: any) => {
             this.model = _.cloneDeep(model);
@@ -247,11 +247,12 @@ export class EventsComponent extends AbstractComponent
 
     this.eventsComponentService
       .getOrganizationGames(this.organization_id, page)
-      .take(1)
-      .finally(() => {
+      .pipe(
+      take(1),
+      finalize(() => {
         this.isLoading = false;
         this.setEventsMode();
-      })
+      }))
       .subscribe(
         (data: PagedData) => {
           this.processPagedData(data);
@@ -275,9 +276,10 @@ export class EventsComponent extends AbstractComponent
     this.isLoading = true;
     this.eventsComponentService
       .createEvent(this.organization_id, model)
-      .finally(() => {
+      .pipe(
+      finalize(() => {
         this.getEvents();
-      })
+      }))
       .subscribe(
         (game: Game) => {
           this.toast.setMessage('Event created.', 'info');
@@ -290,11 +292,12 @@ export class EventsComponent extends AbstractComponent
   public submitUpdateEvent(model: any): void {
     this.eventsComponentService
       .updateGameAddress(model)
-      .finally(() => {
+      .pipe(
+      finalize(() => {
         this.isLoading = false;
         this.getEvents();
         this.cd.markForCheck();
-      })
+      }))
       .subscribe(
         (game: Game) => {
           this.toast.setMessage('Event updated.', 'info');

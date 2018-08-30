@@ -42,12 +42,8 @@ import {
   AlertButtonState
 } from '../shared/alert-modal/index';
 
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/combineLatest';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/finally';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { finalize, map, switchMap, take } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
@@ -111,18 +107,20 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
   public getAllMatchesByGame(game_id: string, page: Page): void {
     this.matchService
       .getAllMatchesByGame(game_id, page)
-      .map((data: PagedData) => {
-        data.rows = _.map(data.rows, match => {
-          match.isTimeLocked = !this.pagingService.isNotTimeLocked(match);
-          return match;
-        });
+      .pipe(
+        map((data: PagedData) => {
+          data.rows = _.map(data.rows, match => {
+            match.isTimeLocked = !this.pagingService.isNotTimeLocked(match);
+            return match;
+          });
 
-        return data;
-      })
-      .finally(() => {
-        this.setMatchesMode();
-        this.cd.markForCheck();
-      })
+          return data;
+        }),
+        finalize(() => {
+          this.setMatchesMode();
+          this.cd.markForCheck();
+        })
+      )
       .subscribe(matches => {
         this.processPagedData(matches);
       });
@@ -195,22 +193,24 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
     this.delete_id = match_id;
     this.alertModalService.show();
     this.alertModalService.alertSubject$
-      .take(1)
-      .switchMap((state: AlertState) => {
-        let observable$: Observable<any>;
-        if (state.alertButtonState === AlertButtonState.Ok) {
-          observable$ = this.matchService.deleteMatch(match_id);
-        } else {
-          let modalSubject: Subject<boolean> = new Subject<boolean>();
-          observable$ = modalSubject.asObservable();
-          modalSubject.next(true);
-        }
-        return observable$;
-      })
-      .finally(() => {
-        this.cd.markForCheck();
-        this.getAllMatchesByGame(this.game.id, this.page);
-      })
+      .pipe(
+        take(1),
+        switchMap((state: AlertState) => {
+          let observable$: Observable<any>;
+          if (state.alertButtonState === AlertButtonState.Ok) {
+            observable$ = this.matchService.deleteMatch(match_id);
+          } else {
+            let modalSubject: Subject<boolean> = new Subject<boolean>();
+            observable$ = modalSubject.asObservable();
+            modalSubject.next(true);
+          }
+          return observable$;
+        }),
+        finalize(() => {
+          this.cd.markForCheck();
+          this.getAllMatchesByGame(this.game.id, this.page);
+        })
+      )
       .subscribe((state: AlertState) => {
         console.log('state is:', state);
       });
@@ -267,10 +267,12 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
       this.isLoading = true;
       this.matchService
         .getMatch(match_id)
-        .finally(() => {
-          this.isLoading = false;
-          this.cd.markForCheck();
-        })
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+            this.cd.markForCheck();
+          })
+        )
         .subscribe(
           (match: Match) => {
             this.model = this.convertMatchToModel(match);
@@ -299,9 +301,11 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
     this.isLoading = true;
     this.matchService
       .updateMatch(match)
-      .finally(() => {
-        this.getAllMatchesByGame(this.game.id, this.page);
-      })
+      .pipe(
+        finalize(() => {
+          this.getAllMatchesByGame(this.game.id, this.page);
+        })
+      )
       .subscribe(
         (match: Match) => {
           this.toast.setMessage('Match updated.', 'info');
@@ -316,9 +320,11 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
     this.isLoading = true;
     this.matchService
       .createMatch(this.game.id, this.convertModelToMatch(model))
-      .finally(() => {
-        this.getAllMatchesByGame(this.game.id, this.page);
-      })
+      .pipe(
+        finalize(() => {
+          this.getAllMatchesByGame(this.game.id, this.page);
+        })
+      )
       .subscribe(
         (match: Match) => {
           this.toast.setMessage('Match created.', 'info');

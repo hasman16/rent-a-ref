@@ -13,11 +13,8 @@ import {
 } from './../../shared/models/index';
 import { AbstractService } from './abstract.service';
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/take';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { finalize, take, tap } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 
@@ -55,8 +52,11 @@ export class OrganizeService extends AbstractService {
         .get<PagedData>(`/api/sports`, {
           params: queryParams
         })
-        .do(
-          (sportsData: PagedData) => (this.sportsData = _.cloneDeep(sportsData))
+        .pipe(
+          tap(
+            (sportsData: PagedData) =>
+              (this.sportsData = _.cloneDeep(sportsData))
+          )
         );
     } else {
       let bs: BehaviorSubject<PagedData> = new BehaviorSubject<PagedData>(null);
@@ -64,7 +64,7 @@ export class OrganizeService extends AbstractService {
       ob = bs;
     }
 
-    return ob.take(1);
+    return ob.pipe(take(1));
   }
 
   // addresses

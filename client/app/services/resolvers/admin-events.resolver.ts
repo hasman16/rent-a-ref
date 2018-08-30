@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { OrganizeService, PagingService, EventsService } from './../http/index';
 import { Page, PagedData } from './../../shared/models/index';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
-import 'rxjs/add/observable/combineLatest';
+import { Observable, combineLatest, empty } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AdminEventsResolver
@@ -18,11 +16,13 @@ export class AdminEventsResolver
 
 	resolve(): Observable<{} | [PagedData, PagedData]> {
 		const pagingInfo: Page = this.pagingService.getDefaultPager();
-		return Observable.combineLatest(
+		return combineLatest(
 			this.eventsService.getAllGames(pagingInfo),
 			this.organizeService.getSports(pagingInfo)
-		).catch(() => {
-			return Observable.empty();
-		});
+		).pipe(
+			catchError(() => {
+				return empty();
+			})
+		);
 	}
 }

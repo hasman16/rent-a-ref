@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { OrganizeService, PagingService, UserService } from './../http/index';
 import { Page, PagedData, Sport } from './../../shared/models/index';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SportsResolver implements Resolve<Observable<PagedData>> {

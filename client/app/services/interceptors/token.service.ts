@@ -19,24 +19,24 @@ export class TokenService {
   }
 
   getUploadHeaders(): HttpHeaders {
-    return new HttpHeaders()
-      .set('charset', 'UTF-8');;
+    return new HttpHeaders().set('charset', 'UTF-8');
   }
 
-  getJsonHeaders(): HttpHeaders{
+  getJsonHeaders(): HttpHeaders {
     return new HttpHeaders()
       .set('Content-Type', 'application/json')
       .append('charset', 'UTF-8');
   }
 
   getHeaders(url): HttpHeaders {
-    const isUpload: boolean = /upload/ig.test(url);
-    let headers: HttpHeaders = isUpload ? this.getUploadHeaders(): this.getJsonHeaders();
+    const isUpload: boolean = /upload/gi.test(url);
+    let headers: HttpHeaders = isUpload
+      ? this.getUploadHeaders()
+      : this.getJsonHeaders();
 
     if (this.token) {
       headers = headers.append('Authorization', 'Bearer ' + this.token);
     }
-    console.log('headers:', headers);
     return headers;
   }
 

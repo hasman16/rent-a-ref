@@ -10,8 +10,7 @@ import {
 
 import { ModalState } from './modal';
 
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Subscription ,  Observable } from 'rxjs';
 
 @Component({
   selector: 'rar-modal',

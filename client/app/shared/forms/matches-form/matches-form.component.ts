@@ -12,7 +12,7 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { StatesService } from './../../../services/index';
 import { State, Option } from './../../models/index';
 import { BaseFormComponent } from './../../formly/base-form/base-form.component';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({

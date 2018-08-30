@@ -12,7 +12,9 @@ import {
 import { IAddressService } from './../../shared/forms/address-form/address-form.component';
 import { IPhoneService } from './../../shared/forms/phone-form/phone-form.component';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import * as _ from 'lodash';
 
 @Injectable()
@@ -50,14 +52,16 @@ export class ProfileService implements IAddressService, IPhoneService {
   }
 
   getProfile(user_id: any) {
-    return this.userService.getProfile(user_id).map(res => {
-      this.data = res;
-      this.person = res.person;
-      this.addresses = res.addresses;
-      this.phones = res.phones;
-      this.areas = res.areas;
-      return res;
-    });
+    return this.userService.getProfile(user_id).pipe(
+      map(res => {
+        this.data = res;
+        this.person = res.person;
+        this.addresses = res.addresses;
+        this.phones = res.phones;
+        this.areas = res.areas;
+        return res;
+      })
+    );
   }
 
   createAddress(newAddress: Address): Observable<Address> {

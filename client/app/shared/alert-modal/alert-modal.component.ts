@@ -11,8 +11,7 @@ import { AlertModalService } from './alert-modal.service';
 import { AlertState, AlertButtonState } from './alert-state';
 
 import { ModalComponent } from './../modal/modal.component';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Subscription ,  Observable } from 'rxjs';
 
 @Component({
 	selector: 'rar-alert-modal',

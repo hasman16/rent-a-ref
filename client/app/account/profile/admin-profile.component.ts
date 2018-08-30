@@ -22,10 +22,9 @@ import {
   Profile,
   User
 } from './../../shared/models/index';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/finally';
+import { Observable, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -153,10 +152,12 @@ export class AdminProfileComponent implements OnInit {
 
     this.profileService
       .getProfile(currentUser.id)
-      .finally(() => {
-        this.cancelStatusView();
-        this.cd.markForCheck();
-      })
+      .pipe(
+        finalize(() => {
+          this.cancelStatusView();
+          this.cd.markForCheck();
+        })
+      )
       .subscribe(
         (profile: Profile) => {
           this.data = profile;

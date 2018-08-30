@@ -15,9 +15,8 @@ import { CropImageModalService } from './crop-image-modal.service';
 import { UploadState, CropImageState } from './crop-image';
 
 import { ModalComponent } from './../modal/modal.component';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
-
+import { Subscription, Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 @Component({
 	selector: 'rar-cropper-image-modal',
 	templateUrl: './crop-image-modal.component.html',
@@ -125,7 +124,7 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 			formData.append('photo', uploadImage);
 			this.cropImageModalService
 				.uploadImage(this.destination, formData)
-				.finally(() => this.cropImageModalService.hide())
+				.pipe(finalize(() => this.cropImageModalService.hide()))
 				.subscribe(
 					() => {
 						this.closeModal(null);

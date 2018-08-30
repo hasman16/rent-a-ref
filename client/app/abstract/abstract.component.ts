@@ -6,11 +6,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastComponent } from '../shared/toast/toast.component';
 import { PagingService } from '../services/index';
 import { Option, Page, PagedData, Sorts } from './../shared/models/index';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/finally';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { catchError, debounceTime, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 export abstract class AbstractComponent {
@@ -32,12 +29,15 @@ export abstract class AbstractComponent {
     this.isLoading = false;
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
     this.searchSubject = new Subject();
-    this.search$ = this.searchSubject.asObservable().debounceTime(this.delay);
+    this.search$ = this.searchSubject.asObservable();
     this.subscriptions.push(
       this.search$
-        .do((page: Page) => {
-          this.getData(_.cloneDeep(page));
-        })
+        .pipe(
+          debounceTime(this.delay),
+          tap((page: Page) => {
+            this.getData(_.cloneDeep(page));
+          })
+        )
         .subscribe()
     );
   }

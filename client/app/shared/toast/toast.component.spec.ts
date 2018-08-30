@@ -5,7 +5,7 @@ import { ToastComponent } from './toast.component';
 import { ToastService } from './toast.service';
 import { Toast } from './toast';
 
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 describe('ToastComponent', () => {
   let component: ToastComponent;

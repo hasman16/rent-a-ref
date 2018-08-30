@@ -11,8 +11,8 @@ import { Address } from '../../models/address';
 import { StatesService } from '../../../services/index';
 import { AbstractFormComponent } from '../abstract-form';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'zone-form',

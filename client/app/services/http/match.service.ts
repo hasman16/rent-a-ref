@@ -11,8 +11,8 @@ import {
 } from './../../shared/models/index';
 import { AbstractService } from './abstract.service';
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 
@@ -94,30 +94,32 @@ export class MatchService extends AbstractService {
       .get(url, {
         params: queryParams
       })
-      .map((data: PagedData) => {
-        data.rows = _.map(data.rows, match => {
-          const officials: any[] = _.map(match.users, user => {
-            return user.officiating;
+      .pipe(
+        map((data: PagedData) => {
+          data.rows = _.map(data.rows, match => {
+            const officials: any[] = _.map(match.users, user => {
+              return user.officiating;
+            });
+
+            const statuses: string[] = _.map(
+              officials,
+              official => official.status
+            );
+
+            if (_.some(statuses, status => status === 'cancelled')) {
+              match.status = 'cancelled';
+            } else if (_.some(statuses, status => status === 'played')) {
+              match.status = 'played';
+            }
+
+            match.users = _.cloneDeep(officials);
+
+            return match;
           });
 
-          const statuses: string[] = _.map(
-            officials,
-            official => official.status
-          );
-
-          if (_.some(statuses, status => status === 'cancelled')) {
-            match.status = 'cancelled';
-          } else if (_.some(statuses, status => status === 'played')) {
-            match.status = 'played';
-          }
-
-          match.users = _.cloneDeep(officials);
-
-          return match;
-        });
-
-        return data;
-      });
+          return data;
+        })
+      );
   }
 
   public getOfficialsByMatch(

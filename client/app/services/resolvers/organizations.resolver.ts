@@ -3,10 +3,8 @@ import { Resolve } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService, OrganizeService } from './../http/index';
 import { Organization, Profile, User } from './../../shared/models/index';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
+import { Observable, empty } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class OrganizationsResolver
@@ -21,13 +19,13 @@ export class OrganizationsResolver
 
 		const user_id = currentUser.id;
 
-		return this.organizeService
-			.getUserOrganization(user_id)
-			.catch(() => {
-				return Observable.empty();
-			})
-			.map((profile: Profile) => {
+		return this.organizeService.getUserOrganization(user_id).pipe(
+			catchError(() => {
+				return empty();
+			}),
+			map((profile: Profile) => {
 				return profile.organizations;
-			});
+			})
+		);
 	}
 }

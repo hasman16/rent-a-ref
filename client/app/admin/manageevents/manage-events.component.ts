@@ -29,8 +29,8 @@ import {
   Sport,
   User
 } from '../../shared/models/index';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/finally';
+import { Observable } from 'rxjs';
+import { finalize, take } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 enum TabState {
@@ -121,10 +121,11 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
 
       this.eventsComponentService
         .getEvent(game.id)
-        .take(1)
-        .finally(() => {
+        .pipe(
+        take(1),
+        finalize(() => {
           this.cd.markForCheck();
-        })
+        }))
         .subscribe(
           (model: any) => {
             this.model = _.cloneDeep(model);
@@ -161,9 +162,10 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     this.isLoading = true;
     this.eventsService
       .getAllGames(params)
-      .finally(() => {
+      .pipe(
+      finalize(() => {
         this.cd.markForCheck();
-      })
+      }))
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
@@ -173,9 +175,10 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   public submitUpdateEvent(model: any): void {
     this.eventsComponentService
       .updateGameAddress(model)
-      .finally(() => {
+      .pipe(
+      finalize(() => {
         this.cd.markForCheck();
-      })
+      }))
       .subscribe(
         (game: Game) => {
           this.toast.setMessage('Event updated.', 'info');
