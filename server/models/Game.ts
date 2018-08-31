@@ -3,7 +3,11 @@ const Game = function(sequelize, DataTypes) {
 		'game',
 		{
 			event_name: DataTypes.STRING(64),
-			date: {
+			start_date: {
+				type: DataTypes.DATE,
+				allowNull: false
+			},
+			end_date: {
 				type: DataTypes.DATE,
 				allowNull: false
 			},

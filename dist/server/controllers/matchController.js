@@ -103,9 +103,13 @@ function MatchController(models, ResponseService) {
     function canAssignOrRemove(value) {
         return value === 'pending' || value === 'none' || value === 'active';
     }
+    function processTime(match, timeZome) {
+        match.date = ResponseService.addTimeToDate(match.time, match.date);
+        match.date = ResponseService.calculateDate(match.date, match.timezone_id);
+    }
     function update(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var match, sequelize, Officiating, match_id, Address, Phone, address, phone, relation, transaction, oldMatch, newMatch, oldAddress, oldPhone, dateTime, newMatch_1, error_1;
+            var match, sequelize, Officiating, match_id, Address, Phone, address, phone, relation, transaction, oldMatch, newMatch, oldAddress, oldPhone, timeZone, newMatch_1, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -156,11 +160,13 @@ function MatchController(models, ResponseService) {
                         _a.label = 6;
                     case 6:
                         if (!address) return [3 /*break*/, 11];
-                        dateTime = match.date + 'T' + match.time;
-                        match.date = dateTime.replace(/z/i, '');
                         return [4 /*yield*/, ResponseService.workoutTimeZone(match, address)];
                     case 7:
-                        _a.sent();
+                        timeZone = _a.sent();
+                        ResponseService.setTimeZone(match, timeZone.googleTimeZone);
+                        address.lat = timeZone.location.lat;
+                        address.lng = timeZone.location.lng;
+                        processTime(match, timeZone);
                         return [4 /*yield*/, Address.findById(oldMatch.address_id, {
                                 transaction: transaction
                             })];

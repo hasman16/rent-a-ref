@@ -81,17 +81,67 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
           {
             className: 'col-sm-6',
             type: 'input',
-            key: 'date',
+            key: 'start_date',
             templateOptions: {
-              label: 'Event Date',
+              label: 'Start Date',
               type: 'date',
-              datepickerOptions:{
+              datepickerOptions: {
                 min: new Date(),
-                startAt: new Date(),
+                startAt: new Date()
               },
               required: true
             }
           },
+          {
+            className: 'col-sm-6',
+            type: 'input',
+            key: 'start_time',
+            templateOptions: {
+              label: 'Start Time',
+              type: 'time',
+              required: true
+            }
+          }
+        ]
+      },
+      {
+        template: '<hr class="space-hr" />'
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
+            className: 'col-sm-6',
+            type: 'input',
+            key: 'end_date',
+            templateOptions: {
+              label: 'End Date',
+              type: 'date',
+              datepickerOptions: {
+                min: new Date(),
+                startAt: new Date()
+              },
+              required: true
+            }
+          },
+          {
+            className: 'col-sm-6',
+            type: 'input',
+            key: 'end_time',
+            templateOptions: {
+              label: 'End Time',
+              type: 'time',
+              required: true
+            }
+          }
+        ]
+      },
+      {
+        template: '<hr class="space-hr" />'
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
           {
             className: 'col-sm-6',
             type: 'select',
@@ -100,6 +150,20 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
               label: 'Type of Sport',
               required: true,
               options: _.cloneDeep(this.sports)
+            }
+          },
+          {
+            className: 'col-sm-6',
+            type: 'radio',
+            key: 'event_type',
+            templateOptions: {
+              label: 'What type of event',
+              required: true,
+              options: [
+                { value: 'League', key: 'league' },
+                { value: 'Tournament', key: 'tournament' },
+                { value: 'One off event', key: 'oneoff' }
+              ]
             }
           }
         ]

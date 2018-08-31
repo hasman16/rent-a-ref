@@ -7,7 +7,8 @@ export default function GameController(models, ResponseService) {
   const attributes = [
     'id',
     'event_name',
-    'date',
+    'start_date',
+    'end_date',
     'event_type',
     'venue_name',
     'status',
@@ -102,6 +103,25 @@ export default function GameController(models, ResponseService) {
     ResponseService.findObject(game_id, 'Game', res, doDelete, 204);
   }
 
+  function addTimeToDate(time, date) {
+    return ResponseService.addTimeToDate(time, date);
+  }
+
+  function calculateDate(date, timezone_id) {
+    return ResponseService.calculateDate(date, timezone_id);
+  }
+
+  function fixTime(timezone_id, date, time) {
+    return calculateDate(addTimeToDate(time, date), timezone_id);
+  }
+
+  function processTime(game, timeZone) {
+    const timeFixer = _.partial(fixTime, game.timezone_id);
+
+    game.start_date = timeFixer(game.start_date, game.start_time);
+    game.end_date = timeFixer(game.end_date, game.end_time);
+  }
+
   async function createGameAddressPhone(req, res) {
     const sequelize = models.sequelize;
     const Address = models.Address;
@@ -121,7 +141,16 @@ export default function GameController(models, ResponseService) {
     let transaction, newGame, newAddress, newPhone;
     try {
       transaction = await sequelize.transaction();
-      await ResponseService.workoutTimeZone(game, address);
+      let dateTime: string = game.start_date + 'T' + game.start_time;
+      game.start_date = dateTime.replace(/z/i, '');
+
+      let timeZone = await ResponseService.workoutTimeZone(game, address);
+      ResponseService.setTimeZone(game, timeZone.googleTimeZone);
+
+      address.lat = timeZone.location.lat;
+      address.lng = timeZone.location.lng;
+
+      processTime(game, timeZone);
 
       newAddress = await Address.create(address, { transaction });
       game.address_id = newAddress.id;

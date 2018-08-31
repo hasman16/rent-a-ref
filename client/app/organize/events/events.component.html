@@ -47,7 +47,7 @@
           <ngx-datatable-column name="Event Name" prop="event_name" editable="false"></ngx-datatable-column>
           <ngx-datatable-column name="Date" prop="id" editable="false">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              {{ formatDate(value) }}
+              {{ formatStartDate(value) }}
             </ng-template>
           </ngx-datatable-column>
           <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>

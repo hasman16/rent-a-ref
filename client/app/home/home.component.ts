@@ -8,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 	public chartData: Array<any>;
 	public bottomCarousel: Array<any> = [];
+	public text1: string;
+	public text2: string;
 	constructor() {
+		this.text1 =
+			'<strong>Rent-A-Ref </strong>is a platform that connects leagues, teams, coaches and sports enthusiasts with referees for their sports events. We believe that everyone deserves a fair game, & strongly believe that Referees available through the Rent-A-Ref platform will provide you a piece of mind. Request, pay, sit back, and let Rent-A-Ref take care of the Referees for your sports event.';
+		this.text2 =
+			'Since founding, the business has worked with more than 15 leagues on a consistent and daily basis, as well as worked to fill refs for more than 100 tournaments that were each “one-offs.” Radchuk said the database of referees includes more than 500, which is not only growing but helpful to compete against referee associations: “They’re basically armies of referees that concentrate on one single sport rather than many, which we offer.”';
 		this.bottomCarousel = [
 			{
 				url: './assets/images/quote2.jpg',

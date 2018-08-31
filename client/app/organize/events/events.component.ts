@@ -115,14 +115,13 @@ export class EventsComponent extends AbstractComponent
     this.getEvents(page);
   }
 
-  public formatDate(id): string {
-    const item: Game = _.find(this.games, item => {
-      return id === item.id;
-    });
-    let value: string = moment
-      .tz(item.date, item.timezone_id)
-      .format('MMMM DD YYYY');
-    return value;
+  protected formatDate(date: string, timezone_id: string): string {
+    return moment.tz(date, timezone_id).format('MMMM DD YYYY');
+  }
+
+  public formatStartDate(id): string {
+    let item: Game = this.findGameById(id);
+    return this.formatDate(item.start_date, item.timezone_id);
   }
 
   public setEventsMode(): void {
@@ -174,10 +173,14 @@ export class EventsComponent extends AbstractComponent
     this.viewState = ViewState.editEvent;
   }
 
-  public hasPaid(id: string): boolean {
-    let game = _.find(this.games, game => {
+  private findGameById(id): Game {
+    return <Game>_.find(this.games, game => {
       return game.id === id;
     });
+  }
+
+  public hasPaid(id: string): boolean {
+    let game: Game = this.findGameById(id);
     return game && game.status === 'pending' ? false : true;
   }
 
@@ -193,10 +196,11 @@ export class EventsComponent extends AbstractComponent
       this.eventsComponentService
         .getPreparedEventForPayment(game_id)
         .pipe(
-        take(1),
-        finalize(() => {
-          this.isLoading = false;
-        }))
+          take(1),
+          finalize(() => {
+            this.isLoading = false;
+          })
+        )
         .subscribe(
           (model: any) => {
             this.model = _.cloneDeep(model);
@@ -219,11 +223,12 @@ export class EventsComponent extends AbstractComponent
       this.eventsComponentService
         .getEvent(game_id)
         .pipe(
-        take(1),
-        finalize(() => {
-          this.isLoading = false;
-          this.cd.markForCheck();
-        }))
+          take(1),
+          finalize(() => {
+            this.isLoading = false;
+            this.cd.markForCheck();
+          })
+        )
         .subscribe(
           (model: any) => {
             this.model = _.cloneDeep(model);
@@ -248,11 +253,12 @@ export class EventsComponent extends AbstractComponent
     this.eventsComponentService
       .getOrganizationGames(this.organization_id, page)
       .pipe(
-      take(1),
-      finalize(() => {
-        this.isLoading = false;
-        this.setEventsMode();
-      }))
+        take(1),
+        finalize(() => {
+          this.isLoading = false;
+          this.setEventsMode();
+        })
+      )
       .subscribe(
         (data: PagedData) => {
           this.processPagedData(data);
@@ -277,9 +283,10 @@ export class EventsComponent extends AbstractComponent
     this.eventsComponentService
       .createEvent(this.organization_id, model)
       .pipe(
-      finalize(() => {
-        this.getEvents();
-      }))
+        finalize(() => {
+          this.getEvents();
+        })
+      )
       .subscribe(
         (game: Game) => {
           this.toast.setMessage('Event created.', 'info');
@@ -293,11 +300,12 @@ export class EventsComponent extends AbstractComponent
     this.eventsComponentService
       .updateGameAddress(model)
       .pipe(
-      finalize(() => {
-        this.isLoading = false;
-        this.getEvents();
-        this.cd.markForCheck();
-      }))
+        finalize(() => {
+          this.isLoading = false;
+          this.getEvents();
+          this.cd.markForCheck();
+        })
+      )
       .subscribe(
         (game: Game) => {
           this.toast.setMessage('Event updated.', 'info');

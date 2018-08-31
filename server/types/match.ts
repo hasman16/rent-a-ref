@@ -4,6 +4,8 @@ import { PhoneModel } from './phone';
 export interface MatchModel {
 	id?: string;
 	match_name?: string;
+	duration?: number;
+	periods?: number;
 	date?: string;
 	time?: string;
 	timezone_id?: string;

@@ -318,31 +318,42 @@ export default class ResponseService {
     }
   }
 
+  addTimeToDate(time: string, date: string): string {
+    return String(date + 'T' + time).replace(/z/i, '');
+  }
+
+  calculateDate(date: string, timezone_id: string) {
+    return moment
+      .tz(date, timezone_id)
+      .utc()
+      .valueOf();
+  }
+
+  setTimeZone(model: any, googleTimeZone: GoogleMapsTimezone) {
+    model.timezone_id = googleTimeZone.timeZoneId;
+    model.timezone_name = googleTimeZone.timeZoneName;
+    model.timezone = googleTimeZone.rawOffset;
+    model.timezone_offset = googleTimeZone.dstOffset;
+  }
+
   async workoutTimeZone(model, address) {
-    const googleAddress = await this.getAddress(address);
+    const googleAddress = await this.getGoogleAddress(address);
     const geometry = _.get(googleAddress, 'results[0].geometry', null);
     if (!geometry) {
       throw new Error('Error searching for address.');
     }
     const location = geometry.location;
-    const googleTimeZone: GoogleMapsTimezone = await this.getTimezone([
-      location.lat,
-      location.lng
-    ]);
+    const googleTimeZone: GoogleMapsTimezone = await this.getTimezoneFromGoogle(
+      [location.lat, location.lng]
+    );
     if (!googleTimeZone) {
       throw new Error('Error searching for timezone.');
     }
-    address.lat = location.lat;
-    address.lng = location.lng;
-    model.timezone_id = googleTimeZone.timeZoneId;
-    model.timezone_name = googleTimeZone.timeZoneName;
-    model.timezone = googleTimeZone.rawOffset;
-    model.timezone_offset = googleTimeZone.dstOffset;
-    const event_date = moment.tz(model.date, model.timezone_id);
-    model.date = event_date.utc().valueOf();
+
+    return { googleTimeZone, location };
   }
 
-  async getAddress(address: AddressModel) {
+  async getGoogleAddress(address: AddressModel) {
     let addressString: string = _.defaultTo(address.line1, '');
     addressString += ' ' + _.defaultTo(address.line2, '');
     addressString += ' ' + _.defaultTo(address.state, '');
@@ -363,7 +374,7 @@ export default class ResponseService {
     });
   }
 
-  async getTimezone(location, timestamp = null) {
+  async getTimezoneFromGoogle(location, timestamp = null) {
     return new Promise(function(resolve, reject) {
       googleMapsClient
         .timezone({

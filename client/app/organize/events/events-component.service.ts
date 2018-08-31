@@ -107,12 +107,19 @@ export class EventsComponentService {
 	}
 
 	public convertGameToModel(model: Game): any {
-		const timeZoneDate = moment.tz(model.date, model.timezone_id);
-		const eventDate: string = timeZoneDate.format('YYYY-MM-DD');
+		const timezone_id = model.timezone_id;
+		const startTimeZoneDate = moment.tz(model.start_date, timezone_id);
+		const endTimeZoneDate = moment.tz(model.start_date, timezone_id);
+
 		let tempModel = _.cloneDeep(model);
 		delete tempModel.address;
 		delete tempModel.phone;
-		tempModel.date = eventDate;
+		tempModel.start_date = startTimeZoneDate.format('YYYY-MM-DD');
+		tempModel.start_time = startTimeZoneDate.format('HH:mm:ss');
+
+		tempModel.end_date = endTimeZoneDate.format('YYYY-MM-DD');
+		tempModel.end_time = endTimeZoneDate.format('HH:mm:ss');
+
 		let obj = {
 			address_id: model.address.id
 		};
@@ -121,7 +128,11 @@ export class EventsComponentService {
 	}
 
 	public convertModelToGame(model): Game {
-		const dateString: string = String(model.date);
+		const startDateString: string = String(model.start_date);
+		const startTimeString: string = String(model.start_time);
+
+		const endDateString: string = String(model.end_date);
+		const endTimeString: string = String(model.end_time);
 
 		return <Game>{
 			id: model.id,
@@ -135,7 +146,13 @@ export class EventsComponentService {
 
 			event_name: model.event_name,
 			event_type: model.event_type,
-			date: dateString,
+
+			start_date: startDateString,
+			start_time: startTimeString,
+
+			end_date: endDateString,
+			end_time: endTimeString,
+
 			venue_name: model.venue_name,
 			status: model.status,
 			sport_id: model.sport_id,
@@ -237,17 +254,63 @@ export class EventsComponentService {
 				fieldGroupClassName: 'row',
 				fieldGroup: [
 					{
-						className: 'col-sm-4',
+						className: 'col-sm-6',
 						type: 'input',
-						key: 'date',
+						key: 'start_date',
 						templateOptions: {
-							label: 'Event Date',
+							label: 'Start Date',
 							type: 'date',
 							required: true
 						}
 					},
 					{
-						className: 'col-sm-4',
+						className: 'col-sm-6',
+						type: 'input',
+						key: 'start_time',
+						templateOptions: {
+							label: 'Start Time',
+							type: 'time',
+							required: true
+						}
+					}
+				]
+			},
+			{
+				template: '<hr class="space-hr" />'
+			},
+			{
+				fieldGroupClassName: 'row',
+				fieldGroup: [
+					{
+						className: 'col-sm-6',
+						type: 'input',
+						key: 'end_date',
+						templateOptions: {
+							label: 'End Date',
+							type: 'date',
+							required: true
+						}
+					},
+					{
+						className: 'col-sm-6',
+						type: 'input',
+						key: 'end_time',
+						templateOptions: {
+							label: 'End Time',
+							type: 'time',
+							required: true
+						}
+					}
+				]
+			},
+			{
+				template: '<hr class="space-hr" />'
+			},
+			{
+				fieldGroupClassName: 'row',
+				fieldGroup: [
+					{
+						className: 'col-sm-6',
 						type: 'select',
 						key: 'sport_id',
 						templateOptions: {
@@ -257,7 +320,7 @@ export class EventsComponentService {
 						}
 					},
 					{
-						className: 'col-sm-4',
+						className: 'col-sm-6',
 						type: 'radio',
 						key: 'event_type',
 						templateOptions: {

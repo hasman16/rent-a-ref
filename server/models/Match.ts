@@ -24,6 +24,7 @@ const Match = function(sequelize, DataTypes) {
         validate: {
           isIn: [
             [
+              'U7',
               'U8',
               'U10',
               'U11',
@@ -43,6 +44,14 @@ const Match = function(sequelize, DataTypes) {
       },
       date: {
         type: DataTypes.DATE,
+        allowNull: false
+      },
+      duration: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      periods: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       timezone: {

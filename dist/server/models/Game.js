@@ -3,7 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Game = function (sequelize, DataTypes) {
     return sequelize.define('game', {
         event_name: DataTypes.STRING(64),
-        date: {
+        start_date: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        end_date: {
             type: DataTypes.DATE,
             allowNull: false
         },

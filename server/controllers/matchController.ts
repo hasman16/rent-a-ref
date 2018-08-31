@@ -84,6 +84,11 @@ export default function MatchController(models, ResponseService) {
     return value === 'pending' || value === 'none' || value === 'active';
   }
 
+  function processTime(match, timeZome) {
+    match.date = ResponseService.addTimeToDate(match.time, match.date);
+    match.date = ResponseService.calculateDate(match.date, match.timezone_id);
+  }
+
   async function update(req, res) {
     let match: MatchModel = <MatchModel>ResponseService.getItemFromBody(req);
     const sequelize = models.sequelize;
@@ -129,9 +134,13 @@ export default function MatchController(models, ResponseService) {
           }
         }
         if (address) {
-          let dateTime: string = match.date + 'T' + match.time;
-          match.date = dateTime.replace(/z/i, '');
-          await ResponseService.workoutTimeZone(match, address);
+          let timeZone = await ResponseService.workoutTimeZone(match, address);
+          ResponseService.setTimeZone(match, timeZone.googleTimeZone);
+
+          address.lat = timeZone.location.lat;
+          address.lng = timeZone.location.lng;
+          processTime(match, timeZone);
+
           oldAddress = await Address.findById(oldMatch.address_id, {
             transaction
           });
