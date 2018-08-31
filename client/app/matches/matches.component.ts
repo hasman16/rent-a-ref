@@ -216,11 +216,19 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
       });
   }
 
-  public createNewMatch(): void {
-    const game: any = _.cloneDeep(this.game);
-    const timeZoneDate = moment.tz(game.date, game.timezone_id);
+  public getDateAndTime(date, timezone_id): [string, string] {
+    const timeZoneDate = moment.tz(date, timezone_id);
     const matchDate: string = timeZoneDate.format('YYYY-MM-DD');
     const matchTime: string = timeZoneDate.format('HH:mm:ss');
+    return [matchDate, matchTime];
+  }
+
+  public createNewMatch(): void {
+    const game: Game = _.cloneDeep(this.game);
+    const [matchDate, matchTime]: [string, string] = this.getDateAndTime(
+      game.start_date,
+      game.timezone_id
+    );
 
     this.model = {
       venue_name: game.venue_name,
@@ -236,10 +244,11 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
     this.cd.markForCheck();
   }
 
-  convertMatchToModel(match: Match): any {
-    const timeZoneDate = moment.tz(match.date, match.timezone_id);
-    const matchDate: string = timeZoneDate.format('YYYY-MM-DD');
-    const matchTime: string = timeZoneDate.format('HH:mm:ss');
+  protected convertMatchToModel(match: Match): any {
+    const [matchDate, matchTime]: [string, string] = this.getDateAndTime(
+      match.date,
+      match.timezone_id
+    );
 
     const address: Address = match.address;
     return {
