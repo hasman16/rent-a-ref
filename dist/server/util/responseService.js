@@ -306,6 +306,7 @@ var ResponseService = /** @class */ (function () {
         return String(date + 'T' + time).replace(/z/i, '');
     };
     ResponseService.prototype.calculateDate = function (date, timezone_id) {
+        console.log('calculateDate:', date, timezone_id);
         return moment
             .tz(date, timezone_id)
             .utc()

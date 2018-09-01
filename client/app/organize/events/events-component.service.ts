@@ -109,7 +109,7 @@ export class EventsComponentService {
 	public convertGameToModel(model: Game): any {
 		const timezone_id = model.timezone_id;
 		const startTimeZoneDate = moment.tz(model.start_date, timezone_id);
-		const endTimeZoneDate = moment.tz(model.start_date, timezone_id);
+		const endTimeZoneDate = moment.tz(model.end_date, timezone_id);
 
 		let tempModel = _.cloneDeep(model);
 		delete tempModel.address;
@@ -133,7 +133,7 @@ export class EventsComponentService {
 
 		const endDateString: string = String(model.end_date);
 		const endTimeString: string = String(model.end_time);
-
+		console.log(':::', startDateString, startTimeString);
 		return <Game>{
 			id: model.id,
 			adult_games: model.adult_games,

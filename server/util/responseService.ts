@@ -323,6 +323,7 @@ export default class ResponseService {
   }
 
   calculateDate(date: string, timezone_id: string) {
+    console.log('calculateDate:', date, timezone_id);
     return moment
       .tz(date, timezone_id)
       .utc()

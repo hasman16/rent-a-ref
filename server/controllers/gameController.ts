@@ -141,8 +141,6 @@ export default function GameController(models, ResponseService) {
     let transaction, newGame, newAddress, newPhone;
     try {
       transaction = await sequelize.transaction();
-      let dateTime: string = game.start_date + 'T' + game.start_time;
-      game.start_date = dateTime.replace(/z/i, '');
 
       let timeZone = await ResponseService.workoutTimeZone(game, address);
       ResponseService.setTimeZone(game, timeZone.googleTimeZone);

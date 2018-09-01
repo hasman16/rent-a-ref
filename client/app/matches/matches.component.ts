@@ -224,7 +224,7 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
   }
 
   public createNewMatch(): void {
-    const game: Game = _.cloneDeep(this.game);
+    const game: any = _.cloneDeep(this.game);
     const [matchDate, matchTime]: [string, string] = this.getDateAndTime(
       game.start_date,
       game.timezone_id
@@ -259,8 +259,8 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
       venue_name: match.venue_name,
       date: matchDate,
       time: matchTime,
-      periods: 2,
-      duration: 45,
+      periods: match.periods,
+      duration: match.duration,
       referees: match.referees,
       sport_id: match.sport_id,
       address_id: match.address_id,

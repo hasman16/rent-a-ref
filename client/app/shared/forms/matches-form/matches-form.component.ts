@@ -164,6 +164,26 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
               type: 'time',
               required: true
             }
+          },
+          {
+            className: 'col-sm-6',
+            type: 'input',
+            key: 'periods',
+            templateOptions: {
+              label: 'Periods per Match',
+              type: 'number',
+              required: true
+            }
+          },
+          {
+            className: 'col-sm-6',
+            type: 'input',
+            key: 'duration',
+            templateOptions: {
+              label: 'Minutes per Period',
+              type: 'number',
+              required: true
+            }
           }
         ]
       },

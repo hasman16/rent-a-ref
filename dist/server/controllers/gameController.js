@@ -139,7 +139,7 @@ function GameController(models, ResponseService) {
     }
     function createGameAddressPhone(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, Address, Phone, game, address, phone, transaction, newGame, newAddress, newPhone, dateTime, timeZone, error_1;
+            var sequelize, Address, Phone, game, address, phone, transaction, newGame, newAddress, newPhone, timeZone, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -161,8 +161,6 @@ function GameController(models, ResponseService) {
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        dateTime = game.start_date + 'T' + game.start_time;
-                        game.start_date = dateTime.replace(/z/i, '');
                         return [4 /*yield*/, ResponseService.workoutTimeZone(game, address)];
                     case 3:
                         timeZone = _a.sent();
