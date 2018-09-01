@@ -133,7 +133,7 @@ export class EventsComponentService {
 
 		const endDateString: string = String(model.end_date);
 		const endTimeString: string = String(model.end_time);
-		console.log(':::', startDateString, startTimeString);
+
 		return <Game>{
 			id: model.id,
 			adult_games: model.adult_games,
@@ -185,8 +185,6 @@ export class EventsComponentService {
 			const skus = product.skus;
 			const data = _.head(skus.data);
 			let value: string = product.name.split(/\s/)[0];
-
-			console.log('skus:', value.toLowerCase(), data);
 
 			switch (value.toLowerCase()) {
 				case 'kids':

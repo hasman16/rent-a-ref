@@ -1,6 +1,8 @@
 import { UserModel } from './../types/index';
 import * as randomstring from 'randomstring';
 
+const TOKEN_LIFESPAN: number = 20;
+
 export default function LoginController(
   bcrypt,
   jwt,
@@ -135,13 +137,11 @@ export default function LoginController(
 
   function comparePassword(res, user, newUser) {
     const lock = newUser.lock;
-    //console.log('comparePassword:', user.password, lock.password);
     return bcrypt
       .compare(user.password, lock.password)
       .then(result => {
         if (result) {
-          const [user, token] = generateToken(newUser, 5);
-          //console.log('go updateLock');
+          const [user, token] = generateToken(newUser, TOKEN_LIFESPAN);
           return updateLock(user.id, function() {
             return {
               attempts: 0,
@@ -170,7 +170,6 @@ export default function LoginController(
       can_organize: newUser.can_organize,
       status: newUser.status
     };
-    //console.log('create token:', user, process.env.SECRET_TOKEN);
     return [
       user,
       jwt.sign(user, process.env.SECRET_TOKEN, {
@@ -203,7 +202,6 @@ export default function LoginController(
       email: req.body.email,
       password: req.body.password
     };
-    //console.log('try login:', req.body);
     User.findOne({
       where: { email: user.email },
       include: [
@@ -216,7 +214,6 @@ export default function LoginController(
       ]
     })
       .then(function(newUser) {
-        //console.log('new User:', newUser);
         if (newUser) {
           if (newUser.status === 'active') {
             return comparePassword(res, user, newUser);
@@ -236,7 +233,6 @@ export default function LoginController(
 
     try {
       transaction = await sequelize.transaction();
-      console.log('got transaction');
       aUser = await User.findOne(
         {
           where: {
@@ -252,22 +248,17 @@ export default function LoginController(
       );
 
       if (!aUser) {
-        console.log('no user');
         throw new Error('Unable to retrieve user.');
       }
       if (aUser.status !== 'active') {
-        console.log('user not active');
         throw new Error('User is not active.');
       }
 
-      const [user, token] = generateToken(aUser, 5);
+      const [user, token] = generateToken(aUser, TOKEN_LIFESPAN);
 
-      console.log('commit transaction');
       await transaction.commit();
-      console.log('set response');
       loginSuccess(res, token, user);
     } catch (error) {
-      console.log('error is:', error);
       transaction.rollback(transaction);
       ResponseService.exception(res, error, 403);
     }

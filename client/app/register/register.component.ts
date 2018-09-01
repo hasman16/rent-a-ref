@@ -128,7 +128,6 @@ export class RegisterComponent {
   }
 
   public resolvedRecaptcha(captchaResponse: string) {
-    console.log(`Resolved captcha with response ${captchaResponse}:`);
     this.captchaResponse = captchaResponse;
   }
 

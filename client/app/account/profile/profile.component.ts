@@ -35,7 +35,7 @@ import {
   CropImageState,
   UploadState
 } from './../../shared/crop-image-modal/index';
-import { Observable ,  Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -140,7 +140,6 @@ export class ProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   public closeModal($event): void {
-    console.log('close modal');
     this.cropImageModalService.hide();
   }
 

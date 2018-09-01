@@ -274,17 +274,13 @@ export class OrganizeComponent implements OnInit {
             );
         }),
         finalize(() => {
+          this.getOrganizations();
           this.cd.markForCheck();
         })
       )
       .subscribe(
-        ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
-          console.log('it worked');
-        },
-        (err: HttpErrorResponse) => this.callFailure(err),
-        () => {
-          this.getOrganizations();
-        }
+        ([addresses, phones]: [Array<Address>, Array<Phone>]) => {},
+        (err: HttpErrorResponse) => this.callFailure(err)
       );
   }
 

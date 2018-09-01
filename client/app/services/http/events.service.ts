@@ -42,7 +42,6 @@ export class EventsService extends AbstractService {
     queryParams: any = null
   ): Observable<PagedData> {
     const url = `/api/organization/${organization_id}/games`;
-    console.log('url is;', url, queryParams);
     return this.http.get<PagedData>(url, {
       params: queryParams
     });

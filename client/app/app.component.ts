@@ -25,7 +25,7 @@ const FIFTEEN_MINUTES: number = 15 * ONE_MINUTE;
 })
 export class AppComponent implements OnInit, OnDestroy {
 	private subscriptions: Subscription[] = [];
-	public timedOut = false;
+	public timedOut: boolean = false;
 	public lastPing: Date = null;
 	private pulseDialog: MatDialogRef<PulseComponent>;
 
@@ -88,9 +88,11 @@ export class AppComponent implements OnInit, OnDestroy {
 		);
 
 		this.subscriptions.push(
-			this.idle.onTimeoutWarning.subscribe(countdown => {
-				const idleState =
-					'You will time out in ' + countdown + ' seconds!';
+			this.idle.onTimeoutWarning.subscribe((countdown: number) => {
+				const units: string =
+					countdown !== 1 ? ' seconds!' : ' second!';
+				const idleState: string =
+					'You will time out in ' + countdown + units;
 				this.setIdleText(idleState);
 			})
 		);

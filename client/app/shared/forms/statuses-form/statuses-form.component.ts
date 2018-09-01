@@ -27,7 +27,6 @@ export class StatusesFormComponent implements AfterViewInit, OnInit {
     if (model) {
       this.model = _.cloneDeep(model);
     }
-    console.log('this mode:', this.model);
   }
   @Input() states: Option[];
   @Input() sports: Option[];

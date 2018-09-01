@@ -117,7 +117,6 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
       })
       .then(result => {
         if (_.has(result, 'source')) {
-          console.log('result:', result.source);
           this.createAndPayOrder(order, result.source);
         } else {
           console.log('failed payment');

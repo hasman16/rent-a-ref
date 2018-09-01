@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var randomstring = require("randomstring");
+var TOKEN_LIFESPAN = 20;
 function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) {
     var User = models.User;
     var Lock = models.Lock;
@@ -138,13 +139,11 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
     }
     function comparePassword(res, user, newUser) {
         var lock = newUser.lock;
-        //console.log('comparePassword:', user.password, lock.password);
         return bcrypt
             .compare(user.password, lock.password)
             .then(function (result) {
             if (result) {
-                var _a = generateToken(newUser, 5), user_1 = _a[0], token_1 = _a[1];
-                //console.log('go updateLock');
+                var _a = generateToken(newUser, TOKEN_LIFESPAN), user_1 = _a[0], token_1 = _a[1];
                 return updateLock(user_1.id, function () {
                     return {
                         attempts: 0,
@@ -173,7 +172,6 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
             can_organize: newUser.can_organize,
             status: newUser.status
         };
-        //console.log('create token:', user, process.env.SECRET_TOKEN);
         return [
             user,
             jwt.sign(user, process.env.SECRET_TOKEN, {
@@ -204,7 +202,6 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
             email: req.body.email,
             password: req.body.password
         };
-        //console.log('try login:', req.body);
         User.findOne({
             where: { email: user.email },
             include: [
@@ -217,7 +214,6 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
             ]
         })
             .then(function (newUser) {
-            //console.log('new User:', newUser);
             if (newUser) {
                 if (newUser.status === 'active') {
                     return comparePassword(res, user, newUser);
@@ -245,7 +241,6 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _b.sent();
-                        console.log('got transaction');
                         return [4 /*yield*/, User.findOne({
                                 where: {
                                     id: req.decoded.id
@@ -259,24 +254,19 @@ function LoginController(bcrypt, jwt, models, ResponseService, SendGridService) 
                     case 3:
                         aUser = _b.sent();
                         if (!aUser) {
-                            console.log('no user');
                             throw new Error('Unable to retrieve user.');
                         }
                         if (aUser.status !== 'active') {
-                            console.log('user not active');
                             throw new Error('User is not active.');
                         }
-                        _a = generateToken(aUser, 5), user = _a[0], token = _a[1];
-                        console.log('commit transaction');
+                        _a = generateToken(aUser, TOKEN_LIFESPAN), user = _a[0], token = _a[1];
                         return [4 /*yield*/, transaction.commit()];
                     case 4:
                         _b.sent();
-                        console.log('set response');
                         loginSuccess(res, token, user);
                         return [3 /*break*/, 6];
                     case 5:
                         error_1 = _b.sent();
-                        console.log('error is:', error_1);
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_1, 403);
                         return [3 /*break*/, 6];

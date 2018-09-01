@@ -131,7 +131,6 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
   }
 
   public onSelectTableRow({ selected }): void {
-    console.log('Select Event', selected, this.selected);
     const match = _.cloneDeep(_.head(selected));
     //this.isEditing = true;
     //this.editEvent(game);

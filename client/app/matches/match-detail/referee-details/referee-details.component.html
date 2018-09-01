@@ -30,6 +30,14 @@
 		</ng-container>
 	</div>
 
+	<div class="modal-container">
+		<ng-container *ngIf="referee.email">
+			<span class="item">
+				<label>{{referee.email}}</label>
+			</span>	
+		</ng-container>
+	</div>
+
 	<ng-container *ngIf="hasPhones(referee)">
 		<hr />
 		<div class="modal-container">
@@ -46,9 +54,14 @@
 			<div *ngFor="let address of referee.addresses; let i=index" class="item">
                 <address>
                 	{{address.line1}}<br />
-                	{{address.line2}}<br />
+			        <ng-container *ngIf="address.line2">
+			           {{address.line2}}<br />
+					</ng-container>
                 	{{address.city}}<br />
-                	{{address.state}}&nbsp;&nbsp;{{address.zip}}
+                	<span>
+                		<span style="padding-right: 5px">{{address.state}}</span>
+                		<span>{{address.zip}}</span>
+                	</span>
             	</address>
 			</div>
 		</div>
