@@ -1,3 +1,4 @@
+/*
 html,
 body,
 div,
@@ -64,6 +65,7 @@ td {
 .container {
 	margin: 0 auto;
 	max-width: 1200px;
+	bottom: 0;
 	height: 100%;
 	padding-left: 1.25rem;
 	padding-right: 1.25rem;
@@ -1858,6 +1860,97 @@ ul.jcarousel-control li {
 #tabletFooter {
 	display: none;
 }
+
+.btn,
+.btn-sm {
+	min-width: 100px;
+}
+
+@media only screen and (max-width: 599px) {
+	#tabletFooter {
+		display: block;
+	}
+
+	.container {
+		height: 100%;
+		padding-left: 0;
+		padding-right: 0;
+		position: relative;
+	}
+}
+
+@media only screen and (min-width: 600px) {
+	#master-wrapper {
+		background: url('/assets/images/refereebg.jpg') repeat fixed center
+			center transparent;
+		opacity: 0.987679;
+	}
+
+	#regularFooter {
+		display: block;
+	}
+
+	.container {
+		height: 100%;
+		padding-left: 0;
+		padding-right: 0;
+		position: relative;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.container {
+		height: 100%;
+		padding-left: 0;
+		padding-right: 0;
+		position: relative;
+	}
+}
+@media only screen and (min-width: 992) {
+	.container {
+		margin: 0 auto;
+		height: 100%;
+		padding-left: 10px;
+		padding-right: 10px;
+		position: relative;
+	}
+}
+@media only screen and (min-width: 1200) {
+	.container {
+		margin: 0 auto;
+		max-width: 1200px;
+		height: 100%;
+		padding-left: 1.25rem;
+		padding-right: 1.25rem;
+		position: relative;
+	}
+}
+*/
+
+.container {
+	margin: 0 auto;
+	max-width: 1200px;
+	bottom: 0;
+	height: 100%;
+	padding-left: 1.25rem;
+	padding-right: 1.25rem;
+	position: relative;
+}
+#master-wrapper {
+	background: url('/assets/images/refereebg1.jpg') repeat fixed center center
+		black;
+	height: 100%;
+	position: fixed;
+	width: 100%;
+	z-index: -1;
+}
+#regularFooter {
+	display: none;
+}
+#tabletFooter {
+	display: none;
+}
+
 @media only screen and (max-width: 599px) {
 	#tabletFooter {
 		display: block;

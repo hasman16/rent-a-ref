@@ -6,6 +6,12 @@
 .container {
   width: 100%;
 }
+
+.btn,
+.btn-sm {
+  min-width: 60px;
+}
+
 $elegantshd-grey: #131313;
 $elegantshd-lt-grey: #e7e5e4;
 .elegantshd {
