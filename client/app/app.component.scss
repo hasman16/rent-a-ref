@@ -1590,14 +1590,7 @@ ul.jcarousel-control li {
 #slider-wrapper div.jqans-wrapper.default #pause-right {
 	background: #59728b;
 }
-#master-wrapper {
-	background: url('/assets/images/refereebg1.jpg') repeat fixed center center
-		black;
-	height: 100%;
-	position: fixed;
-	width: 100%;
-	z-index: -1;
-}
+
 .nfMain {
 	border-style: solid;
 	border-color: #00ad00;
@@ -1853,12 +1846,6 @@ ul.jcarousel-control li {
 	background: red;
 	clear: both;
 }
-#regularFooter {
-	display: none;
-}
-#tabletFooter {
-	display: none;
-}
 
 .container {
 	margin: 0 auto;
@@ -1870,6 +1857,7 @@ ul.jcarousel-control li {
 	padding-right: 1.25rem;
 	position: relative;
 }
+
 #master-wrapper {
 	background: url('/assets/images/refereebg1.jpg') repeat fixed center center
 		black;
@@ -1878,15 +1866,12 @@ ul.jcarousel-control li {
 	width: 100%;
 	z-index: -1;
 }
-#regularFooter {
-	display: none;
-}
-#tabletFooter {
-	display: none;
-}
 
 @media only screen and (max-width: 599px) {
 	#tabletFooter {
+		display: none;
+	}
+	#regularFooter {
 		display: block;
 	}
 
@@ -1899,12 +1884,9 @@ ul.jcarousel-control li {
 }
 
 @media only screen and (min-width: 600px) {
-	#master-wrapper {
-		background: url('/assets/images/refereebg.jpg') repeat fixed center
-			center transparent;
-		opacity: 0.987679;
+	#tabletFooter {
+		display: none;
 	}
-
 	#regularFooter {
 		display: block;
 	}
@@ -1918,6 +1900,13 @@ ul.jcarousel-control li {
 }
 
 @media only screen and (min-width: 768px) {
+	#tabletFooter {
+		display: none;
+	}
+	#regularFooter {
+		display: block;
+	}
+
 	.container {
 		height: 100%;
 		padding-left: 0;
@@ -1926,6 +1915,17 @@ ul.jcarousel-control li {
 	}
 }
 @media only screen and (min-width: 992) {
+	#tabletFooter {
+		display: none;
+	}
+	#regularFooter {
+		display: block;
+	}
+	#master-wrapper {
+		background: url('/assets/images/refereebg.jpg') repeat fixed center
+			center transparent;
+		opacity: 0.987679;
+	}
 	.container {
 		margin: 0 auto;
 		height: 100%;
@@ -1935,6 +1935,17 @@ ul.jcarousel-control li {
 	}
 }
 @media only screen and (min-width: 1200) {
+	#tabletFooter {
+		display: none;
+	}
+	#regularFooter {
+		display: block;
+	}
+	#master-wrapper {
+		background: url('/assets/images/refereebg.jpg') repeat fixed center
+			center transparent;
+		opacity: 0.987679;
+	}
 	.container {
 		margin: 0 auto;
 		max-width: 1200px;
