@@ -167,7 +167,6 @@ const routes: Routes = [
     canActivate: [AuthGuardLogin],
     component: DeactivatedComponent
   },
-  { path: 'admin', redirectTo: 'admin/0', pathMatch: 'full' },
   {
     path: 'admin/:id',
     component: AdminComponent,

@@ -1,16 +1,14 @@
 import { environment } from './environments/environment';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
-import { TourMatMenuModule } from 'ngx-tour-md-menu';
-
-import { RecaptchaModule } from 'ng-recaptcha';
-/* Modules */
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { CoreModule } from './services/core.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from './material.module';
+
+/* Modules */
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyMaterialModule } from '@ngx-formly/material';
@@ -19,10 +17,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { HttpClientModule } from '@angular/common/http';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { TourMatMenuModule } from 'ngx-tour-md-menu';
+
 import { RoutingModule } from './routing.module';
+import { MaterialModule } from './material.module';
+import { CoreModule } from './services/core.module';
 import { SharedModule } from './shared/shared.module';
-import { CommonModule } from '@angular/common';
 
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction'; // agm-direction
@@ -91,7 +93,6 @@ import { PulseComponent } from './pulse/pulse.component';
 
 /* Misc. */
 import { DropdownDirective } from './shared/dropdown.directive';
-import { Routes, RouterModule } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
 
 // rich grid
