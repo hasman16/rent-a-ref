@@ -179,8 +179,8 @@ import {
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        //FormlyBootstrapModule,
-        FormlyMaterialModule,
+        FormlyBootstrapModule,
+        //FormlyMaterialModule,
         FormlyModule.forRoot({
             wrappers: [
                 {

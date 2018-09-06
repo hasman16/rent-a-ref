@@ -4,6 +4,7 @@
 		margin: 0;
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: space-around;
 	}
 
 	.officialsName {
@@ -23,12 +24,13 @@
 		display: flex;
 		background: white;
 		justify-content: space-around;
+		flex-direction: column;
 		> div {
-			width: 33%;
+			width: 98%;
 			margin: 1%;
 		}
 		> rar-google-map {
-			width: 63%;
+			width: 98%;
 			margin: 1%;
 		}
 	}
@@ -44,16 +46,29 @@
 	/deep/ datatable-body-row {
 		cursor: pointer;
 	}
-	/*
+
 	@media only screen and (max-width: 599px) {
 	}
 	@media only screen and (min-width: 600px) {
 	}
 	@media only screen and (min-width: 768px) {
+		.addresses {
+			display: flex;
+			background: white;
+			justify-content: space-around;
+			flex-direction: row;
+			> div {
+				width: 31%;
+				margin: 1%;
+			}
+			> rar-google-map {
+				width: 61%;
+				margin: 1%;
+			}
+		}
 	}
 	@media only screen and (min-width: 992) {
 	}
 	@media only screen and (min-width: 1200) {
 	}
-	*/
 }

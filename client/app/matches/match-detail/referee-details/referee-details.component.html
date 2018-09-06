@@ -13,17 +13,17 @@
 	</div>
 
 	<div class="modal-container">
-		<ng-container *ngIf="referee.person.firstname">
+		<ng-container *ngIf="referee?.person.firstname">
 			<span class="officialsName">
 				<label>{{referee.person.firstname}}</label>
 			</span>	
 		</ng-container>
-		<ng-container *ngIf="referee.person.middlenames">
+		<ng-container *ngIf="referee?.person.middlenames">
 			<span class="officialsName">
 				<label>{{referee.person.middlenames}}</label>
 			</span>	
 		</ng-container>
-		<ng-container *ngIf="referee.person.lastname">
+		<ng-container *ngIf="referee?.person.lastname">
 			<span class="officialsName">
 				<label>{{referee.person.lastname}}</label>
 			</span>	
@@ -31,7 +31,7 @@
 	</div>
 
 	<div class="modal-container">
-		<ng-container *ngIf="referee.email">
+		<ng-container *ngIf="referee?.email">
 			<span class="item">
 				<label>{{referee.email}}</label>
 			</span>	

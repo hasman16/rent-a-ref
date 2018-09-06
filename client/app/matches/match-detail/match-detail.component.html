@@ -7,7 +7,8 @@
             </span>
         </div>
     </div>
-
+</div>
+<div class="row">
     <div class="col-12">
         <div class="card" style="min-height: 250px">
             <h3>Game Referees</h3>
@@ -19,17 +20,17 @@
            
                   <div class="card-body">
                     <h5 class="card-title">
-                        <ng-container *ngIf="referee.person.firstname">
+                        <ng-container *ngIf="referee?.person?.firstname">
                             <span class="officialsName">
                                 <label>{{referee.person.firstname}}</label>
                             </span> 
                         </ng-container>
-                        <ng-container *ngIf="referee.person.middlenames">
+                        <ng-container *ngIf="referee?.person?.middlenames">
                             <span class="officialsName">
                                 <label>{{referee.person.middlenames}}</label>
                             </span> 
                         </ng-container>
-                        <ng-container *ngIf="referee.person.lastname">
+                        <ng-container *ngIf="referee?.person?.lastname">
                             <span class="officialsName">
                                 <label>{{referee.person.lastname}}</label>
                             </span> 
@@ -41,7 +42,8 @@
         	</div>
         </div>
     </div>
-
+</div>
+<div class="row">
     <div class="col-12">
         <div class="addresses">
             <div>
@@ -58,12 +60,12 @@
                     </div>
                 </div>
             </div>
+
             <rar-google-map
              [origin]="origin"
              [destination]="destination"
              [show-directions]="showDirections"></rar-google-map>
         </div>
     </div>
-
 </div>
 <referee-details-modal [show]="showModal" (hide)="hideRefereeDetails($event)" [referee]="currentReferee"></referee-details-modal>
