@@ -3,6 +3,204 @@
 @import '~@swimlane/ngx-datatable/release/index.css';
 @import '~@swimlane/ngx-datatable/release/themes/material.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+font,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dd,
+dl,
+dt,
+li,
+ol,
+ul,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  font-family: 'Arial', Helvetica, sans-serif;
+  //font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  font: normal 16px/18.66px 'Arial', Helvetica, sans-serif;
+}
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  bottom: 0;
+  height: 100%;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  position: relative;
+}
+
+body {
+  background: url('/assets/images/refereebg1.jpg') repeat fixed center center
+    black;
+  //  height: 100%;
+  //  position: fixed;
+  //  width: 100%;
+  //  z-index: -1;
+}
+
+@media only screen and (max-width: 599px) {
+  #tabletFooter {
+    display: none;
+  }
+  #regularFooter {
+    display: block;
+  }
+  .container {
+    height: 100%;
+    padding: 0;
+    position: relative;
+  }
+  body {
+    background: white;
+  }
+  .nav-item {
+    font-size: 1.5em;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  #tabletFooter {
+    display: none;
+  }
+  #regularFooter {
+    display: block;
+  }
+
+  .container {
+    height: 100%;
+    padding: 0;
+    position: relative;
+  }
+  body {
+    background: white;
+  }
+  .nav-item {
+    font-size: 1.2em;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #tabletFooter {
+    display: none;
+  }
+  #regularFooter {
+    display: block;
+  }
+
+  .container {
+    height: 100%;
+    padding: 0;
+    position: relative;
+  }
+  body {
+    background: url('/assets/images/refereebg.jpg') repeat fixed center center
+      transparent;
+    opacity: 0.987679;
+  }
+  .nav-item {
+    font-size: 1em;
+  }
+}
+@media only screen and (min-width: 992) {
+  #tabletFooter {
+    display: none;
+  }
+  #regularFooter {
+    display: block;
+  }
+  body {
+    background: url('/assets/images/refereebg.jpg') repeat fixed center center
+      transparent;
+    opacity: 0.987679;
+  }
+  .container {
+    margin: 0 auto;
+    height: 100%;
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+    position: relative;
+  }
+  .nav-item {
+    font-size: 1em;
+  }
+}
+@media only screen and (min-width: 1200) {
+  #tabletFooter {
+    display: none;
+  }
+  #regularFooter {
+    display: block;
+  }
+  body {
+    background: url('/assets/images/refereebg.jpg') repeat fixed center center
+      transparent;
+    opacity: 0.987679;
+  }
+  .container {
+    margin: 0 auto;
+    max-width: 1200px;
+    height: 100%;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    position: relative;
+  }
+  .nav-item {
+    font-size: 1em;
+  }
+}
 
 .btn,
 .btn-sm {
@@ -92,7 +290,7 @@ $elegantshd-lt-grey: #e7e5e4;
   color: red;
   text-indent: 3.125rem;
   font-weight: bolder;
-  background-color: #fff;
+  background-color: white;
 }
 
 div.card {

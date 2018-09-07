@@ -1,3 +1,4 @@
+/*
 html,
 body,
 div,
@@ -56,11 +57,15 @@ thead,
 tr,
 th,
 td {
-	font: normal 16px/18.66px 'Arial', Helvetica, sans-serif;
+	font-family: 'Arial', Helvetica, sans-serif;
+	//font-weight: normal;
 	margin: 0;
 	padding: 0;
 }
-
+html,
+body {
+	font: normal 16px/18.66px 'Arial', Helvetica, sans-serif;
+}
 .container {
 	margin: 0 auto;
 	max-width: 1200px;
@@ -70,7 +75,8 @@ td {
 	padding-right: 1.25rem;
 	position: relative;
 }
-
+*/
+/*
 .wrapper {
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.75);
 	background: white;
@@ -1846,7 +1852,7 @@ ul.jcarousel-control li {
 	background: red;
 	clear: both;
 }
-
+*/ /*
 .container {
 	margin: 0 auto;
 	width: 100%;
@@ -1881,6 +1887,14 @@ ul.jcarousel-control li {
 		padding-right: 0;
 		position: relative;
 	}
+
+	html,
+	body {
+		font-size: 0.8em;
+	}
+	nav {
+		font-size: 1.5em;
+	}
 }
 
 @media only screen and (min-width: 600px) {
@@ -1897,6 +1911,13 @@ ul.jcarousel-control li {
 		padding-right: 0;
 		position: relative;
 	}
+	html,
+	body {
+		font-size: 0.8em;
+	}
+	nav {
+		font-size: 1.5em;
+	}
 }
 
 @media only screen and (min-width: 768px) {
@@ -1912,6 +1933,10 @@ ul.jcarousel-control li {
 		padding-left: 0;
 		padding-right: 0;
 		position: relative;
+	}
+	html,
+	body {
+		font-size: 1em;
 	}
 }
 @media only screen and (min-width: 992) {
@@ -1932,6 +1957,10 @@ ul.jcarousel-control li {
 		padding-left: 0.625rem;
 		padding-right: 0.625rem;
 		position: relative;
+	}
+	html,
+	body {
+		font-size: 1.2em;
 	}
 }
 @media only screen and (min-width: 1200) {
@@ -1954,4 +1983,9 @@ ul.jcarousel-control li {
 		padding-right: 1.25rem;
 		position: relative;
 	}
+	html,
+	body {
+		font-size: 1.5em;
+	}
 }
+*/
