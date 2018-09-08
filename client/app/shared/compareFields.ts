@@ -5,8 +5,8 @@ export function compareFields(
 	fieldName2: string
 ): ValidatorFn {
 	return (c: AbstractControl): { [key: string]: boolean } | null => {
-		let field1 = c.get(fieldName1);
-		let field2 = c.get(fieldName2);
+		const field1 = c.get(fieldName1);
+		const field2 = c.get(fieldName2);
 
 		if (field1.value !== field2.value) {
 			return { compareFields: true };

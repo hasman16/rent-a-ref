@@ -86,11 +86,11 @@
         <br />
         <div class="row">
           
-          <div class="col-6">
+          <div class="col-md-6">
             <event-order-table [model]="model"></event-order-table>
           </div>
 
-          <div class="col-6">
+          <div class="col-md-6">
              <rar-stripe [amount]="model.total" [lineItems]="eventsComponentService.lineItems" [reference_id]="game_id" (paymentState)="paymentState($event)"></rar-stripe>
           </div>
 

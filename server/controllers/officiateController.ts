@@ -165,8 +165,13 @@ export default function OfficiateController(
   }
 
   async function adminTimeLockByPass(req, match) {
-    if (!ResponseService.isAdmin(req)) {
-      await ResponseService.isTimeLocked(match);
+    if (ResponseService.isAdmin(req)) {
+      return Promise.resolve({
+        success: true,
+        message: 'Event is before lock time'
+      });
+    } else {
+      return await ResponseService.isTimeLocked(match);
     }
   }
 
@@ -348,7 +353,7 @@ export default function OfficiateController(
         throw new Error('Referee is not officiating this match. ');
       }
 
-      await adminTimeLockByPass(req, match);
+      let timeLocked = await adminTimeLockByPass(req, match);
 
       let isDeclined = await Officiating.update(
         {
@@ -385,7 +390,7 @@ export default function OfficiateController(
         throw new Error('Referee is not officiating this match. ');
       }
 
-      await adminTimeLockByPass(req, match);
+      let timeLocked = await adminTimeLockByPass(req, match);
 
       let invitesAccepted = await Officiating.count({
         where: {

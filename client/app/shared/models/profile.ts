@@ -14,5 +14,5 @@ export interface Profile extends BaseModel {
 	addresses: Address[];
 	areas: Address[];
 	phones: Phone[];
-	organizations: Organization[]
+	organizations: Organization[];
 }

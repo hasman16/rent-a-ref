@@ -1,6 +1,6 @@
-import {BaseModel} from './base';
+import { BaseModel } from './base';
 
-export interface Sport extends BaseModel{
+export interface Sport extends BaseModel {
 	duration: number;
 	name: string;
 	periods: number;

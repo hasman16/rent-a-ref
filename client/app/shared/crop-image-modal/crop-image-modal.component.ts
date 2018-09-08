@@ -160,24 +160,24 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 		contentType: string = 'image/png',
 		sliceSize: number = 512
 	): Blob {
-		let byteCharacters = atob(
+		const byteCharacters = atob(
 			b64Data.replace('data:image/png;base64,', '')
 		);
-		let byteArrays = [];
+		const byteArrays = [];
 
 		for (
 			let offset = 0;
 			offset < byteCharacters.length;
 			offset += sliceSize
 		) {
-			let slice = byteCharacters.slice(offset, offset + sliceSize);
+			const slice = byteCharacters.slice(offset, offset + sliceSize);
 
-			let byteNumbers = new Array(slice.length);
+			const byteNumbers = new Array(slice.length);
 			for (let i = 0; i < slice.length; i++) {
 				byteNumbers[i] = slice.charCodeAt(i);
 			}
 
-			let byteArray = new Uint8Array(byteNumbers);
+			const byteArray = new Uint8Array(byteNumbers);
 
 			byteArrays.push(byteArray);
 		}

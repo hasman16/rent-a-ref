@@ -59,7 +59,9 @@ export class OrganizeService extends AbstractService {
           )
         );
     } else {
-      let bs: BehaviorSubject<PagedData> = new BehaviorSubject<PagedData>(null);
+      const bs: BehaviorSubject<PagedData> = new BehaviorSubject<PagedData>(
+        null
+      );
       bs.next(_.cloneDeep(this.sportsData));
       ob = bs;
     }

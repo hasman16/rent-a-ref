@@ -134,7 +134,7 @@ function MatchController(models, ResponseService) {
                         delete match.phone;
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 16, , 17]);
+                        _a.trys.push([1, 17, , 18]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
@@ -143,25 +143,28 @@ function MatchController(models, ResponseService) {
                             })];
                     case 3:
                         oldMatch = _a.sent();
-                        if (!(oldMatch && canAssignOrRemove(oldMatch.status))) return [3 /*break*/, 13];
-                        if (!phone) return [3 /*break*/, 6];
+                        if (!(oldMatch && canAssignOrRemove(oldMatch.status))) return [3 /*break*/, 14];
+                        return [4 /*yield*/, isOrgMemberOrAdmin(req, oldMatch.game_id)];
+                    case 4:
+                        _a.sent();
+                        if (!phone) return [3 /*break*/, 7];
                         return [4 /*yield*/, Phone.findById(oldMatch.phone_id, {
                                 transaction: transaction
                             })];
-                    case 4:
+                    case 5:
                         oldPhone = _a.sent();
                         match.phone_id = oldPhone.id;
-                        if (!oldPhone) return [3 /*break*/, 6];
+                        if (!oldPhone) return [3 /*break*/, 7];
                         return [4 /*yield*/, Phone.update(phone, {
                                 where: { id: oldPhone.id }
                             }, { transaction: transaction })];
-                    case 5:
-                        _a.sent();
-                        _a.label = 6;
                     case 6:
-                        if (!address) return [3 /*break*/, 11];
-                        return [4 /*yield*/, ResponseService.workoutTimeZone(match, address)];
+                        _a.sent();
+                        _a.label = 7;
                     case 7:
+                        if (!address) return [3 /*break*/, 12];
+                        return [4 /*yield*/, ResponseService.workoutTimeZone(address)];
+                    case 8:
                         timeZone = _a.sent();
                         ResponseService.setTimeZone(match, timeZone.googleTimeZone);
                         address.lat = timeZone.location.lat;
@@ -170,9 +173,9 @@ function MatchController(models, ResponseService) {
                         return [4 /*yield*/, Address.findById(oldMatch.address_id, {
                                 transaction: transaction
                             })];
-                    case 8:
+                    case 9:
                         oldAddress = _a.sent();
-                        if (!oldAddress) return [3 /*break*/, 10];
+                        if (!oldAddress) return [3 /*break*/, 11];
                         match.address_id = oldAddress.id;
                         return [4 /*yield*/, Address.update(address, {
                                 where: {
@@ -181,33 +184,33 @@ function MatchController(models, ResponseService) {
                             }, {
                                 transaction: transaction
                             })];
-                    case 9:
+                    case 10:
                         _a.sent();
-                        _a.label = 10;
-                    case 10: return [3 /*break*/, 12];
-                    case 11:
+                        _a.label = 11;
+                    case 11: return [3 /*break*/, 13];
+                    case 12:
                         match.date = oldMatch.date;
                         delete match.timezone_id;
                         delete match.timezone_name;
                         delete match.timezone;
                         delete match.timezone_offset;
-                        _a.label = 12;
-                    case 12: return [3 /*break*/, 14];
-                    case 13: throw new Error('Cannot update match.');
-                    case 14: return [4 /*yield*/, Match.update(match, relation, {
+                        _a.label = 13;
+                    case 13: return [3 /*break*/, 15];
+                    case 14: throw new Error('Cannot update match.');
+                    case 15: return [4 /*yield*/, Match.update(match, relation, {
                             transaction: transaction
                         })];
-                    case 15:
+                    case 16:
                         newMatch_1 = _a.sent();
                         transaction.commit();
                         ResponseService.success(res, 'Match updated', 200);
-                        return [3 /*break*/, 17];
-                    case 16:
+                        return [3 /*break*/, 18];
+                    case 17:
                         error_1 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_1, 404);
-                        return [3 /*break*/, 17];
-                    case 17: return [2 /*return*/];
+                        return [3 /*break*/, 18];
+                    case 18: return [2 /*return*/];
                 }
             });
         });
@@ -261,7 +264,7 @@ function MatchController(models, ResponseService) {
                         _a.label = 7;
                     case 7:
                         transaction.commit();
-                        ResponseService.success(res, 'Match and Referee assignments deleted', 204);
+                        ResponseService.success(res, 'Match and Referee assignments deleted.', 204);
                         return [3 /*break*/, 9];
                     case 8:
                         error_2 = _a.sent();
@@ -275,7 +278,7 @@ function MatchController(models, ResponseService) {
     }
     function createMatchAddressPhone(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, Address, Phone, match, address, phone, transaction, newMatch, newAddress, newPhone, dateTime, aMatch, error_3;
+            var sequelize, Address, Phone, match, address, phone, transaction, newMatch, newAddress, newPhone, timeZone, aMatch, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -293,54 +296,49 @@ function MatchController(models, ResponseService) {
                         match.status = 'pending';
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 10, , 11]);
+                        _a.trys.push([1, 11, , 12]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        dateTime = match.date + 'T' + match.time;
-                        match.date = dateTime.replace(/z/i, '');
-                        return [4 /*yield*/, ResponseService.workoutTimeZone(match, address)];
+                        return [4 /*yield*/, isOrgMemberOrAdmin(req, match.game_id)];
                     case 3:
                         _a.sent();
                         if (!address) return [3 /*break*/, 6];
-                        return [4 /*yield*/, Address.create(address, { transaction: transaction })];
+                        return [4 /*yield*/, ResponseService.workoutTimeZone(address)];
                     case 4:
+                        timeZone = _a.sent();
+                        ResponseService.setTimeZone(match, timeZone.googleTimeZone);
+                        address.lat = timeZone.location.lat;
+                        address.lng = timeZone.location.lng;
+                        processTime(match, timeZone);
+                        return [4 /*yield*/, Address.create(address, { transaction: transaction })];
+                    case 5:
                         newAddress = _a.sent();
                         match.address_id = newAddress.id;
-                        if (!newAddress) return [3 /*break*/, 6];
-                        return [4 /*yield*/, Address.update({
-                                lat: address.lat,
-                                lng: address.lng
-                            }, {
-                                where: {
-                                    id: newAddress.id
-                                }
-                            }, {
-                                transaction: transaction
-                            })];
-                    case 5:
-                        _a.sent();
-                        _a.label = 6;
+                        return [3 /*break*/, 7];
                     case 6:
-                        if (!phone) return [3 /*break*/, 8];
-                        return [4 /*yield*/, Phone.create(phone, { transaction: transaction })];
+                        delete match.date;
+                        _a.label = 7;
                     case 7:
+                        if (!phone) return [3 /*break*/, 9];
+                        return [4 /*yield*/, Phone.create(phone, { transaction: transaction })];
+                    case 8:
                         newPhone = _a.sent();
                         match.phone_id = newPhone.id;
-                        _a.label = 8;
-                    case 8: return [4 /*yield*/, Match.create(match, { transaction: transaction })];
-                    case 9:
+                        _a.label = 9;
+                    case 9: return [4 /*yield*/, Match.create(match, { transaction: transaction })];
+                    case 10:
                         newMatch = _a.sent();
                         transaction.commit();
                         aMatch = ResponseService.deleteItemDates(newMatch);
                         ResponseService.success(res, aMatch, 201);
-                        return [3 /*break*/, 11];
-                    case 10:
+                        return [3 /*break*/, 12];
+                    case 11:
                         error_3 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_3);
-                        return [3 /*break*/, 11];
-                    case 11: return [2 /*return*/];
+                        return [3 /*break*/, 12];
+                    case 12: return [2 /*return*/];
                 }
             });
         });
@@ -350,6 +348,46 @@ function MatchController(models, ResponseService) {
     }
     function updateMatchAddress(req, res) { }
     function deleteMatchAddress(req, res) { }
+    function isOrgMemberOrAdmin(req, game_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sequelize_1, Game, Organizer, game, whereClause, result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!ResponseService.isAdmin(req)) return [3 /*break*/, 1];
+                        return [2 /*return*/, {
+                                success: true,
+                                message: 'Is Admin'
+                            }];
+                    case 1:
+                        sequelize_1 = models.sequelize;
+                        Game = models.Game;
+                        Organizer = models.Organizer;
+                        return [4 /*yield*/, Game.findById(game_id)];
+                    case 2:
+                        game = _a.sent();
+                        whereClause = {
+                            user_id: req.decoded.id,
+                            organization_id: game.organization_id
+                        };
+                        return [4 /*yield*/, Organizer.findOne(whereClause)];
+                    case 3:
+                        result = _a.sent();
+                        if (result) {
+                            return [2 /*return*/, {
+                                    success: true,
+                                    message: 'Event is before lock time'
+                                }];
+                        }
+                        else {
+                            throw new Error('Event is now locked');
+                        }
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    }
     return {
         getAll: getAll,
         getAllByGame: getAllByGame,
