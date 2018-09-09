@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import {
 	Address,
@@ -33,7 +32,6 @@ export class EventsComponentService {
 	public productPlan: any[] = [];
 	public lineItems: any[] = [];
 	constructor(
-		private http: HttpClient,
 		private stripeService: StripeService,
 		protected statesService: StatesService,
 		protected eventsService: EventsService

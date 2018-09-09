@@ -318,7 +318,7 @@ var ResponseService = /** @class */ (function () {
         model.timezone = googleTimeZone.rawOffset;
         model.timezone_offset = googleTimeZone.dstOffset;
     };
-    ResponseService.prototype.workoutTimeZone = function (model, address) {
+    ResponseService.prototype.workoutTimeZone = function (address) {
         return __awaiter(this, void 0, void 0, function () {
             var googleAddress, geometry, location, googleTimeZone;
             return __generator(this, function (_a) {

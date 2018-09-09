@@ -204,12 +204,13 @@ function OfficiateController(models, ResponseService, SendGridService) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!!ResponseService.isAdmin(req)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, ResponseService.isTimeLocked(match)];
-                    case 1:
-                        _a.sent();
-                        _a.label = 2;
-                    case 2: return [2 /*return*/];
+                        if (!ResponseService.isAdmin(req)) return [3 /*break*/, 1];
+                        return [2 /*return*/, Promise.resolve({
+                                success: true,
+                                message: 'Event is before lock time'
+                            })];
+                    case 1: return [4 /*yield*/, ResponseService.isTimeLocked(match)];
+                    case 2: return [2 /*return*/, _a.sent()];
                 }
             });
         });
@@ -406,7 +407,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
             var _this = this;
             return __generator(this, function (_a) {
                 executeMethod = function (user, match, officiate, transaction) { return __awaiter(_this, void 0, void 0, function () {
-                    var isDeclined;
+                    var timeLocked, isDeclined;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
@@ -415,7 +416,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                 }
                                 return [4 /*yield*/, adminTimeLockByPass(req, match)];
                             case 1:
-                                _a.sent();
+                                timeLocked = _a.sent();
                                 return [4 /*yield*/, Officiating.update({
                                         status: 'declined'
                                     }, {
@@ -450,7 +451,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
             var _this = this;
             return __generator(this, function (_a) {
                 executeMethod = function (user, match, officiate, transaction) { return __awaiter(_this, void 0, void 0, function () {
-                    var invitesAccepted, isAccepted;
+                    var timeLocked, invitesAccepted, isAccepted;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
@@ -459,7 +460,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                 }
                                 return [4 /*yield*/, adminTimeLockByPass(req, match)];
                             case 1:
-                                _a.sent();
+                                timeLocked = _a.sent();
                                 return [4 /*yield*/, Officiating.count({
                                         where: {
                                             match_id: match.id,

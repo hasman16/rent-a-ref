@@ -1,4 +1,4 @@
-import { User } from './user'
+import { User } from './user';
 import { BaseModel } from './base';
 
 export interface Login extends BaseModel {

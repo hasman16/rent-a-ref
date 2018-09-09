@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { LazyLoadImageModule } from 'ng-lazyload-image'; //https://github.com/tjoskar/ng-lazyload-image
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
@@ -48,7 +48,7 @@ import { SearchBoxComponent } from './search-box/index';
         FormsModule,
         MaterialModule,
         ReactiveFormsModule,
-        HttpModule,
+        HttpClientModule,
         ImageCropperModule,
         LazyLoadImageModule,
         //FormlyBootstrapModule,
@@ -104,7 +104,7 @@ import { SearchBoxComponent } from './search-box/index';
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpModule,
+        HttpClientModule,
         FormlyMaterialModule,
 
         // Shared Components

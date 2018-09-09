@@ -118,6 +118,8 @@ export default function MatchController(models, ResponseService) {
         transaction
       });
       if (oldMatch && canAssignOrRemove(oldMatch.status)) {
+        await isOrgMemberOrAdmin(req, oldMatch.game_id);
+
         if (phone) {
           oldPhone = await Phone.findById(oldMatch.phone_id, {
             transaction
@@ -133,8 +135,9 @@ export default function MatchController(models, ResponseService) {
             );
           }
         }
+
         if (address) {
-          let timeZone = await ResponseService.workoutTimeZone(match, address);
+          let timeZone = await ResponseService.workoutTimeZone(address);
           ResponseService.setTimeZone(match, timeZone.googleTimeZone);
 
           address.lat = timeZone.location.lat;
@@ -221,7 +224,7 @@ export default function MatchController(models, ResponseService) {
       transaction.commit();
       ResponseService.success(
         res,
-        'Match and Referee assignments deleted',
+        'Match and Referee assignments deleted.',
         204
       );
     } catch (error) {
@@ -249,30 +252,22 @@ export default function MatchController(models, ResponseService) {
 
     try {
       transaction = await sequelize.transaction();
-      let dateTime: string = match.date + 'T' + match.time;
-      match.date = dateTime.replace(/z/i, '');
-      await ResponseService.workoutTimeZone(match, address);
+      await isOrgMemberOrAdmin(req, match.game_id);
 
       if (address) {
+        let timeZone = await ResponseService.workoutTimeZone(address);
+        ResponseService.setTimeZone(match, timeZone.googleTimeZone);
+
+        address.lat = timeZone.location.lat;
+        address.lng = timeZone.location.lng;
+        processTime(match, timeZone);
+
         newAddress = await Address.create(address, { transaction });
         match.address_id = newAddress.id;
-        if (newAddress) {
-          await Address.update(
-            {
-              lat: address.lat,
-              lng: address.lng
-            },
-            {
-              where: {
-                id: newAddress.id
-              }
-            },
-            {
-              transaction
-            }
-          );
-        }
+      } else {
+        delete match.date;
       }
+
       if (phone) {
         newPhone = await Phone.create(phone, { transaction });
         match.phone_id = newPhone.id;
@@ -295,6 +290,34 @@ export default function MatchController(models, ResponseService) {
 
   function updateMatchAddress(req, res) {}
   function deleteMatchAddress(req, res) {}
+
+  async function isOrgMemberOrAdmin(req, game_id) {
+    if (ResponseService.isAdmin(req)) {
+      return {
+        success: true,
+        message: 'Is Admin'
+      };
+    } else {
+      const sequelize = models.sequelize;
+      const Game = models.Game;
+      const Organizer = models.Organizer;
+      const game = await Game.findById(game_id);
+
+      const whereClause = {
+        user_id: req.decoded.id,
+        organization_id: game.organization_id
+      };
+      const result = await Organizer.findOne(whereClause);
+      if (result) {
+        return {
+          success: true,
+          message: 'Event is before lock time'
+        };
+      } else {
+        throw new Error('Event is now locked');
+      }
+    }
+  }
 
   return {
     getAll,

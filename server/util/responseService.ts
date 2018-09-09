@@ -337,7 +337,7 @@ export default class ResponseService {
     model.timezone_offset = googleTimeZone.dstOffset;
   }
 
-  async workoutTimeZone(model, address) {
+  async workoutTimeZone(address) {
     const googleAddress = await this.getGoogleAddress(address);
     const geometry = _.get(googleAddress, 'results[0].geometry', null);
     if (!geometry) {

@@ -41,15 +41,8 @@ import {
 } from '../shared/crop-image-modal/index';
 import * as _ from 'lodash';
 
-import { Observable, Subscription, Subject } from 'rxjs';
-import {
-  combineLatest,
-  filter,
-  finalize,
-  map,
-  switchMap,
-  take
-} from 'rxjs/operators';
+import { combineLatest, Observable, Subscription, Subject } from 'rxjs';
+import { filter, finalize, map, switchMap, take } from 'rxjs/operators';
 
 @Component({
   selector: 'rar-organize',
@@ -109,7 +102,7 @@ export class OrganizeComponent implements OnInit {
   }
 
   public getImageAddress(organization: Organization): string {
-    let url = _.get(organization, 'images[0].location', '');
+    const url = _.get(organization, 'images[0].location', '');
     return url;
   }
 
@@ -170,7 +163,7 @@ export class OrganizeComponent implements OnInit {
           if (state.alertButtonState === AlertButtonState.Ok) {
             observable$ = this.organizeService.deleteOrganization(org_id);
           } else {
-            let modalSubject: Subject<boolean> = new Subject<boolean>();
+            const modalSubject: Subject<boolean> = new Subject<boolean>();
             observable$ = modalSubject.asObservable();
             modalSubject.next(true);
           }
@@ -189,13 +182,14 @@ export class OrganizeComponent implements OnInit {
   public editOrganization(orgId: number): void {
     let currentModel: any = _.find(
       this.organizations,
-      organization => organization.id == orgId
+      organization => organization.id === orgId
     );
     if (currentModel) {
-      this.organizeService
-        .getOrgAddresses(orgId)
+      combineLatest(
+        this.organizeService.getOrgAddresses(orgId),
+        this.organizeService.getOrgPhones(orgId)
+      )
         .pipe(
-          combineLatest(this.organizeService.getOrgPhones(orgId)),
           take(1),
           map(([addresses, phones]: [Array<any>, Array<any>]) => {
             return [_.head(addresses), _.head(phones)];
@@ -265,13 +259,10 @@ export class OrganizeComponent implements OnInit {
       .pipe(
         switchMap(organization => {
           const org_id: any = organization.id;
-          return this.organizeService
-            .bulkCreateAddresses(model.addresses, org_id)
-            .pipe(
-              combineLatest(
-                this.organizeService.bulkCreatePhones(model.phones, org_id)
-              )
-            );
+          return combineLatest(
+            this.organizeService.bulkCreateAddresses(model.addresses, org_id),
+            this.organizeService.bulkCreatePhones(model.phones, org_id)
+          );
         }),
         finalize(() => {
           this.getOrganizations();
@@ -298,7 +289,7 @@ export class OrganizeComponent implements OnInit {
   private updatedItems<T extends BaseModel>(newItems: T[], oldItems: T[]): T[] {
     return _(newItems)
       .filter((newItem: T) => {
-        let item: T = _.find(
+        const item: T = _.find(
           oldItems,
           (oldItem: T) => oldItem.id === newItem.id
         );
@@ -331,28 +322,28 @@ export class OrganizeComponent implements OnInit {
   }
 
   public submitUpdateOrganization(model): void {
-    let newPhones: Phone[] = _.filter(model.phones, (phone: Phone) =>
+    const newPhones: Phone[] = _.filter(model.phones, (phone: Phone) =>
       _.isNil(phone.id)
     );
-    let newAddresses: Address[] = _.filter(
+    const newAddresses: Address[] = _.filter(
       model.addresses,
       (address: Address) => _.isNil(address.id)
     );
 
-    let deletedPhones: Phone[] = this.deletedPhones(
+    const deletedPhones: Phone[] = this.deletedPhones(
       model.phones,
       this.currentModel.phones
     );
-    let deletedAddresses: Address[] = this.deletedAddresses(
+    const deletedAddresses: Address[] = this.deletedAddresses(
       model.addresses,
       this.currentModel.addresses
     );
 
-    let updatedPhones: Phone[] = this.updatedPhones(
+    const updatedPhones: Phone[] = this.updatedPhones(
       model.phones,
       this.currentModel.phones
     );
-    let updatedAddresses: Address[] = this.updatedAddresses(
+    const updatedAddresses: Address[] = this.updatedAddresses(
       model.addresses,
       this.currentModel.addresses
     );
@@ -370,22 +361,16 @@ export class OrganizeComponent implements OnInit {
       )
       .pipe(
         switchMap(organization => {
-          return this.organizeService
-            .bulkCreateAddresses(newAddresses, org_id)
-            .pipe(
-              combineLatest(
-                this.organizeService.bulkCreatePhones(newPhones, org_id)
-              )
-            );
+          return combineLatest(
+            this.organizeService.bulkCreateAddresses(newAddresses, org_id),
+            this.organizeService.bulkCreatePhones(newPhones, org_id)
+          );
         }),
         switchMap(([addresses, phones]: [Array<Address>, Array<Phone>]) => {
-          return this.organizeService
-            .bulkUpdateAddresses(updatedAddresses, org_id)
-            .pipe(
-              combineLatest(
-                this.organizeService.bulkUpdatePhones(updatedPhones, org_id)
-              )
-            );
+          return combineLatest(
+            this.organizeService.bulkUpdateAddresses(updatedAddresses, org_id),
+            this.organizeService.bulkUpdatePhones(updatedPhones, org_id)
+          );
         }),
         finalize(() => {
           this.cd.markForCheck();

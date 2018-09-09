@@ -161,7 +161,7 @@ function GameController(models, ResponseService) {
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        return [4 /*yield*/, ResponseService.workoutTimeZone(game, address)];
+                        return [4 /*yield*/, ResponseService.workoutTimeZone(address)];
                     case 3:
                         timeZone = _a.sent();
                         ResponseService.setTimeZone(game, timeZone.googleTimeZone);

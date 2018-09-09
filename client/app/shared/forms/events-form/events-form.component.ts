@@ -169,25 +169,6 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
         ]
       },
       {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12',
-            type: 'radio',
-            key: 'event_type',
-            templateOptions: {
-              label: 'What type of event',
-              required: true,
-              options: [
-                { value: 'League', key: 'league' },
-                { value: 'Tournament', key: 'tournament' },
-                { value: 'One off event', key: 'oneoff' }
-              ]
-            }
-          }
-        ]
-      },
-      {
         template:
           '<hr class="space-hr" /><div><strong>Age Groups</strong></div>'
       },
@@ -231,7 +212,7 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
             type: 'input',
             key: 'kids_games',
             templateOptions: {
-              label: 'Number games for Kids 13 and Under.',
+              label: 'Number of kids games.',
               type: 'number',
               min: 1,
               max: 1000
@@ -246,7 +227,7 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
             type: 'input',
             key: 'teen_games',
             templateOptions: {
-              label: 'Number of games for High Schooler.',
+              label: 'Number of High Schooler games.',
               type: 'number',
               min: 1,
               max: 1000,
@@ -262,7 +243,7 @@ export class EventsFormComponent implements AfterViewInit, OnInit {
             type: 'input',
             key: 'adult_games',
             templateOptions: {
-              label: 'Number of games for Over 18s.',
+              label: 'Number of over 18s games.',
               type: 'number',
               min: 1,
               max: 1000,

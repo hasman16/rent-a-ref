@@ -15,6 +15,6 @@ export class AuthGuardSuspended implements CanActivate {
 	canActivate() {
 		const currentUser: User = this.auth.getCurrentUser();
 
-		return this.auth.loggedIn && currentUser.status == 'suspended';
+		return this.auth.loggedIn && currentUser.status === 'suspended';
 	}
 }

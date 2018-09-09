@@ -1,8 +1,8 @@
-import { TestBed, inject } from "@angular/core/testing";
+import { TestBed, inject } from '@angular/core/testing';
 
-import { CanDeactivateGuardService } from "./can-deactivate-guard.service";
+import { CanDeactivateGuardService } from './can-deactivate-guard.service';
 
-describe("CanDeactivateGuardService", () => {
+describe('CanDeactivateGuardService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			providers: [CanDeactivateGuardService]
@@ -10,7 +10,7 @@ describe("CanDeactivateGuardService", () => {
 	});
 
 	it(
-		"should be created",
+		'should be created',
 		inject(
 			[CanDeactivateGuardService],
 			(service: CanDeactivateGuardService) => {

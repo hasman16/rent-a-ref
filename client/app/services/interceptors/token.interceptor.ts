@@ -46,8 +46,6 @@ export class TokenInterceptor implements HttpInterceptor {
             err.status === 401 &&
             _.toLower(err.statusText) === 'unauthorized'
           ) {
-            // redirect to the login route
-            // or show a modal
             this.router.navigateByUrl('/logout');
           }
         }
