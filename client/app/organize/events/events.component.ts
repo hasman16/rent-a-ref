@@ -190,6 +190,20 @@ export class EventsComponent extends AbstractComponent
     this.cd.markForCheck();
   }
 
+  public setSelectedTab($event: Event, tab: ViewState): void {
+    $event.preventDefault();
+    this.viewState = tab;
+    this.cd.markForCheck();
+  }
+
+  public switchToAddMatch($event): void {
+    this.setSelectedTab($event, ViewState.addMatches);
+  }
+
+  public switchToEditEvent($event) {
+    this.setSelectedTab($event, ViewState.listEvents);
+  }
+
   public hasPaid(id: string): boolean {
     let game: Game = this.findGameById(id);
     return game && game.status === 'pending' ? false : true;

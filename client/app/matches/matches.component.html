@@ -48,7 +48,7 @@
       <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
 
-      <ngx-datatable-column name="" prop="id" editable="true" *ngIf="!auth.isAdmin">
+      <ngx-datatable-column name="" prop="id" editable="true" *ngIf="auth.isAdmin">
         <ng-template let-value="value" ngx-datatable-cell-template>
           <button class="btn btn-success btn-sm" (click)="assignOfficials(value)" title="Click to Assign officials">Officials</button>
         </ng-template>

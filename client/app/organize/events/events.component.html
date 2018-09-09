@@ -106,6 +106,13 @@
     </div>
 
     <div class="card"  *ngIf="isViewState('addMatches')">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#" (click)="switchToEditEvent($event)">Event</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="#" (click)="switchToAddMatch($event)">Matches</a></li>
+        </ol>
+      </nav>
+      <br />
       <rar-matches [model]="currentGame" [states]="states"></rar-matches>
     </div>
 
