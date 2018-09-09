@@ -41,7 +41,8 @@ enum ViewState {
   noEvents,
   listEvents,
   editEvent,
-  payForEvent
+  payForEvent,
+  addMatches
 }
 
 @Component({
@@ -64,6 +65,7 @@ export class EventsComponent extends AbstractComponent
 
   protected sports: Option[];
   public games: Game[] = [];
+  public currentGame: Game;
 
   public organization_id: string = '';
   public game_id: string = '';
@@ -149,6 +151,9 @@ export class EventsComponent extends AbstractComponent
       case 'payingForEvent':
         result = this.viewState === ViewState.payForEvent;
         break;
+      case 'addMatches':
+        result = this.viewState === ViewState.addMatches;
+        break;
       default:
         result = false;
         break;
@@ -177,6 +182,12 @@ export class EventsComponent extends AbstractComponent
     return <Game>_.find(this.games, game => {
       return game.id === id;
     });
+  }
+
+  public goAddMatches(id: string): void {
+    this.currentGame = this.findGameById(id);
+    this.viewState = ViewState.addMatches;
+    this.cd.markForCheck();
   }
 
   public hasPaid(id: string): boolean {

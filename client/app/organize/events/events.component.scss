@@ -6,13 +6,19 @@
 }
 :host /deep/ .card {
 	.form-size {
-		max-width: 80%;
-		min-width: 80%;
+		max-width: 90%;
+		min-width: 90%;
 		margin: auto;
 	}
+
+	.event-form {
+		width: 100%;
+		max-width: 600px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
 	.mat-radio-button {
 		padding-right: 15px;
 	}
 }
-
-

@@ -4,7 +4,7 @@
     <div class="card" *ngIf="isViewState('editEvent');">
       <app-toast [message]="toast.message"></app-toast>
 
-      <div class="card form-size">
+      <div class="card event-form">
         <events-form (ngSubmit)="submitEvent($event)" (ngCancel)="setEventsMode($event)"
          [model]="model"
          [states]="states"
@@ -61,6 +61,12 @@
 
           <ngx-datatable-column name="" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-success btn-sm" (click)="goAddMatches(value)" title="Click to add matches to this event.">Add Matches</button>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="" prop="id" editable="true">
+            <ng-template let-value="value" ngx-datatable-cell-template>
               <button class="btn btn-primary btn-sm" (click)="editEvents(value)" title="Click to edit this event"  [disabled]="hasPaid(value)">Edit</button>
             </ng-template>
           </ngx-datatable-column>
@@ -97,6 +103,10 @@
         </div>
       </mat-card>
 
+    </div>
+
+    <div class="card"  *ngIf="isViewState('addMatches')">
+      <rar-matches [model]="currentGame" [states]="states"></rar-matches>
     </div>
 
   </div>
