@@ -30,9 +30,8 @@ export class StatusesFormComponent implements AfterViewInit, OnInit {
   }
   @Input() states: Option[];
   @Input() sports: Option[];
-  @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
-  @Output('ngCancel')
-  cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() ngSubmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ngCancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public model: any = {};
   public submitText: string = 'Update Status';
@@ -118,12 +117,10 @@ export class StatusesFormComponent implements AfterViewInit, OnInit {
   }
 
   onSubmit(model: any): void {
-    console.log('onSubmit');
-    this.submitter.emit(model);
+    this.ngSubmit.emit(model);
   }
 
   onCancel(event: MouseEvent): void {
-    console.log('onCancel');
-    this.cancelSubmitter.emit(true);
+    this.ngCancel.emit(true);
   }
 }

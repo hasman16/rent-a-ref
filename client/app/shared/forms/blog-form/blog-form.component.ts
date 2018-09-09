@@ -28,9 +28,8 @@ export class BlogFormComponent implements AfterViewInit, OnInit {
     this.submitText = this.getSubmitText(hasId);
     this.model = _.cloneDeep(model);
   }
-  @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
-  @Output('ngCancel')
-  cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() ngSubmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ngCancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public model: any = {};
   public submitText: string;
@@ -128,10 +127,10 @@ export class BlogFormComponent implements AfterViewInit, OnInit {
   }
 
   public onSubmit(model: any): void {
-    this.submitter.emit(model);
+    this.ngSubmit.emit(model);
   }
 
   public onCancel(event: MouseEvent): void {
-    this.cancelSubmitter.emit(true);
+    this.ngCancel.emit(true);
   }
 }

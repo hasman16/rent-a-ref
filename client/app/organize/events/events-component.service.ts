@@ -19,8 +19,8 @@ import {
 	StripeService,
 	UserService
 } from './../../services/index';
-import { Subject, Observable, of, BehaviorSubject } from 'rxjs';
-import { combineLatest, map, switchMap, take } from 'rxjs/operators';
+import { combineLatest, Subject, Observable, of, BehaviorSubject } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
@@ -92,8 +92,10 @@ export class EventsComponentService {
 
 	public getPreparedEventForPayment(gameId: string): Observable<any> {
 		this.lineItems = [];
-		return this.getEvent(gameId).pipe(
-			combineLatest(this.stripeService.getProducts()),
+		return combineLatest(
+			this.getEvent(gameId),
+			this.stripeService.getProducts()
+		).pipe(
 			map(([model, products]: [any, any]) => {
 				this.products = _.filter(products.data, product => {
 					return product.type === 'good';
@@ -109,7 +111,7 @@ export class EventsComponentService {
 		const startTimeZoneDate = moment.tz(model.start_date, timezone_id);
 		const endTimeZoneDate = moment.tz(model.end_date, timezone_id);
 
-		let tempModel = _.cloneDeep(model);
+		const tempModel = _.cloneDeep(model);
 		delete tempModel.address;
 		delete tempModel.phone;
 		tempModel.start_date = startTimeZoneDate.format('YYYY-MM-DD');
@@ -118,7 +120,7 @@ export class EventsComponentService {
 		tempModel.end_date = endTimeZoneDate.format('YYYY-MM-DD');
 		tempModel.end_time = endTimeZoneDate.format('HH:mm:ss');
 
-		let obj = {
+		const obj = {
 			address_id: model.address.id
 		};
 		delete model.address.id;
@@ -168,6 +170,8 @@ export class EventsComponentService {
 	}
 
 	public prepareForPayment(model: any, products: any[]): any {
+		let lineItems: any[] = [];
+
 		const addSku = (amount, sku) => {
 			if (amount > 0) {
 				lineItems.push({
@@ -177,7 +181,6 @@ export class EventsComponentService {
 				});
 			}
 		};
-		let lineItems: any[] = [];
 
 		_.forEach(products, product => {
 			const skus = product.skus;

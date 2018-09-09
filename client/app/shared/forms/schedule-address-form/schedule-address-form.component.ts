@@ -26,9 +26,7 @@ export class ScheduleAddressFormComponent implements AfterViewInit, OnInit {
   set aModel(model: any) {
     this.model = _.cloneDeep(model);
   }
-  @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
-  @Output('ngCancel')
-  cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() ngSubmit: EventEmitter<any> = new EventEmitter<any>();
 
   public model: any = {};
   public submitText: string;
@@ -107,6 +105,6 @@ export class ScheduleAddressFormComponent implements AfterViewInit, OnInit {
   }
 
   onSubmit(model: any): void {
-    this.submitter.emit(model);
+    this.ngSubmit.emit(model);
   }
 }

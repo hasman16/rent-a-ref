@@ -28,9 +28,8 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
     this.model = _.cloneDeep(model);
   }
   @Input() states: Option[];
-  @Output('ngSubmit') submitter: EventEmitter<any> = new EventEmitter<any>();
-  @Output('ngCancel')
-  cancelSubmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() ngSubmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ngCancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public model: any = {};
   public submitText: string;
@@ -261,10 +260,10 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
   }
 
   onSubmit(model: any): void {
-    this.submitter.emit(model);
+    this.ngSubmit.emit(model);
   }
 
   onCancel(event: MouseEvent): void {
-    this.cancelSubmitter.emit(true);
+    this.ngCancel.emit(true);
   }
 }

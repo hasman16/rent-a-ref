@@ -25,8 +25,8 @@ import {
   Profile,
   User
 } from './../../shared/models/index';
-import { Observable, of, Subscription } from 'rxjs';
-import { filter, finalize, merge, switchMap, tap } from 'rxjs/operators';
+import { merge, Observable, of, Subscription } from 'rxjs';
+import { filter, finalize, switchMap, tap } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -86,7 +86,7 @@ export class MatchDetailComponent implements OnInit {
   }
 
   public showRefereeDetails(referee): void {
-    let currentReferee = _.cloneDeep(referee);
+    const currentReferee = _.cloneDeep(referee);
     currentReferee.url = this.getImageAddress(referee);
     currentReferee.orderedPhones = this.orderPhones(referee);
     currentReferee.addresses = referee.addresses;
@@ -107,7 +107,7 @@ export class MatchDetailComponent implements OnInit {
     const refereePhones = referee.phones;
     const types: string[] = ['mobile', 'home', 'work', 'other'];
     return <Phone[]>types.reduce((phones: Phone[], type: string): Phone[] => {
-      let phone: Phone = refereePhones.find(
+      const phone: Phone = refereePhones.find(
         (aPhone: Phone): Phone => (aPhone.description === type ? aPhone : null)
       );
       if (phone) {
@@ -124,9 +124,9 @@ export class MatchDetailComponent implements OnInit {
 
   private getData(id: string) {
     const page: Page = this.pagingService.getDefaultPager();
-    let control$ = of(!!this.user);
+    const control$ = of(!!this.user);
 
-    let getOfficialsAndMatch$ = this.matchService
+    const getOfficialsAndMatch$ = this.matchService
       .getMatchOfficials(id, page)
       .pipe(
         tap(referees => {
@@ -137,7 +137,7 @@ export class MatchDetailComponent implements OnInit {
         })
       );
 
-    let getUser$ = control$.pipe(
+    const getUser$ = control$.pipe(
       filter(value => value === true),
       switchMap(() => this.userService.getUserAddresses(this.user.id)),
       tap(addresses => {
@@ -146,16 +146,14 @@ export class MatchDetailComponent implements OnInit {
       switchMap(() => getOfficialsAndMatch$)
     );
 
-    getUser$
-      .pipe(
-        merge(
-          control$.pipe(
-            filter(value => value === false),
-            switchMap(() => getOfficialsAndMatch$)
-          )
-        ),
-        finalize(() => this.cd.markForCheck())
+    merge(
+      getUser$,
+      control$.pipe(
+        filter(value => value === false),
+        switchMap(() => getOfficialsAndMatch$)
       )
+    )
+      .pipe(finalize(() => this.cd.markForCheck()))
       .subscribe(match => {
         const matchAddress: Address = _.cloneDeep(match.address);
 

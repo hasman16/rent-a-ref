@@ -22,13 +22,13 @@
         <div class="form-size">
           <br />
           <div class="row shadow rar-list"  *ngFor="let organization of organizations" >
-            <div class="col-2 rar-logo" (click)="openModal(organization)" title="Upload Organization Logo.">
+            <div class="col-md-2 rar-logo" (click)="openModal(organization)" title="Upload Organization Logo.">
               <rar-image [errorImage]="defaultImage"  [image]="getImageAddress(organization)" [width]="80" [alt]="logo"></rar-image>
             </div>
-            <div class="col-7" (click)="editEvents(organization.id);" title="Edit Events.">
+            <div class="col-md-7" (click)="editEvents(organization.id);" title="Edit Events.">
               <h2 class="contrain-text" title="{{organization.name}}">{{organization.name}}</h2>
             </div>
-            <div class="col-3">
+            <div class="col-md-3">
               <div class="button-container">
                 <button class="btn btn-primary btn-sm" (click)="editOrganization(organization.id)" title="Edit Organization.">Edit</button>
                 <button class="btn btn-danger btn-sm" (click)="goDeleteOrganization(organization.id)" title="Click to delete organization">Delete</button>

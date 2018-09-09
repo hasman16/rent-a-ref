@@ -19,14 +19,16 @@ export class SearchBoxComponent {
 	@Input() searchLabel: string = 'Search';
 	@Input('search-attributes')
 	set setSearchAttributes(searchAttributes: Array<Option>) {
-		if (_.isArray(searchAttributes) && searchAttributes.length > 1) {
-			this.searchAttributes = <Array<Option>>_.cloneDeep(
-				searchAttributes
-			);
-			let selectedItem: Option = <Option>_.head(this.searchAttributes);
-			_.forEach(this.searchAttributes, (item: Option) => {
-				item.selected = false;
-			});
+		if (_.isArray(searchAttributes) && searchAttributes.length > 0) {
+			this.searchAttributes = <Array<Option>>_(
+				_.cloneDeep(searchAttributes)
+			)
+				.map((item: Option) => {
+					item.selected = false;
+					return item;
+				})
+				.value();
+			const selectedItem: Option = <Option>_.head(this.searchAttributes);
 			selectedItem.selected = true;
 		}
 	}
@@ -35,10 +37,6 @@ export class SearchBoxComponent {
 	@Output() searchAttribute: EventEmitter<string> = new EventEmitter();
 	public searchAttributes: Array<Option>;
 	constructor() {}
-
-	ngOnInit() {}
-
-	ngOnDestroy() {}
 
 	public updateSearchText(event): void {
 		const value: string = event.target.value.toLowerCase();
