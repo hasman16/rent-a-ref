@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { LayoutModule } from '@angular/cdk/layout';
 
 import {
   MatButtonModule,
@@ -20,6 +21,7 @@ import {
 } from '@angular/material';
 
 const MATERIALS = [
+  LayoutModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatInputModule,

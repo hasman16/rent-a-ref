@@ -2,6 +2,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import {
+  BreakpointObserver,
+  Breakpoints,
+  BreakpointState
+} from '@angular/cdk/layout';
 
 import { AbstractComponent } from '../../abstract/abstract.component';
 
@@ -18,8 +23,7 @@ import {
   Sorts,
   User
 } from './../../shared/models/index';
-import { Observable ,  Subscription ,  Subject } from 'rxjs';
-
+import { Observable, Subscription, Subject } from 'rxjs';
 
 import * as _ from 'lodash';
 
@@ -41,6 +45,7 @@ export class ManageUsersComponent extends AbstractComponent
   protected userWasUpdated: boolean = false;
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     public toast: ToastComponent,
     private userService: UserService,
@@ -62,6 +67,7 @@ export class ManageUsersComponent extends AbstractComponent
   ngOnInit() {
     this.viewProfile = false;
     this.initialize();
+
     this.searchAttribute = 'email|';
     const pagedData: PagedData = this.route.snapshot.data.userData;
     this.processPagedData(pagedData);

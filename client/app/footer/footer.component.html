@@ -2,7 +2,7 @@
 
 <footer>
   <div class="row">
-    <div class="col-sm-3 footerleft ">
+    <div class="col-xs-12 col-md-4 footerleft ">
       <pre> <em *ngIf="dt">{{ getDate() | date:'fullDate'}}</em></pre>
       <span style="display: none;">
         <button type="button" class="btn btn-sm btn-info " (click)="today()">Today</button>
@@ -13,7 +13,7 @@
       <p>Your most trusted gateway to modern sports management. <b>1 STOP</b> to events organization and Referee or Umpires assignment </p>
       <p><i class="fa fa-envelope"></i> E-mail : info@rentaref.com</p>
     </div>
-    <div class="col-sm-3 paddingtop-bottom">
+    <div class="col-xs-12 col-md-4 paddingtop-bottom">
       <h6 class="heading7">GENERAL LINKS</h6>
       <ul class="footer-ul">
         <li>
@@ -40,7 +40,7 @@
         </li>
       </ul>
     </div>
-    <div class="col-sm-3 paddingtop-bottom">
+    <div class="col-xs-12 col-md-4 paddingtop-bottom">
       <h6 class="heading7">LATEST POST</h6>
       <div class="post">
         <p>facebook crack the movie advertisment code:what it means for you <span>August 3,2015</span></p>
@@ -48,10 +48,8 @@
         <p>facebook crack the movie advertisment code:what it means for you <span>August 3,2015</span></p>
       </div>
     </div>
-    <div class="col-sm-3 paddingtop-bottom">
-    </div>
-    <div class="social-icons img-responsive">
-      <ul class="nomargin">
+    <div class="col-12">
+      <ul>
         <a href="https://www.facebook.com/rentaref"><i class="fa fa-facebook-square fa-3x social-fb" id="social"></i></a>
         <a href="https://twitter.com/rentaref"><i class="fa fa-twitter-square fa-3x social-tw" id="social"></i></a>
         <a href="https://www.instagram.com/rentaref/"><i class="fa fa-instagram fa-3x social-gp" id="social"></i></a>
@@ -65,35 +63,33 @@
 <!--footer start from here-->
 
 <div class="copyright">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <p>&copy; {{year}} - Powered by <a href="http://www.hasmandesign.com" target="_blank"> Hasman Design L.L.C &reg;</a></p>
-      </div>
-      <div class="col-md-6">
-        <ul class="bottom_ul">
-          <li>
-            <a routerLink="/about" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-              <i class="fa fa-book"></i><span class="general-links"> About Us</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="/blog" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-              <i class="fa fa-rss-square"></i><span class="general-links"> Blog</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="/contact" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-              <i class="fa fa-envelope-o"></i><span class="general-links"> Contact Us</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="/sitemap" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
-              <i class="fa fa-sitemap"></i><span class="general-links"> Site Map</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <p>&copy; {{year}} - Powered by <a href="http://www.hasmandesign.com" target="_blank"> Hasman Design L.L.C &reg;</a></p>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <ul class="bottom_ul">
+        <li>
+          <a routerLink="/about" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
+            <i class="fa fa-book"></i><span class="general-links"> About Us</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/blog" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
+            <i class="fa fa-rss-square"></i><span class="general-links"> Blog</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/contact" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
+            <i class="fa fa-envelope-o"></i><span class="general-links"> Contact Us</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/sitemap" class="nav-item nav-link" aria-hidden="true" routerLinkActive="active">
+            <i class="fa fa-sitemap"></i><span class="general-links"> Site Map</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

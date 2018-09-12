@@ -60,10 +60,11 @@
       <ngx-datatable-column name="Lastname" prop="lastname" editable="false">
         <ng-template let-value="value" ngx-datatable-cell-template>
           <div class="cell-item">
-            {{value}}
+            {{value}}{{viewIsWide}}
           </div>
         </ng-template>
       </ngx-datatable-column>
+
 
       <ngx-datatable-column name="Gender" prop="gender" editable="false">
         <ng-template let-value="value" ngx-datatable-cell-template>
@@ -86,7 +87,8 @@
             {{value}}
           </div>
         </ng-template>
-      </ngx-datatable-column>
+      </ngx-datatable-column>        
+
       <ngx-datatable-column name="Status" prop="status" editable="false">
         <ng-template let-value="value" ngx-datatable-cell-template>
           <div class="cell-item">
