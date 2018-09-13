@@ -14,6 +14,7 @@ var models = [
     'Lock',
     'Match',
     'Organization',
+    'Officiating',
     'Person',
     'Phone',
     'Post',
@@ -76,16 +77,6 @@ models.forEach(function (model) {
     m.Game.belongsTo(m.Address);
     m.Game.belongsTo(m.Phone);
     m.Game.belongsTo(m.Sport);
-    var Officiating = exports.sequelize.define('officiating', {
-        status: {
-            type: sequelize_1.default.STRING(32),
-            allowNull: false,
-            defaultValue: 'pending',
-            validate: {
-                isIn: [['pending', 'accepted', 'declined', 'cancelled']]
-            }
-        }
-    });
     m.User.belongsToMany(m.Match, {
         through: 'officiating'
     });
@@ -117,7 +108,7 @@ models.forEach(function (model) {
     });
     module.exports.Referee = exports.sequelize.models.referee;
     module.exports.Match = exports.sequelize.models.match;
-    module.exports.Officiating = exports.sequelize.models.officiating;
+    //module.exports.Officiating = sequelize.models.officiating;
     module.exports.Organizer = exports.sequelize.models.organizer;
     module.exports.OrganizationAddress = exports.sequelize.models.organization_address;
     module.exports.OrganizationImage = exports.sequelize.models.organization_image;

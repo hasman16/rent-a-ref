@@ -33,8 +33,14 @@
       (select)='onSelectTableRow($event)'
       >
       <ngx-datatable-column name="Email" prop="email" editable="false"></ngx-datatable-column>
-      <ngx-datatable-column name="Referee" prop="can_referee" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
+      <ngx-datatable-column name="Position" prop="id" editable="true">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <select class="form-control">
+              <option *ngFor="let position of positions" value="{{position.value}}">{{position.label}}</option>
+          </select>
+        </ng-template>
+      </ngx-datatable-column>
 
       <ngx-datatable-column name="Assign Referee" prop="id" editable="true">
         <ng-template let-value="value" ngx-datatable-cell-template>

@@ -21,7 +21,14 @@ import {
   PagingService,
   UserService
 } from '../services/index';
-import { Match, Page, PagedData, Sorts, User } from '../shared/models/index';
+import {
+  Match,
+  Option,
+  Page,
+  PagedData,
+  Sorts,
+  User
+} from '../shared/models/index';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -57,6 +64,7 @@ export class AssignUsersComponent extends AbstractComponent
   protected match_id: string;
   protected match: Match;
   public viewState: ViewState = ViewState.listReferees;
+  public positions: Option[];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -67,6 +75,12 @@ export class AssignUsersComponent extends AbstractComponent
     protected pagingService: PagingService
   ) {
     super(pagingService);
+    this.positions = [
+      { label: 'Center', value: '0' },
+      { label: 'Assistent Ref 1', value: '1' },
+      { label: 'Assistent Ref 2', value: '2' },
+      { label: '4th Official', value: '3' }
+    ];
   }
 
   ngOnInit() {
