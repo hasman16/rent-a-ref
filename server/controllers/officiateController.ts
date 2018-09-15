@@ -176,7 +176,13 @@ export default function OfficiateController(
   }
 
   async function addOfficialToMatch(req, res) {
-    let executeMethod = async (user, match, officiate, transaction) => {
+    let executeMethod = async (
+      transaction,
+      user,
+      match,
+      officiate,
+      position
+    ) => {
       let isOfficiating;
       if (officiate) {
         const status = _.lowerCase(officiate.status);
@@ -203,7 +209,8 @@ export default function OfficiateController(
           {
             user_id: user.id,
             match_id: match.id,
-            status: 'pending'
+            status: 'pending',
+            position: position
           },
           { transaction }
         );
@@ -348,7 +355,13 @@ export default function OfficiateController(
   }
 
   async function declineMatch(req, res) {
-    let executeMethod = async (user, match, officiate, transaction) => {
+    let executeMethod = async (
+      transaction,
+      user,
+      match,
+      officiate,
+      position
+    ) => {
       if (!officiate) {
         throw new Error('Referee is not officiating this match. ');
       }
@@ -385,7 +398,13 @@ export default function OfficiateController(
   }
 
   async function acceptMatch(req, res) {
-    let executeMethod = async (user, match, officiate, transaction) => {
+    let executeMethod = async (
+      transaction,
+      user,
+      match,
+      officiate,
+      positon
+    ) => {
       if (!officiate) {
         throw new Error('Referee is not officiating this match. ');
       }
@@ -437,6 +456,7 @@ export default function OfficiateController(
     const body = ResponseService.getItemFromBody(req);
     const match_id = body.match_id;
     const user_id = body.user_id;
+    const position = body.position;
 
     let transaction;
 
@@ -474,7 +494,7 @@ export default function OfficiateController(
         throw new Error('You can not be removed from this match.');
       }
 
-      await executeMethod(user, match, officiate, transaction);
+      await executeMethod(transaction, user, match, officiate, position);
       await transaction.commit();
       ResponseService.success(
         res,

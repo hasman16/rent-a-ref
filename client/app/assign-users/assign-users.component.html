@@ -13,6 +13,39 @@
 
   <div class="card-block" *ngIf="users && users.length > 0">
 
+        <div class="row shadow rar-list"  *ngFor="let user of users">
+          <div class="col-md-3 pb-2">
+            {{user.email}}
+          </div>
+          <div class="col-md-2 pb-2">
+            {{user.status}}
+          </div>
+          <div class="col-md-3 pb-2">
+            <select class="form-control" [(ngModel)]="user.position">
+                <option *ngFor="let position of positions" value="{{position.value}}">{{position.label}}</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+
+            <div class="row">
+              <div class="col-2 pb-2" *ngIf="canAssign(user.id)">
+                <button class="btn btn-primary btn-sm"  (click)="officiateMatch(user.id)" title="Click to assign this Referee to this match">Assign</button>
+              </div>
+
+              <div class="col-2 pb-2" *ngIf="canUnassign(user.id)" >
+                <button class="btn btn-danger btn-sm" (click)="removeOofficial(user.id)" title="Click to remove this Referee from this match">Remove</button>
+              </div>
+
+              <div class="col-2 pb-2">
+                <button class="btn btn-primary btn-sm" (click)="viewSchedule(user.id)" title="Click to view this Referees schedule">Schedule</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div> 
+<!--
     <ngx-datatable class="bootstrap"
       [rows]="users"
       [columnMode]="'force'"
@@ -34,9 +67,9 @@
       >
       <ngx-datatable-column name="Email" prop="email" editable="false"></ngx-datatable-column>
       <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
-      <ngx-datatable-column name="Position" prop="id" editable="true">
+      <ngx-datatable-column name="Position" prop="position" editable="true">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <select class="form-control">
+          <select class="form-control" [ngModel]="value" (ngModelChange)="onChange($event)">
               <option *ngFor="let position of positions" value="{{position.value}}">{{position.label}}</option>
           </select>
         </ng-template>
@@ -61,7 +94,7 @@
       </ngx-datatable-column>
     </ngx-datatable>
   </div>
-  <br />
+-->
   <br />
   <button class="btn btn-primary btn-sm" (click)="backToList($event)" title="Click to go back to match list.">Back to List</button>
 

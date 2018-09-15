@@ -220,7 +220,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
             var executeMethod;
             var _this = this;
             return __generator(this, function (_a) {
-                executeMethod = function (user, match, officiate, transaction) { return __awaiter(_this, void 0, void 0, function () {
+                executeMethod = function (transaction, user, match, officiate, position) { return __awaiter(_this, void 0, void 0, function () {
                     var isOfficiating, status_1;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
@@ -247,7 +247,8 @@ function OfficiateController(models, ResponseService, SendGridService) {
                             case 5: return [4 /*yield*/, Officiating.create({
                                     user_id: user.id,
                                     match_id: match.id,
-                                    status: 'pending'
+                                    status: 'pending',
+                                    position: position
                                 }, { transaction: transaction })];
                             case 6:
                                 isOfficiating = _a.sent();
@@ -406,7 +407,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
             var executeMethod;
             var _this = this;
             return __generator(this, function (_a) {
-                executeMethod = function (user, match, officiate, transaction) { return __awaiter(_this, void 0, void 0, function () {
+                executeMethod = function (transaction, user, match, officiate, position) { return __awaiter(_this, void 0, void 0, function () {
                     var timeLocked, isDeclined;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
@@ -450,7 +451,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
             var executeMethod;
             var _this = this;
             return __generator(this, function (_a) {
-                executeMethod = function (user, match, officiate, transaction) { return __awaiter(_this, void 0, void 0, function () {
+                executeMethod = function (transaction, user, match, officiate, positon) { return __awaiter(_this, void 0, void 0, function () {
                     var timeLocked, invitesAccepted, isAccepted;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
@@ -502,7 +503,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
     }
     function operateOnMatch(req, res, executeMethod) {
         return __awaiter(this, void 0, void 0, function () {
-            var Address, body, match_id, user_id, transaction, match, user, officiate, error_2;
+            var Address, body, match_id, user_id, position, transaction, match, user, officiate, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -510,6 +511,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         body = ResponseService.getItemFromBody(req);
                         match_id = body.match_id;
                         user_id = body.user_id;
+                        position = body.position;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 8, , 9]);
@@ -545,7 +547,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         if (!canAssignOrRemove(match.status)) {
                             throw new Error('You can not be removed from this match.');
                         }
-                        return [4 /*yield*/, executeMethod(user, match, officiate, transaction)];
+                        return [4 /*yield*/, executeMethod(transaction, user, match, officiate, position)];
                     case 6:
                         _a.sent();
                         return [4 /*yield*/, transaction.commit()];

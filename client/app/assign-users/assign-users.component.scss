@@ -3,7 +3,7 @@
     color: #131313;
     background-color: #e7e5e4;
     letter-spacing: 0.15em;
-    text-shadow: 1px -1px 0 #767676, -1px 2px 1px #737272, -2px 4px 1px #767474,
+    /* text-shadow: 1px -1px 0 #767676, -1px 2px 1px #737272, -2px 4px 1px #767474,
       -3px 6px 1px #787777, -4px 8px 1px #7b7a7a, -5px 10px 1px #7f7d7d,
       -6px 12px 1px #828181, -7px 14px 1px #868585, -8px 16px 1px #8b8a89,
       -9px 18px 1px #8f8e8d, -10px 20px 1px #949392, -11px 22px 1px #999897,
@@ -12,8 +12,9 @@
       -18px 36px 1px #bcbbba, -19px 38px 1px #c1bfbf, -20px 40px 1px #c6c4c4,
       -21px 42px 1px #cbc9c8, -22px 44px 1px #cfcdcd, -23px 46px 1px #d4d2d1,
       -24px 48px 1px #d8d6d5, -25px 50px 1px #dbdad9, -26px 52px 1px #dfdddc,
-      -27px 54px 1px #e2e0df, -28px 56px 1px #e4e3e2;
+      -27px 54px 1px #e2e0df, -28px 56px 1px #e4e3e2;*/
   }
+
   .bigFont {
     font-family: 'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic,
       'AppleGothic', sans-serif;
@@ -27,5 +28,12 @@
 
   .container-width {
     width: 100%;
+  }
+
+  .rar-list {
+    padding: 10px 0px;
+    margin: 15px 5px;
+    border: 1px solid #ddd;
+    cursor: pointer;
   }
 }

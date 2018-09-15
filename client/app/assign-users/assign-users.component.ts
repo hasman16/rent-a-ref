@@ -93,6 +93,10 @@ export class AssignUsersComponent extends AbstractComponent
     this.cleanUp();
   }
 
+  onChange(event): void {
+    console.log('dropdown change:', event);
+  }
+
   public isViewState(value: string): boolean {
     let result: boolean = false;
     switch (value) {
@@ -136,11 +140,15 @@ export class AssignUsersComponent extends AbstractComponent
   }
 
   public officiateMatch(user_id) {
+    const user = this.findUser(this.users, user_id);
+    console.log('user is:', user);
+
     if (!this.isLoading) {
       this.matchService
         .officiateMatch({
           user_id,
-          match_id: this.match_id
+          match_id: this.match_id,
+          position: 1
         })
         .pipe(
           finalize(() => {
