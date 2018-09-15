@@ -1,0 +1,4 @@
+<div class="d-flex justify-content-between" *ngIf="totalElements > limit">
+  <button class="btn btn-dark rounded-0" [disabled]="currentPage === 0" (click)="previousPage($event)">Previous</button>
+  <button class="btn btn-dark rounded-0" [disabled]="currentPage === lastPage" (click)="nextPage($event)">Next</button>
+</div>

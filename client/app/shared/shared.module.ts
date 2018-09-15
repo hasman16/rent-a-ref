@@ -41,6 +41,34 @@ import { MatchesFormComponent } from './forms/matches-form/matches-form.componen
 import { StatusesFormComponent } from './forms/statuses-form/statuses-form.component';
 import { ScheduleAddressFormComponent } from './forms/schedule-address-form/schedule-address-form.component';
 import { SearchBoxComponent } from './search-box/index';
+import { PaginationComponent } from './pagination/index';
+
+const sharedComponents = [
+    ToastComponent,
+    LoaderComponent,
+    LoadingComponent,
+    SuspendedComponent,
+    DeactivatedComponent,
+    StandbyComponent,
+    PasswordresetComponent,
+    UploadButtonComponent,
+    UploaderComponent,
+    ModalComponent,
+    AlertModalComponent,
+    CropImageModalComponent,
+    RaRImageComponent,
+    StripeComponent,
+    BaseFormComponent,
+    OrganizationFormComponent,
+    BlogFormComponent,
+    EventsFormComponent,
+    MatchesFormComponent,
+    StatusesFormComponent,
+    ScheduleAddressFormComponent,
+    SearchBoxComponent,
+    DatepickerTypeComponent,
+    PaginationComponent
+];
 
 @NgModule({
     imports: [
@@ -106,53 +134,9 @@ import { SearchBoxComponent } from './search-box/index';
         ReactiveFormsModule,
         HttpClientModule,
         FormlyMaterialModule,
-
-        // Shared Components
-        ModalComponent,
-        ToastComponent,
-        LoaderComponent,
-        LoadingComponent,
-        AlertModalComponent,
-        UploadButtonComponent,
-        UploaderComponent,
-        CropImageModalComponent,
-        RaRImageComponent,
-        StripeComponent,
-        BaseFormComponent,
-        OrganizationFormComponent,
-        BlogFormComponent,
-        EventsFormComponent,
-        MatchesFormComponent,
-        StatusesFormComponent,
-        ScheduleAddressFormComponent,
-        SearchBoxComponent,
-        DatepickerTypeComponent
+        ...sharedComponents
     ],
-    declarations: [
-        ToastComponent,
-        LoaderComponent,
-        LoadingComponent,
-        SuspendedComponent,
-        DeactivatedComponent,
-        StandbyComponent,
-        PasswordresetComponent,
-        UploadButtonComponent,
-        UploaderComponent,
-        ModalComponent,
-        AlertModalComponent,
-        CropImageModalComponent,
-        RaRImageComponent,
-        StripeComponent,
-        BaseFormComponent,
-        OrganizationFormComponent,
-        BlogFormComponent,
-        EventsFormComponent,
-        MatchesFormComponent,
-        StatusesFormComponent,
-        ScheduleAddressFormComponent,
-        SearchBoxComponent,
-        DatepickerTypeComponent
-    ],
+    declarations: [...sharedComponents],
     providers: [
         AlertModalService,
         CropImageModalService,
