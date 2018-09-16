@@ -15,6 +15,7 @@ export * from './sport';
 export * from './user';
 export * from './country';
 export * from './state';
+export * from './officiating';
 export * from './option';
 export * from './page';
 export * from './paged-data';

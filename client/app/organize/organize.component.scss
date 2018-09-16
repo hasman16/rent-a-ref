@@ -1,97 +1,99 @@
-:host /deep/ .index-column,
-:host /deep/ .index-column-header {
-  text-align: right;
-}
-
-:host /deep/ .data-table .data-table-row.selected {
-  background-color: #e4edf9;
-}
-
-:host /deep/ .card {
-  .form-size {
-    max-width: 70%;
-    min-width: 70%;
-    margin: auto;
+:host {
+  /deep/ .index-column,
+  /deep/ .index-column-header {
+    text-align: right;
   }
 
-  @media only screen and (max-width: 599px) {
-    .form-size {
-      max-width: 95%;
-      min-width: 95%;
-      margin: auto;
-    }
+  /deep/ .data-table .data-table-row.selected {
+    background-color: #e4edf9;
   }
 
-  @media only screen and (min-width: 600px) {
-    .form-size {
-      max-width: 85%;
-      min-width: 85%;
-      margin: auto;
-    }
-  }
-
-  @media only screen and (min-width: 768px) {
+  /deep/ .card {
     .form-size {
       max-width: 70%;
       min-width: 70%;
       margin: auto;
     }
+
+    @media only screen and (max-width: 599px) {
+      .form-size {
+        max-width: 95%;
+        min-width: 95%;
+        margin: auto;
+      }
+    }
+
+    @media only screen and (min-width: 600px) {
+      .form-size {
+        max-width: 85%;
+        min-width: 85%;
+        margin: auto;
+      }
+    }
+
+    @media only screen and (min-width: 768px) {
+      .form-size {
+        max-width: 70%;
+        min-width: 70%;
+        margin: auto;
+      }
+    }
   }
-}
 
-.horizontal-and-vertical-centering {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.etched-text {
-  text-shadow: 0 2px white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #b8bec5;
-}
-
-.org-table-item {
-  cursor: pointer;
-}
-
-.new-org-button {
-  max-width: 15em;
-  padding: 1em auto;
-}
-
-.display {
-  display: block;
-}
-
-.rar-list {
-  padding: 10px 0px;
-  margin: 15px 5px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-}
-
-.rar-logo {
-  cursor: pointer;
-  img {
-    border: 1px solid #000;
+  .horizontal-and-vertical-centering {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-}
 
-.button-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 5px;
-}
+  .etched-text {
+    text-shadow: 0 2px white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #b8bec5;
+  }
 
-.contrain-text {
-  display: inline-block;
-  white-space: nowrap;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  .org-table-item {
+    cursor: pointer;
+  }
+
+  .new-org-button {
+    max-width: 15em;
+    padding: 1em auto;
+  }
+
+  .display {
+    display: flex;
+  }
+
+  .rar-list {
+    padding: 10px 0px;
+    margin: 15px 5px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+  }
+
+  .rar-logo {
+    cursor: pointer;
+    img {
+      border: 1px solid #000;
+    }
+  }
+
+  .button-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 5px;
+  }
+
+  .contrain-text {
+    display: inline-block;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

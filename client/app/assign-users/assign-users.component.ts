@@ -23,6 +23,7 @@ import {
 } from '../services/index';
 import {
   Match,
+  Officiating,
   Option,
   Page,
   PagedData,
@@ -33,6 +34,15 @@ import { Observable, Subscription, Subject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import * as _ from 'lodash';
+
+interface MatchOfficiating extends Match {
+  officiating: Officiating;
+}
+
+interface UserGame extends User {
+  matches?: MatchOfficiating[];
+  position?: number;
+}
 
 enum ViewState {
   listReferees,
@@ -57,8 +67,8 @@ export class AssignUsersComponent extends AbstractComponent
     }
   }
   @Output() back: EventEmitter<boolean> = new EventEmitter();
-  public users: User[] = [];
-  public currentUser: User;
+  public users: UserGame[] = [];
+  public currentUser: UserGame;
   public placeholder: string = 'Type to filter Referees by email ...';
   protected isLoading: boolean = true;
   protected match_id: string;
@@ -192,8 +202,8 @@ export class AssignUsersComponent extends AbstractComponent
     }
   }
 
-  private findUser(user: User[], id): User {
-    return <User>_.find(this.users, user => {
+  private findUser(user: UserGame[], id): UserGame {
+    return <UserGame>_.find(this.users, user => {
       return user.id === id;
     });
   }
@@ -230,7 +240,16 @@ export class AssignUsersComponent extends AbstractComponent
   }
 
   protected processPagedData(data: PagedData): void {
-    this.users = this.extractDataAndPagedData(data);
+    const users: UserGame[] = this.extractDataAndPagedData(data);
+    this.users = users.map((user: UserGame) => {
+      const match: MatchOfficiating = _.head(user.matches);
+      user.position = 0;
+      if (match) {
+        const officiating: Officiating = match.officiating;
+        user.position = officiating ? officiating.position : 0;
+      }
+      return user;
+    });
   }
 
   protected callSuccess(data: PagedData) {
