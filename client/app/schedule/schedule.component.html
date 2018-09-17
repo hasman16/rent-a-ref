@@ -69,35 +69,48 @@
         </ngx-datatable>
 
         <div class="row shadow rar-list"  *ngFor="let game of schedule">
-          <div class="col-sm-2 pb-2">
-            {{ formatDate(game.id) }} <br>
-            Time
-          </div>
+          <div class="col-sm-12">
+            <div class="row" style="color: #000; font-size: 1.0rem; font-weight: bold;">
+              <div class="col-md-3">
+                <span>{{ game.id }}000000</span>
+              </div>
+              <div class="col-md-3">
+                {{ formatDate(game.id) }} &nbsp; 
+                {{ formatTime(game.id)}}
+              </div>
 
-          <div class="col-md-2 pb-2">
-            {{ game.match_name }}
-          </div>
-
-          <div class="col-12">
-            {{ game.venue_name}}-{{game.address.line1}}
-          </div>
-
-          <div class="col-md-2 pb-2">
-            {{ game.position }}
-          </div>
-
-          <div class="col-md-4">
-asdfa
-            <div class="d-flex justify-content-around">
-              <button class="btn btn-primary btn-sm" (click)="acceptMatch($event)" title="Click to accept a match" *ngIf="canAccept(game.id)">Accept</button>
-
-              <button class="btn btn-danger btn-sm" (click)="declineMatch($event)" title="Click to decline a match" *ngIf="canDecline(game.id)">Decline</button>
-
-              <button class="btn btn-danger btn-sm" (click)="declineMatch($event)" title="Click to the match back to the Admin." *ngIf="canTurnBack(game.id)">Turn Back</button>
-
-              <input type="hidden" name="{{game.id}}" value="{{game.id}}">
+              <div class="col-md-3" >
+                {{ game.age }}
+              </div>
+              <div class="col-md-3" >
+                {{ game.position }}Assistent Referee &nbsp;
+                $100
+              </div>
             </div>
+          </div>
 
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-md-12" >
+                <span style="color: #51697A; font-size: 1.4rem"> {{ game.match_name }}</span>
+                <div class="">
+                {{ game.venue_name}}
+                </div>
+              </div>
+
+              <div class="col-md-12">
+  
+                  <button class="btn btn-primary btn-sm" (click)="acceptMatch($event)" title="Click to accept a match" *ngIf="canAccept(game.id)">Accept</button>
+
+                  <button class="btn btn-danger btn-sm" (click)="declineMatch($event)" title="Click to decline a match" *ngIf="canDecline(game.id)">Decline</button>
+
+                  <button class="btn btn-danger btn-sm" (click)="declineMatch($event)" title="Click to the match back to the Admin." *ngIf="canTurnBack(game.id)">Turn Back</button>
+
+                  <input type="hidden" name="{{game.id}}" value="{{game.id}}">
+     
+
+              </div>
+            </div>
           </div>
 
         </div> 

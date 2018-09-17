@@ -55,6 +55,10 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 		return this.pagingService.formatDate(id, this.schedule);
 	}
 
+	public formatTime(id): string {
+		return this.pagingService.formatTime(id, this.schedule);
+	}
+
 	protected getOfficial(id, officials): any {
 		return _.find(officials, item => {
 			return id === item.user_id;

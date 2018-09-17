@@ -55,6 +55,15 @@ export class PagingService {
 			.format('MMMM DD YYYY');
 	}
 
+	public formatTime(id, collection): string {
+		const selectedItem = _.find(collection, item => {
+			return id === item.id;
+		});
+		return <string>moment
+			.tz(selectedItem.date, selectedItem.timezone_id)
+			.format('HH:mm');
+	}
+
 	public isNotTimeLocked(eventObj, lock = 1, grain = 'minutes'): boolean {
 		const now = moment().utc();
 		const matchTime = moment.tz(eventObj.date, eventObj.timezone_id);
