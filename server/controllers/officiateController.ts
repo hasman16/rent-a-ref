@@ -22,6 +22,8 @@ export default function OfficiateController(
   async function refereeSchedule(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
     const Op = models.sequelize.Op;
+    const Address = models.Address;
+    const Phone = models.Phone;
     const whereClause = Object.assign(clause, {
       where: {},
       include: [
@@ -67,10 +69,16 @@ export default function OfficiateController(
                   }
                 }
               }
+            },
+            {
+              model: Address
+            },
+            {
+              model: Phone
             }
           ]
         },
-        clause
+        {}
       );
 
       const matchOfficiate = await Match.findAndCountAll(whereOfficiate, {

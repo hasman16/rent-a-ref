@@ -51,12 +51,14 @@ function OfficiateController(models, ResponseService, SendGridService) {
     ];
     function refereeSchedule(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, _c, clause, Op, whereClause, transaction, result, whereOfficiate, matchOfficiate, error_1;
+            var _a, _b, _c, clause, Op, Address, Phone, whereClause, transaction, result, whereOfficiate, matchOfficiate, error_1;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
                         clause = ResponseService.produceSearchAndSortClause(req);
                         Op = models.sequelize.Op;
+                        Address = models.Address;
+                        Phone = models.Phone;
                         whereClause = Object.assign(clause, {
                             where: {},
                             include: [
@@ -103,9 +105,15 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                                 _c)
                                         }
                                     }
+                                },
+                                {
+                                    model: Address
+                                },
+                                {
+                                    model: Phone
                                 }
                             ]
-                        }, clause);
+                        }, {});
                         return [4 /*yield*/, Match.findAndCountAll(whereOfficiate, {
                                 transaction: transaction
                             })];

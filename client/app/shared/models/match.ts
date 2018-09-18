@@ -22,3 +22,10 @@ export interface Match {
 	address?: Address;
 	phone?: Phone;
 }
+
+export enum Positions {
+	Center = 0,
+	AssistentRef1 = 1,
+	AssistentRef2 = 2,
+	FourthOfficial = 3
+}

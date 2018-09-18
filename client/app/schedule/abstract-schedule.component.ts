@@ -29,7 +29,12 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	public user: User;
 	public selectedMatch: any;
 	public viewState: ViewState = ViewState.scheduleView;
-
+	private positions: any = {
+		0: 'Center',
+		1: 'AssistentRef1',
+		2: 'AssistentRef2',
+		3: 'FourthOfficial'
+	};
 	constructor(
 		protected cd: ChangeDetectorRef,
 		protected auth: AuthService,
@@ -45,6 +50,17 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	public onSelectTableRow({ selected }): void {
 		this.selectedMatch = _.cloneDeep(_.head(selected));
 		this.viewState = ViewState.matchView;
+	}
+
+	public rowSelected(game): void {
+		console.log('selected game:', game);
+		this.selectedMatch = _.cloneDeep(game);
+		this.viewState = ViewState.matchView;
+	}
+
+	public getPosition(positionId: number): string {
+		positionId = positionId || 0;
+		return this.positions[positionId];
 	}
 
 	public backToSchedule(event): void {
@@ -143,6 +159,7 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	}
 
 	public declineMatch(event): void {
+		console.log('got event:', event);
 		this.processButtonClick(event, 'decline');
 	}
 
@@ -152,7 +169,10 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 			action === 'accept' ? 'accepted' : 'declined';
 		const error: string = 'Error: Game was NOT ${actionLabel}.';
 		const success: string = 'Game ${actionLabel}.';
-		const id: number = parseInt(event.target.nextElementSibling.value);
+		const id: number = parseInt(
+			String(event.target.id).replace(/[a-z]/gi, '')
+		);
+		console.log('ids was:', id);
 		this.generateOfficiateRelation(id, action, success, error);
 	}
 

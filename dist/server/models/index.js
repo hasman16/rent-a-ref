@@ -83,6 +83,10 @@ models.forEach(function (model) {
     m.Match.belongsToMany(m.User, {
         through: 'officiating'
     });
+    m.Sport.hasMany(m.Match);
+    m.Game.hasMany(m.Match);
+    m.Address.hasMany(m.Match);
+    m.Phone.hasMany(m.Match);
     m.Match.belongsTo(m.Sport);
     m.Match.belongsTo(m.Game);
     m.Match.belongsTo(m.Address);
@@ -108,7 +112,6 @@ models.forEach(function (model) {
     });
     module.exports.Referee = exports.sequelize.models.referee;
     module.exports.Match = exports.sequelize.models.match;
-    //module.exports.Officiating = sequelize.models.officiating;
     module.exports.Organizer = exports.sequelize.models.organizer;
     module.exports.OrganizationAddress = exports.sequelize.models.organization_address;
     module.exports.OrganizationImage = exports.sequelize.models.organization_image;
