@@ -5,7 +5,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { AbstractComponent } from '../abstract/abstract.component';
 import { ToastComponent } from '../shared/toast/toast.component';
-import { Match, Page, PagedData, Sorts, User } from '../shared/models/index';
+import {
+	Match,
+	Officiating,
+	Page,
+	PagedData,
+	Sorts,
+	User
+} from '../shared/models/index';
 import { empty, Observable, Subscription, Subject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -22,12 +29,16 @@ export enum ViewState {
 	matchView
 }
 
+interface MatchOfficiating extends Match {
+	users?: Officiating[];
+}
+
 export abstract class AbstractScheduleComponent extends AbstractComponent {
-	public schedule: any[];
+	public schedule: MatchOfficiating[];
 	public isLoading: boolean = false;
 	public placeholder: string = 'search venue name';
 	public user: User;
-	public selectedMatch: any;
+	public selectedMatch: MatchOfficiating;
 	public viewState: ViewState = ViewState.scheduleView;
 	private positions: any = {
 		0: 'Center',
@@ -57,8 +68,9 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 		this.viewState = ViewState.matchView;
 	}
 
-	public getPosition(positionId: number): string {
-		positionId = positionId || 0;
+	public getPosition(match: MatchOfficiating): string {
+		const officiating: Officiating = _.head(match.users);
+		const positionId = officiating.position || 0;
 		return this.positions[positionId];
 	}
 
@@ -66,24 +78,12 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 		this.viewState = ViewState.scheduleView;
 	}
 
-	public formatDate(id): string {
-		return this.pagingService.formatDate(id, this.schedule);
+	public formatDate(match: MatchOfficiating): string {
+		return this.pagingService.formatDate(match.id, this.schedule);
 	}
 
-	public formatTime(id): string {
-		return this.pagingService.formatTime(id, this.schedule);
-	}
-
-	protected getOfficial(id, officials): any {
-		return _.find(officials, item => {
-			return id === item.user_id;
-		});
-	}
-
-	protected getItem(id): Match {
-		return <Match>_.find(this.schedule, item => {
-			return id === item.id;
-		});
+	public formatTime(match: MatchOfficiating): string {
+		return this.pagingService.formatTime(match.id, this.schedule);
 	}
 
 	protected matchIsPending(item: Match): boolean {
@@ -93,12 +93,24 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 
 	protected abstract isNotTimeLocked(item: Match): boolean;
 
-	public officiateState(id, state: string): boolean {
+	protected getOfficial(id, officials): any {
+		return;
+	}
+
+	public officiateState(
+		matchOfficiating: MatchOfficiating,
+		state: string
+	): boolean {
 		let result: boolean = false;
-		const item: Match = this.getItem(id);
-		if (item && this.matchIsPending(item) && this.isNotTimeLocked(item)) {
-			const invitedOfficials: any[] = item['users'];
-			const official = this.getOfficial(this.user.id, invitedOfficials);
+		if (
+			matchOfficiating &&
+			this.matchIsPending(matchOfficiating) &&
+			this.isNotTimeLocked(matchOfficiating)
+		) {
+			const userId = this.user.id;
+			const official = _.find(matchOfficiating.users, item => {
+				return userId === item.user_id;
+			});
 			if (official.status === state) {
 				result = true;
 			}
@@ -106,20 +118,26 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 		return result;
 	}
 
-	public canAccept(id): boolean {
-		return this.officiateState(id, 'pending');
+	public canAccept(matchOfficiating: MatchOfficiating): boolean {
+		return this.officiateState(matchOfficiating, 'pending');
 	}
 
-	public canDecline(id): boolean {
-		return this.officiateState(id, 'pending');
+	public canDecline(matchOfficiating: MatchOfficiating): boolean {
+		return this.officiateState(matchOfficiating, 'pending');
 	}
 
-	public canTurnBack(id): boolean {
-		return this.officiateState(id, 'accepted');
+	public canTurnBack(matchOfficiating: MatchOfficiating): boolean {
+		return this.officiateState(matchOfficiating, 'accepted');
+	}
+
+	protected getMatchFromSchedule(id): MatchOfficiating {
+		return <MatchOfficiating>_.find(this.schedule, item => {
+			return id === item.id;
+		});
 	}
 
 	protected generateOfficiateRelation(id, operation, success, error) {
-		const item: Match = this.getItem(id);
+		const item: Match = this.getMatchFromSchedule(id);
 		const officiate = {
 			user_id: this.user.id,
 			match_id: item.id

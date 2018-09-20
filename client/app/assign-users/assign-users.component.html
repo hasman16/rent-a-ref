@@ -41,55 +41,6 @@
         </div> 
 
         <rar-pagination [page]="page"></rar-pagination>
-<!--
-    <ngx-datatable class="bootstrap"
-      [rows]="users"
-      [columnMode]="'force'"
-      [headerHeight]="50"
-      [footerHeight]="50"
-      [rowHeight]="'auto'"
-      [externalSorting]="true"
-      [loadingIndicator]="isLoading"
-      (sort)="onSortTableColumn($event)"
-      [externalPaging]="true"
-      [count]="page.total_elements"
-      [offset]="page.offset"
-      [limit]="page.limit"
-      (page)='setPage($event)'
-      [selected]="selected"
-      [selectionType]="'single'"
-      (activate)="onActivate($event)"
-      (select)='onSelectTableRow($event)'
-      >
-      <ngx-datatable-column name="Email" prop="email" editable="false"></ngx-datatable-column>
-      <ngx-datatable-column name="Status" prop="status" editable="false"></ngx-datatable-column>
-      <ngx-datatable-column name="Position" prop="position" editable="true">
-        <ng-template let-value="value" ngx-datatable-cell-template>
-          <select class="form-control" [ngModel]="value" (ngModelChange)="onChange($event)">
-              <option *ngFor="let position of positions" value="{{position.value}}">{{position.label}}</option>
-          </select>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <ngx-datatable-column name="Assign Referee" prop="id" editable="true">
-        <ng-template let-value="value" ngx-datatable-cell-template>
-          <button class="btn btn-primary btn-sm" *ngIf="canAssign(value)" (click)="officiateMatch(value)" title="Click to assign this Referee to this match">Assign</button>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <ngx-datatable-column name="Remove Referee" prop="id" editable="true">
-        <ng-template let-value="value" ngx-datatable-cell-template>
-          <button class="btn btn-danger btn-sm" *ngIf="canUnassign(value)" (click)="removeOofficial(value)" title="Click to remove this Referee from this match">Remove</button>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <ngx-datatable-column name="View Schedule" prop="id" editable="true">
-        <ng-template let-value="value" ngx-datatable-cell-template>
-          <button class="btn btn-primary btn-sm" (click)="viewSchedule(value)" title="Click to view this Referees schedule">Schedule</button>
-        </ng-template>
-      </ngx-datatable-column>
-    </ngx-datatable>
-  -->
   </div>
 
   <br />

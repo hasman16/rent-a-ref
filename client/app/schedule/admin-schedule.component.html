@@ -28,13 +28,15 @@
                   {{ game.age }}
                 </div>
                 <div class="col-md-4">
-                  {{ formatDate(game.id) }} 
-                  {{ formatTime(game.id)}}
+                  <div class="d-flex justify-content-between">
+                    <span>{{ formatDate(game) }}</span>
+                    <span>{{ formatTime(game) }}</span>
+                  </div>
                 </div>
 
-                <div class="col-md-4" >
-                  {{ getPosition(game.position) }}
-                  $100
+                <div class="col-md-4 d-flex" >
+                  <span>{{ getPosition(game) }}</span>
+                  <span>$100.00</span>
                 </div>
               </div>
             </div>
@@ -45,20 +47,22 @@
                   <span class="match-name"> {{ game.match_name }}</span>
                 </div>
                 <div class="col-md-12" >
-                  <span class="">{{ game.venue_name}}</span>
-                  <span style=""> {{ game.address.line1 }}</span>
-                  <span style=""> {{ game.address.line2 }}</span>
-                  <span style=""> {{ game.address.city }}</span>
-                  <span style=""> {{ game.address.state }}</span>
-                  <span style=""> {{ game.address.zip }}</span>
+                  <div class="d-flex justify-content-between">
+                    <span>{{ game.venue_name }}</span>
+                    <span>{{ game.address.line1 }}</span>
+                    <span>{{ game.address.line2 }}</span>
+                    <span>{{ game.address.city }}</span>
+                    <span>{{ game.address.state }}</span>
+                    <span>{{ game.address.zip }}</span>
+                  </div>
                 </div>
                 <div class="col-md-12">
     
-                    <button class="btn btn-primary btn-sm" id="a{{game.id}}" (click)="acceptMatch($event)" title="Click to accept a match" *ngIf="canAccept(game.id)">Accept</button>
+                    <button class="btn btn-primary btn-sm" id="a{{game.id}}" (click)="acceptMatch($event)" title="Click to accept a match" *ngIf="canAccept(game)">Accept</button>
 
-                    <button class="btn btn-danger btn-sm" id="b{{game.id}}"  (click)="declineMatch($event)" title="Click to decline a match" *ngIf="canDecline(game.id)">Decline</button>
+                    <button class="btn btn-danger btn-sm" id="b{{game.id}}"  (click)="declineMatch($event)" title="Click to decline a match" *ngIf="canDecline(game)">Decline</button>
 
-                    <button class="btn btn-danger btn-sm" id="c{{game.id}}" (click)="declineMatch($event)" title="Click to the match back to the Admin." *ngIf="canTurnBack(game.id)">Turn Back</button>
+                    <button class="btn btn-danger btn-sm" id="c{{game.id}}" (click)="declineMatch($event)" title="Click to the match back to the Admin." *ngIf="canTurnBack(game)">Turn Back</button>
 
        
                 </div>
