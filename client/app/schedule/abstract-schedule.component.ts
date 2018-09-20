@@ -53,7 +53,6 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	}
 
 	public rowSelected(game): void {
-		console.log('selected game:', game);
 		this.selectedMatch = _.cloneDeep(game);
 		this.viewState = ViewState.matchView;
 	}

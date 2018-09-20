@@ -16,50 +16,61 @@
 
       <div class="card-block" *ngIf="schedule && schedule.length > 0">
 
-        <ngx-datatable class="bootstrap"
-          [rows]="schedule"
-          [columnMode]="'force'"
-          [headerHeight]="50"
-          [footerHeight]="50"
-          [rowHeight]="'auto'"
-          [externalSorting]="true"
-          [loadingIndicator]="isLoading"
-          (sort)="onSortTableColumn($event)"
-          [externalPaging]="true"
-          [count]="page.total_elements"
-          [offset]="page.offset"
-          [limit]="page.limit"
-          (page)='setPage($event)'
-          [selected]="selected"
-          [selectionType]="'single'"
-          (activate)="onActivate($event)"
-          (select)='onSelectTableRow($event)'
-          >
-          <ngx-datatable-column name="Match Name" prop="match_name" editable="false"></ngx-datatable-column>
-          <ngx-datatable-column name="Date" prop="id" editable="false">
-            <ng-template let-value="value" ngx-datatable-cell-template>
-            {{ formatDate(value) }}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Age" prop="age" editable="false"></ngx-datatable-column>
-          <ngx-datatable-column name="Venue" prop="venue_name" editable="false"></ngx-datatable-column>
+        <div class="shadow data-grid">
+          
+          <div class="row rar-list"  *ngFor="let game of schedule" (click)="rowSelected(game)">
+            <div class="col-sm-12">
+              <div class="row game-data">
+                <div class="col-md-2">
+                  <span>{{ game.id }}</span>
+                </div>
+                <div class="col-md-2">
+                  {{ game.age }}
+                </div>
+                <div class="col-md-4">
+                  {{ formatDate(game.id) }} 
+                  {{ formatTime(game.id)}}
+                </div>
 
-          <ngx-datatable-column name="Accept Match" prop="id" editable="true">
-           <ng-template let-value="value" ngx-datatable-cell-template>
-                <button class="btn btn-primary btn-sm" (click)="acceptMatch($event)" title="Click to accept a match" *ngIf="canAccept(value)">Accept</button>
-                <input type="hidden" name="{{value}}" value="{{value}}">
-            </ng-template>
-          </ngx-datatable-column>
+                <div class="col-md-4" >
+                  {{ getPosition(game.position) }}
+                  $100
+                </div>
+              </div>
+            </div>
 
-          <ngx-datatable-column name="Decline Match" prop="id" editable="true">
-            <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-danger btn-sm" (click)="declineMatch($event)" title="Click to decline a match" *ngIf="canDecline(value)">Decline</button>
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-md-12" >
+                  <span class="match-name"> {{ game.match_name }}</span>
+                </div>
+                <div class="col-md-12" >
+                  <span class="">{{ game.venue_name}}</span>
+                  <span style=""> {{ game.address.line1 }}</span>
+                  <span style=""> {{ game.address.line2 }}</span>
+                  <span style=""> {{ game.address.city }}</span>
+                  <span style=""> {{ game.address.state }}</span>
+                  <span style=""> {{ game.address.zip }}</span>
+                </div>
+                <div class="col-md-12">
+    
+                    <button class="btn btn-primary btn-sm" id="a{{game.id}}" (click)="acceptMatch($event)" title="Click to accept a match" *ngIf="canAccept(game.id)">Accept</button>
 
-              <button class="btn btn-danger btn-sm" (click)="declineMatch($event)" title="Click to the match back to the Admin." *ngIf="canTurnBack(value)">Turn Back</button>
-              <input type="hidden" name="{{value}}" value="{{value}}">
-            </ng-template>
-          </ngx-datatable-column>
-        </ngx-datatable>
+                    <button class="btn btn-danger btn-sm" id="b{{game.id}}"  (click)="declineMatch($event)" title="Click to decline a match" *ngIf="canDecline(game.id)">Decline</button>
+
+                    <button class="btn btn-danger btn-sm" id="c{{game.id}}" (click)="declineMatch($event)" title="Click to the match back to the Admin." *ngIf="canTurnBack(game.id)">Turn Back</button>
+
+       
+                </div>
+              </div>
+            </div>
+
+          </div>           
+
+        </div>
+
+        <ngb-pagination [collectionSize]="250" [page]="1" [maxSize]="5" size="md"></ngb-pagination>
+        <rar-pagination [page]="page"></rar-pagination> 
       </div>
 
     </div>
