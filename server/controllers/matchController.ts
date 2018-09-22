@@ -211,15 +211,9 @@ export default function MatchController(models, ResponseService) {
         transaction
       });
       if (officiate) {
-        await Officiating.destroy(
-          relation,
-          {
-            transaction
-          },
-          {
-            transaction
-          }
-        );
+        await Officiating.destroy(relation, {
+          transaction
+        });
       }
       transaction.commit();
       ResponseService.success(

@@ -32,7 +32,7 @@ import {
 } from './../../shared/models/index';
 import { PaymentState, Payment } from './../../shared/stripe/stripe-state';
 import { Observable } from 'rxjs';
-import { finalize, take } from 'rxjs/operators';
+import { finalize, take, tap } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
@@ -73,7 +73,7 @@ export class EventsComponent extends AbstractComponent
   public viewState: ViewState = ViewState.noEvents;
   public products: any[] = [];
   public plans: any[] = [];
-  public placeholder: string = 'Type to filter by "Event Name" ...';
+  public placeholder: string = 'filter by "Event Name" ...';
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -270,6 +270,10 @@ export class EventsComponent extends AbstractComponent
 
   public deleteEvent(game_id: string): void {
     console.log('deleteEvent');
+    this.eventsComponentService
+      .deleteEvent(game_id)
+      .pipe(tap(() => this.getEvents()))
+      .subscribe();
   }
 
   public getEvents(page: Page = null): void {

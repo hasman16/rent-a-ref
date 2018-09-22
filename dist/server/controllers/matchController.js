@@ -256,8 +256,6 @@ function MatchController(models, ResponseService) {
                         if (!officiate) return [3 /*break*/, 7];
                         return [4 /*yield*/, Officiating.destroy(relation, {
                                 transaction: transaction
-                            }, {
-                                transaction: transaction
                             })];
                     case 6:
                         _a.sent();

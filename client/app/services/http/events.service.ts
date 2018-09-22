@@ -76,4 +76,9 @@ export class EventsService extends AbstractService {
     const url: string = `/api/games/${game_id}/phones/${phone.id}`;
     return this.putData(url, phone);
   }
+
+  public deleteEvent(game_id: string): Observable<any> {
+    const url: string = `/api/games/${game_id}`;
+    return <Observable<any>>this.http.delete(url);
+  }
 }

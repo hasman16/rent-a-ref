@@ -66,6 +66,10 @@ export class EventsComponentService {
 		);
 	}
 
+	public deleteEvent(game_id: string): Observable<any> {
+		return this.eventsService.deleteEvent(game_id);
+	}
+
 	public createEvent(org_id: string, model: any): Observable<any> {
 		return this.eventsService.createGame(org_id, model);
 	}

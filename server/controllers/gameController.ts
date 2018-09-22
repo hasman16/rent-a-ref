@@ -89,18 +89,73 @@ export default function GameController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function deleteOne(req, res) {
+  async function deleteOne(req, res) {
+    const sequelize = models.sequelize;
+    const Address = models.Address;
+    const Phone = models.Phone;
+    const Match = models.Match;
     const game_id = req.params.game_id;
+    const whereClause = {
+      where: {
+        game: game_id
+      },
+      include: [
+        {
+          model: Address
+        },
+        {
+          model: Phone
+        },
+        {
+          model: Match
+        }
+      ]
+    };
+    let transaction;
 
-    function doDelete(game) {
-      return Game.destroy({
+    try {
+      transaction = await sequelize.transaction();
+      const result = await Game.findOne(whereClause, {
+        transaction
+      });
+      if (result) {
+        throw new Error('Game does not exist.');
+      }
+
+      const matches: any[] = result.matches;
+      const address = result.address;
+      const phone = result.phones;
+
+      if (address) {
+        await Address.destroy({
+          where: {
+            id: address.id
+          }
+        });
+      }
+      if (phone) {
+        await Phone.destroy({
+          where: {
+            id: phone.id
+          }
+        });
+      }
+
+      await Game.destroy({
         where: {
-          id: game.id
+          id: game_id
         }
       });
-    }
+      await transaction.commit();
 
-    ResponseService.findObject(game_id, 'Game', res, doDelete, 204);
+      ResponseService.success(res, {
+        success: true,
+        message: 'Event deleted'
+      });
+    } catch (error) {
+      transaction.rollback(transaction);
+      ResponseService.exception(res, error, 400);
+    }
   }
 
   function addTimeToDate(time, date) {

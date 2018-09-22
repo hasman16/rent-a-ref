@@ -113,15 +113,92 @@ function GameController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function deleteOne(req, res) {
-        var game_id = req.params.game_id;
-        function doDelete(game) {
-            return Game.destroy({
-                where: {
-                    id: game.id
+        return __awaiter(this, void 0, void 0, function () {
+            var sequelize, Address, Phone, Match, game_id, whereClause, transaction, result, matches, address, phone, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        sequelize = models.sequelize;
+                        Address = models.Address;
+                        Phone = models.Phone;
+                        Match = models.Match;
+                        game_id = req.params.game_id;
+                        whereClause = {
+                            where: {
+                                game: game_id
+                            },
+                            include: [
+                                {
+                                    model: Address
+                                },
+                                {
+                                    model: Phone
+                                },
+                                {
+                                    model: Match
+                                }
+                            ]
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 10, , 11]);
+                        return [4 /*yield*/, sequelize.transaction()];
+                    case 2:
+                        transaction = _a.sent();
+                        return [4 /*yield*/, Game.findOne(whereClause, {
+                                transaction: transaction
+                            })];
+                    case 3:
+                        result = _a.sent();
+                        if (result) {
+                            throw new Error('Game does not exist.');
+                        }
+                        matches = result.matches;
+                        address = result.address;
+                        phone = result.phones;
+                        if (!address) return [3 /*break*/, 5];
+                        return [4 /*yield*/, Address.destroy({
+                                where: {
+                                    id: address.id
+                                }
+                            })];
+                    case 4:
+                        _a.sent();
+                        _a.label = 5;
+                    case 5:
+                        if (!phone) return [3 /*break*/, 7];
+                        return [4 /*yield*/, Phone.destroy({
+                                where: {
+                                    id: phone.id
+                                }
+                            })];
+                    case 6:
+                        _a.sent();
+                        _a.label = 7;
+                    case 7: return [4 /*yield*/, Game.destroy({
+                            where: {
+                                id: game_id
+                            }
+                        })];
+                    case 8:
+                        _a.sent();
+                        return [4 /*yield*/, transaction.commit()];
+                    case 9:
+                        _a.sent();
+                        ResponseService.success(res, {
+                            success: true,
+                            message: 'Event deleted'
+                        });
+                        return [3 /*break*/, 11];
+                    case 10:
+                        error_1 = _a.sent();
+                        transaction.rollback(transaction);
+                        ResponseService.exception(res, error_1, 400);
+                        return [3 /*break*/, 11];
+                    case 11: return [2 /*return*/];
                 }
             });
-        }
-        ResponseService.findObject(game_id, 'Game', res, doDelete, 204);
+        });
     }
     function addTimeToDate(time, date) {
         return ResponseService.addTimeToDate(time, date);
@@ -139,7 +216,7 @@ function GameController(models, ResponseService) {
     }
     function createGameAddressPhone(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, Address, Phone, game, address, phone, transaction, newGame, newAddress, newPhone, timeZone, error_1;
+            var sequelize, Address, Phone, game, address, phone, transaction, newGame, newAddress, newPhone, timeZone, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -185,9 +262,9 @@ function GameController(models, ResponseService) {
                         ResponseService.success(res, newGame, 201);
                         return [3 /*break*/, 9];
                     case 8:
-                        error_1 = _a.sent();
+                        error_2 = _a.sent();
                         transaction.rollback(transaction);
-                        ResponseService.exception(res, error_1);
+                        ResponseService.exception(res, error_2);
                         return [3 /*break*/, 9];
                     case 9: return [2 /*return*/];
                 }
