@@ -1,6 +1,6 @@
-const Game = function(sequelize, DataTypes) {
+const Meeting = function(sequelize, DataTypes) {
 	return sequelize.define(
-		'game',
+		'meeting',
 		{
 			event_name: DataTypes.STRING(64),
 			start_date: {
@@ -80,4 +80,4 @@ const Game = function(sequelize, DataTypes) {
 	);
 };
 
-export default Game;
+export default Meeting;

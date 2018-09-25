@@ -15,7 +15,7 @@ export interface Match {
 	venue_name?: string;
 	status?: string;
 	age?: string;
-	game_id?: number;
+	meeting_id?: number;
 	sport_id?: number;
 	address_id?: string;
 	phone_id?: string;

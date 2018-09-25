@@ -2,15 +2,15 @@
 
   <h1 class="etched-text" *ngIf="!isEditing"> Event Assignment</h1>
 
-  <div class="card-block horizontal-and-vertical-centering " *ngIf="!isEditing && (!games || games.length === 0)">
+  <div class="card-block horizontal-and-vertical-centering " *ngIf="!isEditing && (!meetings || meetings.length === 0)">
     <div class="form-size">
       <p>There is no events data.</p>
     </div>
   </div>
 
-  <div class="card-block" *ngIf="!isEditing && (games && games.length > 0)">
+  <div class="card-block" *ngIf="!isEditing && (meetings && meetings.length > 0)">
     <ngx-datatable class="bootstrap"
-      [rows]="games"
+      [rows]="meetings"
       [columnMode]="'force'"
       [headerHeight]="50"
       [footerHeight]="50"
@@ -43,7 +43,7 @@
   <div class="card-block" *ngIf="isEditing">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#" (click)="switchToEditEvent($event)">Event</a></li>
+        <li class="breadcrumb-item"><a href="#" (click)="switchToEditMeeting($event)">Event</a></li>
         <li class="breadcrumb-item active" aria-current="page"><a href="#" (click)="switchToAddMatch($event)">Games</a></li>
       </ol>
     </nav>
@@ -51,7 +51,7 @@
 
     <div *ngIf="isTabEditEvent()">
       <div class="card form-size">
-        <events-form (ngSubmit)="submitEvent($event)" (ngCancel)="setEventsMode($event)"
+        <events-form (ngSubmit)="submitMeeting($event)" (ngCancel)="setMeetingMode($event)"
          [model]="model"
          [states]="states"
          [sports]="sports"></events-form>

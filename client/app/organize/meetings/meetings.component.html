@@ -5,7 +5,7 @@
       <app-toast [message]="toast.message"></app-toast>
 
       <div class="card event-form">
-        <events-form (ngSubmit)="submitEvent($event)" (ngCancel)="setEventsMode($event)"
+        <events-form (ngSubmit)="submitMeeting($event)" (ngCancel)="setMeetingMode($event)"
          [model]="model"
          [states]="states"
          [sports]="sports"></events-form>
@@ -24,13 +24,13 @@
         <strong class="etched-text">You have no <i>Events</i>.</strong>
         <p>You need to create at least one event. Once the event you can create and assign <i>games</i> to the event.
           <br />Although creating games is optional, it allows more fine grained control of each event. Note a game can have the same address or a different address from avenue.</p>
-        <button class="btn btn-primary btn-sm" (click)="createNewEvent()" title="Click to create new event">New Event</button>
+        <button class="btn btn-primary btn-sm" (click)="createNewMeeting()" title="Click to create new event">New Event</button>
       </div>
 
       <div class="form-size" *ngIf="isViewState('listEvents')">
 
         <ngx-datatable class="bootstrap"
-          [rows]="games"
+          [rows]="meetings"
           [columnMode]="'force'"
           [headerHeight]="50"
           [footerHeight]="50"
@@ -55,7 +55,7 @@
 
           <ngx-datatable-column name="" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-success btn-sm" (click)="goPayForEvent(value)" title="Click to pay for this event" [disabled]="hasPaid(value)">Pay</button>
+              <button class="btn btn-success btn-sm" (click)="goPayForMeeting(value)" title="Click to pay for this event" [disabled]="hasPaid(value)">Pay</button>
             </ng-template>
           </ngx-datatable-column>
 
@@ -67,19 +67,19 @@
 
           <ngx-datatable-column name="" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-primary btn-sm" (click)="editEvents(value)" title="Click to edit this event"  [disabled]="hasPaid(value)">Edit</button>
+              <button class="btn btn-primary btn-sm" (click)="editMeeting(value)" title="Click to edit this event"  [disabled]="hasPaid(value)">Edit</button>
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="" prop="id" editable="true">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <button class="btn btn-danger btn-sm" (click)="deleteEvent(value)" title="Click to delete event">Delete</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteMeeting(value)" title="Click to delete event">Delete</button>
             </ng-template>
           </ngx-datatable-column>                 
         </ngx-datatable>
 
         <hr />
-        <button class="btn btn-primary btn-sm new-org-button" (click)="createNewEvent()" title="Click to create new event">New Event</button>
+        <button class="btn btn-primary btn-sm new-org-button" (click)="createNewMeeting()" title="Click to create new event">New Event</button>
       </div>
     </div>
 
@@ -93,11 +93,11 @@
         <div class="row">
           
           <div class="col-md-6">
-            <event-order-table [model]="model"></event-order-table>
+            <meeting-order-table [model]="model"></meeting-order-table>
           </div>
 
           <div class="col-md-6">
-             <rar-stripe [amount]="model.total" [lineItems]="eventsComponentService.lineItems" [reference_id]="game_id" (paymentState)="paymentState($event)"></rar-stripe>
+             <rar-stripe [amount]="model.total" [lineItems]="meetingComponentService.lineItems" [reference_id]="event_id" (paymentState)="paymentState($event)"></rar-stripe>
           </div>
 
         </div>
@@ -108,12 +108,12 @@
     <div class="card"  *ngIf="isViewState('addMatches')">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#" (click)="switchToEditEvent($event)">Event</a></li>
+          <li class="breadcrumb-item"><a href="#" (click)="switchToEditMeeting($event)">Event</a></li>
           <li class="breadcrumb-item active" aria-current="page"><a href="#" (click)="switchToAddMatch($event)">Matches</a></li>
         </ol>
       </nav>
       <br />
-      <rar-matches [model]="currentGame" [states]="states"></rar-matches>
+      <rar-matches [model]="currentMeeting" [states]="states"></rar-matches>
     </div>
 
   </div>

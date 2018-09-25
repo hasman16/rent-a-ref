@@ -1,7 +1,7 @@
 import { AddressModel } from './address';
 import { PhoneModel } from './phone';
 
-export interface GameModel {
+export interface MeetingModel {
 	id?: string;
 	event_name?: string;
 	start_date?: string;

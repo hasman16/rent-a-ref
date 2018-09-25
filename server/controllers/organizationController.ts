@@ -76,7 +76,7 @@ export default function OrganizationController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function create(req, res) {
+  async function create(req, res) {
     const sequelize = models.sequelize;
     const user_id = req.decoded.id;
     const Organizer = models.Organizer;
@@ -84,7 +84,7 @@ export default function OrganizationController(models, ResponseService) {
       name: req.body.name,
       user_id: user_id
     };
-
+    /*
     sequelize
       .transaction(function(t) {
         return Organization.create(organization, { transaction: t }).then(
@@ -107,6 +107,34 @@ export default function OrganizationController(models, ResponseService) {
         );
       })
       .catch(error => ResponseService.exception(res, error));
+*/
+    let transaction;
+
+    try {
+      transaction = await sequelize.transaction();
+      const newOrganization = await Organization.create(organization, {
+        transaction
+      });
+      const organizer = {
+        organization_id: newOrganization.id,
+        user_id: user_id
+      };
+      const newOrganizer = await Organizer.create(organizer, { transaction });
+
+      await transaction.commit();
+      ResponseService.success(
+        res,
+        {
+          id: newOrganization.id,
+          name: newOrganization.name,
+          user_id: newOrganization.user_id
+        },
+        201
+      );
+    } catch (error) {
+      transaction.rollback(transaction);
+      ResponseService.exception(res, error);
+    }
   }
 
   function update(req, res) {
@@ -122,24 +150,57 @@ export default function OrganizationController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function deleteOne(req, res) {
+  async function deleteOne(req, res) {
+    const sequelize = models.sequelize;
+    const Organizer = models.Organizer;
+    const Game = models.Game;
     const organization_id = req.params.organization_id;
+    let transaction;
 
-    function doDelete(organization) {
-      return Organization.destroy({
-        where: {
-          id: organization.id
-        }
-      });
+    try {
+      transaction = await sequelize.transaction();
+      let organization = await Organization.findOne(
+        {
+          where: {
+            id: organization_id
+          },
+          include: [
+            {
+              model: Game
+            }
+          ]
+        },
+        { transaction }
+      );
+      const games = organization.games;
+
+      if (!organization) {
+        throw new Error('Organization not found.');
+      }
+
+      if (games.length > 0) {
+        throw new Error('This organization has ' + games.length + ' events.');
+      }
+
+      await Organization.destroy(
+        {
+          where: {
+            id: organization.id
+          }
+        },
+        { transaction }
+      );
+
+      await transaction.commit();
+      ResponseService.success(
+        res,
+        'Organization :' + organization_id + ' was deleted',
+        204
+      );
+    } catch (error) {
+      transaction.rollback(transaction);
+      ResponseService.exception(res, error);
     }
-
-    ResponseService.findObject(
-      organization_id,
-      'Organization',
-      res,
-      doDelete,
-      204
-    );
   }
 
   /*
@@ -161,6 +222,7 @@ export default function OrganizationController(models, ResponseService) {
     etag: '"c1fdf2fd9f3a5dbc41bc9527415736a0"'
   }
 */
+
   function uploadLogo(req, res) {
     const file = req.file;
     if (file) {

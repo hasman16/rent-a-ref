@@ -24,13 +24,13 @@ export default function MatchController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function getAllByGame(req, res) {
+  function getAllByMeeting(req, res) {
     let clause = ResponseService.produceSearchAndSortClause(req);
     const User = models.User;
     const whereClause = Object.assign(
       {
         where: {
-          game_id: req.params.game_id
+          meeting_id: req.params.meeting_id
         },
         include: [
           {
@@ -118,7 +118,7 @@ export default function MatchController(models, ResponseService) {
         transaction
       });
       if (oldMatch && canAssignOrRemove(oldMatch.status)) {
-        await isOrgMemberOrAdmin(req, oldMatch.game_id);
+        await isOrgMemberOrAdmin(req, oldMatch.meeting_id);
 
         if (phone) {
           oldPhone = await Phone.findById(oldMatch.phone_id, {
@@ -240,13 +240,13 @@ export default function MatchController(models, ResponseService) {
     delete match.address;
     delete match.phone;
 
-    match.game_id = req.params.game_id;
+    match.meeting_id = req.params.meeting_id;
     match.status = 'pending';
     let transaction, newMatch, newAddress, newPhone;
 
     try {
       transaction = await sequelize.transaction();
-      await isOrgMemberOrAdmin(req, match.game_id);
+      await isOrgMemberOrAdmin(req, match.meeting_id);
 
       if (address) {
         let timeZone = await ResponseService.workoutTimeZone(address);
@@ -285,7 +285,7 @@ export default function MatchController(models, ResponseService) {
   function updateMatchAddress(req, res) {}
   function deleteMatchAddress(req, res) {}
 
-  async function isOrgMemberOrAdmin(req, game_id) {
+  async function isOrgMemberOrAdmin(req, meeting_id) {
     if (ResponseService.isAdmin(req)) {
       return {
         success: true,
@@ -293,13 +293,13 @@ export default function MatchController(models, ResponseService) {
       };
     } else {
       const sequelize = models.sequelize;
-      const Game = models.Game;
+      const Meeting = models.Meeting;
       const Organizer = models.Organizer;
-      const game = await Game.findById(game_id);
+      const meeting = await Meeting.findById(meeting_id);
 
       const whereClause = {
         user_id: req.decoded.id,
-        organization_id: game.organization_id
+        organization_id: meeting.organization_id
       };
       const result = await Organizer.findOne(whereClause);
       if (result) {
@@ -315,7 +315,7 @@ export default function MatchController(models, ResponseService) {
 
   return {
     getAll,
-    getAllByGame,
+    getAllByMeeting,
     getOne,
     create,
     update,

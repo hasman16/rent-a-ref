@@ -23,6 +23,6 @@ export class AdminComponent implements OnInit, CanComponentDeactivate {
   }
 
   public onAssigning() {
-    //this.router.navigate(['admin/games']);
+    //this.router.navigate(['admin/meetings']);
   }
 }

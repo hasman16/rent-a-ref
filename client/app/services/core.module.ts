@@ -9,7 +9,7 @@ import {
 } from './guards/index';
 import {
   AuthService,
-  EventsService,
+  MeetingService,
   MatchService,
   OrganizeService,
   PagingService,
@@ -21,8 +21,8 @@ import {
 } from './http/index';
 import { TokenInterceptor, TokenService } from './interceptors/index';
 import {
-  AdminEventsResolver,
-  EventsResolver,
+  AdminMeetingResolver,
+  MeetingResolver,
   OrganizationsResolver,
   SportsResolver,
   ScheduleResolver,
@@ -35,7 +35,7 @@ import {
     AuthGuardLogin,
     AuthService,
     CanDeactivateGuardService,
-    EventsService,
+    MeetingService,
     MatchService,
     OrganizeService,
     PagingService,
@@ -44,8 +44,8 @@ import {
     StripeService,
     TokenService,
     UserService,
-    AdminEventsResolver,
-    EventsResolver,
+    AdminMeetingResolver,
+    MeetingResolver,
     OrganizationsResolver,
     ScheduleResolver,
     BlogResolver,

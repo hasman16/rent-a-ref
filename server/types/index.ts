@@ -1,5 +1,5 @@
 export * from './address';
-export * from './game';
+export * from './meeting';
 export * from './login';
 export * from './match';
 export * from './order';

@@ -48,11 +48,11 @@ import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.co
 import { ContactUsComponent } from './group/contactus/contactus.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import {
-    EventsComponent,
-    EventsComponentService
-} from './organize/events/index';
+    MeetingsComponent,
+    MeetingsComponentService
+} from './organize/meetings/index';
 
-import { EventOrderTableComponent } from './organize/event-order-table/event-order-table.component';
+import { MeetingOrderTableComponent } from './organize/meeting-order-table/meeting-order-table.component';
 
 import { FaqComponent } from './group/faq/faq.component';
 import { FooterComponent } from './footer/footer.component';
@@ -82,7 +82,7 @@ import { AdminScheduleComponent } from './schedule/admin-schedule.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-and-conditions.component';
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
-import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
+import { ManageMeetingsComponent } from './admin/managemeetings/manage-meetings.component';
 import {
     MatchesComponent,
     MatchDetailComponent,
@@ -122,8 +122,8 @@ import {
         ContactUsComponent,
         DropdownDirective,
         EditProfileComponent,
-        EventsComponent,
-        EventOrderTableComponent,
+        MeetingsComponent,
+        MeetingOrderTableComponent,
         FaqComponent,
         FooterComponent,
         FooterTabletComponent,
@@ -145,7 +145,7 @@ import {
         AdminProfileComponent,
         ProfileComponent,
         ManageUsersComponent,
-        ManageEventsComponent,
+        ManageMeetingsComponent,
         MatchesComponent,
         MatchDetailComponent,
         AssignUsersComponent,
@@ -226,7 +226,7 @@ import {
         CoreModule,
         CommonModule
     ],
-    providers: [EventsComponentService, GoogleMapsAPIWrapper],
+    providers: [MeetingsComponentService, GoogleMapsAPIWrapper],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     // Add bootstrap
     bootstrap: [AppComponent],

@@ -16,7 +16,7 @@ export interface MatchModel {
 	status?: string;
 	age?: string;
 	referees?: number;
-	game_id?: number;
+	meeting_id?: number;
 	address_id?: string;
 	phone_id?: string;
 	address?: AddressModel;

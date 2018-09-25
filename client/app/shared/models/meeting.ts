@@ -1,7 +1,7 @@
 import { Address } from './address';
 import { Phone } from './phone';
 
-export interface Game {
+export interface Meeting {
 	id?: string;
 	event_name?: string;
 	start_date?: string;

@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import {
   Address,
   BaseModel,
-  Game,
+  Meeting,
   Match,
   PagedData,
   Phone
@@ -32,11 +32,11 @@ export class MatchService extends AbstractService {
     });
   }
 
-  public getAllMatchesByGame(
-    game_id: string,
+  public getAllMatchesByMeeting(
+    meeting_id: string,
     queryParams: any = null
   ): Observable<PagedData> {
-    const url = `/api/games/${game_id}/matches`;
+    const url = `/api/meeting/${meeting_id}/matches`;
     return <Observable<PagedData>>this.http.get(url, {
       params: queryParams
     });
@@ -46,8 +46,8 @@ export class MatchService extends AbstractService {
     return this.http.get(`/api/matches/${match_id}`);
   }
 
-  public getGameMatches(game_id: string): Observable<Match[]> {
-    const url = `/api/games/${game_id}/matches`;
+  public getMeetingMatches(meeting_id: string): Observable<Match[]> {
+    const url = `/api/meeting/${meeting_id}/matches`;
     return this.http.get<Match[]>(url);
   }
 
@@ -55,8 +55,8 @@ export class MatchService extends AbstractService {
     return this.http.delete<any>(`/api/matches/${match_id}`);
   }
 
-  public createMatch(game_id, match): Observable<Match> {
-    const url = `/api/games/${game_id}/matches`;
+  public createMatch(meeting_id, match): Observable<Match> {
+    const url = `/api/meeting/${meeting_id}/matches`;
     return this.postData(url, match);
   }
 

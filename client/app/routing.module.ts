@@ -7,8 +7,8 @@ import {
   AuthGuardLogin,
   AuthGuardSuspended,
   CanDeactivateGuardService,
-  AdminEventsResolver,
-  EventsResolver,
+  AdminMeetingResolver,
+  MeetingResolver,
   OrganizationsResolver,
   ScheduleResolver,
   BlogResolver,
@@ -28,7 +28,7 @@ import { ContactUsComponent } from './group/contactus/contactus.component';
 import { DeactivatedComponent } from './account/profile/deactivated/deactivated.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import { CreatePostComponent } from './group/blog/create-post/create-post.component';
-import { EventsComponent } from './organize/events/events.component';
+import { MeetingsComponent } from './organize/meetings/meetings.component';
 import { FaqComponent } from './group/faq/faq.component';
 import { HomeComponent } from './home/home.component';
 import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
@@ -48,7 +48,7 @@ import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-
 import { ResetComponent } from './account/profile/reset/reset.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { OrganizeComponent } from './organize/organize.component';
-import { ManageEventsComponent } from './admin/manageevents/manage-events.component';
+import { ManageMeetingsComponent } from './admin/managemeetings/manage-meetings.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -139,10 +139,10 @@ const routes: Routes = [
   },
   {
     path: 'organization/:organization_id/events',
-    component: EventsComponent,
+    component: MeetingsComponent,
     canActivate: [AuthGuardLogin],
     resolve: {
-      games: EventsResolver,
+      meetings: MeetingResolver,
       sportsData: SportsResolver
     }
   },
@@ -182,9 +182,9 @@ const routes: Routes = [
       },
       {
         path: 'manageevents',
-        component: ManageEventsComponent,
+        component: ManageMeetingsComponent,
         resolve: {
-          eventsData: AdminEventsResolver
+          meetingData: AdminMeetingResolver
         }
       }
     ]

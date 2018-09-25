@@ -1,5 +1,5 @@
-export * from './admin-events.resolver';
-export * from './events.resolver';
+export * from './admin-meeting.resolver';
+export * from './meeting.resolver';
 export * from './organizations.resolver';
 export * from './sports.resolver';
 export * from './schedule.resolver';

@@ -1,9 +1,9 @@
-import { AddressModel, GameModel, PhoneModel } from './../types/index';
+import { AddressModel, MeetingModel, PhoneModel } from './../types/index';
 import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
 
-export default function GameController(models, ResponseService) {
-  const Game = models.Game;
+export default function meetingController(models, ResponseService) {
+  const Meeting = models.Meeting;
   const attributes = [
     'id',
     'event_name',
@@ -20,16 +20,18 @@ export default function GameController(models, ResponseService) {
     'adults_refs_pay'
   ];
 
-  function returnGame(res, game, status = 200) {
-    let newGame: GameModel = <GameModel>ResponseService.deleteItemDates(game);
-    newGame.id = game.id;
-    ResponseService.success(res, newGame, status);
+  function returnMeeting(res, meeting, status = 200) {
+    let newMeeting: MeetingModel = <MeetingModel>ResponseService.deleteItemDates(
+      event
+    );
+    newMeeting.id = meeting.id;
+    ResponseService.success(res, newMeeting, status);
   }
 
   function getAll(req, res) {
     const clause = ResponseService.produceSearchAndSortClause(req);
 
-    Game.findAndCountAll(clause)
+    Meeting.findAndCountAll(clause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
@@ -41,7 +43,7 @@ export default function GameController(models, ResponseService) {
     });
     clause.where = whereClause;
 
-    Game.findAndCountAll(clause)
+    Meeting.findAndCountAll(clause)
       .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
@@ -50,9 +52,9 @@ export default function GameController(models, ResponseService) {
     const Address = models.Address;
     const Phone = models.Phone;
 
-    Game.find({
+    Meeting.find({
       where: {
-        id: req.params.game_id
+        id: req.params.meeting_id
       },
       include: [
         {
@@ -68,24 +70,28 @@ export default function GameController(models, ResponseService) {
   }
 
   function create(req, res) {
-    const game: GameModel = <GameModel>ResponseService.getItemFromBody(req);
+    const meeting: MeetingModel = <MeetingModel>ResponseService.getItemFromBody(
+      req
+    );
 
-    Game.create(game)
-      .then(newGame => {
-        returnGame(res, newGame, 201);
+    Meeting.create(meeting)
+      .then(newMeeting => {
+        returnMeeting(res, newMeeting, 201);
       })
       .catch(error => ResponseService.exception(res, error));
   }
 
   function update(req, res) {
-    const game: GameModel = <GameModel>ResponseService.getItemFromBody(req);
+    const meeting: MeetingModel = <MeetingModel>ResponseService.getItemFromBody(
+      req
+    );
 
-    Game.update(game, {
+    Meeting.update(meeting, {
       where: {
-        id: req.params.game_id
+        id: req.params.meeting_id
       }
     })
-      .then(result => ResponseService.success(res, 'Game updated'))
+      .then(result => ResponseService.success(res, 'Event updated'))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -94,10 +100,10 @@ export default function GameController(models, ResponseService) {
     const Address = models.Address;
     const Phone = models.Phone;
     const Match = models.Match;
-    const game_id = req.params.game_id;
+    const meeting_id = req.params.meeting_id;
     const whereClause = {
       where: {
-        game: game_id
+        id: meeting_id
       },
       include: [
         {
@@ -112,40 +118,66 @@ export default function GameController(models, ResponseService) {
       ]
     };
     let transaction;
-
+    console.log('delete MeetingController');
     try {
       transaction = await sequelize.transaction();
-      const result = await Game.findOne(whereClause, {
+      const result = await Meeting.findOne(whereClause, {
         transaction
       });
+      console.log('meeting is:', result);
       if (result) {
-        throw new Error('Game does not exist.');
+        throw new Error('Meeting does not exist.');
       }
+      console.log('meeting:', 1);
 
       const matches: any[] = result.matches;
       const address = result.address;
       const phone = result.phones;
+      if (matches.length > 0) {
+        throw new Error('This meeting has ' + matches.length + ' matches.');
+      }
+      console.log('meeting:', 2);
 
       if (address) {
-        await Address.destroy({
-          where: {
-            id: address.id
+        await Address.destroy(
+          {
+            where: {
+              id: address.id
+            }
+          },
+          {
+            transaction
           }
-        });
+        );
+        console.log('meeting:', 3);
       }
       if (phone) {
-        await Phone.destroy({
-          where: {
-            id: phone.id
+        await Phone.destroy(
+          {
+            where: {
+              id: phone.id
+            }
+          },
+          {
+            transaction
           }
-        });
+        );
+        console.log('meeting:', 4);
       }
+      console.log('meeting:', 5);
 
-      await Game.destroy({
-        where: {
-          id: game_id
+      await Meeting.destroy(
+        {
+          where: {
+            id: meeting_id
+          }
+        },
+        {
+          transaction
         }
-      });
+      );
+      console.log('meeting:', 6);
+
       await transaction.commit();
 
       ResponseService.success(res, {
@@ -170,70 +202,74 @@ export default function GameController(models, ResponseService) {
     return calculateDate(addTimeToDate(time, date), timezone_id);
   }
 
-  function processTime(game, timeZone) {
-    const timeFixer = _.partial(fixTime, game.timezone_id);
+  function processTime(meeting, timeZone) {
+    const timeFixer = _.partial(fixTime, meeting.timezone_id);
 
-    game.start_date = timeFixer(game.start_date, game.start_time);
-    game.end_date = timeFixer(game.end_date, game.end_time);
+    meeting.start_date = timeFixer(meeting.start_date, meeting.start_time);
+    meeting.end_date = timeFixer(meeting.end_date, meeting.end_time);
   }
 
-  async function createGameAddressPhone(req, res) {
+  async function createMeetingAddressPhone(req, res) {
     const sequelize = models.sequelize;
     const Address = models.Address;
     const Phone = models.Phone;
-    let game: GameModel = <GameModel>ResponseService.getItemFromBody(req);
-    const address: AddressModel = ResponseService.deleteItemDates(game.address);
-    const phone: PhoneModel = ResponseService.deleteItemDates(game.phone);
+    let meeting: MeetingModel = <MeetingModel>ResponseService.getItemFromBody(
+      req
+    );
+    const address: AddressModel = ResponseService.deleteItemDates(
+      meeting.address
+    );
+    const phone: PhoneModel = ResponseService.deleteItemDates(meeting.phone);
 
-    delete game.address_id;
-    delete game.phone_id;
-    delete game.address;
-    delete game.phone;
+    delete meeting.address_id;
+    delete meeting.phone_id;
+    delete meeting.address;
+    delete meeting.phone;
 
-    game.organization_id = req.params.organization_id;
-    game.status = 'pending';
+    meeting.organization_id = req.params.organization_id;
+    meeting.status = 'pending';
 
-    let transaction, newGame, newAddress, newPhone;
+    let transaction, newMeeting, newAddress, newPhone;
     try {
       transaction = await sequelize.transaction();
 
       let timeZone = await ResponseService.workoutTimeZone(address);
-      ResponseService.setTimeZone(game, timeZone.googleTimeZone);
+      ResponseService.setTimeZone(meeting, timeZone.googleTimeZone);
 
       address.lat = timeZone.location.lat;
       address.lng = timeZone.location.lng;
 
-      processTime(game, timeZone);
+      processTime(meeting, timeZone);
 
       newAddress = await Address.create(address, { transaction });
-      game.address_id = newAddress.id;
+      meeting.address_id = newAddress.id;
       if (phone) {
         newPhone = await Phone.create(phone, { transaction });
-        game.phone_id = newPhone.id;
+        meeting.phone_id = newPhone.id;
       }
-      newGame = await Game.create(game, { transaction });
+      newMeeting = await Meeting.create(meeting, { transaction });
       transaction.commit();
-      ResponseService.success(res, newGame, 201);
+      ResponseService.success(res, newMeeting, 201);
     } catch (error) {
       transaction.rollback(transaction);
       ResponseService.exception(res, error);
     }
   }
 
-  function getGameAddress(req, res) {
+  function getMeetingAddress(req, res) {
     this.getOne(req, res);
   }
 
-  function updateGameAddress(req, res) {
+  function updateMeetingAddress(req, res) {
     const Address = models.Address;
     const address: AddressModel = ResponseService.deleteItemDates(req);
 
-    Game.find({
+    Meeting.find({
       where: {
-        id: req.params.game_id
+        id: req.params.meeting_id
       }
     })
-      .then(game => {
+      .then(meeting => {
         return Address.update(address, {
           where: {
             id: req.params.address_id
@@ -244,7 +280,7 @@ export default function GameController(models, ResponseService) {
       .catch(error => ResponseService.exception(res, error));
   }
 
-  function deleteGameAddress(req, res) {}
+  function deleteMeetingAddress(req, res) {}
 
   function getPrices(req, res) {
     const sequelize = models.sequelize;
@@ -262,9 +298,9 @@ export default function GameController(models, ResponseService) {
     update,
     deleteOne,
     getPrices,
-    getGameAddress,
-    createGameAddressPhone,
-    updateGameAddress,
-    deleteGameAddress
+    getMeetingAddress,
+    createMeetingAddressPhone,
+    updateMeetingAddress,
+    deleteMeetingAddress
   };
 }

@@ -25,10 +25,10 @@ function matchRoutes(setter, matchCtrl) {
         .route('/matches/:match_id/address')
         .get(authentication, matchCtrl.getMatchAddress);
     router
-        .route('/games/:game_id/matches')
-        .get(authentication, matchCtrl.getAllByGame);
+        .route('/meeting/:meeting_id/matches')
+        .get(authentication, matchCtrl.getAllByMeeting);
     router
-        .route('/games/:game_id/matches')
+        .route('/meeting/:meeting_id/matches')
         .post(authentication, matchCtrl.createMatchAddressPhone);
     router.use('/matches/:match_id/address/:address_id', authentication, isOrgMember, isUserOrAdmin);
     router

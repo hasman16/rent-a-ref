@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import {
 	Address,
 	BaseModel,
-	Game,
+	Meeting,
 	Phone,
 	Option,
 	Page,
@@ -14,7 +14,7 @@ import {
 } from './../../shared/models/index';
 import {
 	AuthService,
-	EventsService,
+	MeetingService,
 	StatesService,
 	StripeService,
 	UserService
@@ -26,7 +26,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
 
 @Injectable()
-export class EventsComponentService {
+export class MeetingsComponentService {
 	public products: any[] = [];
 	public plans: any[] = [];
 	public productPlan: any[] = [];
@@ -34,7 +34,7 @@ export class EventsComponentService {
 	constructor(
 		private stripeService: StripeService,
 		protected statesService: StatesService,
-		protected eventsService: EventsService
+		protected meetingService: MeetingService
 	) {}
 
 	public mapSportsAsOptions(sports: Sport[]): Option[] {
@@ -52,52 +52,52 @@ export class EventsComponentService {
 		return this.statesService.getStatesProvinces();
 	}
 
-	public getEvent(id: string): Observable<any> {
-		const games = value => value && value > 0;
-		return this.eventsService.getGame(id).pipe(
+	public getMeeting(id: string): Observable<any> {
+		const meeting = value => value && value > 0;
+		return this.meetingService.getMeeting(id).pipe(
 			take(1),
-			map((aGame: Game) => {
-				const model = this.convertGameToModel(aGame);
-				model.kids = games(model.kids_games);
-				model.teens = games(model.teen_games);
-				model.adults = games(model.adult_games);
+			map((ameeting: Meeting) => {
+				const model = this.convertMeetingToModel(ameeting);
+				model.kids = meeting(model.kids_games);
+				model.teens = meeting(model.teen_games);
+				model.adults = meeting(model.adult_games);
 				return model;
 			})
 		);
 	}
 
-	public deleteEvent(game_id: string): Observable<any> {
-		return this.eventsService.deleteEvent(game_id);
+	public deleteMeeting(meeting_id: string): Observable<any> {
+		return this.meetingService.deleteMeeting(meeting_id);
 	}
 
-	public createEvent(org_id: string, model: any): Observable<any> {
-		return this.eventsService.createGame(org_id, model);
+	public createMeeting(org_id: string, model: any): Observable<any> {
+		return this.meetingService.createMeeting(org_id, model);
 	}
 
-	public updateGameAddress(model: any): Observable<any> {
+	public updateMeetingAddress(model: any): Observable<any> {
 		const address = model.address;
 
-		return this.eventsService.updateGame(model).pipe(
-			switchMap((game: Game): Observable<any> => {
+		return this.meetingService.updateMeeting(model).pipe(
+			switchMap((meeting: Meeting): Observable<any> => {
 				if (address) {
-					return this.eventsService.updateAddress(model.id, address);
+					return this.meetingService.updateAddress(model.id, address);
 				}
 				return of(true);
 			})
 		);
 	}
 
-	public getOrganizationGames(
+	public getOrganizationMeetings(
 		org_id: string,
 		page: Page = null
 	): Observable<any> {
-		return this.eventsService.getOrganizationGames(org_id, page);
+		return this.meetingService.getOrganizationMeetings(org_id, page);
 	}
 
-	public getPreparedEventForPayment(gameId: string): Observable<any> {
+	public getPreparedMeetingForPayment(meetingId: string): Observable<any> {
 		this.lineItems = [];
 		return combineLatest(
-			this.getEvent(gameId),
+			this.getMeeting(meetingId),
 			this.stripeService.getProducts()
 		).pipe(
 			map(([model, products]: [any, any]) => {
@@ -110,7 +110,7 @@ export class EventsComponentService {
 		);
 	}
 
-	public convertGameToModel(model: Game): any {
+	public convertMeetingToModel(model: Meeting): any {
 		const timezone_id = model.timezone_id;
 		const startTimeZoneDate = moment.tz(model.start_date, timezone_id);
 		const endTimeZoneDate = moment.tz(model.end_date, timezone_id);
@@ -131,14 +131,14 @@ export class EventsComponentService {
 		return Object.assign(obj, model.address, tempModel);
 	}
 
-	public convertModelToGame(model): Game {
+	public convertModelToMeeting(model): Meeting {
 		const startDateString: string = String(model.start_date);
 		const startTimeString: string = String(model.start_time);
 
 		const endDateString: string = String(model.end_date);
 		const endTimeString: string = String(model.end_time);
 
-		return <Game>{
+		return <Meeting>{
 			id: model.id,
 			adult_games: model.adult_games,
 			teen_games: model.teen_games,

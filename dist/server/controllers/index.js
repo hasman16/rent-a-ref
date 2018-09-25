@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./addressController"));
 __export(require("./areaController"));
 __export(require("./blogController"));
-__export(require("./gameController"));
+__export(require("./meetingController"));
 __export(require("./loginController"));
 __export(require("./officiateController"));
 __export(require("./organizationController"));

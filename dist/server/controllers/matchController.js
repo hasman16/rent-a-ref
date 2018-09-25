@@ -52,12 +52,12 @@ function MatchController(models, ResponseService) {
             .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
-    function getAllByGame(req, res) {
+    function getAllByMeeting(req, res) {
         var clause = ResponseService.produceSearchAndSortClause(req);
         var User = models.User;
         var whereClause = Object.assign({
             where: {
-                game_id: req.params.game_id
+                meeting_id: req.params.meeting_id
             },
             include: [
                 {
@@ -144,7 +144,7 @@ function MatchController(models, ResponseService) {
                     case 3:
                         oldMatch = _a.sent();
                         if (!(oldMatch && canAssignOrRemove(oldMatch.status))) return [3 /*break*/, 14];
-                        return [4 /*yield*/, isOrgMemberOrAdmin(req, oldMatch.game_id)];
+                        return [4 /*yield*/, isOrgMemberOrAdmin(req, oldMatch.meeting_id)];
                     case 4:
                         _a.sent();
                         if (!phone) return [3 /*break*/, 7];
@@ -290,7 +290,7 @@ function MatchController(models, ResponseService) {
                         delete match.phone_id;
                         delete match.address;
                         delete match.phone;
-                        match.game_id = req.params.game_id;
+                        match.meeting_id = req.params.meeting_id;
                         match.status = 'pending';
                         _a.label = 1;
                     case 1:
@@ -298,7 +298,7 @@ function MatchController(models, ResponseService) {
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
-                        return [4 /*yield*/, isOrgMemberOrAdmin(req, match.game_id)];
+                        return [4 /*yield*/, isOrgMemberOrAdmin(req, match.meeting_id)];
                     case 3:
                         _a.sent();
                         if (!address) return [3 /*break*/, 6];
@@ -346,9 +346,9 @@ function MatchController(models, ResponseService) {
     }
     function updateMatchAddress(req, res) { }
     function deleteMatchAddress(req, res) { }
-    function isOrgMemberOrAdmin(req, game_id) {
+    function isOrgMemberOrAdmin(req, meeting_id) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize_1, Game, Organizer, game, whereClause, result;
+            var sequelize_1, Meeting, Organizer, meeting, whereClause, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -359,14 +359,14 @@ function MatchController(models, ResponseService) {
                             }];
                     case 1:
                         sequelize_1 = models.sequelize;
-                        Game = models.Game;
+                        Meeting = models.Meeting;
                         Organizer = models.Organizer;
-                        return [4 /*yield*/, Game.findById(game_id)];
+                        return [4 /*yield*/, Meeting.findById(meeting_id)];
                     case 2:
-                        game = _a.sent();
+                        meeting = _a.sent();
                         whereClause = {
                             user_id: req.decoded.id,
-                            organization_id: game.organization_id
+                            organization_id: meeting.organization_id
                         };
                         return [4 /*yield*/, Organizer.findOne(whereClause)];
                     case 3:
@@ -388,7 +388,7 @@ function MatchController(models, ResponseService) {
     }
     return {
         getAll: getAll,
-        getAllByGame: getAllByGame,
+        getAllByMeeting: getAllByMeeting,
         getOne: getOne,
         create: create,
         update: update,

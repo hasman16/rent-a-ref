@@ -337,7 +337,7 @@ export default class ResponseService {
     model.timezone_offset = googleTimeZone.dstOffset;
   }
 
-  async workoutTimeZone(address) {
+  public async workoutTimeZone(address) {
     const googleAddress = await this.getGoogleAddress(address);
     const geometry = _.get(googleAddress, 'results[0].geometry', null);
     if (!geometry) {
@@ -354,7 +354,7 @@ export default class ResponseService {
     return { googleTimeZone, location };
   }
 
-  async getGoogleAddress(address: AddressModel) {
+  public async getGoogleAddress(address: AddressModel) {
     let addressString: string = _.defaultTo(address.line1, '');
     addressString += ' ' + _.defaultTo(address.line2, '');
     addressString += ' ' + _.defaultTo(address.state, '');
@@ -375,7 +375,7 @@ export default class ResponseService {
     });
   }
 
-  async getTimezoneFromGoogle(location, timestamp = null) {
+  public async getTimezoneFromGoogle(location) {
     return new Promise(function(resolve, reject) {
       googleMapsClient
         .timezone({
@@ -391,7 +391,7 @@ export default class ResponseService {
     });
   }
 
-  async isTimeLocked(eventObj, lock = 1, grain = 'minutes') {
+  public async isTimeLocked(eventObj, lock = 1, grain = 'minutes') {
     return new Promise(function(resolve, reject) {
       const now = moment().utc();
       const matchTime = moment.tz(eventObj.date, eventObj.timezone_id);
@@ -410,5 +410,13 @@ export default class ResponseService {
         });
       }
     });
+  }
+
+  public async byPassTimeLockIfAdmin(req, item) {
+    let lock = 1;
+    if (this.isAdmin(req)) {
+      lock = 0;
+    }
+    return await this.isTimeLocked(item, lock);
   }
 }

@@ -19,7 +19,7 @@ import SendGridService from './../util/sendGridService';
 import addressController from './../controllers/addressController';
 import areaController from './../controllers/areaController';
 import blogController from './../controllers/blogController';
-import gameController from './../controllers/gameController';
+import meetingController from './../controllers/meetingController';
 import matchController from './../controllers/matchController';
 import officiateController from './../controllers/officiateController';
 import organizationController from './../controllers/organizationController';
@@ -37,7 +37,7 @@ import registerController from './../controllers/registerController';
 import addressRoutes from './addressRoutes';
 import areaRoutes from './areaRoutes';
 import blogRoutes from './blogRoutes';
-import gameRoutes from './gameRoutes';
+import meetingRoutes from './meetingRoutes';
 import matchRoutes from './matchRoutes';
 import officiateRoutes from './officiateRoutes';
 import organizationRoutes from './organizationRoutes';
@@ -112,7 +112,7 @@ export default function setRoutes(app, models) {
 
   const addressCtrl = addressController(models, responseService);
   const blogCtrl = blogController(models, responseService);
-  const gameCtrl = gameController(models, responseService);
+  const meetingCtrl = meetingController(models, responseService);
   const matchCtrl = matchController(models, responseService);
   const areaCtrl = areaController(models, responseService);
   const officiateCtrl = officiateController(
@@ -158,7 +158,7 @@ export default function setRoutes(app, models) {
 
   addressRoutes(external, addressCtrl);
   blogRoutes(external, blogCtrl);
-  gameRoutes(external, gameCtrl);
+  meetingRoutes(external, meetingCtrl);
   matchRoutes(external, matchCtrl);
   areaRoutes(external, areaCtrl);
   personRoutes(external, personCtrl);

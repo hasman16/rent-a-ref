@@ -10,15 +10,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastComponent } from '../../shared/toast/toast.component';
 import {
   CanComponentDeactivate,
-  EventsService,
+  MeetingService,
   PagingService,
   StatesService
 } from './../../services/index';
-import { EventsComponentService } from './../../organize/events/events-component.service';
+import { MeetingsComponentService } from './../../organize/meetings/meetings-component.service';
 import {
   Address,
   BaseModel,
-  Game,
+  Meeting,
   Page,
   PagedData,
   Phone,
@@ -39,17 +39,17 @@ enum TabState {
 }
 
 @Component({
-  selector: 'rar-manage-events',
-  templateUrl: './manage-events.component.html',
-  styleUrls: ['./manage-events.component.scss'],
+  selector: 'rar-manage-meetings',
+  templateUrl: './manage-meetings.component.html',
+  styleUrls: ['./manage-meetings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
+export class ManageMeetingsComponent implements OnInit, CanComponentDeactivate {
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
   public sports: Option[];
   public states: Option[];
-  public games: Game[] = [];
+  public meetings: Meeting[] = [];
   protected page: Page;
   public isEditing: boolean = false;
   public model: any = {};
@@ -60,24 +60,24 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     public toast: ToastComponent,
-    private eventsService: EventsService,
+    private meetingService: MeetingService,
     private pagingService: PagingService,
-    protected eventsComponentService: EventsComponentService
+    protected meetingsComponentService: MeetingsComponentService
   ) {
     this.page = _.cloneDeep(this.pagingService.getDefaultPager());
   }
 
   ngOnInit() {
-    const [gamesData, sportsData]: [
+    const [meetingData, sportsData]: [
       PagedData,
       PagedData
-    ] = this.route.snapshot.data.eventsData;
-    this.sports = this.eventsComponentService.mapSportsAsOptions(
+    ] = this.route.snapshot.data.meetingData;
+    this.sports = this.meetingsComponentService.mapSportsAsOptions(
       sportsData.rows
     );
-    this.states = this.eventsComponentService.getStatesProvinces();
+    this.states = this.meetingsComponentService.getStatesProvinces();
     this.setSelectedTab(TabState.editEvent);
-    this.processPagedData(gamesData);
+    this.processPagedData(meetingData);
     this.isLoading = false;
   }
 
@@ -87,12 +87,12 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  public switchToEditEvent($event): void {
+  public switchToEditMeeting($event): void {
     $event.preventDefault();
     this.setSelectedTab(TabState.editEvent);
   }
 
-  public isTabEditEvent(): boolean {
+  public isTabEditMeeting(): boolean {
     return this.selectedTab === TabState.editEvent;
   }
 
@@ -110,22 +110,23 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   }
 
   public onSelectTableRow({ selected }): void {
-    const game = _.cloneDeep(_.head(selected));
+    const event = _.cloneDeep(_.head(selected));
     this.isEditing = true;
-    this.editEvent(game);
+    this.editMeeting(event);
   }
 
-  public editEvent(game: Game): void {
+  public editMeeting(meeting: Meeting): void {
     if (!this.isLoading) {
       this.isLoading = true;
 
-      this.eventsComponentService
-        .getEvent(game.id)
+      this.meetingsComponentService
+        .getMeeting(meeting.id)
         .pipe(
-        take(1),
-        finalize(() => {
-          this.cd.markForCheck();
-        }))
+          take(1),
+          finalize(() => {
+            this.cd.markForCheck();
+          })
+        )
         .subscribe(
           (model: any) => {
             this.model = _.cloneDeep(model);
@@ -140,7 +141,7 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   }
 
   public formatDate(id): string {
-    return this.pagingService.formatDate(id, this.games);
+    return this.pagingService.formatDate(id, this.meetings);
   }
 
   public onActivate(event): void {
@@ -150,37 +151,39 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   public onSortTableColumn(sorting): void {
     const page: Page = this.pagingService.sortColumn(this.page, sorting);
     this.page = _.cloneDeep(page);
-    this.getEvents(this.page);
+    this.getMeeting(this.page);
   }
 
   public setPage(paging): void {
     this.page.offset = paging.offset;
-    this.getEvents(this.page);
+    this.getMeeting(this.page);
   }
 
-  public getEvents(params: any) {
+  public getMeeting(params: any) {
     this.isLoading = true;
-    this.eventsService
-      .getAllGames(params)
+    this.meetingService
+      .getAllMeetings(params)
       .pipe(
-      finalize(() => {
-        this.cd.markForCheck();
-      }))
+        finalize(() => {
+          this.cd.markForCheck();
+        })
+      )
       .subscribe(
         res => this.callSuccess(res),
         (err: HttpErrorResponse) => this.callFailure(err)
       );
   }
 
-  public submitUpdateEvent(model: any): void {
-    this.eventsComponentService
-      .updateGameAddress(model)
+  public submitUpdateMeeting(model: any): void {
+    this.meetingsComponentService
+      .updateMeetingAddress(model)
       .pipe(
-      finalize(() => {
-        this.cd.markForCheck();
-      }))
+        finalize(() => {
+          this.cd.markForCheck();
+        })
+      )
       .subscribe(
-        (game: Game) => {
+        (meeting: Meeting) => {
           this.toast.setMessage('Event updated.', 'info');
         },
         (err: HttpErrorResponse) =>
@@ -188,17 +191,19 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
       );
   }
 
-  public deleteEvent(user) {
+  public deleteMeeting(user) {
     console.log('delete:', user);
   }
 
-  public submitEvent(model: Game): void {
-    const game: Game = this.eventsComponentService.convertModelToGame(model);
+  public submitMeeting(model: Meeting): void {
+    const meeting: Meeting = this.meetingsComponentService.convertModelToMeeting(
+      model
+    );
 
     if (_.isNil(model.id) || !model.id) {
       //this.submitNewEvent(game);
     } else {
-      this.submitUpdateEvent(game);
+      this.submitUpdateMeeting(event);
       // this.setEventsMode();
     }
   }
@@ -206,7 +211,7 @@ export class ManageEventsComponent implements OnInit, CanComponentDeactivate {
   protected processPagedData(data: PagedData): void {
     let [page, newData] = this.pagingService.processPagedData(this.page, data);
     this.page = page;
-    this.games = newData;
+    this.meetings = newData;
   }
 
   protected callSuccess(data: PagedData) {

@@ -172,17 +172,6 @@ export default function OfficiateController(
     return value === 'pending' || value === 'none' || value === 'active';
   }
 
-  async function adminTimeLockByPass(req, match) {
-    if (ResponseService.isAdmin(req)) {
-      return Promise.resolve({
-        success: true,
-        message: 'Event is before lock time'
-      });
-    } else {
-      return await ResponseService.isTimeLocked(match);
-    }
-  }
-
   async function addOfficialToMatch(req, res) {
     let executeMethod = async (
       transaction,
@@ -267,6 +256,7 @@ export default function OfficiateController(
       if (!match) {
         throw new Error('Match does not exist.');
       }
+      let timeLocked = await ResponseService.byPassTimeLockIfAdmin(req, match);
 
       let isOfficiating = await Officiating.destroy(
         {
@@ -286,6 +276,72 @@ export default function OfficiateController(
       ResponseService.success(
         res,
         'Referee has been removed from match:' + match_id
+      );
+    } catch (err) {
+      transaction.rollback(transaction);
+      ResponseService.exception(res, message);
+    }
+  }
+
+  async function deleteMatch(req, res) {
+    const match_id = req.params.match_id;
+    const message = 'Referee was not removed from match : ' + match_id;
+    let transaction;
+
+    try {
+      transaction = await sequelize.transaction();
+      let match = await Match.findOne(
+        {
+          where: {
+            id: match_id
+          },
+          include: [
+            {
+              model: User
+            }
+          ]
+        },
+        { transaction }
+      );
+
+      if (!match) {
+        throw new Error('Match not found.');
+      }
+      if (!canAssignOrRemove(match.status)) {
+        throw new Error(
+          'A match can only be cancelled if it is pending or active.'
+        );
+      }
+      let timeLocked = await ResponseService.byPassTimeLockIfAdmin(req, match);
+
+      let areCancelled = await Officiating.destroy(
+        {
+          where: {
+            match_id
+          }
+        },
+        { transaction }
+      );
+
+      if (!areCancelled) {
+        throw new Error('Failed to delete match.');
+      }
+
+      await transaction.commit();
+
+      match.user.forEach(user => {
+        SendGridService.sendEmail({
+          to: user.email,
+          from: 'admin@rentaref.com',
+          subject: 'Match cancelled and delete match:' + match_id,
+          content:
+            'The Administrator of Rent-A-Ref cancelled and deleted match: ' +
+            match.id
+        });
+      });
+      ResponseService.success(
+        res,
+        'Match cancelled and Referees have been removed from match:' + match_id
       );
     } catch (err) {
       transaction.rollback(transaction);
@@ -324,6 +380,7 @@ export default function OfficiateController(
           'A match can only be cancelled if it is pending or active.'
         );
       }
+      let timeLocked = await ResponseService.byPassTimeLockIfAdmin(req, match);
 
       let areCancelled = await Officiating.update(
         {
@@ -374,8 +431,6 @@ export default function OfficiateController(
         throw new Error('Referee is not officiating this match. ');
       }
 
-      let timeLocked = await adminTimeLockByPass(req, match);
-
       let isDeclined = await Officiating.update(
         {
           status: 'declined'
@@ -416,8 +471,6 @@ export default function OfficiateController(
       if (!officiate) {
         throw new Error('Referee is not officiating this match. ');
       }
-
-      let timeLocked = await adminTimeLockByPass(req, match);
 
       let invitesAccepted = await Officiating.count({
         where: {
@@ -501,6 +554,7 @@ export default function OfficiateController(
       if (!canAssignOrRemove(match.status)) {
         throw new Error('You can not be removed from this match.');
       }
+      let timeLocked = await ResponseService.byPassTimeLockIfAdmin(req, match);
 
       await executeMethod(transaction, user, match, officiate, position);
       await transaction.commit();

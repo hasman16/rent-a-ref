@@ -2,7 +2,7 @@ export * from './base';
 export * from './address';
 export * from './bio';
 export * from './comment';
-export * from './game';
+export * from './meeting';
 export * from './login';
 export * from './match';
 export * from './order';

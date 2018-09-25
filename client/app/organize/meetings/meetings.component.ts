@@ -11,7 +11,7 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AbstractComponent } from '../../abstract/abstract.component';
-import { EventsComponentService } from './events-component.service';
+import { MeetingsComponentService } from './meetings-component.service';
 import { ToastComponent } from './../../shared/toast/toast.component';
 import {
   AuthService,
@@ -21,7 +21,7 @@ import {
 import {
   Address,
   BaseModel,
-  Game,
+  Meeting,
   Phone,
   Option,
   Page,
@@ -46,12 +46,12 @@ enum ViewState {
 }
 
 @Component({
-  selector: 'rar-events',
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss'],
+  selector: 'rar-meetings',
+  templateUrl: './meetings.component.html',
+  styleUrls: ['./meetings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EventsComponent extends AbstractComponent
+export class MeetingsComponent extends AbstractComponent
   implements OnInit, OnDestroy {
   @Input()
   set country(aCountry: string) {
@@ -64,11 +64,11 @@ export class EventsComponent extends AbstractComponent
   protected prices: any[] = [];
 
   protected sports: Option[];
-  public games: Game[] = [];
-  public currentGame: Game;
+  public meetings: Meeting[] = [];
+  public currentMeeting: Meeting;
 
   public organization_id: string = '';
-  public game_id: string = '';
+  public meeting_id: string = '';
   public buttonText: string = 'Create';
   public viewState: ViewState = ViewState.noEvents;
   public products: any[] = [];
@@ -80,7 +80,7 @@ export class EventsComponent extends AbstractComponent
     protected toast: ToastComponent,
     protected route: ActivatedRoute,
     protected router: Router,
-    protected eventsComponentService: EventsComponentService,
+    protected meetingsComponentService: MeetingsComponentService,
     protected pagingService: PagingService
   ) {
     super(pagingService);
@@ -93,16 +93,18 @@ export class EventsComponent extends AbstractComponent
   public ngOnInit() {
     this.initialize();
     this.searchAttribute = 'event_name|';
-    const gameData: PagedData = _.cloneDeep(this.route.snapshot.data.games);
-    this.processPagedData(gameData);
+    const meetingData: PagedData = _.cloneDeep(
+      this.route.snapshot.data.meetings
+    );
+    this.processPagedData(meetingData);
 
-    this.sports = this.eventsComponentService.mapSportsAsOptions(
+    this.sports = this.meetingsComponentService.mapSportsAsOptions(
       this.route.snapshot.data.sportsData.rows
     );
 
-    this.states = this.eventsComponentService.getStatesProvinces();
+    this.states = this.meetingsComponentService.getStatesProvinces();
 
-    this.setEventsMode();
+    this.setMeetingMode();
   }
 
   ngOnDestroy() {
@@ -110,11 +112,11 @@ export class EventsComponent extends AbstractComponent
   }
 
   protected processPagedData(data: PagedData): void {
-    this.games = this.extractDataAndPagedData(data);
+    this.meetings = this.extractDataAndPagedData(data);
   }
 
   protected getData(page: Page): void {
-    this.getEvents(page);
+    this.getMeeting(page);
   }
 
   protected formatDate(date: string, timezone_id: string): string {
@@ -122,13 +124,13 @@ export class EventsComponent extends AbstractComponent
   }
 
   public formatStartDate(id): string {
-    let item: Game = this.findGameById(id);
+    let item: Meeting = this.findMeetingById(id);
     return this.formatDate(item.start_date, item.timezone_id);
   }
 
-  public setEventsMode(): void {
+  public setMeetingMode(): void {
     this.isLoading = false;
-    if (_.isArray(this.games) && this.games.length > 0) {
+    if (_.isArray(this.meetings) && this.meetings.length > 0) {
       this.viewState = ViewState.listEvents;
     } else {
       this.viewState = ViewState.noEvents;
@@ -172,20 +174,20 @@ export class EventsComponent extends AbstractComponent
     );
   }
 
-  public createNewEvent(): void {
+  public createNewMeeting(): void {
     this.model = this.prepareModel({});
     this.buttonText = 'Create';
     this.viewState = ViewState.editEvent;
   }
 
-  private findGameById(id): Game {
-    return <Game>_.find(this.games, game => {
-      return game.id === id;
+  private findMeetingById(id): Meeting {
+    return <Meeting>_.find(this.meetings, meeting => {
+      return meeting.id === id;
     });
   }
 
   public goAddMatches(id: string): void {
-    this.currentGame = this.findGameById(id);
+    this.currentMeeting = this.findMeetingById(id);
     this.viewState = ViewState.addMatches;
     this.cd.markForCheck();
   }
@@ -200,26 +202,26 @@ export class EventsComponent extends AbstractComponent
     this.setSelectedTab($event, ViewState.addMatches);
   }
 
-  public switchToEditEvent($event) {
+  public switchToEditMeeting($event) {
     this.setSelectedTab($event, ViewState.listEvents);
   }
 
   public hasPaid(id: string): boolean {
-    let game: Game = this.findGameById(id);
-    return game && game.status === 'pending' ? false : true;
+    let meeting: Meeting = this.findMeetingById(id);
+    return meeting && meeting.status === 'pending' ? false : true;
   }
 
   public paymentState(payment: Payment): void {
     if (payment.paymentState === PaymentState.PaymentSuccess) {
-      this.getEvents(this.page);
+      this.getMeeting(this.page);
     }
   }
 
-  public goPayForEvent(game_id: string): void {
+  public goPayForMeeting(meeting_id: string): void {
     if (!this.isLoading) {
       this.isLoading = true;
-      this.eventsComponentService
-        .getPreparedEventForPayment(game_id)
+      this.meetingsComponentService
+        .getPreparedMeetingForPayment(meeting_id)
         .pipe(
           take(1),
           finalize(() => {
@@ -229,24 +231,24 @@ export class EventsComponent extends AbstractComponent
         .subscribe(
           (model: any) => {
             this.model = _.cloneDeep(model);
-            this.game_id = game_id;
+            this.meeting_id = meeting_id;
             this.viewState = ViewState.payForEvent;
             this.cd.markForCheck();
           },
           (err: HttpErrorResponse) => {
             this.callFailure(err, 'Failed to retrieve Event.');
-            this.setEventsMode();
+            this.setMeetingMode();
           }
         );
     }
   }
 
-  public editEvents(game_id: string): void {
+  public editMeeting(meeting_id: string): void {
     if (!this.isLoading) {
       this.isLoading = true;
 
-      this.eventsComponentService
-        .getEvent(game_id)
+      this.meetingsComponentService
+        .getMeeting(meeting_id)
         .pipe(
           take(1),
           finalize(() => {
@@ -262,30 +264,30 @@ export class EventsComponent extends AbstractComponent
           },
           (err: HttpErrorResponse) => {
             this.callFailure(err, 'Failed to retrieve Event.');
-            this.setEventsMode();
+            this.setMeetingMode();
           }
         );
     }
   }
 
-  public deleteEvent(game_id: string): void {
+  public deleteMeeting(meeting_id: string): void {
     console.log('deleteEvent');
-    this.eventsComponentService
-      .deleteEvent(game_id)
-      .pipe(tap(() => this.getEvents()))
+    this.meetingsComponentService
+      .deleteMeeting(meeting_id)
+      .pipe(tap(() => this.getMeeting()))
       .subscribe();
   }
 
-  public getEvents(page: Page = null): void {
+  public getMeeting(page: Page = null): void {
     this.isLoading = true;
 
-    this.eventsComponentService
-      .getOrganizationGames(this.organization_id, page)
+    this.meetingsComponentService
+      .getOrganizationMeetings(this.organization_id, page)
       .pipe(
         take(1),
         finalize(() => {
           this.isLoading = false;
-          this.setEventsMode();
+          this.setMeetingMode();
         })
       )
       .subscribe(
@@ -297,27 +299,29 @@ export class EventsComponent extends AbstractComponent
       );
   }
 
-  public submitEvent(model: Game): void {
-    const game: Game = this.eventsComponentService.convertModelToGame(model);
+  public submitMeeting(model: Meeting): void {
+    const meeting: Meeting = this.meetingsComponentService.convertModelToMeeting(
+      model
+    );
 
     if (_.isNil(model.id) || !model.id) {
-      this.submitNewEvent(game);
+      this.submitNewMeeting(meeting);
     } else {
-      this.submitUpdateEvent(game);
+      this.submitUpdateMeeting(meeting);
     }
   }
 
-  public submitNewEvent(model: Game): void {
+  public submitNewMeeting(model: Meeting): void {
     this.isLoading = true;
-    this.eventsComponentService
-      .createEvent(this.organization_id, model)
+    this.meetingsComponentService
+      .createMeeting(this.organization_id, model)
       .pipe(
         finalize(() => {
-          this.getEvents();
+          this.getMeeting();
         })
       )
       .subscribe(
-        (game: Game) => {
+        (meeting: Meeting) => {
           this.toast.setMessage('Event created.', 'info');
         },
         (err: HttpErrorResponse) =>
@@ -325,18 +329,18 @@ export class EventsComponent extends AbstractComponent
       );
   }
 
-  public submitUpdateEvent(model: any): void {
-    this.eventsComponentService
-      .updateGameAddress(model)
+  public submitUpdateMeeting(model: any): void {
+    this.meetingsComponentService
+      .updateMeetingAddress(model)
       .pipe(
         finalize(() => {
           this.isLoading = false;
-          this.getEvents();
+          this.getMeeting();
           this.cd.markForCheck();
         })
       )
       .subscribe(
-        (game: Game) => {
+        (meeting: Meeting) => {
           this.toast.setMessage('Event updated.', 'info');
         },
         (err: HttpErrorResponse) =>
@@ -353,6 +357,6 @@ export class EventsComponent extends AbstractComponent
   }
 
   public onCancel(): void {
-    this.setEventsMode();
+    this.setMeetingMode();
   }
 }

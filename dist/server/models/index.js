@@ -9,7 +9,7 @@ var models = [
     'Area',
     'Comment',
     'Email',
-    'Game',
+    'Meeting',
     'Image',
     'Lock',
     'Match',
@@ -73,10 +73,10 @@ models.forEach(function (model) {
     m.Phone.belongsToMany(m.User, {
         through: 'user_phone'
     });
-    m.Game.belongsTo(m.Organization);
-    m.Game.belongsTo(m.Address);
-    m.Game.belongsTo(m.Phone);
-    m.Game.belongsTo(m.Sport);
+    m.Meeting.belongsTo(m.Organization);
+    m.Meeting.belongsTo(m.Address);
+    m.Meeting.belongsTo(m.Phone);
+    m.Meeting.belongsTo(m.Sport);
     m.User.belongsToMany(m.Match, {
         through: 'officiating'
     });
@@ -84,11 +84,11 @@ models.forEach(function (model) {
         through: 'officiating'
     });
     m.Sport.hasMany(m.Match);
-    m.Game.hasMany(m.Match);
+    m.Meeting.hasMany(m.Match);
     m.Address.hasMany(m.Match);
     m.Phone.hasMany(m.Match);
     m.Match.belongsTo(m.Sport);
-    m.Match.belongsTo(m.Game);
+    m.Match.belongsTo(m.Meeting);
     m.Match.belongsTo(m.Address);
     m.Match.belongsTo(m.Phone);
     m.User.hasMany(m.Post);

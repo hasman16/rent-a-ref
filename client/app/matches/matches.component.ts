@@ -25,7 +25,7 @@ import {
   Address,
   BaseModel,
   Phone,
-  Game,
+  Meeting,
   Match,
   Option,
   Organization,
@@ -63,8 +63,8 @@ enum ViewState {
 })
 export class MatchesComponent extends AbstractComponent implements OnInit {
   @Input('model')
-  set setGame(game: Game) {
-    this.game = _.cloneDeep(game);
+  set setMeeting(meeting: Meeting) {
+    this.meeting = _.cloneDeep(meeting);
     this.cd.markForCheck();
   }
   @Input('states')
@@ -74,7 +74,7 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
   private matches: any[] = [];
   private viewState: ViewState = ViewState.noMatches;
   public isLoading: boolean = false;
-  private game: Game = <Game>{};
+  private meeting: Meeting = <Meeting>{};
   public model: any = {};
   public states: Option[] = [];
   public delete_id: string;
@@ -97,16 +97,16 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
   ngOnInit() {
     this.initialize();
     this.searchAttribute = 'match_name|';
-    this.getAllMatchesByGame(this.game.id, this.page);
+    this.getAllMatchesByMeeting(this.meeting.id, this.page);
   }
 
   ngOnDestroy() {
     this.cleanUp();
   }
 
-  public getAllMatchesByGame(game_id: string, page: Page): void {
+  public getAllMatchesByMeeting(meeting_id: string, page: Page): void {
     this.matchService
-      .getAllMatchesByGame(game_id, page)
+      .getAllMatchesByMeeting(meeting_id, page)
       .pipe(
         map((data: PagedData) => {
           data.rows = _.map(data.rows, match => {
@@ -139,16 +139,16 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
   public backToList($event): void {
     this.viewState = ViewState.listMatches;
     this.cd.markForCheck();
-    this.getAllMatchesByGame(this.game.id, this.page);
+    this.getAllMatchesByMeeting(this.meeting.id, this.page);
   }
 
   public setPage(paging): void {
     this.page.offset = paging.offset;
-    this.getAllMatchesByGame(this.game.id, this.page);
+    this.getAllMatchesByMeeting(this.meeting.id, this.page);
   }
 
   protected getData(data: Page): void {
-    this.getAllMatchesByGame(this.game.id, data);
+    this.getAllMatchesByMeeting(this.meeting.id, data);
   }
 
   public formatDate(id): string {
@@ -207,7 +207,7 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
         }),
         finalize(() => {
           this.cd.markForCheck();
-          this.getAllMatchesByGame(this.game.id, this.page);
+          this.getAllMatchesByMeeting(this.meeting.id, this.page);
         })
       )
       .subscribe((state: AlertState) => {
@@ -223,21 +223,21 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
   }
 
   public createNewMatch(): void {
-    const game: any = _.cloneDeep(this.game);
+    const meeting: any = _.cloneDeep(this.meeting);
     const [matchDate, matchTime]: [string, string] = this.getDateAndTime(
-      game.start_date,
-      game.timezone_id
+      meeting.start_date,
+      meeting.timezone_id
     );
 
     this.model = {
-      venue_name: game.venue_name,
+      venue_name: meeting.venue_name,
       date: matchDate,
       time: matchTime,
-      line1: game.line1,
-      line2: game.line2,
-      city: game.city,
-      state: game.state,
-      zip: game.zip
+      line1: meeting.line1,
+      line2: meeting.line2,
+      city: meeting.city,
+      state: meeting.state,
+      zip: meeting.zip
     };
     this.viewState = ViewState.editMatch;
     this.cd.markForCheck();
@@ -263,7 +263,7 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
       referees: match.referees,
       sport_id: match.sport_id,
       address_id: match.address_id,
-      game_id: match.game_id,
+      meeting_id: match.meeting_id,
       line1: address.line1,
       line2: address.line2,
       city: address.city,
@@ -313,7 +313,7 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
       .updateMatch(match)
       .pipe(
         finalize(() => {
-          this.getAllMatchesByGame(this.game.id, this.page);
+          this.getAllMatchesByMeeting(this.meeting.id, this.page);
         })
       )
       .subscribe(
@@ -329,10 +329,10 @@ export class MatchesComponent extends AbstractComponent implements OnInit {
   protected submitNewMatch(model): void {
     this.isLoading = true;
     this.matchService
-      .createMatch(this.game.id, this.convertModelToMatch(model))
+      .createMatch(this.meeting.id, this.convertModelToMatch(model))
       .pipe(
         finalize(() => {
-          this.getAllMatchesByGame(this.game.id, this.page);
+          this.getAllMatchesByMeeting(this.meeting.id, this.page);
         })
       )
       .subscribe(

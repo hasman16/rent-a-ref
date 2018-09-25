@@ -1,5 +1,5 @@
 export * from './auth.service';
-export * from './events.service';
+export * from './meeting.service';
 export * from './match.service';
 export * from './organize.service';
 export * from './paging.service';

@@ -366,8 +366,7 @@ var ResponseService = /** @class */ (function () {
             });
         });
     };
-    ResponseService.prototype.getTimezoneFromGoogle = function (location, timestamp) {
-        if (timestamp === void 0) { timestamp = null; }
+    ResponseService.prototype.getTimezoneFromGoogle = function (location) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -409,6 +408,22 @@ var ResponseService = /** @class */ (function () {
                             });
                         }
                     })];
+            });
+        });
+    };
+    ResponseService.prototype.byPassTimeLockIfAdmin = function (req, item) {
+        return __awaiter(this, void 0, void 0, function () {
+            var lock;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        lock = 1;
+                        if (this.isAdmin(req)) {
+                            lock = 0;
+                        }
+                        return [4 /*yield*/, this.isTimeLocked(item, lock)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
             });
         });
     };
