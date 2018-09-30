@@ -28,8 +28,8 @@
                 </div>
                 <div class="col-md-4">
                   <div class="d-flex justify-content-between">
-                    <span class="d-inline-block">{{ formatDate(game) }}</span>
-                    <span class="d-inline-block">{{ formatTime(game) }}</span>
+                    <span>{{ game.date | date:'mediumDate': game.timezone_id}}</span>
+                    <span>{{ game.date | date:'shortTime': game.timezone_id}}</span>
                   </div>
                 </div>
 

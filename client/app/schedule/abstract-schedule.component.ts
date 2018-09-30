@@ -176,7 +176,6 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	}
 
 	public declineMatch(event): void {
-		console.log('got event:', event);
 		this.processButtonClick(event, 'decline');
 	}
 
@@ -189,7 +188,6 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 		const id: number = parseInt(
 			String(event.target.id).replace(/[a-z]/gi, '')
 		);
-		console.log('ids was:', id);
 		this.generateOfficiateRelation(id, action, success, error);
 	}
 

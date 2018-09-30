@@ -29,8 +29,8 @@
                 </div>
                 <div class="col-md-4">
                   <div class="d-flex justify-content-between">
-                    <span>{{ formatDate(game) }}</span>
-                    <span>{{ formatTime(game) }}</span>
+                    <span>{{ game.date | date:'mediumDate': game.timezone_id}}</span>
+                    <span>{{ game.date | date:'shortTime': game.timezone_id}}</span>
                   </div>
                 </div>
 
@@ -63,7 +63,6 @@
                     <button class="btn btn-danger btn-sm" id="b{{game.id}}"  (click)="declineMatch($event)" title="Click to decline a match" *ngIf="canDecline(game)">Decline</button>
 
                     <button class="btn btn-danger btn-sm" id="c{{game.id}}" (click)="declineMatch($event)" title="Click to the match back to the Admin." *ngIf="canTurnBack(game)">Turn Back</button>
-
        
                 </div>
               </div>

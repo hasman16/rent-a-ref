@@ -49,7 +49,7 @@
     </nav>
     <br />
 
-    <div *ngIf="isTabEditEvent()">
+    <div *ngIf="isTabEditMeeting()">
       <div class="card form-size">
         <events-form (ngSubmit)="submitMeeting($event)" (ngCancel)="setMeetingMode($event)"
          [model]="model"

@@ -1,15 +1,13 @@
 {
-	"variables": [],
 	"info": {
-		"name": "Rent-A-Ref",
 		"_postman_id": "639d8bdd-e340-35db-5c61-695af663e59d",
+		"name": "Rent-A-Ref",
 		"description": "API tests for rent-a-ref website on Heroku. Will need to tests on Heroku too.",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Login",
-			"description": "",
 			"item": [
 				{
 					"name": "login as admin1",
@@ -17,6 +15,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "7b9bcf33-d190-4ec5-b9ea-e4aba54809c2",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -45,33 +44,39 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"description": "",
 									"key": "email",
-									"type": "text",
-									"value": "admin1@rentaref.com"
+									"value": "admin1@rentaref.com",
+									"type": "text"
 								},
 								{
-									"description": "",
 									"key": "password",
-									"type": "text",
-									"value": "admin1"
+									"value": "admin1",
+									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -81,6 +86,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "8f7768e8-355f-43c8-83fc-a0cd2a66800a",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -109,33 +115,39 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"description": "",
 									"key": "email",
-									"type": "text",
-									"value": "admin2@rentaref.com"
+									"value": "admin2@rentaref.com",
+									"type": "text"
 								},
 								{
-									"description": "",
 									"key": "password",
-									"type": "text",
-									"value": "admin2"
+									"value": "admin2",
+									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -145,6 +157,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "55cc2c57-18d9-4ede-bdc6-24bb909c3b82",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -173,33 +186,39 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"description": "",
 									"key": "email",
-									"type": "text",
-									"value": "ref1@rentaref.com"
+									"value": "ref1@rentaref.com",
+									"type": "text"
 								},
 								{
-									"description": "",
 									"key": "password",
-									"type": "text",
-									"value": "referee1"
+									"value": "referee1",
+									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -209,6 +228,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "663f2e35-9ef2-4db0-9346-917a2741364a",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -237,33 +257,39 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"description": "",
 									"key": "email",
-									"type": "text",
-									"value": "ref2@rentaref.com"
+									"value": "ref2@rentaref.com",
+									"type": "text"
 								},
 								{
-									"description": "",
 									"key": "password",
-									"type": "text",
-									"value": "referee2"
+									"value": "referee2",
+									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -273,6 +299,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "bc6d2d9f-3ea4-4c4b-89d9-034d6d0cf6dd",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -290,7 +317,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -308,7 +334,17 @@
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -318,6 +354,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "82f31f4c-b1cb-48b4-9323-a46210aae98b",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -335,7 +372,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -353,7 +389,17 @@
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -363,6 +409,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "9791cbf5-8486-46db-a118-97cec1124497",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -380,13 +427,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -395,18 +440,26 @@
 								{
 									"key": "email",
 									"value": "fredflintstone@bedrock.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "fjljj",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				}
@@ -414,7 +467,6 @@
 		},
 		{
 			"name": "Addresses as ref1",
-			"description": "Unit tests for address CRUD endpoints for a user. The getAll call should fail, this should only work for admins.",
 			"item": [
 				{
 					"name": "login as ref1",
@@ -422,6 +474,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "04fb2f1c-29ff-4992-9f82-118cc682d31d",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -450,13 +503,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -465,18 +516,26 @@
 								{
 									"key": "email",
 									"value": "ref1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "referee1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -503,13 +562,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/addresses",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -518,18 +575,26 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/addresses",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"addresses"
+							]
+						}
 					},
 					"response": []
 				},
@@ -552,13 +617,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -567,18 +630,28 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/addresses",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"addresses"
+							]
+						}
 					},
 					"response": []
 				},
@@ -608,18 +681,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -628,36 +698,43 @@
 								{
 									"key": "line1",
 									"value": "255 Main St",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "line2",
 									"value": "",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "city",
 									"value": "Metroville",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "state",
 									"value": "CA",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "zip",
 									"value": "92866",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/addresses",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"addresses"
+							]
+						}
 					},
 					"response": []
 				},
@@ -680,13 +757,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -695,18 +770,28 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/addresses",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"addresses"
+							]
+						}
 					},
 					"response": []
 				},
@@ -733,18 +818,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/addresses/{{addressId}}",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -753,62 +835,67 @@
 								{
 									"key": "line1",
 									"value": "255 Main St",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "line2",
 									"value": "",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "city",
 									"value": "Metroville South",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "state",
 									"value": "CA",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "zip",
 									"value": "92866",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "created_at",
 									"value": "2017-08-07T06:04:09.699Z",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "deleted_at",
 									"value": "2017-08-07T06:04:09.699Z",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "updated_at",
 									"value": "2017-08-07T06:04:09.699Z",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/addresses/{{addressId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"addresses",
+								"{{addressId}}"
+							]
+						}
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Unit tests for address CRUD endpoints for a user. The getAll call should fail, this should only work for admins."
 		},
 		{
 			"name": "Addresses as admin1",
-			"description": "Unit tests for address CRUD endpoints for a user. The getAll call should fail, this should only work for admins.",
 			"item": [
 				{
 					"name": "login as admin1",
@@ -816,6 +903,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "aae46acf-fd8a-45df-8799-7e991258bdcb",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -844,13 +932,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -859,18 +945,26 @@
 								{
 									"key": "email",
 									"value": "admin1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -892,13 +986,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/addresses",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -907,18 +999,26 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/addresses",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"addresses"
+							]
+						}
 					},
 					"response": []
 				},
@@ -928,6 +1028,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "5dffdabf-48ef-46fa-ac3f-c24e2ebf1ec5",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -938,13 +1039,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -953,18 +1052,28 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/addresses",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"addresses"
+							]
+						}
 					},
 					"response": []
 				},
@@ -994,18 +1103,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -1014,36 +1120,43 @@
 								{
 									"key": "line1",
 									"value": "255 Main St",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "line2",
 									"value": "",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "city",
 									"value": "Metroville",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "state",
 									"value": "CA",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "zip",
 									"value": "92866",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/addresses",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"addresses"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1053,6 +1166,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "ebb1d84a-1f41-4899-acec-9be76583109d",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -1063,13 +1177,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/addresses",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -1078,18 +1190,28 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/addresses",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"addresses"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1099,6 +1221,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "0321633d-e768-4708-892a-83eb07033573",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -1115,18 +1238,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/addresses/{{addressId}}",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -1135,44 +1255,52 @@
 								{
 									"key": "line1",
 									"value": "255 Main St",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "line2",
 									"value": "",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "city",
 									"value": "Metroville South",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "state",
 									"value": "CA",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "zip",
 									"value": "92866",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/addresses/{{addressId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"addresses",
+								"{{addressId}}"
+							]
+						}
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Unit tests for address CRUD endpoints for a user. The getAll call should fail, this should only work for admins."
 		},
 		{
 			"name": "Blog as ref",
-			"description": "Unit tests for address CRUD endpoints for a user. The getAll call should fail, this should only work for admins.",
 			"item": [
 				{
 					"name": "login as ref1",
@@ -1180,6 +1308,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "1b4c4204-b251-401d-b8c2-9c2d36ed87c3",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -1208,13 +1337,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -1223,18 +1350,26 @@
 								{
 									"key": "email",
 									"value": "admin1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1257,33 +1392,41 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/posts",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"description": "",
 									"key": "email",
-									"type": "text",
-									"value": "admin2@rentaref.com"
+									"value": "admin2@rentaref.com",
+									"type": "text"
 								},
 								{
-									"description": "",
 									"key": "password",
-									"type": "text",
-									"value": "admin2"
+									"value": "admin2",
+									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/posts",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"posts"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1293,6 +1436,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "09eff6b7-7913-43e3-9550-8487e7ef3dd4",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -1310,18 +1454,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/posts",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -1330,12 +1471,21 @@
 								{
 									"key": "content",
 									"value": "Crazy ramblings of a lunatic.",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/posts",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"posts"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1345,6 +1495,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "5fdbb53d-2b01-4dcd-b312-e2c1f6966f7d",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -1364,13 +1515,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/posts",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -1379,18 +1528,28 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/posts",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"posts"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1400,6 +1559,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "824ef02f-1314-4b2b-be88-ded921219627",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -1409,18 +1569,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/posts/{{postId}}",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -1429,12 +1586,22 @@
 								{
 									"key": "content",
 									"value": "Mary had a little lamb.",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/posts/{{postId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"posts",
+								"{{postId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1444,6 +1611,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "ebfa5b96-d334-4865-977c-9d7cbc236877",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -1459,13 +1627,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/posts",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -1474,26 +1640,34 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/posts",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"posts"
+							]
+						}
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Unit tests for address CRUD endpoints for a user. The getAll call should fail, this should only work for admins."
 		},
 		{
 			"name": "Organizations as Admin1",
-			"description": "",
 			"item": [
 				{
 					"name": "login as admin1",
@@ -1501,6 +1675,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "6ef94982-6310-4a19-b621-a88fc9ab8102",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -1529,13 +1704,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -1544,18 +1717,26 @@
 								{
 									"key": "email",
 									"value": "admin1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1582,13 +1763,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -1597,12 +1776,21 @@
 								{
 									"key": "name",
 									"value": "Test Organization",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1624,13 +1812,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -1639,18 +1825,26 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1678,13 +1872,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -1693,12 +1885,22 @@
 								{
 									"key": "name",
 									"value": "Underwater basket weaving",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1708,6 +1910,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "8559c48f-1fef-42d4-a472-0a48824be8e7",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -1723,13 +1926,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -1738,18 +1939,27 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1759,6 +1969,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "0aa0c13a-5094-4dc7-ba93-ebedc7c15579",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -1775,18 +1986,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}/phones",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -1795,18 +2003,28 @@
 								{
 									"key": "number",
 									"value": "9495555455",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "description",
 									"value": "mobile",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}",
+								"phones"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1816,6 +2034,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "dc4f1c70-84c6-4f10-a3e2-9e1631ecf25f",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -1835,18 +2054,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}/phones",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -1855,18 +2071,28 @@
 								{
 									"key": "number",
 									"value": "9495555455",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "description",
 									"value": "mobile",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}",
+								"phones"
+							]
+						}
 					},
 					"response": []
 				}
@@ -1874,7 +2100,6 @@
 		},
 		{
 			"name": "Organizations as ref1",
-			"description": "",
 			"item": [
 				{
 					"name": "login as ref1",
@@ -1882,6 +2107,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "caea7930-68ac-4754-833f-3138ef21b594",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -1910,13 +2136,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -1925,18 +2149,26 @@
 								{
 									"key": "email",
 									"value": "ref1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "referee1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1946,6 +2178,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "55e941a4-5852-4776-a6a3-a9c22990cf13",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -1963,13 +2196,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -1978,12 +2209,21 @@
 								{
 									"key": "name",
 									"value": "Test Organization",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1993,6 +2233,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "5c354ada-4a29-4121-a033-59686adeb09c",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -2007,33 +2248,39 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"description": "",
 									"key": "email",
-									"type": "text",
-									"value": "admin2@rentaref.com"
+									"value": "admin2@rentaref.com",
+									"type": "text"
 								},
 								{
-									"description": "",
 									"key": "password",
-									"type": "text",
-									"value": "admin2"
+									"value": "admin2",
+									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2061,13 +2308,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -2076,12 +2321,22 @@
 								{
 									"key": "name",
 									"value": "Underwater basket weaving",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2111,13 +2366,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -2126,18 +2379,27 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2147,6 +2409,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "fc71be0d-7e03-4609-ad9f-45d7abb98e0c",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -2163,18 +2426,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}/phones",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -2183,18 +2443,28 @@
 								{
 									"key": "number",
 									"value": "9495555455",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "description",
 									"value": "mobile",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}",
+								"phones"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2204,6 +2474,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "bfcee988-7ec6-41df-ac68-a5be27a7eac3",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -2217,25 +2488,35 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}/phones/bulk",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n \"phones\": [\n  {\n  \"number\": \"9495558888\",\n  \"description\": \"mobile\"\n  },\n  {\n  \"number\": \"9498885555\",\n  \"description\": \"home\"\n  }\n ]\n }"
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}/phones/bulk",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}",
+								"phones",
+								"bulk"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2245,6 +2526,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "0bb2d84c-cf41-4a40-af59-e07a1581cba7",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -2264,18 +2546,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}/phones",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -2284,18 +2563,28 @@
 								{
 									"key": "number",
 									"value": "9495555455",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "description",
 									"value": "mobile",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}",
+								"phones"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2305,6 +2594,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "e4ad4014-577a-4668-8ac6-a68c960bcc20",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -2317,18 +2607,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}/addresses",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -2337,36 +2624,43 @@
 								{
 									"key": "line1",
 									"value": "255 Main St",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "line2",
 									"value": "",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "city",
 									"value": "Metroville",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "state",
 									"value": "CA",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "zip",
 									"value": "92866",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}/addresses",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}",
+								"addresses"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2376,6 +2670,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "0aa6fa29-f002-4a55-9bb4-83784c56baa1",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -2393,25 +2688,35 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}/addresses/bulk",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n \"addresses\": [\n  {\n  \"line1\": \"55 Main St\",\n  \"line2\": \"\",\n  \"city\": \"Orange\",\n  \"state\": \"CA\",\n  \"zip\": 92688\n  },\n    {\n  \"line1\": \"110 Main\",\n  \"line2\": \"Apt 1B\",\n  \"city\": \"Orange\",\n  \"state\": \"CA\",\n  \"zip\": 92688\n  }\n ]\n }"
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}/addresses/bulk",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}",
+								"addresses",
+								"bulk"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2421,6 +2726,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "8a18fed8-0e7e-44af-8339-ea0e1e3b402c",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -2443,18 +2749,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}/addresses",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -2463,26 +2766,35 @@
 								{
 									"key": "number",
 									"value": "9495555455",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "description",
 									"value": "mobile",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}/addresses",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}",
+								"addresses"
+							]
+						}
 					},
 					"response": []
 				}
 			]
 		},
 		{
-			"name": "Game as Admin1",
-			"description": "",
+			"name": "Meet as Admin1",
 			"item": [
 				{
 					"name": "login as admin1",
@@ -2490,6 +2802,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "1595d848-e653-4ffb-94a0-683d60f1249c",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -2518,13 +2831,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -2533,27 +2844,36 @@
 								{
 									"key": "email",
 									"value": "admin1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/games",
+					"name": "localhost:3000/api/meeting",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -2564,13 +2884,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/games",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -2579,18 +2897,26 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/meeting",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2600,6 +2926,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "44c51f20-809b-4d7b-b5ec-64b13d0659fe",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -2617,13 +2944,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -2632,12 +2957,21 @@
 								{
 									"key": "name",
 									"value": "Test Organization",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/organizations",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2667,13 +3001,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -2682,33 +3014,43 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/games",
+					"name": "localhost:3000/api/meeting",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "0381fc68-c9b7-4519-980a-a4a518175211",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 201;",
 									"tests['Returns an id'] = responseBody.has('id');",
-									"postman.setGlobalVariable(\"gameId\", item.id);",
+									"postman.setGlobalVariable(\"meetingId\", item.id);",
 									"",
 									"",
 									""
@@ -2717,34 +3059,42 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/games",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"event_name\": \"Junior Special\",\n  \"start_date\": \"2099-07-04\",\n  \"start_time\": \"10:40\",\n  \"end_date\": \"2099-09-05\",\n  \"end_time\":\"11:40\",\n  \"event_type\": \"oneoff\",\n  \"venue_name\": \"Junior High School 13\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"333 S Prospect St\",\n    \"line2\": \"\",\n    \"city\": \"Orange\",\n    \"state\":\"CA\",\n    \"zip\": \"92869\"\n   },\n   \"phone\": {\n     \"number\":\"9497778888\",\n     \"description\":\"mobile\"\n   }\n }"
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/games",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"games"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id/games",
+					"name": "localhost:3000/api/organization/:id/meeting",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "3f679550-6b2e-48d8-9e48-1c2a85e55998",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -2755,40 +3105,50 @@
 									"",
 									"tests['Expect game id to be a number'] = /\\d+/.test(item.id);",
 									"//tests['Expect user_id is return return correctly'] = item.user_id == postman.getGlobalVariable(\"userId\");",
-									"postman.setGlobalVariable(\"gameId\", item.id);"
+									"postman.setGlobalVariable(\"meetingId\", item.id);"
 								]
 							}
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}/games",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"event_name\": \"Junior Special\",\n  \"start_date\": \"2099-07-04\",\n  \"start_time\": \"10:40\",\n  \"end_date\": \"2099-09-05\",\n  \"end_time\":\"11:40\",\n  \"event_type\": \"oneoff\",\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"95 Lavinia Ave\",\n    \"line2\": \"\",\n    \"city\": \"Toronto\",\n    \"state\":\"ON\",\n    \"zip\": \"M6S 3H9\"\n   }\n }"
+							"raw": "{\n  \"event_name\": \"Junior Special\",\n\t\"start_date\": \"2099-07-04\",\n\t\"start_time\": \"10:40\",\n\t\"end_date\": \"2099-09-05\",\n\t\"end_time\":\"11:40\",\n  \"event_type\": \"oneoff\",\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"95 Lavinia Ave\",\n    \"line2\": \"\",\n    \"city\": \"Toronto\",\n    \"state\":\"ON\",\n    \"zip\": \"M6S 3H9\"\n   }\n }"
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/organization/{{organizationId}}/meeting",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organization",
+								"{{organizationId}}",
+								"meeting"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id/games",
+					"name": "localhost:3000/api/organization/:id/meeting",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "1634c95e-c098-4b71-9b1a-67e79e830105",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -2797,42 +3157,52 @@
 									"tests['Returns a event_name'] = responseBody.has('event_name');",
 									"tests['Returns a venue_name'] = responseBody.has('venue_name');",
 									"",
-									"tests['Expect game id to be a number'] = /\\d+/.test(item.id);",
+									"tests['Expect meeting id to be a number'] = /\\d+/.test(item.id);",
 									"",
-									"postman.setGlobalVariable(\"gameId\", item.id);"
+									"postman.setGlobalVariable(\"meetingId\", item.id);"
 								]
 							}
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}/games",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"event_name\": \"Junior Special\",\n  \"start_date\": \"2099-07-04\",\n  \"start_time\": \"10:40\",\n  \"end_date\": \"2099-09-05\",\n  \"end_time\":\"11:40\",\n  \"event_type\": \"oneoff\",\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"333 S Prospect St\",\n    \"line2\": \"\",\n    \"city\": \"Orange\",\n    \"state\":\"CA\",\n    \"zip\": \"92869\"\n   },\n   \"phone\": {\n     \"number\":\"9497778888\",\n     \"description\":\"mobile\"\n   }\n }"
+							"raw": "{\n  \"event_name\": \"Junior Special\",\n\t\"start_date\": \"2099-07-04\",\n\t\"start_time\": \"10:40\",\n\t\"end_date\": \"2099-09-05\",\n\t\"end_time\":\"11:40\",\n  \"event_type\": \"oneoff\",\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"333 S Prospect St\",\n    \"line2\": \"\",\n    \"city\": \"Orange\",\n    \"state\":\"CA\",\n    \"zip\": \"92869\"\n   },\n   \"phone\": {\n   \t\"number\":\"9497778888\",\n   \t\"description\":\"mobile\"\n   }\n }"
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/organization/{{organizationId}}/meeting",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organization",
+								"{{organizationId}}",
+								"meeting"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/games/:game_id/matches",
+					"name": "localhost:3000/api/meeting/:meeting_id/matches",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "abe2df04-c63c-490c-8a02-4082171d5cac",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -2847,25 +3217,34 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/games/{{gameId}}/matches",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"match_name\":\"McPherson vs Orange Elementary\",\n  \"date\":\"2099-08-07\",\n  \"time\":\"14:30\",\n  \"periods\":\"2\",\n  \"duration\":\"45\",\n  \"referees\":\"5\",\n  \"venue_name\":\"sadfasdfasd\",\n  \"status\":\"pending\",\"age\":\"U10\",\n  \"address\":{\n    \"line1\":\"fasdfasdf\",\n    \"line2\":null,\n    \"city\":\"asdfasd\",\n    \"state\":\"CA\",\n    \"zip\":\"92866\"\n  }\n}"
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/games/{{meetingId}}/matches",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"games",
+								"{{meetingId}}",
+								"matches"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2888,18 +3267,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/officiate/match",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -2908,24 +3284,32 @@
 								{
 									"key": "user_id",
 									"value": "{{userId}}",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "match_id",
 									"value": "{{matchId}}",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "position",
 									"value": "0",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/officiate/match",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"officiate",
+								"match"
+							]
+						}
 					},
 					"response": []
 				},
@@ -2935,6 +3319,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "4369aa7b-e3fd-4986-96da-0d3965769898",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -2948,18 +3333,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/decline/match",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -2968,27 +3350,37 @@
 								{
 									"key": "user_id",
 									"value": "{{userId}}",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "match_id",
 									"value": "{{matchId}}",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/decline/match",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"decline",
+								"match"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/games/:game_id/matches",
+					"name": "localhost:3000/api/meeting/:meeting_id/matches",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "abe2df04-c63c-490c-8a02-4082171d5cac",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -3003,25 +3395,34 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/games/{{gameId}}/matches",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"match_name\":\"Orange Elementary vs McPherson\",\n  \"date\":\"2099-07-15\",\n  \"time\":\"10:15\",\n  \"referees\":\"5\",\n    \"periods\":\"2\",\n  \"duration\":\"45\",\n  \"venue_name\":\"sadfasdfasd\",\n  \"status\":\"pending\",\"age\":\"U12\",\n  \"address\":{\n    \"line1\":\"fasdfasdf\",\n    \"line2\":null,\n    \"city\":\"asdfasd\",\n    \"state\":\"CA\",\n    \"zip\":\"92866\"\n  }\n}"
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/games/{{meetingId}}/matches",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"games",
+								"{{meetingId}}",
+								"matches"
+							]
+						}
 					},
 					"response": []
 				},
@@ -3044,18 +3445,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/officiate/match",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -3064,24 +3462,32 @@
 								{
 									"key": "user_id",
 									"value": "{{userId}}",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "match_id",
 									"value": "{{matchId}}",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "position",
 									"value": "1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/officiate/match",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"officiate",
+								"match"
+							]
+						}
 					},
 					"response": []
 				},
@@ -3091,6 +3497,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "aaf85047-9408-4204-a05d-56d6e67cee8b",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -3104,18 +3511,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/accept/match",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -3124,110 +3528,108 @@
 								{
 									"key": "user_id",
 									"value": "{{userId}}",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "match_id",
 									"value": "{{matchId}}",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
-					},
-					"response": []
-				},
-				{
-					"name": "localhost:3000/api/games",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 200;",
-									""
-								]
-							}
-						}
-					],
-					"request": {
 						"url": {
-							"raw": "localhost:3000/api/games?search=event_name|&order=DESC&offset=0&sortby=id,event_name",
+							"raw": "localhost:3000/api/accept/match",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"api",
-								"games"
+								"accept",
+								"match"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/meeting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/meeting?search=event_name|&order=DESC&offset=0&sortby=id,event_name",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting"
 							],
 							"query": [
 								{
 									"key": "search",
-									"value": "event_name|",
-									"equals": true,
-									"description": ""
+									"value": "event_name|"
 								},
 								{
 									"key": "order",
-									"value": "DESC",
-									"equals": true,
-									"description": ""
+									"value": "DESC"
 								},
 								{
 									"key": "offset",
-									"value": "0",
-									"equals": true,
-									"description": ""
+									"value": "0"
 								},
 								{
 									"key": "sortby",
-									"value": "id,event_name",
-									"equals": true,
-									"description": ""
-								}
-							],
-							"variable": []
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "admin2@rentaref.com",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "admin2",
-									"description": "",
-									"type": "text"
+									"value": "id,event_name"
 								}
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/games/:id",
+					"name": "localhost:3000/api/meeting/:id",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3238,13 +3640,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/games/{{gameId}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -3253,39 +3653,17 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
-					},
-					"response": []
-				},
-				{
-					"name": "localhost:3000/api/games/:game_id/matches?offset=0&limit=10&total_elements=1&total_pages=1&sortby=&order=&search=",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"var data = JSON.parse(responseBody);",
-									"tests['Status code is 200'] = responseCode.code === 200;",
-									""
-								]
-							}
-						}
-					],
-					"request": {
 						"url": {
-							"raw": "localhost:3000/api/games/{{gameId}}/matches?offset=0&limit=10&total_elements=1&total_pages=1&sortby=&order=&search=",
+							"raw": "localhost:3000/api/games/{{gameId}}",
 							"host": [
 								"localhost"
 							],
@@ -3293,61 +3671,34 @@
 							"path": [
 								"api",
 								"games",
-								"{{gameId}}",
-								"matches"
-							],
-							"query": [
-								{
-									"key": "offset",
-									"value": "0",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "limit",
-									"value": "10",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "total_elements",
-									"value": "1",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "total_pages",
-									"value": "1",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "sortby",
-									"value": "",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "order",
-									"value": "",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "search",
-									"value": "",
-									"equals": true,
-									"description": ""
-								}
-							],
-							"variable": []
-						},
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/meeting/:meeting_id/matches?offset=0&limit=10&total_elements=1&total_pages=1&sortby=&order=&search=",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"tests['Status code is 200'] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -3356,27 +3707,68 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/games/{{meetingId}}/matches?offset=0&limit=10&total_elements=1&total_pages=1&sortby=&order=&search=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"games",
+								"{{meetingId}}",
+								"matches"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "total_elements",
+									"value": "1"
+								},
+								{
+									"key": "total_pages",
+									"value": "1"
+								},
+								{
+									"key": "sortby",
+									"value": ""
+								},
+								{
+									"key": "order",
+									"value": ""
+								},
+								{
+									"key": "search",
+									"value": ""
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id/games",
+					"name": "localhost:3000/api/organization/:id/meeting",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "615437bc-aac3-4b65-a772-761a65e28e1d",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3386,25 +3778,34 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}/games",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"event_name\": \"Junior Special\",\n  \"event_date\": 1284102000000,\n  \"event_type\": \"oneoff\",\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"crap\",\n    \"line2\": \"xxxxxpp\",\n    \"city\": \"Orange\",\n    \"state\":\"CA\",\n    \"zip\": \"92888\"\n   }\n }"
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/organization/{{organizationId}}/games",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organization",
+								"{{organizationId}}",
+								"games"
+							]
+						}
 					},
 					"response": []
 				},
@@ -3414,6 +3815,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3424,13 +3826,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/referee/{{userId}}/schedule",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -3439,18 +3839,28 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/referee/{{userId}}/schedule",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"referee",
+								"{{userId}}",
+								"schedule"
+							]
+						}
 					},
 					"response": []
 				},
@@ -3460,6 +3870,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3470,13 +3881,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/match/{{matchId}}/officials",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -3485,18 +3894,28 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/match/{{matchId}}/officials",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"match",
+								"{{matchId}}",
+								"officials"
+							]
+						}
 					},
 					"response": []
 				},
@@ -3506,6 +3925,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3516,13 +3936,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/officials/match/{{matchId}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -3531,18 +3949,28 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/officials/match/{{matchId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"officials",
+								"match",
+								"{{matchId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -3552,6 +3980,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3562,6 +3991,28 @@
 						}
 					],
 					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authoriztionToken}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin2@rentaref.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin2",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
 							"raw": "localhost:3000/api/officials/match/{{matchId}}?search=can_referee|active,email|adm",
 							"host": [
@@ -3577,47 +4028,17 @@
 							"query": [
 								{
 									"key": "search",
-									"value": "can_referee|active,email|adm",
-									"equals": true,
-									"description": ""
-								}
-							],
-							"variable": []
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "admin2@rentaref.com",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "admin2",
-									"description": "",
-									"type": "text"
+									"value": "can_referee|active,email|adm"
 								}
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				}
 			]
 		},
 		{
-			"name": "Game as ref1",
-			"description": "",
+			"name": "Meeting as ref1",
 			"item": [
 				{
 					"name": "login as ref1",
@@ -3625,6 +4046,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "0efcf4d4-0948-4f0c-8fc7-a19daad5b1e5",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3653,7 +4075,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
@@ -3676,16 +4097,27 @@
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/games",
+					"name": "localhost:3000/api/meeting",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3696,7 +4128,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/games",
 						"method": "GET",
 						"header": [
 							{
@@ -3719,7 +4150,17 @@
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/meeting",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting"
+							]
+						}
 					},
 					"response": []
 				},
@@ -3729,6 +4170,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "44c51f20-809b-4d7b-b5ec-64b13d0659fe",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -3746,7 +4188,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations",
 						"method": "POST",
 						"header": [
 							{
@@ -3764,7 +4205,17 @@
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/organizations",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
 					},
 					"response": []
 				},
@@ -3794,7 +4245,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organizations/{{organizationId}}",
 						"method": "GET",
 						"header": [
 							{
@@ -3817,22 +4267,34 @@
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/organizations/{{organizationId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/games",
+					"name": "localhost:3000/api/meeting",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "c7bcbc39-3df4-4162-8d99-cdc07ee2b17f",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
 									"tests['Status code is 200'] = responseCode.code === 201;",
 									"tests['Returns an id'] = responseBody.has('id');",
-									"postman.setGlobalVariable(\"gameId\", item.id);",
+									"postman.setGlobalVariable(\"meetingId\", item.id);",
 									"",
 									"",
 									""
@@ -3841,34 +4303,42 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/games",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"event_name\": \"Junior Special\",\n    \"event_type\": \"oneoff\",\n  \"start_date\": \"2099-07-04\",\n  \"start_time\":\"10:45\",\n    \"end_date\": \"2099-07-04\",\n  \"end_time\":\"12:45\",\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"95 Lavinia Ave\",\n    \"line2\": \"\",\n    \"city\": \"Toronto\",\n    \"state\":\"ON\",\n    \"zip\": \"M6S 3H9\"\n   }\n }"
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/meeting",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/organization/:id/games",
+					"name": "localhost:3000/api/organization/:id/meeting",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "a40ccb78-7ed8-4a26-aec1-3245156320a4",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -3879,40 +4349,50 @@
 									"",
 									"tests['Expect game id to be a number'] = /\\d+/.test(item.id);",
 									"//tests['Expect user_id is return return correctly'] = item.user_id == postman.getGlobalVariable(\"userId\");",
-									"postman.setGlobalVariable(\"gameId\", item.id);"
+									"postman.setGlobalVariable(\"meetingId\", item.id);"
 								]
 							}
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/organization/{{organizationId}}/games",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"event_name\": \"Junior Special\",\n    \"event_type\": \"oneoff\",\n  \"start_date\": \"2099-07-04\",\n  \"start_time\":\"10:45\",\n    \"end_date\": \"2099-07-04\",\n  \"end_time\":\"12:45\",\n  \"venue_name\": \"Junior High School\",\n  \"kids_referees\": 5,\n  \"teens_referees\": 10,\n  \"adults_referees\": 15,\n  \"kids_refs_pay\": 100,\n  \"teens_refs_pay\": 110,\n  \"adults_refs_pay\": 120,\n  \"sport_id\": 1,\n  \"address\": {\n    \"line1\":\"95 Lavinia Ave\",\n    \"line2\": \"\",\n    \"city\": \"Toronto\",\n    \"state\":\"ON\",\n    \"zip\": \"M6S 3H9\"\n   },\n   \"phone\": {\n     \"number\":\"9491114444\",\n     \"description\":\"mobile\"\n   }\n }"
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/organization/{{organizationId}}/games",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"organization",
+								"{{organizationId}}",
+								"games"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/games",
+					"name": "localhost:3000/api/meeting",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3923,7 +4403,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/games",
 						"method": "GET",
 						"header": [
 							{
@@ -3946,16 +4425,27 @@
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/meeting",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/games/:id",
+					"name": "localhost:3000/api/meeting/:id",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "0d862ee3-f1f3-46ca-9319-0fe77e8694ec",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -3966,7 +4456,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/games/{{gameId}}",
 						"method": "GET",
 						"header": [
 							{
@@ -3989,7 +4478,18 @@
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/games/{{meetingId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"games",
+								"{{meetingId}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -3997,7 +4497,6 @@
 		},
 		{
 			"name": "People as ref1",
-			"description": "Unit tests for people endpoint.",
 			"item": [
 				{
 					"name": "login as ref1",
@@ -4005,6 +4504,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "23f23e0b-1179-4660-a8c2-6bd4f923fcee",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4034,13 +4534,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -4049,18 +4547,26 @@
 								{
 									"key": "email",
 									"value": "ref1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "referee1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4070,6 +4576,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "a81037e3-2e1d-4cd0-b79e-90c19a432d7d",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4087,13 +4594,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/people",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -4102,18 +4607,26 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/people",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"people"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4123,6 +4636,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "ce2904f8-4471-4dd0-b6b2-983e563bcb50",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4137,13 +4651,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/people/{{personId}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -4152,18 +4664,27 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/people/{{personId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"people",
+								"{{personId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4173,6 +4694,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "1c767609-2323-490b-8428-0044ac21d2b7",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4186,13 +4708,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/people/{{personId}}",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -4201,30 +4721,37 @@
 								{
 									"key": "firstname",
 									"value": "Harold",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "lastname",
 									"value": "LLoyd",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "dob",
 									"value": "1284102000000",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "gender",
 									"value": "f",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/people/{{personId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"people",
+								"{{personId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4234,6 +4761,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "cf083c97-73b2-4594-a0b2-d0000d698834",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4247,13 +4775,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/people/{{personId}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -4262,26 +4788,35 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/people/{{personId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"people",
+								"{{personId}}"
+							]
+						}
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Unit tests for people endpoint."
 		},
 		{
 			"name": "Phones as ref1",
-			"description": "Unit tests for phone CRUD endpoints for a user. The getAll call should fail, this should only work for admins.",
 			"item": [
 				{
 					"name": "login as ref1",
@@ -4289,6 +4824,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "4e1841be-cbf5-4949-9a72-f344ee36a8ee",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4317,13 +4853,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -4332,18 +4866,26 @@
 								{
 									"key": "email",
 									"value": "ref1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "referee1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4353,6 +4895,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "da1c76d6-1f8a-41d9-b570-2e1af0e625c0",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4370,13 +4913,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/phones",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -4385,18 +4926,26 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"phones"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4406,6 +4955,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "ea766fdf-92d9-4fc3-bd93-a0bc552e565d",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -4426,18 +4976,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/phones",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -4446,18 +4993,28 @@
 								{
 									"key": "number",
 									"value": "9495555455",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "description",
 									"value": "mobile",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"phones"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4467,6 +5024,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "2ba73f27-b95d-4620-92c2-93cb9af7401b",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -4487,18 +5045,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/phones",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -4507,18 +5062,28 @@
 								{
 									"key": "number",
 									"value": "9495555455",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "description",
 									"value": "home",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"phones"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4528,6 +5093,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "62f40415-c1c9-4fae-ae06-725a9ab76dcb",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -4548,18 +5114,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/phones",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -4568,18 +5131,28 @@
 								{
 									"key": "number",
 									"value": "9495555455",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "description",
 									"value": "other",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"phones"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4589,6 +5162,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "e989e63d-f0f2-437a-979c-77d6aa47ff61",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4603,13 +5177,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/phones",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -4618,18 +5190,28 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"phones"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4656,18 +5238,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/phones",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -4676,26 +5255,36 @@
 								{
 									"key": "number",
 									"value": "9495555455",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "description",
 									"value": "oasdfasd",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/phones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"phones"
+							]
+						}
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Unit tests for phone CRUD endpoints for a user. The getAll call should fail, this should only work for admins."
 		},
 		{
 			"name": "Sports as Admin1",
-			"description": "",
 			"item": [
 				{
 					"name": "login as admin1",
@@ -4703,6 +5292,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "594ab064-ce33-43a2-b2b5-1e8d21c13b3b",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -4731,13 +5321,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -4746,18 +5334,26 @@
 								{
 									"key": "email",
 									"value": "admin1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4777,13 +5373,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sports",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -4792,18 +5386,26 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/sports",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sports"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4838,13 +5440,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sports/1",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -4853,18 +5453,27 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/sports/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sports",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4874,6 +5483,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "f32386df-4800-4bc0-8c19-3b044593c80b",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -4899,13 +5509,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sports",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -4914,30 +5522,36 @@
 								{
 									"key": "name",
 									"value": "Underwater basket weaving",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "periods",
 									"value": "5",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "referees",
 									"value": "13",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "duration",
 									"value": "90",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/sports",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sports"
+							]
+						}
 					},
 					"response": []
 				},
@@ -4972,13 +5586,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sports/1",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -4987,30 +5599,37 @@
 								{
 									"key": "name",
 									"value": "Underwater basket weaving",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "periods",
 									"value": "5",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "referees",
 									"value": "13",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "duration",
 									"value": "90",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/sports/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sports",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -5018,7 +5637,6 @@
 		},
 		{
 			"name": "Sports as ref1",
-			"description": "",
 			"item": [
 				{
 					"name": "login as ref1",
@@ -5026,6 +5644,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "08975c0b-0d24-48ac-8490-3eff6c0523c5",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5053,13 +5672,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -5068,18 +5685,26 @@
 								{
 									"key": "email",
 									"value": "ref1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "referee1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -5099,13 +5724,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sports",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5114,18 +5737,26 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/sports",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sports"
+							]
+						}
 					},
 					"response": []
 				},
@@ -5160,13 +5791,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sports/1",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5175,18 +5804,27 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/sports/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sports",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -5196,6 +5834,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "3f5cc1f5-d7a8-4986-a599-4a31f9792616",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5213,13 +5852,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sports",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5228,30 +5865,36 @@
 								{
 									"key": "name",
 									"value": "Underwater basket weaving",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "periods",
 									"value": "5",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "referees",
 									"value": "13",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "duration",
 									"value": "90",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/sports",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sports"
+							]
+						}
 					},
 					"response": []
 				},
@@ -5261,6 +5904,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "496af8e4-5c56-479a-8fba-22f36c4302da",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5278,13 +5922,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/sports/1",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5293,30 +5935,37 @@
 								{
 									"key": "name",
 									"value": "Underwater basket weaving",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "periods",
 									"value": "5",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "referees",
 									"value": "13",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "duration",
 									"value": "90",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/sports/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sports",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -5324,7 +5973,6 @@
 		},
 		{
 			"name": "Users as Admin1",
-			"description": "",
 			"item": [
 				{
 					"name": "login as admin1",
@@ -5332,6 +5980,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "b37a447a-3076-4c1d-9e77-a0db6c87c85a",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5360,13 +6009,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -5375,31 +6022,37 @@
 								{
 									"key": "email",
 									"value": "admin1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/users",
 					"request": {
-						"url": "localhost:3000/api/users",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5408,31 +6061,37 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/users/1",
 					"request": {
-						"url": "localhost:3000/api/users/1",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5441,31 +6100,38 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/users",
 					"request": {
-						"url": "localhost:3000/api/users",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5474,55 +6140,57 @@
 								{
 									"key": "email",
 									"value": "test77@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "test1",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "firstname",
 									"value": "Lazerus",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "sex",
 									"value": "m",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "dob",
 									"value": "1758888",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "lastname",
 									"value": "Jones",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/users",
 					"request": {
-						"url": "localhost:3000/api/users",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5531,67 +6199,67 @@
 								{
 									"key": "email",
 									"value": "test78@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "test1",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "firstname",
 									"value": "Lazerus",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "sex",
 									"value": "m",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "dob",
 									"value": "1758888",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "lastname",
 									"value": "Jones",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "can_referee",
 									"value": "true",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "can_organize",
 									"value": "true",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/register",
 					"request": {
-						"url": "localhost:3000/api/register",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5600,49 +6268,52 @@
 								{
 									"key": "email",
 									"value": "register@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "test1",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "firstname",
 									"value": "Lazerus",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "sex",
 									"value": "m",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "dob",
 									"value": "1758888",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"register"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/users/1",
 					"request": {
-						"url": "localhost:3000/api/users/1",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5651,49 +6322,53 @@
 								{
 									"key": "email",
 									"value": "test4@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "test12",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "firstname",
 									"value": "Lazerus",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "sex",
 									"value": "m",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "dob",
 									"value": "1758888",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/users/1",
 					"request": {
-						"url": "localhost:3000/api/users/1",
 						"method": "DELETE",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5702,36 +6377,42 @@
 								{
 									"key": "email",
 									"value": "test4@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "test1",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "firstname",
 									"value": "Lazerus",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "sex",
 									"value": "m",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "dob",
 									"value": "1758888",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -5753,13 +6434,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/people",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5768,18 +6447,27 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/users/people",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"people"
+							]
+						}
 					},
 					"response": []
 				}
@@ -5787,7 +6475,6 @@
 		},
 		{
 			"name": "Users as Ref",
-			"description": "",
 			"item": [
 				{
 					"name": "login as ref ",
@@ -5795,6 +6482,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "1680e5d5-502c-45bf-896c-32e30da5acdb",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5822,13 +6510,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -5837,18 +6523,26 @@
 								{
 									"key": "email",
 									"value": "ref1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "referee1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -5858,6 +6552,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "89f5adc1-3611-48ba-95fa-ff53aee2c749",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5873,13 +6568,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5888,18 +6581,26 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
@@ -5909,6 +6610,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "89f5adc1-3611-48ba-95fa-ff53aee2c749",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -5924,13 +6626,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/people",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5939,31 +6639,38 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/users/people",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"people"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/users/:id",
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -5972,31 +6679,38 @@
 								{
 									"key": "email",
 									"value": "admin2@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "admin2",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/users/:id",
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6005,31 +6719,38 @@
 								{
 									"key": "email",
 									"value": "test4@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "test12",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/register",
 					"request": {
-						"url": "localhost:3000/api/register",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6038,55 +6759,57 @@
 								{
 									"key": "email",
 									"value": "test4@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "test12",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "firstname",
 									"value": "Lazerus",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "lastname",
 									"value": "Man",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "phone",
 									"value": "9491234567",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "captcha",
 									"value": "oooii",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"register"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/users",
 					"request": {
-						"url": "localhost:3000/api/users",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6095,31 +6818,37 @@
 								{
 									"key": "email",
 									"value": "test5@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "test12",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/users/:id",
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}",
 						"method": "DELETE",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6128,36 +6857,42 @@
 								{
 									"key": "email",
 									"value": "test4@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "test1",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "firstname",
 									"value": "Lazerus",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "sex",
 									"value": "m",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "dob",
 									"value": "1758888",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -6165,7 +6900,6 @@
 		},
 		{
 			"name": "Password",
-			"description": "",
 			"item": [
 				{
 					"name": "login as pete@mailinator.com",
@@ -6173,6 +6907,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "795fa8ef-3678-44d9-842e-83577f2217cd",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -6200,13 +6935,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -6215,31 +6948,37 @@
 								{
 									"key": "email",
 									"value": "pete@mailinator.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "petepete",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/changepassword/:user_id",
 					"request": {
-						"url": "localhost:3000/api/changepassword/{{userId}}",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6248,18 +6987,27 @@
 								{
 									"key": "password1",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password2",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/changepassword/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"changepassword",
+								"{{userId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -6269,6 +7017,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "b0ca7187-65b5-4c59-b4db-9df474eb80cb",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -6296,13 +7045,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6311,31 +7058,37 @@
 								{
 									"key": "email",
 									"value": "pete@mailinator.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/forgotpassword",
 					"request": {
-						"url": "localhost:3000/api/forgotpassword",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -6344,25 +7097,32 @@
 								{
 									"key": "email",
 									"value": "pete@mailinator.com",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/forgotpassword",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"forgotpassword"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/resetpassword",
 					"request": {
-						"url": "localhost:3000/api/resetpassword",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -6371,30 +7131,36 @@
 								{
 									"key": "email",
 									"value": "pete@mailinator.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password1",
 									"value": "hello1",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password2",
 									"value": "hello1",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "passcode",
 									"value": "yQC5X8jG1jprja9NLiTPVu8dJz1mOwdI",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/resetpassword",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"resetpassword"
+							]
+						}
 					},
 					"response": []
 				},
@@ -6404,6 +7170,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "41916c6b-75c3-4045-bfaf-9863c107509f",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -6431,13 +7198,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -6446,29 +7211,35 @@
 								{
 									"key": "email",
 									"value": "pete@mailinator.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "localhost:3000/api/changepassword/:user_id",
 					"request": {
-						"url": "localhost:3000/api/changepassword/{{userId}}",
 						"method": "PUT",
 						"header": [
 							{
-								"description": "",
 								"key": "Authorization",
 								"value": "{{authoriztionToken}}"
 							}
@@ -6477,20 +7248,29 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"description": "",
 									"key": "password1",
-									"type": "text",
-									"value": "petepete"
+									"value": "petepete",
+									"type": "text"
 								},
 								{
-									"description": "",
 									"key": "password2",
-									"type": "text",
-									"value": "petepete"
+									"value": "petepete",
+									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/changepassword/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"changepassword",
+								"{{userId}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -6498,7 +7278,6 @@
 		},
 		{
 			"name": "Profile",
-			"description": "",
 			"item": [
 				{
 					"name": "login as ref1",
@@ -6506,6 +7285,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "e9809a93-95cc-44a1-a045-a6674f9c6889",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -6533,13 +7313,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -6548,18 +7326,26 @@
 								{
 									"key": "email",
 									"value": "ref1@rentaref.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "referee1",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -6592,13 +7378,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/profile/{{userId}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6607,18 +7391,27 @@
 								{
 									"key": "password1",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password2",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/profile/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"profile",
+								"{{userId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -6648,18 +7441,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/location_preference",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -6668,30 +7458,38 @@
 								{
 									"key": "radius",
 									"value": "5",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "city",
 									"value": "Metroville",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "state",
 									"value": "CA",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "zip",
 									"value": "92866",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/location_preference",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"location_preference"
+							]
+						}
 					},
 					"response": []
 				},
@@ -6724,13 +7522,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/profile/{{userId}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6739,18 +7535,27 @@
 								{
 									"key": "password1",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password2",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/profile/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"profile",
+								"{{userId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -6760,6 +7565,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "24a0f502-d69e-4834-85d5-d1eafaf44b8c",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -6770,18 +7576,15 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/location_preference/{{areaId}}",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -6790,30 +7593,39 @@
 								{
 									"key": "radius",
 									"value": "55",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "city",
 									"value": "Metroville North",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "state",
 									"value": "CA",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "zip",
 									"value": "92866",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/location_preference/{{areaId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"location_preference",
+								"{{areaId}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -6821,7 +7633,6 @@
 		},
 		{
 			"name": "Stripe",
-			"description": "",
 			"item": [
 				{
 					"name": "login as admin1",
@@ -6829,6 +7640,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "7b9bcf33-d190-4ec5-b9ea-e4aba54809c2",
 								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
@@ -6857,33 +7669,39 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/login",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"description": "",
 									"key": "email",
-									"type": "text",
-									"value": "admin1@rentaref.com"
+									"value": "admin1@rentaref.com",
+									"type": "text"
 								},
 								{
-									"description": "",
 									"key": "password",
-									"type": "text",
-									"value": "admin1"
+									"value": "admin1",
+									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -6916,13 +7734,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/stripe/products",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6931,18 +7747,27 @@
 								{
 									"key": "password1",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password2",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "localhost:3000/api/stripe/products",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"stripe",
+								"products"
+							]
+						}
 					},
 					"response": []
 				},
@@ -6975,13 +7800,11 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/stripe/plans",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authoriztionToken}}",
-								"description": ""
+								"value": "{{authoriztionToken}}"
 							}
 						],
 						"body": {
@@ -6990,18 +7813,27 @@
 								{
 									"key": "password1",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password2",
 									"value": "reefer",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/stripe/plans",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"stripe",
+								"plans"
+							]
+						}
 					},
 					"response": []
 				},
@@ -7031,7 +7863,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/location_preference",
 						"method": "POST",
 						"header": [
 							{
@@ -7068,7 +7899,19 @@
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/location_preference",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"location_preference"
+							]
+						}
 					},
 					"response": []
 				},
@@ -7101,7 +7944,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/profile/{{userId}}",
 						"method": "GET",
 						"header": [
 							{
@@ -7124,7 +7966,18 @@
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/profile/{{userId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"profile",
+								"{{userId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -7134,6 +7987,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "24a0f502-d69e-4834-85d5-d1eafaf44b8c",
 								"type": "text/javascript",
 								"exec": [
 									"var item = JSON.parse(responseBody);",
@@ -7144,7 +7998,6 @@
 						}
 					],
 					"request": {
-						"url": "localhost:3000/api/users/{{userId}}/location_preference/{{areaId}}",
 						"method": "PUT",
 						"header": [
 							{
@@ -7181,7 +8034,20 @@
 								}
 							]
 						},
-						"description": null
+						"url": {
+							"raw": "localhost:3000/api/users/{{userId}}/location_preference/{{areaId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"location_preference",
+								"{{areaId}}"
+							]
+						}
 					},
 					"response": []
 				}

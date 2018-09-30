@@ -391,13 +391,13 @@ export default class ResponseService {
     });
   }
 
-  public async isTimeLocked(eventObj, lock = 1, grain = 'minutes') {
+  public async isTimeLocked(eventObj, lock = 1) {
     return new Promise(function(resolve, reject) {
       const now = moment().utc();
       const matchTime = moment.tz(eventObj.date, eventObj.timezone_id);
       const lockTime = matchTime.utc().subtract(lock, 'hour');
 
-      const result = now.isSameOrBefore(lockTime, grain);
+      const result = now.isSameOrBefore(lockTime, 'minutes');
       if (result) {
         resolve({
           success: true,

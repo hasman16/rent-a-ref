@@ -385,16 +385,15 @@ var ResponseService = /** @class */ (function () {
             });
         });
     };
-    ResponseService.prototype.isTimeLocked = function (eventObj, lock, grain) {
+    ResponseService.prototype.isTimeLocked = function (eventObj, lock) {
         if (lock === void 0) { lock = 1; }
-        if (grain === void 0) { grain = 'minutes'; }
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         var now = moment().utc();
                         var matchTime = moment.tz(eventObj.date, eventObj.timezone_id);
                         var lockTime = matchTime.utc().subtract(lock, 'hour');
-                        var result = now.isSameOrBefore(lockTime, grain);
+                        var result = now.isSameOrBefore(lockTime, 'minutes');
                         if (result) {
                             resolve({
                                 success: true,
