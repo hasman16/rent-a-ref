@@ -17,7 +17,8 @@ import {
   MatFormFieldModule,
   MatProgressBarModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatTableModule
 } from '@angular/material';
 
 const MATERIALS = [
@@ -37,7 +38,8 @@ const MATERIALS = [
   MatFormFieldModule,
   MatProgressBarModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatTableModule
 ];
 
 @NgModule({

@@ -35,6 +35,16 @@ import * as _ from 'lodash';
 export class ManageUsersComponent extends AbstractComponent
   implements OnInit, OnDestroy, CanComponentDeactivate {
   public users: User[] = [];
+  public displayedColumns: string[] = [
+    'id',
+    'Email',
+    'Firstname',
+    'Lastname',
+    'Gender',
+    'Organizer',
+    'Referee',
+    'Status'
+  ];
   protected isLoading: boolean = true;
   protected allowEdit: boolean = false;
   protected currentUser: User = <User>{};
