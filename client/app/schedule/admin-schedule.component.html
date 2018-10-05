@@ -72,8 +72,15 @@
 
         </div>
 
-        <ngb-pagination [collectionSize]="250" [page]="1" [maxSize]="5" size="md"></ngb-pagination>
+        <div class="d-xs-block d-md-none">dd
+          <ngb-pagination [collectionSize]="250" [page]="1" [maxSize]="2" size="md"></ngb-pagination>
+        </div>
+        <div class="d-none d-md-block">xx
+          <ngb-pagination [collectionSize]="250" [page]="1" [maxSize]="5" size="md"></ngb-pagination>
+        </div>
+        <!--
         <rar-pagination [page]="page"></rar-pagination> 
+      -->
       </div>
 
     </div>

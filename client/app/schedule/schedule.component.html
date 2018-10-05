@@ -48,13 +48,13 @@
                   <span class="match-name"> {{ game.match_name }}</span>
                 </div>
                 <div class="col-md-12" >
-                  <div class="d-flex justify-content-start">
-                    <span class="d-inline-block">{{ game.venue_name }}</span>
-                    <span class="d-inline-block">{{ game.address.line1 }}</span>
-                    <span class="d-inline-block">{{ game.address.line2 }}</span>
-                    <span class="d-inline-block">{{ game.address.city }}</span>
-                    <span class="d-inline-block">{{ game.address.state }}</span>
-                    <span class="d-inline-block">{{ game.address.zip }}</span>
+                  <div class="d-flex flex-wrap justify-content-start">
+                    <span class="d-inline-block px-1">{{ game.venue_name }}</span>
+                    <span class="d-inline-block px-1">{{ game.address.line1 }}</span>
+                    <span class="d-inline-block px-1">{{ game.address.line2 }}</span>
+                    <span class="d-inline-block px-1">{{ game.address.city }}</span>
+                    <span class="d-inline-block px-1">{{ game.address.state }}</span>
+                    <span class="d-inline-block px-1">{{ game.address.zip }}</span>
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -74,8 +74,16 @@
 
         </div>
 
-        <ngb-pagination [collectionSize]="250" [page]="1" [maxSize]="5" size="md"></ngb-pagination>
-        <rar-pagination [page]="page"></rar-pagination> 
+        <div class="d-xs-block d-md-none">
+          <ngb-pagination [collectionSize]="250" [page]="1" [maxSize]="1" size="md"></ngb-pagination>
+        </div>
+        <div class="d-none d-md-block">
+          <span class="d-inline-block mx-auto">
+            <ngb-pagination class="mx-auto" [collectionSize]="250" [page]="1" [maxSize]="5" size="md"></ngb-pagination>
+          </span>
+        </div>
+        <!--
+        <rar-pagination [page]="page"></rar-pagination> -->
       </div>
   
 
