@@ -105,8 +105,14 @@ export class OrganizeService extends AbstractService {
     return this.http.get(`/api/organizations/${organization_id}`);
   }
 
-  public getUserOrganization(user_id: any): Observable<any> {
-    return this.http.get(`/api/users/${user_id}/organizations`);
+  public getUserOrganization(
+    user_id: string,
+    queryParams: any = null
+  ): Observable<PagedData> {
+    const url: string = `/api/users/${user_id}/organizations`;
+    return this.http.get<PagedData>(url, {
+      params: queryParams
+    });
   }
 
   public createAddress(newAddress: any, org_id: any): Observable<any> {

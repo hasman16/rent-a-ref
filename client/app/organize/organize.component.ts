@@ -10,10 +10,12 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { AbstractComponent } from '../abstract/abstract.component';
 import { ToastComponent } from '../shared/toast/toast.component';
 import {
   AuthService,
   OrganizeService,
+  PagingService,
   StatesService,
   UserService
 } from '../services/index';
@@ -50,12 +52,13 @@ import { filter, finalize, map, switchMap, take } from 'rxjs/operators';
   styleUrls: ['./organize.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OrganizeComponent implements OnInit {
+export class OrganizeComponent extends AbstractComponent
+  implements OnInit, OnDestroy {
   @Input()
   set country(aCountry: string) {
     this.countryName = aCountry || 'usa';
   }
-  private subscriptions: Subscription[] = [];
+  //private subscriptions: Subscription[] = [];
   protected countryName: string;
   protected currentModel: any = {};
   public titles: string[] = ['Organization Name', '', ''];
@@ -77,19 +80,25 @@ export class OrganizeComponent implements OnInit {
     private statesService: StatesService,
     private organizeService: OrganizeService,
     private alertModalService: AlertModalService,
-    private cropImageModalService: CropImageModalService
-  ) {}
+    private cropImageModalService: CropImageModalService,
+    protected pagingService: PagingService
+  ) {
+    super(pagingService);
+  }
 
   ngOnInit() {
-    const organizations: Organization[] = this.route.snapshot.data
-      .organizations;
-    this.organizations = _.isArray(organizations) ? organizations : [];
+    this.initialize();
+    this.searchAttribute = 'name|';
+
+    const organizations: PagedData = this.route.snapshot.data.organizations;
+    this.processPagedData(organizations);
+
     this.setOrganizeMode();
     this.subscriptions.push(
       this.cropImageModalService.cropImageSubject$.subscribe(
         (cropImageState: CropImageState) => {
           if (cropImageState.uploadState === UploadState.Success) {
-            this.getOrganizations();
+            this.getOrganizations(this.page);
           }
           this.cd.markForCheck();
         }
@@ -98,7 +107,15 @@ export class OrganizeComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach((s: Subscription) => s.unsubscribe());
+    this.cleanUp();
+  }
+
+  protected processPagedData(data: PagedData): void {
+    this.organizations = this.extractDataAndPagedData(data);
+  }
+
+  protected getData(page: Page): void {
+    this.getOrganizations(page);
   }
 
   public getImageAddress(organization: Organization): string {
@@ -216,26 +233,23 @@ export class OrganizeComponent implements OnInit {
     this.router.navigate([`/organization/${organization_id}/events/`]);
   }
 
-  public getOrganizations(user_id?: any) {
+  public getOrganizations(page: Page = null) {
     const currentUser: User = this.auth.getCurrentUser();
 
-    user_id = user_id || currentUser.id;
+    const user_id = currentUser.id;
 
     this.organizeService
-      .getUserOrganization(user_id)
+      .getUserOrganization(user_id, page)
       .pipe(
         finalize(() => {
+          this.isLoading = false;
           this.cd.markForCheck();
           this.setOrganizeMode();
-          this.isLoading = false;
-          if (this.organizations.length === 0) {
-            this.setOrganizeMode();
-          }
         })
       )
       .subscribe(
-        (profile: Profile) => {
-          this.organizations = profile.organizations;
+        (data: PagedData) => {
+          this.processPagedData(data);
         },
         (err: HttpErrorResponse) => this.callFailure(err)
       );
@@ -250,29 +264,29 @@ export class OrganizeComponent implements OnInit {
     }
   }
 
-  public submitNewOrganization(model): void {
-    this.isLoading = true;
-    this.organizeService
-      .createOrganization({
-        name: model.name
-      })
-      .pipe(
-        switchMap(organization => {
+  public submitNewOrganization(model: Organization): void {
+    /*switchMap(organization => {
           const org_id: any = organization.id;
           return combineLatest(
             this.organizeService.bulkCreateAddresses(model.addresses, org_id),
             this.organizeService.bulkCreatePhones(model.phones, org_id)
           );
-        }),
-        finalize(() => {
-          this.getOrganizations();
-          this.cd.markForCheck();
-        })
-      )
-      .subscribe(
-        ([addresses, phones]: [Array<Address>, Array<Phone>]) => {},
-        (err: HttpErrorResponse) => this.callFailure(err)
-      );
+        }),*/
+    if (!this.isLoading) {
+      this.isLoading = true;
+      this.organizeService
+        .createOrganization(model)
+        .pipe(
+          finalize(() => {
+            this.getOrganizations();
+            this.cd.markForCheck();
+          })
+        )
+        .subscribe(
+          ([addresses, phones]: [Array<Address>, Array<Phone>]) => {},
+          (err: HttpErrorResponse) => this.callFailure(err)
+        );
+    }
   }
 
   private updatedPhones(newPhones: Phone[], oldPhones: Phone[]): Phone[] {

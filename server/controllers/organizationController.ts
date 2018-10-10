@@ -13,33 +13,24 @@ export default function OrganizationController(models, ResponseService) {
   }
 
   function getByUser(req, res) {
-    const User = models.User;
+    let clause = ResponseService.produceSearchAndSortClause(req);
     const Image = models.Image;
-
-    User.findOne({
+    const whereClause = Object.assign(clause, {
       where: {
-        id: req.params.user_id
+        user_id: req.params.user_id
       },
       include: [
         {
-          model: Organization,
+          model: Image,
           through: {
             attributes: []
-          },
-          include: [
-            {
-              model: Image,
-              through: {
-                attributes: []
-              }
-            }
-          ]
+          }
         }
       ]
-    })
-      .then(results => {
-        ResponseService.success(res, results);
-      })
+    });
+
+    Organization.findAndCountAll(whereClause)
+      .then(results => ResponseService.success(res, results))
       .catch(error => ResponseService.exception(res, error));
   }
 
@@ -79,37 +70,17 @@ export default function OrganizationController(models, ResponseService) {
   async function create(req, res) {
     const sequelize = models.sequelize;
     const user_id = req.decoded.id;
+    const Address = models.Address;
     const Organizer = models.Organizer;
+    const Phone = models.Phone;
+    const body = ResponseService.getItemFromBody(req);
     const organization = {
-      name: req.body.name,
+      name: body.name,
       user_id: user_id
     };
-    /*
-    sequelize
-      .transaction(function(t) {
-        return Organization.create(organization, { transaction: t }).then(
-          newOrganization => {
-            const organizer = {
-              organization_id: newOrganization.id,
-              user_id: user_id
-            };
-            return Organizer.create(organizer, { transaction: t }).then(
-              newOrganizer => {
-                const org = {
-                  id: newOrganization.id,
-                  name: newOrganization.name,
-                  user_id: newOrganization.user_id
-                };
-                ResponseService.success(res, org, 201);
-              }
-            );
-          }
-        );
-      })
-      .catch(error => ResponseService.exception(res, error));
-*/
+    const addresses = body.addresses;
+    const phones = body.phones;
     let transaction;
-
     try {
       transaction = await sequelize.transaction();
       const newOrganization = await Organization.create(organization, {
@@ -120,6 +91,22 @@ export default function OrganizationController(models, ResponseService) {
         user_id: user_id
       };
       const newOrganizer = await Organizer.create(organizer, { transaction });
+
+      if (Array.isArray(addresses) && addresses.length > 0) {
+        const newAddresses = await Address.bulkCreate(addresses, {
+          transaction,
+          returning: true
+        });
+        await newOrganization.addAddress(newAddresses, { transaction });
+      }
+
+      if (Array.isArray(phones) && phones.length > 0) {
+        const newPhones = await Phone.bulkCreate(phones, {
+          transaction,
+          returning: true
+        });
+        await newOrganization.addPhones(newPhones, { transaction });
+      }
 
       await transaction.commit();
       ResponseService.success(

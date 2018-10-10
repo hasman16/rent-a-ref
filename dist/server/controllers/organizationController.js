@@ -45,32 +45,23 @@ function OrganizationController(models, ResponseService) {
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getByUser(req, res) {
-        var User = models.User;
+        var clause = ResponseService.produceSearchAndSortClause(req);
         var Image = models.Image;
-        User.findOne({
+        var whereClause = Object.assign(clause, {
             where: {
-                id: req.params.user_id
+                user_id: req.params.user_id
             },
             include: [
                 {
-                    model: Organization,
+                    model: Image,
                     through: {
                         attributes: []
-                    },
-                    include: [
-                        {
-                            model: Image,
-                            through: {
-                                attributes: []
-                            }
-                        }
-                    ]
+                    }
                 }
             ]
-        })
-            .then(function (results) {
-            ResponseService.success(res, results);
-        })
+        });
+        Organization.findAndCountAll(whereClause)
+            .then(function (results) { return ResponseService.success(res, results); })
             .catch(function (error) { return ResponseService.exception(res, error); });
     }
     function getOrganizers(req, res) {
@@ -105,20 +96,25 @@ function OrganizationController(models, ResponseService) {
     }
     function create(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, user_id, Organizer, organization, transaction, newOrganization, organizer, newOrganizer, error_1;
+            var sequelize, user_id, Address, Organizer, Phone, body, organization, addresses, phones, transaction, newOrganization, organizer, newOrganizer, newAddresses, newPhones, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         sequelize = models.sequelize;
                         user_id = req.decoded.id;
+                        Address = models.Address;
                         Organizer = models.Organizer;
+                        Phone = models.Phone;
+                        body = ResponseService.getItemFromBody(req);
                         organization = {
-                            name: req.body.name,
+                            name: body.name,
                             user_id: user_id
                         };
+                        addresses = body.addresses;
+                        phones = body.phones;
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 6, , 7]);
+                        _a.trys.push([1, 12, , 13]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
@@ -134,21 +130,44 @@ function OrganizationController(models, ResponseService) {
                         return [4 /*yield*/, Organizer.create(organizer, { transaction: transaction })];
                     case 4:
                         newOrganizer = _a.sent();
-                        return [4 /*yield*/, transaction.commit()];
+                        if (!(Array.isArray(addresses) && addresses.length > 0)) return [3 /*break*/, 7];
+                        return [4 /*yield*/, Address.bulkCreate(addresses, {
+                                transaction: transaction,
+                                returning: true
+                            })];
                     case 5:
+                        newAddresses = _a.sent();
+                        return [4 /*yield*/, newOrganization.addAddress(newAddresses, { transaction: transaction })];
+                    case 6:
+                        _a.sent();
+                        _a.label = 7;
+                    case 7:
+                        if (!(Array.isArray(phones) && phones.length > 0)) return [3 /*break*/, 10];
+                        return [4 /*yield*/, Phone.bulkCreate(phones, {
+                                transaction: transaction,
+                                returning: true
+                            })];
+                    case 8:
+                        newPhones = _a.sent();
+                        return [4 /*yield*/, newOrganization.addPhones(newPhones, { transaction: transaction })];
+                    case 9:
+                        _a.sent();
+                        _a.label = 10;
+                    case 10: return [4 /*yield*/, transaction.commit()];
+                    case 11:
                         _a.sent();
                         ResponseService.success(res, {
                             id: newOrganization.id,
                             name: newOrganization.name,
                             user_id: newOrganization.user_id
                         }, 201);
-                        return [3 /*break*/, 7];
-                    case 6:
+                        return [3 /*break*/, 13];
+                    case 12:
                         error_1 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_1);
-                        return [3 /*break*/, 7];
-                    case 7: return [2 /*return*/];
+                        return [3 /*break*/, 13];
+                    case 13: return [2 /*return*/];
                 }
             });
         });
