@@ -149,7 +149,7 @@ function OrganizationController(models, ResponseService) {
                             })];
                     case 8:
                         newPhones = _a.sent();
-                        return [4 /*yield*/, newOrganization.addPhones(newPhones, { transaction: transaction })];
+                        return [4 /*yield*/, newOrganization.addPhone(newPhones, { transaction: transaction })];
                     case 9:
                         _a.sent();
                         _a.label = 10;

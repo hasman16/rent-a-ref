@@ -105,7 +105,7 @@ export default function OrganizationController(models, ResponseService) {
           transaction,
           returning: true
         });
-        await newOrganization.addPhones(newPhones, { transaction });
+        await newOrganization.addPhone(newPhones, { transaction });
       }
 
       await transaction.commit();
