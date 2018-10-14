@@ -35,8 +35,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require("lodash");
 function OrganizationController(models, ResponseService) {
     var Organization = models.Organization;
+    var Address = models.Address;
+    var Organizer = models.Organizer;
+    var Phone = models.Phone;
     var attributes = ['id', 'name', 'user_id'];
     function getAll(req, res) {
         var clause = ResponseService.produceSearchAndSortClause(req);
@@ -87,6 +91,12 @@ function OrganizationController(models, ResponseService) {
             include: [
                 {
                     model: models.Image
+                },
+                {
+                    model: Address
+                },
+                {
+                    model: Phone
                 }
             ],
             attributes: attributes
@@ -96,15 +106,12 @@ function OrganizationController(models, ResponseService) {
     }
     function create(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, user_id, Address, Organizer, Phone, body, organization, addresses, phones, transaction, newOrganization, organizer, newOrganizer, newAddresses, newPhones, error_1;
+            var sequelize, user_id, body, organization, addresses, phones, transaction, newOrganization, organizer, newOrganizer, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         sequelize = models.sequelize;
                         user_id = req.decoded.id;
-                        Address = models.Address;
-                        Organizer = models.Organizer;
-                        Phone = models.Phone;
                         body = ResponseService.getItemFromBody(req);
                         organization = {
                             name: body.name,
@@ -114,7 +121,7 @@ function OrganizationController(models, ResponseService) {
                         phones = body.phones;
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 12, , 13]);
+                        _a.trys.push([1, 8, , 9]);
                         return [4 /*yield*/, sequelize.transaction()];
                     case 2:
                         transaction = _a.sent();
@@ -130,68 +137,197 @@ function OrganizationController(models, ResponseService) {
                         return [4 /*yield*/, Organizer.create(organizer, { transaction: transaction })];
                     case 4:
                         newOrganizer = _a.sent();
-                        if (!(Array.isArray(addresses) && addresses.length > 0)) return [3 /*break*/, 7];
-                        return [4 /*yield*/, Address.bulkCreate(addresses, {
-                                transaction: transaction,
-                                returning: true
-                            })];
+                        return [4 /*yield*/, bulkCreateAddresses(newOrganization, addresses, transaction)];
                     case 5:
-                        newAddresses = _a.sent();
-                        return [4 /*yield*/, newOrganization.addAddress(newAddresses, { transaction: transaction })];
+                        _a.sent();
+                        return [4 /*yield*/, bulkCreatePhones(newOrganization, phones, transaction)];
                     case 6:
                         _a.sent();
-                        _a.label = 7;
+                        return [4 /*yield*/, transaction.commit()];
                     case 7:
-                        if (!(Array.isArray(phones) && phones.length > 0)) return [3 /*break*/, 10];
-                        return [4 /*yield*/, Phone.bulkCreate(phones, {
-                                transaction: transaction,
-                                returning: true
-                            })];
-                    case 8:
-                        newPhones = _a.sent();
-                        return [4 /*yield*/, newOrganization.addPhone(newPhones, { transaction: transaction })];
-                    case 9:
-                        _a.sent();
-                        _a.label = 10;
-                    case 10: return [4 /*yield*/, transaction.commit()];
-                    case 11:
                         _a.sent();
                         ResponseService.success(res, {
                             id: newOrganization.id,
                             name: newOrganization.name,
                             user_id: newOrganization.user_id
                         }, 201);
-                        return [3 /*break*/, 13];
-                    case 12:
+                        return [3 /*break*/, 9];
+                    case 8:
                         error_1 = _a.sent();
                         transaction.rollback(transaction);
                         ResponseService.exception(res, error_1);
-                        return [3 /*break*/, 13];
-                    case 13: return [2 /*return*/];
+                        return [3 /*break*/, 9];
+                    case 9: return [2 /*return*/];
                 }
             });
         });
     }
     function update(req, res) {
-        var organization = {
-            name: req.body.name
-        };
-        Organization.update(organization, {
-            where: {
-                id: req.params.organization_id
-            }
-        })
-            .then(function (result) { return getOne(req, res); })
-            .catch(function (error) { return ResponseService.exception(res, error); });
-    }
-    function deleteOne(req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var sequelize, Organizer, Game, organization_id, transaction, organization, games, error_2;
+            var sequelize, body, organization_id, newAddresses, newPhones, updatedAddresses, updatedPhones, newName, transaction, organization, addresses, phones, newOrganization, error_2;
+            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         sequelize = models.sequelize;
-                        Organizer = models.Organizer;
+                        body = ResponseService.getItemFromBody(req);
+                        organization_id = req.params.organization_id;
+                        newAddresses = body.newAddresses;
+                        newPhones = body.newPhones;
+                        updatedAddresses = body.updatedAddresses;
+                        updatedPhones = body.updatedPhones;
+                        newName = body.name;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 14, , 15]);
+                        return [4 /*yield*/, sequelize.transaction()];
+                    case 2:
+                        transaction = _a.sent();
+                        return [4 /*yield*/, Organization.findById(organization_id, {
+                                transaction: transaction
+                            })];
+                    case 3:
+                        organization = _a.sent();
+                        if (!organization) {
+                            throw new Error('Organization not found.');
+                        }
+                        if (!(_.isString(newName) && newName.length > 3)) return [3 /*break*/, 5];
+                        return [4 /*yield*/, Organization.update({ name: newName }, {
+                                where: {
+                                    id: organization_id
+                                }
+                            }, { transaction: transaction })];
+                    case 4:
+                        _a.sent();
+                        _a.label = 5;
+                    case 5: return [4 /*yield*/, bulkCreateAddresses(organization, newAddresses, transaction)];
+                    case 6:
+                        _a.sent();
+                        return [4 /*yield*/, bulkCreatePhones(organization, newPhones, transaction)];
+                    case 7:
+                        _a.sent();
+                        if (!(Array.isArray(updatedAddresses) && updatedAddresses.length > 0)) return [3 /*break*/, 9];
+                        return [4 /*yield*/, Promise.all(updatedAddresses.map(function (address) { return __awaiter(_this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, Address.update(address, {
+                                                where: {
+                                                    id: address.id
+                                                }
+                                            }, { transaction: transaction })];
+                                        case 1:
+                                            _a.sent();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            }); }))];
+                    case 8:
+                        addresses = _a.sent();
+                        _a.label = 9;
+                    case 9:
+                        if (!(Array.isArray(updatedPhones) && updatedPhones.length > 0)) return [3 /*break*/, 11];
+                        return [4 /*yield*/, Promise.all(updatedPhones.map(function (phone) { return __awaiter(_this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, Phone.update(phone, {
+                                                where: {
+                                                    id: phone.id
+                                                }
+                                            }, { transaction: transaction })];
+                                        case 1:
+                                            _a.sent();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            }); }))];
+                    case 10:
+                        phones = _a.sent();
+                        _a.label = 11;
+                    case 11: return [4 /*yield*/, Organization.findOne({
+                            where: {
+                                id: organization_id
+                            },
+                            include: [
+                                {
+                                    model: models.Image
+                                },
+                                {
+                                    model: Address
+                                },
+                                {
+                                    model: Phone
+                                }
+                            ],
+                            attributes: attributes
+                        }, { transaction: transaction })];
+                    case 12:
+                        newOrganization = _a.sent();
+                        return [4 /*yield*/, transaction.commit()];
+                    case 13:
+                        _a.sent();
+                        ResponseService.success(res, newOrganization);
+                        return [3 /*break*/, 15];
+                    case 14:
+                        error_2 = _a.sent();
+                        transaction.rollback(transaction);
+                        ResponseService.exception(res, error_2);
+                        return [3 /*break*/, 15];
+                    case 15: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    function bulkCreateAddresses(organization, addresses, transaction) {
+        return __awaiter(this, void 0, void 0, function () {
+            var newAddresses;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(Array.isArray(addresses) && addresses.length > 0)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, Address.bulkCreate(addresses, {
+                                transaction: transaction,
+                                returning: true
+                            })];
+                    case 1:
+                        newAddresses = _a.sent();
+                        return [4 /*yield*/, organization.addAddress(newAddresses, { transaction: transaction })];
+                    case 2:
+                        _a.sent();
+                        _a.label = 3;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    function bulkCreatePhones(organization, phones, transaction) {
+        return __awaiter(this, void 0, void 0, function () {
+            var newPhones;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(Array.isArray(phones) && phones.length > 0)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, Phone.bulkCreate(phones, {
+                                transaction: transaction,
+                                returning: true
+                            })];
+                    case 1:
+                        newPhones = _a.sent();
+                        return [4 /*yield*/, organization.addPhone(newPhones, { transaction: transaction })];
+                    case 2:
+                        _a.sent();
+                        _a.label = 3;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    function deleteOne(req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sequelize, Game, organization_id, transaction, organization, games, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        sequelize = models.sequelize;
                         Game = models.Game;
                         organization_id = req.params.organization_id;
                         _a.label = 1;
@@ -232,9 +368,9 @@ function OrganizationController(models, ResponseService) {
                         ResponseService.success(res, 'Organization :' + organization_id + ' was deleted', 204);
                         return [3 /*break*/, 7];
                     case 6:
-                        error_2 = _a.sent();
+                        error_3 = _a.sent();
                         transaction.rollback(transaction);
-                        ResponseService.exception(res, error_2);
+                        ResponseService.exception(res, error_3);
                         return [3 /*break*/, 7];
                     case 7: return [2 /*return*/];
                 }

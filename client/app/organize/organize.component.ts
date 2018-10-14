@@ -265,13 +265,6 @@ export class OrganizeComponent extends AbstractComponent
   }
 
   public submitNewOrganization(model: Organization): void {
-    /*switchMap(organization => {
-          const org_id: any = organization.id;
-          return combineLatest(
-            this.organizeService.bulkCreateAddresses(model.addresses, org_id),
-            this.organizeService.bulkCreatePhones(model.phones, org_id)
-          );
-        }),*/
     if (!this.isLoading) {
       this.isLoading = true;
       this.organizeService
@@ -369,29 +362,21 @@ export class OrganizeComponent extends AbstractComponent
     this.organizeService
       .updateOrganization(
         {
-          name: model.name
+          name: model.name,
+          newAddresses,
+          newPhones,
+          updatedAddresses,
+          updatedPhones
         },
         org_id
       )
       .pipe(
-        switchMap(organization => {
-          return combineLatest(
-            this.organizeService.bulkCreateAddresses(newAddresses, org_id),
-            this.organizeService.bulkCreatePhones(newPhones, org_id)
-          );
-        }),
-        switchMap(([addresses, phones]: [Array<Address>, Array<Phone>]) => {
-          return combineLatest(
-            this.organizeService.bulkUpdateAddresses(updatedAddresses, org_id),
-            this.organizeService.bulkUpdatePhones(updatedPhones, org_id)
-          );
-        }),
         finalize(() => {
           this.cd.markForCheck();
         })
       )
       .subscribe(
-        ([addresses, phones]: [Array<Address>, Array<Phone>]) => {
+        () => {
           console.log('submitUpdateOrganization worked');
         },
         (err: HttpErrorResponse) => this.callFailure(err),
