@@ -202,29 +202,15 @@ export class OrganizeComponent extends AbstractComponent
       organization => organization.id === orgId
     );
     if (currentModel) {
-      combineLatest(
-        this.organizeService.getOrgAddresses(orgId),
-        this.organizeService.getOrgPhones(orgId)
-      )
+      this.organizeService
+        .getOrganization(orgId)
         .pipe(
-          take(1),
-          map(([addresses, phones]: [Array<any>, Array<any>]) => {
-            return [_.head(addresses), _.head(phones)];
-          }),
-          map(([addresses, phones]: [any, any]) => {
-            return [addresses['addresses'], phones['phones']];
-          }),
           finalize(() => {
             this.cd.markForCheck();
           })
         )
-        .subscribe(([addresses, phones]: [Array<Address>, Array<Phone>]) => {
-          currentModel = _.cloneDeep(currentModel);
-          currentModel = Object.assign({}, currentModel, {
-            addresses: addresses,
-            phones: phones
-          });
-          this.setEditMode(currentModel);
+        .subscribe(organization => {
+          this.setEditMode(_.cloneDeep(organization));
         });
     }
   }
@@ -243,8 +229,8 @@ export class OrganizeComponent extends AbstractComponent
       .pipe(
         finalize(() => {
           this.isLoading = false;
-          this.cd.markForCheck();
           this.setOrganizeMode();
+          this.cd.markForCheck();
         })
       )
       .subscribe(
@@ -372,6 +358,8 @@ export class OrganizeComponent extends AbstractComponent
       )
       .pipe(
         finalize(() => {
+          this.getOrganizations();
+
           this.cd.markForCheck();
         })
       )
@@ -379,10 +367,7 @@ export class OrganizeComponent extends AbstractComponent
         () => {
           console.log('submitUpdateOrganization worked');
         },
-        (err: HttpErrorResponse) => this.callFailure(err),
-        () => {
-          this.getOrganizations();
-        }
+        (err: HttpErrorResponse) => this.callFailure(err)
       );
   }
 
