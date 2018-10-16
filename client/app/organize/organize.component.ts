@@ -359,7 +359,6 @@ export class OrganizeComponent extends AbstractComponent
       .pipe(
         finalize(() => {
           this.getOrganizations();
-
           this.cd.markForCheck();
         })
       )

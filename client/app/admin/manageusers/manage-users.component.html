@@ -98,14 +98,14 @@
       </ngx-datatable-column>
     </ngx-datatable>
   </div>
-  {{viewProfile}}
-  <div class="card min-height" *ngIf="viewProfile">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a (click)="backToList($event)">Users</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Profile</li>
-      </ol>
-    </nav>
-    <rar-admin-profile [user]="selectedUser" (userUpdated)="userUpdated()"></rar-admin-profile>
-  </div>
+</div> 
+
+<div class="card min-height" *ngIf="viewProfile">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a (click)="backToList($event)">Users</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Profile</li>
+    </ol>
+  </nav>
+  <rar-admin-profile [user]="selectedUser" (userUpdated)="userUpdated()"></rar-admin-profile>
 </div>
