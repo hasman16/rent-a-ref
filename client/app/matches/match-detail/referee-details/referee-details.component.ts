@@ -38,16 +38,16 @@ export class RefereeDetailsModalComponent implements OnInit {
 
 	ngOnInit() {}
 
-	hide(event): void {
+	public hide(): void {
 		this.visible = false;
 		this.hideEmitter.emit(false);
 	}
 
-	public closeModal($event): void {
+	public closeModal(): void {
 		this.hide(null);
 	}
 
-	public submitModal($event): void {
+	public submitModal(): void {
 		this.hide(null);
 	}
 

@@ -31,6 +31,32 @@ const users = [
     can_referee: 'active',
     can_organize: 'active'
   },
+
+  {
+    email: 'admin4@rentaref.com',
+    password: 'admin4',
+    authorization: 1,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'active'
+  },
+  {
+    email: 'admin5@rentaref.com',
+    password: 'admin5',
+    authorization: 2,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'active'
+  },
+  {
+    email: 'admin6@rentaref.com',
+    password: 'admin6',
+    authorization: 2,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'active'
+  },
+
   {
     email: 'org11@rentaref.com',
     password: 'organ11',
@@ -56,6 +82,30 @@ const users = [
     can_organize: 'pending'
   },
   {
+    email: 'org44@rentaref.com',
+    password: 'organ44',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'active'
+  },
+  {
+    email: 'org55@rentaref.com',
+    password: 'organ55',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'no',
+    can_organize: 'active'
+  },
+  {
+    email: 'org66@rentaref.com',
+    password: 'organ66',
+    authorization: 3,
+    status: 'pending',
+    can_referee: 'pending',
+    can_organize: 'pending'
+  },
+  {
     email: 'ref1@rentaref.com',
     password: 'referee1',
     authorization: 3,
@@ -66,6 +116,54 @@ const users = [
   {
     email: 'ref2@rentaref.com',
     password: 'referee2',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
+  },
+  {
+    email: 'ref3@rentaref.com',
+    password: 'referee3',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
+  },
+  {
+    email: 'ref4@rentaref.com',
+    password: 'referee4',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
+  },
+  {
+    email: 'ref5@rentaref.com',
+    password: 'referee5',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
+  },
+  {
+    email: 'ref6@rentaref.com',
+    password: 'referee6',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
+  },
+  {
+    email: 'ref7@rentaref.com',
+    password: 'referee7',
+    authorization: 3,
+    status: 'active',
+    can_referee: 'active',
+    can_organize: 'no'
+  },
+  {
+    email: 'ref8@rentaref.com',
+    password: 'referee8',
     authorization: 3,
     status: 'active',
     can_referee: 'active',
@@ -117,6 +215,24 @@ const people = [
     gender: 'f'
   },
   {
+    firstname: 'Bugs',
+    lastname: 'Bunny',
+    email: 'admin4@rentaref.com',
+    gender: 'm'
+  },
+  {
+    firstname: 'Porky',
+    lastname: 'Pig',
+    email: 'admin5@rentaref.com',
+    gender: 'm'
+  },
+  {
+    firstname: 'Buster',
+    lastname: 'Bunny',
+    email: 'admin6@rentaref.com',
+    gender: 'm'
+  },
+  {
     firstname: 'Sandy',
     lastname: 'cheeks',
     email: 'org11@rentaref.com',
@@ -135,6 +251,25 @@ const people = [
     gender: 'm'
   },
   {
+    firstname: 'Duffy',
+    lastname: 'Duck',
+    email: 'org44@rentaref.com',
+    gender: 'm'
+  },
+  {
+    firstname: 'Elmer',
+    lastname: 'Fudd',
+    email: 'org55@rentaref.com',
+    gender: 'm'
+  },
+  {
+    firstname: 'Yosemite',
+    lastname: 'Sam',
+    email: 'org66@rentaref.com',
+    gender: 'm'
+  },
+
+  {
     firstname: 'Sheldon',
     lastname: 'Plankton',
     email: 'ref1@rentaref.com',
@@ -144,6 +279,42 @@ const people = [
     firstname: 'Mrs',
     lastname: 'Puff',
     email: 'ref2@rentaref.com',
+    gender: 'f'
+  },
+  {
+    firstname: 'Melvin',
+    lastname: 'The Martian',
+    email: 'ref3@rentaref.com',
+    gender: 'm'
+  },
+  {
+    firstname: 'Sylvester',
+    lastname: 'The Cat',
+    email: 'ref4@rentaref.com',
+    gender: 'm'
+  },
+  {
+    firstname: 'Tweetie',
+    lastname: 'Pie',
+    email: 'ref5@rentaref.com',
+    gender: 'm'
+  },
+  {
+    firstname: 'Granny',
+    lastname: 'Pie',
+    email: 'ref6@rentaref.com',
+    gender: 'f'
+  },
+  {
+    firstname: 'Donald',
+    lastname: 'Duck',
+    email: 'ref7@rentaref.com',
+    gender: 'm'
+  },
+  {
+    firstname: 'Daisy',
+    lastname: 'Duck',
+    email: 'ref8@rentaref.com',
     gender: 'f'
   },
   {

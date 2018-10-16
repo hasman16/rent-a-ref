@@ -1,5 +1,3 @@
-import { Router, ActivatedRoute } from '@angular/router';
-
 import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
@@ -16,7 +14,6 @@ import { AbstractComponent } from '../abstract/abstract.component';
 
 import { ToastComponent } from '../shared/toast/toast.component';
 import {
-  CanComponentDeactivate,
   MatchService,
   PagingService,
   UserService
@@ -78,9 +75,7 @@ export class AssignUsersComponent extends AbstractComponent
 
   constructor(
     private cd: ChangeDetectorRef,
-    private route: ActivatedRoute,
     private toast: ToastComponent,
-    private userService: UserService,
     private matchService: MatchService,
     protected pagingService: PagingService
   ) {
