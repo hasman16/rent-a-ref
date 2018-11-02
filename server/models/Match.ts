@@ -26,6 +26,7 @@ const Match = function(sequelize, DataTypes) {
             [
               'U7',
               'U8',
+              'U9',
               'U10',
               'U11',
               'U12',

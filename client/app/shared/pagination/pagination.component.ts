@@ -15,41 +15,63 @@ import * as _ from 'lodash';
 	styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent {
-	@Input('page')
-	set setSearchAttributes(page: Page) {
-		if (page) {
-			this.page = _.cloneDeep(page);
-			if (this.page.limit > 0 && this.page.total_elements > 0) {
-				this.currentPage = this.page.offset;
-				this.lastPage = this.page.total_elements / this.page.limit;
-			} else {
-				this.currentPage = this.lastPage = 0;
-			}
-		}
+	@Input('limit')
+	set setLimit(limit: number) {
+		this.limit = limit;
+		this.setPagination();
 	}
-	@Output() next: EventEmitter<Page> = new EventEmitter();
-	@Output() previous: EventEmitter<Page> = new EventEmitter();
+	@Input('count')
+	set setCount(count: number) {
+		this.totalElements = count;
+		this.setPagination();
+	}
+	@Input('offset')
+	set setOffset(offset: number) {
+		this.offset = offset;
+		this.setPagination();
+	}
+	@Output('page') newPage: EventEmitter<Page> = new EventEmitter();
 	private page: Page;
 	public currentPage: number = 0;
 	public lastPage: number = 0;
-	public limit: number = 0;
 	public totalElements: number = 0;
+	public limit: number = 0;
+	public offset: number = 0;
 
 	constructor() {}
 
-	private calculatePage(proposedPage: number): Page {
-		let page: Page = _.cloneDeep(this.page);
-		page.offset = Math.max(Math.min(proposedPage, this.lastPage), 0);
-		return page;
+	private setValueInBounds(currentPage: number, lastPage: number): number {
+		currentPage = currentPage < lastPage ? currentPage : lastPage - 1;
+		return Math.max(currentPage, 0);
+	}
+
+	private setPagination(): void {
+		if (
+			_.isFinite(this.limit) &&
+			_.isFinite(this.totalElements) &&
+			_.isFinite(this.offset) &&
+			this.totalElements > 0 &&
+			this.limit > 0 &&
+			this.totalElements > this.limit
+		) {
+			this.lastPage = Math.ceil(this.totalElements / this.limit);
+			this.currentPage = this.offset + 1;
+		} else {
+			this.currentPage = this.lastPage = 0;
+		}
+	}
+
+	private calculatePage(proposedPage: number): void {
+		const page: Page = <Page>{};
+		page.offset = this.setValueInBounds(proposedPage, this.lastPage);
+		this.newPage.emit(page);
 	}
 
 	public nextPage(event): void {
-		const page: Page = this.calculatePage(this.page.offset + 1);
-		this.next.emit(page);
+		this.calculatePage(this.offset + 1);
 	}
 
 	public previousPage(event): void {
-		const page: Page = this.calculatePage(this.page.offset - 1);
-		this.previous.emit(page);
+		this.calculatePage(this.offset - 1);
 	}
 }

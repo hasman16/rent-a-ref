@@ -13,11 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractComponent } from '../abstract/abstract.component';
 
 import { ToastComponent } from '../shared/toast/toast.component';
-import {
-  MatchService,
-  PagingService,
-  UserService
-} from '../services/index';
+import { MatchService, PagingService, UserService } from '../services/index';
 import {
   Match,
   Officiating,
@@ -116,6 +112,11 @@ export class AssignUsersComponent extends AbstractComponent
         break;
     }
     return result;
+  }
+
+  public setPage(paging: Page): void {
+    this.page.offset = paging.offset;
+    this.getData(this.page);
   }
 
   public getUsers(params: Page) {

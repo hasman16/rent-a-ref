@@ -44,11 +44,11 @@ export class RefereeDetailsModalComponent implements OnInit {
 	}
 
 	public closeModal(): void {
-		this.hide(null);
+		this.hide();
 	}
 
 	public submitModal(): void {
-		this.hide(null);
+		this.hide();
 	}
 
 	private hasProperty(referee, property): boolean {

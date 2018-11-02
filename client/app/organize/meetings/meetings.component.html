@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-12">
 
-    <div class="card" *ngIf="isViewState('editEvent');">
+    <div class="card" *ngIf="isViewState('editEvent');" style="height: 100%; min-height: 25em">
       <app-toast [message]="toast.message"></app-toast>
 
       <div class="card event-form">
@@ -13,7 +13,7 @@
 
     </div>
 
-    <div class="card" [class.horizontal-and-vertical-centering]="isViewState('noEvents')" *ngIf="isViewState('listEvents') || isViewState('noEvents') ">
+    <div class="card" [class.horizontal-and-vertical-centering]="isViewState('noEvents')" *ngIf="isViewState('listEvents') || isViewState('noEvents') " style="height: 100%; min-height: 25em">
 
       <rar-search-box 
       [placeholder]="placeholder"
@@ -83,7 +83,7 @@
       </div>
     </div>
 
-    <div class="card" *ngIf="isViewState('payingForEvent')">
+    <div class="card" *ngIf="isViewState('payingForEvent')" style="height: 100%; min-height: 25em">
 
       <mat-card>
         <header>

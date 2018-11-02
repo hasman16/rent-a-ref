@@ -71,7 +71,7 @@ export abstract class AbstractComponent {
 
   public onActivate(event): void {}
 
-  public setPage(paging): void {
+  public setPage(paging: Page): void {
     this.page.offset = paging.offset;
     this.getData(this.page);
   }
