@@ -43,11 +43,11 @@ export class RefereeDetailsModalComponent implements OnInit {
 		this.hideEmitter.emit(false);
 	}
 
-	public closeModal(): void {
+	public closeModal($event): void {
 		this.hide();
 	}
 
-	public submitModal(): void {
+	public submitModal($event): void {
 		this.hide();
 	}
 
