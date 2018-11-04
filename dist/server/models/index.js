@@ -112,6 +112,7 @@ models.forEach(function (model) {
     });
     module.exports.Referee = exports.sequelize.models.referee;
     module.exports.Match = exports.sequelize.models.match;
+    module.exports.Meeting = exports.sequelize.models.meeting;
     module.exports.Organizer = exports.sequelize.models.organizer;
     module.exports.OrganizationAddress = exports.sequelize.models.organization_address;
     module.exports.OrganizationImage = exports.sequelize.models.organization_image;
