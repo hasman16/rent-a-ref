@@ -10,7 +10,8 @@
 
     <div class="col-md-3 ">
       <select class="form-control" >
-        <option *ngFor="let position of positions" value="email">Email</option>
+        <option value="email">Email</option>
+        <option value="status">Status</option>
       </select>
     </div>
   </div>
@@ -50,11 +51,24 @@
 
         </div> 
 
-        <rar-pagination 
+        <div class="d-xs-block d-md-none">
+          <rar-pagination 
           [count]="page.total_elements" 
           [offset]="page.offset"
           [limit]="page.limit"
           (page)="setPage($event)"></rar-pagination>
+        </div>
+        <div class="d-none d-md-block">
+          <span class="d-inline-block mx-auto">
+            <ngb-pagination (pageChange)="pageChanged($event)"
+                            [collectionSize]="page.total_elements"
+                            [page]="page.offset + 1"
+                            [maxSize]="5"
+                            size="md"
+                            class="mx-auto">
+            </ngb-pagination>
+          </span>
+        </div>
   </div>
 
   <br />

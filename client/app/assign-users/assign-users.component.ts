@@ -119,6 +119,10 @@ export class AssignUsersComponent extends AbstractComponent
     this.getData(this.page);
   }
 
+  public pageChanged(pageNumber: number): void {
+    this.setPage(<Page>{ offset: pageNumber - 1 });
+  }
+
   public getUsers(params: Page) {
     let page: Page = _.cloneDeep(params);
     page.search = 'can_referee|active,' + page.search;

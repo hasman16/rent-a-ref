@@ -250,4 +250,8 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	public isMatchView(): boolean {
 		return this.viewState === ViewState.matchView;
 	}
+
+	public pageChanged(pageNumber: number): void {
+		this.setPage(<Page>{ offset: pageNumber - 1 });
+	}
 }
