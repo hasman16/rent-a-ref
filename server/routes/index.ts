@@ -1,9 +1,9 @@
 import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
-import * as redis from 'redis';
-import * as ExpressBrute from 'express-brute';
-import * as RedisStore from 'express-brute-redis';
+//import * as redis from 'redis';
+//import * as ExpressBrute from 'express-brute';
+//import * as RedisStore from 'express-brute-redis';
 import * as aws from 'aws-sdk';
 import * as multer from 'multer';
 import * as multerS3 from 'multer-s3';
