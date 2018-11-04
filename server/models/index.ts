@@ -9,6 +9,7 @@ const models = [
   'Area',
   'Comment',
   'Email',
+  'Match',
   'Meeting',
   'Image',
   'Lock',
@@ -137,8 +138,6 @@ models.forEach(function(model) {
   });
 
   module.exports.Referee = sequelize.models.referee;
-  module.exports.Match = sequelize.models.match;
-  module.exports.Meeting = sequelize.models.meeting;
   module.exports.Organizer = sequelize.models.organizer;
   module.exports.OrganizationAddress = sequelize.models.organization_address;
   module.exports.OrganizationImage = sequelize.models.organization_image;
