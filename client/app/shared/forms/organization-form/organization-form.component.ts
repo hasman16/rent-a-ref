@@ -64,7 +64,7 @@ export class OrganizationFormComponent implements AfterViewInit, OnInit {
             templateOptions: {
               label: 'Organization Name',
               required: true,
-              minLength: 5,
+              minLength: 3,
               pattern: /\w+[a-zA-Z0-9]/
             }
           }
