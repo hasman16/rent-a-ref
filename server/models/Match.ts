@@ -24,21 +24,21 @@ const Match = function(sequelize, DataTypes) {
         validate: {
           isIn: [
             [
-              'U7',
-              'U8',
-              'U9',
-              'U10',
-              'U11',
-              'U12',
-              'U13',
-              'U14',
-              'U15',
-              'U16',
-              'U17',
-              'U18',
-              'U19',
-              'U23',
-              'Adults'
+              'u7',
+              'u8',
+              'u9',
+              'u10',
+              'u11',
+              'u12',
+              'u13',
+              'u14',
+              'u15',
+              'u16',
+              'u17',
+              'u18',
+              'u19',
+              'u23',
+              'adults'
             ]
           ]
         }

@@ -16,7 +16,8 @@
                 <div class="card shadow item" 
                 *ngFor="let referee of referees; let i=index"
                 (click)="showRefereeDetails(referee)">
-                    <rar-image [errorImage]="defaultImage" [image]="getImageAddress(referee)" [width]="130"></rar-image>
+                    <span>Position: {{referee.position | refereePosition}}</span>
+                    <rar-image [errorImage]="defaultImage" [image]="referee.url" [width]="130"></rar-image>
            
                   <div class="card-body">
                     <h5 class="card-title">

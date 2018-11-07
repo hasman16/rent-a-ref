@@ -25,7 +25,7 @@ export interface Match {
 
 export enum Positions {
 	Center = 0,
-	AssistentRef1 = 1,
-	AssistentRef2 = 2,
+	AssistantRef1 = 1,
+	AssistantRef2 = 2,
 	FourthOfficial = 3
 }

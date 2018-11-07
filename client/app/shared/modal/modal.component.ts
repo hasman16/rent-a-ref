@@ -10,7 +10,7 @@ import {
 
 import { ModalState } from './modal';
 
-import { Subscription ,  Observable } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'rar-modal',
@@ -33,7 +33,6 @@ export class ModalComponent implements OnInit {
         this.size = 'lg';
         break;
     }
-    console.log('this size:', this.size);
   }
   @Input() closable = true;
   @Input() visible: boolean = false;

@@ -103,6 +103,7 @@ import {
     FormlyHorizontalTextAreaWrapper,
     RepeatTypeComponent
 } from './shared/formly/index';
+import { RefereePositionPipe } from './shared/position-pipe/index';
 
 @NgModule({
     declarations: [
@@ -161,7 +162,8 @@ import {
         RepeatTypeComponent,
         FormlyHorizontalWrapper,
         FormlyHorizontalRadioWrapper,
-        FormlyHorizontalTextAreaWrapper
+        FormlyHorizontalTextAreaWrapper,
+        RefereePositionPipe
     ],
     imports: [
         BrowserModule,

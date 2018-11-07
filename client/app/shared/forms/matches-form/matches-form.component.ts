@@ -90,47 +90,47 @@ export class MatchesFormComponent implements AfterViewInit, OnInit {
               options: [
                 {
                   label: 'U8',
-                  value: 'U8'
+                  value: 'u8'
                 },
                 {
                   label: 'U9',
-                  value: 'U9'
+                  value: 'u9'
                 },
                 {
                   label: 'U10',
-                  value: 'U10'
+                  value: 'u10'
                 },
                 {
                   label: 'U11',
-                  value: 'U11'
+                  value: 'u11'
                 },
                 {
                   label: 'U12',
-                  value: 'U12'
+                  value: 'u12'
                 },
                 {
                   label: 'U13',
-                  value: 'U13'
+                  value: 'u13'
                 },
                 {
                   label: 'U14',
-                  value: 'U14'
+                  value: 'u14'
                 },
                 {
                   label: 'U15',
-                  value: 'U15'
+                  value: 'u15'
                 },
                 {
                   label: 'U16',
-                  value: 'U16'
+                  value: 'u16'
                 },
                 {
                   label: 'U17',
-                  value: 'U17'
+                  value: 'u17'
                 },
                 {
                   label: 'U18',
-                  value: 'U18'
+                  value: 'u18'
                 },
                 {
                   label: 'Adults',

@@ -14,6 +14,7 @@ import { PagingService, MatchService, UserService } from '../../services/index';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
 import { Location } from '../../googlemap/google-map.component';
+import { RefereePositionPipe } from '../../shared/position-pipe/index';
 //Models
 import {
   Address,
@@ -70,7 +71,7 @@ export class MatchDetailComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private matchService: MatchService,
     private pagingService: PagingService,
-    private userService: UserService
+    private userService: UserService //private refereePosition: RefereePositionPipe
   ) {}
 
   ngOnInit() {
@@ -87,7 +88,7 @@ export class MatchDetailComponent implements OnInit {
 
   public showRefereeDetails(referee): void {
     const currentReferee = _.cloneDeep(referee);
-    currentReferee.url = this.getImageAddress(referee);
+    currentReferee.url = referee.url;
     currentReferee.orderedPhones = this.orderPhones(referee);
     currentReferee.addresses = referee.addresses;
     this.currentReferee = _.cloneDeep(currentReferee);
@@ -96,11 +97,6 @@ export class MatchDetailComponent implements OnInit {
 
   public hideRefereeDetails($event): void {
     this.showModal = false;
-  }
-
-  public getImageAddress(referee): string {
-    const url = _.get(referee, 'images[0].location', this.defaultImage);
-    return url;
   }
 
   private orderPhones(referee): Phone[] {
@@ -130,7 +126,26 @@ export class MatchDetailComponent implements OnInit {
       .getMatchOfficials(id, page)
       .pipe(
         tap(referees => {
-          this.referees = referees.rows;
+          this.referees = _(referees.rows)
+            .map(referee => {
+              const match = _.head(referee.matches);
+              const url = _.get(
+                referee,
+                'images[0].location',
+                this.defaultImage
+              );
+              let position = _.get(
+                referee,
+                'matches[0].officiating.position',
+                ''
+              );
+
+              referee.position = position;
+              referee.url = url;
+              return referee;
+            })
+            .value();
+          console.log('got referees:', this.referees);
         }),
         switchMap(() => {
           return this.matchService.getMatch(id);

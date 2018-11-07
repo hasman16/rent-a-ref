@@ -42,8 +42,8 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 	public viewState: ViewState = ViewState.scheduleView;
 	private positions: any = {
 		0: 'Center',
-		1: 'AssistentRef1',
-		2: 'AssistentRef2',
+		1: 'AssistantRef1',
+		2: 'AssistantRef2',
 		3: 'FourthOfficial'
 	};
 	constructor(

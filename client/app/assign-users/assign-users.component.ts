@@ -78,8 +78,8 @@ export class AssignUsersComponent extends AbstractComponent
     super(pagingService);
     this.positions = [
       { label: 'Center', value: '0' },
-      { label: 'Assistent Ref 1', value: '1' },
-      { label: 'Assistent Ref 2', value: '2' },
+      { label: 'Assistant Ref 1', value: '1' },
+      { label: 'Assistant Ref 2', value: '2' },
       { label: '4th Official', value: '3' }
     ];
   }
