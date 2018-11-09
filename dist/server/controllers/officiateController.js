@@ -212,7 +212,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
             var executeMethod;
             var _this = this;
             return __generator(this, function (_a) {
-                executeMethod = function (transaction, user, match, officiate, position) { return __awaiter(_this, void 0, void 0, function () {
+                executeMethod = function (transaction, user, match, officiate, position, pay) { return __awaiter(_this, void 0, void 0, function () {
                     var isOfficiating, status_1;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
@@ -240,7 +240,8 @@ function OfficiateController(models, ResponseService, SendGridService) {
                                     user_id: user.id,
                                     match_id: match.id,
                                     status: 'pending',
-                                    position: position
+                                    position: position,
+                                    pay: pay
                                 }, { transaction: transaction })];
                             case 6:
                                 isOfficiating = _a.sent();
@@ -564,7 +565,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
     }
     function operateOnMatch(req, res, executeMethod) {
         return __awaiter(this, void 0, void 0, function () {
-            var Address, body, match_id, user_id, position, transaction, match, user, officiate, timeLocked, error_2;
+            var Address, body, match_id, user_id, position, pay, transaction, match, user, officiate, timeLocked, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -573,6 +574,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         match_id = body.match_id;
                         user_id = body.user_id;
                         position = body.position;
+                        pay = body.pay;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 9, , 10]);
@@ -611,7 +613,7 @@ function OfficiateController(models, ResponseService, SendGridService) {
                         return [4 /*yield*/, ResponseService.byPassTimeLockIfAdmin(req, match)];
                     case 6:
                         timeLocked = _a.sent();
-                        return [4 /*yield*/, executeMethod(transaction, user, match, officiate, position)];
+                        return [4 /*yield*/, executeMethod(transaction, user, match, officiate, position, pay)];
                     case 7:
                         _a.sent();
                         return [4 /*yield*/, transaction.commit()];

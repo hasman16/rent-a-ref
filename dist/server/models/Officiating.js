@@ -2,6 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Officiating = function (sequelize, DataTypes) {
     return sequelize.define('officiating', {
+        pay: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         position: {
             type: DataTypes.INTEGER,
             allowNull: false,

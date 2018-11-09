@@ -157,7 +157,8 @@ export class AssignUsersComponent extends AbstractComponent
         .officiateMatch({
           user_id,
           match_id: this.match_id,
-          position: user.position || 0
+          position: _.defaultTo(user.position, 0),
+          pay: _.defaultTo(user.pay, 0)
         })
         .pipe(
           finalize(() => {
@@ -246,6 +247,7 @@ export class AssignUsersComponent extends AbstractComponent
       if (match) {
         const officiating: Officiating = match.officiating;
         user.position = officiating ? officiating.position : 0;
+        user.pay = officiating ? officiating.pay : 0;
       }
       return user;
     });

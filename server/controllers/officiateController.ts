@@ -178,7 +178,8 @@ export default function OfficiateController(
       user,
       match,
       officiate,
-      position
+      position,
+      pay
     ) => {
       let isOfficiating;
       if (officiate) {
@@ -207,7 +208,8 @@ export default function OfficiateController(
             user_id: user.id,
             match_id: match.id,
             status: 'pending',
-            position: position
+            position: position,
+            pay: pay
           },
           { transaction }
         );
@@ -518,6 +520,7 @@ export default function OfficiateController(
     const match_id = body.match_id;
     const user_id = body.user_id;
     const position = body.position;
+    const pay = body.pay;
 
     let transaction;
 
@@ -556,7 +559,7 @@ export default function OfficiateController(
       }
       let timeLocked = await ResponseService.byPassTimeLockIfAdmin(req, match);
 
-      await executeMethod(transaction, user, match, officiate, position);
+      await executeMethod(transaction, user, match, officiate, position, pay);
       await transaction.commit();
       ResponseService.success(
         res,

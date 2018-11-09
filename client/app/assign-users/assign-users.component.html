@@ -28,13 +28,14 @@
           <div class="col-md-3 pb-2">
             {{user.email}}
           </div>
-          <div class="col-md-2 pb-2">
-            {{user.status}}
-          </div>
           <div class="col-md-3 pb-2">
             <select class="form-control" [(ngModel)]="user.position">
                 <option *ngFor="let position of positions" value="{{position.value}}">{{position.label}}</option>
             </select>
+          </div>
+
+          <div class="col-md-2 pb-2">
+            <input class="form-control" [(ngModel)]="user.pay" type="number" min="0">
           </div>
 
           <div class="col-md-4">
