@@ -9,6 +9,7 @@ function stripeRoutes(setter, stripeCtrl) {
     var isOrgOwner = authorization.isOrgOwner;
     var isOrgMember = authorization.isOrgMember;
     var imageUploader = setter.imageUploader;
+    var isUser = authorization.isUser;
     router.route('/stripe/products').get(authentication, stripeCtrl.listProducts);
     router.route('/stripe/plans').get(authentication, stripeCtrl.listPlans);
     router
@@ -35,6 +36,9 @@ function stripeRoutes(setter, stripeCtrl) {
     router
         .route('/stripe/make_payment/:order_id')
         .post(authentication, stripeCtrl.makeStripePayment);
+    router
+        .route('/stripe/customer/:user_id')
+        .get(authentication, isUser, stripeCtrl.retrieveOrCreateCustomer);
 }
 exports.default = stripeRoutes;
 //# sourceMappingURL=stripeRoutes.js.map

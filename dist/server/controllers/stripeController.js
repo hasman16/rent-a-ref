@@ -38,8 +38,135 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var Stripe = require("stripe");
 function StripeController(models, ResponseService) {
+    var sequelize = models.sequelize;
     var stripe = new Stripe(process.env.STRIPE_KEY);
     stripe.setApiVersion('2018-02-06');
+    function retrieveOrCreateCustomer(req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var User, Customer, user_id, transaction, stripeCustomer, user, customer, stripeCustomers, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        User = models.User;
+                        Customer = models.Customer;
+                        user_id = req.params.user_id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 14, , 15]);
+                        return [4 /*yield*/, sequelize.transaction()];
+                    case 2:
+                        transaction = _a.sent();
+                        return [4 /*yield*/, User.findOne({
+                                where: {
+                                    id: user_id
+                                }
+                            }, { transaction: transaction })];
+                    case 3:
+                        user = _a.sent();
+                        return [4 /*yield*/, Customer.findOne({
+                                where: {
+                                    email: user.email
+                                }
+                            }, { transaction: transaction })];
+                    case 4:
+                        customer = _a.sent();
+                        if (!(customer && customer.stripe_id)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, stripe.customers.retrieve(customer.stripe_id)];
+                    case 5:
+                        stripeCustomer = _a.sent();
+                        return [3 /*break*/, 12];
+                    case 6: return [4 /*yield*/, stripe.customers.list({
+                            email: user.email
+                        })];
+                    case 7:
+                        stripeCustomers = _a.sent();
+                        if (!(stripeCustomers &&
+                            stripeCustomers.data &&
+                            _.isArray(stripeCustomers.data) &&
+                            stripeCustomers.data.length > 0)) return [3 /*break*/, 8];
+                        stripeCustomer = _.head(stripeCustomers.data);
+                        return [3 /*break*/, 10];
+                    case 8: return [4 /*yield*/, stripe.customers.create({
+                            email: user.email
+                        })];
+                    case 9:
+                        stripeCustomer = _a.sent();
+                        _a.label = 10;
+                    case 10: return [4 /*yield*/, Customer.create({
+                            email: user.email,
+                            stripe_id: stripeCustomer.id
+                        }, { transaction: transaction })];
+                    case 11:
+                        customer = _a.sent();
+                        _a.label = 12;
+                    case 12: return [4 /*yield*/, transaction.commit()];
+                    case 13:
+                        _a.sent();
+                        ResponseService.success(res, stripeCustomer);
+                        return [3 /*break*/, 15];
+                    case 14:
+                        error_1 = _a.sent();
+                        transaction.rollback(transaction);
+                        ResponseService.exception(res, error_1);
+                        return [3 /*break*/, 15];
+                    case 15: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    function createCard(req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var User, Customer, card, user_id, transaction, stripeCustomer, user, customer, stripeCustomer_1, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        User = models.User;
+                        Customer = models.Customer;
+                        card = ResponseService.getItemFromBody(req);
+                        user_id = req.params.user_id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 7, , 8]);
+                        return [4 /*yield*/, sequelize.transaction()];
+                    case 2:
+                        transaction = _a.sent();
+                        return [4 /*yield*/, User.findOne({
+                                where: {
+                                    id: user_id
+                                }
+                            }, { transaction: transaction })];
+                    case 3:
+                        user = _a.sent();
+                        return [4 /*yield*/, Customer.findOne({
+                                where: {
+                                    email: user.email
+                                }
+                            }, { transaction: transaction })];
+                    case 4:
+                        customer = _a.sent();
+                        return [4 /*yield*/, stripe.customers.retrieve(customer.stripe_id)];
+                    case 5:
+                        stripeCustomer_1 = _a.sent();
+                        if (!stripeCustomer_1) {
+                            throw new Error('Unable to retrieve Customer.');
+                        }
+                        //const newCare = await stripe.customers.
+                        return [4 /*yield*/, transaction.commit()];
+                    case 6:
+                        //const newCare = await stripe.customers.
+                        _a.sent();
+                        ResponseService.success(res, stripeCustomer_1);
+                        return [3 /*break*/, 8];
+                    case 7:
+                        error_2 = _a.sent();
+                        transaction.rollback(transaction);
+                        ResponseService.exception(res, error_2);
+                        return [3 /*break*/, 8];
+                    case 8: return [2 /*return*/];
+                }
+            });
+        });
+    }
     function listProducts(req, res) {
         stripe.products
             .list({ limit: 10 })
@@ -226,6 +353,7 @@ function StripeController(models, ResponseService) {
         });
     }
     return {
+        retrieveOrCreateCustomer: retrieveOrCreateCustomer,
         createOrder: createOrder,
         createAndPayOrder: createAndPayOrder,
         listPlans: listPlans,

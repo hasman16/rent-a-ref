@@ -43,4 +43,22 @@ export class StripeService extends AbstractService {
       JSON.stringify(payload)
     );
   }
+
+  public retrieveCustomer(user_id: string): Observable<any> {
+    return this.http.get(`/api/stripe/customer/${user_id}`);
+  }
+
+  public payOrderWithOldCard(order: Order): Observable<any> {
+    return this.http.post(
+      `/api/stripe/pay_with_old_card`,
+      JSON.stringify(order)
+    );
+  }
+
+  public payOrderWithNewCard(order: Order): Observable<any> {
+    return this.http.post(
+      `/api/stripe/pay_with_new_card`,
+      JSON.stringify(order)
+    );
+  }
 }

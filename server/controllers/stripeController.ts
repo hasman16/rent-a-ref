@@ -3,8 +3,115 @@ import * as Stripe from 'stripe';
 import { OrderModel } from './../types/index';
 
 export default function StripeController(models, ResponseService) {
+  const sequelize = models.sequelize;
   const stripe = new Stripe(process.env.STRIPE_KEY);
   stripe.setApiVersion('2018-02-06');
+
+  async function retrieveOrCreateCustomer(req, res) {
+    const User = models.User;
+    const Customer = models.Customer;
+    const user_id = req.params.user_id;
+    let transaction, stripeCustomer;
+    try {
+      transaction = await sequelize.transaction();
+
+      const user = await User.findOne(
+        {
+          where: {
+            id: user_id
+          }
+        },
+        { transaction }
+      );
+      let customer = await Customer.findOne(
+        {
+          where: {
+            email: user.email
+          }
+        },
+        { transaction }
+      );
+
+      if (customer && customer.stripe_id) {
+        stripeCustomer = await stripe.customers.retrieve(customer.stripe_id);
+      } else {
+        const stripeCustomers = await stripe.customers.list({
+          email: user.email
+        });
+
+        if (
+          stripeCustomers &&
+          stripeCustomers.data &&
+          _.isArray(stripeCustomers.data) &&
+          stripeCustomers.data.length > 0
+        ) {
+          stripeCustomer = _.head(stripeCustomers.data);
+        } else {
+          stripeCustomer = await stripe.customers.create({
+            email: user.email
+          });
+        }
+
+        customer = await Customer.create(
+          {
+            email: user.email,
+            stripe_id: stripeCustomer.id
+          },
+          { transaction }
+        );
+      }
+
+      await transaction.commit();
+      ResponseService.success(res, stripeCustomer);
+    } catch (error) {
+      transaction.rollback(transaction);
+      ResponseService.exception(res, error);
+    }
+  }
+
+  async function createCard(req, res) {
+    const User = models.User;
+    const Customer = models.Customer;
+    const card = ResponseService.getItemFromBody(req);
+    const user_id = req.params.user_id;
+
+    let transaction, stripeCustomer;
+
+    try {
+      transaction = await sequelize.transaction();
+
+      const user = await User.findOne(
+        {
+          where: {
+            id: user_id
+          }
+        },
+        { transaction }
+      );
+      const customer = await Customer.findOne(
+        {
+          where: {
+            email: user.email
+          }
+        },
+        { transaction }
+      );
+      const stripeCustomer = await stripe.customers.retrieve(
+        customer.stripe_id
+      );
+      if (!stripeCustomer) {
+        throw new Error('Unable to retrieve Customer.');
+      }
+      //const newCare = await stripe.customers.
+
+      await transaction.commit();
+      ResponseService.success(res, stripeCustomer);
+    } catch (error) {
+      transaction.rollback(transaction);
+      ResponseService.exception(res, error);
+    }
+  }
+
   function listProducts(req, res) {
     stripe.products
       .list({ limit: 10 })
@@ -201,6 +308,7 @@ export default function StripeController(models, ResponseService) {
   }
 
   return {
+    retrieveOrCreateCustomer,
     createOrder,
     createAndPayOrder,
     listPlans,

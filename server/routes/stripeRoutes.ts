@@ -7,6 +7,7 @@ export default function stripeRoutes(setter, stripeCtrl) {
   const isOrgOwner = authorization.isOrgOwner;
   const isOrgMember = authorization.isOrgMember;
   const imageUploader = setter.imageUploader;
+  const isUser = authorization.isUser;
 
   router.route('/stripe/products').get(authentication, stripeCtrl.listProducts);
   router.route('/stripe/plans').get(authentication, stripeCtrl.listPlans);
@@ -41,4 +42,8 @@ export default function stripeRoutes(setter, stripeCtrl) {
   router
     .route('/stripe/make_payment/:order_id')
     .post(authentication, stripeCtrl.makeStripePayment);
+
+  router
+    .route('/stripe/customer/:user_id')
+    .get(authentication, isUser, stripeCtrl.retrieveOrCreateCustomer);
 }

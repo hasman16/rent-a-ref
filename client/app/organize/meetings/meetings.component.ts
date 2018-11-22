@@ -28,7 +28,8 @@ import {
   PagedData,
   Organization,
   State,
-  Sport
+  Sport,
+  User
 } from './../../shared/models/index';
 import { PaymentState, Payment } from './../../shared/stripe/stripe-state';
 import { Observable } from 'rxjs';
@@ -64,6 +65,7 @@ export class MeetingsComponent extends AbstractComponent
   protected prices: any[] = [];
 
   protected sports: Option[];
+  public user: User = <User>{ id: null };
   public meetings: Meeting[] = [];
   public currentMeeting: Meeting;
 
@@ -77,6 +79,7 @@ export class MeetingsComponent extends AbstractComponent
 
   constructor(
     private cd: ChangeDetectorRef,
+    private auth: AuthService,
     protected toast: ToastComponent,
     protected route: ActivatedRoute,
     protected router: Router,
@@ -87,6 +90,7 @@ export class MeetingsComponent extends AbstractComponent
     this.route.params.subscribe(params => {
       this.organization_id = params['organization_id'];
     });
+    this.user = this.auth.getCurrentUser();
     console.log('VERSION:::::::::::::::', VERSION.full);
   }
 

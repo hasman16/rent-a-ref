@@ -31,6 +31,7 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('cardInfo') cardInfo: ElementRef;
   @Input() amount: number = 0;
   @Input() reference_id: string;
+  @Input() user_id: string;
 
   @Input() lineItems: any[] = [];
   @Output() paymentState: EventEmitter<Payment> = new EventEmitter<Payment>();
@@ -41,6 +42,8 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
   public model: any = {};
   public success: any = null;
   public disableSubmit: boolean = false;
+  public hasSource: boolean = false;
+  public sources: any[] = [];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -69,7 +72,9 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
     this.card.addEventListener('change', this.cardHandler);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.retrieveCustomer();
+  }
 
   public ngOnDestroy() {
     this.card.removeEventListener('change', this.cardHandler);
@@ -110,6 +115,7 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
     };
     this.error = null;
     this.success = null;
+    this.disableSubmit = true;
 
     stripe
       .createSource(this.card, {
@@ -127,6 +133,59 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
         this.errorOut(err);
       });
   }
+
+  private retrieveCustomer() {
+    this.disableSubmit = true;
+    this.hasSource = false;
+    this.sources = null;
+    this.stripeService
+      .retrieveCustomer(this.user_id)
+      .pipe(
+        finalize(() => {
+          this.cd.markForCheck();
+        })
+      )
+      .subscribe(
+        customer => {
+          this.disableSubmit = false;
+          let sources = _.get(customer, 'sources.data', null);
+          if (_.isArray(sources) && sources.length > 0) {
+            this.sources = sources;
+            this.hasSource = true;
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this.errorOut(err);
+        }
+      );
+  }
+  /*
+  private addCardSource(order, source): void {
+    this.error = null;
+    this.success = null;
+    this.disableSubmit = true;
+    this.stripeService
+      .addCardAndPayOrder({ order: order, source: source.id })
+      .pipe(
+        finalize(() => {
+          this.disableSubmit = false;
+          this.cd.markForCheck();
+        })
+      )
+      .subscribe(
+        success => {
+          this.paymentState.emit(<Payment>{
+            paymentState: PaymentState.PaymentSuccess
+          });
+        },
+        (err: HttpErrorResponse) => {
+          this.errorOut(err);
+          this.paymentState.emit(<Payment>{
+            paymentState: PaymentState.PaymentError
+          });
+        }
+      );
+  }*/
 
   private createAndPayOrder(order, source) {
     this.error = null;

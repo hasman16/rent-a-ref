@@ -35,6 +35,7 @@ interface MatchOfficiating extends Match {
 interface UserGame extends User {
   matches?: MatchOfficiating[];
   position?: number;
+  pay?: number;
 }
 
 enum ViewState {

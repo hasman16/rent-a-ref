@@ -97,7 +97,11 @@
           </div>
 
           <div class="col-md-6">
-             <rar-stripe [amount]="model.total" [lineItems]="meetingComponentService.lineItems" [reference_id]="event_id" (paymentState)="paymentState($event)"></rar-stripe>
+             <rar-stripe  [amount]="model.total"
+                          [lineItems]="meetingsComponentService.lineItems"
+                          [reference_id]="event_id"
+                          [user_id]="user.id"
+                          (paymentState)="paymentState($event)"></rar-stripe>
           </div>
 
         </div>

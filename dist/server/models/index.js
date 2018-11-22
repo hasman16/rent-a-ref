@@ -8,6 +8,7 @@ var models = [
     'Address',
     'Area',
     'Comment',
+    'Customer',
     'Email',
     'Match',
     'Meeting',
