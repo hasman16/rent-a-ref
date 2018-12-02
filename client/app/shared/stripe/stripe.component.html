@@ -1,36 +1,34 @@
-<div class="payment example5">
-  <div *ngIf="hasSource">
+<div class="payment example5" style="min-height: 2.5em">
+  <div *ngIf="isViewState('listCards')">
     <div class="row">
       <div class="col-12" >
         <div class="form-size">
-        <br />
-        <div class="row shadow"  *ngFor="let source of sources;" >
+        <div class="row shadow" *ngFor="let source of sources;" >
           <div class="col-xs-12 col-md-2" title="Card Type">
             <h4 class="contrain-text" title="{{source.name}}">{{source.brand}}</h4>
           </div>
-          <div class="col-xs-12 col-md-2" title="Edit Events.">
-            <h4 class="contrain-text" title="{{source.exp_month}}">{{source.exp_month}}</h4>
-          </div>
-          <div class="col-xs-12 col-md-2" title="Edit Events.">
-            <h4 class="contrain-text" title="{{source.exp_year}}">{{source.exp_year}}</h4>
-          </div>
-            <div class="col-xs-12 col-md-3" title="Edit Events.">
+          <div class="col-xs-12 col-md-3" title="Edit Events.">
             <h4 class="contrain-text" title="{{source.last4}}">{{source.last4}}</h4>
           </div>
-          <div class="col-xs-12 col-md-3">
-            <div class="button-container">
-              <button class="btn btn-primary btn-sm" title="Use this card.">Select</button>
-              <button class="btn btn-danger btn-sm" title="Click to delete card.">Delete</button>
-            </div>
+          <div class="col-xs-12 col-md-3" title="Edit Events.">
+            <h4 class="contrain-text" title="{{source.exp_year}}">{{source.exp_month}}-{{source.exp_year}}</h4>
+          </div>
+          <div class="col-xs-12 col-md-2">
+            <button class="btn btn-primary btn-sm" title="Pay with this card.">Pay</button>
+          </div>
+          <div class="col-xs-12 col-md-2">
+            <button class="btn btn-danger btn-sm" title="Click to delete card.">Delete</button>
           </div>
         </div>
         <br />
-        <button class="btn btn-primary btn-sm new-org-button" title="Click to create a new card">New Card</button>
+        <button class="btn btn-primary btn-sm new-org-button"
+                title="Click to add a new card"
+                (click)="showAddCard(event)">Add Card</button>
       </div>
       </div>
     </div>
   </div>
-  <div *ngIf="!hasSource">
+  <div *ngIf="isViewState('addCard')">
     <form #checkout="ngForm" (ngSubmit)="onSubmit(checkout)">
       <div id="example5-paymentRequest">
       <!--Stripe paymentRequestButton Element inserted here-->
@@ -88,8 +86,9 @@
           </div>
         </div>
 
-        <button mat-raised-button type="submit" [disabled]="!checkout.form.valid || disableSubmit">Pay {{amount / 100 |currency}}</button>
+        <button mat-raised-button class="payment-back">Back to List</button>
 
+        <button mat-raised-button type="submit" class="payment-button" [disabled]="!checkout.form.valid || disableSubmit">Pay {{amount / 100 |currency}}</button>
       </fieldset>
       <div class="error" role="alert" *ngIf="error">
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17">

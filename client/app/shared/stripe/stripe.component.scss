@@ -100,17 +100,22 @@ label {
   display: none;
 }
 
-.payment button {
+.payment {
   display: block;
   width: calc(100% - 30px);
   height: 40px;
   margin: 5px 15px 0;
-  background-color: #24b47e;
   border-radius: 4px;
   color: #fff;
   text-transform: uppercase;
   font-weight: 600;
   cursor: pointer;
+  .payment-back {
+    background-color: #fdfdfd;
+  }
+  .payment-button {
+    background-color: #24b47e;
+  }
 }
 
 .payment input:active {
