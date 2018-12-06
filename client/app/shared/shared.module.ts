@@ -19,7 +19,7 @@ import { UploadButtonComponent } from './uploadbutton/upload-button.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ModalComponent } from './modal/modal.component';
 import { RaRImageComponent } from './image/image.component';
-import { StripeComponent } from './stripe/index';
+import { StripeComponent, StripeCardComponent } from './stripe/index';
 import { MaterialModule } from '../material.module';
 import { AlertModalComponent, AlertModalService } from './alert-modal/index';
 import {
@@ -58,6 +58,7 @@ const sharedComponents = [
 	CropImageModalComponent,
 	RaRImageComponent,
 	StripeComponent,
+	StripeCardComponent,
 	BaseFormComponent,
 	OrganizationFormComponent,
 	BlogFormComponent,

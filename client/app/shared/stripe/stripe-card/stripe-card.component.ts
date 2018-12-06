@@ -14,25 +14,21 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PaymentState, Payment } from './stripe-state';
-import { Order } from './../models/index';
-import { OrganizeService, StripeService } from '../../services/index';
+import { PaymentState, Payment } from '../stripe-state';
+import { Order } from './../../models/index';
+import { OrganizeService, StripeService } from '../../../services/index';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-enum ViewState {
-	listCards,
-	addCard,
-	payWithCard
-}
 @Component({
-	selector: 'rar-stripe',
-	templateUrl: './stripe.component.html',
-	styleUrls: ['./stripe.component.scss'],
+	selector: 'rar-stripe-card',
+	templateUrl: './stripe-card.component.html',
+	styleUrls: ['./stripe-card.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StripeComponent implements OnInit {
+export class StripeCardComponent implements AfterViewInit, OnInit, OnDestroy {
+	@ViewChild('cardInfo') cardInfo: ElementRef;
 	@Input() amount: number = 0;
 	@Input() reference_id: string;
 	@Input() user_id: string;
@@ -41,13 +37,13 @@ export class StripeComponent implements OnInit {
 	@Output() paymentState: EventEmitter<Payment> = new EventEmitter<Payment>();
 
 	public card: any;
+	public cardHandler = this.onChange.bind(this);
 	public error: string;
 	public model: any = {};
 	public success: any = null;
 	public disableSubmit: boolean = false;
 	public hasSource: boolean = false;
 	public sources: any[] = [];
-	public viewState: ViewState = ViewState.listCards;
 
 	constructor(
 		private cd: ChangeDetectorRef,
@@ -55,27 +51,34 @@ export class StripeComponent implements OnInit {
 		private stripeService: StripeService
 	) {}
 
-	public ngOnInit(): void {
-		this.retrieveCustomer();
+	public ngAfterViewInit() {
+		this.card = elements.create('card', {
+			style: {
+				base: {
+					iconColor: '#666EE8',
+					color: '#31325F',
+					lineHeight: '40px',
+					fontWeight: 300,
+					fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+					fontSize: '18px',
+					'::placeholder': {
+						color: '#CFD7E0'
+					}
+				}
+			}
+		});
+		this.card.mount(this.cardInfo.nativeElement);
+
+		this.card.addEventListener('change', this.cardHandler);
 	}
 
-	public isViewState(value: string): boolean {
-		let result: boolean = false;
-		switch (value) {
-			case 'listCards':
-				result = this.viewState === ViewState.listCards;
-				break;
-			case 'payWithCard':
-				result = this.viewState === ViewState.payWithCard;
-				break;
-			case 'addCard':
-				result = this.viewState === ViewState.addCard;
-				break;
-			default:
-				result = false;
-				break;
-		}
-		return result;
+	ngOnInit() {
+		//this.retrieveCustomer();
+	}
+
+	public ngOnDestroy() {
+		this.card.removeEventListener('change', this.cardHandler);
+		this.card.destroy();
 	}
 
 	public onChange({ error }) {
@@ -89,15 +92,52 @@ export class StripeComponent implements OnInit {
 		this.cd.detectChanges();
 	}
 
-	public showAddCard(event): void {
-		this.viewState = ViewState.addCard;
-	}
+	public onSubmit(form: NgForm): void {
+		let order: Order = <Order>{
+			currency: 'usd',
+			items: this.lineItems,
+			email: this.model.email,
+			shipping: {
+				name: this.model.fullname,
+				address: {
+					line1: this.model.line1,
+					city: this.model.city,
+					state: this.model.state,
+					postal_code: this.model.zip,
+					country: 'US'
+				}
+			},
+			metadata: {
+				status: 'created',
+				reference_id: this.reference_id,
+				reference_id_type: 'event_id'
+			}
+		};
+		this.error = null;
+		this.success = null;
+		this.disableSubmit = true;
 
+		stripe
+			.createSource(this.card, {
+				name: this.model.name
+			})
+			.then(result => {
+				if (_.has(result, 'source')) {
+					this.createAndPayOrder(order, result.source);
+				} else {
+					console.log('failed payment');
+				}
+			})
+			.catch(err => {
+				this.disableSubmit = false;
+				this.errorOut(err);
+			});
+	}
+	/*
 	private retrieveCustomer() {
 		this.disableSubmit = true;
 		this.hasSource = false;
 		this.sources = null;
-		this.viewState = ViewState.addCard;
 		this.stripeService
 			.retrieveCustomer(this.user_id)
 			.pipe(
@@ -120,7 +160,7 @@ export class StripeComponent implements OnInit {
 				}
 			);
 	}
-
+*/
 	private createAndPayOrder(order, source) {
 		this.error = null;
 		this.success = null;
@@ -148,11 +188,11 @@ export class StripeComponent implements OnInit {
 			);
 	}
 
-	private makeStripePayment(token): void {
+	private makeStripePayment(token) {
 		this.error = null;
 		this.success = null;
 		this.disableSubmit = true;
-		this.stripeService
+		return this.stripeService
 			.makeStripePayment(this.reference_id, token)
 			.pipe(
 				finalize(() => {
@@ -175,7 +215,7 @@ export class StripeComponent implements OnInit {
 			);
 	}
 
-	private errorOut(err: any): void {
+	private errorOut(err: any) {
 		if (err && err.message && err.message.message) {
 			this.error = err.message.message;
 		} else if (err.message) {
