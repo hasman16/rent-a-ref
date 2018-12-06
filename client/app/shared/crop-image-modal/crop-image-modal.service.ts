@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UploadState, CropImageState } from './crop-image';
-import { Subject ,  Observable ,  BehaviorSubject } from 'rxjs';
-
-
-
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 import * as _ from 'lodash';
 
@@ -31,10 +28,7 @@ export class CropImageModalService {
 		this.cropImageSubject.next(cropImageState);
 	}
 
-	public uploadImage(
-		destination: string,
-		formData: FormData
-	): Observable<any> {
+	public uploadImage(destination: string, formData: FormData): Observable<any> {
 		return this.http.post(destination, formData, { reportProgress: true });
 	}
 }

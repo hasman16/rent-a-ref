@@ -61,10 +61,7 @@ export class UploadButtonComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.renderer.setAttribute(this.uploadInput, 'size', '1');
 		this.renderer.setAttribute(this.uploadInput, 'type', 'file');
 		this.renderer.insertBefore(parent, this.uploadInput, boldElement);
-		this.uploadInput.addEventListener(
-			'change',
-			this.uploadImages.bind(this)
-		);
+		this.uploadInput.addEventListener('change', this.uploadImages.bind(this));
 	}
 
 	public uploadImages($event) {

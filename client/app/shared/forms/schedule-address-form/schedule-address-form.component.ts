@@ -1,11 +1,11 @@
 import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild
+	AfterViewInit,
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+	ViewChild
 } from '@angular/core';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
@@ -16,95 +16,95 @@ import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'schedule-address-form',
-  templateUrl: './schedule-address-form.component.html',
-  styleUrls: ['./schedule-address-form.component.scss']
+	selector: 'schedule-address-form',
+	templateUrl: './schedule-address-form.component.html',
+	styleUrls: ['./schedule-address-form.component.scss']
 })
 export class ScheduleAddressFormComponent implements AfterViewInit, OnInit {
-  @ViewChild(BaseFormComponent) baseForm: BaseFormComponent;
-  @Input('model')
-  set aModel(model: any) {
-    this.model = _.cloneDeep(model);
-  }
-  @Output() ngSubmit: EventEmitter<any> = new EventEmitter<any>();
+	@ViewChild(BaseFormComponent) baseForm: BaseFormComponent;
+	@Input('model')
+	set aModel(model: any) {
+		this.model = _.cloneDeep(model);
+	}
+	@Output() ngSubmit: EventEmitter<any> = new EventEmitter<any>();
 
-  public model: any = {};
-  public submitText: string;
-  public fields: FormlyFieldConfig[];
-  public disable: boolean = true;
-  public states: Option[];
+	public model: any = {};
+	public submitText: string;
+	public fields: FormlyFieldConfig[];
+	public disable: boolean = true;
+	public states: Option[];
 
-  constructor(private statesService: StatesService) {
-    this.disable = true;
-  }
+	constructor(private statesService: StatesService) {
+		this.disable = true;
+	}
 
-  ngOnInit() {
-    this.states = this.statesService.getStatesProvinces();
+	ngOnInit() {
+		this.states = this.statesService.getStatesProvinces();
 
-    this.fields = [
-      {
-        template: '<div><strong>Origin</strong></div>'
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12',
-            type: 'input',
-            key: 'line1',
-            templateOptions: {
-              label: 'Street 1',
-              required: false
-            }
-          },
-          {
-            type: 'input',
-            key: 'line2',
-            className: 'col-sm-12',
-            templateOptions: {
-              type: 'text',
-              label: 'Street 2'
-            }
-          },
-          {
-            type: 'input',
-            key: 'city',
-            className: 'col-sm-12',
-            templateOptions: {
-              label: 'City',
-              required: true
-            }
-          },
-          {
-            type: 'select',
-            key: 'state',
-            className: 'col-sm-12',
-            templateOptions: {
-              label: 'State',
-              options: _.cloneDeep(this.states),
-              required: true
-            }
-          },
-          {
-            type: 'input',
-            key: 'zip',
-            className: 'col-sm-12',
-            templateOptions: {
-              label: 'Zip',
-              required: false,
-              pattern: /\d{5}(\-\d{4})?/
-            }
-          }
-        ]
-      }
-    ];
-  }
+		this.fields = [
+			{
+				template: '<div><strong>Origin</strong></div>'
+			},
+			{
+				fieldGroupClassName: 'row',
+				fieldGroup: [
+					{
+						className: 'col-sm-12',
+						type: 'input',
+						key: 'line1',
+						templateOptions: {
+							label: 'Street 1',
+							required: false
+						}
+					},
+					{
+						type: 'input',
+						key: 'line2',
+						className: 'col-sm-12',
+						templateOptions: {
+							type: 'text',
+							label: 'Street 2'
+						}
+					},
+					{
+						type: 'input',
+						key: 'city',
+						className: 'col-sm-12',
+						templateOptions: {
+							label: 'City',
+							required: true
+						}
+					},
+					{
+						type: 'select',
+						key: 'state',
+						className: 'col-sm-12',
+						templateOptions: {
+							label: 'State',
+							options: _.cloneDeep(this.states),
+							required: true
+						}
+					},
+					{
+						type: 'input',
+						key: 'zip',
+						className: 'col-sm-12',
+						templateOptions: {
+							label: 'Zip',
+							required: false,
+							pattern: /\d{5}(\-\d{4})?/
+						}
+					}
+				]
+			}
+		];
+	}
 
-  ngAfterViewInit() {
-    this.disable = false;
-  }
+	ngAfterViewInit() {
+		this.disable = false;
+	}
 
-  onSubmit(model: any): void {
-    this.ngSubmit.emit(model);
-  }
+	onSubmit(model: any): void {
+		this.ngSubmit.emit(model);
+	}
 }

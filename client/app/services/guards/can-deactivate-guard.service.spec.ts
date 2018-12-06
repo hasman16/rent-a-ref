@@ -9,13 +9,10 @@ describe('CanDeactivateGuardService', () => {
 		});
 	});
 
-	it(
-		'should be created',
-		inject(
-			[CanDeactivateGuardService],
-			(service: CanDeactivateGuardService) => {
-				expect(service).toBeTruthy();
-			}
-		)
-	);
+	it('should be created', inject(
+		[CanDeactivateGuardService],
+		(service: CanDeactivateGuardService) => {
+			expect(service).toBeTruthy();
+		}
+	));
 });

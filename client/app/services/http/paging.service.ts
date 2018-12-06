@@ -50,18 +50,20 @@ export class PagingService {
 		const selectedItem = _.find(collection, item => {
 			return id === item.id;
 		});
-		return <string>moment
-			.tz(selectedItem.date, selectedItem.timezone_id)
-			.format('MMMM DD YYYY');
+		return <string>(
+			moment
+				.tz(selectedItem.date, selectedItem.timezone_id)
+				.format('MMMM DD YYYY')
+		);
 	}
 
 	public formatTime(id, collection): string {
 		const selectedItem = _.find(collection, item => {
 			return id === item.id;
 		});
-		return <string>moment
-			.tz(selectedItem.date, selectedItem.timezone_id)
-			.format('HH:mm');
+		return <string>(
+			moment.tz(selectedItem.date, selectedItem.timezone_id).format('HH:mm')
+		);
 	}
 
 	public isNotTimeLocked(eventObj, lock = 1, grain = 'minutes'): boolean {

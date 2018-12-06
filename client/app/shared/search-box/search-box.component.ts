@@ -20,9 +20,7 @@ export class SearchBoxComponent {
 	@Input('search-attributes')
 	set setSearchAttributes(searchAttributes: Array<Option>) {
 		if (_.isArray(searchAttributes) && searchAttributes.length > 0) {
-			this.searchAttributes = <Array<Option>>_(
-				_.cloneDeep(searchAttributes)
-			)
+			this.searchAttributes = <Array<Option>>_(_.cloneDeep(searchAttributes))
 				.map((item: Option) => {
 					item.selected = false;
 					return item;

@@ -12,66 +12,66 @@ import { AuthService, UserService } from '../services/index';
 import { Login, User } from './../shared/models/index';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  protected cookieValue: string = 'UNKNOWN';
-  protected cookieCheck: boolean = false;
-  protected checkboxFlag: boolean = false;
-  public form: FormGroup = new FormGroup({});
-  public model: any = {};
-  public options: FormlyFormOptions = <FormlyFormOptions>{};
-  public fields: FormlyFieldConfig[];
-  public showDirections: boolean = false;
-  constructor(
-    private auth: AuthService,
-    private router: Router,
-    public toast: ToastComponent
-  ) {}
+	protected cookieValue: string = 'UNKNOWN';
+	protected cookieCheck: boolean = false;
+	protected checkboxFlag: boolean = false;
+	public form: FormGroup = new FormGroup({});
+	public model: any = {};
+	public options: FormlyFormOptions = <FormlyFormOptions>{};
+	public fields: FormlyFieldConfig[];
+	public showDirections: boolean = false;
+	constructor(
+		private auth: AuthService,
+		private router: Router,
+		public toast: ToastComponent
+	) {}
 
-  ngOnInit() {
-    if (this.auth.loggedIn) {
-      this.router.navigate(['/']);
-    }
+	ngOnInit() {
+		if (this.auth.loggedIn) {
+			this.router.navigate(['/']);
+		}
 
-    this.fields = [
-      {
-        key: 'email',
-        type: 'input',
-        templateOptions: {
-          type: 'email',
-          label: 'email',
-          placeholder: 'Email Address',
-          required: true,
-          minLength: 5
-        }
-      },
-      {
-        key: 'password',
-        type: 'input',
-        templateOptions: {
-          type: 'password',
-          label: 'password',
-          placeholder: 'Password',
-          required: true,
-          minLength: 5
-        }
-      }
-    ];
-  }
+		this.fields = [
+			{
+				key: 'email',
+				type: 'input',
+				templateOptions: {
+					type: 'email',
+					label: 'email',
+					placeholder: 'Email Address',
+					required: true,
+					minLength: 5
+				}
+			},
+			{
+				key: 'password',
+				type: 'input',
+				templateOptions: {
+					type: 'password',
+					label: 'password',
+					placeholder: 'Password',
+					required: true,
+					minLength: 5
+				}
+			}
+		];
+	}
 
-  public forgot() {
-    this.router.navigate(['passwordreset']);
-  }
+	public forgot() {
+		this.router.navigate(['passwordreset']);
+	}
 
-  public onSubmit(data: any): void {
-    this.auth.login(data).subscribe(
-      (login: Login) => {},
-      (err: HttpErrorResponse) => {
-        this.toast.setMessage('Invalid email or password! ', 'danger');
-      }
-    );
-  }
+	public onSubmit(data: any): void {
+		this.auth.login(data).subscribe(
+			(login: Login) => {},
+			(err: HttpErrorResponse) => {
+				this.toast.setMessage('Invalid email or password! ', 'danger');
+			}
+		);
+	}
 }

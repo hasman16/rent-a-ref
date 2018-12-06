@@ -6,25 +6,23 @@ import { SearchBoxComponent } from './search-box.component';
 import { Subject } from 'rxjs';
 
 describe('SearchBoxComponent', () => {
-  let component: SearchBoxComponent;
-  let fixture: ComponentFixture<SearchBoxComponent>;
+	let component: SearchBoxComponent;
+	let fixture: ComponentFixture<SearchBoxComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [SearchBoxComponent],
-        providers: []
-      }).compileComponents();
-    })
-  );
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({
+			declarations: [SearchBoxComponent],
+			providers: []
+		}).compileComponents();
+	}));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SearchBoxComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(SearchBoxComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

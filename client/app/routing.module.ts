@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import {
-  AuthGuardAdmin,
-  AuthGuardLocked,
-  AuthGuardLogin,
-  AuthGuardSuspended,
-  CanDeactivateGuardService,
-  AdminMeetingResolver,
-  MeetingResolver,
-  OrganizationsResolver,
-  ScheduleResolver,
-  BlogResolver,
-  SportsResolver,
-  UserResolver
+	AuthGuardAdmin,
+	AuthGuardLocked,
+	AuthGuardLogin,
+	AuthGuardSuspended,
+	CanDeactivateGuardService,
+	AdminMeetingResolver,
+	MeetingResolver,
+	OrganizationsResolver,
+	ScheduleResolver,
+	BlogResolver,
+	SportsResolver,
+	UserResolver
 } from './services/index';
 
 import { AppComponent } from './app.component';
@@ -51,60 +51,60 @@ import { OrganizeComponent } from './organize/organize.component';
 import { ManageMeetingsComponent } from './admin/managemeetings/manage-meetings.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'how-it-works', component: HowItWorksComponent },
-  { path: 'admin/manageusers', component: ManageUsersComponent },
-  { path: 'career', component: CareersComponent },
-  { path: 'faq', component: FaqComponent },
-  // { path: 'blog', component: BlogComponent },
-  { path: 'contact', component: ContactUsComponent },
-  { path: 'pricing', component: PricingComponent },
-  { path: 'partners', component: PartnersComponent },
-  { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'resetpassword', component: ResetPasswordComponent },
-  { path: 'resetpassword/:passcode', component: ResetPasswordComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
-  { path: 'passwordreset', component: PasswordresetComponent },
-  { path: 'reset', component: ResetComponent },
-  {
-    path: 'account/:id',
-    component: AccountComponent,
-    canActivate: [AuthGuardLogin]
-  },
-  {
-    path: 'account/:id/schedule',
-    component: ScheduleComponent,
-    canActivate: [AuthGuardLogin],
-    resolve: {
-      scheduleData: ScheduleResolver
-    }
-  },
-  {
-    path: 'blog',
-    component: BlogComponent,
-    canActivate: [AuthGuardLogin],
-    resolve: {
-      blogData: BlogResolver
-    },
-    children: [
-      { path: '', redirectTo: 'posts', pathMatch: 'full' },
-      {
-        path: 'edit-post',
-        component: EditPostComponent,
-        resolve: {
-          blogData: BlogResolver
-        }
-      },
-      {
-        path: 'create-post',
-        component: CreatePostComponent
-      }
-    ]
-  },
-  /*{
+	{ path: '', component: HomeComponent },
+	{ path: 'how-it-works', component: HowItWorksComponent },
+	{ path: 'admin/manageusers', component: ManageUsersComponent },
+	{ path: 'career', component: CareersComponent },
+	{ path: 'faq', component: FaqComponent },
+	// { path: 'blog', component: BlogComponent },
+	{ path: 'contact', component: ContactUsComponent },
+	{ path: 'pricing', component: PricingComponent },
+	{ path: 'partners', component: PartnersComponent },
+	{ path: 'terms-and-conditions', component: TermsAndConditionsComponent },
+	{ path: 'about', component: AboutComponent },
+	{ path: 'register', component: RegisterComponent },
+	{ path: 'resetpassword', component: ResetPasswordComponent },
+	{ path: 'resetpassword/:passcode', component: ResetPasswordComponent },
+	{ path: 'login', component: LoginComponent },
+	{ path: 'logout', component: LogoutComponent },
+	{ path: 'passwordreset', component: PasswordresetComponent },
+	{ path: 'reset', component: ResetComponent },
+	{
+		path: 'account/:id',
+		component: AccountComponent,
+		canActivate: [AuthGuardLogin]
+	},
+	{
+		path: 'account/:id/schedule',
+		component: ScheduleComponent,
+		canActivate: [AuthGuardLogin],
+		resolve: {
+			scheduleData: ScheduleResolver
+		}
+	},
+	{
+		path: 'blog',
+		component: BlogComponent,
+		canActivate: [AuthGuardLogin],
+		resolve: {
+			blogData: BlogResolver
+		},
+		children: [
+			{ path: '', redirectTo: 'posts', pathMatch: 'full' },
+			{
+				path: 'edit-post',
+				component: EditPostComponent,
+				resolve: {
+					blogData: BlogResolver
+				}
+			},
+			{
+				path: 'create-post',
+				component: CreatePostComponent
+			}
+		]
+	},
+	/*{
     path: 'users/:id',
     component: BlogComponent,
     canActivate: [AuthGuardLogin],
@@ -128,79 +128,79 @@ const routes: Routes = [
     ]
 
   },*/
-  {
-    path: 'organization',
-    component: OrganizeComponent,
-    canActivate: [AuthGuardLogin],
-    resolve: {
-      organizations: OrganizationsResolver,
-      sportsData: SportsResolver
-    }
-  },
-  {
-    path: 'organization/:organization_id/events',
-    component: MeetingsComponent,
-    canActivate: [AuthGuardLogin],
-    resolve: {
-      meetings: MeetingResolver,
-      sportsData: SportsResolver
-    }
-  },
-  {
-    path: 'account/:id/profile',
-    component: ProfileComponent,
-    canDeactivate: [CanDeactivateGuardService],
-    children: [{ path: 'edit-profile', component: EditProfileComponent }]
-  },
-  {
-    path: 'account/:id/standby',
-    canActivate: [AuthGuardLocked],
-    component: StandbyComponent
-  },
-  {
-    path: 'account/:id/suspended',
-    canActivate: [AuthGuardSuspended],
-    component: SuspendedComponent
-  },
-  {
-    path: 'account/:id/deactivated',
-    canActivate: [AuthGuardLogin],
-    component: DeactivatedComponent
-  },
-  {
-    path: 'admin/:id',
-    component: AdminComponent,
-    canActivate: [AuthGuardAdmin],
-    children: [
-      { path: '', redirectTo: 'manageevents', pathMatch: 'full' },
-      {
-        path: 'manageusers',
-        component: ManageUsersComponent,
-        resolve: {
-          userData: UserResolver
-        }
-      },
-      {
-        path: 'manageevents',
-        component: ManageMeetingsComponent,
-        resolve: {
-          meetingData: AdminMeetingResolver
-        }
-      }
-    ]
-  },
-  { path: 'notfound', component: NotFoundComponent },
-  { path: '**', redirectTo: '/notfound' }
+	{
+		path: 'organization',
+		component: OrganizeComponent,
+		canActivate: [AuthGuardLogin],
+		resolve: {
+			organizations: OrganizationsResolver,
+			sportsData: SportsResolver
+		}
+	},
+	{
+		path: 'organization/:organization_id/events',
+		component: MeetingsComponent,
+		canActivate: [AuthGuardLogin],
+		resolve: {
+			meetings: MeetingResolver,
+			sportsData: SportsResolver
+		}
+	},
+	{
+		path: 'account/:id/profile',
+		component: ProfileComponent,
+		canDeactivate: [CanDeactivateGuardService],
+		children: [{ path: 'edit-profile', component: EditProfileComponent }]
+	},
+	{
+		path: 'account/:id/standby',
+		canActivate: [AuthGuardLocked],
+		component: StandbyComponent
+	},
+	{
+		path: 'account/:id/suspended',
+		canActivate: [AuthGuardSuspended],
+		component: SuspendedComponent
+	},
+	{
+		path: 'account/:id/deactivated',
+		canActivate: [AuthGuardLogin],
+		component: DeactivatedComponent
+	},
+	{
+		path: 'admin/:id',
+		component: AdminComponent,
+		canActivate: [AuthGuardAdmin],
+		children: [
+			{ path: '', redirectTo: 'manageevents', pathMatch: 'full' },
+			{
+				path: 'manageusers',
+				component: ManageUsersComponent,
+				resolve: {
+					userData: UserResolver
+				}
+			},
+			{
+				path: 'manageevents',
+				component: ManageMeetingsComponent,
+				resolve: {
+					meetingData: AdminMeetingResolver
+				}
+			}
+		]
+	},
+	{ path: 'notfound', component: NotFoundComponent },
+	{ path: '**', redirectTo: '/notfound' }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(
-      routes,
-      { enableTracing: true } // For debugging purposes only
-    )
-  ],
-  providers: [],
-  exports: [RouterModule]
+	imports: [
+		RouterModule.forRoot(
+			routes,
+			{ enableTracing: true } // For debugging purposes only
+		)
+	],
+	providers: [],
+	exports: [RouterModule]
 })
 export class RoutingModule {}

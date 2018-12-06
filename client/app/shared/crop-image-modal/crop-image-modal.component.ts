@@ -51,15 +51,13 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.subscription.push(
-			this.cropImageModalService.modalState$.subscribe(
-				(value: boolean) => {
-					if (value) {
-						this.uploadModal.showModal(null);
-					} else {
-						this.uploadModal.closeModal(null);
-					}
+			this.cropImageModalService.modalState$.subscribe((value: boolean) => {
+				if (value) {
+					this.uploadModal.showModal(null);
+				} else {
+					this.uploadModal.closeModal(null);
 				}
-			)
+			})
 		);
 	}
 
@@ -160,16 +158,10 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 		contentType: string = 'image/png',
 		sliceSize: number = 512
 	): Blob {
-		const byteCharacters = atob(
-			b64Data.replace('data:image/png;base64,', '')
-		);
+		const byteCharacters = atob(b64Data.replace('data:image/png;base64,', ''));
 		const byteArrays = [];
 
-		for (
-			let offset = 0;
-			offset < byteCharacters.length;
-			offset += sliceSize
-		) {
+		for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
 			const slice = byteCharacters.slice(offset, offset + sliceSize);
 
 			const byteNumbers = new Array(slice.length);

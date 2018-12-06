@@ -39,12 +39,14 @@ export class MeetingsComponentService {
 
 	public mapSportsAsOptions(sports: Sport[]): Option[] {
 		return _(sports)
-			.map((sport: Sport): Option => {
-				return <Option>{
-					label: sport.name,
-					value: sport.id
-				};
-			})
+			.map(
+				(sport: Sport): Option => {
+					return <Option>{
+						label: sport.name,
+						value: sport.id
+					};
+				}
+			)
 			.value();
 	}
 
@@ -78,12 +80,14 @@ export class MeetingsComponentService {
 		const address = model.address;
 
 		return this.meetingService.updateMeeting(model).pipe(
-			switchMap((meeting: Meeting): Observable<any> => {
-				if (address) {
-					return this.meetingService.updateAddress(model.id, address);
+			switchMap(
+				(meeting: Meeting): Observable<any> => {
+					if (address) {
+						return this.meetingService.updateAddress(model.id, address);
+					}
+					return of(true);
 				}
-				return of(true);
-			})
+			)
 		);
 	}
 
@@ -223,9 +227,7 @@ export class MeetingsComponentService {
 
 		this.lineItems = _.cloneDeep(lineItems);
 		model['total'] =
-			model.kids_games_total +
-			model.teen_games_total +
-			model.adult_games_total;
+			model.kids_games_total + model.teen_games_total + model.adult_games_total;
 		return model;
 	}
 
@@ -427,8 +429,7 @@ export class MeetingsComponentService {
 				]
 			},
 			{
-				template:
-					'<hr class="space-hr" /><div><strong>Address</strong></div>'
+				template: '<hr class="space-hr" /><div><strong>Address</strong></div>'
 			},
 			{
 				fieldGroupClassName: 'row',

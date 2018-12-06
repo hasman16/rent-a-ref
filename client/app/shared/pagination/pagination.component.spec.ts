@@ -6,25 +6,23 @@ import { PaginationComponent } from './pagination.component';
 import { Subject } from 'rxjs';
 
 describe('PaginationComponent', () => {
-  let component: PaginationComponent;
-  let fixture: ComponentFixture<PaginationComponent>;
+	let component: PaginationComponent;
+	let fixture: ComponentFixture<PaginationComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [PaginationComponent],
-        providers: []
-      }).compileComponents();
-    })
-  );
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({
+			declarations: [PaginationComponent],
+			providers: []
+		}).compileComponents();
+	}));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PaginationComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(PaginationComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

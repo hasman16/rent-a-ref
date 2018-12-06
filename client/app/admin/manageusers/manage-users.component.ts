@@ -3,174 +3,174 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
-  BreakpointObserver,
-  Breakpoints,
-  BreakpointState
+	BreakpointObserver,
+	Breakpoints,
+	BreakpointState
 } from '@angular/cdk/layout';
 
 import { AbstractComponent } from '../../abstract/abstract.component';
 
 import { ToastComponent } from '../../shared/toast/toast.component';
 import {
-  CanComponentDeactivate,
-  PagingService,
-  UserService
+	CanComponentDeactivate,
+	PagingService,
+	UserService
 } from '../../services/index';
 import {
-  Option,
-  Page,
-  PagedData,
-  Sorts,
-  User
+	Option,
+	Page,
+	PagedData,
+	Sorts,
+	User
 } from './../../shared/models/index';
 import { Observable, Subscription, Subject } from 'rxjs';
 
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'rar-manage-users',
-  templateUrl: './manage-users.component.html',
-  styleUrls: ['./manage-users.component.scss']
+	selector: 'rar-manage-users',
+	templateUrl: './manage-users.component.html',
+	styleUrls: ['./manage-users.component.scss']
 })
 export class ManageUsersComponent extends AbstractComponent
-  implements OnInit, OnDestroy, CanComponentDeactivate {
-  public users: User[] = [];
-  public displayedColumns: string[] = [
-    'id',
-    'Email',
-    'Firstname',
-    'Lastname',
-    'Gender',
-    'Organizer',
-    'Referee',
-    'Status'
-  ];
-  protected isLoading: boolean = true;
-  protected allowEdit: boolean = false;
-  protected currentUser: User = <User>{};
-  public placeholder: string = 'Type to filter by email ...';
-  public defaultImage: string = 'assets/images/avatar2.png';
-  public selectedUser: any;
-  public viewProfile: boolean = true;
-  protected userWasUpdated: boolean = false;
+	implements OnInit, OnDestroy, CanComponentDeactivate {
+	public users: User[] = [];
+	public displayedColumns: string[] = [
+		'id',
+		'Email',
+		'Firstname',
+		'Lastname',
+		'Gender',
+		'Organizer',
+		'Referee',
+		'Status'
+	];
+	protected isLoading: boolean = true;
+	protected allowEdit: boolean = false;
+	protected currentUser: User = <User>{};
+	public placeholder: string = 'Type to filter by email ...';
+	public defaultImage: string = 'assets/images/avatar2.png';
+	public selectedUser: any;
+	public viewProfile: boolean = true;
+	protected userWasUpdated: boolean = false;
 
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private route: ActivatedRoute,
-    public toast: ToastComponent,
-    private userService: UserService,
-    protected pagingService: PagingService
-  ) {
-    super(pagingService);
-    this.searchAttributes = [
-      {
-        label: 'Email',
-        value: 'email'
-      },
-      {
-        label: 'Lastname',
-        value: 'lastname'
-      }
-    ];
-  }
+	constructor(
+		private breakpointObserver: BreakpointObserver,
+		private route: ActivatedRoute,
+		public toast: ToastComponent,
+		private userService: UserService,
+		protected pagingService: PagingService
+	) {
+		super(pagingService);
+		this.searchAttributes = [
+			{
+				label: 'Email',
+				value: 'email'
+			},
+			{
+				label: 'Lastname',
+				value: 'lastname'
+			}
+		];
+	}
 
-  ngOnInit() {
-    this.viewProfile = false;
-    this.initialize();
+	ngOnInit() {
+		this.viewProfile = false;
+		this.initialize();
 
-    this.searchAttribute = 'email|';
-    const pagedData: PagedData = this.route.snapshot.data.userData;
-    this.processPagedData(pagedData);
-  }
+		this.searchAttribute = 'email|';
+		const pagedData: PagedData = this.route.snapshot.data.userData;
+		this.processPagedData(pagedData);
+	}
 
-  ngOnDestroy() {
-    this.cleanUp();
-  }
+	ngOnDestroy() {
+		this.cleanUp();
+	}
 
-  public updateSearchAttribute(event): void {
-    this.searchAttribute = event + '|';
-  }
+	public updateSearchAttribute(event): void {
+		this.searchAttribute = event + '|';
+	}
 
-  public canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.allowEdit) {
-      return true;
-    }
-  }
+	public canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+		if (!this.allowEdit) {
+			return true;
+		}
+	}
 
-  public getImageAddress(id): string {
-    const user = _.find(this.users, user => user.id === id);
-    const url = _.get(user, 'images[0].location', '');
-    return url;
-  }
+	public getImageAddress(id): string {
+		const user = _.find(this.users, user => user.id === id);
+		const url = _.get(user, 'images[0].location', '');
+		return url;
+	}
 
-  public onSelectTableRow({ selected }): void {
-    this.selectedUser = _.head(selected);
-    this.viewProfile = true;
-  }
+	public onSelectTableRow({ selected }): void {
+		this.selectedUser = _.head(selected);
+		this.viewProfile = true;
+	}
 
-  public backToList($event): void {
-    $event.preventDefault();
-    this.viewProfile = false;
-    if (this.userWasUpdated) {
-      this.userWasUpdated = false;
-      this.getData(this.page);
-    }
-  }
+	public backToList($event): void {
+		$event.preventDefault();
+		this.viewProfile = false;
+		if (this.userWasUpdated) {
+			this.userWasUpdated = false;
+			this.getData(this.page);
+		}
+	}
 
-  public userUpdated(): void {
-    this.userWasUpdated = true;
-  }
+	public userUpdated(): void {
+		this.userWasUpdated = true;
+	}
 
-  public getUsers(params: any) {
-    this.isLoading = true;
-    this.userService
-      .getUsersPeople(params)
-      .subscribe(
-        res => this.callSuccess(res),
-        (err: HttpErrorResponse) => this.callFailure(err)
-      );
-  }
+	public getUsers(params: any) {
+		this.isLoading = true;
+		this.userService
+			.getUsersPeople(params)
+			.subscribe(
+				res => this.callSuccess(res),
+				(err: HttpErrorResponse) => this.callFailure(err)
+			);
+	}
 
-  protected getData(data: Page): void {
-    this.getUsers(data);
-  }
+	protected getData(data: Page): void {
+		this.getUsers(data);
+	}
 
-  public updateUser() {
-    this.userService
-      .getUsersPeople(this.page)
-      .subscribe(
-        res => this.callSuccess(res),
-        (err: HttpErrorResponse) => this.callFailure(err)
-      );
-  }
+	public updateUser() {
+		this.userService
+			.getUsersPeople(this.page)
+			.subscribe(
+				res => this.callSuccess(res),
+				(err: HttpErrorResponse) => this.callFailure(err)
+			);
+	}
 
-  public deleteUser(user) {
-    this.userService.deleteUser(user).subscribe(
-      data => this.toast.setMessage('user deleted successfully.', 'success'),
-      (err: HttpErrorResponse) => this.callFailure(err),
-      () => {
-        this.page = this.pagingService.getDefaultPager();
-        this.getUsers(this.page);
-      }
-    );
-  }
+	public deleteUser(user) {
+		this.userService.deleteUser(user).subscribe(
+			data => this.toast.setMessage('user deleted successfully.', 'success'),
+			(err: HttpErrorResponse) => this.callFailure(err),
+			() => {
+				this.page = this.pagingService.getDefaultPager();
+				this.getUsers(this.page);
+			}
+		);
+	}
 
-  protected processPagedData(data: PagedData): void {
-    this.users = this.extractDataAndPagedData(data);
-  }
+	protected processPagedData(data: PagedData): void {
+		this.users = this.extractDataAndPagedData(data);
+	}
 
-  protected callSuccess(data: PagedData) {
-    this.processPagedData(data);
-    this.toast.setMessage('users data retrieved', 'success');
-    this.isLoading = false;
-  }
+	protected callSuccess(data: PagedData) {
+		this.processPagedData(data);
+		this.toast.setMessage('users data retrieved', 'success');
+		this.isLoading = false;
+	}
 
-  protected callFailure(err: HttpErrorResponse, message = 'An error occurred') {
-    if (err.error instanceof Error) {
-      this.toast.setMessage(message, 'danger');
-    } else {
-      this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
-    }
-    this.isLoading = false;
-  }
+	protected callFailure(err: HttpErrorResponse, message = 'An error occurred') {
+		if (err.error instanceof Error) {
+			this.toast.setMessage(message, 'danger');
+		} else {
+			this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
+		}
+		this.isLoading = false;
+	}
 }

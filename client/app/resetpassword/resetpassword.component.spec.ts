@@ -4,23 +4,22 @@ import { By } from '@angular/platform-browser';
 import { ResetPasswordComponent } from './resetpassword.component';
 
 describe('ResetPasswordComponent', () => {
-  let component: ResetPasswordComponent;
-  let fixture: ComponentFixture<ResetPasswordComponent>;
+	let component: ResetPasswordComponent;
+	let fixture: ComponentFixture<ResetPasswordComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ResetPasswordComponent ]
-    })
-    .compileComponents();
-  }));
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({
+			declarations: [ResetPasswordComponent]
+		}).compileComponents();
+	}));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ResetPasswordComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(ResetPasswordComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  /*it('should create', () => {
+	/*it('should create', () => {
     expect(component).toBeTruthy();
   });
 

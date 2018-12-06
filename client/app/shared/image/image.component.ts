@@ -3,8 +3,15 @@ import { Component, Input } from '@angular/core';
 @Component({
 	selector: 'rar-image',
 	template: `
-        <img [defaultImage]="defaultImage" [lazyLoad]="image" [offset]="offset" [errorImage]="errorImage" width="{{width}}" alt="{{alt}}">
-    `,
+		<img
+			[defaultImage]="defaultImage"
+			[lazyLoad]="image"
+			[offset]="offset"
+			[errorImage]="errorImage"
+			width="{{width}}"
+			alt="{{alt}}"
+		/>
+	`,
 	styleUrls: ['image.component.scss']
 })
 export class RaRImageComponent {

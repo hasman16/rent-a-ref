@@ -5,36 +5,36 @@ import { Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 export abstract class AbstractFormComponent {
-  @Output() cancelForm = new EventEmitter();
+	@Output() cancelForm = new EventEmitter();
 
-  protected alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
-  protected zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
+	protected alphaNumericRegex: '[a-zA-Z0-9_-\\s]*';
+	protected zipRegex: '\\d{5}|\\d{5}((\\s|-)\\d{4})';
 
-  protected currentForm: FormGroup;
+	protected currentForm: FormGroup;
 
-  constructor() {}
+	constructor() {}
 
-  protected setUpValidators(aForm: FormGroup, controls: string[]) {
-    this.currentForm = aForm;
-    controls.forEach(controlName => {
-      let control = this.currentForm.get(controlName);
-      this.validator(control, controlName + 'Invalid');
-    });
-  }
+	protected setUpValidators(aForm: FormGroup, controls: string[]) {
+		this.currentForm = aForm;
+		controls.forEach(controlName => {
+			let control = this.currentForm.get(controlName);
+			this.validator(control, controlName + 'Invalid');
+		});
+	}
 
-  protected validator(item: AbstractControl, name: string) {
-    item.valueChanges.pipe(debounceTime(1000)).subscribe(value => {
-      let result = false;
-      if (item.touched && item.invalid) {
-        result = true;
-      }
-      this[name] = result;
-    });
-  }
+	protected validator(item: AbstractControl, name: string) {
+		item.valueChanges.pipe(debounceTime(1000)).subscribe(value => {
+			let result = false;
+			if (item.touched && item.invalid) {
+				result = true;
+			}
+			this[name] = result;
+		});
+	}
 
-  public abstract fillForm();
+	public abstract fillForm();
 
-  public onCancel(event) {
-    this.cancelForm.emit(false);
-  }
+	public onCancel(event) {
+		this.cancelForm.emit(false);
+	}
 }

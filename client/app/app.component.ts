@@ -89,10 +89,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
 		this.subscriptions.push(
 			this.idle.onTimeoutWarning.subscribe((countdown: number) => {
-				const units: string =
-					countdown !== 1 ? ' seconds!' : ' second!';
-				const idleState: string =
-					'You will time out in ' + countdown + units;
+				const units: string = countdown !== 1 ? ' seconds!' : ' second!';
+				const idleState: string = 'You will time out in ' + countdown + units;
 				this.setIdleText(idleState);
 			})
 		);
@@ -101,11 +99,9 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.keepalive.interval(FIFTEEN_MINUTES);
 
 		this.subscriptions.push(
-			this.keepalive.onPing
-				.pipe(tap(() => this.auth.pulse()))
-				.subscribe(() => {
-					this.lastPing = new Date();
-				})
+			this.keepalive.onPing.pipe(tap(() => this.auth.pulse())).subscribe(() => {
+				this.lastPing = new Date();
+			})
 		);
 	}
 

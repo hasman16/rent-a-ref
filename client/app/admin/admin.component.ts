@@ -3,26 +3,26 @@ import { CanComponentDeactivate } from '../services/index';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'rar-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+	selector: 'rar-admin',
+	templateUrl: './admin.component.html',
+	styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit, CanComponentDeactivate {
-  protected available: any = {};
+	protected available: any = {};
 
-  constructor() {}
+	constructor() {}
 
-  ngOnInit() {}
+	ngOnInit() {}
 
-  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return true;
-  }
+	canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+		return true;
+	}
 
-  public onOfficials() {
-    //this.router.navigate(['admin/officials']);
-  }
+	public onOfficials() {
+		//this.router.navigate(['admin/officials']);
+	}
 
-  public onAssigning() {
-    //this.router.navigate(['admin/meetings']);
-  }
+	public onAssigning() {
+		//this.router.navigate(['admin/meetings']);
+	}
 }

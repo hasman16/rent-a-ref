@@ -11,8 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractComponent } from '../../../abstract/abstract.component';
 import { ToastComponent } from '../../../shared/toast/toast.component';
 import { Page, PagedData, Sorts, User } from '../../../shared/models/index';
-import { Observable ,  Subscription ,  Subject } from 'rxjs';
-
+import { Observable, Subscription, Subject } from 'rxjs';
 
 import * as _ from 'lodash';
 
@@ -84,10 +83,7 @@ export class EditPostComponent extends AbstractComponent implements OnInit {
 		if (err.error instanceof Error) {
 			this.toast.setMessage(message, 'danger');
 		} else {
-			this.toast.setMessage(
-				'An error occurred:' + err.statusText,
-				'danger'
-			);
+			this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
 		}
 		this.isLoading = false;
 		this.cd.markForCheck();

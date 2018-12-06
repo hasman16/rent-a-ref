@@ -1,16 +1,16 @@
 //https://github.com/stripe/stripe-payments-demo
 import {
-  ChangeDetectorRef,
-  ChangeDetectionStrategy,
-  Component,
-  AfterViewInit,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  Input,
-  Output,
-  EventEmitter
+	ChangeDetectorRef,
+	ChangeDetectionStrategy,
+	Component,
+	AfterViewInit,
+	OnInit,
+	OnDestroy,
+	ViewChild,
+	ElementRef,
+	Input,
+	Output,
+	EventEmitter
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -22,175 +22,175 @@ import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 enum ViewState {
-  listCards,
-  addCard,
-  payWithCard
+	listCards,
+	addCard,
+	payWithCard
 }
 @Component({
-  selector: 'rar-stripe',
-  templateUrl: './stripe.component.html',
-  styleUrls: ['./stripe.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+	selector: 'rar-stripe',
+	templateUrl: './stripe.component.html',
+	styleUrls: ['./stripe.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
-  @ViewChild('cardInfo') cardInfo: ElementRef;
-  @Input() amount: number = 0;
-  @Input() reference_id: string;
-  @Input() user_id: string;
+	@ViewChild('cardInfo') cardInfo: ElementRef;
+	@Input() amount: number = 0;
+	@Input() reference_id: string;
+	@Input() user_id: string;
 
-  @Input() lineItems: any[] = [];
-  @Output() paymentState: EventEmitter<Payment> = new EventEmitter<Payment>();
+	@Input() lineItems: any[] = [];
+	@Output() paymentState: EventEmitter<Payment> = new EventEmitter<Payment>();
 
-  public card: any;
-  public cardHandler = this.onChange.bind(this);
-  public error: string;
-  public model: any = {};
-  public success: any = null;
-  public disableSubmit: boolean = false;
-  public hasSource: boolean = false;
-  public sources: any[] = [];
-  public viewState: ViewState = ViewState.listCards;
+	public card: any;
+	public cardHandler = this.onChange.bind(this);
+	public error: string;
+	public model: any = {};
+	public success: any = null;
+	public disableSubmit: boolean = false;
+	public hasSource: boolean = false;
+	public sources: any[] = [];
+	public viewState: ViewState = ViewState.listCards;
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    private organizeService: OrganizeService,
-    private stripeService: StripeService
-  ) {}
+	constructor(
+		private cd: ChangeDetectorRef,
+		private organizeService: OrganizeService,
+		private stripeService: StripeService
+	) {}
 
-  public ngAfterViewInit() {
-    this.card = elements.create('card', {
-      style: {
-        base: {
-          iconColor: '#666EE8',
-          color: '#31325F',
-          lineHeight: '40px',
-          fontWeight: 300,
-          fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-          fontSize: '18px',
-          '::placeholder': {
-            color: '#CFD7E0'
-          }
-        }
-      }
-    });
-    this.card.mount(this.cardInfo.nativeElement);
+	public ngAfterViewInit() {
+		this.card = elements.create('card', {
+			style: {
+				base: {
+					iconColor: '#666EE8',
+					color: '#31325F',
+					lineHeight: '40px',
+					fontWeight: 300,
+					fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+					fontSize: '18px',
+					'::placeholder': {
+						color: '#CFD7E0'
+					}
+				}
+			}
+		});
+		this.card.mount(this.cardInfo.nativeElement);
 
-    this.card.addEventListener('change', this.cardHandler);
-  }
+		this.card.addEventListener('change', this.cardHandler);
+	}
 
-  ngOnInit() {
-    this.retrieveCustomer();
-  }
+	ngOnInit() {
+		this.retrieveCustomer();
+	}
 
-  public ngOnDestroy() {
-    this.card.removeEventListener('change', this.cardHandler);
-    this.card.destroy();
-  }
+	public ngOnDestroy() {
+		this.card.removeEventListener('change', this.cardHandler);
+		this.card.destroy();
+	}
 
-  public isViewState(value: string): boolean {
-    let result: boolean = false;
-    switch (value) {
-      case 'listCards':
-        result = this.viewState === ViewState.listCards;
-        break;
-      case 'payWithCard':
-        result = this.viewState === ViewState.payWithCard;
-        break;
-      case 'addCard':
-        result = this.viewState === ViewState.addCard;
-        break;
-      default:
-        result = false;
-        break;
-    }
-    return result;
-  }
+	public isViewState(value: string): boolean {
+		let result: boolean = false;
+		switch (value) {
+			case 'listCards':
+				result = this.viewState === ViewState.listCards;
+				break;
+			case 'payWithCard':
+				result = this.viewState === ViewState.payWithCard;
+				break;
+			case 'addCard':
+				result = this.viewState === ViewState.addCard;
+				break;
+			default:
+				result = false;
+				break;
+		}
+		return result;
+	}
 
-  public onChange({ error }) {
-    if (error) {
-      this.error = error.message;
-      this.disableSubmit = true;
-    } else {
-      this.error = null;
-      this.disableSubmit = false;
-    }
-    this.cd.detectChanges();
-  }
+	public onChange({ error }) {
+		if (error) {
+			this.error = error.message;
+			this.disableSubmit = true;
+		} else {
+			this.error = null;
+			this.disableSubmit = false;
+		}
+		this.cd.detectChanges();
+	}
 
-  public showAddCard(event): void {
-    this.viewState = ViewState.addCard;
-  }
+	public showAddCard(event): void {
+		this.viewState = ViewState.addCard;
+	}
 
-  public onSubmit(form: NgForm): void {
-    let order: Order = <Order>{
-      currency: 'usd',
-      items: this.lineItems,
-      email: this.model.email,
-      shipping: {
-        name: this.model.fullname,
-        address: {
-          line1: this.model.line1,
-          city: this.model.city,
-          state: this.model.state,
-          postal_code: this.model.zip,
-          country: 'US'
-        }
-      },
-      metadata: {
-        status: 'created',
-        reference_id: this.reference_id,
-        reference_id_type: 'event_id'
-      }
-    };
-    this.error = null;
-    this.success = null;
-    this.disableSubmit = true;
+	public onSubmit(form: NgForm): void {
+		let order: Order = <Order>{
+			currency: 'usd',
+			items: this.lineItems,
+			email: this.model.email,
+			shipping: {
+				name: this.model.fullname,
+				address: {
+					line1: this.model.line1,
+					city: this.model.city,
+					state: this.model.state,
+					postal_code: this.model.zip,
+					country: 'US'
+				}
+			},
+			metadata: {
+				status: 'created',
+				reference_id: this.reference_id,
+				reference_id_type: 'event_id'
+			}
+		};
+		this.error = null;
+		this.success = null;
+		this.disableSubmit = true;
 
-    stripe
-      .createSource(this.card, {
-        name: this.model.name
-      })
-      .then(result => {
-        if (_.has(result, 'source')) {
-          this.createAndPayOrder(order, result.source);
-        } else {
-          console.log('failed payment');
-        }
-      })
-      .catch(err => {
-        this.disableSubmit = false;
-        this.errorOut(err);
-      });
-  }
+		stripe
+			.createSource(this.card, {
+				name: this.model.name
+			})
+			.then(result => {
+				if (_.has(result, 'source')) {
+					this.createAndPayOrder(order, result.source);
+				} else {
+					console.log('failed payment');
+				}
+			})
+			.catch(err => {
+				this.disableSubmit = false;
+				this.errorOut(err);
+			});
+	}
 
-  private retrieveCustomer() {
-    this.disableSubmit = true;
-    this.hasSource = false;
-    this.sources = null;
-    this.viewState = ViewState.addCard;
-    this.stripeService
-      .retrieveCustomer(this.user_id)
-      .pipe(
-        finalize(() => {
-          this.cd.markForCheck();
-        })
-      )
-      .subscribe(
-        customer => {
-          this.disableSubmit = false;
-          let sources = _.get(customer, 'sources.data', null);
-          if (_.isArray(sources) && sources.length > 0) {
-            this.sources = sources;
-            this.hasSource = true;
-            this.viewState = ViewState.listCards;
-          }
-        },
-        (err: HttpErrorResponse) => {
-          this.errorOut(err);
-        }
-      );
-  }
-  /*
+	private retrieveCustomer() {
+		this.disableSubmit = true;
+		this.hasSource = false;
+		this.sources = null;
+		this.viewState = ViewState.addCard;
+		this.stripeService
+			.retrieveCustomer(this.user_id)
+			.pipe(
+				finalize(() => {
+					this.cd.markForCheck();
+				})
+			)
+			.subscribe(
+				customer => {
+					this.disableSubmit = false;
+					let sources = _.get(customer, 'sources.data', null);
+					if (_.isArray(sources) && sources.length > 0) {
+						this.sources = sources;
+						this.hasSource = true;
+						this.viewState = ViewState.listCards;
+					}
+				},
+				(err: HttpErrorResponse) => {
+					this.errorOut(err);
+				}
+			);
+	}
+	/*
   private addCardSource(order, source): void {
     this.error = null;
     this.success = null;
@@ -218,65 +218,65 @@ export class StripeComponent implements AfterViewInit, OnInit, OnDestroy {
       );
   }*/
 
-  private createAndPayOrder(order, source) {
-    this.error = null;
-    this.success = null;
-    this.disableSubmit = true;
-    return this.stripeService
-      .createAndPayOrder({ order: order, source: source.id })
-      .pipe(
-        finalize(() => {
-          this.disableSubmit = false;
-          this.cd.markForCheck();
-        })
-      )
-      .subscribe(
-        success => {
-          this.paymentState.emit(<Payment>{
-            paymentState: PaymentState.PaymentSuccess
-          });
-        },
-        (err: HttpErrorResponse) => {
-          this.errorOut(err);
-          this.paymentState.emit(<Payment>{
-            paymentState: PaymentState.PaymentError
-          });
-        }
-      );
-  }
+	private createAndPayOrder(order, source) {
+		this.error = null;
+		this.success = null;
+		this.disableSubmit = true;
+		return this.stripeService
+			.createAndPayOrder({ order: order, source: source.id })
+			.pipe(
+				finalize(() => {
+					this.disableSubmit = false;
+					this.cd.markForCheck();
+				})
+			)
+			.subscribe(
+				success => {
+					this.paymentState.emit(<Payment>{
+						paymentState: PaymentState.PaymentSuccess
+					});
+				},
+				(err: HttpErrorResponse) => {
+					this.errorOut(err);
+					this.paymentState.emit(<Payment>{
+						paymentState: PaymentState.PaymentError
+					});
+				}
+			);
+	}
 
-  private makeStripePayment(token) {
-    this.error = null;
-    this.success = null;
-    this.disableSubmit = true;
-    return this.stripeService
-      .makeStripePayment(this.reference_id, token)
-      .pipe(
-        finalize(() => {
-          this.disableSubmit = false;
-          this.cd.markForCheck();
-        })
-      )
-      .subscribe(
-        success => {
-          this.paymentState.emit(<Payment>{
-            paymentState: PaymentState.PaymentSuccess
-          });
-        },
-        (err: HttpErrorResponse) => {
-          this.errorOut(err);
-          this.paymentState.emit(<Payment>{
-            paymentState: PaymentState.PaymentError
-          });
-        }
-      );
-  }
+	private makeStripePayment(token) {
+		this.error = null;
+		this.success = null;
+		this.disableSubmit = true;
+		return this.stripeService
+			.makeStripePayment(this.reference_id, token)
+			.pipe(
+				finalize(() => {
+					this.disableSubmit = false;
+					this.cd.markForCheck();
+				})
+			)
+			.subscribe(
+				success => {
+					this.paymentState.emit(<Payment>{
+						paymentState: PaymentState.PaymentSuccess
+					});
+				},
+				(err: HttpErrorResponse) => {
+					this.errorOut(err);
+					this.paymentState.emit(<Payment>{
+						paymentState: PaymentState.PaymentError
+					});
+				}
+			);
+	}
 
-  private errorOut(err: any) {
-    if (err && err.message && err.message.message) {
-      this.error = err.message.message;
-    } else if (err.message) {
-      this.error = err.message;
-    }
-  }
+	private errorOut(err: any) {
+		if (err && err.message && err.message.message) {
+			this.error = err.message.message;
+		} else if (err.message) {
+			this.error = err.message;
+		}
+	}
 }

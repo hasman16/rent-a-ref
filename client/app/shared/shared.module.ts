@@ -23,15 +23,15 @@ import { StripeComponent } from './stripe/index';
 import { MaterialModule } from '../material.module';
 import { AlertModalComponent, AlertModalService } from './alert-modal/index';
 import {
-    CropImageModalComponent,
-    CropImageModalService
+	CropImageModalComponent,
+	CropImageModalService
 } from './crop-image-modal/index';
 import {
-    FormlyHorizontalWrapper,
-    FormlyHorizontalRadioWrapper,
-    FormlyHorizontalTextAreaWrapper,
-    RepeatTypeComponent,
-    DatepickerTypeComponent
+	FormlyHorizontalWrapper,
+	FormlyHorizontalRadioWrapper,
+	FormlyHorizontalTextAreaWrapper,
+	RepeatTypeComponent,
+	DatepickerTypeComponent
 } from './formly/index';
 import { BaseFormComponent } from './formly/base-form/base-form.component';
 import { OrganizationFormComponent } from './forms/organization-form/organization-form.component';
@@ -44,105 +44,105 @@ import { SearchBoxComponent } from './search-box/index';
 import { PaginationComponent } from './pagination/index';
 
 const sharedComponents = [
-    ToastComponent,
-    LoaderComponent,
-    LoadingComponent,
-    SuspendedComponent,
-    DeactivatedComponent,
-    StandbyComponent,
-    PasswordresetComponent,
-    UploadButtonComponent,
-    UploaderComponent,
-    ModalComponent,
-    AlertModalComponent,
-    CropImageModalComponent,
-    RaRImageComponent,
-    StripeComponent,
-    BaseFormComponent,
-    OrganizationFormComponent,
-    BlogFormComponent,
-    EventsFormComponent,
-    MatchesFormComponent,
-    StatusesFormComponent,
-    ScheduleAddressFormComponent,
-    SearchBoxComponent,
-    DatepickerTypeComponent,
-    PaginationComponent
+	ToastComponent,
+	LoaderComponent,
+	LoadingComponent,
+	SuspendedComponent,
+	DeactivatedComponent,
+	StandbyComponent,
+	PasswordresetComponent,
+	UploadButtonComponent,
+	UploaderComponent,
+	ModalComponent,
+	AlertModalComponent,
+	CropImageModalComponent,
+	RaRImageComponent,
+	StripeComponent,
+	BaseFormComponent,
+	OrganizationFormComponent,
+	BlogFormComponent,
+	EventsFormComponent,
+	MatchesFormComponent,
+	StatusesFormComponent,
+	ScheduleAddressFormComponent,
+	SearchBoxComponent,
+	DatepickerTypeComponent,
+	PaginationComponent
 ];
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        FormsModule,
-        MaterialModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        ImageCropperModule,
-        LazyLoadImageModule,
-        //FormlyBootstrapModule,
-        FormlyMaterialModule,
-        FormlyModule.forRoot({
-            wrappers: [
-                {
-                    name: 'horizontalWrapper',
-                    component: FormlyHorizontalWrapper
-                },
-                {
-                    name: 'horizontalRadioWrapper',
-                    component: FormlyHorizontalRadioWrapper
-                },
-                {
-                    name: 'horizontalTextareaWrapper',
-                    component: FormlyHorizontalTextAreaWrapper
-                }
-            ],
-            types: [
-                {
-                    name: 'horizontalInput',
-                    extends: 'input',
-                    wrappers: ['fieldset', 'horizontalWrapper']
-                },
-                {
-                    name: 'horizontalRadio',
-                    extends: 'radio',
-                    wrappers: ['fieldset', 'horizontalRadioWrapper']
-                },
-                {
-                    name: 'horizontalTextarea',
-                    extends: 'textarea',
-                    wrappers: ['fieldset', 'horizontalTextareaWrapper']
-                },
-                { name: 'repeat', component: RepeatTypeComponent },
-                {
-                    name: 'datepicker',
-                    component: DatepickerTypeComponent,
-                    wrappers: ['form-field'],
-                    defaultOptions: {
-                        defaultValue: new Date(),
-                        templateOptions: {
-                            datepickerOptions: {}
-                        }
-                    }
-                }
-            ]
-        })
-    ],
-    exports: [
-        // Shared Modules
-        BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        FormlyMaterialModule,
-        ...sharedComponents
-    ],
-    declarations: [...sharedComponents],
-    providers: [
-        AlertModalService,
-        CropImageModalService,
-        LoaderService,
-        ToastComponent,
-        ToastService
-    ]
+	imports: [
+		BrowserModule,
+		FormsModule,
+		MaterialModule,
+		ReactiveFormsModule,
+		HttpClientModule,
+		ImageCropperModule,
+		LazyLoadImageModule,
+		//FormlyBootstrapModule,
+		FormlyMaterialModule,
+		FormlyModule.forRoot({
+			wrappers: [
+				{
+					name: 'horizontalWrapper',
+					component: FormlyHorizontalWrapper
+				},
+				{
+					name: 'horizontalRadioWrapper',
+					component: FormlyHorizontalRadioWrapper
+				},
+				{
+					name: 'horizontalTextareaWrapper',
+					component: FormlyHorizontalTextAreaWrapper
+				}
+			],
+			types: [
+				{
+					name: 'horizontalInput',
+					extends: 'input',
+					wrappers: ['fieldset', 'horizontalWrapper']
+				},
+				{
+					name: 'horizontalRadio',
+					extends: 'radio',
+					wrappers: ['fieldset', 'horizontalRadioWrapper']
+				},
+				{
+					name: 'horizontalTextarea',
+					extends: 'textarea',
+					wrappers: ['fieldset', 'horizontalTextareaWrapper']
+				},
+				{ name: 'repeat', component: RepeatTypeComponent },
+				{
+					name: 'datepicker',
+					component: DatepickerTypeComponent,
+					wrappers: ['form-field'],
+					defaultOptions: {
+						defaultValue: new Date(),
+						templateOptions: {
+							datepickerOptions: {}
+						}
+					}
+				}
+			]
+		})
+	],
+	exports: [
+		// Shared Modules
+		BrowserModule,
+		FormsModule,
+		ReactiveFormsModule,
+		HttpClientModule,
+		FormlyMaterialModule,
+		...sharedComponents
+	],
+	declarations: [...sharedComponents],
+	providers: [
+		AlertModalService,
+		CropImageModalService,
+		LoaderService,
+		ToastComponent,
+		ToastService
+	]
 })
 export class SharedModule {}

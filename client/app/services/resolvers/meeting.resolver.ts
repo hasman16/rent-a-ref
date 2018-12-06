@@ -13,12 +13,10 @@ export class MeetingResolver implements Resolve<Observable<any>> {
 	resolve(route: ActivatedRouteSnapshot): Observable<any> {
 		const organization_id = route.paramMap.get('organization_id');
 
-		return this.meetingService
-			.getOrganizationMeetings(organization_id)
-			.pipe(
-				catchError(() => {
-					return empty();
-				})
-			);
+		return this.meetingService.getOrganizationMeetings(organization_id).pipe(
+			catchError(() => {
+				return empty();
+			})
+		);
 	}
 }

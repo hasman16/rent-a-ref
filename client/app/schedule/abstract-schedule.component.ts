@@ -181,13 +181,10 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 
 	private processButtonClick(event, action: string): void {
 		event.stopImmediatePropagation();
-		const actionLabel: string =
-			action === 'accept' ? 'accepted' : 'declined';
+		const actionLabel: string = action === 'accept' ? 'accepted' : 'declined';
 		const error: string = 'Error: Game was NOT ${actionLabel}.';
 		const success: string = 'Game ${actionLabel}.';
-		const id: number = parseInt(
-			String(event.target.id).replace(/[a-z]/gi, '')
-		);
+		const id: number = parseInt(String(event.target.id).replace(/[a-z]/gi, ''));
 		this.generateOfficiateRelation(id, action, success, error);
 	}
 
@@ -211,17 +208,11 @@ export abstract class AbstractScheduleComponent extends AbstractComponent {
 		this.cd.markForCheck();
 	}
 
-	protected callFailure(
-		err: HttpErrorResponse,
-		message = 'An error occurred'
-	) {
+	protected callFailure(err: HttpErrorResponse, message = 'An error occurred') {
 		if (err.error instanceof Error) {
 			this.toast.setMessage(message, 'danger');
 		} else {
-			this.toast.setMessage(
-				'An error occurred:' + err.statusText,
-				'danger'
-			);
+			this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
 		}
 		this.isLoading = false;
 		this.cd.markForCheck();

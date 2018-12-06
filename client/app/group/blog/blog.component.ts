@@ -96,10 +96,7 @@ export class BlogComponent extends AbstractComponent implements OnInit {
 		if (err.error instanceof Error) {
 			this.toast.setMessage(message, 'danger');
 		} else {
-			this.toast.setMessage(
-				'An error occurred:' + err.statusText,
-				'danger'
-			);
+			this.toast.setMessage('An error occurred:' + err.statusText, 'danger');
 		}
 		this.isLoading = false;
 		this.cd.markForCheck();

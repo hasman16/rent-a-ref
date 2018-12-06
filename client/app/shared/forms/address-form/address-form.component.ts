@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  FormGroup,
-  AbstractControl,
-  Validators,
-  FormBuilder,
-  ReactiveFormsModule
+	FormGroup,
+	AbstractControl,
+	Validators,
+	FormBuilder,
+	ReactiveFormsModule
 } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -17,137 +17,137 @@ import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
 export interface IAddressService {
-  createAddress(address: Address): Observable<Address>;
-  updateAddress(address: Address): Observable<Address>;
+	createAddress(address: Address): Observable<Address>;
+	updateAddress(address: Address): Observable<Address>;
 }
 
 @Component({
-  selector: 'address-form',
-  templateUrl: './address-form.component.html',
-  styleUrls: ['./address-form.component.scss']
+	selector: 'address-form',
+	templateUrl: './address-form.component.html',
+	styleUrls: ['./address-form.component.scss']
 })
 export class AddressFormComponent extends AbstractFormComponent
-  implements OnInit {
-  public addressForm: FormGroup;
-  protected anAddress: Address = <Address>{};
-  protected countryName: string = 'usa';
-  protected mode: boolean = false;
-  public states: Option[];
+	implements OnInit {
+	public addressForm: FormGroup;
+	protected anAddress: Address = <Address>{};
+	protected countryName: string = 'usa';
+	protected mode: boolean = false;
+	public states: Option[];
 
-  public line1Invalid: boolean = false;
-  public cityInvalid: boolean = false;
-  public zipInvalid: boolean = false;
-  protected userId: number = 0;
+	public line1Invalid: boolean = false;
+	public cityInvalid: boolean = false;
+	public zipInvalid: boolean = false;
+	protected userId: number = 0;
 
-  @Output() saveAddress = new EventEmitter();
-  @Input()
-  set address(anAddress: Address) {
-    this.anAddress = _.cloneDeep(anAddress);
-    this.fillForm();
-  }
-  @Input()
-  set zoneMode(mode: boolean) {
-    this.mode = mode;
-  }
-  @Input()
-  set country(aCountry: string) {
-    this.countryName = aCountry || 'usa';
-    this.fillForm();
-  }
-  @Input() addressService: IAddressService;
+	@Output() saveAddress = new EventEmitter();
+	@Input()
+	set address(anAddress: Address) {
+		this.anAddress = _.cloneDeep(anAddress);
+		this.fillForm();
+	}
+	@Input()
+	set zoneMode(mode: boolean) {
+		this.mode = mode;
+	}
+	@Input()
+	set country(aCountry: string) {
+		this.countryName = aCountry || 'usa';
+		this.fillForm();
+	}
+	@Input() addressService: IAddressService;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private statesService: StatesService
-  ) {
-    super();
-    this.addressForm = this.formBuilder.group({
-      line1: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(100),
-          Validators.pattern(this.alphaNumericRegex)
-        ]
-      ],
+	constructor(
+		private formBuilder: FormBuilder,
+		private statesService: StatesService
+	) {
+		super();
+		this.addressForm = this.formBuilder.group({
+			line1: [
+				'',
+				[
+					Validators.required,
+					Validators.minLength(5),
+					Validators.maxLength(100),
+					Validators.pattern(this.alphaNumericRegex)
+				]
+			],
 
-      line2: [
-        '',
-        [Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]
-      ],
+			line2: [
+				'',
+				[Validators.maxLength(100), Validators.pattern(this.alphaNumericRegex)]
+			],
 
-      city: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(30),
-          Validators.pattern(this.alphaNumericRegex)
-        ]
-      ],
+			city: [
+				'',
+				[
+					Validators.required,
+					Validators.minLength(2),
+					Validators.maxLength(30),
+					Validators.pattern(this.alphaNumericRegex)
+				]
+			],
 
-      state: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(10),
-          Validators.pattern(this.alphaNumericRegex)
-        ]
-      ],
+			state: [
+				'',
+				[
+					Validators.required,
+					Validators.maxLength(10),
+					Validators.pattern(this.alphaNumericRegex)
+				]
+			],
 
-      zip: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(10),
-          Validators.pattern(this.zipRegex)
-        ]
-      ]
-    });
+			zip: [
+				'',
+				[
+					Validators.required,
+					Validators.minLength(5),
+					Validators.maxLength(10),
+					Validators.pattern(this.zipRegex)
+				]
+			]
+		});
 
-    this.setUpValidators(this.addressForm, ['line1', 'city', 'zip']);
-  }
+		this.setUpValidators(this.addressForm, ['line1', 'city', 'zip']);
+	}
 
-  public fillForm() {
-    this.states = this.statesService.getStatesProvinces(this.countryName);
+	public fillForm() {
+		this.states = this.statesService.getStatesProvinces(this.countryName);
 
-    this.addressForm.setValue({
-      line1: this.anAddress.line1 || '',
-      line2: this.anAddress.line2 || '',
-      city: this.anAddress.city || '',
-      state: this.anAddress.state || '',
-      zip: this.anAddress.zip || ''
-    });
-  }
+		this.addressForm.setValue({
+			line1: this.anAddress.line1 || '',
+			line2: this.anAddress.line2 || '',
+			city: this.anAddress.city || '',
+			state: this.anAddress.state || '',
+			zip: this.anAddress.zip || ''
+		});
+	}
 
-  ngOnInit() {
-    this.fillForm();
-  }
+	ngOnInit() {
+		this.fillForm();
+	}
 
-  public onAddressSubmit() {
-    if (this.addressService) {
-      const newAddress: Address = <Address>this.addressForm.value;
-      let observable: Observable<Address>;
-      newAddress.id = this.anAddress.id;
+	public onAddressSubmit() {
+		if (this.addressService) {
+			const newAddress: Address = <Address>this.addressForm.value;
+			let observable: Observable<Address>;
+			newAddress.id = this.anAddress.id;
 
-      this.saveAddress.emit({ action: 'show_overlay' });
+			this.saveAddress.emit({ action: 'show_overlay' });
 
-      if (_.isNil(newAddress.id) || parseInt(newAddress.id) === 0) {
-        observable = this.addressService.createAddress(newAddress);
-      } else {
-        observable = this.addressService.updateAddress(newAddress);
-      }
+			if (_.isNil(newAddress.id) || parseInt(newAddress.id) === 0) {
+				observable = this.addressService.createAddress(newAddress);
+			} else {
+				observable = this.addressService.updateAddress(newAddress);
+			}
 
-      observable.subscribe(
-        () => {
-          this.saveAddress.emit({ action: 'save_success' });
-        },
-        (err: HttpErrorResponse) => {
-          this.saveAddress.emit({ action: 'save_failure' });
-        }
-      );
-    }
-  }
+			observable.subscribe(
+				() => {
+					this.saveAddress.emit({ action: 'save_success' });
+				},
+				(err: HttpErrorResponse) => {
+					this.saveAddress.emit({ action: 'save_failure' });
+				}
+			);
+		}
+	}
 }

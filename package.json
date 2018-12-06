@@ -17,7 +17,8 @@
     "testbe": "tsc -p server && mocha dist/server/test --exit",
     "lint": "ng lint",
     "lintbe": "tslint server/**/**.ts{,x}",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "format":"prettier --write \"./client/**/*.+(ts|scss|json)\""
   },
   "engines": {
     "node": "~10.0.0",

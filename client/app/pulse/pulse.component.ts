@@ -17,11 +17,9 @@ export class PulseComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit() {
-		this.authSubscription = this.auth.idleText$.subscribe(
-			(text: string) => {
-				this.message = text;
-			}
-		);
+		this.authSubscription = this.auth.idleText$.subscribe((text: string) => {
+			this.message = text;
+		});
 	}
 
 	ngOnDestroy() {

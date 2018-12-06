@@ -48,8 +48,8 @@ import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.co
 import { ContactUsComponent } from './group/contactus/contactus.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import {
-    MeetingsComponent,
-    MeetingsComponentService
+	MeetingsComponent,
+	MeetingsComponentService
 } from './organize/meetings/index';
 
 import { MeetingOrderTableComponent } from './organize/meeting-order-table/meeting-order-table.component';
@@ -71,8 +71,8 @@ import { PasswordFormComponent } from './shared/forms/password-form/password-for
 import { PhoneFormComponent } from './shared/forms/phone-form/phone-form.component';
 import { PricingComponent } from './home/pricing/pricing.component';
 import {
-    AdminProfileComponent,
-    ProfileComponent
+	AdminProfileComponent,
+	ProfileComponent
 } from './account/profile/index';
 import { ManageUsersComponent } from './admin/manageusers/manage-users.component';
 import { RegisterComponent } from './register/register.component';
@@ -84,9 +84,9 @@ import { TermsAndConditionsComponent } from './group/terms-and-conditions/terms-
 import { ZoneFormComponent } from './shared/forms/zone-form/zone-form.component';
 import { ManageMeetingsComponent } from './admin/managemeetings/manage-meetings.component';
 import {
-    MatchesComponent,
-    MatchDetailComponent,
-    RefereeDetailsModalComponent
+	MatchesComponent,
+	MatchDetailComponent,
+	RefereeDetailsModalComponent
 } from './matches/index';
 import { AssignUsersComponent } from './assign-users/assign-users.component';
 import { PulseComponent } from './pulse/pulse.component';
@@ -98,140 +98,140 @@ import { MyDatePickerModule } from 'mydatepicker';
 // rich grid
 import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
 import {
-    FormlyHorizontalWrapper,
-    FormlyHorizontalRadioWrapper,
-    FormlyHorizontalTextAreaWrapper,
-    RepeatTypeComponent
+	FormlyHorizontalWrapper,
+	FormlyHorizontalRadioWrapper,
+	FormlyHorizontalTextAreaWrapper,
+	RepeatTypeComponent
 } from './shared/formly/index';
 import { RefereePositionPipe } from './shared/position-pipe/index';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        AboutComponent,
-        AccountComponent,
-        AddressFormComponent,
-        HorizontalAddressFormComponent,
-        AdminComponent,
-        BioFormComponent,
-        BlogComponent,
-        EditPostComponent,
-        CreatePostComponent,
-        CareersComponent,
-        CarouselComponent,
-        CarouselItemComponent,
-        ContactUsComponent,
-        DropdownDirective,
-        EditProfileComponent,
-        MeetingsComponent,
-        MeetingOrderTableComponent,
-        FaqComponent,
-        FooterComponent,
-        FooterTabletComponent,
-        PrivacyModalComponent,
-        TermsModalComponent,
-        GoogleMapComponent,
-        HeaderComponent,
-        HomeComponent,
-        HowItWorksComponent,
-        LoginComponent,
-        LogoutComponent,
-        NotFoundComponent,
-        OrganizeComponent,
-        PartnersComponent,
-        PasswordFormComponent,
-        PhoneFormComponent,
-        PricingComponent,
-        PulseComponent,
-        AdminProfileComponent,
-        ProfileComponent,
-        ManageUsersComponent,
-        ManageMeetingsComponent,
-        MatchesComponent,
-        MatchDetailComponent,
-        AssignUsersComponent,
-        RefereeDetailsModalComponent,
-        RegisterComponent,
-        ResetComponent,
-        ResetPasswordComponent,
-        AdminScheduleComponent,
-        ScheduleComponent,
-        TermsAndConditionsComponent,
-        ZoneFormComponent,
-        AdminMenuComponent,
-        RepeatTypeComponent,
-        FormlyHorizontalWrapper,
-        FormlyHorizontalRadioWrapper,
-        FormlyHorizontalTextAreaWrapper,
-        RefereePositionPipe
-    ],
-    imports: [
-        BrowserModule,
-        AgmCoreModule.forRoot({
-            apiKey: environment.GOOGLEMAPS_KEY,
-            libraries: ['places']
-        }),
-        AgmDirectionModule,
-        NgxDatatableModule,
+	declarations: [
+		AppComponent,
+		AboutComponent,
+		AccountComponent,
+		AddressFormComponent,
+		HorizontalAddressFormComponent,
+		AdminComponent,
+		BioFormComponent,
+		BlogComponent,
+		EditPostComponent,
+		CreatePostComponent,
+		CareersComponent,
+		CarouselComponent,
+		CarouselItemComponent,
+		ContactUsComponent,
+		DropdownDirective,
+		EditProfileComponent,
+		MeetingsComponent,
+		MeetingOrderTableComponent,
+		FaqComponent,
+		FooterComponent,
+		FooterTabletComponent,
+		PrivacyModalComponent,
+		TermsModalComponent,
+		GoogleMapComponent,
+		HeaderComponent,
+		HomeComponent,
+		HowItWorksComponent,
+		LoginComponent,
+		LogoutComponent,
+		NotFoundComponent,
+		OrganizeComponent,
+		PartnersComponent,
+		PasswordFormComponent,
+		PhoneFormComponent,
+		PricingComponent,
+		PulseComponent,
+		AdminProfileComponent,
+		ProfileComponent,
+		ManageUsersComponent,
+		ManageMeetingsComponent,
+		MatchesComponent,
+		MatchDetailComponent,
+		AssignUsersComponent,
+		RefereeDetailsModalComponent,
+		RegisterComponent,
+		ResetComponent,
+		ResetPasswordComponent,
+		AdminScheduleComponent,
+		ScheduleComponent,
+		TermsAndConditionsComponent,
+		ZoneFormComponent,
+		AdminMenuComponent,
+		RepeatTypeComponent,
+		FormlyHorizontalWrapper,
+		FormlyHorizontalRadioWrapper,
+		FormlyHorizontalTextAreaWrapper,
+		RefereePositionPipe
+	],
+	imports: [
+		BrowserModule,
+		AgmCoreModule.forRoot({
+			apiKey: environment.GOOGLEMAPS_KEY,
+			libraries: ['places']
+		}),
+		AgmDirectionModule,
+		NgxDatatableModule,
 
-        RoutingModule,
-        SharedModule,
+		RoutingModule,
+		SharedModule,
 
-        MaterialModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        FormlyBootstrapModule,
-        //FormlyMaterialModule,
-        FormlyModule.forRoot({
-            wrappers: [
-                {
-                    name: 'horizontalWrapper',
-                    component: FormlyHorizontalWrapper
-                },
-                {
-                    name: 'horizontalRadioWrapper',
-                    component: FormlyHorizontalRadioWrapper
-                },
-                {
-                    name: 'horizontalTextareaWrapper',
-                    component: FormlyHorizontalTextAreaWrapper
-                }
-            ],
-            types: [
-                {
-                    name: 'horizontalInput',
-                    extends: 'input',
-                    wrappers: ['fieldset', 'horizontalWrapper']
-                },
-                {
-                    name: 'horizontalRadio',
-                    extends: 'radio',
-                    wrappers: ['fieldset', 'horizontalRadioWrapper']
-                },
-                {
-                    name: 'horizontalTextarea',
-                    extends: 'textarea',
-                    wrappers: ['fieldset', 'horizontalTextareaWrapper']
-                },
-                { name: 'repeat', component: RepeatTypeComponent }
-            ]
-        }),
-        RecaptchaModule.forRoot(),
+		MaterialModule,
+		BrowserAnimationsModule,
+		FormsModule,
+		ReactiveFormsModule,
+		FormlyBootstrapModule,
+		//FormlyMaterialModule,
+		FormlyModule.forRoot({
+			wrappers: [
+				{
+					name: 'horizontalWrapper',
+					component: FormlyHorizontalWrapper
+				},
+				{
+					name: 'horizontalRadioWrapper',
+					component: FormlyHorizontalRadioWrapper
+				},
+				{
+					name: 'horizontalTextareaWrapper',
+					component: FormlyHorizontalTextAreaWrapper
+				}
+			],
+			types: [
+				{
+					name: 'horizontalInput',
+					extends: 'input',
+					wrappers: ['fieldset', 'horizontalWrapper']
+				},
+				{
+					name: 'horizontalRadio',
+					extends: 'radio',
+					wrappers: ['fieldset', 'horizontalRadioWrapper']
+				},
+				{
+					name: 'horizontalTextarea',
+					extends: 'textarea',
+					wrappers: ['fieldset', 'horizontalTextareaWrapper']
+				},
+				{ name: 'repeat', component: RepeatTypeComponent }
+			]
+		}),
+		RecaptchaModule.forRoot(),
 
-        HttpClientModule,
-        MyDatePickerModule,
-        ImageCropperModule,
-        TourMatMenuModule.forRoot(),
-        NgbModule.forRoot(),
-        NgIdleKeepaliveModule.forRoot(),
-        CoreModule,
-        CommonModule
-    ],
-    providers: [MeetingsComponentService, GoogleMapsAPIWrapper],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    // Add bootstrap
-    bootstrap: [AppComponent],
-    entryComponents: [PulseComponent]
+		HttpClientModule,
+		MyDatePickerModule,
+		ImageCropperModule,
+		TourMatMenuModule.forRoot(),
+		NgbModule.forRoot(),
+		NgIdleKeepaliveModule.forRoot(),
+		CoreModule,
+		CommonModule
+	],
+	providers: [MeetingsComponentService, GoogleMapsAPIWrapper],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
+	// Add bootstrap
+	bootstrap: [AppComponent],
+	entryComponents: [PulseComponent]
 })
 export class AppModule {}

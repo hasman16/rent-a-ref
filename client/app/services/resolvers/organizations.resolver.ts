@@ -26,12 +26,10 @@ export class OrganizationsResolver implements Resolve<Observable<PagedData>> {
 
 		const pagingInfo: Page = this.pagingService.getDefaultPager();
 
-		return this.organizeService
-			.getUserOrganization(user_id, pagingInfo)
-			.pipe(
-				catchError(() => {
-					return empty();
-				})
-			);
+		return this.organizeService.getUserOrganization(user_id, pagingInfo).pipe(
+			catchError(() => {
+				return empty();
+			})
+		);
 	}
 }
