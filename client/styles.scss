@@ -62,47 +62,25 @@ tr,
 th,
 td {
   font-family: 'Arial', Helvetica, sans-serif;
-  //font-weight: normal;
+  font-weight: normal;
   margin: 0;
   padding: 0;
 }
-html,
-body {
+:root {
   font: normal 16px/18.66px 'Arial', Helvetica, sans-serif;
 }
-
-.container {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1200px;
-  bottom: 0;
-  height: 100%;
-  padding: 0;
-  position: relative;
-}
-
+html,
 body {
-  background: url('/assets/images/refereebg1.jpg') repeat fixed center center
-    black;
-  //  height: 100%;
-  //  position: fixed;
-  //  width: 100%;
-  //  z-index: -1;
+  background: white;
 }
 
 @media only screen and (max-width: 599px) {
-  body {
-    background: white;
-  }
   .nav-item {
     font-size: 1.3em;
   }
 }
 
 @media only screen and (min-width: 600px) {
-  body {
-    background: white;
-  }
   .nav-item {
     font-size: 1.2em;
   }
@@ -118,30 +96,22 @@ body {
     font-size: 1em;
   }
 }
-@media only screen and (min-width: 992) {
-  body {
-    background: url('/assets/images/refereebg.jpg') repeat fixed center center
-      transparent;
-    opacity: 0.987679;
-  }
-  .nav-item {
-    font-size: 1em;
-  }
-}
-@media only screen and (min-width: 1200) {
-  body {
-    background: url('/assets/images/refereebg.jpg') repeat fixed center center
-      transparent;
-    opacity: 0.987679;
-  }
-  .nav-item {
-    font-size: 1em;
-  }
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  bottom: 0;
+  height: 100vh;
+  min-height: 100vh;
+  padding: 0;
+  position: relative;
+  background-color: white;
 }
 
 .btn,
 .btn-sm {
-  min-width: 60px;
+  min-width: 3.75em;
 }
 
 $elegantshd-grey: #131313;
@@ -272,15 +242,15 @@ bootstrap table theme
 
 .ngx-datatable.bootstrap {
   box-shadow: none;
-  font-size: 13px;
+  font-size: 0.8125rem;
   .datatable-header {
     height: unset !important;
     .datatable-header-cell {
       vertical-align: bottom;
-      padding: 0.75rem;
+      padding: 0.923em;
       border-bottom: 1px solid #d1d4d7;
       .datatable-header-cell-label {
-        line-height: 24px;
+        line-height: 1.846em;
       }
     }
   }
@@ -307,16 +277,16 @@ bootstrap table theme
     color: #ededed;
     margin-top: -1px;
     .page-count {
-      line-height: 50px;
-      height: 50px;
+      line-height: 3.125em;
+      height: 3.125em;
       padding: 0 1.2rem;
     }
     .datatable-pager {
-      margin: 0 10px;
+      margin: 0 0.625em;
       vertical-align: top;
       ul {
         li {
-          margin: 10px 0px;
+          margin: 0.625em 0;
           &:not(.disabled) {
             &.active,
             &:hover {
@@ -329,12 +299,12 @@ bootstrap table theme
         }
       }
       a {
-        height: 22px;
-        min-width: 24px;
-        line-height: 22px;
+        height: 1.375em;
+        min-width: 1.5em;
+        line-height: 1.325em;
         padding: 0;
-        border-radius: 3px;
-        margin: 0 3px;
+        border-radius: 0.166em;
+        margin: 0 0.166em;
         text-align: center;
         vertical-align: top;
         text-decoration: none;
@@ -345,9 +315,9 @@ bootstrap table theme
       .datatable-icon-skip,
       .datatable-icon-right,
       .datatable-icon-prev {
-        font-size: 18px;
-        line-height: 27px;
-        padding: 0 3px;
+        font-size: 1.125rem;
+        line-height: 1.5em;
+        padding: 0 0.166em;
       }
     }
   }

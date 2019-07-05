@@ -133,67 +133,13 @@ export class StripeCardComponent implements AfterViewInit, OnInit, OnDestroy {
 				this.errorOut(err);
 			});
 	}
-	/*
-	private retrieveCustomer() {
-		this.disableSubmit = true;
-		this.hasSource = false;
-		this.sources = null;
-		this.stripeService
-			.retrieveCustomer(this.user_id)
-			.pipe(
-				finalize(() => {
-					this.cd.markForCheck();
-				})
-			)
-			.subscribe(
-				customer => {
-					this.disableSubmit = false;
-					let sources = _.get(customer, 'sources.data', null);
-					if (_.isArray(sources) && sources.length > 0) {
-						this.sources = sources;
-						this.hasSource = true;
-						this.viewState = ViewState.listCards;
-					}
-				},
-				(err: HttpErrorResponse) => {
-					this.errorOut(err);
-				}
-			);
-	}
-*/
+
 	private createAndPayOrder(order, source) {
 		this.error = null;
 		this.success = null;
 		this.disableSubmit = true;
 		return this.stripeService
 			.createAndPayOrder({ order: order, source: source.id })
-			.pipe(
-				finalize(() => {
-					this.disableSubmit = false;
-					this.cd.markForCheck();
-				})
-			)
-			.subscribe(
-				success => {
-					this.paymentState.emit(<Payment>{
-						paymentState: PaymentState.PaymentSuccess
-					});
-				},
-				(err: HttpErrorResponse) => {
-					this.errorOut(err);
-					this.paymentState.emit(<Payment>{
-						paymentState: PaymentState.PaymentError
-					});
-				}
-			);
-	}
-
-	private makeStripePayment(token) {
-		this.error = null;
-		this.success = null;
-		this.disableSubmit = true;
-		return this.stripeService
-			.makeStripePayment(this.reference_id, token)
 			.pipe(
 				finalize(() => {
 					this.disableSubmit = false;

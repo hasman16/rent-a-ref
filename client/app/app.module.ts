@@ -43,8 +43,6 @@ import { BlogComponent } from './group/blog/blog.component';
 import { EditPostComponent } from './group/blog/edit-post/edit-post.component';
 import { CreatePostComponent } from './group/blog/create-post/create-post.component';
 import { CareersComponent } from './group/careers/careers.component';
-import { CarouselComponent } from './carousel/carousel.component';
-import { CarouselItemComponent } from './carousel/carousel-item/carousel-item.component';
 import { ContactUsComponent } from './group/contactus/contactus.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 import {
@@ -118,8 +116,6 @@ import { RefereePositionPipe } from './shared/position-pipe/index';
 		EditPostComponent,
 		CreatePostComponent,
 		CareersComponent,
-		CarouselComponent,
-		CarouselItemComponent,
 		ContactUsComponent,
 		DropdownDirective,
 		EditProfileComponent,

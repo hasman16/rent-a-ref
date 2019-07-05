@@ -8,8 +8,8 @@ import { Component, Input } from '@angular/core';
 			[lazyLoad]="image"
 			[offset]="offset"
 			[errorImage]="errorImage"
-			width="{{width}}"
-			alt="{{alt}}"
+			width="{{ width }}"
+			alt="{{ alt }}"
 		/>
 	`,
 	styleUrls: ['image.component.scss']

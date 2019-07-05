@@ -121,39 +121,33 @@ export class StripeComponent implements OnInit {
 			);
 	}
 
-	private createAndPayOrder(order, source) {
+	private createAndPayOrder(source) {
+		let order: Order = <Order>{
+			currency: 'usd',
+			items: this.lineItems,
+			email: this.model.email,
+			shipping: {
+				name: this.model.fullname,
+				address: {
+					line1: this.model.line1,
+					city: this.model.city,
+					state: this.model.state,
+					postal_code: this.model.zip,
+					country: 'US'
+				}
+			},
+			metadata: {
+				status: 'created',
+				reference_id: this.reference_id,
+				reference_id_type: 'event_id'
+			}
+		};
 		this.error = null;
 		this.success = null;
 		this.disableSubmit = true;
+
 		return this.stripeService
 			.createAndPayOrder({ order: order, source: source.id })
-			.pipe(
-				finalize(() => {
-					this.disableSubmit = false;
-					this.cd.markForCheck();
-				})
-			)
-			.subscribe(
-				success => {
-					this.paymentState.emit(<Payment>{
-						paymentState: PaymentState.PaymentSuccess
-					});
-				},
-				(err: HttpErrorResponse) => {
-					this.errorOut(err);
-					this.paymentState.emit(<Payment>{
-						paymentState: PaymentState.PaymentError
-					});
-				}
-			);
-	}
-
-	private makeStripePayment(token): void {
-		this.error = null;
-		this.success = null;
-		this.disableSubmit = true;
-		this.stripeService
-			.makeStripePayment(this.reference_id, token)
 			.pipe(
 				finalize(() => {
 					this.disableSubmit = false;
