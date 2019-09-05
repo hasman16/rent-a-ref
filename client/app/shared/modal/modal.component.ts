@@ -20,21 +20,24 @@ import { Subscription, Observable } from 'rxjs';
 export class ModalComponent implements OnInit {
 	@Input('name') modalName: string = '';
 	@Input('size')
-	set setSize(value) {
+	set setSize(value: string) {
 		switch (value) {
 			case 'small':
+			case 'sm':
 				this.size = 'sm';
 				break;
 			case 'medium':
+			case 'md':
 				this.size = 'md';
 				break;
 			case 'large':
+			case 'lg':
 			default:
 				this.size = 'lg';
 				break;
 		}
 	}
-	@Input() closable = true;
+	@Input() closable: boolean = true;
 	@Input() visible: boolean = false;
 	@Input() backText: string = '';
 	@Input() cancelText: string = 'Cancel';

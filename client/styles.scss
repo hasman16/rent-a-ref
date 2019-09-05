@@ -3,86 +3,21 @@
 @import '~@swimlane/ngx-datatable/release/index.css';
 @import '~@swimlane/ngx-datatable/release/themes/material.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-font,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-dd,
-dl,
-dt,
-li,
-ol,
-ul,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td {
-  font-family: 'Arial', Helvetica, sans-serif;
-  font-weight: normal;
-  margin: 0;
-  padding: 0;
-}
+
 :root {
-  font: normal 16px/18.66px 'Arial', Helvetica, sans-serif;
-}
-html,
-body {
+  font: normal 16px/1.2 'Arial', Helvetica, sans-serif;
   background: white;
 }
 
 @media only screen and (max-width: 599px) {
   .nav-item {
-    font-size: 1.3em;
+    font-size: 1.3rem;
   }
 }
 
 @media only screen and (min-width: 600px) {
   .nav-item {
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
 }
 
@@ -93,7 +28,7 @@ body {
     opacity: 0.987679;
   }
   .nav-item {
-    font-size: 1em;
+    font-size: 1rem;
   }
 }
 

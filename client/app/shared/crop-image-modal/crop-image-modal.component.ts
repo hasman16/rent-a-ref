@@ -39,7 +39,7 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 	protected croppedImage: any = '';
 	protected files: FileList;
 	protected selectedTab: string = 'loading';
-	protected subscription: Subscription[] = [];
+	protected subscription: Subscription = new Subscription();
 	protected initialImage: string = '';
 
 	constructor(
@@ -50,7 +50,7 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit() {
-		this.subscription.push(
+		this.subscription.add(
 			this.cropImageModalService.modalState$.subscribe((value: boolean) => {
 				if (value) {
 					this.uploadModal.showModal(null);
@@ -62,7 +62,7 @@ export class CropImageModalComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.subscription.forEach((sub: Subscription) => sub.unsubscribe());
+		this.subscription.unsubscribe();
 	}
 
 	public isSelectedTab(tab: string): boolean {

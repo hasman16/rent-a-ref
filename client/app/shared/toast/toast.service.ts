@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Toast } from './toast';
 
 @Injectable()
 export class ToastService {
-	private toastSubject = new Subject<Toast>();
+	private toastSubject: Subject<Toast> = new Subject<Toast>();
 
-	public toasts = this.toastSubject.asObservable();
+	public toasts: Observable<Toast> = this.toastSubject.asObservable();
 
 	constructor() {}
 
-	message(toast: Toast) {
+	public message(toast: Toast): void {
 		this.toastSubject.next(toast);
 	}
 }

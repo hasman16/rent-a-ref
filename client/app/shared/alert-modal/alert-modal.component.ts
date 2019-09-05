@@ -26,12 +26,12 @@ export class AlertModalComponent implements OnInit, OnDestroy {
 	public submitText: string = 'Ok';
 	public disableSubmit: boolean = true;
 	public cancelText: string = 'Cancel';
-	protected subscription: Subscription[] = [];
+	protected subscription: Subscription = new Subscription();
 
 	constructor(private alertModalService: AlertModalService) {}
 
 	ngOnInit() {
-		this.subscription.push(
+		this.subscription.add(
 			this.alertModalService.modalState$.subscribe((value: boolean) => {
 				if (value) {
 					this.alertModal.showModal(null);
@@ -43,7 +43,7 @@ export class AlertModalComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.subscription.forEach((sub: Subscription) => sub.unsubscribe());
+		this.subscription.unsubscribe();
 	}
 
 	protected hide(alertButtonState: AlertButtonState): void {
