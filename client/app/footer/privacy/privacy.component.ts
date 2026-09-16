@@ -18,6 +18,9 @@ export class PrivacyModalComponent implements OnInit {
 	@ViewChild('privacy') privacyModal: ModalComponent;
 	@Input('show')
 	set show(value) {
+		if (!this.privacyModal) {
+			return;
+		}
 		if (value) {
 			this.privacyModal.showModal(null);
 		} else {

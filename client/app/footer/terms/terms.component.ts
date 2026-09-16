@@ -18,6 +18,9 @@ export class TermsModalComponent implements OnInit {
 	@ViewChild('terms') termsModal: ModalComponent;
 	@Input('show')
 	set show(value) {
+		if (!this.termsModal) {
+			return;
+		}
 		if (value) {
 			this.termsModal.showModal(null);
 		} else {

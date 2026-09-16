@@ -19,6 +19,9 @@ export class RefereeDetailsModalComponent implements OnInit {
 	@ViewChild('refereeDetails') refereeDetailsModal: ModalComponent;
 	@Input('show')
 	set show(value) {
+		if (!this.refereeDetailsModal) {
+			return;
+		}
 		if (value) {
 			this.refereeDetailsModal.showModal(null);
 		} else {

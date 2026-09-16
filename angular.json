@@ -28,11 +28,13 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "client/assets"
+                "input": "client/assets",
+                "output": "assets"
               },
               {
                 "glob": "favicon.ico",
-                "input": "client/assets"
+                "input": "client/assets",
+                "output": "/"
               }
             ],
             "styles": [
