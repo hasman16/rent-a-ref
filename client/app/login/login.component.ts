@@ -12,6 +12,7 @@ import { AuthService, UserService } from '../services/index';
 import { Login, User } from './../shared/models/index';
 
 @Component({
+	standalone: false,
 	selector: 'app-login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss']

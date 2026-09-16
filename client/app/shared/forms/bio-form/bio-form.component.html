@@ -23,7 +23,9 @@
       </div>
       <div class="input-group">
         <span class="input-group-addon"><i class="fa  fa-birthday-cake"></i></span>
-        <my-date-picker name="dob" [options]="myDatePickerOptions"  formControlName="dob" placeholder="Date of birth"></my-date-picker>
+        <input matInput name="dob" [matDatepicker]="dobPicker" formControlName="dob" placeholder="Date of birth">
+        <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dobPicker></mat-datepicker>
       </div>
       <br>
       <div>

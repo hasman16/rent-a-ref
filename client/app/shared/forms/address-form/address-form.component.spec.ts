@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
 	FormGroup,
@@ -15,12 +16,12 @@ import { AddressFormComponent } from './address-form.component';
 import { ProfileService, StatesService } from './../../../services/index';
 
 let profileServiceStub = {
-	createAddress: function() {},
-	updateAddress: function() {}
+	createAddress: function () {},
+	updateAddress: function () {}
 };
 
 let statesServiceStub = {
-	getStatesProvinces: function() {
+	getStatesProvinces: function () {
 		return [
 			{
 				name: 'Arkansas',
@@ -51,6 +52,7 @@ describe('AddressFormComponent', () => {
 		TestBed.configureTestingModule({
 			imports: [ReactiveFormsModule],
 			declarations: [AddressFormComponent],
+			schemas: [NO_ERRORS_SCHEMA],
 			providers: [
 				{ provide: ProfileService, useValue: profileServiceStub },
 				{ provide: StatesService, useValue: statesServiceStub }
@@ -71,7 +73,7 @@ describe('AddressFormComponent', () => {
 		state = addressForm.get('state');
 	};
 
-	xdescribe('Address Line 1', () => {
+	describe.skip('Address Line 1', () => {
 		beforeEach(setUp);
 
 		beforeEach(createCompoent);

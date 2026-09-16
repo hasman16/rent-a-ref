@@ -1,5 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { ToastComponent } from './toast.component';
 import { ToastService } from './toast.service';
@@ -12,10 +14,12 @@ describe('ToastComponent', () => {
 	let fixture: ComponentFixture<ToastComponent>;
 	let mockToastService: Subject<Toast>;
 
-	beforeEach(async(() => {
+	beforeEach(waitForAsync(() => {
 		mockToastService = new Subject();
 		TestBed.configureTestingModule({
+			imports: [CommonModule],
 			declarations: [ToastComponent],
+			schemas: [NO_ERRORS_SCHEMA],
 			providers: [
 				{
 					provide: ToastService,
@@ -30,14 +34,15 @@ describe('ToastComponent', () => {
 	beforeEach(() => {
 		fixture = TestBed.createComponent(ToastComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it('should create', () => {
+		fixture.detectChanges();
 		expect(component).toBeTruthy();
 	});
 
 	it('should not have message set nor DOM element', () => {
+		fixture.detectChanges();
 		expect(component.message.body).toBeFalsy();
 		expect(component.message.type).toBeFalsy();
 		const de = fixture.debugElement.query(By.css('div'));

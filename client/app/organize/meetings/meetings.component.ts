@@ -36,7 +36,7 @@ import { Observable } from 'rxjs';
 import { finalize, take, tap } from 'rxjs/operators';
 
 import * as _ from 'lodash';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 enum ViewState {
 	noEvents,
@@ -47,6 +47,7 @@ enum ViewState {
 }
 
 @Component({
+	standalone: false,
 	selector: 'rar-meetings',
 	templateUrl: './meetings.component.html',
 	styleUrls: ['./meetings.component.scss'],

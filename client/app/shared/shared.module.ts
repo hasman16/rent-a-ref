@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ImageCropperModule } from 'ngx-image-cropper';
+import { ImageCropperComponent } from 'ngx-image-cropper';
 import { HttpClientModule } from '@angular/common/http';
 import { LazyLoadImageModule } from 'ng-lazyload-image'; //https://github.com/tjoskar/ng-lazyload-image
 import { FormlyModule } from '@ngx-formly/core';
@@ -78,7 +78,7 @@ const sharedComponents = [
 		MaterialModule,
 		ReactiveFormsModule,
 		HttpClientModule,
-		ImageCropperModule,
+		ImageCropperComponent,
 		LazyLoadImageModule,
 		//FormlyBootstrapModule,
 		FormlyMaterialModule,

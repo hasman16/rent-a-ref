@@ -13,6 +13,7 @@ import { ModalState } from './modal';
 import { Subscription, Observable } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'rar-modal',
 	templateUrl: './modal.component.html',
 	styleUrls: ['./modal.component.scss']

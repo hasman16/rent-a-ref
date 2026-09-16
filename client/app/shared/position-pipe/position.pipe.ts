@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'refereePosition' })
+@Pipe({
+	standalone: false, name: 'refereePosition' })
 export class RefereePositionPipe implements PipeTransform {
 	transform(value: number): string {
 		let positions: any = {

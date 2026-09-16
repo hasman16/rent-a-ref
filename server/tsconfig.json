@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "../dist/server",
     "baseUrl": "",
-    "module": "commonjs"
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "isolatedModules": false
   }
 }

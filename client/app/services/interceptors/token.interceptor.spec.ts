@@ -31,11 +31,11 @@ describe('TokenInterceptor', () => {
 			]
 		});
 
-		service = TestBed.get(UserService);
-		loadService = TestBed.get(LoaderService);
-		tokenService = TestBed.get(TokenService);
+		service = TestBed.inject(UserService);
+		loadService = TestBed.inject(LoaderService);
+		tokenService = TestBed.inject(TokenService);
 		tokenService.setOptions('12345ABCDE');
-		httpMock = TestBed.get(HttpTestingController);
+		httpMock = TestBed.inject(HttpTestingController);
 	});
 
 	it('should add an Authorization header', () => {

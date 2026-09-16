@@ -16,6 +16,7 @@ import { Toast } from './../toast';
 import { Subscription } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'rar-upload-button',
 	templateUrl: './upload-button.component.html',
 	styleUrls: ['./upload-button.component.scss']

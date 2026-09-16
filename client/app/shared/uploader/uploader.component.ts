@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'rar-uploader',
 	templateUrl: './uploader.component.html',
 	styleUrls: ['./uploader.component.scss']

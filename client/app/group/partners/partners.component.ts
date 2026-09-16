@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'app-partners',
 	templateUrl: './partners.component.html',
 	styleUrls: ['./partners.component.scss']

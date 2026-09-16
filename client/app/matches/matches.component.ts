@@ -46,7 +46,7 @@ import { Observable, Subscription, Subject } from 'rxjs';
 import { finalize, map, switchMap, take } from 'rxjs/operators';
 
 import * as _ from 'lodash';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 enum ViewState {
 	noMatches,
@@ -56,6 +56,7 @@ enum ViewState {
 }
 
 @Component({
+	standalone: false,
 	selector: 'rar-matches',
 	templateUrl: './matches.component.html',
 	styleUrls: ['./matches.component.scss'],

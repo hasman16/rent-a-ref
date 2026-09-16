@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
+	standalone: false,
 	selector: 'base-form',
 	templateUrl: './base-form.component.html',
 	styleUrls: ['./base-form.component.scss']

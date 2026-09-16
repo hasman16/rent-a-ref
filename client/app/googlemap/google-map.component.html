@@ -1,22 +1,16 @@
 <div class="wrapper">
 	<div class="map-wrapper">
-		<agm-map [latitude]="location.lat" [longitude]="location.lng">
-		  <agm-marker [latitude]="location.marker.lat" [longitude]="location.marker.lng"
-		  *ngIf="!showDirections"></agm-marker>
-		  <!--
-		  <agm-circle [latitude]="location.marker.lat" [longitude]="location.marker.lng"
-		  [(radius)]="circleRadius"
-		  [fillColor]="'blue'"
-		  [circleDraggable]="true"
-		  [editable]="true"></agm-circle> -->
-		  <agm-direction
-		  	*ngIf="showDirections"
-		  	 [origin]="origin"
-		  	 [destination]="destination"
-		  	 [visible]="showDirections"
-		  	 [panel]="myPanel"
-		  	 (onChange)="onDirectionChange($event)"></agm-direction>
-		</agm-map>
+		<google-map
+			*ngIf="apiLoaded"
+			[center]="{ lat: location.lat, lng: location.lng }"
+			[zoom]="location.zoom || 8">
+			<map-marker
+				*ngIf="!showDirections"
+				[position]="{ lat: location.marker.lat, lng: location.marker.lng }"></map-marker>
+			<map-directions-renderer
+				*ngIf="showDirections && directionsResult"
+				[directions]="directionsResult"></map-directions-renderer>
+		</google-map>
 	</div>
 	<div #myPanel class="directions">
 	</div>

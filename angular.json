@@ -1,141 +1,133 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "cli": {
+    "packageManager": "npm",
+    "analytics": false
+  },
   "newProjectRoot": "projects",
   "projects": {
     "angular2-full-stack": {
       "root": "",
       "sourceRoot": "client",
       "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": "dist/public",
             "index": "client/index.html",
-            "main": "client/main.ts",
+            "browser": "client/main.ts",
             "tsConfig": "client/tsconfig.app.json",
-            "polyfills": "client/polyfills.ts",
+            "polyfills": ["zone.js"],
             "assets": [
-              "client/assets",
-              "client/assets/favicon.ico"
+              {
+                "glob": "**/*",
+                "input": "client/assets"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "client/assets"
+              }
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/@swimlane/ngx-datatable/index.css",
+              "node_modules/@swimlane/ngx-datatable/themes/material.css",
+              "node_modules/@swimlane/ngx-datatable/assets/icons.css",
               "client/styles.scss"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/tether/dist/js/tether.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "32kb",
+                  "maximumError": "64kb"
+                }
+              ],
               "fileReplacements": [
                 {
-                  "replace": "client/environments/environment.ts",
-                  "with": "client/environments/environment.prod.ts"
+                  "replace": "client/app/environments/environment.ts",
+                  "with": "client/app/environments/environment.prod.ts"
                 }
               ]
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "testing": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "polyfills": ["zone.js", "zone.js/testing", "zone.js/plugins/vitest-patch"]
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "angular2-full-stack:build"
-          },
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular2-full-stack:build:production"
+              "buildTarget": "angular2-full-stack:build:production"
+            },
+            "development": {
+              "buildTarget": "angular2-full-stack:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
-            "browserTarget": "angular2-full-stack:build"
+            "buildTarget": "angular2-full-stack:build"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "main": "client/test.ts",
-            "karmaConfig": "client/karma.conf.js",
-            "polyfills": "client/polyfills.ts",
             "tsConfig": "client/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/tether/dist/js/tether.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/font-awesome/css/font-awesome.min.css",
-              "client/styles.scss"
-            ],
-            "assets": [
-              "client/assets",
-              "client/assets/favicon.ico"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "client/tsconfig.app.json",
-              "client/tsconfig.spec.json"
-            ],
+            "buildTarget": "angular2-full-stack:build:testing",
             "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "angular2-full-stack-e2e": {
-      "root": "",
-      "sourceRoot": "",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular2-full-stack:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+              "client/app/shared/forms/blog-form/blog-form.component.spec.ts",
+              "client/app/shared/forms/events-form/events-form.component.spec.ts",
+              "client/app/shared/forms/matches-form/matches-form.component.spec.ts",
+              "client/app/shared/forms/organization-form/organization-form.component.spec.ts",
+              "client/app/shared/forms/schedule-address-form/schedule-address-form.component.spec.ts",
+              "client/app/shared/forms/statuses-form/statuses-form.component.spec.ts",
+              "client/app/shared/forms/address-form/horizontal-address-form/horizontal-address-form.component.spec.ts",
+              "client/app/account/account.component.spec.ts",
+              "client/app/logout/logout.component.spec.ts",
+              "client/app/resetpassword/resetpassword.component.spec.ts"
             ]
           }
         }
       }
     }
   },
-  "defaultProject": "angular2-full-stack",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "app",
-      "styleext": "css"
+      "prefix": "app"
     },
     "@schematics/angular:directive": {
       "prefix": "app"

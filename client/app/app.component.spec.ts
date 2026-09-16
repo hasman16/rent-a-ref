@@ -1,11 +1,11 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { AuthService } from './services/index';
 
-xdescribe('Component: App', () => {
+describe.skip('Component: App', () => {
 	let component: AppComponent;
 	let fixture: ComponentFixture<AppComponent>;
 	let authService: AuthService;
@@ -15,7 +15,7 @@ xdescribe('Component: App', () => {
 		currentUser: any;
 	};
 
-	beforeEach(async(() => {
+	beforeEach(waitForAsync(() => {
 		authServiceStub = {
 			loggedIn: false,
 			isAdmin: false,
@@ -35,7 +35,7 @@ xdescribe('Component: App', () => {
 			});
 	}));
 
-	it('should create the app', async(() => {
+	it('should create the app', waitForAsync(() => {
 		expect(component).toBeTruthy();
 	}));
 

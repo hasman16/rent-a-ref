@@ -5,6 +5,7 @@ import { LoaderService } from './loader.service';
 import { LoaderState } from './loader';
 
 @Component({
+	standalone: false,
 	selector: 'rar-loader',
 	templateUrl: 'loader.component.html',
 	styleUrls: ['loader.component.scss']

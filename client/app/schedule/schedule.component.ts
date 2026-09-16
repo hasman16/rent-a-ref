@@ -24,6 +24,7 @@ import {
 } from '../services/index';
 
 @Component({
+	standalone: false,
 	selector: 'app-schedule',
 	templateUrl: './schedule.component.html',
 	styleUrls: ['./schedule.component.scss'],

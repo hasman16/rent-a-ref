@@ -1,4 +1,4 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, waitForAsync, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 
@@ -38,11 +38,11 @@ describe('AuthGuardService', () => {
 		});
 
 		// inject your guard service AND Router
-		it('checks if a user is valid', async(
+		it('checks if a user is valid', waitForAsync(
 			inject(
 				[AuthGuardLogin, Router, AuthService],
 				(authGuardLogin, router, authService) => {
-					spyOn(router, 'navigate');
+					vi.spyOn(router, 'navigate').mockReturnValue(undefined);
 					expect(authGuardLogin.canActivate()).toBeFalsy();
 					expect(authService.loggedIn).toBeFalsy();
 					expect(authService.isActive).toBeFalsy();
@@ -59,11 +59,11 @@ describe('AuthGuardService', () => {
 			setUp(mockAuthService);
 		});
 
-		it('should return true', async(
+		it('should return true', waitForAsync(
 			inject(
 				[AuthGuardLogin, Router, AuthService],
 				(authGuardLogin, router, authService) => {
-					spyOn(router, 'navigate');
+					vi.spyOn(router, 'navigate').mockReturnValue(undefined);
 
 					expect(authGuardLogin.canActivate()).toBeTruthy();
 					expect(authService.loggedIn).toBeTruthy();

@@ -4,7 +4,7 @@
 	font-weight: bold;
 	color: #b8bec5;
 }
-:host /deep/ .card {
+:host ::ng-deep .card {
 	.form-size {
 		max-width: 90%;
 		min-width: 90%;

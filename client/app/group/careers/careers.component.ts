@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'app-careers',
 	templateUrl: './careers.component.html',
 	styleUrls: ['./careers.component.scss']

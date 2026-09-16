@@ -12,6 +12,7 @@ import { compareFields } from '../../compareFields';
 import { UserService } from '../../../services/index';
 
 @Component({
+	standalone: false,
 	selector: 'password-form',
 	templateUrl: './password-form.component.html',
 	styleUrls: ['./password-form.component.scss']

@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { PaginationComponent } from './pagination.component';
@@ -9,9 +10,10 @@ describe('PaginationComponent', () => {
 	let component: PaginationComponent;
 	let fixture: ComponentFixture<PaginationComponent>;
 
-	beforeEach(async(() => {
+	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
 			declarations: [PaginationComponent],
+			schemas: [NO_ERRORS_SCHEMA],
 			providers: []
 		}).compileComponents();
 	}));

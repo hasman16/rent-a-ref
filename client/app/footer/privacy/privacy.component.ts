@@ -9,6 +9,7 @@ import {
 import { ModalComponent } from './../../shared/modal/modal.component';
 
 @Component({
+	standalone: false,
 	selector: 'privacy-modal',
 	templateUrl: './privacy.component.html',
 	styleUrls: []

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/index';
 
 @Component({
+	standalone: false,
 	selector: 'app-logout',
 	template: './logout.component.html',
 	styles: ['']

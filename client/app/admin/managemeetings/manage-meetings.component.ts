@@ -39,6 +39,7 @@ enum TabState {
 }
 
 @Component({
+	standalone: false,
 	selector: 'rar-manage-meetings',
 	templateUrl: './manage-meetings.component.html',
 	styleUrls: ['./manage-meetings.component.scss'],

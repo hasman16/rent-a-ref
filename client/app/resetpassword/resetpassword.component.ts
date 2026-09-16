@@ -11,6 +11,7 @@ import { AuthService } from '../services/index';
 import { ToastComponent } from '../shared/toast/toast.component';
 
 @Component({
+	standalone: false,
 	selector: 'app-reset-password',
 	templateUrl: './resetpassword.component.html',
 	styleUrls: ['./resetpassword.component.scss']

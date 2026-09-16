@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminComponent } from './admin.component';
 
@@ -6,9 +7,10 @@ describe('AdminComponent', () => {
 	let component: AdminComponent;
 	let fixture: ComponentFixture<AdminComponent>;
 
-	beforeEach(async(() => {
+	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [AdminComponent]
+			declarations: [AdminComponent],
+			schemas: [NO_ERRORS_SCHEMA]
 		}).compileComponents();
 	}));
 
@@ -18,7 +20,7 @@ describe('AdminComponent', () => {
 		fixture.detectChanges();
 	});
 
-	/*it('should be created', () => {
+	it('should be created', () => {
     expect(component).toBeTruthy();
-  });*/
+  });
 });

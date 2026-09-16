@@ -6,7 +6,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService, UserService } from './services/index';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { PulseComponent } from './pulse/pulse.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Keepalive } from '@ng-idle/keepalive';
 import { Subscription } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
@@ -18,7 +18,7 @@ const TEN_MINUTES: number = 10 * ONE_MINUTE;
 const FIFTEEN_MINUTES: number = 15 * ONE_MINUTE;
 
 @Component({
-	moduleId: module.id,
+	standalone: false,
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']

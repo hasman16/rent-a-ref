@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService, UserService } from '../services/index';
 import { Subscription } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'rar-pulse',
 	templateUrl: './pulse.component.html'
 })

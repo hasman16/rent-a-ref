@@ -11,7 +11,7 @@
 	.search-attribute {
 		display: inline-block;
 	}
-	/deep/ .search-attribute {
+	::ng-deep .search-attribute {
 		.mat-radio-button {
 			padding-left: 0.3125em;
 		}

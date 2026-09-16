@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'schedule-address-form',
 	templateUrl: './schedule-address-form.component.html',
 	styleUrls: ['./schedule-address-form.component.scss']

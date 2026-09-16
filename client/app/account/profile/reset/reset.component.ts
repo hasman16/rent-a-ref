@@ -13,6 +13,7 @@ import { ToastComponent } from '../../../shared/toast/toast.component';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
+	standalone: false,
 	selector: 'app-reset',
 	templateUrl: './reset.component.html',
 	styleUrls: ['./reset.component.scss']

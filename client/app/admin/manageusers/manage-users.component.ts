@@ -28,6 +28,7 @@ import { Observable, Subscription, Subject } from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'rar-manage-users',
 	templateUrl: './manage-users.component.html',
 	styleUrls: ['./manage-users.component.scss']

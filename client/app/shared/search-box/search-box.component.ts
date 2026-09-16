@@ -10,6 +10,7 @@ import { Option } from '../models/index';
 import * as _ from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'rar-search-box',
 	templateUrl: './search-box.component.html',
 	styleUrls: ['./search-box.component.scss']

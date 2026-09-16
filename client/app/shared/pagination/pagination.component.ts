@@ -10,6 +10,7 @@ import { Page, Option } from '../models/index';
 import * as _ from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'rar-pagination',
 	templateUrl: './pagination.component.html',
 	styleUrls: ['./pagination.component.scss']

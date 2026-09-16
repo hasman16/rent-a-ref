@@ -1,14 +1,14 @@
 :host {
-  /deep/ .index-column,
-  /deep/ .index-column-header {
+  ::ng-deep .index-column,
+  ::ng-deep .index-column-header {
     text-align: right;
   }
 
-  /deep/ .data-table .data-table-row.selected {
+  ::ng-deep .data-table .data-table-row.selected {
     background-color: #e4edf9;
   }
 
-  /deep/ .card {
+  ::ng-deep .card {
     .form-size {
       max-width: 70%;
       min-width: 70%;

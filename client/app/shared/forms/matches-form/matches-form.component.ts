@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'matches-form',
 	templateUrl: './matches-form.component.html',
 	styleUrls: ['./matches-form.component.scss']

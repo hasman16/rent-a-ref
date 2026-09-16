@@ -1,4 +1,3 @@
-import { environment } from './environments/environment';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,18 +15,16 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { ImageCropperModule } from 'ngx-image-cropper';
+import { ImageCropperComponent } from 'ngx-image-cropper';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
-import { TourMatMenuModule } from 'ngx-tour-md-menu';
 
 import { RoutingModule } from './routing.module';
 import { MaterialModule } from './material.module';
 import { CoreModule } from './services/core.module';
 import { SharedModule } from './shared/shared.module';
 
-import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
-import { AgmDirectionModule } from 'agm-direction'; // agm-direction
+import { GoogleMap, MapMarker, MapDirectionsRenderer } from '@angular/google-maps';
 import { GoogleMapComponent } from './googlemap/index';
 
 /* Components */
@@ -91,7 +88,6 @@ import { PulseComponent } from './pulse/pulse.component';
 
 /* Misc. */
 import { DropdownDirective } from './shared/dropdown.directive';
-import { MyDatePickerModule } from 'mydatepicker';
 
 // rich grid
 import { AdminMenuComponent } from './admin/adminmenu/admin-menu.component';
@@ -163,11 +159,9 @@ import { RefereePositionPipe } from './shared/position-pipe/index';
 	],
 	imports: [
 		BrowserModule,
-		AgmCoreModule.forRoot({
-			apiKey: environment.GOOGLEMAPS_KEY,
-			libraries: ['places']
-		}),
-		AgmDirectionModule,
+		GoogleMap,
+		MapMarker,
+		MapDirectionsRenderer,
 		NgxDatatableModule,
 
 		RoutingModule,
@@ -213,21 +207,18 @@ import { RefereePositionPipe } from './shared/position-pipe/index';
 				{ name: 'repeat', component: RepeatTypeComponent }
 			]
 		}),
-		RecaptchaModule.forRoot(),
+		RecaptchaModule,
 
 		HttpClientModule,
-		MyDatePickerModule,
-		ImageCropperModule,
-		TourMatMenuModule.forRoot(),
-		NgbModule.forRoot(),
+		ImageCropperComponent,
+		NgbModule,
 		NgIdleKeepaliveModule.forRoot(),
 		CoreModule,
 		CommonModule
 	],
-	providers: [MeetingsComponentService, GoogleMapsAPIWrapper],
+	providers: [MeetingsComponentService],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	// Add bootstrap
-	bootstrap: [AppComponent],
-	entryComponents: [PulseComponent]
+	bootstrap: [AppComponent]
 })
 export class AppModule {}

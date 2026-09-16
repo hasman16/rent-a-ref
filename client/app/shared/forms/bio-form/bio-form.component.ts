@@ -14,9 +14,8 @@ import { UserService } from '../../../services/index';
 
 import { Observable } from 'rxjs';
 
-import { MyDatePickerModule, IMyDpOptions, IMyDateModel } from 'mydatepicker';
-
 @Component({
+	standalone: false,
 	selector: 'bio-form',
 	templateUrl: './bio-form.component.html',
 	styleUrls: ['./bio-form.component.scss']
@@ -61,15 +60,11 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
 				[Validators.maxLength(30), Validators.pattern(this.alphaNumericRegex)]
 			],
 			gender: ['', [<any>Validators.nullValidator]],
-			dob: [{ date: { year: 1998, month: 10, day: 9 } }, Validators.required] // this example is initialized to specific date
+			dob: [new Date(1998, 9, 9), Validators.required] // this example is initialized to specific date
 		});
 
 		this.setUpValidators(this.bioForm, ['firstname', 'lastname']);
 	}
-
-	public myDatePickerOptions: IMyDpOptions = {
-		dateFormat: 'yyyy-mm-dd'
-	};
 
 	public fillForm() {
 		if (this.aPerson) {
@@ -83,15 +78,8 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
 		}
 	}
 
-	getDate(timestamp): any {
-		let date: Date = new Date(timestamp);
-		return {
-			date: {
-				year: date.getFullYear(),
-				month: date.getMonth() + 1,
-				day: date.getDate()
-			}
-		};
+	getDate(timestamp): Date {
+		return new Date(timestamp);
 	}
 
 	setDate(timestamp): void {
@@ -104,12 +92,12 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
 	}
 
 	resetDate(): void {
-		// Reset date picker to specific date (today)
-		this.bioForm.reset({ dob: { jsdate: new Date() } });
+		// Reset date picker to today
+		this.bioForm.reset({ dob: new Date() });
 	}
 
 	clearDate(): void {
-		// Clear the date using the patchValue function (use null or empty string)
+		// Clear the date using the patchValue function
 		this.bioForm.patchValue({ dob: null });
 	}
 
@@ -117,19 +105,11 @@ export class BioFormComponent extends AbstractFormComponent implements OnInit {
 		this.fillForm();
 	}
 
-	getEpoc(dob) {
-		let value: number = 0;
-
-		if (dob.epoc) {
-			value = Number(dob.epoc) * 1000;
-		} else {
-			const day = Number(dob.date.day);
-			const month = Number(dob.date.month) - 1;
-			const year = Number(dob.date.year);
-			value = new Date(year, month, day).getTime();
+	getEpoc(dob): number {
+		if (!dob) {
+			return 0;
 		}
-
-		return value;
+		return new Date(dob).getTime();
 	}
 
 	public onSubmit() {

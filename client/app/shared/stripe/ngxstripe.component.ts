@@ -19,6 +19,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { OrganizeService } from '../../services/index';
 import * as _ from 'lodash';
 @Component({
+	standalone: false,
   selector: 'rar-stripe',
   templateUrl: './stripe.component.html',
   styleUrls: ['./stripe.component.scss']

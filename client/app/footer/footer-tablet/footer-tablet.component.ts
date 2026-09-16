@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'app-footer-tablet',
 	templateUrl: './footer-tablet.component.html',
 	styleUrls: ['./footer-tablet.component.scss']

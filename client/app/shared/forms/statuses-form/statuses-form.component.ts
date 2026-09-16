@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'statuses-form',
 	templateUrl: './statuses-form.component.html',
 	styleUrls: ['./statuses-form.component.scss']

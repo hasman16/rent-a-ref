@@ -10,7 +10,7 @@
 		border-radius: 0;
 	}
 
-	/deep/ .datatable-row-group {
+	::ng-deep .datatable-row-group {
 		cursor: pointer;
 	}
 }

@@ -24,6 +24,7 @@ import {
 } from '../../../services/index';
 
 @Component({
+	standalone: false,
 	selector: 'app-editblog',
 	templateUrl: './edit-post.component.html',
 	styleUrls: ['./edit-post.component.scss'],

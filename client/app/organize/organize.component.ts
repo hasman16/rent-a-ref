@@ -47,6 +47,7 @@ import { combineLatest, Observable, Subscription, Subject } from 'rxjs';
 import { filter, finalize, map, switchMap, take } from 'rxjs/operators';
 
 @Component({
+	standalone: false,
 	selector: 'rar-organize',
 	templateUrl: './organize.component.html',
 	styleUrls: ['./organize.component.scss'],

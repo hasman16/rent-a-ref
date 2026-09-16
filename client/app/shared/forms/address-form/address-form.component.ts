@@ -22,6 +22,7 @@ export interface IAddressService {
 }
 
 @Component({
+	standalone: false,
 	selector: 'address-form',
 	templateUrl: './address-form.component.html',
 	styleUrls: ['./address-form.component.scss']

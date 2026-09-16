@@ -1,6 +1,7 @@
 import { HostBinding, HostListener, Directive } from '@angular/core';
 // import { NgModule } from '@angular/core';
 @Directive({
+	standalone: false,
 	selector: '[appDropdown]'
 })
 // This appDropdown would be consumed by the recipe-detail.component.html and header.component.html.

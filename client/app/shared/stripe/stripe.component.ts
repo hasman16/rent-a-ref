@@ -27,6 +27,7 @@ enum ViewState {
 	payWithCard
 }
 @Component({
+	standalone: false,
 	selector: 'rar-stripe',
 	templateUrl: './stripe.component.html',
 	styleUrls: ['./stripe.component.scss'],

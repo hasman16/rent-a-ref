@@ -11,6 +11,7 @@ import {
 } from './../../../shared/models/index';
 
 @Component({
+	standalone: false,
 	selector: 'app-suspended',
 	templateUrl: './suspended.component.html',
 	styleUrls: ['./suspended.component.scss']

@@ -14,6 +14,7 @@ import { AbstractFormComponent } from '../abstract-form';
 import { Observable } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'zone-form',
 	templateUrl: './zone-form.component.html',
 	styleUrls: ['./zone-form.component.scss']

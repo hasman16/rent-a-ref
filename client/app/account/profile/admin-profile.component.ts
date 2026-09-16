@@ -26,10 +26,11 @@ import { Observable, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import * as _ from 'lodash';
-import * as moment from 'moment';
+import moment from 'moment';
 
 // End
 @Component({
+	standalone: false,
 	selector: 'rar-admin-profile',
 	templateUrl: './admin-profile.component.html',
 	styleUrls: ['./profile.component.scss'],

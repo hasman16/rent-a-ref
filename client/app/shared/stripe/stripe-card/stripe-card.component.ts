@@ -22,6 +22,7 @@ import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'rar-stripe-card',
 	templateUrl: './stripe-card.component.html',
 	styleUrls: ['./stripe-card.component.scss'],

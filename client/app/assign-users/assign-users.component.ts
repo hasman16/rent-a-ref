@@ -43,6 +43,7 @@ enum ViewState {
 	viewSchedule
 }
 @Component({
+	standalone: false,
 	selector: 'rar-assign-users',
 	templateUrl: './assign-users.component.html',
 	styleUrls: ['./assign-users.component.scss'],

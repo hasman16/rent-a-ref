@@ -13,6 +13,7 @@ import { ToastComponent } from '../../../shared/toast/toast.component';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
+	standalone: false,
 	selector: 'app-passwordreset',
 	templateUrl: './passwordreset.component.html',
 	styleUrls: ['./passwordreset.component.scss']

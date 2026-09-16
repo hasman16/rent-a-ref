@@ -14,6 +14,7 @@ import { ModalComponent } from './../modal/modal.component';
 import { Subscription, Observable } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'rar-alert-modal',
 	templateUrl: './alert-modal.component.html',
 	styleUrls: ['./alert-modal.component.scss']

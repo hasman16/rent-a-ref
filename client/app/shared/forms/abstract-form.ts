@@ -1,9 +1,10 @@
-import { EventEmitter, Output } from '@angular/core';
+import { Directive, EventEmitter, Output } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
+@Directive()
 export abstract class AbstractFormComponent {
 	@Output() cancelForm = new EventEmitter();
 

@@ -3,12 +3,12 @@
     min-height: 750px;
   }
 
-  /deep/ .datatable-body-cell-label {
+  ::ng-deep .datatable-body-cell-label {
     width: 100%;
     height: 100%;
   }
 
-  /deep/ .datatable-row-group {
+  ::ng-deep .datatable-row-group {
     cursor: pointer;
   }
 

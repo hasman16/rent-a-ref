@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Page, PagedData, Sorts } from './../../shared/models/index';
 import * as _ from 'lodash';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 @Injectable()
 export class PagingService {
@@ -66,7 +66,7 @@ export class PagingService {
 		);
 	}
 
-	public isNotTimeLocked(eventObj, lock = 1, grain = 'minutes'): boolean {
+	public isNotTimeLocked(eventObj, lock = 1, grain: moment.unitOfTime.StartOf = 'minutes'): boolean {
 		const now = moment().utc();
 		const matchTime = moment.tz(eventObj.date, eventObj.timezone_id);
 		const lockTime = matchTime.utc().subtract(lock, 'hour');

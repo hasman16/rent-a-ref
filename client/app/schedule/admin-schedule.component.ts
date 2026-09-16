@@ -27,6 +27,7 @@ import {
 } from '../services/index';
 
 @Component({
+	standalone: false,
 	selector: 'rar-admin-schedule',
 	templateUrl: './admin-schedule.component.html',
 	styleUrls: ['./schedule.component.scss'],

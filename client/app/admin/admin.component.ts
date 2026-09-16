@@ -3,6 +3,7 @@ import { CanComponentDeactivate } from '../services/index';
 import { Observable } from 'rxjs';
 
 @Component({
+	standalone: false,
 	selector: 'rar-admin',
 	templateUrl: './admin.component.html',
 	styleUrls: ['./admin.component.scss']

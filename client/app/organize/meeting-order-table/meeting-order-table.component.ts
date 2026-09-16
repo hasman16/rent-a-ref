@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'meeting-order-table',
 	templateUrl: './meeting-order-table.component.html',
 	styleUrls: ['./meeting-order-table.component.scss']

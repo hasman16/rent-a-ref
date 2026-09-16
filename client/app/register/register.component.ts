@@ -10,7 +10,7 @@ import { ToastComponent } from '../shared/toast/toast.component';
 import * as _ from 'lodash';
 
 @Component({
-	moduleId: module.id,
+	standalone: false,
 	selector: 'app-register',
 	templateUrl: './register.component.html',
 	styleUrls: ['./register.component.scss']

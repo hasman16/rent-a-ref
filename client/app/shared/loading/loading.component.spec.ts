@@ -1,5 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { LoadingComponent } from './loading.component';
 
@@ -7,8 +8,9 @@ describe('LoadingComponent', () => {
 	let component: LoadingComponent;
 	let fixture: ComponentFixture<LoadingComponent>;
 
-	beforeEach(async(() => {
+	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
+			imports: [CommonModule],
 			declarations: [LoadingComponent]
 		}).compileComponents();
 	}));
@@ -16,14 +18,15 @@ describe('LoadingComponent', () => {
 	beforeEach(() => {
 		fixture = TestBed.createComponent(LoadingComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it('should be created', () => {
+		fixture.detectChanges();
 		expect(component).toBeTruthy();
 	});
 
 	it('should not show the DOM element', () => {
+		fixture.detectChanges();
 		const de = fixture.debugElement.query(By.css('div'));
 		expect(de).toBeNull();
 	});

@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TermsAndConditionsComponent } from './terms-and-conditions.component';
 
@@ -6,9 +7,10 @@ describe('TermsAndConditionsComponent', () => {
 	let component: TermsAndConditionsComponent;
 	let fixture: ComponentFixture<TermsAndConditionsComponent>;
 
-	beforeEach(async(() => {
+	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [TermsAndConditionsComponent]
+			declarations: [TermsAndConditionsComponent],
+			schemas: [NO_ERRORS_SCHEMA]
 		}).compileComponents();
 	}));
 

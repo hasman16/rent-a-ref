@@ -18,6 +18,7 @@ import { ModalComponent } from './../modal/modal.component';
 import { Subscription, Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 @Component({
+	standalone: false,
 	selector: 'rar-cropper-image-modal',
 	templateUrl: './crop-image-modal.component.html',
 	styleUrls: ['./crop-image-modal.component.scss']

@@ -30,10 +30,11 @@ import { merge, Observable, of, Subscription } from 'rxjs';
 import { filter, finalize, switchMap, tap } from 'rxjs/operators';
 
 import * as _ from 'lodash';
-import * as moment from 'moment';
+import moment from 'moment';
 
 // End
 @Component({
+	standalone: false,
 	selector: 'rar-match-detail',
 	templateUrl: './match-detail.component.html',
 	styleUrls: ['./match-detail.component.scss'],

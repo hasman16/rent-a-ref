@@ -9,8 +9,8 @@ import {
 	NgZone,
 	OnInit
 } from '@angular/core';
-import { MapsAPILoader, AgmMap } from '@agm/core';
-import { GoogleMapsAPIWrapper } from '@agm/core/services';
+import { GoogleMap } from '@angular/google-maps';
+import { GoogleMapsLoaderService } from './google-maps-loader.service';
 import * as _ from 'lodash';
 
 declare const google: any;
@@ -36,6 +36,7 @@ export interface Location {
 }
 
 @Component({
+	standalone: false,
 	selector: 'rar-google-map',
 	templateUrl: './google-map.component.html',
 	styleUrls: ['./google-map.component.scss'],
@@ -48,6 +49,7 @@ export class GoogleMapComponent implements OnInit {
 		this.setAddress(address, (newAddress: Location) => {
 			this.destination = _.cloneDeep(newAddress);
 			this.location = _.cloneDeep(newAddress);
+			this.onDirectionChange();
 		});
 	}
 
@@ -56,6 +58,7 @@ export class GoogleMapComponent implements OnInit {
 		this.setAddress(address, (newAddress: Location) => {
 			this.origin = _.cloneDeep(newAddress);
 			this.showDirections = true;
+			this.onDirectionChange();
 		});
 	}
 	public circleRadius: number = 64373;
@@ -63,14 +66,15 @@ export class GoogleMapComponent implements OnInit {
 	public origin: Marker;
 	public destination: Marker;
 	public geocoder: any;
+	public apiLoaded: boolean = false;
+	public directionsResult: google.maps.DirectionsResult | null = null;
 
-	@ViewChild(AgmMap) map: AgmMap;
+	@ViewChild(GoogleMap) map: GoogleMap;
 
 	constructor(
 		private cd: ChangeDetectorRef,
-		private mapsApiLoader: MapsAPILoader,
-		private zone: NgZone,
-		private wrapper: GoogleMapsAPIWrapper
+		private mapsLoader: GoogleMapsLoaderService,
+		private zone: NgZone
 	) {
 		this.location = <Location>{
 			lat: 34.05,
@@ -90,11 +94,12 @@ export class GoogleMapComponent implements OnInit {
 			lat: 33.803056,
 			lng: -117.8325
 		};
-		this.mapsApiLoader = mapsApiLoader;
-		this.zone = zone;
-		this.wrapper = wrapper;
-		this.mapsApiLoader.load().then(() => {
-			this.geocoder = new google.maps.Geocoder();
+		this.mapsLoader.load().then(() => {
+			this.zone.run(() => {
+				this.apiLoaded = true;
+				this.geocoder = new google.maps.Geocoder();
+				this.cd.markForCheck();
+			});
 		});
 	}
 
@@ -102,8 +107,28 @@ export class GoogleMapComponent implements OnInit {
 		this.location.marker.draggable = false;
 	}
 
-	public onDirectionChange(event): void {
-		console.log('onDirectionChange:', event);
+	public onDirectionChange(): void {
+		if (!this.apiLoaded || !this.showDirections) {
+			return;
+		}
+		const directionsService = new google.maps.DirectionsService();
+		directionsService.route(
+			{
+				origin: { lat: this.origin.lat, lng: this.origin.lng },
+				destination: { lat: this.destination.lat, lng: this.destination.lng },
+				travelMode: google.maps.TravelMode.DRIVING
+			},
+			(result, status) => {
+				this.zone.run(() => {
+					if (status === google.maps.DirectionsStatus.OK) {
+						this.directionsResult = result;
+					} else {
+						this.directionsResult = null;
+					}
+					this.cd.markForCheck();
+				});
+			}
+		);
 	}
 
 	protected setAddress(address: Location, callback): void {

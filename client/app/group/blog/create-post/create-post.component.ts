@@ -35,6 +35,7 @@ import {
 } from '../../../services/index';
 
 @Component({
+	standalone: false,
 	selector: 'app-createblog',
 	templateUrl: './create-post.component.html',
 	styleUrls: ['./create-post.component.scss'],

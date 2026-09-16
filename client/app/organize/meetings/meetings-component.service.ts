@@ -23,7 +23,7 @@ import { combineLatest, Subject, Observable, of, BehaviorSubject } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 
 import * as _ from 'lodash';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 @Injectable()
 export class MeetingsComponentService {

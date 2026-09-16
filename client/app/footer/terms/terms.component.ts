@@ -9,6 +9,7 @@ import {
 import { ModalComponent } from './../../shared/modal/modal.component';
 
 @Component({
+	standalone: false,
 	selector: 'terms-modal',
 	templateUrl: './terms.component.html',
 	styleUrls: []

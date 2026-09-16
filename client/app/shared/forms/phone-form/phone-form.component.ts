@@ -20,6 +20,7 @@ export interface IPhoneService {
 }
 
 @Component({
+	standalone: false,
 	selector: 'phone-form',
 	templateUrl: './phone-form.component.html',
 	styleUrls: ['./phone-form.component.scss']

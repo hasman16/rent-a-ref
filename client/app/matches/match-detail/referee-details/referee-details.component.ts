@@ -10,6 +10,7 @@ import { ModalComponent } from './../../../shared/modal/modal.component';
 import * as _ from 'lodash';
 
 @Component({
+	standalone: false,
 	selector: 'referee-details-modal',
 	templateUrl: './referee-details.component.html',
 	styleUrls: ['./referee-details.component.scss']

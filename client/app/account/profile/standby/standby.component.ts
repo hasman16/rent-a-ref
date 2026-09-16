@@ -11,6 +11,7 @@ import {
 } from './../../../shared/models/index';
 
 @Component({
+	standalone: false,
 	selector: 'app-standby',
 	templateUrl: './standby.component.html',
 	styleUrls: ['./standby.component.scss']

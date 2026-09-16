@@ -1,5 +1,5 @@
 :host {
-	/deep/ .datatable-row-group {
+	::ng-deep .datatable-row-group {
 		cursor: pointer;
 	}
 	.rar-list {

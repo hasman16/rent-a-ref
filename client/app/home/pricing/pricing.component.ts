@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+	standalone: false,
 	selector: 'app-pricing',
 	templateUrl: './pricing.component.html',
 	styleUrls: ['./pricing.component.scss']

@@ -7,5 +7,5 @@
   </formly-group>
 </div>
 <div class="addButton">
-  <button class="btn btn-primary buttonSize" type="button" (click)="add()">{{field.fieldArray.templateOptions.btnText}}</button>
+  <button class="btn btn-primary buttonSize" type="button" (click)="add()">{{$any(field.fieldArray).props.btnText}}</button>
 </div>

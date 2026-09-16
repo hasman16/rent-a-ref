@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FaqComponent } from './faq.component';
 
@@ -6,9 +7,10 @@ describe('FaqComponent', () => {
 	let component: FaqComponent;
 	let fixture: ComponentFixture<FaqComponent>;
 
-	beforeEach(async(() => {
+	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [FaqComponent]
+			declarations: [FaqComponent],
+			schemas: [NO_ERRORS_SCHEMA]
 		}).compileComponents();
 	}));
 

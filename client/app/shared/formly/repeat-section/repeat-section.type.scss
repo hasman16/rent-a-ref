@@ -1,16 +1,16 @@
 .col-1,
 .col-2,
 .col-3,
-:host /deep/ .col-4 {
+:host ::ng-deep .col-4 {
 	padding-right: 5px;
 	padding-left: 5px;
 }
 
-:host /deep/ .addButton {
+:host ::ng-deep .addButton {
 	margin: 2em 0;
 }
 
-:host /deep/ .card {
+:host ::ng-deep .card {
 	margin: 1.5em 0;
 }
 

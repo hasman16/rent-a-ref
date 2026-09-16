@@ -9,7 +9,7 @@ import {
 	FormBuilder,
 	EmailValidator
 } from '@angular/forms';
-import * as moment from 'moment';
+import moment from 'moment';
 
 import { ToastComponent } from '../../../shared/toast/toast.component';
 import {
@@ -23,6 +23,7 @@ import { compareFields } from '../../../shared/compareFields';
 import { Address, Bio, Phone, User } from '../../../shared/models/index';
 
 @Component({
+	standalone: false,
 	selector: 'app-edit-profile',
 	templateUrl: './edit-profile.component.html',
 	styleUrls: ['./edit-profile.component.scss']

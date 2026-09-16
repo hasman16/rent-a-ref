@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Headers, RequestOptions } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import * as _ from 'lodash';
 
 @Injectable()
 export class TokenService {
 	private token: string;
-	private headers = new Headers({
+	private headers = new HttpHeaders({
 		'Content-Type': 'application/json',
 		charset: 'UTF-8'
 	});
-	private options = new RequestOptions({ headers: this.headers });
+	private options = { headers: this.headers };
 
 	constructor() {}
 
@@ -46,12 +45,13 @@ export class TokenService {
 
 	setOptions(token) {
 		this.token = token;
-		this.headers = new Headers();
-		this.headers.append('Content-Type', 'application/json');
-		this.headers.append('charset', 'UTF-8');
+		this.headers = new HttpHeaders({
+			'Content-Type': 'application/json',
+			charset: 'UTF-8'
+		});
 		if (token) {
-			this.headers.append('Authorization', 'Bearer ' + token);
+			this.headers = this.headers.append('Authorization', 'Bearer ' + token);
 		}
-		this.options = new RequestOptions({ headers: this.headers });
+		this.options = { headers: this.headers };
 	}
 }

@@ -12,6 +12,7 @@ import {
 } from './../../../shared/models/index';
 
 @Component({
+	standalone: false,
 	selector: 'app-deactivated',
 	templateUrl: './deactivated.component.html',
 	styleUrls: ['./deactivated.component.scss']

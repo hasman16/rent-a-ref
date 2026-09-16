@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { SearchBoxComponent } from './search-box.component';
@@ -9,9 +10,10 @@ describe('SearchBoxComponent', () => {
 	let component: SearchBoxComponent;
 	let fixture: ComponentFixture<SearchBoxComponent>;
 
-	beforeEach(async(() => {
+	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
 			declarations: [SearchBoxComponent],
+			schemas: [NO_ERRORS_SCHEMA],
 			providers: []
 		}).compileComponents();
 	}));

@@ -1,8 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { FieldType } from '@ngx-formly/material';
-import { MatInput } from '@angular/material';
+import { FieldTypeConfig } from '@ngx-formly/core';
+import { MatInput } from '@angular/material/input';
 
 @Component({
+	standalone: false,
 	selector: 'datepicker-type',
 	template: `
 		<input
@@ -19,7 +21,7 @@ import { MatInput } from '@angular/material';
 		<mat-datepicker #picker></mat-datepicker>
 	`
 })
-export class DatepickerTypeComponent extends FieldType {
+export class DatepickerTypeComponent extends FieldType<FieldTypeConfig> {
 	// Optional: only if you want to rely on `MatInput` implementation
 	@ViewChild(MatInput) formFieldControl: MatInput;
 }

@@ -13,6 +13,7 @@ import { AuthService, UserService } from '../../services/index';
 import { Login, User } from './../../shared/models/index';
 
 @Component({
+	standalone: false,
 	selector: 'app-contactus',
 	templateUrl: './contactus.component.html',
 	styleUrls: ['./contactus.component.scss']
